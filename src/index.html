@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>EnvTNE</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+  <!-- <meta charset="UTF-8"> -->
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+  <title> Enaviya | Travel and Expense</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+
+  <link rel="stylesheet" href="css/common-style.css">
+  <link rel="stylesheet" href="css/themify-icons.css">
+  <link rel="stylesheet" href="css/owl.carousel.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link href="css/responsive.css" rel="stylesheet" />
+
+  <!-- bootstrap js -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.bundle.js"></script>
+  <!-- Google fonts -->
+  <link
+     href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+     rel="stylesheet">
+  <!-- Fontawesome -->
+  <link rel="stylesheet" href="css/font-awesome.css">
+  <!-- Multi Select css and JS -->
+  <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+  <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css" />
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <!-- owl carousel css -->
+  <script src="js/owl.carousel.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+</head>
+<body class="sidebar-mini sidebar-collapse">
+  <app-root></app-root>
+  
+  <!-- <script>
+    $(function () {
+       $(".datepicker").datepicker();
+    });
+ </script> -->
+ <script>
+    $(document).ready(function () {
+       $('ul.nav.nav-tabs li a').click(function () {
+          $('ul.nav.nav-tabs li.active').removeClass('active');
+          $(this).closest('li').addClass('active');
+       });
+    });
+ </script>
+ <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+       return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+ </script>
+ <!-- <script>
+    $(document).ready(function () {
+       $('#employeemaster').dataTable({
+          "aLengthMenu": [[10, 15, -1], [10, 15, "All"]],
+          "pageLength": 10
+       });
+    });
+ </script> -->
+ <!-- Left Menu Script starts here -->
+ <script>
+    $(document).ready(function () {
+       $('.main-sidebar111').click(function () {
+          $('.sidebar-mini').addClass('sidemenu-collapse');
+       });
+    });
+ </script>
+ <script>
+    $(document).ready(function () {
+       $('.sidebar-toggle').click(function () {
+          $(".sidebar-mini").toggleClass("sidebar-collapse");
+       });
+    });
+ </script>
+ <!-- Left Menu Script ends here -->
+ <script>
+    $(document).ready(function () {
+      setTimeout(() => {
+        
+      })
+      console.log('test');
+       var bigimage = $("#expenseEntry");
+       var thumbs = $("#expenseHead");
+       //var totalslides = 10;
+       var syncedSecondary = true;
+
+      //  bigimage
+      //     .owlCarousel({
+      //        items: 1,
+      //        slideSpeed: 4000,
+      //        nav: true,
+      //        autoplay: false,
+      //        dots: false,
+      //        loop: true,
+      //        touchDrag: false,
+      //        mouseDrag: false,
+      //        responsiveRefreshRate: 200,
+      //        autoHeight: true,
+      //        navText: [
+      //           '<i class="fa fa-arrow-left" aria-hidden="true"></i>',
+      //           '<i class="fa fa-arrow-right" aria-hidden="true"></i>'
+      //        ]
+      //     })
+      //     .on("changed.owl.carousel", syncPosition);
+
+      //  thumbs
+      //     .on("initialized.owl.carousel", function () {
+      //        thumbs
+      //           .find(".owl-item")
+      //           .eq(0)
+      //           .addClass("current");
+      //     })
+      //     .owlCarousel({
+      //        items: 5,
+      //        dots: true,
+      //        nav: true,
+      //        navText: [
+      //           '<i class="fa fa-arrow-left" aria-hidden="true"></i>',
+      //           '<i class="fa fa-arrow-right" aria-hidden="true"></i>'
+      //        ],
+      //        smartSpeed: 200,
+      //        slideSpeed: 500,
+      //        slideBy: 4,
+      //        responsiveRefreshRate: 100
+      //     })
+      //     .on("changed.owl.carousel", syncPosition2);
+
+      //  function syncPosition(el) {
+      //     //if loop is set to false, then you have to uncomment the next line
+      //     //var current = el.item.index;
+
+      //     //to disable loop, comment this block
+      //     var count = el.item.count - 1;
+      //     var current = Math.round(el.item.index - el.item.count / 2 - 0.5);
+
+      //     if (current < 0) {
+      //        current = count;
+      //     }
+      //     if (current > count) {
+      //        current = 0;
+      //     }
+      //     //to this
+      //     thumbs
+      //        .find(".owl-item")
+      //        .removeClass("current")
+      //        .eq(current)
+      //        .addClass("current");
+      //     var onscreen = thumbs.find(".owl-item.active").length - 1;
+      //     var start = thumbs
+      //        .find(".owl-item.active")
+      //        .first()
+      //        .index();
+      //     var end = thumbs
+      //        .find(".owl-item.active")
+      //        .last()
+      //        .index();
+
+      //     if (current > end) {
+      //        thumbs.data("owl.carousel").to(current, 100, true);
+      //     }
+      //     if (current < start) {
+      //        thumbs.data("owl.carousel").to(current - onscreen, 100, true);
+      //     }
+      //  }
+
+      //  function syncPosition2(el) {
+      //     if (syncedSecondary) {
+      //        var number = el.item.index;
+      //        bigimage.data("owl.carousel").to(number, 100, true);
+      //     }
+      //  }
+
+       thumbs.on("click", ".owl-item", function (e) {
+          e.preventDefault();
+          var number = $(this).index();
+          bigimage.data("owl.carousel").to(number, 300, true);
+       });
+    });
+
+ </script>
+ <!-- <script>
+    $(document).ready(function () {
+       $('#expenseCLM').dataTable({
+          "aLengthMenu": [[3, 5, -1], [3, 5, 10, "All"]],
+          "pageLength": 3
+       });
+    });
+ </script> -->
+ <script>
+    $(document).on('change', '.file-input', function () {
+       var filesCount = $(this)[0].files.length;
+       var textbox = $(this).prev();
+       if (filesCount === 1) {
+          var fileName = $(this).val().split('\\').pop();
+          textbox.text(fileName);
+       } else {
+          textbox.text(filesCount + ' files selected');
+       }
+    });
+ </script>
+ <script type="text/javascript">
+    $(".multi-select").multiselect({
+       // Bootstrap 5 compatibility
+       templates: {
+          button: '<button type="button" class="multiselect dropdown-toggle btn btn-primary" data-bs-toggle="dropdown" aria-expanded="false"><span class="multiselect-selected-text"></span></button>',
+       },
+    });
+ </script>
+ <script>
+    $(function () {
+       $('tr.parent td span.btn')
+          .on("click", function () {
+             var idOfParent = $(this).parents('tr').attr('id');
+             $('tr.child-' + idOfParent).toggle('slow');
+          });
+       $('tr[class^=child-]').hide().children('td');
+    });
+ </script>
+ <script>
+    $(document).ready(function () {
+       resetshowhide();
+    });
+    function resetshowhide() {
+       $('.btn-showhide').unbind('click');
+       $('.btn-showhide').click(function () {
+          //$(this).next('tr').slideToggle('500');
+          var idOfParent = $(this).parents("tr").attr("id");
+          $("tr.child-" + idOfParent).toggle();
+          $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
+          ResetSpace();
+       });
+    }
+    function ResetSpace() {
+       ////var parent = $('#expenseEntry .owl-stage-outer.owl-height'),
+       ////    child = parent.children('#expenseEntry .owl-item.active'); if (child.height() > parent.height('')) {
+       ////        parent.height(child.height());
+       ////    }
+       $("#expenseEntry .owl-height").height($("#expenseEntry .owl-item.active").height());
+    }
+ </script>
+</body>
+</html>

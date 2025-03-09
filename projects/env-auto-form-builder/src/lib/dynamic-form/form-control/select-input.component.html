@@ -1,0 +1,9 @@
+<label [for]="name">{{label}}</label>
+<select [id]="name" [formControl]="control">
+  <option *ngFor="let option of options" [value]="option.value">{{option.label}}</option>
+</select>
+<div *ngIf="control.invalid && (control.dirty || control.touched)">
+  <div *ngIf="control.errors?.['required']">
+    This field is required.
+  </div>
+</div>
