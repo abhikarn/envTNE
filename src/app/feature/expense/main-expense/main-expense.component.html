@@ -13,20 +13,8 @@
                                         <select id="ddlTravelExpenseRequest" name="ExpenseRequest"
                                             class="form-control chm-formselect">
                                             <option value="0">Select Travel Request</option>
-                                            <option value="37">TR/2024/03/0000037</option>
-                                            <option value="182" selected="selected">TR/2024/03/0000182</option>
-                                            <option value="183">TR/2024/03/0000183</option>
-                                            <option value="191">TR/2024/03/0000191</option>
-                                            <option value="193">TR/2024/03/0000193</option>
-                                            <option value="194">TR/2024/03/0000194</option>
-                                            <option value="196">TR/2024/03/0000196</option>
-                                            <option value="198">TR/2024/03/0000198</option>
-                                            <option value="199">TR/2024/03/0000199</option>
-                                            <option value="201">TR/2024/03/0000201</option>
-                                            <option value="222">TR/2024/03/0000222</option>
-                                            <option value="272">TR/2024/04/0000272</option>
-                                            <option value="625">TR/2024/06/00625</option>
-                                            <option value="719">TR/2025/01/00719</option>
+                                            <option *ngFor="let req of travelRequests" [value]="req.TravelRequestId">
+                                                {{req.TravelRequestNumber}} </option>
                                         </select>
                                         <span id="spanTravelExpenseRequest" data-tid="0" style="display:none;">NA</span>
                                     </div>
@@ -128,9 +116,12 @@
                             </div>
                         </div>
                         <div class="expense-core-wrapper">
-                            
                             <mat-tab-group fitInkBarToContent>
-                                <mat-tab label="Local Conveyance">
+                                <mat-tab>
+                                    <ng-template mat-tab-label>
+                                        <span matBadge="5" matBadgeColor="accent" matBadgeOverlap="false">Local
+                                            Conveyance</span>
+                                    </ng-template>
                                     <div class="expense-item-hold">
                                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                                             <div class="common-block mb-3">
@@ -3557,11 +3548,11 @@
                                 </mat-tab>
                                 <mat-tab label="Tab 5">
                                     Content for Tab 5
-                                  </mat-tab>
-                                  <mat-tab label="Tab 6">
+                                </mat-tab>
+                                <mat-tab label="Tab 6">
                                     Content for Tab 6
-                                  </mat-tab>
-                              </mat-tab-group>
+                                </mat-tab>
+                            </mat-tab-group>
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-12">
