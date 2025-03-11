@@ -346,7 +346,7 @@ header.header-fixed {
     height: 44px;
 }
 
-main.body-wrapper {
+/* main.body-wrapper {
     width: 100%;
     max-width: 100%;
     margin: 50px auto 0 auto;
@@ -355,7 +355,7 @@ main.body-wrapper {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-}
+} */
 
 
 footer.tne-app-footer {

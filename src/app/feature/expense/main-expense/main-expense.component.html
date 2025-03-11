@@ -128,32 +128,9 @@
                             </div>
                         </div>
                         <div class="expense-core-wrapper">
-                            <div class="badge-high">
-                                <div id="expenseHead" class="owl-carousel owl-theme thumbs-child-wrapper nav-custom">
-                                    <div class="item">
-                                        <div class="expense-list-head">
-                                            <h6>Local Conveyance<span>2</span></h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="expense-list-head">
-                                            <h6>Ticket Expense<span>2</span></h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="expense-list-head">
-                                            <h6>Accommodation<span>2</span></h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="expense-list-head">
-                                            <h6>Per Diem <span>2</span></h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="expenseEntry" class="owl-carousel owl-theme">
-                                <div class="item">
+                            
+                            <mat-tab-group fitInkBarToContent>
+                                <mat-tab label="Local Conveyance">
                                     <div class="expense-item-hold">
                                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                                             <div class="common-block mb-3">
@@ -534,9 +511,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- item -->
-                                <div class="item">
+                                </mat-tab>
+                                <mat-tab label="Ticket Expense">
                                     <div class="expense-item-hold">
                                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                                             <div class="common-block mb-3">
@@ -1140,9 +1116,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- item -->
-                                <div class="item">
+                                </mat-tab>
+                                <mat-tab label="Accommodation">
                                     <div class="expense-item-hold">
                                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                                             <div class="common-block mb-3">
@@ -2683,19 +2658,13 @@
                                                                 }
                                                             }
                                                         </style>
-
-
-
-
-
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- item -->
-                                <div class="item">
+                                </mat-tab>
+                                <mat-tab label="Per Diem">
                                     <div class="expense-item-hold">
                                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                                             <div class="common-block mb-3">
@@ -3585,9 +3554,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- item -->
-                            </div>
+                                </mat-tab>
+                                <mat-tab label="Tab 5">
+                                    Content for Tab 5
+                                  </mat-tab>
+                                  <mat-tab label="Tab 6">
+                                    Content for Tab 6
+                                  </mat-tab>
+                              </mat-tab-group>
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-12">
