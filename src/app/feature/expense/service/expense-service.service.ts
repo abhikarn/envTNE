@@ -14,6 +14,8 @@ export class ExpenseService {
 
   private apiTravelDDLData = `${this.baseUrl}/Expense/GetTravelDDLData`;
   private apiCityAuto = `${this.baseUrl}/Master/GetCityAuto`;
+  private apiLocalTravelMode = `${this.baseUrl}/Expense/GetLocalTravelMode`;
+  private apiApplicationMsg = `${this.baseUrl}/Message/GetApplicationMessage`;
 
   private apiExpensePolicyEntitlement = `${this.baseUrl}/Expense/GetExpensePolicyEntitlement
 `
@@ -50,14 +52,60 @@ export class ExpenseService {
   }
 
   // City Auto
-  getCityAuto(term: string) {
+  getCityAuto(term: string): Observable<any> {
     return this.http.get<any>(`${this.apiCityAuto}?term=${term}&typeid=53`);
   }
 
   // Payment Type List
-  getTravelPaymentType() {
+  getTravelPaymentType(): Observable<any> {
     let ddlType = 'PayType';
     return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}`);
+  }
+
+  // Currency List
+  getCurrencyList(): Observable<any> {
+    let ddlType = 'Currency';
+    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}`);
+  }
+
+  // Accomodation Type
+  getAccomodationTypeList(): Observable<any> {
+    let ddlType = 'AccomodationType';
+    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}`);
+  }
+
+  // Baggage Type
+  getBaggageTypeList(): Observable<any> {
+    let ddlType = 'BaggageType';
+    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}`);
+  }
+
+  // Other Type
+  getOtherTypeList(): Observable<any> {
+    let ddlType = 'OtherType';
+    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}&refId=51`);
+  }
+
+  // BoMeals
+  getBoMeals(): Observable<any> {
+    let ddlType = 'ddlBoMeals';
+    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}&refId=51`);
+  }
+
+  // Local travel type
+  getLocalTravelTypeList(): Observable<any> {
+    let ddlType = 'LocalTravelType';
+    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}`);
+  }
+
+  // Local Travel Mode
+  getLocalTravelModeList(): Observable<any> {
+    return this.http.get<any>(`${this.apiLocalTravelMode}?claimTypeId=51&expenseCategoryId=4&userMasterId=4&travelRequestId=0`);
+  }
+
+  // Application Message
+  getApplicationMessage(): Observable<any> {
+    return this.http.get<any>(`${this.apiApplicationMsg}?applicationMessageByFlagParam=ChooseTravelRequest`);
   }
 
   // Expense Policy Entitlement

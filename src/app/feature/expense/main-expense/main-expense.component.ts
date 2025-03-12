@@ -35,6 +35,13 @@ export class MainExpenseComponent {
   cities = [];
   filteredCities$: Observable<{ CityMasterId: number; City: string }[]>;
   travelPaymentList: any;
+  currencyList: any;
+  accomodationTypeList: any;
+  baggageTypeList: any;
+  otherTypeList: any;
+  boMealsList: any;
+  localTravelTypeList: any;
+  localTravelModeList: any;
 
   constructor(
     private expenseService: ExpenseService
@@ -49,6 +56,13 @@ export class MainExpenseComponent {
     this.fetchPendingTravelRequests();
     this.fetchTravelModeList();
     this.fetchTravelPayemntTypeList();
+    this.fetchCurrencyList();
+    this.fetchAccomodationTypeList();
+    this.fetchBaggageTypeList();
+    this.fetchOtherTypeList();
+    this.fecthBoMeals();
+    this.fetchLocalTravelTypeList();
+    this.fecthLocalTravelModeList();
     this.fetchExpensePolicyEntitlement();
   }
 
@@ -110,6 +124,94 @@ export class MainExpenseComponent {
       },
       error: (error) => {
         console.error('Error fetching travel payments:', error);
+      }
+    })
+  }
+
+  fetchCurrencyList() {
+    this.expenseService.getCurrencyList().pipe(take(1)).subscribe({
+      next: (response) => {
+        this.currencyList = response;
+      },
+      error: (error) => {
+        console.error('Error fetching currency :', error);
+      }
+    })
+  }
+
+  fetchAccomodationTypeList() {
+    this.expenseService.getAccomodationTypeList().pipe(take(1)).subscribe({
+      next: (response) => {
+        this.accomodationTypeList = response;
+      },
+      error: (error) => {
+        console.error('Error fetching accomodation type :', error);
+      }
+    })
+  }
+
+  fetchBaggageTypeList() {
+    this.expenseService.getBaggageTypeList().pipe(take(1)).subscribe({
+      next: (response) => {
+        this.baggageTypeList = response;
+      },
+      error: (error) => {
+        console.error('Error fetching baggage type :', error);
+      }
+    })
+  }
+
+  fetchOtherTypeList() {
+    this.expenseService.getOtherTypeList().pipe(take(1)).subscribe({
+      next: (response) => {
+        this.otherTypeList = response;
+      },
+      error: (error) => {
+        console.error('Error fetching other type :', error);
+      }
+    })
+  }
+
+  fecthBoMeals() {
+    this.expenseService.getBoMeals().pipe(take(1)).subscribe({
+      next: (response) => {
+        this.boMealsList = response;
+      },
+      error: (error) => {
+        console.error('Error fetching bo meals :', error);
+      }
+    })
+  }
+
+  fetchLocalTravelTypeList() {
+    this.expenseService.getLocalTravelTypeList().pipe(take(1)).subscribe({
+      next: (response) => {
+        this.localTravelTypeList = response;
+      },
+      error: (error) => {
+        console.error('Error fetching local travel type :', error);
+      }
+    })
+  }
+
+  fecthLocalTravelModeList() {
+    this.expenseService.getLocalTravelModeList().pipe(take(1)).subscribe({
+      next: (response) => {
+        this.localTravelModeList = response;
+      },
+      error: (error) => {
+        console.error('Error fetching local travel mode :', error);
+      }
+    })
+  }
+
+  fecthApplicationMsg() {
+    this.expenseService.getApplicationMessage().pipe(take(1)).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.error('Error fetching application message :', error);
       }
     })
   }
