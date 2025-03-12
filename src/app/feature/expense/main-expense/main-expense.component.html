@@ -11,22 +11,10 @@
                                     <div class="form-group chm-formgroup new-form-grp">
                                         <label>Request </label>
                                         <select id="ddlTravelExpenseRequest" name="ExpenseRequest"
-                                            class="form-control chm-formselect">
+                                            class="form-control chm-formselect" (change)="onSelectTravelExpenseRequest($event)">
                                             <option value="0">Select Travel Request</option>
-                                            <option value="37">TR/2024/03/0000037</option>
-                                            <option value="182" selected="selected">TR/2024/03/0000182</option>
-                                            <option value="183">TR/2024/03/0000183</option>
-                                            <option value="191">TR/2024/03/0000191</option>
-                                            <option value="193">TR/2024/03/0000193</option>
-                                            <option value="194">TR/2024/03/0000194</option>
-                                            <option value="196">TR/2024/03/0000196</option>
-                                            <option value="198">TR/2024/03/0000198</option>
-                                            <option value="199">TR/2024/03/0000199</option>
-                                            <option value="201">TR/2024/03/0000201</option>
-                                            <option value="222">TR/2024/03/0000222</option>
-                                            <option value="272">TR/2024/04/0000272</option>
-                                            <option value="625">TR/2024/06/00625</option>
-                                            <option value="719">TR/2025/01/00719</option>
+                                            <option *ngFor="let req of travelRequests" [value]="req.TravelRequestId">
+                                                {{req.TravelRequestNumber}} </option>
                                         </select>
                                         <span id="spanTravelExpenseRequest" data-tid="0" style="display:none;">NA</span>
                                     </div>
@@ -128,415 +116,8 @@
                             </div>
                         </div>
                         <div class="expense-core-wrapper">
-                            <div class="badge-high">
-                                <div id="expenseHead" class="owl-carousel owl-theme thumbs-child-wrapper nav-custom">
-                                    <div class="item">
-                                        <div class="expense-list-head">
-                                            <h6>Local Conveyance<span>2</span></h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="expense-list-head">
-                                            <h6>Ticket Expense<span>2</span></h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="expense-list-head">
-                                            <h6>Accommodation<span>2</span></h6>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="expense-list-head">
-                                            <h6>Per Diem <span>2</span></h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="expenseEntry" class="owl-carousel owl-theme">
-                                <div class="item">
-                                    <div class="expense-item-hold">
-                                        <div class="other-sectionaa hidehtgnm" style="display: block;">
-                                            <div class="common-block mb-3">
-                                                <h6 class="common-title fw-bold mb-3">Local Conveyance </h6>
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Claim Date <span
-                                                                    class="red-star-sml">*</span></label>
-                                                            <input class="form-control chm-forminput  datepicker "
-                                                                type="text">
-
-                                                            <span class="date-picket-icon align-top-t10"><img
-                                                                    src="images/date-icon.png"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Local Travel Type <span
-                                                                    class="red-star-sml">*</span></label>
-                                                            <select id="ddlLtcLocalTravelType" name="LocalTravelType"
-                                                                class="form-control chm-formselect ltc">
-                                                                <option value="0" selected="selected">Select Local
-                                                                    Travel Type</option>
-                                                                <option value="4">Conveyance During Travel</option>
-                                                                <option value="6">Parking and Toll</option>
-                                                            </select>
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-ddlLtcLocalTravelType"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Local Travel Mode <span
-                                                                    class="red-star-sml">*</span></label>
-                                                            <select id="ddlLtcLocalTravelMode" name="LocalTravelMode"
-                                                                class="form-control chm-formselect ltc">
-                                                                <option value="0" selected="selected">Select Local
-                                                                    Travel Mode</option>
-                                                                <option value="58">Taxi</option>
-                                                                <option value="94">2 Wheeler</option>
-                                                            </select>
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-ddlLtcLocalTravelMode"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Origin Point Name <span
-                                                                    class="red-star-sml">*</span></label>
-                                                            <input class="form-control chm-forminput ltc"
-                                                                id="txtLtcOriginPointName" name="txtLtcOriginPointName"
-                                                                placeholder="" type="text">
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-txtLtcOriginPointName"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Destination Point Name <span
-                                                                    class="red-star-sml">*</span></label>
-                                                            <input class="form-control chm-forminput ltc"
-                                                                id="txtLtcDestinationPointName"
-                                                                name="txtLtcDestinationPointName" placeholder=""
-                                                                type="text">
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-txtLtcDestinationPointName"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>City <span class="red-star-sml">*</span></label>
-                                                            <span class="twitter-typeahead"
-                                                                style="position: relative; display: inline-block;">
-                                                                <input
-                                                                    class="form-control chm-forminput typeaheadCity ticketLocation ltc tt-input"
-                                                                    id="txtLtcCity" name="txtLtcCity" placeholder=""
-                                                                    type="text" autocomplete="off" spellcheck="false"
-                                                                    dir="auto"
-                                                                    style="position: relative; vertical-align: top;">
-                                                                <pre aria-hidden="true"
-                                                                    style="position: absolute; visibility: hidden; white-space: pre; font-family: &quot;Inter&quot;, sans-serif; font-size: 12.6px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0.4px; text-indent: 0px; text-rendering: optimizelegibility; text-transform: none;"></pre>
-                                                                <div class="tt-menu"
-                                                                    style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;">
-                                                                    <div class="tt-dataset tt-dataset-City"></div>
-                                                                </div>
-                                                            </span>
-                                                            <input type="hidden" id="hdnLtcCityId" for="txtLtcCityGrade"
-                                                                name="hdnOneWayCityId" value="0" expensecategoryid="4">
-                                                            <input type="hidden" id="hdnOneWayLtcCity"
-                                                                name="hdnOneWayCity" value="">
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-txtLtcCity"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3  col-md-6 col-sm-6 countryTB"
-                                                        style="display: none">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Country</label>
-                                                            <input type="text" id="txtLtcCountry" data-title="0"
-                                                                data-ecat="ltc" data-date="dtLtcClaimDate"
-                                                                class="form-control chm-forminput ltc" placeholder="">
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-txtLtcCountry"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3  col-md-6 col-sm-6 countryTB"
-                                                        style="display: none">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Country Grade</label>
-                                                            <input type="text" id="txtLtcCountryGrade" data-title="0"
-                                                                data-ecat="ltc" data-date="dtLtcClaimDate"
-                                                                class="form-control chm-forminput ltc" placeholder="">
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-txtLtcCountryGrade"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3  col-md-6 col-sm-6 cityTB">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>City Grade <span
-                                                                    class="red-star-sml">*</span></label>
-                                                            <input type="text"
-                                                                class="form-control chm-forminput ltc auto-filled"
-                                                                data-cgr="txtLtcCountryGrade" data-ctry="txtLtcCountry"
-                                                                data-ecat="ltc" data-date="txtLtcClaimDate"
-                                                                id="txtLtcCityGrade" placeholder="" readonly="readonly">
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-txtLtcCityGrade"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3  col-md-6 ">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Purpose <span class="red-star-sml">*</span></label>
-                                                            <input type="text" class="form-control chm-forminput ltc"
-                                                                id="txtLtcPurpose" placeholder="">
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-txtLtcPurpose"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div
-                                                        class="col-lg-3  col-md-6 col-sm-6 conveyanceEntitlement d-none">
-                                                        <div class="form-group chm-formgroup new-form-grp ">
-                                                            <label>Entitlement Currency <span
-                                                                    class="red-star-sml">*</span></label>
-                                                            <select class="form-control chm-formselect  entlCurr"
-                                                                id="txtLtcEntitleCurr" name="txtLtcEntitleCurr"
-                                                                disabled="disabled">
-                                                                <option value="" selected="selected">Please select
-                                                                </option>
-                                                                <option value="2">Afghan Afghani : AFN</option>
-                                                                <option value="3">Albanian Lek : ALL</option>
-                                                                <option value="40">Algerian Dinar : DZD</option>
-                                                                <option value="6">Angolan Kwanza : AOA</option>
-                                                                <option value="7">Argentine Peso : ARS</option>
-                                                                <option value="4">Armenian Dram : AMD</option>
-                                                                <option value="9">Aruban Florin : AWG</option>
-                                                                <option value="8">Australian Dollar : AUD</option>
-                                                                <option value="10">Azerbaijani Manat : AZN</option>
-                                                                <option value="21">Bahamian Dollar : BSD</option>
-                                                                <option value="15">Bahraini Dinar : BHD</option>
-                                                                <option value="13">Bangladeshi Taka : BDT</option>
-                                                                <option value="12">Barbadian Dollar : BBD</option>
-                                                                <option value="24">Belarusian Ruble : BYN</option>
-
-                                                            </select>
-                                                            <span class="validate-error-message "
-                                                                id="validate-error-message-txtLtcEntitleCurr"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3  col-md-6 conveyanceEntitlement d-none">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Entitlement Amount <span
-                                                                    class="red-star-sml">*</span></label>
-                                                            <input type="text" id="txtLtcEntitleAmount"
-                                                                readonly="readonly"
-                                                                class="form-control chm-forminput enav-only-numeric amount-tag-rt auto-filled"
-                                                                oninput="limitLength(this, 10)" placeholder="">
-                                                            <span class="validate-error-message"
-                                                                id="validate-error-message-txtLtcEntitleAmount"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div
-                                                        class="col-lg-3  col-md-6 col-sm-6 conveyanceEntitlement d-none">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Entitlement Conversion Rate <span
-                                                                    class="red-star-sml">*</span></label>
-                                                            <input type="text" aby="LTC"
-                                                                data-currencydropdown="txtLtcEntitleCurr"
-                                                                class="form-control chm-forminput allowDecimal enav-only-numeric conversionrate entlamtConversionRate amount-tag-rt"
-                                                                oninput="limitLength(this, 10)"
-                                                                id="txtLtcEntitlementConversionRate" placeholder="">
-                                                            <span class="validate-error-message"
-                                                                id="validate-error-message-txtLtcEntitlementConversionRate"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3  col-md-6 col-sm-6">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Payment Type <span
-                                                                    class="red-star-sml">*</span></label>
-                                                            <select name="PayType" id="ddlLtcPaymentType"
-                                                                class="form-control chm-formselect ltc">
-                                                                <option value="0" selected="selected">Select Payment
-                                                                    Type</option>
-                                                                <option value="91">Paid By Employee</option>
-                                                                <option value="92">Corporate CreditCard</option>
-                                                                <option value="93">Amount Paid By Company</option>
-                                                                <option value="94">CreditCard</option>
-                                                            </select>
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-ddlLtcPaymentType"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3  col-md-6 col-sm-6">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Currency <span class="red-star-sml">*</span></label>
-                                                            <select class="form-control chm-formselect ltc ddlcurr"
-                                                                id="ddlLtcCurrency" name="ddlLtcCurrency"
-                                                                disabled="disabled">
-                                                                <option value="">Please select</option>
-                                                                <option value="2">Afghan Afghani : AFN</option>
-                                                                <option value="3">Albanian Lek : ALL</option>
-                                                                <option value="40">Algerian Dinar : DZD</option>
-                                                                <option value="6">Angolan Kwanza : AOA</option>
-                                                                <option value="7">Argentine Peso : ARS</option>
-                                                                <option value="4">Armenian Dram : AMD</option>
-                                                                <option value="9">Aruban Florin : AWG</option>
-                                                                <option value="8">Australian Dollar : AUD</option>
-                                                                <option value="10">Azerbaijani Manat : AZN</option>
-                                                                <option value="21">Bahamian Dollar : BSD</option>
-
-                                                            </select>
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-ddlLtcCurrency"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-sm-6 col-md-6">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>KM <span class="red-star-sml">*</span></label>
-                                                            <input type="text"
-                                                                class="form-control chm-forminput ltc allowDecimal"
-                                                                data-km="" data-kmlimit="No" data-kmrate=""
-                                                                id="txtLtcKM" placeholder="">
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-txtLtcKM"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-sm-6 col-md-6">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Total Amount <span
-                                                                    class="red-star-sml">*</span></label>
-                                                            <input type="text"
-                                                                class="form-control chm-forminput ltc allowDecimal enav-only-numeric amount-tag-rt"
-                                                                oninput="limitLength(this, 10)" id="txtLtcTotalAmount"
-                                                                placeholder="">
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-txtLtcTotalAmount"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3  col-md-6 col-sm-6">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Claim Conversion Rate <span
-                                                                    class="red-star-sml">*</span></label>
-                                                            <input type="text" aby="LTCC"
-                                                                data-currencydropdown="ddlLtcCurrency"
-                                                                class="form-control chm-forminput ltc allowDecimal enav-only-numeric conversionrate amount-tag-rt"
-                                                                oninput="limitLength(this, 10)"
-                                                                id="txtLtcClaimConversionRate" placeholder="">
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-txtLtcClaimConversionRate"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group chm-formgroup new-form-grp ">
-                                                            <label>Justification <span
-                                                                    class="red-star-sml"></span></label>
-                                                            <textarea type="text" maxlength="2000"
-                                                                class="form-control chm-formtextarea" id="txtLtcRemarks"
-                                                                placeholder="" value=""></textarea>
-                                                            <span class="validate-error-message ltc"
-                                                                id="validate-error-message-txtLtcRemarks"
-                                                                style="display: none">Required</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="common-block-white mb-3">
-                                                            <div class=" d-flex cladd-btn justify-content-end mb-3">
-                                                                <a
-                                                                    class="  btn btn-outline-secondary clear  w-10">Clear</a>
-                                                                <a href="" class="btn btn-dark w-10"
-                                                                    id="btnAddLtcData">Add </a>
-                                                            </div>
-                                                            <div class="upload-container excel-TBL-hold">
-                                                                <label for="btnLtcUpload" class="custom-upload">Click
-                                                                    to Choose File </label>
-                                                                <input type="file" id="fileLtcUpload"
-                                                                    multiple="multiple"
-                                                                    accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx">
-                                                            </div>
-                                                            <table id="tblLtcDocument"
-                                                                class="table mt-2  grey-table d-table table-cust tbl-sml no-sorting td-firstdata-center vioColor tblTeFile">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th class="thd-w15"><span>Sl No</span></th>
-                                                                        <th class="thd-w70"><span>Document</span></th>
-                                                                        <th class="thd-w15"><span>Action</span></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-
-                                                                        <td>1</td>
-                                                                        <td>Donec dignissim, ipsum at suscipit.pdf</td>
-                                                                        <td><a href=""> <i
-                                                                                    class="fa-solid fa-trash"></i> </a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-
-                                                                        <td>2</td>
-                                                                        <td>Donec dignissim, ipsum at suscipit.pdf</td>
-                                                                        <td><a href=""> <i
-                                                                                    class="fa-solid fa-trash"></i> </a>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <div class="req-details-grid">
-                                                        <div class="exp-clm-DTBL">
-                                                            <div class="table-responsive">
-                                                                <table id="tblLocalTravelConveyance"
-                                                                    class="table   color-table d-table table-cust tbl-sml no-sorting td-firstdata-center vioColor">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th class="thd-w5"><span>Sl.No</span></th>
-                                                                            <th class="thd-w10"><span>Claim Date</span>
-                                                                            </th>
-                                                                            <th class="thd-w15"><span>Local Travel
-                                                                                    Type</span></th>
-                                                                            <th class="thd-w10"><span>Local Travel
-                                                                                    Mode</span></th>
-                                                                            <th class="thd-w10"><span>Origin Point
-                                                                                    Name</span></th>
-                                                                            <th class="thd-w10"><span>Destination Point
-                                                                                    Name</span></th>
-                                                                            <th class="thd-w10"><span>City</span></th>
-                                                                            <th class="thd-w10"><span>Payment
-                                                                                    Type</span>
-                                                                            </th>
-                                                                            <th class="thd-w10"><span>Amount</span></th>
-                                                                            <th class="thd-w10"><span>Action</span></th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody></tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- item -->
-                                <div class="item">
+                            <mat-tab-group fitInkBarToContent>
+                                <mat-tab label="Ticket Expense">
                                     <div class="expense-item-hold">
                                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                                             <div class="common-block mb-3">
@@ -547,12 +128,11 @@
                                                             <label>Travel Mode <span
                                                                     class="red-star-sml">*</span></label>
                                                             <select id="ddlTeTravelMode" name="TravelMode"
-                                                                class="form-control chm-formselect te">
+                                                                class="form-control chm-formselect te" (change)="onSelectTravelMode($event)">
                                                                 <option value="0" selected="selected">Select Travel
                                                                     Mode</option>
-                                                                <option value="1">Air</option>
-                                                                <option value="2">Train</option>
-                                                                <option value="3">Bus</option>
+                                                                    <option *ngFor="let travelMode of travelModeList" [value]="travelMode.Key">
+                                                                        {{travelMode.Value}} </option>
                                                             </select>
                                                             <span class="validate-error-message te"
                                                                 id="validate-error-message-ddlTeTravelMode"
@@ -566,6 +146,8 @@
                                                             <select id="ddlTeTravelClass" name="TravelClass"
                                                                 class="form-control chm-formselect te">
                                                                 <option value="0" selected="selected">Select</option>
+                                                                <option *ngFor="let travelClass of travelClassList" [value]="travelClass.Key">
+                                                                    {{travelClass.Value}} </option>
                                                             </select>
                                                             <input type="hidden" id="hdnTravelClassId"
                                                                 name="hdnTravelClass" value="0">
@@ -575,44 +157,29 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Travel Date <span
-                                                                    class="red-star-sml">*</span></label>
-                                                            <input class="form-control chm-forminput  datepicker "
-                                                                type="text">
-
-                                                            <span class="date-picket-icon align-top-t10"><img
-                                                                    src="images/date-icon.png"></span>
-                                                        </div>
+                                                        <mat-form-field appearance="fill">
+                                                            <mat-label>Travel Date<span class="red-star-sml">*</span></mat-label>
+                                                            <input matInput [matDatepicker]="picker">
+                                                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                                            <mat-datepicker #picker></mat-datepicker>
+                                                          </mat-form-field>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <div class="form-group chm-formgroup new-form-grp">
-                                                            <label>Origin <span class="red-star-sml">*</span></label>
-                                                            <span class="twitter-typeahead"
-                                                                style="position: relative; display: inline-block;">
-                                                                <input
-                                                                    class="form-control chm-forminput form-input-custom typeaheadFromCityOneWay ticketLocation te tt-input"
-                                                                    id="txtTeOrigin" name="txtTeOrigin" placeholder=""
-                                                                    type="text" autocomplete="off" spellcheck="false"
-                                                                    dir="auto"
-                                                                    style="position: relative; vertical-align: top;">
-                                                                <pre aria-hidden="true"
-                                                                    style="position: absolute; visibility: hidden; white-space: pre; font-family: &quot;Inter&quot;, sans-serif; font-size: 12.6px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0.4px; text-indent: 0px; text-rendering: optimizelegibility; text-transform: none;"></pre>
-                                                                <div class="tt-menu"
-                                                                    style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;">
-                                                                    <div class="tt-dataset tt-dataset-City"></div>
-                                                                </div>
-                                                            </span>
-                                                            <input type="hidden" id="hdnOneWayFromCityId"
-                                                                name="hdnOneWayFromCityId" value="0"
-                                                                expensecategoryid="1">
-                                                            <input type="hidden" id="hdnOneWayFromCity"
-                                                                name="hdnOneWayFromCity" value="">
-                                                            <p class="map-loc-name" id="fromOneWayCountryCode"></p>
-                                                            <span class="validate-error-message te"
-                                                                id="validate-error-message-txtTeOrigin"
-                                                                style="display: none">Required</span>
-                                                        </div>
+                                                        <mat-form-field appearance="fill">
+                                                            <mat-label>Origin</mat-label>
+                                                            <input
+                                                              type="text"
+                                                              matInput
+                                                              [formControl]="originControl"
+                                                              [matAutocomplete]="auto"
+                                                            />
+                                                            <mat-autocomplete #auto="matAutocomplete">
+                                                              <mat-option *ngFor="let city of filteredCities$ | async" [value]="city.City">
+                                                                {{ city.City }}
+                                                              </mat-option>
+                                                            </mat-autocomplete>
+                                                          </mat-form-field>
+                                                          
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group chm-formgroup new-form-grp">
@@ -656,10 +223,8 @@
                                                                 class="form-control chm-formselect te">
                                                                 <option value="0" selected="selected">Select Payment
                                                                     Type</option>
-                                                                <option value="91">Paid By Employee</option>
-                                                                <option value="92">Corporate CreditCard</option>
-                                                                <option value="93">Amount Paid By Company</option>
-                                                                <option value="94">CreditCard</option>
+                                                                    <option *ngFor="let travelPayment of travelPaymentList" [value]="travelPayment.Key">
+                                                                        {{travelPayment.Value}} </option>
                                                             </select>
                                                             <span class="validate-error-message te"
                                                                 id="validate-error-message-ddlTePaymentType"
@@ -670,188 +235,10 @@
                                                         <div class="form-group chm-formgroup new-form-grp">
                                                             <label>Currency <span class="red-star-sml">*</span></label>
                                                             <select class="form-control chm-formselect te ddlcurr"
-                                                                id="ddlTeCurrency" name="ddlTeCurrency"
-                                                                disabled="disabled">
+                                                                id="ddlTeCurrency" name="ddlTeCurrency">
                                                                 <option value="">Please select</option>
-                                                                <option value="2">Afghan Afghani : AFN</option>
-                                                                <option value="3">Albanian Lek : ALL</option>
-                                                                <option value="40">Algerian Dinar : DZD</option>
-                                                                <option value="6">Angolan Kwanza : AOA</option>
-                                                                <option value="7">Argentine Peso : ARS</option>
-                                                                <option value="4">Armenian Dram : AMD</option>
-                                                                <option value="9">Aruban Florin : AWG</option>
-                                                                <option value="8">Australian Dollar : AUD</option>
-                                                                <option value="10">Azerbaijani Manat : AZN</option>
-                                                                <option value="21">Bahamian Dollar : BSD</option>
-                                                                <option value="15">Bahraini Dinar : BHD</option>
-                                                                <option value="13">Bangladeshi Taka : BDT</option>
-                                                                <option value="12">Barbadian Dollar : BBD</option>
-                                                                <option value="24">Belarusian Ruble : BYN</option>
-                                                                <option value="25">Belize Dollar : BZD</option>
-                                                                <option value="17">Bermudian Dollar : BMD</option>
-                                                                <option value="22">Bhutanese Ngultrum : BTN</option>
-                                                                <option value="19">Bolivian Boliviano : BOB</option>
-                                                                <option value="11">Bosnia-Herzegovina Convertible Mark
-                                                                    : BAM</option>
-                                                                <option value="23">Botswana Pula : BWP</option>
-                                                                <option value="20">Brazilian Real : BRL</option>
-                                                                <option value="47">British Pound Sterling : GBP
-                                                                </option>
-                                                                <option value="18">Brunei Dollar : BND</option>
-                                                                <option value="14">Bulgarian Lev : BGN</option>
-                                                                <option value="91">Burmese Kyat : MMK</option>
-                                                                <option value="16">Burundian Franc : BIF</option>
-                                                                <option value="74">Cambodian Riel : KHR</option>
-                                                                <option value="26">Canadian Dollar : CAD</option>
-                                                                <option value="35">Cape Verdean Escudo : CVE</option>
-                                                                <option value="79">Cayman Islands Dollar : KYD
-                                                                </option>
-                                                                <option value="154">Central African CFA Franc : XAF
-                                                                </option>
-                                                                <option value="158">CFP Franc : XPF</option>
-                                                                <option value="29">Chilean Peso : CLP</option>
-                                                                <option value="30">Chinese Yuan Renminbi : CNY
-                                                                </option>
-                                                                <option value="31">Colombian Peso : COP</option>
-                                                                <option value="75">Comorian Franc : KMF</option>
-                                                                <option value="27">Congolese Franc : CDF</option>
-                                                                <option value="32">Costa Rican Colón : CRC</option>
-                                                                <option value="58">Croatian Kuna : HRK</option>
-                                                                <option value="33">Cuban Convertible Peso : CUC
-                                                                </option>
-                                                                <option value="34">Cuban Peso : CUP</option>
-                                                                <option value="36">Czech Koruna : CZK</option>
-                                                                <option value="38">Danish Krone : DKK</option>
-                                                                <option value="37">Djiboutian Franc : DJF</option>
-                                                                <option value="39">Dominican Peso : DOP</option>
-                                                                <option value="155">East Caribbean Dollar : XCD
-                                                                </option>
-                                                                <option value="41">Egyptian Pound : EGP</option>
-                                                                <option value="42">Eritrean Nakfa : ERN</option>
-                                                                <option value="43">Ethiopian Birr : ETB</option>
-                                                                <option value="44">Euro : EUR</option>
-                                                                <option value="46">Falkland Islands Pound : FKP
-                                                                </option>
-                                                                <option value="45">Fijian Dollar : FJD</option>
-                                                                <option value="52">Gambian Dalasi : GMD</option>
-                                                                <option value="48">Georgian Lari : GEL</option>
-                                                                <option value="50">Ghanaian Cedi : GHS</option>
-                                                                <option value="51">Gibraltar Pound : GIP</option>
-                                                                <option value="54">Guatemalan Quetzal : GTQ</option>
-                                                                <option value="49">Guernsey Pound : GGP</option>
-                                                                <option value="53">Guinean Franc : GNF</option>
-                                                                <option value="55">Guyanese Dollar : GYD</option>
-                                                                <option value="59">Haitian Gourde : HTG</option>
-                                                                <option value="57">Honduran Lempira : HNL</option>
-                                                                <option value="56">Hong Kong Dollar : HKD</option>
-                                                                <option value="60">Hungarian Forint : HUF</option>
-                                                                <option value="67">Icelandic Króna : ISK</option>
-                                                                <option value="1" selected="selected">Indian Rupee :
-                                                                    INR</option>
-                                                                <option value="61">Indonesian Rupiah : IDR</option>
-                                                                <option value="66">Iranian Rial : IRR</option>
-                                                                <option value="65">Iraqi Dinar : IQD</option>
-                                                                <option value="62">Israeli Shekel : ILS</option>
-                                                                <option value="69">Jamaican Dollar : JMD</option>
-                                                                <option value="71">Japanese Yen : JPY</option>
-                                                                <option value="68">Jersey Pound : JEP</option>
-                                                                <option value="70">Jordanian Dinar : JOD</option>
-                                                                <option value="80">Kazakhstani Tenge : KZT</option>
-                                                                <option value="72">Kenyan Shilling : KES</option>
-                                                                <option value="78">Kuwaiti Dinar : KWD</option>
-                                                                <option value="73">Kyrgyzstani Som : KGS</option>
-                                                                <option value="81">Lao Kip : LAK</option>
-                                                                <option value="82">Lebanese Pound : LBP</option>
-                                                                <option value="85">Lesotho Loti : LSL</option>
-                                                                <option value="84">Liberian Dollar : LRD</option>
-                                                                <option value="86">Libyan Dinar : LYD</option>
-                                                                <option value="93">Macanese Pataca : MOP</option>
-                                                                <option value="90">Macedonian Denar : MKD</option>
-                                                                <option value="89">Malagasy Ariary : MGA</option>
-                                                                <option value="97">Malawian Kwacha : MWK</option>
-                                                                <option value="99">Malaysian Ringgit : MYR</option>
-                                                                <option value="96">Maldivian Rufiyaa : MVR</option>
-                                                                <option value="63">Manx Pound : IMP</option>
-                                                                <option value="94">Mauritanian Ouguiya : MRO</option>
-                                                                <option value="95">Mauritian Rupee : MUR</option>
-                                                                <option value="98">Mexican Peso : MXN</option>
-                                                                <option value="88">Moldovan Leu : MDL</option>
-                                                                <option value="92">Mongolian Tögrög : MNT</option>
-                                                                <option value="87">Moroccan Dirham : MAD</option>
-                                                                <option value="100">Mozambican Metical : MZN</option>
-                                                                <option value="101">Namibian Dollar : NAD</option>
-                                                                <option value="105">Nepalese Rupee : NPR</option>
-                                                                <option value="5">Netherlands Antillean Guilder : ANG
-                                                                </option>
-                                                                <option value="143">New Taiwan Dollar : TWD</option>
-                                                                <option value="106">New Zealand Dollar : NZD</option>
-                                                                <option value="103">Nicaraguan Córdoba : NIO</option>
-                                                                <option value="102">Nigerian Naira : NGN</option>
-                                                                <option value="76">North Korean Won : KPW</option>
-                                                                <option value="104">Norwegian Krone : NOK</option>
-                                                                <option value="107">Omani Rial : OMR</option>
-                                                                <option value="112">Pakistani Rupee : PKR</option>
-                                                                <option value="108">Panamanian Balboa : PAB</option>
-                                                                <option value="110">Papua New Guinean Kina : PGK
-                                                                </option>
-                                                                <option value="114">Paraguayan Guaraní : PYG</option>
-                                                                <option value="109">Peruvian Sol : PEN</option>
-                                                                <option value="111">Philippine Peso : PHP</option>
-                                                                <option value="113">Polish Zloty : PLN</option>
-                                                                <option value="115">Qatari Riyal : QAR</option>
-                                                                <option value="116">Romanian Leu : RON</option>
-                                                                <option value="118">Russian Ruble : RUB</option>
-                                                                <option value="119">Rwandan Franc : RWF</option>
-                                                                <option value="126">Saint Helena Pound : SHP</option>
-                                                                <option value="132">Salvadoran Colón : SVC</option>
-                                                                <option value="153">Samoan Tala : WST</option>
-                                                                <option value="131">São Tomé and Príncipe Dobra : STN
-                                                                </option>
-                                                                <option value="120">Saudi Riyal : SAR</option>
-                                                                <option value="129">Seborga Luigino : SPL</option>
-                                                                <option value="117">Serbian Dinar : RSD</option>
-                                                                <option value="122">Seychellois Rupee : SCR</option>
-                                                                <option value="127">Sierra Leonean Leone : SLL
-                                                                </option>
-                                                                <option value="125">Singapore Dollar : SGD</option>
-                                                                <option value="121">Solomon Islands Dollar : SBD
-                                                                </option>
-                                                                <option value="128">Somali Shilling : SOS</option>
-                                                                <option value="160">South African Rand : ZAR</option>
-                                                                <option value="77">South Korean Won : KRW</option>
-                                                                <option value="83">Sri Lankan Rupee : LKR</option>
-                                                                <option value="123">Sudanese Pound : SDG</option>
-                                                                <option value="130">Surinamese Dollar : SRD</option>
-                                                                <option value="134">Swazi Lilangeni : SZL</option>
-                                                                <option value="124">Swedish Krona : SEK</option>
-                                                                <option value="28">Swiss Franc : CHF</option>
-                                                                <option value="133">Syrian Pound : SYP</option>
-                                                                <option value="136">Tajikistani Somoni : TJS</option>
-                                                                <option value="144">Tanzanian Shilling : TZS</option>
-                                                                <option value="162">TEST-134 : TES</option>
-                                                                <option value="135">Thai Baht : THB</option>
-                                                                <option value="139">Tongan Pa?anga : TOP</option>
-                                                                <option value="141">Trinidad and Tobago Dollar : TTD
-                                                                </option>
-                                                                <option value="138">Tunisian Dinar : TND</option>
-                                                                <option value="140">Turkish Lira : TRY</option>
-                                                                <option value="137">Turkmenistan Manat : TMT</option>
-                                                                <option value="142">Tuvaluan Dollar : TVD</option>
-                                                                <option value="146">Ugandan Shilling : UGX</option>
-                                                                <option value="145">Ukrainian Hryvnia : UAH</option>
-                                                                <option value="64">United Arab Emirates Dirham : AED
-                                                                </option>
-                                                                <option value="147">United States Dollar : USD
-                                                                </option>
-                                                                <option value="148">Uruguayan Peso : UYU</option>
-                                                                <option value="149">Uzbekistani Som : UZS</option>
-                                                                <option value="152">Vanuatu Vatu : VUV</option>
-                                                                <option value="150">Venezuelan Bolívar : VES</option>
-                                                                <option value="151">Vietnamese Ð?ng : VND</option>
-                                                                <option value="157">West African CFA Franc : XOF
-                                                                </option>
-                                                                <option value="159">Yemeni Rial : YER</option>
-                                                                <option value="161">Zambian Kwacha : ZMW</option>
+                                                                <option *ngFor="let currency of currencyList" [value]="currency.Key">
+                                                                    {{currency.Value}} </option>
                                                             </select>
                                                             <span class="validate-error-message te"
                                                                 id="validate-error-message-ddlTeCurrency"
@@ -1140,9 +527,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- item -->
-                                <div class="item">
+                                </mat-tab>
+                                <mat-tab label="Accommodation">
                                     <div class="expense-item-hold">
                                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                                             <div class="common-block mb-3">
@@ -2683,19 +2069,13 @@
                                                                 }
                                                             }
                                                         </style>
-
-
-
-
-
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- item -->
-                                <div class="item">
+                                </mat-tab>
+                                <mat-tab label="Per Diem">
                                     <div class="expense-item-hold">
                                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                                             <div class="common-block mb-3">
@@ -3585,9 +2965,421 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- item -->
-                            </div>
+                                </mat-tab>
+                                <mat-tab label="Lump Sum">
+                                    Lump Sum
+                                </mat-tab>
+                                <mat-tab>
+                                    <ng-template mat-tab-label>
+                                        <span matBadge="5" matBadgeColor="accent" matBadgeOverlap="false">Local
+                                            Conveyance</span>
+                                    </ng-template>
+                                    <div class="expense-item-hold">
+                                        <div class="other-sectionaa hidehtgnm" style="display: block;">
+                                            <div class="common-block mb-3">
+                                                <h6 class="common-title fw-bold mb-3">Local Conveyance </h6>
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Claim Date <span
+                                                                    class="red-star-sml">*</span></label>
+                                                            <input class="form-control chm-forminput  datepicker "
+                                                                type="text">
+
+                                                            <span class="date-picket-icon align-top-t10"><img
+                                                                    src="images/date-icon.png"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Local Travel Type <span
+                                                                    class="red-star-sml">*</span></label>
+                                                            <select id="ddlLtcLocalTravelType" name="LocalTravelType"
+                                                                class="form-control chm-formselect ltc">
+                                                                <option value="0" selected="selected">Select Local
+                                                                    Travel Type</option>
+                                                                <option value="4">Conveyance During Travel</option>
+                                                                <option value="6">Parking and Toll</option>
+                                                            </select>
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-ddlLtcLocalTravelType"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Local Travel Mode <span
+                                                                    class="red-star-sml">*</span></label>
+                                                            <select id="ddlLtcLocalTravelMode" name="LocalTravelMode"
+                                                                class="form-control chm-formselect ltc">
+                                                                <option value="0" selected="selected">Select Local
+                                                                    Travel Mode</option>
+                                                                <option value="58">Taxi</option>
+                                                                <option value="94">2 Wheeler</option>
+                                                            </select>
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-ddlLtcLocalTravelMode"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Origin Point Name <span
+                                                                    class="red-star-sml">*</span></label>
+                                                            <input class="form-control chm-forminput ltc"
+                                                                id="txtLtcOriginPointName" name="txtLtcOriginPointName"
+                                                                placeholder="" type="text">
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-txtLtcOriginPointName"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Destination Point Name <span
+                                                                    class="red-star-sml">*</span></label>
+                                                            <input class="form-control chm-forminput ltc"
+                                                                id="txtLtcDestinationPointName"
+                                                                name="txtLtcDestinationPointName" placeholder=""
+                                                                type="text">
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-txtLtcDestinationPointName"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>City <span class="red-star-sml">*</span></label>
+                                                            <span class="twitter-typeahead"
+                                                                style="position: relative; display: inline-block;">
+                                                                <input
+                                                                    class="form-control chm-forminput typeaheadCity ticketLocation ltc tt-input"
+                                                                    id="txtLtcCity" name="txtLtcCity" placeholder=""
+                                                                    type="text" autocomplete="off" spellcheck="false"
+                                                                    dir="auto"
+                                                                    style="position: relative; vertical-align: top;">
+                                                                <pre aria-hidden="true"
+                                                                    style="position: absolute; visibility: hidden; white-space: pre; font-family: &quot;Inter&quot;, sans-serif; font-size: 12.6px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0.4px; text-indent: 0px; text-rendering: optimizelegibility; text-transform: none;"></pre>
+                                                                <div class="tt-menu"
+                                                                    style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;">
+                                                                    <div class="tt-dataset tt-dataset-City"></div>
+                                                                </div>
+                                                            </span>
+                                                            <input type="hidden" id="hdnLtcCityId" for="txtLtcCityGrade"
+                                                                name="hdnOneWayCityId" value="0" expensecategoryid="4">
+                                                            <input type="hidden" id="hdnOneWayLtcCity"
+                                                                name="hdnOneWayCity" value="">
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-txtLtcCity"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3  col-md-6 col-sm-6 countryTB"
+                                                        style="display: none">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Country</label>
+                                                            <input type="text" id="txtLtcCountry" data-title="0"
+                                                                data-ecat="ltc" data-date="dtLtcClaimDate"
+                                                                class="form-control chm-forminput ltc" placeholder="">
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-txtLtcCountry"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3  col-md-6 col-sm-6 countryTB"
+                                                        style="display: none">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Country Grade</label>
+                                                            <input type="text" id="txtLtcCountryGrade" data-title="0"
+                                                                data-ecat="ltc" data-date="dtLtcClaimDate"
+                                                                class="form-control chm-forminput ltc" placeholder="">
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-txtLtcCountryGrade"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3  col-md-6 col-sm-6 cityTB">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>City Grade <span
+                                                                    class="red-star-sml">*</span></label>
+                                                            <input type="text"
+                                                                class="form-control chm-forminput ltc auto-filled"
+                                                                data-cgr="txtLtcCountryGrade" data-ctry="txtLtcCountry"
+                                                                data-ecat="ltc" data-date="txtLtcClaimDate"
+                                                                id="txtLtcCityGrade" placeholder="" readonly="readonly">
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-txtLtcCityGrade"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3  col-md-6 ">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Purpose <span class="red-star-sml">*</span></label>
+                                                            <input type="text" class="form-control chm-forminput ltc"
+                                                                id="txtLtcPurpose" placeholder="">
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-txtLtcPurpose"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="col-lg-3  col-md-6 col-sm-6 conveyanceEntitlement d-none">
+                                                        <div class="form-group chm-formgroup new-form-grp ">
+                                                            <label>Entitlement Currency <span
+                                                                    class="red-star-sml">*</span></label>
+                                                            <select class="form-control chm-formselect  entlCurr"
+                                                                id="txtLtcEntitleCurr" name="txtLtcEntitleCurr"
+                                                                disabled="disabled">
+                                                                <option value="" selected="selected">Please select
+                                                                </option>
+                                                                <option value="2">Afghan Afghani : AFN</option>
+                                                                <option value="3">Albanian Lek : ALL</option>
+                                                                <option value="40">Algerian Dinar : DZD</option>
+                                                                <option value="6">Angolan Kwanza : AOA</option>
+                                                                <option value="7">Argentine Peso : ARS</option>
+                                                                <option value="4">Armenian Dram : AMD</option>
+                                                                <option value="9">Aruban Florin : AWG</option>
+                                                                <option value="8">Australian Dollar : AUD</option>
+                                                                <option value="10">Azerbaijani Manat : AZN</option>
+                                                                <option value="21">Bahamian Dollar : BSD</option>
+                                                                <option value="15">Bahraini Dinar : BHD</option>
+                                                                <option value="13">Bangladeshi Taka : BDT</option>
+                                                                <option value="12">Barbadian Dollar : BBD</option>
+                                                                <option value="24">Belarusian Ruble : BYN</option>
+
+                                                            </select>
+                                                            <span class="validate-error-message "
+                                                                id="validate-error-message-txtLtcEntitleCurr"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3  col-md-6 conveyanceEntitlement d-none">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Entitlement Amount <span
+                                                                    class="red-star-sml">*</span></label>
+                                                            <input type="text" id="txtLtcEntitleAmount"
+                                                                readonly="readonly"
+                                                                class="form-control chm-forminput enav-only-numeric amount-tag-rt auto-filled"
+                                                                oninput="limitLength(this, 10)" placeholder="">
+                                                            <span class="validate-error-message"
+                                                                id="validate-error-message-txtLtcEntitleAmount"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="col-lg-3  col-md-6 col-sm-6 conveyanceEntitlement d-none">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Entitlement Conversion Rate <span
+                                                                    class="red-star-sml">*</span></label>
+                                                            <input type="text" aby="LTC"
+                                                                data-currencydropdown="txtLtcEntitleCurr"
+                                                                class="form-control chm-forminput allowDecimal enav-only-numeric conversionrate entlamtConversionRate amount-tag-rt"
+                                                                oninput="limitLength(this, 10)"
+                                                                id="txtLtcEntitlementConversionRate" placeholder="">
+                                                            <span class="validate-error-message"
+                                                                id="validate-error-message-txtLtcEntitlementConversionRate"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3  col-md-6 col-sm-6">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Payment Type <span
+                                                                    class="red-star-sml">*</span></label>
+                                                            <select name="PayType" id="ddlLtcPaymentType"
+                                                                class="form-control chm-formselect ltc">
+                                                                <option value="0" selected="selected">Select Payment
+                                                                    Type</option>
+                                                                <option value="91">Paid By Employee</option>
+                                                                <option value="92">Corporate CreditCard</option>
+                                                                <option value="93">Amount Paid By Company</option>
+                                                                <option value="94">CreditCard</option>
+                                                            </select>
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-ddlLtcPaymentType"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3  col-md-6 col-sm-6">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Currency <span class="red-star-sml">*</span></label>
+                                                            <select class="form-control chm-formselect ltc ddlcurr"
+                                                                id="ddlLtcCurrency" name="ddlLtcCurrency"
+                                                                disabled="disabled">
+                                                                <option value="">Please select</option>
+                                                                <option value="2">Afghan Afghani : AFN</option>
+                                                                <option value="3">Albanian Lek : ALL</option>
+                                                                <option value="40">Algerian Dinar : DZD</option>
+                                                                <option value="6">Angolan Kwanza : AOA</option>
+                                                                <option value="7">Argentine Peso : ARS</option>
+                                                                <option value="4">Armenian Dram : AMD</option>
+                                                                <option value="9">Aruban Florin : AWG</option>
+                                                                <option value="8">Australian Dollar : AUD</option>
+                                                                <option value="10">Azerbaijani Manat : AZN</option>
+                                                                <option value="21">Bahamian Dollar : BSD</option>
+
+                                                            </select>
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-ddlLtcCurrency"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-sm-6 col-md-6">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>KM <span class="red-star-sml">*</span></label>
+                                                            <input type="text"
+                                                                class="form-control chm-forminput ltc allowDecimal"
+                                                                data-km="" data-kmlimit="No" data-kmrate=""
+                                                                id="txtLtcKM" placeholder="">
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-txtLtcKM"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-sm-6 col-md-6">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Total Amount <span
+                                                                    class="red-star-sml">*</span></label>
+                                                            <input type="text"
+                                                                class="form-control chm-forminput ltc allowDecimal enav-only-numeric amount-tag-rt"
+                                                                oninput="limitLength(this, 10)" id="txtLtcTotalAmount"
+                                                                placeholder="">
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-txtLtcTotalAmount"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3  col-md-6 col-sm-6">
+                                                        <div class="form-group chm-formgroup new-form-grp">
+                                                            <label>Claim Conversion Rate <span
+                                                                    class="red-star-sml">*</span></label>
+                                                            <input type="text" aby="LTCC"
+                                                                data-currencydropdown="ddlLtcCurrency"
+                                                                class="form-control chm-forminput ltc allowDecimal enav-only-numeric conversionrate amount-tag-rt"
+                                                                oninput="limitLength(this, 10)"
+                                                                id="txtLtcClaimConversionRate" placeholder="">
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-txtLtcClaimConversionRate"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group chm-formgroup new-form-grp ">
+                                                            <label>Justification <span
+                                                                    class="red-star-sml"></span></label>
+                                                            <textarea type="text" maxlength="2000"
+                                                                class="form-control chm-formtextarea" id="txtLtcRemarks"
+                                                                placeholder="" value=""></textarea>
+                                                            <span class="validate-error-message ltc"
+                                                                id="validate-error-message-txtLtcRemarks"
+                                                                style="display: none">Required</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="common-block-white mb-3">
+                                                            <div class=" d-flex cladd-btn justify-content-end mb-3">
+                                                                <a
+                                                                    class="  btn btn-outline-secondary clear  w-10">Clear</a>
+                                                                <a href="" class="btn btn-dark w-10"
+                                                                    id="btnAddLtcData">Add </a>
+                                                            </div>
+                                                            <div class="upload-container excel-TBL-hold">
+                                                                <label for="btnLtcUpload" class="custom-upload">Click
+                                                                    to Choose File </label>
+                                                                <input type="file" id="fileLtcUpload"
+                                                                    multiple="multiple"
+                                                                    accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx">
+                                                            </div>
+                                                            <table id="tblLtcDocument"
+                                                                class="table mt-2  grey-table d-table table-cust tbl-sml no-sorting td-firstdata-center vioColor tblTeFile">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="thd-w15"><span>Sl No</span></th>
+                                                                        <th class="thd-w70"><span>Document</span></th>
+                                                                        <th class="thd-w15"><span>Action</span></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+
+                                                                        <td>1</td>
+                                                                        <td>Donec dignissim, ipsum at suscipit.pdf</td>
+                                                                        <td><a href=""> <i
+                                                                                    class="fa-solid fa-trash"></i> </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+
+                                                                        <td>2</td>
+                                                                        <td>Donec dignissim, ipsum at suscipit.pdf</td>
+                                                                        <td><a href=""> <i
+                                                                                    class="fa-solid fa-trash"></i> </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="req-details-grid">
+                                                        <div class="exp-clm-DTBL">
+                                                            <div class="table-responsive">
+                                                                <table id="tblLocalTravelConveyance"
+                                                                    class="table   color-table d-table table-cust tbl-sml no-sorting td-firstdata-center vioColor">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="thd-w5"><span>Sl.No</span></th>
+                                                                            <th class="thd-w10"><span>Claim Date</span>
+                                                                            </th>
+                                                                            <th class="thd-w15"><span>Local Travel
+                                                                                    Type</span></th>
+                                                                            <th class="thd-w10"><span>Local Travel
+                                                                                    Mode</span></th>
+                                                                            <th class="thd-w10"><span>Origin Point
+                                                                                    Name</span></th>
+                                                                            <th class="thd-w10"><span>Destination Point
+                                                                                    Name</span></th>
+                                                                            <th class="thd-w10"><span>City</span></th>
+                                                                            <th class="thd-w10"><span>Payment
+                                                                                    Type</span>
+                                                                            </th>
+                                                                            <th class="thd-w10"><span>Amount</span></th>
+                                                                            <th class="thd-w10"><span>Action</span></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody></tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                                <mat-tab label="Miscellaneous Expense">
+                                    Miscellaneous Expense
+                                </mat-tab>
+                                <mat-tab label="Visa">
+                                    Visa
+                                </mat-tab>
+                                <mat-tab label="Travel Insurance">
+                                    Travel Insurance
+                                </mat-tab>
+                                <mat-tab label="Roaming">
+                                    Roaming
+                                </mat-tab>
+                                <mat-tab label="Transit Allowance">
+                                    Transit Allowance
+                                </mat-tab>
+                                <mat-tab label="Baggage and Outfit Allowance">
+                                    Baggage and Outfit Allowance
+                                </mat-tab>
+                                <mat-tab label="Porterage Expenses">
+                                    Porterage Expenses
+                                </mat-tab>
+                                <mat-tab label="Advance Return">
+                                    Advance Return
+                                </mat-tab>
+                            </mat-tab-group>
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-12">
