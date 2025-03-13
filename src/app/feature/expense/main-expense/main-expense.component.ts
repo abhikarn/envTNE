@@ -44,6 +44,7 @@ export class MainExpenseComponent {
   boMealsList: any;
   localTravelTypeList: any;
   localTravelModeList: any;
+  category = '';
 
   constructor(
     private expenseService: ExpenseService
@@ -218,6 +219,47 @@ export class MainExpenseComponent {
     })
   }
 
+  onSelectCheckInDateTime() {
+    this.expenseService.getGradeData().pipe(take(1)).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.error('Error fetching grade data :', error);
+      }
+    })
+    // To Do: ValidateUserLeaveDateForDuration
+    // To Do: GetExpensePolicyEntitlement
+  }
+
+  onSelectCheckOutDateTime() {
+    // To Do: ValidateUserLeaveDateForDuration
+  }
+
+  onSelectCity() {
+    this.expenseService.getGradeData().pipe(take(1)).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.error('Error fetching grade data :', error);
+      }
+    })
+    // To Do: GetAccommodationTypeList
+    // To Do: GetExpensePolicyEntitlement
+    this.expenseService.getCurrencyRate().pipe(take(1)).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.error('Error fetching currency rate :', error);
+      }
+    })
+    if(this.category == 'Lump sum') {
+      // To Do: HolidayEntitlementFactor
+    }
+  }
+
   fetchExpensePolicyEntitlement() {
     this.expenseService.getExpensePolicyEntitlement().pipe(take(1)).subscribe({
       next: (response) => {
@@ -227,6 +269,40 @@ export class MainExpenseComponent {
         console.error('Error fetching travel payments:', error);
       }
     })
+  }
+
+  onSelectPerDiemConstraint() {
+    // Same API calling Like on select city
+  }
+
+  onSelectClaimDate() {
+    // To Do: ValidateUserLeaveDateForDuration
+    if(this.category == 'Miscellaneous Expense') {
+      // Same API calling Like on select city
+    }
+  }
+
+  onSelectLocalConveyanceKM() {
+    // To Do: ValidateExpenseClaimLocalTravelConveyance
+  }
+
+  fetchCurrencyRate() {
+    this.expenseService.getCurrencyRate().pipe(take(1)).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.error('Error fetching currency rate :', error);
+      }
+    })
+  }
+
+  onSelectAmount() {
+    this.fetchCurrencyRate();
+  }
+
+  onSelectCurrency() {
+    this.fetchCurrencyRate();
   }
 
 }

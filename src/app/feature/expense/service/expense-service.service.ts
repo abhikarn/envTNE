@@ -16,9 +16,9 @@ export class ExpenseService {
   private apiCityAuto = `${this.baseUrl}/Master/GetCityAuto`;
   private apiLocalTravelMode = `${this.baseUrl}/Expense/GetLocalTravelMode`;
   private apiApplicationMsg = `${this.baseUrl}/Message/GetApplicationMessage`;
-
-  private apiExpensePolicyEntitlement = `${this.baseUrl}/Expense/GetExpensePolicyEntitlement
-`
+  private apiGradeData = `${this.baseUrl}/Expense/GetGradeData`;
+  private apiExpensePolicyEntitlement = `${this.baseUrl}/Expense/GetExpensePolicyEntitlement`;
+  private apiCurrencyRate = `${this.baseUrl}/Master/GetCurrRate`;
 
 
   constructor(
@@ -108,8 +108,13 @@ export class ExpenseService {
     return this.http.get<any>(`${this.apiApplicationMsg}?applicationMessageByFlagParam=ChooseTravelRequest`);
   }
 
+  // Grade Data
+  getGradeData(): Observable<any> {
+    return this.http.get<any>(`${this.apiGradeData}?CityId=0&ReferenceDate=25-Mar-2024&Type=53`);
+  }
+
   // Expense Policy Entitlement
-  getExpensePolicyEntitlement() {
+  getExpensePolicyEntitlement(): Observable<any> {
     const requestBody = {
       ClaimTypeId: 53,
       UserMasterId: 4,
@@ -122,6 +127,11 @@ export class ExpenseService {
     };
     // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.apiExpensePolicyEntitlement, requestBody);
+  }
+
+  // Currency Rate From master
+  getCurrencyRate(): Observable<any> {
+    return this.http.get<any>(`${this.apiCurrencyRate}?CurrencyId=1&ReferenceDate=25-Mar-2024`);
   }
 
 
