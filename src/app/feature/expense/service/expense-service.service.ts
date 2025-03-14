@@ -9,8 +9,10 @@ import { environment } from '../../../../environment';
 export class ExpenseService {
 
   private baseUrl = environment.apiUrl;
+  private apiValidateWorkflowExpenseMapped = `${this.baseUrl}/Expense/ValidateWorkflowExpenseMapped`;
+  private apiGlobalConfigurationJsonData = `${this.baseUrl}/Config/GetGlobalConfigurationJsonData`;
   private apiTravelRequestsPendingForClaimUrl = `${this.baseUrl}/Expense/GetTravelRequestsPendingForClaim?UserMasterId=4&TravelTypeId=0`;
-  private apiTravelRequestJsonInfo = `${this.baseUrl}/Expense/GetTravelRequestJsonInfo`;
+  
 
   private apiTravelDDLData = `${this.baseUrl}/Expense/GetTravelDDLData`;
   private apiCityAuto = `${this.baseUrl}/Master/GetCityAuto`;
@@ -20,10 +22,33 @@ export class ExpenseService {
   private apiExpensePolicyEntitlement = `${this.baseUrl}/Expense/GetExpensePolicyEntitlement`;
   private apiCurrencyRate = `${this.baseUrl}/Master/GetCurrRate`;
 
+  private apiExpenseClaimType = `${this.baseUrl}/Expense/GetExpenseClaimType`;
+  private apiTravelRequestBookedDetail = `${this.baseUrl}/Expense/GetTravelRequestBookedDetail`;
+  private apiTravelRequestJsonInfo = `${this.baseUrl}/Expense/GetTravelRequestJsonInfo`;
+  private apiTravelRequestLeaveSummary = `${this.baseUrl}/Expense/GetTravelRequestLeaveSummary`;
+
 
   constructor(
     private http: HttpClient
   ) { }
+
+  // Validate Workflow Expense Mapped
+  validateWorkflowExpenseMapped(): Observable<any> {
+    const requestBody = {
+      userMasterId: 0,
+      expenseClaimTypeId: 0,
+      requestForId: 80
+    };
+    return this.http.post<any>(this.apiValidateWorkflowExpenseMapped, requestBody);
+  }
+
+  getGlobalConfigurationJsonData(): Observable<any> {
+    const requestBody = {
+      globalConfigurationId: 7,
+      globalConfigurationDetailId: 0
+    };
+    return this.http.post<any>(this.apiGlobalConfigurationJsonData, requestBody);
+  }
 
   // Pending travel requests for claim
   getPendingTravelRequests(): Observable<any> {
@@ -134,5 +159,29 @@ export class ExpenseService {
     return this.http.get<any>(`${this.apiCurrencyRate}?CurrencyId=1&ReferenceDate=25-Mar-2024`);
   }
 
+  // Expense Claim Type
+  getExpenseClaimType(travelRequestId: number): Observable<any> {
+    const requestBody = {
+      referenceId: travelRequestId,
+      reference: 'TravelExpense'
+    };
+    return this.http.post<any>(this.apiExpenseClaimType, requestBody);
+  }
+
+  // Travel Request Booked Detail
+  GetTravelRequestBookedDetail(travelRequestId: number): Observable<any> {
+    const requestBody = {
+      referenceId: travelRequestId
+    };
+    return this.http.post<any>(this.apiTravelRequestBookedDetail, requestBody);
+  }
+
+  // Travel Request Leave Summary
+  GetTravelRequestLeaveSummary(travelRequestId: number): Observable<any> {
+    const requestBody = {
+      referenceId: travelRequestId
+    };
+    return this.http.post<any>(this.apiTravelRequestLeaveSummary, requestBody);
+  }
 
 }

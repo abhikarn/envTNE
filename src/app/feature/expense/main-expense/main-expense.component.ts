@@ -45,10 +45,13 @@ export class MainExpenseComponent {
   localTravelTypeList: any;
   localTravelModeList: any;
   category = '';
+  expenseClaimTypeId: any;
+  travelRequestBookedDetail: any;
+  travelRequestLeaveSummary: any;
 
   constructor(
     private expenseService: ExpenseService
-  ) { 
+  ) {
     this.filteredCities$ = this.originControl.valueChanges.pipe(
       startWith(''),
       switchMap(value => (value?.trim() ? this.expenseService.getCityAuto(value) : of([])))
@@ -56,6 +59,8 @@ export class MainExpenseComponent {
   }
 
   ngOnInit() {
+    this.validateWorkflowExpenseMapped();
+    this.fetchGlobalConfigurationJsonData();
     this.fetchPendingTravelRequests();
     this.fetchTravelModeList();
     this.fetchTravelPayemntTypeList();
@@ -67,6 +72,28 @@ export class MainExpenseComponent {
     this.fetchLocalTravelTypeList();
     this.fecthLocalTravelModeList();
     this.fetchExpensePolicyEntitlement();
+  }
+
+  validateWorkflowExpenseMapped() {
+    this.expenseService.validateWorkflowExpenseMapped().pipe(take(1)).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.error('Error Validate Workflow Expense Mapped', error);
+      }
+    });
+  }
+
+  fetchGlobalConfigurationJsonData() {
+    this.expenseService.getGlobalConfigurationJsonData().pipe(take(1)).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.error('Error fetching global configuration Json data', error);
+      }
+    });
   }
 
   fetchPendingTravelRequests(): void {
@@ -84,12 +111,41 @@ export class MainExpenseComponent {
   onSelectTravelExpenseRequest(event: any) {
     let travelRequestId = Number(event.target.value) || 0;
     if (travelRequestId) {
+      // Get Expense Claim Type Id
+      this.expenseService.getExpenseClaimType(travelRequestId).pipe(take(1)).subscribe({
+        next: (response) => {
+          this.expenseClaimTypeId = response.ExpenseClaimTypeId;
+        },
+        error: (error) => {
+          console.error('Error fetching expense claim type:', error);
+        }
+      })
+
+      // Travel Request Booked Detail
+      this.expenseService.GetTravelRequestBookedDetail(travelRequestId).pipe(take(1)).subscribe({
+        next: (response) => {
+          this.travelRequestBookedDetail = response;
+        },
+        error: (error) => {
+          console.error('Error fetching travel request booked details:', error);
+        }
+      })
+
       this.expenseService.getTravelRequestJsonInfo(travelRequestId).pipe(take(1)).subscribe({
         next: (response) => {
           this.travelRequestJsonInfo = response;
         },
         error: (error) => {
           console.error('Error fetching travel request json info:', error);
+        }
+      })
+
+      this.expenseService.GetTravelRequestLeaveSummary(travelRequestId).pipe(take(1)).subscribe({
+        next: (response) => {
+          this.travelRequestLeaveSummary = response;
+        },
+        error: (error) => {
+          console.error('Error fetching travel request leave summary:', error);
         }
       })
     }
@@ -108,7 +164,7 @@ export class MainExpenseComponent {
 
   onSelectTravelMode(event: any) {
     let travelModeKey = event.target.value || 0;
-    if(travelModeKey) {
+    if (travelModeKey) {
       this.expenseService.getTravelClassList(travelModeKey).pipe(take(1)).subscribe({
         next: (response) => {
           this.travelClassList = response;
@@ -255,7 +311,7 @@ export class MainExpenseComponent {
         console.error('Error fetching currency rate :', error);
       }
     })
-    if(this.category == 'Lump sum') {
+    if (this.category == 'Lump sum') {
       // To Do: HolidayEntitlementFactor
     }
   }
@@ -277,7 +333,7 @@ export class MainExpenseComponent {
 
   onSelectClaimDate() {
     // To Do: ValidateUserLeaveDateForDuration
-    if(this.category == 'Miscellaneous Expense') {
+    if (this.category == 'Miscellaneous Expense') {
       // Same API calling Like on select city
     }
   }
