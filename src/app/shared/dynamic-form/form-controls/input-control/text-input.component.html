@@ -1,0 +1,14 @@
+<mat-form-field appearance="fill" *ngIf="!!controlConfig">
+  <mat-label>{{controlConfig.label}}</mat-label>
+  <input type="text" matInput [formControl]="control"
+    [matAutocomplete]="auto" />
+    <mat-autocomplete #auto="matAutocomplete">
+      @for (option of options$ | async; track option) {
+        <mat-option
+          [value]="option.value">
+          {{ option.value }}
+        </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+

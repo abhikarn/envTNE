@@ -1,0 +1,10 @@
+<label [for]="controlConfig?.name">{{controlConfig?.label}}
+  <span class="red-star-sml">*</span>
+</label>
+<select [id]="controlConfig?.name" [formControl]="control" class="form-control chm-formselect te">
+  @for (option of controlConfig?.options; track option) {
+  <option [value]="option.Key">{{option.Value}}</option>
+  }
+</select>
+<span class="validate-error-message te" id="validate-error-message-ddlTeTravelMode"
+  style="display: none">Required</span>
