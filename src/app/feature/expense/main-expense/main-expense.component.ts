@@ -119,7 +119,7 @@ export class MainExpenseComponent {
       accommodationTypeList: this.expenseService.getAccomodationTypeList(),
       baggageTypeList: this.expenseService.getBaggageTypeList(),
       otherTypeList: this.expenseService.getOtherTypeList(),
-      boMeals: this.expenseService.getBoMeals(),
+      boMealsList: this.expenseService.getBoMeals(),
       localTravelTypeList: this.expenseService.getLocalTravelTypeList()
       // localTravelModeList: this.expenseService.getLocalTravelModeList(),
     }).subscribe({
@@ -133,20 +133,32 @@ export class MainExpenseComponent {
         this.accomodationTypeList = responses.accommodationTypeList;
         this.baggageTypeList = responses.baggageTypeList;
         this.localTravelTypeList = responses.localTravelTypeList;
+        this.boMealsList = responses.boMealsList;
         this.categories = [
           {
-            name: 'Miscellaneous Expense', formControls: [
+            name: 'Tickets Expense', formControls: [
               {
                 type: 'select',
                 name: 'TravelMode',
                 label: 'Travel Mode',
-                options: this.travelModeList
+                placeholder: 'Select Travel Mode',
+                options: this.travelModeList,
+                validations: [{ type: 'required', message: 'Travel Mode is required' }]
               },
               {
                 type: 'select',
-                name: 'TravelClass',
+                name: 'AvailedClass',
                 label: 'Availed Class',
-                options: this.localTravelTypeList
+                placeholder: 'Select Availed Class',
+                options: this.localTravelTypeList,
+                validations: [{ type: 'required', message: 'Availed Class is required' }]
+              },
+              {
+                type: 'date',
+                name: 'TravelDate',
+                label: 'Travel Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Travel Date is required' }]
               },
               {
                 type: 'text',
@@ -158,30 +170,928 @@ export class MainExpenseComponent {
                       value: c.City
                     }
                   })
-                }))
+                })),
+                validations: [{ type: 'required', message: 'Origin is required' }]
+              },
+              {
+                type: 'text',
+                name: 'Destination',
+                label: 'Destination',
+                option$: this.filteredCities$.pipe(map(p => {
+                  return p.map((c) => {
+                    return {
+                      value: c.City
+                    }
+                  })
+                })),
+                validations: [{ type: 'required', message: 'Destination is required' }]
+              },
+              {
+                type: 'select',
+                name: 'PaymentType',
+                label: 'Payment Type',
+                placeholder: 'Select Payment Type',
+                options: this.travelPaymentList,
+                validations: [{ type: 'required', message: 'Payment Type is required' }]
+              },
+              {
+                type: 'select',
+                name: 'Currency',
+                label: 'Currency',
+                options: this.currencyList,
+                validations: [{ type: 'required', message: 'Currency is required' }]
+              },
+              {
+                type: 'text',
+                name: 'Amount',
+                label: 'Amount',
+                validations: [
+                  { type: 'required', message: 'Amount is required' },
+                  { type: 'minLength', value: 6, message: 'It should be less than 6 digit'}
+                ]
+              },
+              {
+                type: 'text',
+                name: 'ConversionRate',
+                label: 'Conversion Rate',
+                validations: [{ type: 'required', message: 'Conversion Rate is required' }]
+              },
+              {
+                type: 'textarea',
+                name: 'Remarks',
+                label: 'Remarks'
               }
             ]
           },
           {
-            name: 'Visa', formControls: []
+            name: 'Accommodation', formControls: [
+              {
+                type: 'select',
+                name: 'AccommodationType',
+                label: 'Accommodation Type',
+                placeholder: 'Select Accommodation Type',
+                options: this.accomodationTypeList,
+                validations: [{ type: 'required', message: 'Accommodation Type is required' }]
+              },
+              {
+                type: 'date',
+                name: 'Check-inDateTime',
+                label: 'Check-in Date Time',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Check-in Date Time is required' }]
+              },
+              {
+                type: 'date',
+                name: 'Check-outDateTime',
+                label: 'Check-out Date Time',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Check-out Date Time is required' }]
+              },
+              {
+                type: 'text',
+                name: 'City',
+                label: 'City',
+                option$: this.filteredCities$.pipe(map(p => {
+                  return p.map((c) => {
+                    return {
+                      value: c.City
+                    }
+                  })
+                })),
+                validations: [{ type: 'required', message: 'City is required' }]
+              },
+              {
+                type: 'text',
+                name: 'CityGrade',
+                label: 'City Grade',
+                validations: [{ type: 'required', message: 'City Grade is required' }]
+              },
+              {
+                type: 'text',
+                name: 'HotelName',
+                label: 'Hotel Name',
+                validations: [{ type: 'required', message: 'Hotel Name is required' }]
+              },
+              {
+                type: 'text',
+                name: 'BillNumber',
+                label: 'Bill Number',
+                validations: [{ type: 'required', message: 'Bill Number is required' }]
+              },
+              {
+                type: 'date',
+                name: 'BillDate',
+                label: 'Bill Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Bill Date is required' }]
+              },
+              {
+                type: 'select',
+                name: 'PaymentType',
+                label: 'Payment Type',
+                placeholder: 'Select Payment Type',
+                options: this.travelPaymentList,
+                validations: [{ type: 'required', message: 'Payment Type is required' }]
+              },
+              {
+                type: 'select',
+                name: 'EntitlementCurrency',
+                label: 'Entitlement Currency',
+                options: this.currencyList,
+                validations: [{ type: 'required', message: 'Entitlement Currency is required' }]
+              },
+              {
+                type: 'text',
+                name: 'EntitlementAmount',
+                label: 'Entitlement Amount',
+                validations: [{ type: 'required', message: 'Entitlement Amount is required' }]
+              },
+              {
+                type: 'text',
+                name: 'EntitlementConversionRate',
+                label: 'Entitlement Conversion Rate',
+                validations: [{ type: 'required', message: 'Entitlement Conversion Rate is required' }]
+              },
+              {
+                type: 'select',
+                name: 'Currency',
+                label: 'Currency',
+                options: this.currencyList,
+                validations: [{ type: 'required', message: 'Currency is required' }]
+              },
+              {
+                type: 'text',
+                name: 'ClaimedAmount',
+                label: 'Claimed Amount',
+                validations: [{ type: 'required', message: 'Claimed Amount is required' }]
+              },
+              {
+                type: 'text',
+                name: 'ClaimedConversionRate',
+                label: 'Claimed Conversion Rate',
+                validations: [{ type: 'required', message: 'Claimed Conversion Rate is required' }]
+              },
+              {
+                type: 'text',
+                name: 'TaxAmount',
+                label: 'Tax Amount'
+              },
+              {
+                type: 'text',
+                name: 'DifferentialAmount(INR)',
+                label: 'Differential Amount(INR)',
+                validations: [{ type: 'required', message: 'Differential Amount is required' }]
+              },
+              {
+                type: 'textarea',
+                name: 'Justification',
+                label: 'Justification'
+              }
+            ]
           },
           {
-            name: 'Travel Insurance', formControls: []
+            name: 'Per Diem', formControls: [
+              {
+                type: 'date',
+                name: 'ClaimFromDate',
+                label: 'Claim From Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Claim From Date is required' }]
+              },
+              {
+                type: 'date',
+                name: 'ClaimToDate',
+                label: 'Claim To Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Claim To Date is required' }]
+              },
+              {
+                type: 'select',
+                name: 'Constraint',
+                label: 'Constraint',
+                placeholder: 'Select Per Diem Type',
+                options: this.boMealsList,
+                validations: [{ type: 'required', message: 'Constraint is required' }]
+              },
+              {
+                type: 'text',
+                name: 'City',
+                label: 'City',
+                option$: this.filteredCities$.pipe(map(p => {
+                  return p.map((c) => {
+                    return {
+                      value: c.City
+                    }
+                  })
+                })),
+                validations: [{ type: 'required', message: 'City is required' }]
+              },
+              {
+                type: 'text',
+                name: 'CityGrade',
+                label: 'City Grade',
+                validations: [{ type: 'required', message: 'City Grade is required' }]
+              },
+              {
+                type: 'text',
+                name: 'BillNumber',
+                label: 'Bill Number'
+              },
+              {
+                type: 'date',
+                name: 'BillDate',
+                label: 'Bill Date',
+                value: null, // Default value
+              },
+              {
+                type: 'select',
+                name: 'EntitlementCurrency',
+                label: 'Entitlement Currency',
+                options: this.currencyList,
+                validations: [{ type: 'required', message: 'Entitlement Currency is required' }]
+              },
+              {
+                type: 'text',
+                name: 'EntitlementAmount',
+                label: 'Entitlement Amount',
+                validations: [{ type: 'required', message: 'Entitlement Amount is required' }]
+              },
+              {
+                type: 'text',
+                name: 'EntitlementConversionRate',
+                label: 'Entitlement Conversion Rate',
+                validations: [{ type: 'required', message: 'Entitlement Conversion Rate is required' }]
+              },
+              {
+                type: 'select',
+                name: 'Currency',
+                label: 'Currency',
+                options: this.currencyList,
+                validations: [{ type: 'required', message: 'Currency is required' }]
+              },
+              {
+                type: 'text',
+                name: 'ClaimedAmount',
+                label: 'Claimed Amount',
+                validations: [{ type: 'required', message: 'Claimed Amount is required' }]
+              },
+              {
+                type: 'text',
+                name: 'ClaimedConversionRate',
+                label: 'Claimed Conversion Rate',
+                validations: [{ type: 'required', message: 'Claimed Conversion Rate is required' }]
+              },
+              {
+                type: 'select',
+                name: 'PaymentType',
+                label: 'Payment Type',
+                placeholder: 'Select Payment Type',
+                options: this.travelPaymentList,
+                validations: [{ type: 'required', message: 'Payment Type is required' }]
+              },
+              {
+                type: 'text',
+                name: 'DifferentialAmount(INR)',
+                label: 'Differential Amount(INR)',
+                validations: [{ type: 'required', message: 'Differential Amount is required' }]
+              },
+              {
+                type: 'textarea',
+                name: 'Justification',
+                label: 'Justification'
+              }
+            ]
           },
           {
-            name: 'Roaming', formControls: []
+            name: 'Lump sum', formControls: [
+              {
+                type: 'select',
+                name: 'AccommodationType',
+                label: 'Accommodation Type',
+                placeholder: 'Select Accommodation Type',
+                options: this.accomodationTypeList,
+                validations: [{ type: 'required', message: 'Accommodation Type is required' }]
+              },
+              {
+                type: 'date',
+                name: 'Check-inDateTime',
+                label: 'Check-in Date Time',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Check-in Date Time is required' }]
+              },
+              {
+                type: 'date',
+                name: 'Check-outDateTime',
+                label: 'Check-out Date Time',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Check-out Date Time Time is required' }]
+              },
+              {
+                type: 'text',
+                name: 'City',
+                label: 'City',
+                option$: this.filteredCities$.pipe(map(p => {
+                  return p.map((c) => {
+                    return {
+                      value: c.City
+                    }
+                  })
+                })),
+                validations: [{ type: 'required', message: 'City is required' }]
+              },
+              {
+                type: 'text',
+                name: 'CityGrade',
+                label: 'City Grade',
+                validations: [{ type: 'required', message: 'City Grade is required' }]
+              },
+              {
+                type: 'select',
+                name: 'PaymentType',
+                label: 'Payment Type',
+                placeholder: 'Select Payment Type',
+                options: this.travelPaymentList,
+                validations: [{ type: 'required', message: 'Payment Type is required' }]
+              },
+              {
+                type: 'select',
+                name: 'EntitlementCurrency',
+                label: 'Entitlement Currency',
+                options: this.currencyList,
+                validations: [{ type: 'required', message: 'Entitlement Currency is required' }]
+              },
+              {
+                type: 'text',
+                name: 'EntitlementAmount',
+                label: 'Entitlement Amount',
+                validations: [{ type: 'required', message: 'Entitlement Amount is required' }]
+              },
+              {
+                type: 'text',
+                name: 'EntitlementConversionRate',
+                label: 'Entitlement Conversion Rate',
+                validations: [{ type: 'required', message: 'Entitlement Conversion Rate is required' }]
+              },
+              {
+                type: 'select',
+                name: 'Currency',
+                label: 'Currency',
+                options: this.currencyList,
+                validations: [{ type: 'required', message: 'Currency is required' }]
+              },
+              {
+                type: 'text',
+                name: 'ClaimedAmount',
+                label: 'Claimed Amount',
+                validations: [{ type: 'required', message: 'Claimed Amount is required' }]
+              },
+              {
+                type: 'text',
+                name: 'ClaimedConversionRate',
+                label: 'Claimed Conversion Rate',
+                validations: [{ type: 'required', message: 'Claimed Conversion Rate is required' }]
+              },
+              {
+                type: 'text',
+                name: 'DifferentialAmount(INR)',
+                label: 'Differential Amount(INR)',
+                validations: [{ type: 'required', message: 'Differential Amount is required' }]
+              },
+              {
+                type: 'textarea',
+                name: 'Justification',
+                label: 'Justification'
+              }
+            ]
           },
           {
-            name: 'Transit Allowance', formControls: []
+            name: 'Local Conveyance', formControls: [
+              {
+                type: 'date',
+                name: 'ClaimDate',
+                label: 'Claim Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Claim Date is required' }]
+              },
+              {
+                type: 'select',
+                name: 'LocalTravelType',
+                label: 'Local Travel Type',
+                options: this.localTravelTypeList
+              },
+              {
+                type: 'select',
+                name: 'LocalTravelMode',
+                label: 'Local Travel Mode',
+                options: this.localTravelModeList
+              },
+              {
+                type: 'text',
+                name: 'OriginPointName',
+                label: 'Origin Point Name'
+              },
+              {
+                type: 'text',
+                name: 'DestinationPointName',
+                label: 'Destination Point Name'
+              },
+              {
+                type: 'text',
+                name: 'City',
+                label: 'City',
+                option$: this.filteredCities$.pipe(map(p => {
+                  return p.map((c) => {
+                    return {
+                      value: c.City
+                    }
+                  })
+                }))
+              },
+              {
+                type: 'text',
+                name: 'CityGrade',
+                label: 'City Grade'
+              },
+              {
+                type: 'text',
+                name: 'Purpose',
+                label: 'Purpose'
+              },
+              {
+                type: 'select',
+                name: 'PaymentType',
+                label: 'PaymentType',
+                options: this.travelPaymentList
+              },
+              {
+                type: 'select',
+                name: 'Currency',
+                label: 'Currency',
+                options: this.currencyList
+              },
+              {
+                type: 'text',
+                name: 'KM',
+                label: 'KM'
+              },
+              {
+                type: 'text',
+                name: 'TotalAmount',
+                label: 'Total Amount'
+              },
+              {
+                type: 'text',
+                name: 'ClaimConversionRate',
+                label: 'Claim Conversion Rate'
+              },
+              {
+                type: 'textarea',
+                name: 'Justification',
+                label: 'Justification'
+              }
+            ]
           },
           {
-            name: 'Baggage and Outfit Allowance', formControls: []
+            name: 'Miscellaneous Expense', formControls: [
+              {
+                type: 'date',
+                name: 'ClaimDate',
+                label: 'Claim Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Claim Date is required' }]
+              },
+              {
+                type: 'select',
+                name: 'OtherType',
+                label: 'Other Type',
+                options: this.otherTypeList
+              },
+              {
+                type: 'text',
+                name: 'City',
+                label: 'City',
+                option$: this.filteredCities$.pipe(map(p => {
+                  return p.map((c) => {
+                    return {
+                      value: c.City
+                    }
+                  })
+                }))
+              },
+              {
+                type: 'text',
+                name: 'CityGrade',
+                label: 'City Grade'
+              },
+              {
+                type: 'text',
+                name: 'ParticularsofExpense',
+                label: 'Particulars of Expense'
+              },
+              {
+                type: 'text',
+                name: 'BillNumber',
+                label: 'Bill Number'
+              },
+              {
+                type: 'date',
+                name: 'BillDate',
+                label: 'Bill Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Bill Date Time is required' }]
+              },
+              {
+                type: 'select',
+                name: 'PaymentType',
+                label: 'PaymentType',
+                options: this.travelPaymentList
+              },
+              {
+                type: 'select',
+                name: 'Currency',
+                label: 'Currency',
+                options: this.currencyList
+              },
+              {
+                type: 'text',
+                name: 'Amount',
+                label: 'Amount'
+              },
+              {
+                type: 'text',
+                name: 'ClaimConversionRate',
+                label: 'Claim Conversion Rate'
+              },
+              {
+                type: 'textarea',
+                name: 'Justification',
+                label: 'Justification'
+              }
+            ]
           },
           {
-            name: 'Porterage Expenses', formControls: []
+            name: 'Visa', formControls: [
+              {
+                type: 'date',
+                name: 'ProcessingDate',
+                label: 'Processing Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Processing Date is required' }]
+              },
+              {
+                type: 'text',
+                name: 'Country',
+                label: 'Country'
+              },
+              {
+                type: 'select',
+                name: 'PaymentType',
+                label: 'PaymentType',
+                options: this.travelPaymentList
+              },
+              {
+                type: 'select',
+                name: 'Currency',
+                label: 'Currency',
+                options: this.currencyList
+              },
+              {
+                type: 'text',
+                name: 'VisaApplicationFee',
+                label: 'Visa Application Fee'
+              },
+              {
+                type: 'text',
+                name: 'ConversionRate',
+                label: 'Conversion Rate'
+              },
+              {
+                type: 'textarea',
+                name: 'Justification',
+                label: 'Justification'
+              }
+            ]
           },
           {
-            name: 'Advance Return', formControls: []
+            name: 'Travel Insurance', formControls: [
+              {
+                type: 'date',
+                name: 'ClaimDate',
+                label: 'Claim Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Claim Date is required' }]
+              },
+              {
+                type: 'text',
+                name: 'InsuranceType',
+                label: 'Insurance Type'
+              },
+              {
+                type: 'select',
+                name: 'PaymentType',
+                label: 'PaymentType',
+                options: this.travelPaymentList
+              },
+              {
+                type: 'select',
+                name: 'Currency',
+                label: 'Currency',
+                options: this.currencyList
+              },
+              {
+                type: 'text',
+                name: 'Amount',
+                label: 'Amount'
+              },
+              {
+                type: 'text',
+                name: 'ConversionRate',
+                label: 'Conversion Rate'
+              },
+              {
+                type: 'textarea',
+                name: 'Justification',
+                label: 'Justification'
+              }
+            ]
+          },
+          {
+            name: 'Roaming', formControls: [
+              {
+                type: 'date',
+                name: 'ClaimDate',
+                label: 'Claim Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Claim Date is required' }]
+              },
+              {
+                type: 'text',
+                name: 'ServiceProvider',
+                label: 'Service Provider'
+              },
+              {
+                type: 'text',
+                name: 'Roaming Plan',
+                label: 'Roaming Plan'
+              },
+              {
+                type: 'date',
+                name: 'ActivationDate',
+                label: 'Activation Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Activation Date is required' }]
+              },
+              {
+                type: 'select',
+                name: 'PaymentType',
+                label: 'PaymentType',
+                options: this.travelPaymentList
+              },
+              {
+                type: 'select',
+                name: 'Currency',
+                label: 'Currency',
+                options: this.currencyList
+              },
+              {
+                type: 'text',
+                name: 'Amount',
+                label: 'Amount'
+              },
+              {
+                type: 'text',
+                name: 'ConversionRate',
+                label: 'Conversion Rate'
+              },
+              {
+                type: 'textarea',
+                name: 'Justification',
+                label: 'Justification'
+              }
+            ]
+          },
+          {
+            name: 'Transit Allowance', formControls: [
+              {
+                type: 'date',
+                name: 'ClaimDate',
+                label: 'Claim Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Claim Date is required' }]
+              },
+              {
+                type: 'select',
+                name: 'NumberofHours',
+                label: 'Number of Hours',
+              },
+              {
+                type: 'text',
+                name: 'City',
+                label: 'City',
+                option$: this.filteredCities$.pipe(map(p => {
+                  return p.map((c) => {
+                    return {
+                      value: c.City
+                    }
+                  })
+                }))
+              },
+              {
+                type: 'text',
+                name: 'Country',
+                label: 'Country'
+              },
+              {
+                type: 'text',
+                name: 'CountryGrade',
+                label: 'Country Grade'
+              },
+              {
+                type: 'select',
+                name: 'EntitlementCurrency',
+                label: 'Entitlement Currency',
+                options: this.currencyList
+              },
+              {
+                type: 'text',
+                name: 'EntitlementAmount',
+                label: 'Entitlement Amount'
+              },
+              {
+                type: 'text',
+                name: 'EntitlementConversionRate',
+                label: 'Entitlement Conversion Rate'
+              },
+              {
+                type: 'select',
+                name: 'PaymentType',
+                label: 'PaymentType',
+                options: this.travelPaymentList
+              },
+              {
+                type: 'select',
+                name: 'Currency',
+                label: 'Currency',
+                options: this.currencyList
+              },
+              {
+                type: 'text',
+                name: 'Amount',
+                label: 'Amount'
+              },
+              {
+                type: 'text',
+                name: 'ClaimConversionRate',
+                label: 'Claim Conversion Rate'
+              },
+              {
+                type: 'textarea',
+                name: 'Justification',
+                label: 'Justification'
+              }
+            ]
+          },
+          {
+            name: 'Baggage and Outfit Allowance', formControls: [
+              {
+                type: 'date',
+                name: 'ClaimDate',
+                label: 'Claim Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Claim Date is required' }]
+              },
+              {
+                type: 'multi-select',
+                name: 'Constraint',
+                label: 'Constraint'
+              },
+              {
+                type: 'select',
+                name: 'EntitlementCurrency',
+                label: 'Entitlement Currency',
+                options: this.currencyList
+              },
+              {
+                type: 'text',
+                name: 'EntitlementAmount',
+                label: 'Entitlement Amount'
+              },
+              {
+                type: 'text',
+                name: 'EntitlementConversionRate',
+                label: 'Entitlement Conversion Rate'
+              },
+              {
+                type: 'select',
+                name: 'PaymentType',
+                label: 'PaymentType',
+                options: this.travelPaymentList
+              },
+              {
+                type: 'select',
+                name: 'Currency',
+                label: 'Currency',
+                options: this.currencyList
+              },
+              {
+                type: 'text',
+                name: 'Amount',
+                label: 'Amount'
+              },
+              {
+                type: 'text',
+                name: 'ClaimConversionRate',
+                label: 'Claim Conversion Rate'
+              },
+              {
+                type: 'textarea',
+                name: 'Justification',
+                label: 'Justification'
+              }
+            ]
+          },
+          {
+            name: 'Porterage Expenses', formControls: [
+              {
+                type: 'date',
+                name: 'ClaimDate',
+                label: 'Claim Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Claim Date is required' }]
+              },
+              {
+                type: 'text',
+                name: 'City',
+                label: 'City',
+                option$: this.filteredCities$.pipe(map(p => {
+                  return p.map((c) => {
+                    return {
+                      value: c.City
+                    }
+                  })
+                }))
+              },
+              {
+                type: 'text',
+                name: 'ParticularsOfExpense',
+                label: 'Particulars Of Expense'
+              },
+              {
+                type: 'select',
+                name: 'BaggageType',
+                label: 'Baggage Type',
+                options: this.baggageTypeList
+              },
+              {
+                type: 'select',
+                name: 'PaymentType',
+                label: 'PaymentType',
+                options: this.travelPaymentList
+              },
+              {
+                type: 'select',
+                name: 'Currency',
+                label: 'Currency',
+                options: this.currencyList
+              },
+              {
+                type: 'text',
+                name: 'Amount',
+                label: 'Amount'
+              },
+              {
+                type: 'textarea',
+                name: 'Justification',
+                label: 'Justification'
+              }
+            ]
+          },
+          {
+            name: 'Advance Return', formControls: [
+              {
+                type: 'date',
+                name: 'Date',
+                label: 'Date',
+                value: null, // Default value
+                validations: [{ type: 'required', message: 'Date is required' }]
+              },
+              {
+                type: 'select',
+                name: 'Currency',
+                label: 'Currency',
+                options: this.currencyList
+              },
+              {
+                type: 'text',
+                name: 'Amount',
+                label: 'Amount'
+              },
+              {
+                type: 'textarea',
+                name: 'Justification',
+                label: 'Justification'
+              }
+            ]
           }
         ];
         // this.localTravelModeList = responses.localTravelModeList;

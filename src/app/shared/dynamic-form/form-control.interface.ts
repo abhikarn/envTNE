@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 export interface IFormControl {
   name: string;
   label?: string;
+  placeholder?: string;
   type?: string;
   // control: FormControl;
   options?: any[];

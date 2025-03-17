@@ -5,11 +5,21 @@ import { IFormControl } from './form-control.interface';
 
 import { TextInputComponent } from './form-controls/input-control/text-input.component';
 import { SelectInputComponent } from './form-controls/dropdown/select-input.component';
+import { DateInputComponent } from './form-controls/date/date-input.component';
+import { TextAreaInputComponent } from './form-controls/text-area/text-area-input.component';
+import { MultiSelectInputComponent } from './form-controls/multi-select/multi-select-input.component';
 
 @Component({
   selector: 'app-dynamic-form',
   standalone: true,
-  imports: [ReactiveFormsModule, TextInputComponent, SelectInputComponent],
+  imports: [
+    ReactiveFormsModule, 
+    TextInputComponent, 
+    SelectInputComponent, 
+    DateInputComponent,
+    TextAreaInputComponent,
+    MultiSelectInputComponent
+  ],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
 })

@@ -1,32 +1,46 @@
-<form [formGroup]="form">
+<form [formGroup]="form" class="row">
   @for (control of formControls; track control) {
-    <div class="col-md-4">
-      <div class="form-group chm-formgroup new-form-grp">
-        <!-- Using ngSwitch to handle different control types -->
-        @switch (control.formConfig.type) {
-          <!-- Handling 'text' type controls -->
-          @case ('text') {
-            <lib-text-input [controlConfig]="control.formConfig"
-              [control]="control.control">
-            </lib-text-input>
-          }
-          <!-- Handling 'select' type controls -->
-          @case ('select') {
-            <lib-select-input [controlConfig]="control.formConfig"
-              [control]="control.control" >
-            </lib-select-input>
-          }
-          <!-- Optional: Default case if control type doesn't match -->
-          @default {
-            <div>
-              <p>Unsupported control type: {{ control.formConfig.type }}</p>
-            </div>
-          }
+  <div class="col-md-4">
+    <div class="">
+      <!-- Using ngSwitch to handle different control types -->
+      @switch (control.formConfig.type) {
+      <!-- Handling 'text' type controls -->
+      @case ('text') {
+      <lib-text-input [controlConfig]="control.formConfig" [control]="control.control">
+      </lib-text-input>
+      }
+      <!-- Handling 'select' type controls -->
+      @case ('select') {
+      <lib-select-input [controlConfig]="control.formConfig" [control]="control.control">
+      </lib-select-input>
+      }
+      <!-- Handling 'multi-select' type controls -->
+      @case ('multi-select') {
+        <lib-multi-select-input [controlConfig]="control.formConfig" [control]="control.control">
+        </lib-multi-select-input>
         }
+      <!-- Handling 'date' type controls -->
+      @case ('date') {
+      <lib-date-input [controlConfig]="control.formConfig" [control]="control.control">
+      </lib-date-input>
+      }
+      <!-- Handling 'textarea' type controls -->
+      @case ('textarea') {
+      <lib-text-area-input [controlConfig]="control.formConfig" [control]="control.control">
+      </lib-text-area-input>
+      }
+      <!-- Optional: Default case if control type doesn't match -->
+      @default {
+      <div>
+        <p>Unsupported control type: {{ control.formConfig.type }}</p>
       </div>
+      }
+      }
     </div>
+  </div>
   }
 </form>
+
 
 
 

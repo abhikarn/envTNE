@@ -1,31 +1,24 @@
 import { Component, Input } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../form-control.interface';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControlFactory } from '../../form-control.factory';
+import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { CommonModule } from '@angular/common';
-
 
 @Component({
-  selector: 'lib-select-input',
-  standalone: true,
+  selector: 'lib-text-area-input',
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatSelectModule,
+    CommonModule, 
+    ReactiveFormsModule, 
+    MatFormFieldModule, 
     MatInputModule
   ],
-  templateUrl: './select-input.component.html'
+  templateUrl: './text-area-input.component.html'
 })
-export class SelectInputComponent {
-  @Input() control: FormControl = new FormControl('');
+export class TextAreaInputComponent {
+  @Input() control: FormControl = new FormControl(null);
   @Input() controlConfig: IFormControl = {name: ''};
-
-  trackByFn(index: number, item: any) {
-    return item.Key;
-  }
 
   getErrorMessage(): string {
     if (!this.controlConfig?.validations) return '';
