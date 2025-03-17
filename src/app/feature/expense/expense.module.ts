@@ -5,8 +5,6 @@ import { ExpenseRoutingModule } from './expense.routing.module';
 import { RouterModule } from '@angular/router';
 import { ExpenseService } from './service/expense-service.service';
 
-
-
 @NgModule({
   declarations: [
     BaseExpenseComponent
@@ -15,6 +13,6 @@ import { ExpenseService } from './service/expense-service.service';
     CommonModule,
     ExpenseRoutingModule
   ],
-  providers: [ExpenseService]
+  providers: []
 })
 export class ExpenseModule { }

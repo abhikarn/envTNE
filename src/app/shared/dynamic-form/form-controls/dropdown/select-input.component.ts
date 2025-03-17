@@ -1,16 +1,16 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { IFormControl } from '../../form-control.interface';
+
 
 @Component({
   selector: 'lib-select-input',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './select-input.component.html'
 })
 export class SelectInputComponent {
-  @Input() name: string = '';
-  @Input() label: string = '';
   @Input() control: FormControl = new FormControl('');
-  @Input() options: any[] = [];
+  @Input() controlConfig?: IFormControl;
+
 }

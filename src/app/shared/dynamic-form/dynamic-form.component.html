@@ -1,0 +1,33 @@
+<form [formGroup]="form">
+  @for (control of formControls; track control) {
+    <div class="col-md-4">
+      <div class="form-group chm-formgroup new-form-grp">
+        <!-- Using ngSwitch to handle different control types -->
+        @switch (control.formConfig.type) {
+          <!-- Handling 'text' type controls -->
+          @case ('text') {
+            <lib-text-input [controlConfig]="control.formConfig"
+              [control]="control.control">
+            </lib-text-input>
+          }
+          <!-- Handling 'select' type controls -->
+          @case ('select') {
+            <lib-select-input [controlConfig]="control.formConfig"
+              [control]="control.control" >
+            </lib-select-input>
+          }
+          <!-- Optional: Default case if control type doesn't match -->
+          @default {
+            <div>
+              <p>Unsupported control type: {{ control.formConfig.type }}</p>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  }
+</form>
+
+
+
+<!-- <p>Form Value: {{ form.value | json }}</p> -->
