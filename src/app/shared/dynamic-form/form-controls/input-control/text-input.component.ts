@@ -7,6 +7,7 @@ import { IFormControl } from '../../form-control.interface';
 import { CommonModule } from '@angular/common';
 import { catchError, Observable, of, take } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
+import { FormControlFactory } from '../../form-control.factory';
 
 
 
@@ -20,7 +21,24 @@ export class TextInputComponent {
   @Input() control: FormControl = new FormControl('');
   @Input() controlConfig: IFormControl = {name: ''};
   options$: Observable<any[]>;
+
   constructor(){
     this.options$ = !this.controlConfig.option$ ? of([]) : this.controlConfig.option$;
+  }
+
+  ngOnInit() {
+    this.control = FormControlFactory.createControl(this.controlConfig);
+  }
+
+  getErrorMessage(): string {
+    if (!this.controlConfig?.validations) return '';
+  
+    for (const validation of this.controlConfig.validations) {
+      if (this.control.hasError(validation.type)) {
+        return validation.message;
+      }
+    }
+  
+    return 'Invalid selection'; // Default fallback message
   }
 }

@@ -11,6 +11,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../../shared/dynamic-form/form-control.interface';
 import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-main-expense',
@@ -102,7 +103,8 @@ export class MainExpenseComponent {
   categories: { name: string; formControls: IFormControl[] }[] = [];
   constructor(
     private expenseService: ExpenseService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private http: HttpClient
   ) {
     this.filteredCities$ = this.originControl.valueChanges.pipe(
       startWith(''),
@@ -119,9 +121,10 @@ export class MainExpenseComponent {
       accommodationTypeList: this.expenseService.getAccomodationTypeList(),
       baggageTypeList: this.expenseService.getBaggageTypeList(),
       otherTypeList: this.expenseService.getOtherTypeList(),
-      boMeals: this.expenseService.getBoMeals(),
-      localTravelTypeList: this.expenseService.getLocalTravelTypeList()
-      // localTravelModeList: this.expenseService.getLocalTravelModeList(),
+      boMealsList: this.expenseService.getBoMeals(),
+      localTravelTypeList: this.expenseService.getLocalTravelTypeList(),
+      localTravelModeList: this.expenseService.getLocalTravelModeList(),
+      expenseConfig: this.http.get<{ name: string; formControls: IFormControl[] }[]>('/assets/config/expense-config.json')
     }).subscribe({
       next: (responses) => {
         // Handle all the API responses here
@@ -133,58 +136,31 @@ export class MainExpenseComponent {
         this.accomodationTypeList = responses.accommodationTypeList;
         this.baggageTypeList = responses.baggageTypeList;
         this.localTravelTypeList = responses.localTravelTypeList;
-        this.categories = [
-          {
-            name: 'Miscellaneous Expense', formControls: [
-              {
-                type: 'select',
-                name: 'TravelMode',
-                label: 'Travel Mode',
-                options: this.travelModeList
-              },
-              {
-                type: 'select',
-                name: 'TravelClass',
-                label: 'Availed Class',
-                options: this.localTravelTypeList
-              },
-              {
-                type: 'text',
-                name: 'Origin',
-                label: 'Origin',
-                option$: this.filteredCities$.pipe(map(p => {
-                  return p.map((c) => {
-                    return {
-                      value: c.City
-                    }
-                  })
-                }))
-              }
-            ]
-          },
-          {
-            name: 'Visa', formControls: []
-          },
-          {
-            name: 'Travel Insurance', formControls: []
-          },
-          {
-            name: 'Roaming', formControls: []
-          },
-          {
-            name: 'Transit Allowance', formControls: []
-          },
-          {
-            name: 'Baggage and Outfit Allowance', formControls: []
-          },
-          {
-            name: 'Porterage Expenses', formControls: []
-          },
-          {
-            name: 'Advance Return', formControls: []
-          }
-        ];
-        // this.localTravelModeList = responses.localTravelModeList;
+        this.localTravelModeList = responses.localTravelModeList;
+        this.boMealsList = responses.boMealsList;
+
+        const optionMapping: { [key: string]: any[] } = {
+          TravelMode: responses.travelModeList,
+          PaymentType: responses.travelPaymentTypeList,
+          Currency: responses.currencyList,
+          AccommodationType: responses.accommodationTypeList,
+          BaggageType: responses.baggageTypeList,
+          OtherType: responses.otherTypeList,
+          BoMeals: responses.boMealsList,
+          LocalTravelType: responses.localTravelTypeList,
+          LocalTravelMode: responses.localTravelModeList
+        };
+        this.categories = responses.expenseConfig.map(category => ({
+          ...category,
+          formControls: category.formControls.map(control => ({
+            ...control,
+            options: optionMapping[control.name] || control.options,
+            option$: typeof control.option$ === 'string' && control.option$ === 'filteredCities$' 
+              ? this.filteredCities$.pipe(map(cities => cities.map(c => ({ value: c.City })))) 
+              : undefined
+          }))
+        }));
+        
         console.log('categories', this.categories);
       },
       error: (err) => {

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 export interface IFormControl {
   name: string;
   label?: string;
+  placeholder?: string;
   type?: string;
   // control: FormControl;
   options?: any[];
@@ -13,4 +14,6 @@ export interface IFormControl {
   value$?:any;
   validations?: IValidationConfig[];
   validationMessages?: any;
+  multiple?: boolean;
+  accept?: string;
 }
