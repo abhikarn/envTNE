@@ -12,10 +12,10 @@ export class FormControlFactory {
           validatorFn = Validators.required;
           break;
         case 'minLength':
-          validatorFn = Validators.minLength(validationConfig.value);
+          validatorFn = Validators.minLength(Number(validationConfig.value));
           break;
         case 'maxLength':
-          validatorFn = Validators.maxLength(validationConfig.value);
+          validatorFn = Validators.maxLength(Number(validationConfig.value));
           break;
         case 'pattern':
           validatorFn = Validators.pattern(validationConfig.value);

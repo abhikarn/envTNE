@@ -14,4 +14,6 @@ export interface IFormControl {
   value$?:any;
   validations?: IValidationConfig[];
   validationMessages?: any;
+  multiple?: boolean;
+  accept?: string;
 }

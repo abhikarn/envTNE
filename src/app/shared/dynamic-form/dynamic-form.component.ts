@@ -8,6 +8,7 @@ import { SelectInputComponent } from './form-controls/dropdown/select-input.comp
 import { DateInputComponent } from './form-controls/date/date-input.component';
 import { TextAreaInputComponent } from './form-controls/text-area/text-area-input.component';
 import { MultiSelectInputComponent } from './form-controls/multi-select/multi-select-input.component';
+import { FileUploadComponent } from './form-controls/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -18,7 +19,8 @@ import { MultiSelectInputComponent } from './form-controls/multi-select/multi-se
     SelectInputComponent, 
     DateInputComponent,
     TextAreaInputComponent,
-    MultiSelectInputComponent
+    MultiSelectInputComponent,
+    FileUploadComponent
   ],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']

@@ -1,44 +1,62 @@
 <form [formGroup]="form" class="row">
   @for (control of formControls; track control) {
+  <!-- Using ngSwitch to handle different control types -->
+  @switch (control.formConfig.type) {
+  <!-- Handling 'text' type controls -->
+  @case ('text') {
   <div class="col-md-4">
-    <div class="">
-      <!-- Using ngSwitch to handle different control types -->
-      @switch (control.formConfig.type) {
-      <!-- Handling 'text' type controls -->
-      @case ('text') {
-      <lib-text-input [controlConfig]="control.formConfig" [control]="control.control">
-      </lib-text-input>
-      }
-      <!-- Handling 'select' type controls -->
-      @case ('select') {
-      <lib-select-input [controlConfig]="control.formConfig" [control]="control.control">
-      </lib-select-input>
-      }
-      <!-- Handling 'multi-select' type controls -->
-      @case ('multi-select') {
-        <lib-multi-select-input [controlConfig]="control.formConfig" [control]="control.control">
-        </lib-multi-select-input>
-        }
-      <!-- Handling 'date' type controls -->
-      @case ('date') {
-      <lib-date-input [controlConfig]="control.formConfig" [control]="control.control">
-      </lib-date-input>
-      }
-      <!-- Handling 'textarea' type controls -->
-      @case ('textarea') {
-      <lib-text-area-input [controlConfig]="control.formConfig" [control]="control.control">
-      </lib-text-area-input>
-      }
-      <!-- Optional: Default case if control type doesn't match -->
-      @default {
-      <div>
-        <p>Unsupported control type: {{ control.formConfig.type }}</p>
-      </div>
-      }
-      }
-    </div>
+    <lib-text-input [controlConfig]="control.formConfig" [control]="control.control">
+    </lib-text-input>
   </div>
   }
+  <!-- Handling 'select' type controls -->
+  @case ('select') {
+  <div class="col-md-4">
+    <lib-select-input [controlConfig]="control.formConfig" [control]="control.control">
+    </lib-select-input>
+  </div>
+  }
+  <!-- Handling 'multi-select' type controls -->
+  @case ('multi-select') {
+  <div class="col-md-4">
+    <lib-multi-select-input [controlConfig]="control.formConfig" [control]="control.control">
+    </lib-multi-select-input>
+  </div>
+  }
+  <!-- Handling 'date' type controls -->
+  @case ('date') {
+  <div class="col-md-4">
+    <lib-date-input [controlConfig]="control.formConfig" [control]="control.control">
+    </lib-date-input>
+  </div>
+  }
+  <!-- Handling 'textarea' type controls -->
+  @case ('textarea') {
+  <lib-text-area-input [controlConfig]="control.formConfig" [control]="control.control">
+  </lib-text-area-input>
+  }
+  <!-- Handling 'file' type controls -->
+  @case ('file') {
+  <lib-file-upload [controlConfig]="control.formConfig" [control]="control.control">
+  </lib-file-upload>
+  }
+  <!-- Optional: Default case if control type doesn't match -->
+  @default {
+  <div>
+    <p>Unsupported control type: {{ control.formConfig.type }}</p>
+  </div>
+  }
+  }
+  }
+
+  <div class="col-md-12">
+    <div class="common-block-white mb-3">
+      <div class=" d-flex cladd-btn justify-content-end mb-3">
+        <a class="  btn btn-outline-secondary clear  w-10">Clear</a>
+        <a href="" class="btn btn-dark w-10" id="btnAddLtcData">Add </a>
+      </div>
+    </div>
+  </div>
 </form>
 
 
