@@ -1,38 +1,44 @@
 <div class="col-md-12">
-    <div class="common-block-white mb-3">
-        <label class="form-label">{{ controlConfig.label }}</label>
-        <div class="upload-container excel-TBL-hold">
-            <label for="{{ controlConfig.name }}" class="custom-upload">Click to Choose File</label>
-            <input type="file" [id]="controlConfig.name" [multiple]="controlConfig.multiple"
-                (change)="onFileSelected($event)" [accept]="controlConfig.accept">
-        </div>
+  <div class="common-block-white mb-3">
+    <label class="form-label">{{ controlConfig.label }}</label>
+    <div class="upload-container excel-TBL-hold">
+      <label for="{{ controlConfig.name }}" class="custom-upload">Click to Choose File</label>
+      <input type="file" [id]="controlConfig.name" [multiple]="controlConfig.multiple"
+        (change)="onFileSelected($event)" [accept]="controlConfig.accept">
+      </div>
 
-        <!-- Table to Display Selected Files -->
-        <table *ngIf="selectedFiles.length > 0" id="tblLtcDocument"
-            class="table mt-2 grey-table d-table table-cust tbl-sml no-sorting td-firstdata-center vioColor tblTeFile">
-            <thead>
-                <tr>
-                    <th class="thd-w15"><span>Sl No</span></th>
-                    <th class="thd-w70"><span>Document</span></th>
-                    <th class="thd-w15"><span>Action</span></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let file of selectedFiles; let i = index">
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ file.name }}</td>
-                    <td>
-                        <a href="#" (click)="removeFile(i)">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
+      <!-- Table to Display Selected Files -->
+      @if (selectedFiles.length > 0) {
+        <table id="tblLtcDocument"
+          class="table mt-2 grey-table d-table table-cust tbl-sml no-sorting td-firstdata-center vioColor tblTeFile">
+          <thead>
+            <tr>
+              <th class="thd-w15"><span>Sl No</span></th>
+              <th class="thd-w70"><span>Document</span></th>
+              <th class="thd-w15"><span>Action</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (file of selectedFiles; track file; let i = $index) {
+              <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ file.name }}</td>
+                <td>
+                  <a href="#" (click)="removeFile(i)">
+                    <i class="fa-solid fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            }
+          </tbody>
         </table>
+      }
 
-        <!-- Validation Message -->
-        <div class="text-danger" *ngIf="control.invalid && control.touched">
-            {{ getErrorMessage() }}
+      <!-- Validation Message -->
+      @if (control.invalid && control.touched) {
+        <div class="text-danger">
+          {{ getErrorMessage() }}
         </div>
+      }
     </div>
-</div>
+  </div>

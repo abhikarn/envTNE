@@ -1,12 +1,10 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'lib-file-upload',
-  imports: [
-    CommonModule
-  ],
+  imports: [],
   templateUrl: './file-upload.component.html'
 })
 export class FileUploadComponent {

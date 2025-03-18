@@ -4,19 +4,18 @@ import { IFormControl } from '../../form-control.interface';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { CommonModule } from '@angular/common';
+
 
 
 @Component({
   selector: 'lib-select-input',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule
-  ],
+],
   templateUrl: './select-input.component.html'
 })
 export class SelectInputComponent {

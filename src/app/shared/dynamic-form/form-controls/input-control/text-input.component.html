@@ -1,14 +1,18 @@
-<mat-form-field appearance="fill" *ngIf="!!controlConfig">
-  <mat-label>{{controlConfig.label}}</mat-label>
-  <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" />
-  <mat-autocomplete #auto="matAutocomplete">
-    @for (option of options$ | async; track option) {
-    <mat-option [value]="option.value">
-      {{ option.value }}
-    </mat-option>
+@if (!!controlConfig) {
+  <mat-form-field appearance="fill">
+    <mat-label>{{controlConfig.label}}</mat-label>
+    <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" />
+    <mat-autocomplete #auto="matAutocomplete">
+      @for (option of options$ | async; track option) {
+        <mat-option [value]="option.value">
+          {{ option.value }}
+        </mat-option>
+      }
+    </mat-autocomplete>
+    @if (control.invalid && control.touched) {
+      <mat-error>
+      {{  getErrorMessage | fnWrap : control.invalid && control.touched }}
+      </mat-error>
     }
-  </mat-autocomplete>
-  <mat-error *ngIf="control.invalid && control.touched">
-    {{ getErrorMessage() }}
-  </mat-error>
-</mat-form-field>
+  </mat-form-field>
+}

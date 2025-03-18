@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -10,13 +10,12 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'lib-date-input',
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule
-  ],
+],
   templateUrl: './date-input.component.html'
 })
 export class DateInputComponent {

@@ -10,13 +10,12 @@ import { TextAreaInputComponent } from './form-controls/text-area/text-area-inpu
 import { MultiSelectInputComponent } from './form-controls/multi-select/multi-select-input.component';
 import { FileUploadComponent } from './form-controls/file-upload/file-upload.component';
 import { DynamicTableComponent } from '../component/dynamic-table/dynamic-table.component';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-dynamic-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TextInputComponent,
     SelectInputComponent,
@@ -25,7 +24,7 @@ import { CommonModule } from '@angular/common';
     MultiSelectInputComponent,
     FileUploadComponent,
     DynamicTableComponent
-  ],
+],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
 })

@@ -8,37 +8,43 @@ import { CommonModule } from '@angular/common';
 import { catchError, Observable, of, take } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { FormControlFactory } from '../../form-control.factory';
+import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 
 
 
 @Component({
   selector: 'lib-text-input',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatOptionModule],
+  imports: [CommonModule, ReactiveFormsModule,
+     MatFormFieldModule, MatInputModule, 
+     MatAutocompleteModule, MatOptionModule,
+    FunctionWrapperPipe],
   templateUrl: './text-input.component.html'
 })
 export class TextInputComponent {
   @Input() control: FormControl = new FormControl('');
-  @Input() controlConfig: IFormControl = {name: ''};
+  @Input() controlConfig: IFormControl = { name: '' };
   options$: Observable<any[]>;
 
-  constructor(){
+  constructor() {
     this.options$ = !this.controlConfig.option$ ? of([]) : this.controlConfig.option$;
+    this.getErrorMessage = this.getErrorMessage.bind(this);
   }
 
   ngOnInit() {
     this.control = FormControlFactory.createControl(this.controlConfig);
   }
 
-  getErrorMessage(): string {
+  getErrorMessage(status: boolean): string {
+    console.log('error', status);
     if (!this.controlConfig?.validations) return '';
-  
+
     for (const validation of this.controlConfig.validations) {
       if (this.control.hasError(validation.type)) {
         return validation.message;
       }
     }
-  
+
     return 'Invalid selection'; // Default fallback message
   }
 }

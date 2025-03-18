@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../form-control.interface';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -11,7 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'lib-multi-select-input',
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -19,7 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatCheckboxModule,
     MatIconModule
-  ],
+],
   templateUrl: './multi-select-input.component.html'
 })
 export class MultiSelectInputComponent {

@@ -1,17 +1,18 @@
 
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, ViewChild } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ExpenseService } from '../service/expense-service.service';
-import { catchError, forkJoin, map, Observable, of, startWith, switchMap, take } from 'rxjs';
+import { forkJoin, map, Observable, of, startWith, switchMap, take } from 'rxjs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../../shared/dynamic-form/form-control.interface';
 import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
 import { HttpClient } from '@angular/common/http';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-main-expense',
@@ -22,7 +23,6 @@ import { HttpClient } from '@angular/common/http';
     MatNativeDateModule,
     MatInputModule,
     MatAutocompleteModule,
-    ReactiveFormsModule,
     DynamicFormComponent
   ],
   templateUrl: './main-expense.component.html',
@@ -45,6 +45,7 @@ export class MainExpenseComponent {
   boMealsList: any;
   localTravelTypeList: any;
   localTravelModeList: any;
+  private destroyRef = inject(DestroyRef);
   travelDetails = [
     {
       label: 'Travel From Date',
@@ -103,7 +104,6 @@ export class MainExpenseComponent {
   categories: { name: string; formControls: IFormControl[] }[] = [];
   constructor(
     private expenseService: ExpenseService,
-    private fb: FormBuilder,
     private http: HttpClient
   ) {
     this.filteredCities$ = this.originControl.valueChanges.pipe(
@@ -125,7 +125,7 @@ export class MainExpenseComponent {
       localTravelTypeList: this.expenseService.getLocalTravelTypeList(),
       localTravelModeList: this.expenseService.getLocalTravelModeList(),
       expenseConfig: this.http.get<{ name: string; formControls: IFormControl[] }[]>('/assets/config/expense-config.json')
-    }).subscribe({
+    }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (responses) => {
         // Handle all the API responses here
         console.log('responses', responses);
