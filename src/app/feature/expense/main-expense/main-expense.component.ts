@@ -155,12 +155,12 @@ export class MainExpenseComponent {
           formControls: category.formControls.map(control => ({
             ...control,
             options: optionMapping[control.name] || control.options,
-            option$: typeof control.option$ === 'string' && control.option$ === 'filteredCities$' 
-              ? this.filteredCities$.pipe(map(cities => cities.map(c => ({ value: c.City })))) 
+            option$: typeof control.option$ === 'string' && control.option$ === 'filteredCities$'
+              ? this.filteredCities$.pipe(map(cities => cities.map(c => ({ value: c.City }))))
               : undefined
           }))
         }));
-        
+
         console.log('categories', this.categories);
       },
       error: (err) => {
@@ -208,5 +208,36 @@ export class MainExpenseComponent {
       }
     })
   }
+
+  onTravelModeChange(event: any, field: any) {
+    const selectedTravelModeId = event.value;
+    console.log(`Selected ${field.name}:`, selectedTravelModeId);
+
+    if (!selectedTravelModeId) {
+      console.warn('No Travel Mode selected, skipping update.');
+      return;
+    }
+
+    this.expenseService.getTravelClassList(selectedTravelModeId).pipe(take(1)).subscribe({
+      next: (travelClasses) => {
+        this.travelClassList = travelClasses;
+
+        // Update only the relevant control instead of replacing the whole categories array
+        this.categories.forEach(category => {
+          category.formControls.forEach(control => {
+            if (control.name === 'AvailedClass') {
+              control.options = travelClasses; // Update only options, avoid object replacement
+            }
+          });
+        });
+
+        console.log('Updated Travel Class Options:', travelClasses);
+      },
+      error: (error) => {
+        console.error('Error fetching travel class list:', error);
+      }
+    });
+  }
+
 
 }

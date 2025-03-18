@@ -1,0 +1,31 @@
+<div class="req-details-grid">
+    <div class="exp-clm-DTBL">
+        <div class="table-responsive">
+            <table class="table color-table d-table table-cust tbl-sml no-sorting td-firstdata-center vioColor">
+                <thead>
+                    <tr>
+                        <th>Sl.No</th>
+                        <th *ngFor="let column of displayedColumns">{{ column }}</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of tableData; let i = index">
+                        <td>{{ i + 1 }}</td> <!-- Serial Number -->
+                        <td *ngFor="let column of displayedColumns">
+                            <ng-container *ngIf="isDate(row[column]); else normalColumn">
+                                {{ row[column] | date:'dd-MMM-yyyy' }}
+                            </ng-container>
+                            <ng-template #normalColumn>
+                                {{ row[column] || '-' }}
+                            </ng-template>
+                        </td>
+                        <td>
+                            <i class="fas fa-edit" (click)="edit(row)"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
