@@ -12,7 +12,8 @@
   <!-- Handling 'select' type controls -->
   @case ('select') {
   <div class="col-md-4">
-    <lib-select-input [controlConfig]="control.formConfig" [control]="control.control">
+    <lib-select-input [controlConfig]="control.formConfig" [control]="control.control"
+      (valueChange)="handleEvent('change', $event)">
     </lib-select-input>
   </div>
   }
@@ -53,10 +54,12 @@
     <div class="common-block-white mb-3">
       <div class=" d-flex cladd-btn justify-content-end mb-3">
         <a class="  btn btn-outline-secondary clear  w-10">Clear</a>
-        <a href="" class="btn btn-dark w-10" id="btnAddLtcData">Add </a>
+        <a class="btn btn-dark w-10" id="btnAddLtcData" (click)="onSubmit()">Add </a>
       </div>
     </div>
   </div>
+
+  <app-dynamic-table [tableData]="tableData" (editRow)="onEditRow($event)"></app-dynamic-table>
 </form>
 
 

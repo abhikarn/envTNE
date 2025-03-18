@@ -1,6 +1,7 @@
 <mat-form-field appearance="fill">
   <mat-label>{{ controlConfig.label }}</mat-label>
-  <mat-select [formControl]="control" placeholder="{{controlConfig.placeholder || 'Select an option'}}">
+  <mat-select [formControl]="control" placeholder="{{controlConfig.placeholder || 'Select an option'}}"
+    (selectionChange)="onSelectionChange($event)">
     <mat-option *ngFor="let option of controlConfig?.options; trackBy: trackByFn" [value]="option.Key">
       {{ option.Value }}
     </mat-option>

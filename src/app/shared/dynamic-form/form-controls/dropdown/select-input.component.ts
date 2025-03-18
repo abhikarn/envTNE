@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../form-control.interface';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,9 +22,10 @@ import { CommonModule } from '@angular/common';
 export class SelectInputComponent {
   @Input() control: FormControl = new FormControl('');
   @Input() controlConfig: IFormControl = {name: ''};
+  @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
 
-  trackByFn(index: number, item: any) {
-    return item.Key;
+  trackByFn(index: number, item: any): string | number {
+    return item?.Key ?? index;
   }
 
   getErrorMessage(): string {
@@ -37,5 +38,10 @@ export class SelectInputComponent {
     }
   
     return 'Invalid selection'; // Default fallback message
+  }
+
+  // Emit selection change event
+  onSelectionChange(event: any) {
+    this.valueChange.emit({ event, control: this.controlConfig });
   }
 }
