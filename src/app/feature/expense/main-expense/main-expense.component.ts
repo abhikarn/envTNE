@@ -31,7 +31,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class MainExpenseComponent {
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
-  travelRequestJsonInfo: any;
+  travelRequestBookedDetail: any;
   travelModeList: any;
   travelClassList: any;
   originControl = new FormControl('');
@@ -120,7 +120,7 @@ export class MainExpenseComponent {
       currencyList: this.expenseService.getCurrencyList(),
       accommodationTypeList: this.expenseService.getAccomodationTypeList(),
       baggageTypeList: this.expenseService.getBaggageTypeList(),
-      otherTypeList: this.expenseService.getOtherTypeList(),
+      // otherTypeList: this.expenseService.getOtherTypeList(),
       boMealsList: this.expenseService.getBoMeals(),
       localTravelTypeList: this.expenseService.getLocalTravelTypeList(),
       localTravelModeList: this.expenseService.getLocalTravelModeList(),
@@ -129,26 +129,26 @@ export class MainExpenseComponent {
       next: (responses) => {
         // Handle all the API responses here
         console.log('responses', responses);
-        this.travelRequests = responses.pendingTravelRequests;
-        this.travelModeList = responses.travelModeList;
-        this.travelPaymentList = responses.travelPaymentTypeList;
-        this.currencyList = responses.currencyList;
-        this.accomodationTypeList = responses.accommodationTypeList;
-        this.baggageTypeList = responses.baggageTypeList;
-        this.localTravelTypeList = responses.localTravelTypeList;
-        this.localTravelModeList = responses.localTravelModeList;
-        this.boMealsList = responses.boMealsList;
+        this.travelRequests = responses.pendingTravelRequests.ResponseValue;
+        this.travelModeList = responses.travelModeList.ResponseValue;
+        this.travelPaymentList = responses.travelPaymentTypeList.ResponseValue;
+        this.currencyList = responses.currencyList.ResponseValue;
+        this.accomodationTypeList = responses.accommodationTypeList.ResponseValue;
+        this.baggageTypeList = responses.baggageTypeList.ResponseValue;
+        this.localTravelTypeList = responses.localTravelTypeList.ResponseValue;
+        this.localTravelModeList = responses.localTravelModeList.ResponseValue;
+        this.boMealsList = responses.boMealsList.ResponseValue;
 
         const optionMapping: { [key: string]: any[] } = {
-          TravelMode: responses.travelModeList,
-          PaymentType: responses.travelPaymentTypeList,
-          Currency: responses.currencyList,
-          AccommodationType: responses.accommodationTypeList,
-          BaggageType: responses.baggageTypeList,
-          OtherType: responses.otherTypeList,
-          BoMeals: responses.boMealsList,
-          LocalTravelType: responses.localTravelTypeList,
-          LocalTravelMode: responses.localTravelModeList
+          TravelMode: responses.travelModeList.ResponseValue,
+          PaymentType: responses.travelPaymentTypeList.ResponseValue,
+          Currency: responses.currencyList.ResponseValue,
+          AccommodationType: responses.accommodationTypeList.ResponseValue,
+          BaggageType: responses.baggageTypeList.ResponseValue,
+          // OtherType: responses.otherTypeList.ResponseValue,
+          BoMeals: responses.boMealsList.ResponseValue,
+          LocalTravelType: responses.localTravelTypeList.ResponseValue,
+          LocalTravelMode: responses.localTravelModeList.ResponseValue
         };
         this.categories = responses.expenseConfig.map(category => ({
           ...category,
@@ -173,9 +173,9 @@ export class MainExpenseComponent {
   onSelectTravelExpenseRequest(event: any) {
     let travelRequestId = Number(event.target.value) || 0;
     if (travelRequestId) {
-      this.expenseService.getTravelRequestJsonInfo(travelRequestId).pipe(take(1)).subscribe({
+      this.expenseService.GetTravelRequestBookedDetail(travelRequestId).pipe(take(1)).subscribe({
         next: (response) => {
-          this.travelRequestJsonInfo = response;
+          this.travelRequestBookedDetail = response.ResponseValue;
         },
         error: (error) => {
           console.error('Error fetching travel request json info:', error);
@@ -220,13 +220,13 @@ export class MainExpenseComponent {
 
     this.expenseService.getTravelClassList(selectedTravelModeId).pipe(take(1)).subscribe({
       next: (travelClasses) => {
-        this.travelClassList = travelClasses;
+        this.travelClassList = travelClasses.ResponseValue;
 
         // Update only the relevant control instead of replacing the whole categories array
         this.categories.forEach(category => {
           category.formControls.forEach(control => {
             if (control.name === 'AvailedClass') {
-              control.options = travelClasses; // Update only options, avoid object replacement
+              control.options = travelClasses.ResponseValue; // Update only options, avoid object replacement
             }
           });
         });

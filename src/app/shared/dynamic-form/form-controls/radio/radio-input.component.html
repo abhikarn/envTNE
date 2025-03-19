@@ -1,0 +1,19 @@
+@if (!!controlConfig) {
+<div class="radio-group-container">
+    <label>{{ controlConfig.label }}</label>
+
+    <mat-radio-group [formControl]="control">
+        @for (option of controlConfig.options; track trackByFn($index, option)) {
+        <mat-radio-button [value]="option.value">
+            {{ option.label }}
+        </mat-radio-button>
+        }
+    </mat-radio-group>
+
+    @if (control.invalid && control.touched) {
+    <mat-error>
+        {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
+    </mat-error>
+    }
+</div>
+}

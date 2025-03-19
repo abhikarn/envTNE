@@ -1,10 +1,13 @@
 
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 
 @Component({
   selector: 'lib-file-upload',
-  imports: [],
+  imports: [
+    FunctionWrapperPipe
+  ],
   templateUrl: './file-upload.component.html'
 })
 export class FileUploadComponent {

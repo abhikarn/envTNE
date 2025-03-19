@@ -6,6 +6,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { IFormControl } from '../../form-control.interface';
 import { MatInputModule } from '@angular/material/input';
+import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 
 @Component({
   selector: 'lib-date-input',
@@ -14,7 +15,8 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule
+    MatInputModule,
+    FunctionWrapperPipe
 ],
   templateUrl: './date-input.component.html'
 })

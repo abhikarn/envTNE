@@ -31,6 +31,16 @@
     </lib-date-input>
   </div>
   }
+  <!-- Handling 'radio' type controls -->
+  @case ('radio') {
+  <div class="col-md-8">
+    <lib-radio-input [controlConfig]="control.formConfig" [control]="control.control">
+    </lib-radio-input>
+  </div>
+  @if (form.get('IsBillRaisedInCompanyGST')?.value) {
+  <app-gst></app-gst>
+  }
+  }
   <!-- Handling 'textarea' type controls -->
   @case ('textarea') {
   <lib-text-area-input [controlConfig]="control.formConfig" [control]="control.control">

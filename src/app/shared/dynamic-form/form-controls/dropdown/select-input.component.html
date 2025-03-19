@@ -3,14 +3,14 @@
   <mat-select [formControl]="control" placeholder="{{controlConfig.placeholder || 'Select an option'}}"
     (selectionChange)="onSelectionChange($event)">
     @for (option of controlConfig.options; track trackByFn($index, option)) {
-      <mat-option [value]="option.Key">
-        {{ option.Value }}
+      <mat-option [value]="option.Id">
+        {{ option.Name }}
       </mat-option>
     }
   </mat-select>
   @if (control.invalid && control.touched) {
     <mat-error>
-      {{ getErrorMessage() }}
+      {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
     </mat-error>
   }
 </mat-form-field>

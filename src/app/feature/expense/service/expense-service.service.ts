@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environment';
+import { ExpenseRequest } from '../model/expense.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +12,23 @@ export class ExpenseService {
   private baseUrl = environment.apiUrl;
   private apiValidateWorkflowExpenseMapped = `${this.baseUrl}/Expense/ValidateWorkflowExpenseMapped`;
   private apiGlobalConfigurationJsonData = `${this.baseUrl}/Config/GetGlobalConfigurationJsonData`;
-  private apiTravelRequestsPendingForClaimUrl = `${this.baseUrl}/Expense/GetTravelRequestsPendingForClaim?UserMasterId=4&TravelTypeId=0`;
+  private apiTravelRequestsPendingForClaimUrl = `${this.baseUrl}/Expense/TravelRequestsPendingForClaim`;
   
 
-  private apiTravelDDLData = `${this.baseUrl}/Expense/GetTravelDDLData`;
+  private apiTravelDDLData = `${this.baseUrl}/Data`;
+  private apiExpenseTravelDDLData = `${this.baseUrl}/Expense`;
   private apiCityAuto = `${this.baseUrl}/Master/GetCityAuto`;
-  private apiLocalTravelMode = `${this.baseUrl}/Expense/GetLocalTravelMode`;
   private apiApplicationMsg = `${this.baseUrl}/Message/GetApplicationMessage`;
   private apiGradeData = `${this.baseUrl}/Expense/GetGradeData`;
   private apiExpensePolicyEntitlement = `${this.baseUrl}/Expense/GetExpensePolicyEntitlement`;
   private apiCurrencyRate = `${this.baseUrl}/Master/GetCurrRate`;
 
-  private apiExpenseClaimType = `${this.baseUrl}/Expense/GetExpenseClaimType`;
-  private apiTravelRequestBookedDetail = `${this.baseUrl}/Expense/GetTravelRequestBookedDetail`;
+  private apiExpenseClaimType = `${this.baseUrl}/Data/ExpenseClaimType`;
+  private apiTravelRequestBookedDetail = `${this.baseUrl}/Expense/TravelRequestBookedDetail`;
   private apiTravelRequestJsonInfo = `${this.baseUrl}/Expense/GetTravelRequestJsonInfo`;
   private apiTravelRequestLeaveSummary = `${this.baseUrl}/Expense/GetTravelRequestLeaveSummary`;
+
+  private apiCreateExpenseRequest = `${this.baseUrl}/ExpenseRequest/Create`;
 
 
   constructor(
@@ -52,7 +55,11 @@ export class ExpenseService {
 
   // Pending travel requests for claim
   getPendingTravelRequests(): Observable<any> {
-    return this.http.get<any>(this.apiTravelRequestsPendingForClaimUrl);
+    const requestBody = {
+      UserMasterId: 4,
+      TravelTypeId: 0
+    }
+    return this.http.post<any>(this.apiTravelRequestsPendingForClaimUrl, requestBody);
   }
 
   // Travel Request Json Info
@@ -67,42 +74,50 @@ export class ExpenseService {
   // Travel Mode List
   getTravelModeList(): Observable<any> {
     let ddlType = 'TravelMode';
-    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}`);
+    return this.http.post<any>(`${this.apiTravelDDLData}/${ddlType}`, {});
   }
 
   // Travel Class List
   getTravelClassList(refId: number): Observable<any> {
     let ddlType = 'TravelClass';
-    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}&RefId=${refId}`);
+    const requestBody = {
+      "TravelModeId": refId
+    }
+    return this.http.post<any>(`${this.apiTravelDDLData}/${ddlType}`, requestBody);
   }
 
   // City Auto
   getCityAuto(term: string): Observable<any> {
-    return this.http.get<any>(`${this.apiCityAuto}?term=${term}&typeid=53`);
+    let ddlType = 'CityAutocomplete';
+    const requestBody = {
+      "SearchText": term,
+      "TravelTypeId": 0
+    }
+    return this.http.post<any>(`${this.apiCityAuto}?${ddlType}`, requestBody);
   }
 
   // Payment Type List
   getTravelPaymentType(): Observable<any> {
-    let ddlType = 'PayType';
-    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}`);
+    let ddlType = 'PaymentType';
+    return this.http.post<any>(`${this.apiTravelDDLData}/${ddlType}`, {});
   }
 
   // Currency List
   getCurrencyList(): Observable<any> {
-    let ddlType = 'Currency';
-    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}`);
+    let ddlType = 'CurrencyView';
+    return this.http.post<any>(`${this.apiTravelDDLData}/${ddlType}`, {});
   }
 
   // Accomodation Type
   getAccomodationTypeList(): Observable<any> {
-    let ddlType = 'AccomodationType';
-    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}`);
+    let ddlType = 'StayType';
+    return this.http.post<any>(`${this.apiTravelDDLData}/${ddlType}`, {});
   }
 
   // Baggage Type
   getBaggageTypeList(): Observable<any> {
     let ddlType = 'BaggageType';
-    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}`);
+    return this.http.post<any>(`${this.apiTravelDDLData}/${ddlType}`, {});
   }
 
   // Other Type
@@ -113,19 +128,20 @@ export class ExpenseService {
 
   // BoMeals
   getBoMeals(): Observable<any> {
-    let ddlType = 'ddlBoMeals';
-    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}&refId=51`);
+    let ddlType = 'MealType';
+    return this.http.post<any>(`${this.apiTravelDDLData}/${ddlType}`, {});
   }
 
   // Local travel type
   getLocalTravelTypeList(): Observable<any> {
     let ddlType = 'LocalTravelType';
-    return this.http.get<any>(`${this.apiTravelDDLData}?ddlType=${ddlType}`);
+    return this.http.post<any>(`${this.apiExpenseTravelDDLData}/${ddlType}`, {});
   }
 
   // Local Travel Mode
   getLocalTravelModeList(): Observable<any> {
-    return this.http.get<any>(`${this.apiLocalTravelMode}?claimTypeId=51&expenseCategoryId=4&userMasterId=4&travelRequestId=0`);
+    let ddlType = 'LocalTravelMode';
+    return this.http.post<any>(`${this.apiTravelDDLData}/${ddlType}`, {});
   }
 
   // Application Message
@@ -171,7 +187,7 @@ export class ExpenseService {
   // Travel Request Booked Detail
   GetTravelRequestBookedDetail(travelRequestId: number): Observable<any> {
     const requestBody = {
-      referenceId: travelRequestId
+      TravelRequestId: travelRequestId
     };
     return this.http.post<any>(this.apiTravelRequestBookedDetail, requestBody);
   }
@@ -182,6 +198,11 @@ export class ExpenseService {
       referenceId: travelRequestId
     };
     return this.http.post<any>(this.apiTravelRequestLeaveSummary, requestBody);
+  }
+
+  // Create Travel Request
+  createExpenseRequest(request: ExpenseRequest): Observable<any> {
+    return this.http.post<any>(this.apiCreateExpenseRequest, request);
   }
 
 }

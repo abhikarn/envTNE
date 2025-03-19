@@ -120,6 +120,27 @@
                 ]
             },
             {
+                "type": "radio",
+                "name": "IsBillRaisedInCompanyGST",
+                "label": "Is bill raised in company GST number?",
+                "options": [
+                    {
+                        "label": "Yes",
+                        "value": true
+                    },
+                    {
+                        "label": "No",
+                        "value": false
+                    }
+                ],
+                "validations": [
+                    {
+                        "type": "required",
+                        "message": "Please select if the bill is raised in company GST number"
+                    }
+                ]
+            },
+            {
                 "type": "textarea",
                 "name": "Remarks",
                 "label": "Remarks"

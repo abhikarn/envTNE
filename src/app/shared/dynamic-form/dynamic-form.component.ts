@@ -5,11 +5,13 @@ import { IFormControl } from './form-control.interface';
 
 import { TextInputComponent } from './form-controls/input-control/text-input.component';
 import { SelectInputComponent } from './form-controls/dropdown/select-input.component';
-import { DateInputComponent } from './form-controls/date/date-input.component';
+import { DateInputComponent } from './form-controls/calender/date-input.component';
 import { TextAreaInputComponent } from './form-controls/text-area/text-area-input.component';
 import { MultiSelectInputComponent } from './form-controls/multi-select/multi-select-input.component';
 import { FileUploadComponent } from './form-controls/file-upload/file-upload.component';
 import { DynamicTableComponent } from '../component/dynamic-table/dynamic-table.component';
+import { RadioInputComponent } from './form-controls/radio/radio-input.component';
+import { GstComponent } from '../component/GST/gst.component';
 
 
 @Component({
@@ -23,7 +25,9 @@ import { DynamicTableComponent } from '../component/dynamic-table/dynamic-table.
     TextAreaInputComponent,
     MultiSelectInputComponent,
     FileUploadComponent,
-    DynamicTableComponent
+    DynamicTableComponent,
+    RadioInputComponent,
+    GstComponent
 ],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
@@ -45,6 +49,9 @@ export class DynamicFormComponent implements OnInit {
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
     });
+    this.form.valueChanges.subscribe(value => {
+      console.log(value)
+    })
   }
 
   /**
