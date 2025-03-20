@@ -2,7 +2,7 @@
 import { Component, DestroyRef, ElementRef, inject, ViewChild } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabsModule } from '@angular/material/tabs';
-import { ExpenseService } from '../service/expense-service.service';
+import { CityAutocompleteParam, DataService, ExpenseService } from '../../../../../tne-api';
 import { forkJoin, map, Observable, of, startWith, switchMap, take } from 'rxjs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -36,7 +36,7 @@ export class MainExpenseComponent {
   travelClassList: any;
   originControl = new FormControl('');
   cities = [];
-  filteredCities$: Observable<{ CityMasterId: number; City: string }[]>;
+  // filteredCities$: Observable<{ CityMasterId: number; City: string }[]>;
   travelPaymentList: any;
   currencyList: any;
   accomodationTypeList: any;
@@ -102,28 +102,33 @@ export class MainExpenseComponent {
     { label: 'Advance Return', content: 'Content for Advance Return' }
   ];
   categories: { name: string; formControls: IFormControl[] }[] = [];
+
   constructor(
     private expenseService: ExpenseService,
+    private dataService: DataService,
     private http: HttpClient
   ) {
-    this.filteredCities$ = this.originControl.valueChanges.pipe(
-      startWith(''),
-      switchMap(value => (value?.trim() ? this.expenseService.getCityAuto(value) : of([])))
-    );
+    // this.filteredCities$ = this.originControl.valueChanges.pipe(
+    //   startWith(''),
+    //   switchMap(value => {
+    //     const param: CityAutocompleteParam = { SearchText: value?.trim() }; // Adjust key name as needed
+    //     return value?.trim() ? this.dataService.dataGetCityAutocomplete(param) : of([]);
+    //   })
+    // );
   }
 
   ngOnInit() {
     forkJoin({
-      pendingTravelRequests: this.expenseService.getPendingTravelRequests(),
-      travelModeList: this.expenseService.getTravelModeList(),
-      travelPaymentTypeList: this.expenseService.getTravelPaymentType(),
-      currencyList: this.expenseService.getCurrencyList(),
-      accommodationTypeList: this.expenseService.getAccomodationTypeList(),
-      baggageTypeList: this.expenseService.getBaggageTypeList(),
+      pendingTravelRequests: this.expenseService.expenseGetTravelRequestsPendingForClaim({ UserMasterId: 4, TravelTypeId: 0}),
+      travelModeList: this.dataService.dataGetTravelMode(),
+      travelPaymentTypeList: this.dataService.dataGetPaymentType(),
+      currencyList: this.dataService.dataGetCurrencyView(),
+      accommodationTypeList: this.dataService.dataGetStayType(),
+      baggageTypeList: this.dataService.dataGetBaggageType(),
       // otherTypeList: this.expenseService.getOtherTypeList(),
-      boMealsList: this.expenseService.getBoMeals(),
-      localTravelTypeList: this.expenseService.getLocalTravelTypeList(),
-      localTravelModeList: this.expenseService.getLocalTravelModeList(),
+      boMealsList: this.dataService.dataGetMealType(),
+      localTravelTypeList: this.dataService.dataGetLocalTravelType(),
+      localTravelModeList: this.dataService.dataGetTravelMode(),
       expenseConfig: this.http.get<{ name: string; formControls: IFormControl[] }[]>('/assets/config/expense-config.json')
     }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (responses) => {
@@ -140,24 +145,24 @@ export class MainExpenseComponent {
         this.boMealsList = responses.boMealsList.ResponseValue;
 
         const optionMapping: { [key: string]: any[] } = {
-          TravelMode: responses.travelModeList.ResponseValue,
-          PaymentType: responses.travelPaymentTypeList.ResponseValue,
-          Currency: responses.currencyList.ResponseValue,
-          AccommodationType: responses.accommodationTypeList.ResponseValue,
-          BaggageType: responses.baggageTypeList.ResponseValue,
+          TravelMode: this.travelModeList,
+          PaymentType: this.travelPaymentList,
+          Currency: this.currencyList,
+          AccommodationType: this.accomodationTypeList,
+          BaggageType: this.baggageTypeList,
           // OtherType: responses.otherTypeList.ResponseValue,
-          BoMeals: responses.boMealsList.ResponseValue,
-          LocalTravelType: responses.localTravelTypeList.ResponseValue,
-          LocalTravelMode: responses.localTravelModeList.ResponseValue
+          BoMeals: this.boMealsList,
+          LocalTravelType: this.localTravelTypeList,
+          LocalTravelMode: this.localTravelModeList
         };
         this.categories = responses.expenseConfig.map(category => ({
           ...category,
           formControls: category.formControls.map(control => ({
             ...control,
             options: optionMapping[control.name] || control.options,
-            option$: typeof control.option$ === 'string' && control.option$ === 'filteredCities$'
-              ? this.filteredCities$.pipe(map(cities => cities.map(c => ({ value: c.City }))))
-              : undefined
+            // option$: typeof control.option$ === 'string' && control.option$ === 'filteredCities$'
+            //   ? this.filteredCities$.pipe(map(cities => cities.map(c => ({ value: c.City }))))
+            //   : undefined
           }))
         }));
 
@@ -173,7 +178,7 @@ export class MainExpenseComponent {
   onSelectTravelExpenseRequest(event: any) {
     let travelRequestId = Number(event.target.value) || 0;
     if (travelRequestId) {
-      this.expenseService.GetTravelRequestBookedDetail(travelRequestId).pipe(take(1)).subscribe({
+      this.expenseService.expenseGetTravelRequestBookedDetail({TravelRequestId: travelRequestId}).pipe(take(1)).subscribe({
         next: (response) => {
           this.travelRequestBookedDetail = response.ResponseValue;
         },
@@ -187,7 +192,7 @@ export class MainExpenseComponent {
   onSelectTravelMode(event: any) {
     let travelModeKey = event.target.value || 0;
     if (travelModeKey) {
-      this.expenseService.getTravelClassList(travelModeKey).pipe(take(1)).subscribe({
+      this.dataService.dataGetTravelClass({TravelModeId:travelModeKey}).pipe(take(1)).subscribe({
         next: (response) => {
           this.travelClassList = response;
         },
@@ -199,7 +204,17 @@ export class MainExpenseComponent {
   }
 
   fetchExpensePolicyEntitlement() {
-    this.expenseService.getExpensePolicyEntitlement().pipe(take(1)).subscribe({
+    const requestBody = {
+      ClaimTypeId: 53,
+      UserMasterId: 4,
+      ExpenseCategoryId: 3,
+      ReferenceDate: '06-Mar-2024',
+      CityGradeId: 8,
+      CountryGradeId: 0,
+      PolicyReferenceId: 53,
+      TravelRequestId: 37
+    };
+    this.expenseService.expenseGetExpensePolicyEntitlement(requestBody).pipe(take(1)).subscribe({
       next: (response) => {
         console.log(response)
       },
@@ -218,7 +233,7 @@ export class MainExpenseComponent {
       return;
     }
 
-    this.expenseService.getTravelClassList(selectedTravelModeId).pipe(take(1)).subscribe({
+    this.dataService.dataGetTravelClass({TravelModeId:selectedTravelModeId}).pipe(take(1)).subscribe({
       next: (travelClasses) => {
         this.travelClassList = travelClasses.ResponseValue;
 
@@ -226,7 +241,7 @@ export class MainExpenseComponent {
         this.categories.forEach(category => {
           category.formControls.forEach(control => {
             if (control.name === 'AvailedClass') {
-              control.options = travelClasses.ResponseValue; // Update only options, avoid object replacement
+              control.options = this.travelClassList; // Update only options, avoid object replacement
             }
           });
         });

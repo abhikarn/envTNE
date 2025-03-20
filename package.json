@@ -4,9 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:proxy": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "api": "npx openapi-generator-cli generate -i ./swagger.json -g typescript-angular -o tne-api --skip-validate-spec"
   },
   "private": true,
   "dependencies": {
