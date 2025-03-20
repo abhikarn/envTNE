@@ -1,4 +1,17 @@
-<form [formGroup]="gstForm">
+<form [formGroup]="companyGSTForm">
+    <div class="col-md-8">
+        <div class="radio-group-container">
+            <label>Is bill raised in company GST number?</label>
+            <mat-radio-group formControlName="IsBillRaisedInCompanyGST">
+                <mat-radio-button *ngFor="let option of options; trackBy: trackByFn" [value]="option.value">
+                    {{ option.label }}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+</form>
+@if (companyGSTForm.get('IsBillRaisedInCompanyGST')?.value) {
+<form [formGroup]="gstDetailsForm">
     <div class="col-md-12">
         <div class="gst-wrapper">
             <div class="gst-hold-body" id="showDiv">
@@ -105,8 +118,8 @@
                                         <td>{{gst.IGST}}</td>
                                         <td>{{gst.UGST}}</td>
                                         <td>
-                                            <a type="button" id="btnAddGstTe" class="btn btn-light btn-sm rounded-circle "
-                                                (click)="removeGstRow(i)">
+                                            <a type="button" id="btnAddGstTe"
+                                                class="btn btn-light btn-sm rounded-circle " (click)="removeGstRow(i)">
                                                 <span class="ti-minus ti-rotate"></span>
                                             </a>
                                         </td>
@@ -120,3 +133,4 @@
         </div>
     </div>
 </form>
+}

@@ -7,6 +7,7 @@ export interface IFormControl {
   label?: string;
   placeholder?: string;
   type?: string;
+  subType?: string;
   // control: FormControl;
   options?: any[];
   option$?: Observable<any[]>;
@@ -16,4 +17,5 @@ export interface IFormControl {
   validationMessages?: any;
   multiple?: boolean;
   accept?: string;
+  autoComplete?: boolean
 }

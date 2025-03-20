@@ -2,7 +2,7 @@
 import { Component, DestroyRef, ElementRef, inject, ViewChild } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabsModule } from '@angular/material/tabs';
-import { CityAutocompleteParam, DataService, ExpenseService } from '../../../../../tne-api';
+import { CityAutocompleteParam, DataService, ExpenseService, TravelService } from '../../../../../tne-api';
 import { forkJoin, map, Observable, of, startWith, switchMap, take } from 'rxjs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -32,6 +32,7 @@ export class MainExpenseComponent {
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
   travelRequestBookedDetail: any;
+  travelRequestPreview: any;
   travelModeList: any;
   travelClassList: any;
   originControl = new FormControl('');
@@ -46,66 +47,15 @@ export class MainExpenseComponent {
   localTravelTypeList: any;
   localTravelModeList: any;
   private destroyRef = inject(DestroyRef);
-  travelDetails = [
-    {
-      label: 'Travel From Date',
-      value: '25-Mar-2024 18:56',
-      id: 'TravelFromDate',
-      hidden: false
-    },
-    {
-      label: 'CostCentre',
-      value: 'COO - Office [ 16050 ]',
-      id: 'txtOtherCostCentre',
-      hidden: false,
-      hiddenFields: [
-        { id: 'hdnCostCentreId', value: '1' },
-        { id: 'hdnCostCentre', value: 'COO - Office [ 16050 ]' }
-      ]
-    },
-    {
-      label: 'LeaveSummary',
-      value: '26-Mar-2024 - 27-Mar-2024 | Personnel leave',
-      id: 'spanleaveSummary',
-      hidden: false
-    },
-    {
-      label: 'Travel To Date Time',
-      value: '29-Mar-2024 23:59',
-      id: 'TravelToDate',
-      hidden: false
-    },
-    {
-      label: 'Purpose Of Travel',
-      value: 'Residential Program',
-      id: 'spanPurposeOfTravel',
-      hidden: false,
-      hiddenFields: [
-        { id: 'hdnPurposeOfTravel', value: '0' }
-      ]
-    },
-    {
-      label: 'Internal Order',
-      value: '',
-      id: 'txInternalOrder',
-      hidden: true
-    }
-  ];
-  tabs = [
-    { label: 'Miscellaneous Expense', content: 'Content for Miscellaneous Expense' },
-    { label: 'Visa', content: 'Content for Visa' },
-    { label: 'Travel Insurance', content: 'Content for Travel Insurance' },
-    { label: 'Roaming', content: 'Content for Roaming' },
-    { label: 'Transit Allowance', content: 'Content for Transit Allowance' },
-    { label: 'Baggage and Outfit Allowance', content: 'Content for Baggage and Outfit Allowance' },
-    { label: 'Porterage Expenses', content: 'Content for Porterage Expenses' },
-    { label: 'Advance Return', content: 'Content for Advance Return' }
-  ];
   categories: { name: string; formControls: IFormControl[] }[] = [];
+  mainExpenseData: any = {
+    expenseRequestDetailType: []
+  };
 
   constructor(
     private expenseService: ExpenseService,
     private dataService: DataService,
+    private travelService:TravelService,
     private http: HttpClient
   ) {
     // this.filteredCities$ = this.originControl.valueChanges.pipe(
@@ -178,6 +128,15 @@ export class MainExpenseComponent {
   onSelectTravelExpenseRequest(event: any) {
     let travelRequestId = Number(event.target.value) || 0;
     if (travelRequestId) {
+      this.travelService.travelGetTravelRequestPreview({TravelRequestId: travelRequestId}).pipe(take(1)).subscribe({
+        next: (response) => {
+          this.travelRequestPreview = response.ResponseValue;
+        },
+        error: (error) => {
+          console.error('Error fetching travel request preview:', error);
+        }
+      })
+
       this.expenseService.expenseGetTravelRequestBookedDetail({TravelRequestId: travelRequestId}).pipe(take(1)).subscribe({
         next: (response) => {
           this.travelRequestBookedDetail = response.ResponseValue;
@@ -186,6 +145,7 @@ export class MainExpenseComponent {
           console.error('Error fetching travel request json info:', error);
         }
       })
+      
     }
   }
 
@@ -254,5 +214,9 @@ export class MainExpenseComponent {
     });
   }
 
+  getFormData(categoryFormData: any) {
+    this.mainExpenseData.expenseRequestDetailType.push(categoryFormData);
+    console.log(this.mainExpenseData);
+  }
 
 }

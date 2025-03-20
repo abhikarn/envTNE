@@ -37,9 +37,10 @@
     <lib-radio-input [controlConfig]="control.formConfig" [control]="control.control">
     </lib-radio-input>
   </div>
-  @if (form.get('IsBillRaisedInCompanyGST')?.value) {
-  <app-gst></app-gst>
   }
+  <!-- Handling 'gst' type controls -->
+  @case ('gst') {
+  <app-gst></app-gst>
   }
   <!-- Handling 'textarea' type controls -->
   @case ('textarea') {
@@ -69,7 +70,7 @@
     </div>
   </div>
 
-  <app-dynamic-table [tableData]="tableData" (editRow)="onEditRow($event)"></app-dynamic-table>
+  <app-dynamic-table *ngIf="tableData.length > 0" [tableData]="tableData" (editRow)="onEditRow($event)"></app-dynamic-table>
 </form>
 
 

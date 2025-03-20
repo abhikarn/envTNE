@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormControlFactory } from './form-control.factory';
 import { IFormControl } from './form-control.interface';
@@ -11,7 +11,7 @@ import { MultiSelectInputComponent } from './form-controls/multi-select/multi-se
 import { FileUploadComponent } from './form-controls/file-upload/file-upload.component';
 import { DynamicTableComponent } from '../component/dynamic-table/dynamic-table.component';
 import { RadioInputComponent } from './form-controls/radio/radio-input.component';
-import { GstComponent } from '../component/GST/gst.component';
+import { GstComponent } from './form-controls/gst/gst.component';
 
 
 @Component({
@@ -33,9 +33,10 @@ import { GstComponent } from '../component/GST/gst.component';
   styleUrls: ['./dynamic-form.component.scss']
 })
 export class DynamicFormComponent implements OnInit {
-
+  @Input() category: string = '';
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
+  @Output() emitFormData = new EventEmitter<any>();
   form: FormGroup = new FormGroup({});
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
   tableData: any = [];
@@ -75,6 +76,7 @@ export class DynamicFormComponent implements OnInit {
     console.log(this.form)
     console.log(Object.keys(this.form.controls))
     this.tableData.push(this.form.value);
+    this.emitFormData.emit(this.form.value);
     this.form.reset();
   }
 

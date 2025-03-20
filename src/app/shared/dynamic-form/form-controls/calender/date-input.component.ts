@@ -25,7 +25,7 @@ export class DateInputComponent {
   @Input() controlConfig: IFormControl = {name: ''};
 
   getErrorMessage(): string {
-    if (!this.controlConfig?.validations) return '';
+    if (!this?.controlConfig?.validations) return '';
   
     for (const validation of this.controlConfig.validations) {
       if (this.control.hasError(validation.type)) {

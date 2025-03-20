@@ -45,9 +45,11 @@
             },
             {
                 "type": "text",
+                "subType": "text",
+                "autoComplete": true,
                 "name": "Origin",
                 "label": "Origin",
-                "option$": "filteredCities$",
+                "option$": [],
                 "validations": [
                     {
                         "type": "required",
@@ -57,9 +59,11 @@
             },
             {
                 "type": "text",
+                "subType": "text",
+                "autoComplete": true,
                 "name": "Destination",
                 "label": "Destination",
-                "option$": "filteredCities$",
+                "option$": [],
                 "validations": [
                     {
                         "type": "required",
@@ -94,6 +98,7 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "Amount",
                 "label": "Amount",
                 "validations": [
@@ -110,6 +115,7 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ConversionRate",
                 "label": "Conversion Rate",
                 "validations": [
@@ -120,25 +126,9 @@
                 ]
             },
             {
-                "type": "radio",
-                "name": "IsBillRaisedInCompanyGST",
-                "label": "Is bill raised in company GST number?",
-                "options": [
-                    {
-                        "label": "Yes",
-                        "value": true
-                    },
-                    {
-                        "label": "No",
-                        "value": false
-                    }
-                ],
-                "validations": [
-                    {
-                        "type": "required",
-                        "message": "Please select if the bill is raised in company GST number"
-                    }
-                ]
+                "type": "gst",
+                "name": "GSTDetails",
+                "label": "GSTDetails"
             },
             {
                 "type": "textarea",
@@ -202,9 +192,11 @@
             },
             {
                 "type": "text",
+                "subType": "text",
+                "autoComplete":true,
                 "name": "City",
                 "label": "City",
-                "option$": "filteredCities$",
+                "option$": [],
                 "validations": [
                     {
                         "type": "required",
@@ -215,6 +207,7 @@
             {
                 "type": "text",
                 "name": "CityGrade",
+                "subType": "text",
                 "label": "City Grade",
                 "validations": [
                     {
@@ -226,6 +219,7 @@
             {
                 "type": "text",
                 "name": "HotelName",
+                "subType": "text",
                 "label": "Hotel Name",
                 "validations": [
                     {
@@ -236,6 +230,7 @@
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "BillNumber",
                 "label": "Bill Number",
                 "validations": [
@@ -284,6 +279,7 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "EntitlementAmount",
                 "label": "Entitlement Amount",
                 "validations": [
@@ -295,6 +291,7 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "EntitlementConversionRate",
                 "label": "Entitlement Conversion Rate",
                 "validations": [
@@ -318,6 +315,7 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ClaimedAmount",
                 "label": "Claimed Amount",
                 "validations": [
@@ -329,6 +327,7 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ClaimedConversionRate",
                 "label": "Claimed Conversion Rate",
                 "validations": [
@@ -340,11 +339,13 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "TaxAmount",
                 "label": "Tax Amount"
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "DifferentialAmount(INR)",
                 "label": "Differential Amount(INR)",
                 "validations": [

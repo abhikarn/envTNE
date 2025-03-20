@@ -31,10 +31,6 @@ export class TextInputComponent {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
 
-  ngOnInit() {
-    this.control = FormControlFactory.createControl(this.controlConfig);
-  }
-
   getErrorMessage(status: boolean): string {
     console.log('error', status);
     if (!this.controlConfig?.validations) return '';

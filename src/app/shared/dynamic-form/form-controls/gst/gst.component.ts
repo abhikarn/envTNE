@@ -1,22 +1,37 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
   selector: 'app-gst',
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatRadioModule
   ],
-  templateUrl: './gst.component.html',
-  styleUrl: './gst.component.scss'
+  templateUrl: './gst.component.html'
 })
 export class GstComponent {
-  gstForm: FormGroup;
+  companyGSTForm: FormGroup;
+  gstDetailsForm: FormGroup;
   gstDetails: any = [];
+  options = [
+    {
+      "label": "Yes",
+      "value": true
+    },
+    {
+      "label": "No",
+      "value": false
+    }
+  ]
 
   constructor(private fb: FormBuilder) {
-    this.gstForm = this.fb.group({
+    this.companyGSTForm = this.gstDetailsForm = this.fb.group({
+      IsBillRaisedInCompanyGST: [false, Validators.required]
+    });
+    this.gstDetailsForm = this.fb.group({
       GstIn: ['', Validators.required],
       InvoiceNumber: ['', Validators.required],
       Amount: ['', [Validators.required, Validators.min(0)]],
@@ -28,8 +43,13 @@ export class GstComponent {
   }
 
 
+  trackByFn(index: number): any {
+    return index;
+  }
+
   addGstRow(): void {
-    this.gstDetails.push(this.gstForm.value);
+    this.gstDetails.push(this.gstDetailsForm.value);
+    this.gstDetailsForm.reset();
   }
 
   removeGstRow(index: number): void {
