@@ -40,7 +40,7 @@
   }
   <!-- Handling 'gst' type controls -->
   @case ('gst') {
-  <app-gst></app-gst>
+  <app-gst [controlConfig]="control.formConfig" [control]="control.control"></app-gst>
   }
   <!-- Handling 'textarea' type controls -->
   @case ('textarea') {

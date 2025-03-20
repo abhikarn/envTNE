@@ -108,8 +108,8 @@
                                         </a>
                                     </td>
                                 </tr>
-                                <ng-container *ngIf="gstDetails.length > 0">
-                                    <tr *ngFor="let gst of gstDetails;let i = index">
+                                <ng-container *ngIf="gstDetails.data.length > 0">
+                                    <tr *ngFor="let gst of gstDetails.data;let i = index">
                                         <td>{{gst.GstIn}}</td>
                                         <td>{{gst.InvoiceNumber}}</td>
                                         <td>{{gst.Amount}}</td>

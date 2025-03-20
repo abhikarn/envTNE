@@ -78,7 +78,7 @@ export class MainExpenseComponent {
       // otherTypeList: this.expenseService.getOtherTypeList(),
       boMealsList: this.dataService.dataGetMealType(),
       localTravelTypeList: this.dataService.dataGetLocalTravelType(),
-      localTravelModeList: this.dataService.dataGetTravelMode(),
+      localTravelModeList: this.dataService.dataGetLocalTravelMode(),
       expenseConfig: this.http.get<{ name: string; formControls: IFormControl[] }[]>('/assets/config/expense-config.json')
     }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (responses) => {
@@ -215,7 +215,31 @@ export class MainExpenseComponent {
   }
 
   getFormData(categoryFormData: any) {
-    this.mainExpenseData.expenseRequestDetailType.push(categoryFormData);
+    let data = categoryFormData.data;
+    if(categoryFormData.category == 'Tickets Expense') {
+      const requestBody = {
+        "UserMasterId": 4,
+        "TravelTypeId": this.travelRequestPreview.TravelTypeId,
+        "TravelModeId": data.TravelMode,
+        "TravelClassId": data.AvailedClass,
+        "RequestForId": this.travelRequestPreview.RequestForId,
+        "FromCityId": data.Origin,
+        "ToCityId": data.Destination,
+        "ReferenceDate": data.TravelDate,
+        "TravelRequestGroupType": [
+          {
+            "UserMasterId": 0,
+            "IsGroupLeader": true
+          }
+        ]
+      }
+      this.travelService.travelValidateTravelTicketPolicy(requestBody).pipe(take(1)).subscribe({
+        next: (response) => {
+          console.log(response);
+        }
+      })
+    }
+    this.mainExpenseData.expenseRequestDetailType.push(categoryFormData.data);
     console.log(this.mainExpenseData);
   }
 

@@ -41,6 +41,7 @@ export class DynamicFormComponent implements OnInit {
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
   tableData: any = [];
   selectedRow: any;
+  formData: any = {};
 
   constructor() { }
 
@@ -73,10 +74,12 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onSubmit() {
+    this.formData.category = this.category;
+    this.formData.data = this.form.value;
     console.log(this.form)
     console.log(Object.keys(this.form.controls))
     this.tableData.push(this.form.value);
-    this.emitFormData.emit(this.form.value);
+    this.emitFormData.emit(this.formData);
     this.form.reset();
   }
 
