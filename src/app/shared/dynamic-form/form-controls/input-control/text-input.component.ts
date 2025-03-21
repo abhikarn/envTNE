@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
@@ -21,14 +21,23 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
     FunctionWrapperPipe],
   templateUrl: './text-input.component.html'
 })
-export class TextInputComponent {
+export class TextInputComponent implements OnInit {
   @Input() control: FormControl = new FormControl('');
   @Input() controlConfig: IFormControl = { name: '' };
-  options$: Observable<any[]>;
+  @Output() emitInputValue = new EventEmitter<any>();
 
   constructor() {
-    this.options$ = !this.controlConfig.option$ ? of([]) : this.controlConfig.option$;
     this.getErrorMessage = this.getErrorMessage.bind(this);
+  }
+
+  ngOnInit() {
+    this.control.valueChanges.subscribe(inputValue => {
+      this.emitInputValue.emit(inputValue);
+    })
+  }
+
+  trackByFn(index: number, item: any): string | number {
+    return item?.Key ?? index;
   }
 
   getErrorMessage(status: boolean): string {
@@ -42,5 +51,9 @@ export class TextInputComponent {
     }
 
     return 'Invalid selection'; // Default fallback message
+  }
+
+  displayFn(city: any): string {
+    return city ? city.City : '';
   }
 }

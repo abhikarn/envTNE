@@ -37,6 +37,7 @@ export class DynamicFormComponent implements OnInit {
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
   @Output() emitFormData = new EventEmitter<any>();
+  @Output() emitTextData = new EventEmitter<any>();
   form: FormGroup = new FormGroup({});
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
   tableData: any = [];
@@ -91,6 +92,11 @@ export class DynamicFormComponent implements OnInit {
         this.form.controls[key].setValue(this.selectedRow[key]); // Set values from selected row
       }
     });
+  }
+
+  getInputValue(inputValue: any) {
+    console.log(inputValue);
+    this.emitTextData.emit(inputValue);
   }
 
 }

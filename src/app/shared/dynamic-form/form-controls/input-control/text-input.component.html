@@ -6,10 +6,10 @@
   @if (controlConfig.autoComplete) {
   <input type="text" matInput [formControl]="control" [matAutocomplete]="auto"
     [placeholder]="controlConfig.placeholder || 'Enter text'" />
-  <mat-autocomplete #auto="matAutocomplete">
-    @for (option of options$ | async; track option) {
-    <mat-option [value]="option.value">
-      {{ option.value }}
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    @for (option of controlConfig.options; track trackByFn($index, option)) {
+    <mat-option [value]="option">
+      {{ option.City }}
     </mat-option>
     }
   </mat-autocomplete>

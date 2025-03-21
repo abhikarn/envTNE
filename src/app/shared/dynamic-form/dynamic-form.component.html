@@ -5,7 +5,7 @@
   <!-- Handling 'text' type controls -->
   @case ('text') {
   <div class="col-md-4">
-    <lib-text-input [controlConfig]="control.formConfig" [control]="control.control">
+    <lib-text-input [controlConfig]="control.formConfig" [control]="control.control" (emitInputValue)="getInputValue($event)">
     </lib-text-input>
   </div>
   }
@@ -69,8 +69,10 @@
       </div>
     </div>
   </div>
-
-  <app-dynamic-table *ngIf="tableData.length > 0" [tableData]="tableData" (editRow)="onEditRow($event)"></app-dynamic-table>
+@if (tableData.length > 0) {
+<app-dynamic-table [tableData]="tableData" (editRow)="onEditRow($event)"></app-dynamic-table>
+}
+  
 </form>
 
 

@@ -243,4 +243,23 @@ export class MainExpenseComponent {
     console.log(this.mainExpenseData);
   }
 
+  getTextData(inputData: any) {
+    const requestBody = {
+      "SearchText": inputData,
+      "TravelTypeId": this.travelRequestPreview.TravelTypeId
+    }
+    this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
+      next: (response: any) => {
+        // Update only the relevant control instead of replacing the whole categories array
+        this.categories.forEach(category => {
+          category.formControls.forEach(control => {
+            if (control.autoComplete) {
+              control.options = response.ResponseValue; // Update only options, avoid object replacement
+            }
+          });
+        });
+      }
+    })
+  }
+
 }
