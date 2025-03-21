@@ -37,7 +37,7 @@
       <!-- Validation Message -->
       @if (control.invalid && control.touched) {
         <div class="text-danger">
-          {{ getErrorMessage() }}
+          {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
         </div>
       }
     </div>

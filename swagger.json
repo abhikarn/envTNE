@@ -1,0 +1,6457 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "v1",
+      "title": "My API"
+    },
+    "host": "localhost:44301",
+    "schemes": [
+      "https"
+    ],
+    "paths": {
+      "/api/Account/EmployeeAuth": {
+        "post": {
+          "tags": [
+            "Account"
+          ],
+          "operationId": "Account_Login",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "loginViewModel",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/LoginViewModel"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Account/UserData": {
+        "post": {
+          "tags": [
+            "Account"
+          ],
+          "operationId": "Account_GetUserData",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "userDataSessionIdParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/UserDataSessionIdParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Account/ForgotPasswordEmail": {
+        "post": {
+          "tags": [
+            "Account"
+          ],
+          "operationId": "Account_ForgotPasswordEmail",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "forgotPasswordParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ForgotPasswordParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Account/ForgotPasswordCode": {
+        "post": {
+          "tags": [
+            "Account"
+          ],
+          "operationId": "Account_ForgotPasswordCode",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "forgotPasswordCustomParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ForgotPasswordCustomParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Account/ResetPassword": {
+        "post": {
+          "tags": [
+            "Account"
+          ],
+          "operationId": "Account_ResetPassword",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "resetPasswordParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ResetPasswordParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Account/EmployeeAuthentication": {
+        "post": {
+          "tags": [
+            "Account"
+          ],
+          "operationId": "Account_ClientAuthentication",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "authenticationGetParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/AuthenticationGetParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Account/ClientInformation": {
+        "post": {
+          "tags": [
+            "Account"
+          ],
+          "operationId": "Account_ClientInformation",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "userDataSessionIdParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/UserDataSessionIdParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Account": {
+        "get": {
+          "tags": [
+            "Account"
+          ],
+          "operationId": "Account_Get",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Dashboard/MyTravelRequest": {
+        "post": {
+          "tags": [
+            "Dashboard"
+          ],
+          "operationId": "Dashboard_GetTravelRequestDashboard",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestDashboardParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestDashboardParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Dashboard/GetTravelRequestBudgetSegregationDashboard": {
+        "post": {
+          "tags": [
+            "Dashboard"
+          ],
+          "operationId": "Dashboard_GetTravelRequestBudgetSegregationDashboard",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestApprovalsDashboardParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestApprovalsDashboardParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Dashboard/MyExpenseRequest": {
+        "post": {
+          "tags": [
+            "Dashboard"
+          ],
+          "operationId": "Dashboard_GetExpenseRequestDashboard",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "expenseRequestDashboardParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ExpenseRequestDashboardParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Dashboard/ApprovalsTravelRequest": {
+        "post": {
+          "tags": [
+            "Dashboard"
+          ],
+          "operationId": "Dashboard_GetTravelRequestApprovalsDashboard",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestApprovalsDashboardParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestApprovalsDashboardParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Dashboard/ApprovalsExpenseRequest": {
+        "post": {
+          "tags": [
+            "Dashboard"
+          ],
+          "operationId": "Dashboard_GetExpenseRequestApprovalDashboard",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "expenseRequestApprovalsDashboardParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ExpenseRequestApprovalsDashboardParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Dashboard/EmployeeLanding": {
+        "post": {
+          "tags": [
+            "Dashboard"
+          ],
+          "operationId": "Dashboard_GetDashboardEmployeeLanding",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "mobileAppDashboardDataParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/MobileAppDashboardDataParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/CurrencyView": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetCurrencyView",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/ConversionRateAgainstBaseCurrency": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetConversionRateAgainstBaseCurrency",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "conversionRateAgainstBaseCurrencyParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ConversionRateAgainstBaseCurrencyParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/GetConversionRate": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetConversionRate",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "conversionRateParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ConversionRateParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/CityAutocomplete": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetCityAutocomplete",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "cityAutocompleteParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/CityAutocompleteParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/CityGrade": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetCityGrade",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "gradeGetParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/GradeGetParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/CostCentreAutocomplete": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetCostCentreAutocomplete",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "autoCompleteSearchTextParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/AutoCompleteSearchTextParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/UserAutocomplete": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetUserAutocomplete",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "autoCompleteSearchTextParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/AutoCompleteSearchTextParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/PaymentType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetPaymentType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/PurposeOfTravel": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetPurposeOfTravel",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/TravelType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetTravelType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/ExpenseClaimType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetExpenseClaimType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/ApplicationModule": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetApplicationModule",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/StayType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetStayType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/MealType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetMealType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/BaggageType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetBaggageType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/LocalTravelMode": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetLocalTravelMode",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/GetUserLocalTravelMode": {
+        "get": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetUserLocalTravelMode",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "claimTypeId",
+              "in": "query",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "expenseCategoryId",
+              "in": "query",
+              "required": true,
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "name": "userMasterId",
+              "in": "query",
+              "required": true,
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "name": "travelRequestId",
+              "in": "query",
+              "required": true,
+              "type": "integer",
+              "format": "int64"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/OtherExpenseCategoryDomestic": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetOtherExpenseCategoryDomestic",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/OtherExpenseCategoryInternational": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetOtherExpenseCategoryInternational",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/LocalTravelType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetLocalTravelType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/TravelRequestFor": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetTravelRequestFor",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/TravelRequestService": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetTravelRequestService",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/TravelMode": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetTravelMode",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/TravelClass": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetTravelClass",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelClassViewParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelClassViewParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/Gender": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetGender",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/AgeGroup": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetAgeGroup",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/IdentityCardType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetIdentityCardType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/AdvancePaymentType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetAdvancePaymentType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/CabType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetCarType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/CabTripType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetCabTripType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/CountryCodeFromCityId": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetCountryCodeFromCityId",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "countryCodeParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/CountryCodeParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/GuestHouseDetail": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetGuestHouseDetail",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "guestHouseListParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/GuestHouseListParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/TravelTicketRequestType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetTravelTicketRequestType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/TravelHelpDeskAdmin": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetTravelHelpDeskAdmin",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelHelpDeskAdminParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelHelpDeskAdminParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/TransitAllowanceType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_TransitAllowanceType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/BaggageOutFitType": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_BaggageOutFitType",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/RelocationTransportMode": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_RelocationTransportMode",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/LocalTravelPurpose": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_LocalTravelPurpose",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/GetCountryData": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetCountryData",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "countryParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/CountryParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/GetRelationship": {
+        "get": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetRelationship",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/GetMobileVersion": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_GetMobileVersion",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "mobileVersionGetParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/MobileVersionGetParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Data/MobileVersionIu": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "operationId": "Data_MobileVersionIu",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "mobileVersionInsertParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/MobileVersionInsertParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Document/Upload": {
+        "post": {
+          "tags": [
+            "Document"
+          ],
+          "operationId": "Document_DocumentUpload",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "documentMobile",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/DocumentMobile"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/ExpenseRequest/Create": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_ExpenseRequestCreate",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "expenseRequestModel",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ExpenseRequestModel"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/RequestPreview": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_ExpenseRequestPreview",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "expenseRequestParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ExpenseRequestParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/RequestApprovals": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_ExpenseRequestApprovals",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "expenseActionParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ExpenseActionParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/TravelRequestsPendingForClaim": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_GetTravelRequestsPendingForClaim",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestsPendingForClaimParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestsPendingForClaimParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/TravelRequestBookedDetail": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_GetTravelRequestBookedDetail",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestBookedDetailParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestBookedDetailParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/ExpenseRequest/IsEligibleForDirectExpense": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_GetIsEligibleForDirectExpense",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "eligibilityParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/EligibilityParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/ValidateWorkflowExpenseMapped": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_ValidateWorkflowExpenseMapped",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateWorkflowExpenseMappedParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateWorkflowExpenseMappedParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/ValidateExpenseClaimLocalTravelConveyance": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_ValidateExpenseClaimLocalTravelConveyance",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateExpenseClaimLocalTravelConveyanceParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateExpenseClaimLocalTravelConveyanceParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/ExpensePolicyEntitlement": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_GetExpensePolicyEntitlement",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "expensePolicyEntitlementParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ExpensePolicyEntitlementParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/GetExpensePolicyEntitlementPerDiem": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_GetExpensePolicyEntitlementPerDiem",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "expensePolicyEntitlementDurationParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ExpensePolicyEntitlementDurationParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/Cancel": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_ExpenseCancel",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "expenseCancelParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ExpenseCancelParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/ValidateUserLeaveDateForClaim": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_ValidateUserLeaveDateForClaim",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateUserLeaveDateForClaimParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateUserLeaveDateForClaimParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/ValidateUserLeaveDateForDuration": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_ValidateUserLeaveDateForDuration",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateUserLeaveDateForDurationParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateUserLeaveDateForDurationParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/ValidateMarriageGiftPolicy": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_ValidateMarriageGiftPolicy",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "marriageGiftPolicyParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/MarriageGiftPolicyParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/ValidateMobileHandSetPurchasePolicy": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_ValidateMobileHandSetPurchasePolicy",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "mobileHandSetPurchasePolicyParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/MobileHandSetPurchasePolicyParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Expense/ValidateDuplicateBill": {
+        "post": {
+          "tags": [
+            "Expense"
+          ],
+          "operationId": "Expense_ValidateDuplicateBill",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateBillingParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateBillingParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Integration/SearchYatra": {
+        "post": {
+          "tags": [
+            "Integration"
+          ],
+          "operationId": "Integration_SearchYatra",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "searchYatraParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/SearchYatraParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Integration/GetTicketOptionsYatra": {
+        "post": {
+          "tags": [
+            "Integration"
+          ],
+          "operationId": "Integration_GetTicketOptionsYatra",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "ticketOptionsYatraParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TicketOptionsYatraParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Integration": {
+        "get": {
+          "tags": [
+            "Integration"
+          ],
+          "operationId": "Integration_GetAirRepriceParam",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "searchFormData",
+              "in": "query",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "optionId",
+              "in": "query",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/EcAirRepriceParam"
+              }
+            }
+          }
+        }
+      },
+      "/api/Travel/RequestPreview": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_GetTravelRequestPreview",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Travel/TravelRequestApprovals": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_TravelRequestApprovals",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestApprovalsParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestApprovalsParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Travel/ValidateTicketPriceCapping": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_ValidateTicketPriceCapping",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateTicketPriceCappingParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateTicketPriceCappingParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Travel/ValidateTravelAdvanceRestrictionPolicy": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_ValidateTravelAdvanceRestrictionPolicy",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateTravelAdvanceRestrictionPolicyParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateTravelAdvanceRestrictionPolicyParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Travel/ValidateTravelTicketPolicy": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_ValidateTravelTicketPolicy",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateTravelTicketPolicyParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateTravelTicketPolicyParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Travel/ValidateTravelAdvancePolicy": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_ValidateTravelAdvancePolicy",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateTravelAdvancePolicyParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateTravelAdvancePolicyParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Travel/ValidateTravelDateRestriction": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_ValidateTravelDateRestriction",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateTravelDateParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateTravelDateParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Travel/ValidateTravellerName": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_ValidateTravellerName",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateTravellerNameParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateTravellerNameParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Travel/ValidateUserGuestHouseEligibility": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_ValidateUserGuestHouseEligibility",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "employeePolicyParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/EmployeePolicyParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Travel/ValidateWorkflowTravelMapped": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_ValidateWorkflowTravelMapped",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateWorkflowTravelMappedParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateWorkflowTravelMappedParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Travel/ValidateGuestHouseEligibility": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_ValidateGuestHouseEligibility",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateGuestHouseEligibilityParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateGuestHouseEligibilityParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Travel/ValidateBackDatedTravelEntry": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_ValidateBackDatedTravelEntry",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validateBackDatedTravelEntryPolicyParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidateBackDatedTravelEntryPolicyParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Travel/TicketApiConfiguration": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_GetTicketApiConfiguration",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "ticketApiConfigurationParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TicketApiConfigurationParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/TravelRequest/TravelServiceRequestPendingAt": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_GetTravelServiceRequestPendingAt",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestActionPendingAtParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestActionPendingAtParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/TravelRequest/Create": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_RaiseTravelRequest",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestInsertParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestInsertParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/TravelRequest/Cancellation": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_TravelRequestCancellation",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestCancellationParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestCancellationParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/TravelRequest/TravelRequestRePricing": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_TravelRequestRePricing",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestRePricingParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestRePricingParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/TravelRequest/TravelRequestTicketPreferenceUpdate": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_TravelRequestTicketPreferenceUpdate",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestTicketPreference",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestTicketPreference"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/TravelRequest/TravelRequestBudgetSegregationIu": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_TravelRequestBudgetSegregationIu",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestBudgetSegregationInsertParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestBudgetSegregationInsertParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/TravelRequest/TravelRequestDateExtension": {
+        "post": {
+          "tags": [
+            "Travel"
+          ],
+          "operationId": "Travel_TravelRequestDateExtension",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "travelRequestDateExtensionParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TravelRequestDateExtensionParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/User/EmployeeProfile": {
+        "post": {
+          "tags": [
+            "User"
+          ],
+          "operationId": "User_GetEmployeeProfile",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "employeeProfileParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/EmployeeProfileParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/User/ValidatePasswordPolicy": {
+        "post": {
+          "tags": [
+            "User"
+          ],
+          "operationId": "User_ValidatePasswordPolicy",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "validatePasswordPolicyParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ValidatePasswordPolicyParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/User/ChangePassword": {
+        "post": {
+          "tags": [
+            "User"
+          ],
+          "operationId": "User_ChangePassword",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "userChangePasswordParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/UserChangePasswordParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Account/EmployeeMetaDataIu": {
+        "post": {
+          "tags": [
+            "User"
+          ],
+          "operationId": "User_EmployeeMetaDataIu",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "userMasterMetaDataInsertParam",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/UserMasterMetaDataInsertParam"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/DataSubmit"
+              }
+            }
+          }
+        }
+      },
+      "/api/Values": {
+        "get": {
+          "tags": [
+            "Values"
+          ],
+          "operationId": "Values_Get",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Values"
+          ],
+          "operationId": "Values_Post",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [],
+          "parameters": [
+            {
+              "name": "value",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      },
+      "/api/Values/{id}": {
+        "get": {
+          "tags": [
+            "Values"
+          ],
+          "operationId": "Values_Get",
+          "consumes": [],
+          "produces": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "integer",
+              "format": "int32"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Values"
+          ],
+          "operationId": "Values_Put",
+          "consumes": [
+            "application/json",
+            "text/json",
+            "application/xml",
+            "text/xml",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "integer",
+              "format": "int32"
+            },
+            {
+              "name": "value",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Values"
+          ],
+          "operationId": "Values_Delete",
+          "consumes": [],
+          "produces": [],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "integer",
+              "format": "int32"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "No Content"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "LoginViewModel": {
+        "required": [
+          "EmployeeCode",
+          "Password"
+        ],
+        "type": "object",
+        "properties": {
+          "EmployeeCode": {
+            "type": "string"
+          },
+          "Password": {
+            "type": "string"
+          },
+          "LogInTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IpAddress": {
+            "type": "string"
+          },
+          "Browser": {
+            "type": "string"
+          },
+          "UserTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "AppVersion": {
+            "type": "string"
+          },
+          "IMEI": {
+            "type": "string"
+          },
+          "AppBaseUrl": {
+            "type": "string"
+          },
+          "ClientCode": {
+            "type": "string"
+          }
+        }
+      },
+      "DataSubmit": {
+        "type": "object",
+        "properties": {
+          "ResponseCode": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ResponseMessage": {
+            "type": "string"
+          },
+          "ResponseValue": {
+            "type": "object"
+          }
+        }
+      },
+      "UserDataSessionIdParam": {
+        "type": "object",
+        "properties": {
+          "SessionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "ForgotPasswordParam": {
+        "type": "object",
+        "properties": {
+          "Email": {
+            "type": "string"
+          },
+          "Otp": {
+            "type": "string"
+          }
+        }
+      },
+      "ForgotPasswordCustomParam": {
+        "type": "object",
+        "properties": {
+          "EmployeeCode": {
+            "type": "string"
+          },
+          "DateOfBirth": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "DateOfJoin": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "Otp": {
+            "type": "string"
+          }
+        }
+      },
+      "ResetPasswordParam": {
+        "type": "object",
+        "properties": {
+          "Reference": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "Password": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthenticationGetParam": {
+        "type": "object",
+        "properties": {
+          "CompanyUrl": {
+            "type": "string"
+          },
+          "Identifier": {
+            "type": "string"
+          },
+          "IpAddress": {
+            "type": "string"
+          },
+          "Browser": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelRequestDashboardParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelRequestApprovalsDashboardParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ExpenseRequestDashboardParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ExpenseRequestApprovalsDashboardParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "MobileAppDashboardDataParam": {
+        "type": "object",
+        "properties": {
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ConversionRateAgainstBaseCurrencyParam": {
+        "type": "object",
+        "properties": {
+          "CurrencyId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceDate": {
+            "format": "date-time",
+            "type": "string"
+          }
+        }
+      },
+      "ConversionRateParam": {
+        "type": "object",
+        "properties": {
+          "FromCurrencyId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ToCurrencyId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceDate": {
+            "format": "date-time",
+            "type": "string"
+          }
+        }
+      },
+      "CityAutocompleteParam": {
+        "type": "object",
+        "properties": {
+          "SearchText": {
+            "type": "string"
+          },
+          "TravelTypeId": {
+            "type": "string"
+          }
+        }
+      },
+      "GradeGetParam": {
+        "type": "object",
+        "properties": {
+          "CityId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "Type": {
+            "type": "string"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "AutoCompleteSearchTextParam": {
+        "type": "object",
+        "properties": {
+          "SearchText": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelClassViewParam": {
+        "type": "object",
+        "properties": {
+          "TravelModeId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "CountryCodeParam": {
+        "type": "object",
+        "properties": {
+          "CityId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "GuestHouseListParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CityId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "RequestForId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CheckInDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "CheckOutDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "TravelRequestGroupType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestGroupType"
+            }
+          },
+          "TravelRequestVisitorType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestVisitorType"
+            }
+          }
+        }
+      },
+      "TravelRequestGroupType": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsGroupLeader": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TravelRequestVisitorType": {
+        "type": "object",
+        "properties": {
+          "TravelRequestVisitorId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "FisrtName": {
+            "type": "string"
+          },
+          "LastName": {
+            "type": "string"
+          },
+          "AgeGroup": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Age": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Gender": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Nationality": {
+            "type": "string"
+          },
+          "MobileNumber": {
+            "type": "string"
+          },
+          "Organization": {
+            "type": "string"
+          },
+          "IdentityReferenceId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IdentityReference": {
+            "type": "string"
+          },
+          "Remarks": {
+            "type": "string"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "TravelHelpDeskAdminParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CityListType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CityListType"
+            }
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "CityListType": {
+        "type": "object",
+        "properties": {
+          "CityId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "FromCity": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CountryParam": {
+        "type": "object",
+        "properties": {
+          "CountryId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "MobileVersionGetParam": {
+        "type": "object",
+        "properties": {
+          "PlatFormId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "VersionDetails": {
+            "type": "string"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "MobileVersionInsertParam": {
+        "type": "object",
+        "properties": {
+          "PlatFormId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Version": {
+            "type": "string"
+          },
+          "VersionCode": {
+            "type": "string"
+          },
+          "VersionDetails": {
+            "type": "string"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "DocumentMobile": {
+        "type": "object",
+        "properties": {
+          "ImageString": {
+            "type": "string"
+          },
+          "FileName": {
+            "type": "string"
+          },
+          "FileExtension": {
+            "type": "string"
+          }
+        }
+      },
+      "ExpenseRequestModel": {
+        "type": "object",
+        "properties": {
+          "ExpenseRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "RequestForId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "RequesterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "RequestDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "Purpose": {
+            "type": "string"
+          },
+          "CostCentreId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "BillableCostCentreId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Remarks": {
+            "type": "string"
+          },
+          "IsDraft": {
+            "type": "boolean"
+          },
+          "ExpenseRequestDetailType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ExpenseRequestDetailType"
+            }
+          },
+          "ExpenseRequestMetaDataType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ExpenseRequestMetaDataType"
+            }
+          },
+          "ExpenseRequestDetailMetaDataType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ExpenseRequestDetailMetaDataType"
+            }
+          },
+          "ExpenseRequestGstType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ExpenseRequestGstType"
+            }
+          },
+          "RelocationExpenseOtherVendorQuoteDetailsType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/RelocationExpenseOtherVendorQuoteDetailsType"
+            }
+          },
+          "DocumentType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DocumentTyp"
+            }
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "ExpenseRequestDetailType": {
+        "type": "object",
+        "properties": {
+          "ExpenseRequestDetailId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseCategoryId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CityId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CityGradeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CountryId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CountryGradeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ClaimDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "PaymentModeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ClaimAmount": {
+            "format": "double",
+            "type": "number"
+          },
+          "CurrencyId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ConversionRate": {
+            "format": "double",
+            "type": "number"
+          },
+          "ClaimAmountInBaseCurrency": {
+            "format": "double",
+            "type": "number"
+          },
+          "IsEntitlementActuals": {
+            "type": "boolean"
+          },
+          "EntitlementAmount": {
+            "format": "double",
+            "type": "number"
+          },
+          "EntitlementCurrencyId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "EntitlementConversionRate": {
+            "format": "double",
+            "type": "number"
+          },
+          "ApprovedAmount": {
+            "format": "double",
+            "type": "number"
+          },
+          "ClaimStatusId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsViolation": {
+            "type": "boolean"
+          },
+          "Violation": {
+            "type": "string"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "IsTravelRaiseRequest": {
+            "type": "boolean"
+          },
+          "TaxAmount": {
+            "type": "string"
+          }
+        }
+      },
+      "ExpenseRequestMetaDataType": {
+        "type": "object",
+        "properties": {
+          "ExpenseRequestMetaDataId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseRequestMetaId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IntegerValue": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "NumericValue": {
+            "format": "double",
+            "type": "number"
+          },
+          "DatetimeValue": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "VarcharValue": {
+            "type": "string"
+          },
+          "BitValue": {
+            "type": "boolean"
+          },
+          "UniqueIdentifierValue": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "RelatedToId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionReference": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "ExpenseRequestDetailMetaDataType": {
+        "type": "object",
+        "properties": {
+          "ExpenseRequestMetaDataId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseRequestMetaId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseRequestDetailId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IntegerValue": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "NumericValue": {
+            "format": "double",
+            "type": "number"
+          },
+          "DatetimeValue": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "VarcharValue": {
+            "type": "string"
+          },
+          "BitValue": {
+            "type": "boolean"
+          },
+          "UniqueIdentifierValue": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "RelatedToId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionReference": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "ExpenseRequestGstType": {
+        "type": "object",
+        "properties": {
+          "ExpenseRequestGstTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseRequestDetailId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "GstIn": {
+            "type": "string"
+          },
+          "VendorName": {
+            "type": "string"
+          },
+          "InvoiceNumber": {
+            "type": "string"
+          },
+          "Amount": {
+            "format": "double",
+            "type": "number"
+          },
+          "Basic": {
+            "format": "double",
+            "type": "number"
+          },
+          "CGST": {
+            "format": "double",
+            "type": "number"
+          },
+          "SGST": {
+            "format": "double",
+            "type": "number"
+          },
+          "IGST": {
+            "format": "double",
+            "type": "number"
+          },
+          "UGST": {
+            "format": "double",
+            "type": "number"
+          },
+          "CESS": {
+            "format": "double",
+            "type": "number"
+          },
+          "Gross": {
+            "format": "double",
+            "type": "number"
+          },
+          "HSN_SAC_Code": {
+            "type": "string"
+          },
+          "StateCode": {
+            "type": "string"
+          },
+          "TaxCode": {
+            "type": "string"
+          },
+          "CostcenterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionReference": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "RelocationExpenseOtherVendorQuoteDetailsType": {
+        "type": "object",
+        "properties": {
+          "RelocationExpenseOtherVendorQuoteDetailsTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseRequestDetailId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "VendorName": {
+            "type": "string"
+          },
+          "QuoteNumber": {
+            "type": "string"
+          },
+          "QuoteDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "Amount": {
+            "format": "double",
+            "type": "number"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "TransactionReference": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "DocumentTyp": {
+        "type": "object",
+        "properties": {
+          "DocumentId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceType": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ModuleId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "RequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "FileName": {
+            "type": "string"
+          },
+          "Guid": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "Location": {
+            "type": "string"
+          },
+          "Remarks": {
+            "type": "string"
+          },
+          "Password": {
+            "type": "string"
+          },
+          "TransactionReference": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "ExpenseRequestParam": {
+        "type": "object",
+        "properties": {
+          "ExpenseRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ExpenseActionParam": {
+        "type": "object",
+        "properties": {
+          "ExpenseRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Remarks": {
+            "type": "string"
+          },
+          "AdjustmentRemarks": {
+            "type": "string"
+          },
+          "ApprovalAction": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "AdjustmentAmount": {
+            "format": "double",
+            "type": "number"
+          },
+          "AdjustmentCurrencyId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseRequestApprovalDetailType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ExpenseRequestApprovalDetailType"
+            }
+          },
+          "ExpenseRequestGstType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ExpenseRequestGstType"
+            }
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ExpenseRequestApprovalDetailType": {
+        "type": "object",
+        "properties": {
+          "ExpenseRequestDetailId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ApprovedAmount": {
+            "format": "double",
+            "type": "number"
+          },
+          "ApproverId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ApproverRemarks": {
+            "type": "string"
+          },
+          "ActionStatusId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelRequestsPendingForClaimParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelRequestBookedDetailParam": {
+        "type": "object",
+        "properties": {
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "EligibilityParam": {
+        "type": "object",
+        "properties": {
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "ValidateWorkflowExpenseMappedParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseClaimTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "RequestForId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "ValidateExpenseClaimLocalTravelConveyanceParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsKmLimitRequired": {
+            "type": "boolean"
+          },
+          "DistanceLimitPerDay": {
+            "format": "double",
+            "type": "number"
+          },
+          "Distance": {
+            "format": "double",
+            "type": "number"
+          },
+          "LocalTravelMode": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ClaimedDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "ExpensePolicyEntitlementParam": {
+        "type": "object",
+        "properties": {
+          "ClaimTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseCategoryId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "CityGradeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CountryGradeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "PolicyReferenceId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseRequestMetaDataType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ExpenseRequestMetaDataType"
+            }
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ExpensePolicyEntitlementDurationParam": {
+        "type": "object",
+        "properties": {
+          "ClaimTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseCategoryId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceFromDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "ReferenceToDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "CityGradeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CountryGradeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "PolicyReferenceId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ExpenseRequestMetaDataType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ExpenseRequestMetaDataType"
+            }
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ExpenseCancelParam": {
+        "type": "object",
+        "properties": {
+          "ExpenseRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Remarks": {
+            "type": "string"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ValidateUserLeaveDateForClaimParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ClaimedDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "ValidateUserLeaveDateForDurationParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "FromDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "ToDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "MarriageGiftPolicyParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "ExpenseRequestId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "MobileHandSetPurchasePolicyParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "ExpenseRequestId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "ValidateBillingParam": {
+        "type": "object",
+        "properties": {
+          "ExpenseCategoryId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "BillingFromDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "BillingToDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "BillNumber": {
+            "type": "string"
+          },
+          "BillDate": {
+            "type": "string"
+          },
+          "Vendor": {
+            "type": "string"
+          },
+          "Amount": {
+            "type": "string"
+          }
+        }
+      },
+      "SearchYatraParam": {
+        "type": "object",
+        "properties": {
+          "ArrivalCityCode": {
+            "type": "string"
+          },
+          "DepartureCityCode": {
+            "type": "string"
+          },
+          "AdultCount": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "ChildCount": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "InfantCount": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Class": {
+            "type": "string"
+          },
+          "FlightDepartDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "ArrivalCountryCode": {
+            "type": "string"
+          },
+          "DepartureCountryCode": {
+            "type": "string"
+          },
+          "ReferenceEmployeeId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "TicketOptionsYatraParam": {
+        "type": "object",
+        "properties": {
+          "TripId": {
+            "type": "string"
+          },
+          "SearchQueryId": {
+            "type": "string"
+          },
+          "DepartureDatetime": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "DepartureDateTimeString": {
+            "type": "string",
+            "readOnly": true
+          },
+          "ArrivalDateTime": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "ArrivalDateTimeString": {
+            "type": "string",
+            "readOnly": true
+          },
+          "IsNonStop": {
+            "type": "boolean"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "IsVerticalDesign": {
+            "type": "boolean"
+          }
+        }
+      },
+      "EcAirRepriceParam": {
+        "type": "object",
+        "properties": {
+          "Data": {
+            "$ref": "#/definitions/EcAirRepriceDataParam"
+          }
+        }
+      },
+      "EcAirRepriceDataParam": {
+        "type": "object",
+        "properties": {
+          "AirOriginDestinationOptions": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "SearchFormData": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelRequestParam": {
+        "type": "object",
+        "properties": {
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelRequestApprovalsParam": {
+        "type": "object",
+        "properties": {
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Remarks": {
+            "type": "string"
+          },
+          "ApprovalAction": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelApprovalServiceType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelApprovalServiceType"
+            }
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelApprovalServiceType": {
+        "type": "object",
+        "properties": {
+          "ServiceTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ActionId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Remarks": {
+            "type": "string"
+          }
+        }
+      },
+      "ValidateTicketPriceCappingParam": {
+        "type": "object",
+        "properties": {
+          "FromCityId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ToCityId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "ValidateTravelAdvanceRestrictionPolicyParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "RequestForId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "ValidateTravelTicketPolicyParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelModeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelClassId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "RequestForId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "FromCityId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ToCityId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "TravelRequestGroupType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestGroupType"
+            }
+          }
+        }
+      },
+      "ValidateTravelAdvancePolicyParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "RequestForId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelStartDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "TravelEndDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "TravelRequestAdvanceType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestAdvanceType"
+            }
+          },
+          "TravelRequestAdvanceCountryWiseType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestAdvanceCountryWiseType"
+            }
+          }
+        }
+      },
+      "TravelRequestAdvanceType": {
+        "type": "object",
+        "properties": {
+          "TravelRequestAdvanceTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CurrencyAsPerPolicy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "AmountAsPerPolicy": {
+            "format": "double",
+            "type": "number"
+          },
+          "Currency": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Amount": {
+            "format": "double",
+            "type": "number"
+          },
+          "DisbursementMode": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CollectionOn": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "Remarks": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelRequestAdvanceCountryWiseType": {
+        "type": "object",
+        "properties": {
+          "TravelRequestAdvanceCountryWiseId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CountryId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "NoOfDays": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "NoOfFullDays": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ValidateTravelDateParam": {
+        "type": "object",
+        "properties": {
+          "TravelTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelStartDate": {
+            "format": "date-time",
+            "type": "string"
+          }
+        }
+      },
+      "ValidateTravellerNameParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "RequestForId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "EmployeePolicyParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ValidateWorkflowTravelMappedParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "RequestForId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "ValidateGuestHouseEligibilityParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "RequestForId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CityId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CheckInDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "CheckOutDate": {
+            "format": "date-time",
+            "type": "string"
+          }
+        }
+      },
+      "ValidateBackDatedTravelEntryPolicyParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelEndDateTime": {
+            "format": "date-time",
+            "type": "string"
+          }
+        }
+      },
+      "TicketApiConfigurationParam": {
+        "type": "object",
+        "properties": {
+          "TravelModeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelTypeId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelRequestActionPendingAtParam": {
+        "type": "object",
+        "properties": {
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelRequestInsertParam": {
+        "type": "object",
+        "properties": {
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelRequestForId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelDateFrom": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "TravelDateTo": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "EmployeeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceEmployeeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsDraft": {
+            "type": "boolean"
+          },
+          "IsPostFacto": {
+            "type": "boolean"
+          },
+          "IsTravelDateRestriction": {
+            "type": "boolean"
+          },
+          "TravelRequestMetaDataType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestMetaDataType"
+            }
+          },
+          "TravelRequestGroupType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestGroupType"
+            }
+          },
+          "TravelRequestVisitorType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestVisitorType"
+            }
+          },
+          "TravelRequestServiceMappingType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestServiceMappingType"
+            }
+          },
+          "TravelRequestTicketType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestTicketType"
+            }
+          },
+          "TravelRequestAccommodationType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestAccommodationType"
+            }
+          },
+          "TravelRequestCabType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestCabType"
+            }
+          },
+          "TravelRequestAdvanceType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestAdvanceType"
+            }
+          },
+          "TravelRequestAdvanceCountryWiseType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestAdvanceCountryWiseType"
+            }
+          },
+          "TravelRequestTicketOptionApiType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestTicketOptionApiType"
+            }
+          },
+          "TravelRequestLeaveType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestLeaveInsertParam"
+            }
+          },
+          "Documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Document"
+            }
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelRequestMetaDataType": {
+        "type": "object",
+        "properties": {
+          "TravelRequestMetaId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IntegerValue": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "NumericValue": {
+            "format": "double",
+            "type": "number"
+          },
+          "DatetimeValue": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "VarcharValue": {
+            "type": "string"
+          },
+          "BitValue": {
+            "type": "boolean"
+          },
+          "UniqueIdentifierValue": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "RelatedToId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelRequestServiceMappingType": {
+        "type": "object",
+        "properties": {
+          "ServiceId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ServiceTypeId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelRequestTicketType": {
+        "type": "object",
+        "properties": {
+          "TravelRequestTicketId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Origin": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Destination": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "DepartureDatetime": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "ArrivalDatetime": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "TravelMode": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelClass": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TicketSearchConstraintId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Remarks": {
+            "type": "string"
+          },
+          "IsViolation": {
+            "type": "boolean"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "IsAPI": {
+            "type": "boolean"
+          },
+          "IsSelfBookedTicket": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TravelRequestAccommodationType": {
+        "type": "object",
+        "properties": {
+          "TravelRequestAccommodationId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "StayType": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "StayReferenceId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Location": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CheckIn": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "CheckOut": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "NumberOfNight": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "NumberOfRoom": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "SpecialInstruction": {
+            "type": "string"
+          },
+          "ServiceAgentReferenceId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelRequestCabType": {
+        "type": "object",
+        "properties": {
+          "TravelRequestCabId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "PickupLocation": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "PickupAddress": {
+            "type": "string"
+          },
+          "PickupDatetime": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "DestinationLocation": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "DestinationAddress": {
+            "type": "string"
+          },
+          "ReturnDatetime": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "PaxCount": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "CarType": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CabTripType": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ServiceAgentReferenceId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Remarks": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelRequestTicketOptionApiType": {
+        "type": "object",
+        "properties": {
+          "TripId": {
+            "type": "string"
+          },
+          "FlightIdentifier": {
+            "type": "string"
+          },
+          "IsSelected": {
+            "type": "boolean"
+          },
+          "Remarks": {
+            "type": "string"
+          },
+          "TransactionReference": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "TravelRequestLeaveInsertParam": {
+        "type": "object",
+        "properties": {
+          "TravelRequesLeaveId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "LeaveFromDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "LeaveToDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "LeaveRemarks": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "Document": {
+        "type": "object",
+        "properties": {
+          "DocumentId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceType": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ModuleId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "RequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "FileName": {
+            "type": "string"
+          },
+          "Guid": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "Location": {
+            "type": "string"
+          },
+          "Remarks": {
+            "type": "string"
+          },
+          "Password": {
+            "type": "string"
+          },
+          "TransactionReference": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "TravelRequestCancellationParam": {
+        "type": "object",
+        "properties": {
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Remarks": {
+            "type": "string"
+          },
+          "IsCancelCompleteRequest": {
+            "type": "boolean"
+          },
+          "TravelCancellationServiceType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelCancellationServiceType"
+            }
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelCancellationServiceType": {
+        "type": "object",
+        "properties": {
+          "ServiceTypeId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ReferenceId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "Remarks": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelRequestRePricingParam": {
+        "type": "object",
+        "properties": {
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelRequestTicketPreference": {
+        "type": "object",
+        "properties": {
+          "TravelRequestTicketId": {
+            "type": "string"
+          },
+          "TravelRequestTicketPreferenceType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestTicketPreferenceType"
+            }
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelRequestTicketPreferenceType": {
+        "type": "object",
+        "properties": {
+          "TravelRequestTicketOptionId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsPreferred": {
+            "type": "boolean"
+          },
+          "PreferenceSequence": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Remarks": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelRequestBudgetSegregationInsertParam": {
+        "type": "object",
+        "properties": {
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ApprovalAction": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelRequestMetaDataType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TravelRequestMetaDataType"
+            }
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "TravelRequestDateExtensionParam": {
+        "type": "object",
+        "properties": {
+          "TravelRequestId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TravelDateFrom": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "TravelDateTo": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "Remarks": {
+            "type": "string"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "EmployeeProfileParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ValidatePasswordPolicyParam": {
+        "type": "object",
+        "properties": {
+          "Password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserChangePasswordParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "CurrentPassword": {
+            "type": "string"
+          },
+          "NewPassword": {
+            "type": "string"
+          },
+          "ConfirmPassword": {
+            "type": "string"
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "UserMasterMetaDataInsertParam": {
+        "type": "object",
+        "properties": {
+          "UserMasterId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "UserMasterMetaDataType": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/UserMasterMetaDataType"
+            }
+          },
+          "IsActive": {
+            "type": "boolean"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "ActionBy": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "TransactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CommunicationSeenCount": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "UserMasterMetaDataType": {
+        "type": "object",
+        "properties": {
+          "UserMasterMetaId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "IntegerValue": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "NumericValue": {
+            "format": "double",
+            "type": "number"
+          },
+          "DatetimeValue": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "VarcharValue": {
+            "type": "string"
+          },
+          "BitValue": {
+            "type": "boolean"
+          },
+          "UniqueIdentifierValue": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "RelatedToId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }

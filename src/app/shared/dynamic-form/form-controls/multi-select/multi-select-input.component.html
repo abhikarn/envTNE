@@ -23,7 +23,7 @@
   </mat-select>
   @if (control.invalid && control.touched) {
     <mat-error>
-      {{ getErrorMessage() }}
+      {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
     </mat-error>
   }
 </mat-form-field>
