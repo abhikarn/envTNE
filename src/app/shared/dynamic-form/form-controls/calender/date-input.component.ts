@@ -23,6 +23,15 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 export class DateInputComponent {
   @Input() control: FormControl = new FormControl(null);
   @Input() controlConfig: IFormControl = {name: ''};
+  
+  ngOnInit() {
+    this.control.valueChanges.subscribe(value => {
+      if (value instanceof Date) {
+        const isoDate = value.toISOString(); // Convert to ISO 8601 format
+        this.control.setValue(isoDate, { emitEvent: false }); // Prevent infinite loop
+      }
+    });
+  }
 
   getErrorMessage(): string {
     if (!this?.controlConfig?.validations) return '';

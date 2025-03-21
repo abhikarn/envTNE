@@ -3,7 +3,7 @@
   <mat-select [formControl]="control" placeholder="{{controlConfig.placeholder || 'Select an option'}}"
     (selectionChange)="onSelectionChange($event)">
     @for (option of controlConfig.options; track trackByFn($index, option)) {
-      <mat-option [value]="option.Id || option.KeyDataId || option.Key">
+      <mat-option [value]="option">
         {{ option.Name || option.KeyData || option.Value}}
       </mat-option>
     }

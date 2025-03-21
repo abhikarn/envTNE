@@ -31,6 +31,7 @@ export class TextInputComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.controlConfig.autoComplete)
     this.control.valueChanges.subscribe(inputValue => {
       this.emitInputValue.emit(inputValue);
     })

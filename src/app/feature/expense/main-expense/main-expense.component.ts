@@ -2,7 +2,7 @@
 import { Component, DestroyRef, ElementRef, inject, ViewChild } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabsModule } from '@angular/material/tabs';
-import { CityAutocompleteParam, DataService, ExpenseService, TravelService } from '../../../../../tne-api';
+import { CityAutocompleteParam, DataService, ExpenseRequestModel, ExpenseService, TravelService } from '../../../../../tne-api';
 import { forkJoin, map, Observable, of, startWith, switchMap, take } from 'rxjs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -47,10 +47,10 @@ export class MainExpenseComponent {
   localTravelTypeList: any;
   localTravelModeList: any;
   private destroyRef = inject(DestroyRef);
-  categories: { name: string; formControls: IFormControl[] }[] = [];
-  mainExpenseData: any = {
-    expenseRequestDetailType: []
-  };
+  categories: any = [];
+  mainExpenseData: ExpenseRequestModel = {};
+  costcenterId: any;
+  purpose: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -79,7 +79,7 @@ export class MainExpenseComponent {
       boMealsList: this.dataService.dataGetMealType(),
       localTravelTypeList: this.dataService.dataGetLocalTravelType(),
       localTravelModeList: this.dataService.dataGetLocalTravelMode(),
-      expenseConfig: this.http.get<{ name: string; formControls: IFormControl[] }[]>('/assets/config/expense-config.json')
+      expenseConfig: this.http.get<any>('/assets/config/expense-config.json')
     }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (responses) => {
         // Handle all the API responses here
@@ -105,9 +105,9 @@ export class MainExpenseComponent {
           LocalTravelType: this.localTravelTypeList,
           LocalTravelMode: this.localTravelModeList
         };
-        this.categories = responses.expenseConfig.map(category => ({
+        this.categories = responses.expenseConfig.map((category: any) => ({
           ...category,
-          formControls: category.formControls.map(control => ({
+          formControls: category.formControls.map((control: any) => ({
             ...control,
             options: optionMapping[control.name] || control.options,
             // option$: typeof control.option$ === 'string' && control.option$ === 'filteredCities$'
@@ -131,6 +131,9 @@ export class MainExpenseComponent {
       this.travelService.travelGetTravelRequestPreview({TravelRequestId: travelRequestId}).pipe(take(1)).subscribe({
         next: (response) => {
           this.travelRequestPreview = response.ResponseValue;
+          this.costcenterId = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 4)?.IntegerValue;
+          this.purpose = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 1)?.IntegerValueReference;
+
         },
         error: (error) => {
           console.error('Error fetching travel request preview:', error);
@@ -146,20 +149,6 @@ export class MainExpenseComponent {
         }
       })
       
-    }
-  }
-
-  onSelectTravelMode(event: any) {
-    let travelModeKey = event.target.value || 0;
-    if (travelModeKey) {
-      this.dataService.dataGetTravelClass({TravelModeId:travelModeKey}).pipe(take(1)).subscribe({
-        next: (response) => {
-          this.travelClassList = response;
-        },
-        error: (error) => {
-          console.error('Error fetching travel modes:', error);
-        }
-      })
     }
   }
 
@@ -185,7 +174,7 @@ export class MainExpenseComponent {
   }
 
   onTravelModeChange(event: any, field: any) {
-    const selectedTravelModeId = event.value;
+    const selectedTravelModeId = event.value.Id || 0;
     console.log(`Selected ${field.name}:`, selectedTravelModeId);
 
     if (!selectedTravelModeId) {
@@ -198,8 +187,8 @@ export class MainExpenseComponent {
         this.travelClassList = travelClasses.ResponseValue;
 
         // Update only the relevant control instead of replacing the whole categories array
-        this.categories.forEach(category => {
-          category.formControls.forEach(control => {
+        this.categories.forEach((category: any) => {
+          category.formControls.forEach((control: any) => {
             if (control.name === 'AvailedClass') {
               control.options = this.travelClassList; // Update only options, avoid object replacement
             }
@@ -215,6 +204,7 @@ export class MainExpenseComponent {
   }
 
   getFormData(categoryFormData: any) {
+    console.log(categoryFormData)
     let data = categoryFormData.data;
     if(categoryFormData.category == 'Tickets Expense') {
       const requestBody = {
@@ -239,20 +229,175 @@ export class MainExpenseComponent {
         }
       })
     }
-    this.mainExpenseData.expenseRequestDetailType.push(categoryFormData.data);
+    this.prepareExpenseRequestPayload();
+    this.mainExpenseData.ExpenseRequestDetailType = this.mainExpenseData.ExpenseRequestDetailType ?? [];
+    this.mainExpenseData.ExpenseRequestDetailType.push({
+      "ExpenseRequestDetailId": 0,
+      "ExpenseRequestId": 0,
+      "ExpenseCategoryId": categoryFormData.categoryId,
+      "CityId": 0,
+      "CityGradeId": 0,
+      "CountryId": 0,
+      "CountryGradeId": 0,
+      "ClaimDate": "2025-03-19T08:37:29.629Z",
+      "PaymentModeId": data.PaymentType.KeyDataId || 0,
+      "ClaimAmount": data.Amount || 0,
+      "CurrencyId": data.Currency.Id || 0,
+      "ConversionRate": data.ConversionRate || 0,
+      "ClaimAmountInBaseCurrency": 0,
+      "IsEntitlementActuals": true,
+      "EntitlementAmount": 0,
+      "EntitlementCurrencyId": 0,
+      "EntitlementConversionRate": 0,
+      "ApprovedAmount": 0,
+      "ClaimStatusId": 0,
+      "IsViolation": true,
+      "Violation": "",
+      "TransactionId": "00000000-0000-0000-0000-000000000000",
+      "IsTravelRaiseRequest": true,
+      "TaxAmount": ""
+    });
+
+    this.mainExpenseData.ExpenseRequestMetaDataType = [];
+    this.mainExpenseData.ExpenseRequestDetailMetaDataType = this.mainExpenseData.ExpenseRequestDetailMetaDataType ?? [];
+    this.mainExpenseData.ExpenseRequestDetailMetaDataType?.push(
+      {
+        "ExpenseRequestMetaDataId": 0,
+        "ExpenseRequestMetaId": 1,
+        "ExpenseRequestDetailId": 0,
+        "IntegerValue": data.TravelMode.Id || 0,
+        "NumericValue": 0,
+        "DatetimeValue": "",
+        "VarcharValue": "",
+        "BitValue": true,
+        "RelatedToId": 0,
+      }
+    );
+    this.mainExpenseData.ExpenseRequestDetailMetaDataType?.push(
+      {
+        "ExpenseRequestMetaDataId": 0,
+        "ExpenseRequestMetaId": 2,
+        "ExpenseRequestDetailId": 0,
+        "IntegerValue": data.AvailedClass.Id || 0,
+        "NumericValue": 0,
+        "DatetimeValue": "",
+        "VarcharValue": "",
+        "BitValue": true,
+        "RelatedToId": 0,
+      }
+    );
+    this.mainExpenseData.ExpenseRequestDetailMetaDataType?.push(
+      {
+        "ExpenseRequestMetaDataId": 0,
+        "ExpenseRequestMetaId": 3,
+        "ExpenseRequestDetailId": 0,
+        "IntegerValue": 0,
+        "NumericValue": 0,
+        "DatetimeValue": data.TravelDate || '',
+        "VarcharValue": "",
+        "BitValue": true,
+        "RelatedToId": 0,
+      }
+    );
+    this.mainExpenseData.ExpenseRequestDetailMetaDataType?.push(
+      {
+        "ExpenseRequestMetaDataId": 0,
+        "ExpenseRequestMetaId": 4,
+        "ExpenseRequestDetailId": 0,
+        "IntegerValue": data.Origin.CityMasterId || 0,
+        "NumericValue": 0,
+        "DatetimeValue": "",
+        "VarcharValue": "",
+        "BitValue": true,
+        "RelatedToId": 0,
+      }
+    );
+    this.mainExpenseData.ExpenseRequestDetailMetaDataType?.push(
+      {
+        "ExpenseRequestMetaDataId": 0,
+        "ExpenseRequestMetaId": 5,
+        "ExpenseRequestDetailId": 0,
+        "IntegerValue": data.Destination.CityMasterId || 0,
+        "NumericValue": 0,
+        "DatetimeValue": "",
+        "VarcharValue": "",
+        "BitValue": true,
+        "RelatedToId": 0,
+      }
+    );
+    this.mainExpenseData.ExpenseRequestDetailMetaDataType?.push(
+      {
+        "ExpenseRequestMetaDataId": 0,
+        "ExpenseRequestMetaId": 9,
+        "ExpenseRequestDetailId": 0,
+        "IntegerValue": 0,
+        "NumericValue": 0,
+        "DatetimeValue": "",
+        "VarcharValue": data.Remarks,
+        "BitValue": true,
+        "RelatedToId": 0,
+      }
+    );
+    this.mainExpenseData.ExpenseRequestGstType = this.mainExpenseData.ExpenseRequestGstType ?? [];
+    data?.GSTDetails?.data?.forEach((gstData: any) => {
+      this.mainExpenseData.ExpenseRequestGstType?.push({
+        "ExpenseRequestGstTypeId": 0,
+        "ExpenseRequestDetailId": 0,
+        "GstIn": gstData.GstIn,
+        "VendorName": "string",
+        "InvoiceNumber": gstData.InvoiceNumber,
+        "Amount": gstData.Amount,
+        "Basic": 0,
+        "CGST": gstData.CGST,
+        "SGST": gstData.SGST,
+        "IGST": gstData.IGST,
+        "UGST": gstData.UGST,
+        "CESS": 0,
+        "Gross": 0,
+        "HSN_SAC_Code": "",
+        "StateCode": "",
+        "TaxCode": "",
+        "CostcenterId": this.costcenterId
+      })
+    })
+    this.mainExpenseData.RelocationExpenseOtherVendorQuoteDetailsType = [];
+    this.mainExpenseData.DocumentType = [];
     console.log(this.mainExpenseData);
+    this.createTravelRequest();
+  }
+
+  prepareExpenseRequestPayload() {
+    this.mainExpenseData.ExpenseRequestId = 0;
+    this.mainExpenseData.RequestForId = this.travelRequestPreview.RequestForId;
+    this.mainExpenseData.RequesterId = 4;
+    this.mainExpenseData.TravelRequestId = this.travelRequestPreview.TravelRequestId;
+    this.mainExpenseData.RequestDate = new Date().toISOString();
+    this.mainExpenseData.Purpose = this.purpose;
+    this.mainExpenseData.CostCentreId = this.costcenterId;
+    this.mainExpenseData.BillableCostCentreId = this.mainExpenseData.CostCentreId;
+    this.mainExpenseData.Remarks = '';
+    this.mainExpenseData.IsDraft = false;
+    this.mainExpenseData.ActionBy = 0;
+  }
+
+  createTravelRequest() {
+    this.expenseService.expenseExpenseRequestCreate(this.mainExpenseData).pipe(take(1)).subscribe({
+      next: (response) => {
+        console.log(response);
+      }
+    })
   }
 
   getTextData(inputData: any) {
     const requestBody = {
       "SearchText": inputData,
-      "TravelTypeId": this.travelRequestPreview.TravelTypeId
+      "TravelTypeId": this.travelRequestPreview.TravelTypeId || 0
     }
     this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
       next: (response: any) => {
         // Update only the relevant control instead of replacing the whole categories array
-        this.categories.forEach(category => {
-          category.formControls.forEach(control => {
+        this.categories.forEach((category: any) => {
+          category.formControls.forEach((control: any) => {
             if (control.autoComplete) {
               control.options = response.ResponseValue; // Update only options, avoid object replacement
             }

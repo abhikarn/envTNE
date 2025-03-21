@@ -33,7 +33,7 @@ import { GstComponent } from './form-controls/gst/gst.component';
   styleUrls: ['./dynamic-form.component.scss']
 })
 export class DynamicFormComponent implements OnInit {
-  @Input() category: string = '';
+  @Input() categoryId: number = 0;
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
   @Output() emitFormData = new EventEmitter<any>();
@@ -75,7 +75,7 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.formData.category = this.category;
+    this.formData.categoryId = this.categoryId;
     this.formData.data = this.form.value;
     console.log(this.form)
     console.log(Object.keys(this.form.controls))

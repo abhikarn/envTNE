@@ -104,7 +104,7 @@
                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                           <div class="common-block mb-3">
                             <h6 class="common-title fw-bold mb-3">{{category.name}}</h6>
-                              <app-dynamic-form [category]="category.name" [formConfig]="category.formControls" [eventHandler]="this" (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"></app-dynamic-form>
+                              <app-dynamic-form [categoryId]="category.id" [formConfig]="category.formControls" [eventHandler]="this" (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"></app-dynamic-form>
                           </div>
                         </div>
                       </div>
