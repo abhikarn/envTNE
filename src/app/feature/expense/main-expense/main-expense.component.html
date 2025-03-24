@@ -95,7 +95,7 @@
   
               </div>
               <!-- expense category -->
-              <div class="expense-core-wrapper">
+              <div class="expense-core-wrapper" [class.disabled]="!travelRequestId">
                 <mat-tab-group fitInkBarToContent>
                   @for (category of categories; track category) {
                   <mat-tab [label]="category.name">
@@ -104,7 +104,7 @@
                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                           <div class="common-block mb-3">
                             <h6 class="common-title fw-bold mb-3">{{category.name}}</h6>
-                              <app-dynamic-form [categoryId]="category.id" [formConfig]="category.formControls" [eventHandler]="this" (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"></app-dynamic-form>
+                              <app-dynamic-form [parentId]="category.parentId" [formConfig]="category.formControls" [eventHandler]="this" (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"></app-dynamic-form>
                           </div>
                         </div>
                       </div>

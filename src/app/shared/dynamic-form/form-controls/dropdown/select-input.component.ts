@@ -24,13 +24,18 @@ export class SelectInputComponent {
   @Input() control: FormControl = new FormControl('');
   @Input() controlConfig: IFormControl = {name: ''};
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
+  disable: boolean = false;;
 
   trackByFn(index: number, item: any): string | number {
     return item?.Key ?? index;
   }
 
+  ngOnInit() {
+    this.controlConfig.defaultValue ? this.control.setValue(this.controlConfig.defaultValue) : '';
+  }
+
   getErrorMessage(): string {
-    if (!this.controlConfig?.validations) return '';
+    if (!this?.controlConfig?.validations) return '';
   
     for (const validation of this.controlConfig.validations) {
       if (this.control.hasError(validation.type)) {

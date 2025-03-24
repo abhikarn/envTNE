@@ -2,6 +2,7 @@
   <mat-label>{{ controlConfig.label }}</mat-label>
   <mat-select [formControl]="control" placeholder="{{controlConfig.placeholder || 'Select an option'}}"
     (selectionChange)="onSelectionChange($event)">
+    <mat-option [value]="controlConfig.defaultValue">Indian Rupee : INR</mat-option>
     @for (option of controlConfig.options; track trackByFn($index, option)) {
       <mat-option [value]="option">
         {{ option.Name || option.KeyData || option.Value}}

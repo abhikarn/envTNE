@@ -33,7 +33,7 @@ import { GstComponent } from './form-controls/gst/gst.component';
   styleUrls: ['./dynamic-form.component.scss']
 })
 export class DynamicFormComponent implements OnInit {
-  @Input() categoryId: number = 0;
+  @Input() parentId: number = 0;
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
   @Output() emitFormData = new EventEmitter<any>();
@@ -52,9 +52,6 @@ export class DynamicFormComponent implements OnInit {
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
     });
-    this.form.valueChanges.subscribe(value => {
-      console.log(value)
-    })
   }
 
   /**
@@ -75,17 +72,30 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.formData.categoryId = this.categoryId;
-    this.formData.data = this.form.value;
-    console.log(this.form)
-    console.log(Object.keys(this.form.controls))
+    this.formData.parentId = this.parentId;
+    this.formControls.forEach(control => {
+      console.log(control)
+      const fieldName = control.formConfig.name;
+      const fieldValue = this.form.value[fieldName];
+      if (!this.formData.excludedData) {
+        this.formData.excludedData = {};
+      }
+      if (!this.formData.data) {
+        this.formData.data = {};
+      }
+      if (control.formConfig.isExcluded) {
+        this.formData.excludedData[fieldName] = fieldValue ?? null;
+      } else {
+        this.formData.data[fieldName] = fieldValue ?? null;
+      }
+    })
+    // this.formData.data = this.form.value;
     this.tableData.push(this.form.value);
     this.emitFormData.emit(this.formData);
     this.form.reset();
   }
 
   onEditRow(row: any) {
-    console.log(row)
     this.selectedRow = { ...row }; // Pass selected row to form
     Object?.keys(this.selectedRow).forEach(key => {
       if (this.form.controls[key]) {
@@ -95,7 +105,6 @@ export class DynamicFormComponent implements OnInit {
   }
 
   getInputValue(inputValue: any) {
-    console.log(inputValue);
     this.emitTextData.emit(inputValue);
   }
 

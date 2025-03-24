@@ -1,11 +1,12 @@
 [
     {
-        "id": 1,
+        "parentId": 1,
         "name": "Tickets Expense",
         "formControls": [
             {
                 "type": "select",
                 "name": "TravelMode",
+                "isExcluded": true,
                 "label": "Travel Mode",
                 "placeholder": "Select Travel Mode",
                 "options": [],
@@ -22,6 +23,7 @@
             {
                 "type": "select",
                 "name": "AvailedClass",
+                "isExcluded": true,
                 "label": "Availed Class",
                 "placeholder": "Select Availed Class",
                 "options": [],
@@ -35,6 +37,7 @@
             {
                 "type": "date",
                 "name": "TravelDate",
+                "isExcluded": true,
                 "label": "Travel Date",
                 "value": null,
                 "validations": [
@@ -49,6 +52,7 @@
                 "subType": "text",
                 "autoComplete": true,
                 "name": "Origin",
+                "isExcluded": true,
                 "label": "Origin",
                 "option$": [],
                 "validations": [
@@ -63,6 +67,7 @@
                 "subType": "text",
                 "autoComplete": true,
                 "name": "Destination",
+                "isExcluded": true,
                 "label": "Destination",
                 "option$": [],
                 "validations": [
@@ -89,6 +94,15 @@
                 "type": "select",
                 "name": "Currency",
                 "label": "Currency",
+                "disable": true,
+                "defaultValue": {
+                    "Id": 1,
+                    "Code": "INR",
+                    "Name": "Indian Rupee",
+                    "Alias": "Indian Rupee",
+                    "IsBaseCurrency": true,
+                    "Display": "Indian Rupee : INR"
+                },
                 "options": [],
                 "validations": [
                     {
@@ -134,6 +148,7 @@
             {
                 "type": "textarea",
                 "name": "Remarks",
+                "isExcluded": true,
                 "label": "Remarks"
             },
             {
@@ -152,11 +167,13 @@
         ]
     },
     {
+        "parentId": 3,
         "name": "Accommodation",
         "formControls": [
             {
                 "type": "select",
                 "name": "AccommodationType",
+                "isExcluded": true,
                 "label": "Accommodation Type",
                 "placeholder": "Select Accommodation Type",
                 "options": [],
@@ -170,6 +187,7 @@
             {
                 "type": "date",
                 "name": "Check-inDateTime",
+                "isExcluded": true,
                 "label": "Check-in Date Time",
                 "value": null,
                 "validations": [
@@ -182,6 +200,7 @@
             {
                 "type": "date",
                 "name": "Check-outDateTime",
+                "isExcluded": true,
                 "label": "Check-out Date Time",
                 "value": null,
                 "validations": [
@@ -194,7 +213,7 @@
             {
                 "type": "text",
                 "subType": "text",
-                "autoComplete":true,
+                "autoComplete": true,
                 "name": "City",
                 "label": "City",
                 "option$": [],
@@ -221,6 +240,7 @@
                 "type": "text",
                 "subType": "text",
                 "name": "HotelName",
+                "isExcluded": true,
                 "label": "Hotel Name",
                 "validations": [
                     {
@@ -233,6 +253,7 @@
                 "type": "text",
                 "subType": "text",
                 "name": "BillNumber",
+                "isExcluded": true,
                 "label": "Bill Number",
                 "validations": [
                     {
@@ -244,6 +265,7 @@
             {
                 "type": "date",
                 "name": "BillDate",
+                "isExcluded": true,
                 "label": "Bill Date",
                 "value": null,
                 "validations": [
@@ -318,6 +340,7 @@
                 "type": "text",
                 "subType": "number",
                 "name": "ClaimedAmount",
+                "isExcluded": true,
                 "label": "Claimed Amount",
                 "validations": [
                     {
@@ -348,6 +371,7 @@
                 "type": "text",
                 "subType": "number",
                 "name": "DifferentialAmount(INR)",
+                "isExcluded": true,
                 "label": "Differential Amount(INR)",
                 "validations": [
                     {
@@ -359,11 +383,13 @@
             {
                 "type": "textarea",
                 "name": "Justification",
+                "isExcluded": true,
                 "label": "Justification"
             }
         ]
     },
     {
+        "parentId": 2,
         "name": "Per Diem",
         "formControls": [
             {
@@ -381,6 +407,7 @@
             {
                 "type": "date",
                 "name": "ClaimToDate",
+                "isExcluded": true,
                 "label": "Claim To Date",
                 "value": null,
                 "validations": [
@@ -393,6 +420,7 @@
             {
                 "type": "select",
                 "name": "Constraint",
+                "isExcluded": true,
                 "label": "Constraint",
                 "placeholder": "Select Per Diem Type",
                 "options": [],
@@ -433,11 +461,13 @@
                 "type": "text",
                 "subType": "text",
                 "name": "BillNumber",
+                "isExcluded": true,
                 "label": "Bill Number"
             },
             {
                 "type": "date",
                 "name": "BillDate",
+                "isExcluded": true,
                 "label": "Bill Date",
                 "value": null
             },
@@ -530,6 +560,7 @@
                 "type": "text",
                 "subType": "number",
                 "name": "DifferentialAmount(INR)",
+                "isExcluded": true,
                 "label": "Differential Amount(INR)",
                 "validations": [
                     {
@@ -541,16 +572,19 @@
             {
                 "type": "textarea",
                 "name": "Justification",
+                "isExcluded": true,
                 "label": "Justification"
             }
         ]
     },
     {
+        "parentId": 28,
         "name": "Lump sum",
         "formControls": [
             {
                 "type": "select",
                 "name": "AccommodationType",
+                "isExcluded": true,
                 "label": "Accommodation Type",
                 "placeholder": "Select Accommodation Type",
                 "options": [],
@@ -564,6 +598,7 @@
             {
                 "type": "date",
                 "name": "Check-inDateTime",
+                "isExcluded": true,
                 "label": "Check-in Date Time",
                 "value": null,
                 "validations": [
@@ -576,6 +611,7 @@
             {
                 "type": "date",
                 "name": "Check-outDateTime",
+                "isExcluded": true,
                 "label": "Check-out Date Time",
                 "value": null,
                 "validations": [
@@ -716,6 +752,7 @@
         ]
     },
     {
+        "parentId": 21,
         "name": "Local Conveyance",
         "formControls": [
             {
@@ -733,12 +770,14 @@
             {
                 "type": "select",
                 "name": "LocalTravelType",
+                "isExcluded": true,
                 "label": "Local Travel Type",
                 "options": []
             },
             {
                 "type": "select",
                 "name": "LocalTravelMode",
+                "isExcluded": true,
                 "label": "Local Travel Mode",
                 "options": []
             },
@@ -746,12 +785,14 @@
                 "type": "text",
                 "subType": "text",
                 "name": "OriginPointName",
+                "isExcluded": true,
                 "label": "Origin Point Name"
             },
             {
                 "type": "text",
                 "subType": "text",
                 "name": "DestinationPointName",
+                "isExcluded": true,
                 "label": "Destination Point Name"
             },
             {
@@ -772,6 +813,7 @@
                 "type": "text",
                 "subType": "text",
                 "name": "Purpose",
+                "isExcluded": true,
                 "label": "Purpose"
             },
             {
@@ -790,6 +832,7 @@
                 "type": "text",
                 "subType": "number",
                 "name": "KM",
+                "isExcluded": true,
                 "label": "KM"
             },
             {
@@ -807,6 +850,7 @@
             {
                 "type": "textarea",
                 "name": "Justification",
+                "isExcluded": true,
                 "label": "Justification"
             }
         ]
@@ -829,6 +873,7 @@
             {
                 "type": "select",
                 "name": "OtherType",
+                "isExcluded": true,
                 "label": "Other Type",
                 "options": []
             },
@@ -850,17 +895,20 @@
                 "type": "text",
                 "subType": "text",
                 "name": "ParticularsofExpense",
+                "isExcluded": true,
                 "label": "Particulars of Expense"
             },
             {
                 "type": "text",
                 "subType": "text",
                 "name": "BillNumber",
+                "isExcluded": true,
                 "label": "Bill Number"
             },
             {
                 "type": "date",
                 "name": "BillDate",
+                "isExcluded": true,
                 "label": "Bill Date",
                 "value": null,
                 "validations": [
@@ -897,11 +945,13 @@
             {
                 "type": "textarea",
                 "name": "Justification",
+                "isExcluded": true,
                 "label": "Justification"
             }
         ]
     },
     {
+        "parentId": 30,
         "name": "Visa",
         "formControls": [
             {
@@ -920,6 +970,7 @@
                 "type": "text",
                 "subType": "text",
                 "name": "Country",
+                "isExcluded": true,
                 "label": "Country"
             },
             {
@@ -949,11 +1000,13 @@
             {
                 "type": "textarea",
                 "name": "Justification",
+                "isExcluded": true,
                 "label": "Justification"
             }
         ]
     },
     {
+        "parentId": 31,
         "name": "Travel Insurance",
         "formControls": [
             {
@@ -972,6 +1025,7 @@
                 "type": "text",
                 "subType": "text",
                 "name": "InsuranceType",
+                "isExcluded": true,
                 "label": "Insurance Type"
             },
             {
@@ -1001,11 +1055,13 @@
             {
                 "type": "textarea",
                 "name": "Justification",
+                "isExcluded": true,
                 "label": "Justification"
             }
         ]
     },
     {
+        "parentId": 32,
         "name": "Roaming",
         "formControls": [
             {
@@ -1024,17 +1080,20 @@
                 "type": "text",
                 "subType": "text",
                 "name": "ServiceProvider",
+                "isExcluded": true,
                 "label": "Service Provider"
             },
             {
                 "type": "text",
                 "subType": "text",
                 "name": "Roaming Plan",
+                "isExcluded": true,
                 "label": "Roaming Plan"
             },
             {
                 "type": "date",
                 "name": "ActivationDate",
+                "isExcluded": true,
                 "label": "Activation Date",
                 "value": null,
                 "validations": [
@@ -1071,11 +1130,13 @@
             {
                 "type": "textarea",
                 "name": "Justification",
+                "isExcluded": true,
                 "label": "Justification"
             }
         ]
     },
     {
+        "parentId": 26,
         "name": "Transit Allowance",
         "formControls": [
             {
@@ -1093,6 +1154,7 @@
             {
                 "type": "select",
                 "name": "NumberofHours",
+                "isExcluded": true,
                 "label": "Number of Hours"
             },
             {
@@ -1107,12 +1169,14 @@
                 "type": "text",
                 "subType": "text",
                 "name": "Country",
+                "isExcluded": true,
                 "label": "Country"
             },
             {
                 "type": "text",
                 "subType": "text",
                 "name": "CountryGrade",
+                "isExcluded": true,
                 "label": "Country Grade"
             },
             {
@@ -1160,11 +1224,13 @@
             {
                 "type": "textarea",
                 "name": "Justification",
+                "isExcluded": true,
                 "label": "Justification"
             }
         ]
     },
     {
+        "parentId": 27,
         "name": "Baggage and Outfit Allowance",
         "formControls": [
             {
@@ -1182,6 +1248,7 @@
             {
                 "type": "multi-select",
                 "name": "Constraint",
+                "isExcluded": true,
                 "label": "Constraint"
             },
             {
@@ -1229,11 +1296,13 @@
             {
                 "type": "textarea",
                 "name": "Justification",
+                "isExcluded": true,
                 "label": "Justification"
             }
         ]
     },
     {
+        "parentId": 5,
         "name": "Porterage Expenses",
         "formControls": [
             {
@@ -1260,11 +1329,13 @@
                 "type": "text",
                 "subType": "text",
                 "name": "ParticularsOfExpense",
+                "isExcluded": true,
                 "label": "Particulars Of Expense"
             },
             {
                 "type": "select",
                 "name": "BaggageType",
+                "isExcluded": true,
                 "label": "Baggage Type",
                 "options": []
             },
@@ -1289,11 +1360,13 @@
             {
                 "type": "textarea",
                 "name": "Justification",
+                "isExcluded": true,
                 "label": "Justification"
             }
         ]
     },
     {
+        "parentId": 9,
         "name": "Advance Return",
         "formControls": [
             {
@@ -1323,6 +1396,7 @@
             {
                 "type": "textarea",
                 "name": "Justification",
+                "isExcluded": true,
                 "label": "Justification"
             }
         ]

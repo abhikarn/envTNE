@@ -42,7 +42,6 @@ export class TextInputComponent implements OnInit {
   }
 
   getErrorMessage(status: boolean): string {
-    console.log('error', status);
     if (!this.controlConfig?.validations) return '';
 
     for (const validation of this.controlConfig.validations) {
