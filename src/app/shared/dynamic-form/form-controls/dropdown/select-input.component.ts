@@ -31,7 +31,13 @@ export class SelectInputComponent {
   }
 
   ngOnInit() {
-    this.controlConfig.defaultValue ? this.control.setValue(this.controlConfig.defaultValue) : '';
+    if (this.controlConfig.defaultValue) {
+      this.control.setValue(this.controlConfig.defaultValue);
+    }
+    
+    if (this.controlConfig.disable) {
+      this.control.disable();
+    }
   }
 
   getErrorMessage(): string {

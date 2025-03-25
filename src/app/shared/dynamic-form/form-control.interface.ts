@@ -20,6 +20,6 @@ export interface IFormControl {
   accept?: string;
   autoComplete?: boolean,
   isExcluded?: boolean;
-  disable?: boolean,
-  defaultValue?: string
+  disable?: boolean;
+  defaultValue?: any;
 }
