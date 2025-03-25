@@ -5,7 +5,7 @@
   <!-- Handling 'text' type controls -->
   @case ('text') {
   <div class="col-md-4">
-    <lib-text-input [controlConfig]="control.formConfig" [control]="control.control">
+    <lib-text-input [controlConfig]="control.formConfig" [control]="control.control" (emitInputValue)="getInputValue($event)">
     </lib-text-input>
   </div>
   }
@@ -30,6 +30,17 @@
     <lib-date-input [controlConfig]="control.formConfig" [control]="control.control">
     </lib-date-input>
   </div>
+  }
+  <!-- Handling 'radio' type controls -->
+  @case ('radio') {
+  <div class="col-md-8">
+    <lib-radio-input [controlConfig]="control.formConfig" [control]="control.control">
+    </lib-radio-input>
+  </div>
+  }
+  <!-- Handling 'gst' type controls -->
+  @case ('gst') {
+  <app-gst [controlConfig]="control.formConfig" [control]="control.control"></app-gst>
   }
   <!-- Handling 'textarea' type controls -->
   @case ('textarea') {
@@ -58,8 +69,10 @@
       </div>
     </div>
   </div>
-
-  <app-dynamic-table [tableData]="tableData" (editRow)="onEditRow($event)"></app-dynamic-table>
+@if (tableData.length > 0) {
+<app-dynamic-table [tableData]="tableData" (editRow)="onEditRow($event)"></app-dynamic-table>
+}
+  
 </form>
 
 

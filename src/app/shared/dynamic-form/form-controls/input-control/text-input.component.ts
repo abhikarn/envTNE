@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
@@ -21,22 +21,56 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
     FunctionWrapperPipe],
   templateUrl: './text-input.component.html'
 })
-export class TextInputComponent {
+export class TextInputComponent implements OnInit {
   @Input() control: FormControl = new FormControl('');
   @Input() controlConfig: IFormControl = { name: '' };
-  options$: Observable<any[]>;
+  @Output() emitInputValue = new EventEmitter<any>();
 
   constructor() {
-    this.options$ = !this.controlConfig.option$ ? of([]) : this.controlConfig.option$;
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
 
   ngOnInit() {
-    this.control = FormControlFactory.createControl(this.controlConfig);
+    if(this.controlConfig.autoComplete)
+    this.control.valueChanges.subscribe(inputValue => {
+      this.emitInputValue.emit(inputValue);
+    });
+  }
+
+  onInput(event: any) {
+    if (this.controlConfig.autoFormat) {
+      let inputValue = event.target.value;
+      this.controlConfig.autoFormat.patterns?.forEach((pattern: any) => {
+        inputValue = inputValue.replace(new RegExp(pattern), '');
+      })
+      if (inputValue.length > this.controlConfig.autoFormat.range.max) {
+        inputValue = inputValue.substring(0, this.controlConfig.autoFormat.range.max);
+      }
+      this.control.setValue(inputValue, { emitEvent: false });
+    }
+  }
+
+  onBlur() {
+    if (this.controlConfig.autoFormat) {
+      let value = this.control.value;
+      if (value == 0) {
+        this.control.setValue(this.controlConfig.autoFormat.setValue, { emitEvent: false });
+        return;
+      }
+      if (value && value !== '') {
+        this.control.setValue(`${value}${this.controlConfig.autoFormat.decimal}`, { emitEvent: false });
+      }
+    }
+    if(this.controlConfig.defaultValue) {
+      this.control.setValue(`${this.controlConfig.defaultValue}${this.controlConfig.autoFormat.decimal}`, { emitEvent: false });
+    }
+  }
+
+  trackByFn(index: number, item: any): string | number {
+    return item?.Key ?? index;
   }
 
   getErrorMessage(status: boolean): string {
-    console.log('error', status);
     if (!this.controlConfig?.validations) return '';
 
     for (const validation of this.controlConfig.validations) {
@@ -46,5 +80,9 @@ export class TextInputComponent {
     }
 
     return 'Invalid selection'; // Default fallback message
+  }
+
+  displayFn(city: any): string {
+    return city ? city.City : '';
   }
 }

@@ -6,6 +6,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { IFormControl } from '../../form-control.interface';
 import { MatInputModule } from '@angular/material/input';
+import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 
 @Component({
   selector: 'lib-date-input',
@@ -14,16 +15,30 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule
+    MatInputModule,
+    FunctionWrapperPipe
 ],
   templateUrl: './date-input.component.html'
 })
 export class DateInputComponent {
   @Input() control: FormControl = new FormControl(null);
   @Input() controlConfig: IFormControl = {name: ''};
+  
+  constructor() {
+    this.getErrorMessage = this.getErrorMessage.bind(this);
+  }
+  
+  ngOnInit() {
+    this.control.valueChanges.subscribe(value => {
+      if (value instanceof Date) {
+        const isoDate = value.toISOString(); // Convert to ISO 8601 format
+        this.control.setValue(isoDate, { emitEvent: false }); // Prevent infinite loop
+      }
+    });
+  }
 
   getErrorMessage(): string {
-    if (!this.controlConfig?.validations) return '';
+    if (!this?.controlConfig?.validations) return '';
   
     for (const validation of this.controlConfig.validations) {
       if (this.control.hasError(validation.type)) {

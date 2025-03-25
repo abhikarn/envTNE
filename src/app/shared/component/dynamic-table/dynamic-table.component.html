@@ -19,6 +19,8 @@
                 <td>
                   @if (isDate(row[column])) {
                     {{ row[column] | date:'dd-MMM-yyyy' }}
+                  } @else if (isObject(row[column])) {
+                    {{ row[column]?.Name || '-' }}
                   } @else {
                     {{ row[column] || '-' }}
                   }

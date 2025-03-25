@@ -1,5 +1,6 @@
 [
     {
+        "parentId": 1,
         "name": "Tickets Expense",
         "formControls": [
             {
@@ -45,9 +46,11 @@
             },
             {
                 "type": "text",
+                "subType": "text",
+                "autoComplete": true,
                 "name": "Origin",
                 "label": "Origin",
-                "option$": "filteredCities$",
+                "option$": [],
                 "validations": [
                     {
                         "type": "required",
@@ -57,9 +60,11 @@
             },
             {
                 "type": "text",
+                "subType": "text",
+                "autoComplete": true,
                 "name": "Destination",
                 "label": "Destination",
-                "option$": "filteredCities$",
+                "option$": [],
                 "validations": [
                     {
                         "type": "required",
@@ -70,6 +75,7 @@
             {
                 "type": "select",
                 "name": "PaymentType",
+                "isExcluded": true,
                 "label": "Payment Type",
                 "placeholder": "Select Payment Type",
                 "options": [],
@@ -83,7 +89,16 @@
             {
                 "type": "select",
                 "name": "Currency",
+                "isExcluded": true,
                 "label": "Currency",
+                "defaultValue": {
+                    "Id": 1,
+                    "Code": "INR",
+                    "Name": "Indian Rupee",
+                    "Alias": "Indian Rupee",
+                    "IsBaseCurrency": true,
+                    "Display": "Indian Rupee : INR"
+                },
                 "options": [],
                 "validations": [
                     {
@@ -94,30 +109,53 @@
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "Amount",
+                "isExcluded": true,
                 "label": "Amount",
+                "autoFormat": {
+                    "patterns" : ["[^0-9]", "^0+(?=\\d)"],
+                    "range": {
+                        "min": 0,
+                        "max": 10
+                    },
+                    "decimal": ".00",
+                    "setValue": "0.00"
+                },
                 "validations": [
                     {
                         "type": "required",
                         "message": "Amount is required"
-                    },
-                    {
-                        "type": "minLength",
-                        "value": 6,
-                        "message": "It should be less than 6 digits"
-                    }
+                    }   
                 ]
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "ConversionRate",
+                "isExcluded": true,
                 "label": "Conversion Rate",
+                "defaultValue": "1",
+                "autoFormat": {
+                    "patterns" : ["[^0-9]", "^0+(?=\\d)"],
+                    "range": {
+                        "min": 0,
+                        "max": 10
+                    },
+                    "decimal": ".00",
+                    "setValue": "1.00"
+                },
                 "validations": [
                     {
                         "type": "required",
                         "message": "Conversion Rate is required"
                     }
                 ]
+            },
+            {
+                "type": "gst",
+                "name": "GSTDetails",
+                "label": "GSTDetails"
             },
             {
                 "type": "textarea",
@@ -140,6 +178,7 @@
         ]
     },
     {
+        "parentId": 3,
         "name": "Accommodation",
         "formControls": [
             {
@@ -181,9 +220,12 @@
             },
             {
                 "type": "text",
+                "subType": "text",
+                "autoComplete": true,
                 "name": "City",
+                "isExcluded": true,
                 "label": "City",
-                "option$": "filteredCities$",
+                "option$": [],
                 "validations": [
                     {
                         "type": "required",
@@ -193,7 +235,9 @@
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "CityGrade",
+                "isExcluded": true,
                 "label": "City Grade",
                 "validations": [
                     {
@@ -204,6 +248,7 @@
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "HotelName",
                 "label": "Hotel Name",
                 "validations": [
@@ -215,6 +260,7 @@
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "BillNumber",
                 "label": "Bill Number",
                 "validations": [
@@ -239,6 +285,7 @@
             {
                 "type": "select",
                 "name": "PaymentType",
+                "isExcluded": true,
                 "label": "Payment Type",
                 "placeholder": "Select Payment Type",
                 "options": [],
@@ -252,6 +299,7 @@
             {
                 "type": "select",
                 "name": "EntitlementCurrency",
+                "isExcluded": true,
                 "label": "Entitlement Currency",
                 "options": [],
                 "validations": [
@@ -263,7 +311,9 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "EntitlementAmount",
+                "isExcluded": true,
                 "label": "Entitlement Amount",
                 "validations": [
                     {
@@ -274,7 +324,9 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "EntitlementConversionRate",
+                "isExcluded": true,
                 "label": "Entitlement Conversion Rate",
                 "validations": [
                     {
@@ -286,6 +338,7 @@
             {
                 "type": "select",
                 "name": "Currency",
+                "isExcluded": true,
                 "label": "Currency",
                 "options": [],
                 "validations": [
@@ -297,6 +350,7 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ClaimedAmount",
                 "label": "Claimed Amount",
                 "validations": [
@@ -308,7 +362,9 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ClaimedConversionRate",
+                "isExcluded": true,
                 "label": "Claimed Conversion Rate",
                 "validations": [
                     {
@@ -319,11 +375,14 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "TaxAmount",
+                "isExcluded": true,
                 "label": "Tax Amount"
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "DifferentialAmount(INR)",
                 "label": "Differential Amount(INR)",
                 "validations": [
@@ -341,11 +400,13 @@
         ]
     },
     {
+        "parentId": 2,
         "name": "Per Diem",
         "formControls": [
             {
                 "type": "date",
                 "name": "ClaimFromDate",
+                "isExcluded": true,
                 "label": "Claim From Date",
                 "value": null,
                 "validations": [
@@ -382,7 +443,10 @@
             },
             {
                 "type": "text",
+                "subType": "text",
+                "autoComplete": true,
                 "name": "City",
+                "isExcluded": true,
                 "label": "City",
                 "option$": "filteredCities$",
                 "validations": [
@@ -394,7 +458,9 @@
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "CityGrade",
+                "isExcluded": true,
                 "label": "City Grade",
                 "validations": [
                     {
@@ -405,6 +471,7 @@
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "BillNumber",
                 "label": "Bill Number"
             },
@@ -417,6 +484,7 @@
             {
                 "type": "select",
                 "name": "EntitlementCurrency",
+                "isExcluded": true,
                 "label": "Entitlement Currency",
                 "options": [],
                 "validations": [
@@ -428,7 +496,9 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "EntitlementAmount",
+                "isExcluded": true,
                 "label": "Entitlement Amount",
                 "validations": [
                     {
@@ -439,7 +509,9 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "EntitlementConversionRate",
+                "isExcluded": true,
                 "label": "Entitlement Conversion Rate",
                 "validations": [
                     {
@@ -451,6 +523,7 @@
             {
                 "type": "select",
                 "name": "Currency",
+                "isExcluded": true,
                 "label": "Currency",
                 "options": [],
                 "validations": [
@@ -462,7 +535,9 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ClaimedAmount",
+                "isExcluded": true,
                 "label": "Claimed Amount",
                 "validations": [
                     {
@@ -473,7 +548,9 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ClaimedConversionRate",
+                "isExcluded": true,
                 "label": "Claimed Conversion Rate",
                 "validations": [
                     {
@@ -485,6 +562,7 @@
             {
                 "type": "select",
                 "name": "PaymentType",
+                "isExcluded": true,
                 "label": "Payment Type",
                 "placeholder": "Select Payment Type",
                 "options": [],
@@ -497,6 +575,7 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "DifferentialAmount(INR)",
                 "label": "Differential Amount(INR)",
                 "validations": [
@@ -514,6 +593,7 @@
         ]
     },
     {
+        "parentId": 28,
         "name": "Lump sum",
         "formControls": [
             {
@@ -555,7 +635,10 @@
             },
             {
                 "type": "text",
+                "subType": "text",
+                "autoComplete": true,
                 "name": "City",
+                "isExcluded": true,
                 "label": "City",
                 "option$": "filteredCities$",
                 "validations": [
@@ -567,7 +650,9 @@
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "CityGrade",
+                "isExcluded": true,
                 "label": "City Grade",
                 "validations": [
                     {
@@ -579,6 +664,7 @@
             {
                 "type": "select",
                 "name": "PaymentType",
+                "isExcluded": true,
                 "label": "Payment Type",
                 "placeholder": "Select Payment Type",
                 "options": [],
@@ -592,6 +678,7 @@
             {
                 "type": "select",
                 "name": "EntitlementCurrency",
+                "isExcluded": true,
                 "label": "Entitlement Currency",
                 "options": [],
                 "validations": [
@@ -603,7 +690,9 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "EntitlementAmount",
+                "isExcluded": true,
                 "label": "Entitlement Amount",
                 "validations": [
                     {
@@ -614,7 +703,9 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "EntitlementConversionRate",
+                "isExcluded": true,
                 "label": "Entitlement Conversion Rate",
                 "validations": [
                     {
@@ -626,6 +717,7 @@
             {
                 "type": "select",
                 "name": "Currency",
+                "isExcluded": true,
                 "label": "Currency",
                 "options": [],
                 "validations": [
@@ -637,7 +729,9 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ClaimedAmount",
+                "isExcluded": true,
                 "label": "Claimed Amount",
                 "validations": [
                     {
@@ -648,7 +742,9 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ClaimedConversionRate",
+                "isExcluded": true,
                 "label": "Claimed Conversion Rate",
                 "validations": [
                     {
@@ -659,6 +755,7 @@
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "DifferentialAmount(INR)",
                 "label": "Differential Amount(INR)",
                 "validations": [
@@ -676,11 +773,13 @@
         ]
     },
     {
+        "parentId": 21,
         "name": "Local Conveyance",
         "formControls": [
             {
                 "type": "date",
                 "name": "ClaimDate",
+                "isExcluded": true,
                 "label": "Claim Date",
                 "value": null,
                 "validations": [
@@ -704,55 +803,70 @@
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "OriginPointName",
                 "label": "Origin Point Name"
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "DestinationPointName",
                 "label": "Destination Point Name"
             },
             {
                 "type": "text",
+                "subType": "text",
+                "autoComplete": true,
                 "name": "City",
+                "isExcluded": true,
                 "label": "City",
                 "option$": "filteredCities$"
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "CityGrade",
+                "isExcluded": true,
                 "label": "City Grade"
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "Purpose",
                 "label": "Purpose"
             },
             {
                 "type": "select",
                 "name": "PaymentType",
+                "isExcluded": true,
                 "label": "PaymentType",
                 "options": []
             },
             {
                 "type": "select",
                 "name": "Currency",
+                "isExcluded": true,
                 "label": "Currency",
                 "options": []
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "KM",
                 "label": "KM"
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "TotalAmount",
+                "isExcluded": true,
                 "label": "Total Amount"
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ClaimConversionRate",
+                "isExcluded": true,
                 "label": "Claim Conversion Rate"
             },
             {
@@ -768,6 +882,7 @@
             {
                 "type": "date",
                 "name": "ClaimDate",
+                "isExcluded": true,
                 "label": "Claim Date",
                 "value": null,
                 "validations": [
@@ -785,22 +900,29 @@
             },
             {
                 "type": "text",
+                "subType": "text",
+                "autoComplete": true,
                 "name": "City",
+                "isExcluded": true,
                 "label": "City",
                 "option$": "filteredCities$"
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "CityGrade",
+                "isExcluded": true,
                 "label": "City Grade"
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "ParticularsofExpense",
                 "label": "Particulars of Expense"
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "BillNumber",
                 "label": "Bill Number"
             },
@@ -819,23 +941,29 @@
             {
                 "type": "select",
                 "name": "PaymentType",
+                "isExcluded": true,
                 "label": "PaymentType",
                 "options": []
             },
             {
                 "type": "select",
                 "name": "Currency",
+                "isExcluded": true,
                 "label": "Currency",
                 "options": []
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "Amount",
+                "isExcluded": true,
                 "label": "Amount"
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ClaimConversionRate",
+                "isExcluded": true,
                 "label": "Claim Conversion Rate"
             },
             {
@@ -846,11 +974,13 @@
         ]
     },
     {
+        "parentId": 30,
         "name": "Visa",
         "formControls": [
             {
                 "type": "date",
                 "name": "ProcessingDate",
+                "isExcluded": true,
                 "label": "Processing Date",
                 "value": null,
                 "validations": [
@@ -862,29 +992,36 @@
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "Country",
                 "label": "Country"
             },
             {
                 "type": "select",
                 "name": "PaymentType",
+                "isExcluded": true,
                 "label": "PaymentType",
                 "options": []
             },
             {
                 "type": "select",
                 "name": "Currency",
+                "isExcluded": true,
                 "label": "Currency",
                 "options": []
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "VisaApplicationFee",
+                "isExcluded": true,
                 "label": "Visa Application Fee"
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ConversionRate",
+                "isExcluded": true,
                 "label": "Conversion Rate"
             },
             {
@@ -895,11 +1032,13 @@
         ]
     },
     {
+        "parentId": 31,
         "name": "Travel Insurance",
         "formControls": [
             {
                 "type": "date",
                 "name": "ClaimDate",
+                "isExcluded": true,
                 "label": "Claim Date",
                 "value": null,
                 "validations": [
@@ -911,29 +1050,36 @@
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "InsuranceType",
                 "label": "Insurance Type"
             },
             {
                 "type": "select",
                 "name": "PaymentType",
+                "isExcluded": true,
                 "label": "PaymentType",
                 "options": []
             },
             {
                 "type": "select",
                 "name": "Currency",
+                "isExcluded": true,
                 "label": "Currency",
                 "options": []
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "Amount",
+                "isExcluded": true,
                 "label": "Amount"
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ConversionRate",
+                "isExcluded": true,
                 "label": "Conversion Rate"
             },
             {
@@ -944,11 +1090,13 @@
         ]
     },
     {
+        "parentId": 32,
         "name": "Roaming",
         "formControls": [
             {
                 "type": "date",
                 "name": "ClaimDate",
+                "isExcluded": true,
                 "label": "Claim Date",
                 "value": null,
                 "validations": [
@@ -960,11 +1108,13 @@
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "ServiceProvider",
                 "label": "Service Provider"
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "Roaming Plan",
                 "label": "Roaming Plan"
             },
@@ -983,23 +1133,29 @@
             {
                 "type": "select",
                 "name": "PaymentType",
+                "isExcluded": true,
                 "label": "PaymentType",
                 "options": []
             },
             {
                 "type": "select",
                 "name": "Currency",
+                "isExcluded": true,
                 "label": "Currency",
                 "options": []
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "Amount",
+                "isExcluded": true,
                 "label": "Amount"
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ConversionRate",
+                "isExcluded": true,
                 "label": "Conversion Rate"
             },
             {
@@ -1010,11 +1166,13 @@
         ]
     },
     {
+        "parentId": 26,
         "name": "Transit Allowance",
         "formControls": [
             {
                 "type": "date",
                 "name": "ClaimDate",
+                "isExcluded": true,
                 "label": "Claim Date",
                 "value": null,
                 "validations": [
@@ -1031,56 +1189,72 @@
             },
             {
                 "type": "text",
+                "subType": "text",
+                "autoComplete": true,
                 "name": "City",
+                "isExcluded": true,
                 "label": "City",
                 "option$": "filteredCities$"
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "Country",
                 "label": "Country"
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "CountryGrade",
                 "label": "Country Grade"
             },
             {
                 "type": "select",
                 "name": "EntitlementCurrency",
+                "isExcluded": true,
                 "label": "Entitlement Currency",
                 "options": []
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "EntitlementAmount",
+                "isExcluded": true,
                 "label": "Entitlement Amount"
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "EntitlementConversionRate",
+                "isExcluded": true,
                 "label": "Entitlement Conversion Rate"
             },
             {
                 "type": "select",
                 "name": "PaymentType",
+                "isExcluded": true,
                 "label": "PaymentType",
                 "options": []
             },
             {
                 "type": "select",
                 "name": "Currency",
+                "isExcluded": true,
                 "label": "Currency",
                 "options": []
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "Amount",
+                "isExcluded": true,
                 "label": "Amount"
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ClaimConversionRate",
+                "isExcluded": true,
                 "label": "Claim Conversion Rate"
             },
             {
@@ -1091,11 +1265,13 @@
         ]
     },
     {
+        "parentId": 27,
         "name": "Baggage and Outfit Allowance",
         "formControls": [
             {
                 "type": "date",
                 "name": "ClaimDate",
+                "isExcluded": true,
                 "label": "Claim Date",
                 "value": null,
                 "validations": [
@@ -1113,39 +1289,50 @@
             {
                 "type": "select",
                 "name": "EntitlementCurrency",
+                "isExcluded": true,
                 "label": "Entitlement Currency",
                 "options": []
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "EntitlementAmount",
+                "isExcluded": true,
                 "label": "Entitlement Amount"
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "EntitlementConversionRate",
+                "isExcluded": true,
                 "label": "Entitlement Conversion Rate"
             },
             {
                 "type": "select",
                 "name": "PaymentType",
+                "isExcluded": true,
                 "label": "PaymentType",
                 "options": []
             },
             {
                 "type": "select",
                 "name": "Currency",
+                "isExcluded": true,
                 "label": "Currency",
                 "options": []
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "Amount",
+                "isExcluded": true,
                 "label": "Amount"
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "ClaimConversionRate",
+                "isExcluded": true,
                 "label": "Claim Conversion Rate"
             },
             {
@@ -1156,11 +1343,13 @@
         ]
     },
     {
+        "parentId": 5,
         "name": "Porterage Expenses",
         "formControls": [
             {
                 "type": "date",
                 "name": "ClaimDate",
+                "isExcluded": true,
                 "label": "Claim Date",
                 "value": null,
                 "validations": [
@@ -1172,12 +1361,16 @@
             },
             {
                 "type": "text",
+                "subType": "text",
+                "autoComplete": true,
                 "name": "City",
+                "isExcluded": true,
                 "label": "City",
                 "option$": "filteredCities$"
             },
             {
                 "type": "text",
+                "subType": "text",
                 "name": "ParticularsOfExpense",
                 "label": "Particulars Of Expense"
             },
@@ -1190,18 +1383,22 @@
             {
                 "type": "select",
                 "name": "PaymentType",
+                "isExcluded": true,
                 "label": "PaymentType",
                 "options": []
             },
             {
                 "type": "select",
                 "name": "Currency",
+                "isExcluded": true,
                 "label": "Currency",
                 "options": []
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "Amount",
+                "isExcluded": true,
                 "label": "Amount"
             },
             {
@@ -1212,11 +1409,13 @@
         ]
     },
     {
+        "parentId": 9,
         "name": "Advance Return",
         "formControls": [
             {
                 "type": "date",
                 "name": "Date",
+                "isExcluded": true,
                 "label": "Date",
                 "value": null,
                 "validations": [
@@ -1229,12 +1428,15 @@
             {
                 "type": "select",
                 "name": "Currency",
+                "isExcluded": true,
                 "label": "Currency",
                 "options": []
             },
             {
                 "type": "text",
+                "subType": "number",
                 "name": "Amount",
+                "isExcluded": true,
                 "label": "Amount"
             },
             {

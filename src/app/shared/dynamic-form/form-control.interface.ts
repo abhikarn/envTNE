@@ -3,10 +3,12 @@ import { IValidationConfig } from './validation-config.interface';
 import { Observable } from 'rxjs';
 
 export interface IFormControl {
+  parentId?: number;
   name: string;
   label?: string;
   placeholder?: string;
   type?: string;
+  subType?: string;
   // control: FormControl;
   options?: any[];
   option$?: Observable<any[]>;
@@ -16,4 +18,9 @@ export interface IFormControl {
   validationMessages?: any;
   multiple?: boolean;
   accept?: string;
+  autoComplete?: boolean,
+  isExcluded?: boolean;
+  disable?: boolean;
+  defaultValue?: any;
+  autoFormat?: any;
 }

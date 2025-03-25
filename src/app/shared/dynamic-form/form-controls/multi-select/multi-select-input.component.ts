@@ -7,6 +7,7 @@ import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 
 @Component({
   selector: 'lib-multi-select-input',
@@ -17,7 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     MatInputModule,
     MatCheckboxModule,
-    MatIconModule
+    MatIconModule,
+    FunctionWrapperPipe
 ],
   templateUrl: './multi-select-input.component.html'
 })
@@ -31,6 +33,10 @@ export class MultiSelectInputComponent {
   allSelected = false;
   allOptions: any[] = [];
   filteredOptions: any[] = [];
+
+  constructor() {
+    this.getErrorMessage = this.getErrorMessage.bind(this);
+  }
 
   ngOnInit() {
     this.allOptions = this.controlConfig?.options || [];

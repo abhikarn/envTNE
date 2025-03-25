@@ -1,18 +1,40 @@
 @if (!!controlConfig) {
-  <mat-form-field appearance="fill">
-    <mat-label>{{controlConfig.label}}</mat-label>
-    <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" />
-    <mat-autocomplete #auto="matAutocomplete">
-      @for (option of options$ | async; track option) {
-        <mat-option [value]="option.value">
-          {{ option.value }}
-        </mat-option>
-      }
-    </mat-autocomplete>
-    @if (control.invalid && control.touched) {
-      <mat-error>
-      {{  getErrorMessage | fnWrap : control.invalid && control.touched }}
-      </mat-error>
+@if (controlConfig.subType == 'text') {
+<mat-form-field appearance="fill">
+  <mat-label>{{controlConfig.label}}</mat-label>
+
+  @if (controlConfig.autoComplete) {
+  <input type="text" matInput [formControl]="control" [matAutocomplete]="auto"
+    [placeholder]="controlConfig.placeholder || 'Enter text'" />
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    @for (option of controlConfig.options; track trackByFn($index, option)) {
+    <mat-option [value]="option">
+      {{ option.City }}
+    </mat-option>
     }
-  </mat-form-field>
+  </mat-autocomplete>
+  }
+  @else {
+  <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'"
+    (blur)="onBlur()" (input)="onInput($event)" />
+  }
+
+  @if (control.invalid && control.touched) {
+  <mat-error>
+    {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
+  </mat-error>
+  }
+</mat-form-field>
+}
+@else if (controlConfig.subType == 'number') {
+<mat-form-field appearance="fill">
+  <mat-label>{{controlConfig.label}}</mat-label>
+  <input type="number" matInput [formControl]="control"/>
+  @if (control.invalid && control.touched) {
+  <mat-error>
+    {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
+  </mat-error>
+  }
+</mat-form-field>
+}
 }

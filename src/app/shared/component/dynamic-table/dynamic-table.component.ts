@@ -29,8 +29,11 @@ export class DynamicTableComponent {
     return value instanceof Date || (!isNaN(Date.parse(value)) && typeof value === 'string');
   }
 
+  isObject(value: any): boolean {
+    return value !== null && typeof value === 'object';
+  }
+
   edit(row: any) {
-    console.log(row);
     this.editRow.emit(row); // Send row data to Dynamic Form Component
   }
 

@@ -32,16 +32,40 @@
                 </div>
   
                 <div class="row">
-                  @for (item of travelDetails; track item; let i = $index) {
                   <div class="col-md-6">
-                    @if (!item.hidden) {
                     <div class="trl-preview-wrapper">
                       <div class="trl-readview-item">
                         <div class="trl-req-head">
-                          <label>{{ item.label }}</label>
+                          <label>Travel From Date</label>
                         </div>
                         <div class="trl-req-detail">
-                          <span [id]="item.id">{{ item.value }}</span>
+                          <span>{{ travelRequestPreview?.TravelDateTimeFromString }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="trl-preview-wrapper">
+                      <div class="trl-readview-item">
+                        <div class="trl-req-head">
+                          <label>Travel To Date</label>
+                        </div>
+                        <div class="trl-req-detail">
+                          <span>{{ travelRequestPreview?.TravelDateTimeToString }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  @for (item of travelRequestPreview?.TravelRequestMetaData; track item; let i = $index) {
+                  @if (item.TravelRequestMetaId == 1 || item.TravelRequestMetaId == 7) {
+                  <div class="col-md-6">
+                    <div class="trl-preview-wrapper">
+                      <div class="trl-readview-item">
+                        <div class="trl-req-head">
+                          <label>{{ item.FieldName }}</label>
+                        </div>
+                        <div class="trl-req-detail">
+                          <span [id]="item.TravelRequestMetaDataId">{{ item.IntegerValueReference }}</span>
                           @if (item.hiddenFields) {
                           <div>
                             @for (field of item.hiddenFields; track field) {
@@ -52,14 +76,26 @@
                         </div>
                       </div>
                     </div>
-                    }
                   </div>
                   }
+                  }
+                  <div class="col-md-6">
+                    <div class="trl-preview-wrapper">
+                      <div class="trl-readview-item">
+                        <div class="trl-req-head">
+                          <label>LeaveSummary</label>
+                        </div>
+                        <div class="trl-req-detail">
+                          <span>{{ travelRequestPreview?.UserLeaveSummary }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
   
               </div>
               <!-- expense category -->
-              <div class="expense-core-wrapper">
+              <div class="expense-core-wrapper" [class.disabled]="!travelRequestId">
                 <mat-tab-group fitInkBarToContent>
                   @for (category of categories; track category) {
                   <mat-tab [label]="category.name">
@@ -68,7 +104,7 @@
                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                           <div class="common-block mb-3">
                             <h6 class="common-title fw-bold mb-3">{{category.name}}</h6>
-                              <app-dynamic-form [formConfig]="category.formControls" [eventHandler]="this"></app-dynamic-form>
+                              <app-dynamic-form [parentId]="category.parentId" [formConfig]="category.formControls" [eventHandler]="this" (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"></app-dynamic-form>
                           </div>
                         </div>
                       </div>

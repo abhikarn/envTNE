@@ -4,6 +4,7 @@ import { IFormControl } from '../../form-control.interface';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 
 
 
@@ -14,7 +15,8 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    FunctionWrapperPipe
 ],
   templateUrl: './select-input.component.html'
 })
@@ -22,13 +24,28 @@ export class SelectInputComponent {
   @Input() control: FormControl = new FormControl('');
   @Input() controlConfig: IFormControl = {name: ''};
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
+  disable: boolean = false;;
 
   trackByFn(index: number, item: any): string | number {
     return item?.Key ?? index;
   }
 
-  getErrorMessage(): string {
-    if (!this.controlConfig?.validations) return '';
+  constructor() {
+    this.getErrorMessage = this.getErrorMessage.bind(this);
+  }
+
+  ngOnInit() {
+    if (this.controlConfig.defaultValue) {
+      this.control.setValue(this.controlConfig.defaultValue);
+    }
+    
+    if (this.controlConfig.disable) {
+      this.control.disable();
+    }
+  }
+
+  getErrorMessage(status: boolean): string {
+    if (!this?.controlConfig?.validations) return '';
   
     for (const validation of this.controlConfig.validations) {
       if (this.control.hasError(validation.type)) {

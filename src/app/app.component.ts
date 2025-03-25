@@ -6,10 +6,11 @@ import { ExpenseModule } from './feature/expense/expense.module';
 import { FeatureModule } from './feature/feature.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet , HeaderComponent, SideMenuComponent, MatTabsModule, TranslateModule],
+  imports: [RouterOutlet , HeaderComponent, SideMenuComponent, MatTabsModule, TranslateModule, MatSnackBarModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

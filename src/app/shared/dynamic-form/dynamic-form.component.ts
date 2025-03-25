@@ -1,15 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormControlFactory } from './form-control.factory';
 import { IFormControl } from './form-control.interface';
 
 import { TextInputComponent } from './form-controls/input-control/text-input.component';
 import { SelectInputComponent } from './form-controls/dropdown/select-input.component';
-import { DateInputComponent } from './form-controls/date/date-input.component';
+import { DateInputComponent } from './form-controls/calender/date-input.component';
 import { TextAreaInputComponent } from './form-controls/text-area/text-area-input.component';
 import { MultiSelectInputComponent } from './form-controls/multi-select/multi-select-input.component';
 import { FileUploadComponent } from './form-controls/file-upload/file-upload.component';
 import { DynamicTableComponent } from '../component/dynamic-table/dynamic-table.component';
+import { RadioInputComponent } from './form-controls/radio/radio-input.component';
+import { GstComponent } from './form-controls/gst/gst.component';
 
 
 @Component({
@@ -23,19 +25,24 @@ import { DynamicTableComponent } from '../component/dynamic-table/dynamic-table.
     TextAreaInputComponent,
     MultiSelectInputComponent,
     FileUploadComponent,
-    DynamicTableComponent
+    DynamicTableComponent,
+    RadioInputComponent,
+    GstComponent
 ],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
 })
 export class DynamicFormComponent implements OnInit {
-
+  @Input() parentId: number = 0;
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
+  @Output() emitFormData = new EventEmitter<any>();
+  @Output() emitTextData = new EventEmitter<any>();
   form: FormGroup = new FormGroup({});
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
   tableData: any = [];
   selectedRow: any;
+  formData: any = {};
 
   constructor() { }
 
@@ -65,20 +72,40 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form)
-    console.log(Object.keys(this.form.controls))
+    this.formData.parentId = this.parentId;
+    this.formControls.forEach(control => {
+      console.log(control)
+      const fieldName = control.formConfig.name;
+      const fieldValue = this.form.value[fieldName];
+      if (!this.formData.excludedData) {
+        this.formData.excludedData = {};
+      }
+      if (!this.formData.data) {
+        this.formData.data = {};
+      }
+      if (control.formConfig.isExcluded) {
+        this.formData.excludedData[fieldName] = fieldValue ?? null;
+      } else {
+        this.formData.data[fieldName] = fieldValue ?? null;
+      }
+    })
+    // this.formData.data = this.form.value;
     this.tableData.push(this.form.value);
+    this.emitFormData.emit(this.formData);
     this.form.reset();
   }
 
   onEditRow(row: any) {
-    console.log(row)
     this.selectedRow = { ...row }; // Pass selected row to form
     Object?.keys(this.selectedRow).forEach(key => {
       if (this.form.controls[key]) {
         this.form.controls[key].setValue(this.selectedRow[key]); // Set values from selected row
       }
     });
+  }
+
+  getInputValue(inputValue: any) {
+    this.emitTextData.emit(inputValue);
   }
 
 }
