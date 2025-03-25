@@ -34,6 +34,10 @@ export class MultiSelectInputComponent {
   allOptions: any[] = [];
   filteredOptions: any[] = [];
 
+  constructor() {
+    this.getErrorMessage = this.getErrorMessage.bind(this);
+  }
+
   ngOnInit() {
     this.allOptions = this.controlConfig?.options || [];
     this.filteredOptions = [...this.allOptions];

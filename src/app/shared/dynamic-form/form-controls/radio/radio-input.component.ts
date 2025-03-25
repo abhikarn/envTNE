@@ -30,6 +30,10 @@ export class RadioInputComponent {
   @Input() control: FormControl = new FormControl('');
   @Input() controlConfig: IFormControl = { name: '' };
 
+  constructor() {
+    this.getErrorMessage = this.getErrorMessage.bind(this);
+  }
+
   trackByFn(index: number, item: any): any {
     return item.value;
   }

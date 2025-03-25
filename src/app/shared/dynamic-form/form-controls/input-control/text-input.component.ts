@@ -34,7 +34,30 @@ export class TextInputComponent implements OnInit {
     if(this.controlConfig.autoComplete)
     this.control.valueChanges.subscribe(inputValue => {
       this.emitInputValue.emit(inputValue);
-    })
+    });
+  }
+
+  onNumberInput(event: any) {
+    if (this.controlConfig.autoFormat) {
+      let inputValue = event.target.value.replace(this.controlConfig.autoFormat.pattern, '');;
+      if (inputValue.length > this.controlConfig.autoFormat.range.max) {
+        inputValue = inputValue.substring(0, this.controlConfig.autoFormat.range.max);
+      }
+      this.control.setValue(inputValue, { emitEvent: false });
+    }
+  }
+
+  onBlur() {
+    if (this.controlConfig.autoFormat) {
+      let value = this.control.value;
+      if (value == 0) {
+        this.control.setValue("0.00", { emitEvent: false });
+        return;
+      }
+      if (value && value !== '') {
+        this.control.setValue(`${value}${this.controlConfig.autoFormat.decimal}`, { emitEvent: false });
+      }
+    }
   }
 
   trackByFn(index: number, item: any): string | number {

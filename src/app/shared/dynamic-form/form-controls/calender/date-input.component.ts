@@ -24,6 +24,10 @@ export class DateInputComponent {
   @Input() control: FormControl = new FormControl(null);
   @Input() controlConfig: IFormControl = {name: ''};
   
+  constructor() {
+    this.getErrorMessage = this.getErrorMessage.bind(this);
+  }
+  
   ngOnInit() {
     this.control.valueChanges.subscribe(value => {
       if (value instanceof Date) {

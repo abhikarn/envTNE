@@ -30,6 +30,10 @@ export class SelectInputComponent {
     return item?.Key ?? index;
   }
 
+  constructor() {
+    this.getErrorMessage = this.getErrorMessage.bind(this);
+  }
+
   ngOnInit() {
     if (this.controlConfig.defaultValue) {
       this.control.setValue(this.controlConfig.defaultValue);
@@ -40,7 +44,7 @@ export class SelectInputComponent {
     }
   }
 
-  getErrorMessage(): string {
+  getErrorMessage(status: boolean): string {
     if (!this?.controlConfig?.validations) return '';
   
     for (const validation of this.controlConfig.validations) {

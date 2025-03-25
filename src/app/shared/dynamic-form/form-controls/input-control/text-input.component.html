@@ -28,7 +28,7 @@
 @else if (controlConfig.subType == 'number') {
 <mat-form-field appearance="fill">
   <mat-label>{{controlConfig.label}}</mat-label>
-  <input type="number" matInput [formControl]="control" />
+  <input type="number" matInput [formControl]="control" (blur)="onBlur()" (input)="onNumberInput($event)"/>
   @if (control.invalid && control.touched) {
   <mat-error>
     {{ getErrorMessage | fnWrap : control.invalid && control.touched }}

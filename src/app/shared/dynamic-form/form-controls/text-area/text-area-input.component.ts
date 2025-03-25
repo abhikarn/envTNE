@@ -20,9 +20,11 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 export class TextAreaInputComponent {
   @Input() control: FormControl = new FormControl(null);
   @Input() controlConfig: IFormControl = { name: '' };
+
   constructor() {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
+  
   getErrorMessage(status: boolean): string {
     if (!this.controlConfig?.validations) return '';
 

@@ -15,6 +15,10 @@ export class FileUploadComponent {
   @Input() control!: FormControl;
   selectedFiles: File[] = [];
 
+  constructor() {
+    this.getErrorMessage = this.getErrorMessage.bind(this);
+  }
+
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {

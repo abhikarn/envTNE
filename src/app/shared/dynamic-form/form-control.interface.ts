@@ -22,4 +22,5 @@ export interface IFormControl {
   isExcluded?: boolean;
   disable?: boolean;
   defaultValue?: any;
+  autoFormat?: any;
 }

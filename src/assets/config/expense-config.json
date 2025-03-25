@@ -113,16 +113,19 @@
                 "name": "Amount",
                 "isExcluded": true,
                 "label": "Amount",
+                "autoFormat": {
+                    "pattern" : "/[^0-9]/g",
+                    "range": {
+                        "min": 0,
+                        "max": 10
+                    },
+                    "decimal": ".00"
+                },
                 "validations": [
                     {
                         "type": "required",
                         "message": "Amount is required"
-                    },
-                    {
-                        "type": "minLength",
-                        "value": 6,
-                        "message": "It should be less than 6 digits"
-                    }
+                    }   
                 ]
             },
             {
