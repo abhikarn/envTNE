@@ -37,9 +37,12 @@ export class TextInputComponent implements OnInit {
     });
   }
 
-  onNumberInput(event: any) {
+  onInput(event: any) {
     if (this.controlConfig.autoFormat) {
-      let inputValue = event.target.value.replace(this.controlConfig.autoFormat.pattern, '');;
+      let inputValue = event.target.value;
+      this.controlConfig.autoFormat.patterns?.forEach((pattern: any) => {
+        inputValue = inputValue.replace(new RegExp(pattern), '');
+      })
       if (inputValue.length > this.controlConfig.autoFormat.range.max) {
         inputValue = inputValue.substring(0, this.controlConfig.autoFormat.range.max);
       }
@@ -51,12 +54,15 @@ export class TextInputComponent implements OnInit {
     if (this.controlConfig.autoFormat) {
       let value = this.control.value;
       if (value == 0) {
-        this.control.setValue("0.00", { emitEvent: false });
+        this.control.setValue(this.controlConfig.autoFormat.setValue, { emitEvent: false });
         return;
       }
       if (value && value !== '') {
         this.control.setValue(`${value}${this.controlConfig.autoFormat.decimal}`, { emitEvent: false });
       }
+    }
+    if(this.controlConfig.defaultValue) {
+      this.control.setValue(`${this.controlConfig.defaultValue}${this.controlConfig.autoFormat.decimal}`, { emitEvent: false });
     }
   }
 

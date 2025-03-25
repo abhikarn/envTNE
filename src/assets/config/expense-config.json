@@ -109,17 +109,18 @@
             },
             {
                 "type": "text",
-                "subType": "number",
+                "subType": "text",
                 "name": "Amount",
                 "isExcluded": true,
                 "label": "Amount",
                 "autoFormat": {
-                    "pattern" : "/[^0-9]/g",
+                    "patterns" : ["[^0-9]", "^0+(?=\\d)"],
                     "range": {
                         "min": 0,
                         "max": 10
                     },
-                    "decimal": ".00"
+                    "decimal": ".00",
+                    "setValue": "0.00"
                 },
                 "validations": [
                     {
@@ -130,10 +131,20 @@
             },
             {
                 "type": "text",
-                "subType": "number",
+                "subType": "text",
                 "name": "ConversionRate",
                 "isExcluded": true,
                 "label": "Conversion Rate",
+                "defaultValue": "1",
+                "autoFormat": {
+                    "patterns" : ["[^0-9]", "^0+(?=\\d)"],
+                    "range": {
+                        "min": 0,
+                        "max": 10
+                    },
+                    "decimal": ".00",
+                    "setValue": "1.00"
+                },
                 "validations": [
                     {
                         "type": "required",

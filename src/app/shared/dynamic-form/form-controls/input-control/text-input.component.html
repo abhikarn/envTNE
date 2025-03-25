@@ -15,7 +15,8 @@
   </mat-autocomplete>
   }
   @else {
-  <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'" />
+  <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'"
+    (blur)="onBlur()" (input)="onInput($event)" />
   }
 
   @if (control.invalid && control.touched) {
@@ -28,7 +29,7 @@
 @else if (controlConfig.subType == 'number') {
 <mat-form-field appearance="fill">
   <mat-label>{{controlConfig.label}}</mat-label>
-  <input type="number" matInput [formControl]="control" (blur)="onBlur()" (input)="onNumberInput($event)"/>
+  <input type="number" matInput [formControl]="control"/>
   @if (control.invalid && control.touched) {
   <mat-error>
     {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
