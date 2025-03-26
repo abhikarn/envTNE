@@ -9,8 +9,20 @@
                 "label": "Travel Mode",
                 "placeholder": "Select Travel Mode",
                 "options": [],
+                "apiService": "DataService",
+                "apiMethod": "dataGetTravelMode",
                 "events": {
-                    "change": "onTravelModeChange"
+                    "change": "onTravelModeChange",
+                    "api": [
+                        {
+                            "type": "",
+                            "service": "DataService",
+                            "method": "dataGetTravelClass",
+                            "payload": {
+                                "TravelModeId" : 0
+                            }
+                        }
+                    ]
                 },
                 "validations": [
                     {
@@ -614,6 +626,21 @@
                 "name": "Check-inDateTime",
                 "label": "Check-in Date Time",
                 "value": null,
+                "event": {
+                    "dateChange": "onSelectCheckInDate",
+                    "api": [
+                        {
+                            "service": "ExpenseService",
+                            "method": "ValidateUserLeaveDateForDuration",
+                            "payload": {
+                                "userMasterId": 0,
+                                "fromDate": null,
+                                "toDate": null,
+                                "travelRequestId": 0
+                            }
+                        }
+                    ]
+                },
                 "validations": [
                     {
                         "type": "required",

@@ -68,13 +68,12 @@ export class DynamicFormComponent implements OnInit {
       this.eventHandler[handlerName](event, field);
     } else {
       console.warn(`Handler '${handlerName}' is not defined for ${field.name}.`);
-    }
+          }
   }
 
   onSubmit() {
     this.formData.parentId = this.parentId;
     this.formControls.forEach(control => {
-      console.log(control)
       const fieldName = control.formConfig.name;
       const fieldValue = this.form.value[fieldName];
       if (!this.formData.excludedData) {

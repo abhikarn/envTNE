@@ -95,7 +95,6 @@ export class MainExpenseComponent {
   ngOnInit() {
     forkJoin({
       pendingTravelRequests: this.expenseService.expenseGetTravelRequestsPendingForClaim({ UserMasterId: 4, TravelTypeId: 0 }),
-      travelModeList: this.dataService.dataGetTravelMode(),
       travelPaymentTypeList: this.dataService.dataGetPaymentType(),
       currencyList: this.dataService.dataGetCurrencyView(),
       accommodationTypeList: this.dataService.dataGetStayType(),
@@ -110,7 +109,6 @@ export class MainExpenseComponent {
         // Handle all the API responses here
         console.log('responses', responses);
         this.travelRequests = responses.pendingTravelRequests.ResponseValue;
-        this.travelModeList = responses.travelModeList.ResponseValue;
         this.travelPaymentList = responses.travelPaymentTypeList.ResponseValue;
         this.currencyList = responses.currencyList.ResponseValue;
         this.accomodationTypeList = responses.accommodationTypeList.ResponseValue;

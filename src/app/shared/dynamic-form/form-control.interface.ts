@@ -23,4 +23,7 @@ export interface IFormControl {
   disable?: boolean;
   defaultValue?: any;
   autoFormat?: any;
+  apiService?: string;
+  apiMethod?: string;
+  events?: any;
 }
