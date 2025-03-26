@@ -27,7 +27,8 @@
   <!-- Handling 'date' type controls -->
   @case ('date') {
   <div class="col-md-4">
-    <lib-date-input [controlConfig]="control.formConfig" [control]="control.control">
+    <lib-date-input [controlConfig]="control.formConfig" [control]="control.control"
+    (valueChange)="handleEvent('dateChange', $event)">
     </lib-date-input>
   </div>
   }

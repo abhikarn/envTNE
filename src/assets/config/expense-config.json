@@ -12,17 +12,7 @@
                 "apiService": "DataService",
                 "apiMethod": "dataGetTravelMode",
                 "events": {
-                    "change": "onTravelModeChange",
-                    "api": [
-                        {
-                            "type": "",
-                            "service": "DataService",
-                            "method": "dataGetTravelClass",
-                            "payload": {
-                                "TravelModeId" : 0
-                            }
-                        }
-                    ]
+                    "change": "onTravelModeChange"
                 },
                 "validations": [
                     {
@@ -626,20 +616,8 @@
                 "name": "Check-inDateTime",
                 "label": "Check-in Date Time",
                 "value": null,
-                "event": {
-                    "dateChange": "onSelectCheckInDate",
-                    "api": [
-                        {
-                            "service": "ExpenseService",
-                            "method": "ValidateUserLeaveDateForDuration",
-                            "payload": {
-                                "userMasterId": 0,
-                                "fromDate": null,
-                                "toDate": null,
-                                "travelRequestId": 0
-                            }
-                        }
-                    ]
+                "events": {
+                    "dateChange": "onSelectDate"
                 },
                 "validations": [
                     {
@@ -653,6 +631,21 @@
                 "name": "Check-outDateTime",
                 "label": "Check-out Date Time",
                 "value": null,
+                "events": {
+                    "dateChange": "onSelectDate",
+                    "api": [
+                        {
+                            "service": "ExpenseService",
+                            "method": "ValidateUserLeaveDateForDuration",
+                            "payload": {
+                                "UserMasterId": 0,
+                                "FromDate": "",
+                                "ToDate": "",
+                                "TravelRequestId": 0
+                            }
+                        }
+                    ]
+                },
                 "validations": [
                     {
                         "type": "required",

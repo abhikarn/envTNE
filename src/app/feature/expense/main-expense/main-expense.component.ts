@@ -15,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SnackbarService } from '../../../shared/service/snackbar.service';
 import { ConfirmDialogService } from '../../../shared/service/confirm-dialog.service';
+import { DatePipe } from '@angular/common';
 
 interface DataEntry {
   parentId: number;
@@ -33,14 +34,14 @@ interface DataEntry {
     DynamicFormComponent
   ],
   templateUrl: './main-expense.component.html',
-  styleUrl: './main-expense.component.scss'
+  styleUrl: './main-expense.component.scss',
+  providers: [DatePipe]
 })
 export class MainExpenseComponent {
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
   travelRequestBookedDetail: any;
   travelRequestPreview: any;
-  travelModeList: any;
   travelClassList: any;
   originControl = new FormControl('');
   cities = [];
@@ -61,6 +62,7 @@ export class MainExpenseComponent {
   expenseRequestData: any = [];
   travelRequestId: number = 0;
   private dialogOpen = false;
+  expenseValidateUserLeaveDateForDuration:any = {};
 
   constructor(
     private expenseService: ExpenseService,
@@ -69,7 +71,8 @@ export class MainExpenseComponent {
     private http: HttpClient,
     private snackbarService: SnackbarService,
     private confirmDialogService: ConfirmDialogService,
-    private eRef: ElementRef
+    private eRef: ElementRef,
+    private datePipe: DatePipe
   ) {
     
   }
@@ -118,7 +121,6 @@ export class MainExpenseComponent {
         this.boMealsList = responses.boMealsList.ResponseValue;
 
         const optionMapping: { [key: string]: any[] } = {
-          TravelMode: this.travelModeList,
           PaymentType: this.travelPaymentList,
           Currency: this.currencyList,
           AccommodationType: this.accomodationTypeList,
@@ -430,6 +432,32 @@ export class MainExpenseComponent {
         });
       }
     })
+  }
+
+  onSelectDate(event: any, field: any) {
+    let dateValue = event.value.toISOString() || "";
+    this.expenseValidateUserLeaveDateForDuration.UserMasterId = 4;
+    this.expenseValidateUserLeaveDateForDuration.TravelRequestId = this.travelRequestId;
+    if(field.name == "Check-inDateTime") {
+      this.expenseValidateUserLeaveDateForDuration.FromDate = dateValue;
+      if(!this.expenseValidateUserLeaveDateForDuration.ToDate) {
+        this.expenseValidateUserLeaveDateForDuration.ToDate = dateValue;
+      }
+    }
+    if(field.name == "Check-outDateTime") {
+      this.expenseValidateUserLeaveDateForDuration.ToDate = dateValue;
+      if(!this.expenseValidateUserLeaveDateForDuration.FromDate) {
+        this.expenseValidateUserLeaveDateForDuration.FromDate = dateValue;
+      }
+    }
+    this.expenseService.expenseValidateUserLeaveDateForDuration(this.expenseValidateUserLeaveDateForDuration).pipe(take(1)).subscribe({
+      next: (res) => {
+        console.log(res.ResponseValue)
+      },
+      error: (error) => {
+        console.error('Error fetching expense Validate User Leave Date For Duration', error);
+      }
+    });
   }
 
 }

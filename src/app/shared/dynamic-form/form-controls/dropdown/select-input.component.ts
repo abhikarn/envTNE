@@ -83,6 +83,7 @@ export class SelectInputComponent {
 
   // Emit selection change event
   onSelectionChange(event: any) {
+    console.log(this.controlConfig)
     this.valueChange.emit({ event, control: this.controlConfig });
   }
 }

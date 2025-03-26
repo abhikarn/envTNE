@@ -7,7 +7,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { IFormControl } from '../../form-control.interface';
 import { MatInputModule } from '@angular/material/input';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'lib-date-input',
@@ -19,15 +18,14 @@ import { DatePipe } from '@angular/common';
     MatInputModule,
     FunctionWrapperPipe
 ],
-  templateUrl: './date-input.component.html',
-  providers: [DatePipe]
+  templateUrl: './date-input.component.html'
 })
 export class DateInputComponent {
   @Input() control: FormControl = new FormControl(null);
   @Input() controlConfig: IFormControl = {name: ''};
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   
-  constructor(private datePipe: DatePipe) {
+  constructor() {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
   
@@ -53,8 +51,6 @@ export class DateInputComponent {
   }
 
   onDateSelect(event: MatDatepickerInputEvent<Date>): void {
-    const formattedDate = this.datePipe.transform(event.value, 'dd/MMM/yyyy');
-    console.log('Formatted Date:', formattedDate);
     this.valueChange.emit({ event, control: this.controlConfig });
   }
 
