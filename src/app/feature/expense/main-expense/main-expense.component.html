@@ -300,9 +300,9 @@
                   <div class="d-flex align-items-center w-100 mb-2">
                     <a href=" " class="btn btn-outline-secondary me-2 w-50">Cancel</a>
                     <button type="button" id="expenseSaveAsDraft" data-draftvalue="false"
-                      class="btn btn-outline-primary w-50">Save as Draft</button>
+                      class="btn btn-outline-primary w-50" (click)="onSave(true)">Save as Draft</button>
                   </div>
-                  <button type="button" id="expenseSubmit" class="btn btn-primary w-100">Submit</button>
+                  <button type="button" id="expenseSubmit" class="btn btn-primary w-100" (click)="onSave(false)">Submit</button>
                 </div>
               </div>
             </div>

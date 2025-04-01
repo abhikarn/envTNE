@@ -72,6 +72,10 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onSubmit() {
+    if(this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     this.formData.parentId = this.parentId;
     this.formControls.forEach(control => {
       const fieldName = control.formConfig.name;
