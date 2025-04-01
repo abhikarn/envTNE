@@ -41,7 +41,7 @@
   }
   <!-- Handling 'gst' type controls -->
   @case ('gst') {
-  <app-gst [controlConfig]="control.formConfig" [control]="control.control"></app-gst>
+  <app-gst [controlConfig]="control.formConfig" [control]="control.control" [amountControl]="form.get('Amount')"></app-gst>
   }
   <!-- Handling 'textarea' type controls -->
   @case ('textarea') {
