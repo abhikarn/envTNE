@@ -28,7 +28,7 @@
   @case ('date') {
   <div class="col-md-4">
     <lib-date-input [controlConfig]="control.formConfig" [control]="control.control"
-    (valueChange)="handleEvent('dateChange', $event)">
+      (valueChange)="handleEvent('dateChange', $event)" [minDate]="minSelectableDate" [maxDate]="maxSelectableDate">
     </lib-date-input>
   </div>
   }

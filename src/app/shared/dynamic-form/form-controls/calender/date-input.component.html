@@ -1,14 +1,15 @@
 <mat-form-field appearance="fill">
   <mat-label>{{ controlConfig.label }}</mat-label>
 
-  <input matInput [matDatepicker]="picker" [formControl]="control" (dateChange)="onDateSelect($event)">
+  <input matInput [matDatepicker]="picker" [formControl]="control" (dateChange)="onDateSelect($event)" [min]="minDate"
+    [max]="maxDate">
 
   <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 
   @if (control.invalid && control.touched) {
-    <mat-error>
-      {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
-    </mat-error>
+  <mat-error>
+    {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
+  </mat-error>
   }
 </mat-form-field>

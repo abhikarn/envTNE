@@ -36,6 +36,8 @@ export class DynamicFormComponent implements OnInit {
   @Input() parentId: number = 0;
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
+  @Input() minSelectableDate?: Date;
+  @Input() maxSelectableDate?: Date;
   @Output() emitFormData = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();
   form: FormGroup = new FormGroup({});

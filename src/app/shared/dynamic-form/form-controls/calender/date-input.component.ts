@@ -23,6 +23,8 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 export class DateInputComponent {
   @Input() control: FormControl = new FormControl(null);
   @Input() controlConfig: IFormControl = {name: ''};
+  @Input() minDate?: Date;
+  @Input() maxDate?: Date;
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   
   constructor() {
