@@ -26,9 +26,12 @@
               <div class="common-block  mb-3">
                 <div class="d-flex align-items-center justify-content-between">
                   <h6 class="common-title fw-bold mb-3">Travel Details </h6>
-                  <div class="date-extension"><button type="button" data-bs-toggle="modal" data-bs-target="#dateextension"
-                      class="btn btn-secondary btn-sm ">Date
-                      Extension </button> </div>
+                  <div class="date-extension">
+                    <button type="button" [disabled]="!travelRequestId"
+                      class="btn btn-secondary btn-sm " (click)="openModal()">
+                      Date Extension 
+                    </button> 
+                  </div>
                 </div>
   
                 <div class="row">
@@ -104,7 +107,10 @@
                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                           <div class="common-block mb-3">
                             <h6 class="common-title fw-bold mb-3">{{category.name}}</h6>
-                              <app-dynamic-form [parentId]="category.parentId" [formConfig]="category.formControls" [eventHandler]="this" (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"></app-dynamic-form>
+                            <app-dynamic-form [parentId]="category.parentId" [formConfig]="category.formControls" [eventHandler]="this"
+                              (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
+                              [minSelectableDate]="travelRequestPreview?.TravelDateFrom" [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
+                            </app-dynamic-form>
                           </div>
                         </div>
                       </div>
@@ -300,9 +306,9 @@
                   <div class="d-flex align-items-center w-100 mb-2">
                     <a href=" " class="btn btn-outline-secondary me-2 w-50">Cancel</a>
                     <button type="button" id="expenseSaveAsDraft" data-draftvalue="false"
-                      class="btn btn-outline-primary w-50">Save as Draft</button>
+                      class="btn btn-outline-primary w-50" (click)="onSave(true)">Save as Draft</button>
                   </div>
-                  <button type="button" id="expenseSubmit" class="btn btn-primary w-100">Submit</button>
+                  <button type="button" id="expenseSubmit" class="btn btn-primary w-100" (click)="onSave(false)">Submit</button>
                 </div>
               </div>
             </div>

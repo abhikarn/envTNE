@@ -15,6 +15,8 @@ export class DynamicTableComponent {
   @Input() tableData: any[] = [];
   @Output() editRow = new EventEmitter<any>();
 
+  expandedRowIndex: number | null = null;
+
   // Exclude Remarks & Attachment from columns
   get displayedColumns(): string[] {
     if (this.tableData.length > 0) {
@@ -35,6 +37,10 @@ export class DynamicTableComponent {
 
   edit(row: any) {
     this.editRow.emit(row); // Send row data to Dynamic Form Component
+  }
+
+  toggleRow(index: number) {
+    this.expandedRowIndex = this.expandedRowIndex === index ? null : index;
   }
 
 }

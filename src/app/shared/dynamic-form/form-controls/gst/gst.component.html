@@ -39,7 +39,9 @@
                                                 placeholder="">
                                             <span class="validate-error-message teGst"
                                                 id="validate-error-message-txtTeGSTNo"
-                                                style="display: none">Required</span>
+                                                *ngIf="gstDetailsForm.controls['GstIn'].invalid && gstDetailsForm.controls['GstIn'].touched">
+                                                {{ gstDetailsForm.controls['GstIn'].hasError('required') ? 'Required' : 'Invalid GST Number' }}
+                                            </span>
                                         </div>
                                     </td>
                                     <td>
@@ -48,7 +50,9 @@
                                                 class="form-control chm-forminput teGst" id="txtTeInvNo" placeholder="">
                                             <span class="validate-error-message teGst"
                                                 id="validate-error-message-txtTeInvNo"
-                                                style="display: none">Required</span>
+                                                *ngIf="gstDetailsForm.controls['InvoiceNumber'].invalid && gstDetailsForm.controls['InvoiceNumber'].touched">
+                                                Required
+                                            </span>
                                         </div>
                                     </td>
                                     <td>
@@ -58,7 +62,9 @@
                                                 id="txtTeGSTValue" placeholder="">
                                             <span class="validate-error-message teGst"
                                                 id="validate-error-message-txtTeGSTValue"
-                                                style="display: none">Required</span>
+                                                *ngIf="gstDetailsForm.controls['Amount'].invalid && gstDetailsForm.controls['Amount'].touched">
+                                                Required
+                                            </span>
                                         </div>
                                     </td>
                                     <td>

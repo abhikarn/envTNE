@@ -12710,7 +12710,7 @@ button.multiselect.dropdown-toggle.btn.btn-primary.custom-select.show:focus {
 }
 
 .form-group.chm-formgroup.new-form-grp .validate-error-message {
-    display: none;
+    /* display: none; */
     color: #D73131;
     font-size: 10px;
     font-weight: 500;

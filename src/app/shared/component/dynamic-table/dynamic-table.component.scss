@@ -1,0 +1,26 @@
+.expanded-content {
+    padding: 10px;
+    background: #f9f9f9;
+    border-left: 4px solid #007bff;
+}
+
+.fas.fa-chevron-down {
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.fas.fa-chevron-down.rotate {
+    transform: rotate(180deg);
+}
+
+.violation-bg {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.violation-border {
+    border: 1px solid red;
+}
+
+.text-danger {
+    color: red;
+}

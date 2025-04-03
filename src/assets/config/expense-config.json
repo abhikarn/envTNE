@@ -9,6 +9,8 @@
                 "label": "Travel Mode",
                 "placeholder": "Select Travel Mode",
                 "options": [],
+                "apiService": "DataService",
+                "apiMethod": "dataGetTravelMode",
                 "events": {
                     "change": "onTravelModeChange"
                 },
@@ -168,12 +170,6 @@
                 "label": "Upload File",
                 "multiple": true,
                 "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
-                "validations": [
-                    {
-                        "type": "required",
-                        "message": "File is required"
-                    }
-                ]
             }
         ]
     },
@@ -614,6 +610,9 @@
                 "name": "Check-inDateTime",
                 "label": "Check-in Date Time",
                 "value": null,
+                "events": {
+                    "dateChange": "onSelectDate"
+                },
                 "validations": [
                     {
                         "type": "required",
@@ -626,6 +625,21 @@
                 "name": "Check-outDateTime",
                 "label": "Check-out Date Time",
                 "value": null,
+                "events": {
+                    "dateChange": "onSelectDate",
+                    "api": [
+                        {
+                            "service": "ExpenseService",
+                            "method": "ValidateUserLeaveDateForDuration",
+                            "payload": {
+                                "UserMasterId": 0,
+                                "FromDate": "",
+                                "ToDate": "",
+                                "TravelRequestId": 0
+                            }
+                        }
+                    ]
+                },
                 "validations": [
                     {
                         "type": "required",

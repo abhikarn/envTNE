@@ -36,6 +36,8 @@ export class DynamicFormComponent implements OnInit {
   @Input() parentId: number = 0;
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
+  @Input() minSelectableDate?: Date;
+  @Input() maxSelectableDate?: Date;
   @Output() emitFormData = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();
   form: FormGroup = new FormGroup({});
@@ -68,13 +70,16 @@ export class DynamicFormComponent implements OnInit {
       this.eventHandler[handlerName](event, field);
     } else {
       console.warn(`Handler '${handlerName}' is not defined for ${field.name}.`);
-    }
+          }
   }
 
   onSubmit() {
+    if(this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     this.formData.parentId = this.parentId;
     this.formControls.forEach(control => {
-      console.log(control)
       const fieldName = control.formConfig.name;
       const fieldValue = this.form.value[fieldName];
       if (!this.formData.excludedData) {

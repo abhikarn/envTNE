@@ -1,8 +1,8 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { IFormControl } from '../../form-control.interface';
 import { MatInputModule } from '@angular/material/input';
@@ -23,6 +23,9 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 export class DateInputComponent {
   @Input() control: FormControl = new FormControl(null);
   @Input() controlConfig: IFormControl = {name: ''};
+  @Input() minDate?: Date;
+  @Input() maxDate?: Date;
+  @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   
   constructor() {
     this.getErrorMessage = this.getErrorMessage.bind(this);
@@ -47,6 +50,10 @@ export class DateInputComponent {
     }
   
     return 'Invalid selection'; // Default fallback message
+  }
+
+  onDateSelect(event: MatDatepickerInputEvent<Date>): void {
+    this.valueChange.emit({ event, control: this.controlConfig });
   }
 
 }

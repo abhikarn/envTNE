@@ -27,7 +27,8 @@
   <!-- Handling 'date' type controls -->
   @case ('date') {
   <div class="col-md-4">
-    <lib-date-input [controlConfig]="control.formConfig" [control]="control.control">
+    <lib-date-input [controlConfig]="control.formConfig" [control]="control.control"
+      (valueChange)="handleEvent('dateChange', $event)" [minDate]="minSelectableDate" [maxDate]="maxSelectableDate">
     </lib-date-input>
   </div>
   }
@@ -40,7 +41,7 @@
   }
   <!-- Handling 'gst' type controls -->
   @case ('gst') {
-  <app-gst [controlConfig]="control.formConfig" [control]="control.control"></app-gst>
+  <app-gst [controlConfig]="control.formConfig" [control]="control.control" [amountControl]="form.get('Amount')"></app-gst>
   }
   <!-- Handling 'textarea' type controls -->
   @case ('textarea') {

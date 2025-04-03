@@ -15,6 +15,9 @@ import { HttpClient } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SnackbarService } from '../../../shared/service/snackbar.service';
 import { ConfirmDialogService } from '../../../shared/service/confirm-dialog.service';
+import { DatePipe } from '@angular/common';
+import { DateExtensionComponent } from '../date-extension/date-extension.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 interface DataEntry {
   parentId: number;
@@ -30,17 +33,18 @@ interface DataEntry {
     MatNativeDateModule,
     MatInputModule,
     MatAutocompleteModule,
-    DynamicFormComponent
+    DynamicFormComponent,
+    MatDialogModule
   ],
   templateUrl: './main-expense.component.html',
-  styleUrl: './main-expense.component.scss'
+  styleUrl: './main-expense.component.scss',
+  providers: [DatePipe]
 })
 export class MainExpenseComponent {
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
   travelRequestBookedDetail: any;
   travelRequestPreview: any;
-  travelModeList: any;
   travelClassList: any;
   originControl = new FormControl('');
   cities = [];
@@ -61,6 +65,7 @@ export class MainExpenseComponent {
   expenseRequestData: any = [];
   travelRequestId: number = 0;
   private dialogOpen = false;
+  expenseValidateUserLeaveDateForDuration:any = {};
 
   constructor(
     private expenseService: ExpenseService,
@@ -69,7 +74,9 @@ export class MainExpenseComponent {
     private http: HttpClient,
     private snackbarService: SnackbarService,
     private confirmDialogService: ConfirmDialogService,
-    private eRef: ElementRef
+    private eRef: ElementRef,
+    private datePipe: DatePipe,
+    private dialog: MatDialog
   ) {
     
   }
@@ -95,7 +102,6 @@ export class MainExpenseComponent {
   ngOnInit() {
     forkJoin({
       pendingTravelRequests: this.expenseService.expenseGetTravelRequestsPendingForClaim({ UserMasterId: 4, TravelTypeId: 0 }),
-      travelModeList: this.dataService.dataGetTravelMode(),
       travelPaymentTypeList: this.dataService.dataGetPaymentType(),
       currencyList: this.dataService.dataGetCurrencyView(),
       accommodationTypeList: this.dataService.dataGetStayType(),
@@ -110,7 +116,6 @@ export class MainExpenseComponent {
         // Handle all the API responses here
         console.log('responses', responses);
         this.travelRequests = responses.pendingTravelRequests.ResponseValue;
-        this.travelModeList = responses.travelModeList.ResponseValue;
         this.travelPaymentList = responses.travelPaymentTypeList.ResponseValue;
         this.currencyList = responses.currencyList.ResponseValue;
         this.accomodationTypeList = responses.accommodationTypeList.ResponseValue;
@@ -120,7 +125,6 @@ export class MainExpenseComponent {
         this.boMealsList = responses.boMealsList.ResponseValue;
 
         const optionMapping: { [key: string]: any[] } = {
-          TravelMode: this.travelModeList,
           PaymentType: this.travelPaymentList,
           Currency: this.currencyList,
           AccommodationType: this.accomodationTypeList,
@@ -150,20 +154,24 @@ export class MainExpenseComponent {
     });
   }
 
+  getTravelRequestPreview() {
+    this.travelService.travelGetTravelRequestPreview({ TravelRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
+      next: (response) => {
+        this.travelRequestPreview = response.ResponseValue;
+        this.costcenterId = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 4)?.IntegerValue;
+        this.purpose = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 1)?.IntegerValueReference;
+
+      },
+      error: (error) => {
+        console.error('Error fetching travel request preview:', error);
+      }
+    })
+  }
+
   onSelectTravelExpenseRequest(event: any) {
     this.travelRequestId = Number(event.target.value) || 0;
     if (this.travelRequestId) {
-      this.travelService.travelGetTravelRequestPreview({ TravelRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
-        next: (response) => {
-          this.travelRequestPreview = response.ResponseValue;
-          this.costcenterId = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 4)?.IntegerValue;
-          this.purpose = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 1)?.IntegerValueReference;
-
-        },
-        error: (error) => {
-          console.error('Error fetching travel request preview:', error);
-        }
-      })
+      this.getTravelRequestPreview();
 
       this.expenseService.expenseGetTravelRequestBookedDetail({ TravelRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
         next: (response) => {
@@ -249,22 +257,7 @@ export class MainExpenseComponent {
   }
 
   getFormData(data: any) {
-    this.confirmDialogService
-      .confirm({
-        title: 'Create Expense Request',
-        message: 'Are you sure you want to create Expense request?',
-        confirmText: 'Create',
-        cancelText: 'Cancel'
-      })
-      .subscribe((confirmed) => {
-        if (confirmed) {
-          console.log('Created Expense request.');
-        } else {
-          console.log('Failed');
-        }
-      });
-    console.log(data)
-    const existingCategory = this.expenseRequestData.find((cat: any) => cat.parentId === data.parentId);
+    const existingCategory = this.expenseRequestData.find((cat: any) => cat.formControlId === data.formControlId);
 
     if (existingCategory) {
       existingCategory.data.push(data.data);
@@ -279,16 +272,16 @@ export class MainExpenseComponent {
 
     console.log(this.expenseRequestData)
 
-    if (data.categoryId == 1) { // Ticket Expense
+    if (data.parentId == 1) { // Ticket Expense
       const requestBody = {
         UserMasterId: 4,
         TravelTypeId: this.travelRequestPreview.TravelTypeId,
-        TravelModeId: data.TravelMode,
-        TravelClassId: data.AvailedClass,
+        TravelModeId: data.data.TravelMode.Id,
+        TravelClassId: data.data.AvailedClass.Id,
         RequestForId: this.travelRequestPreview.RequestForId,
-        FromCityId: data.Origin,
-        ToCityId: data.Destination,
-        ReferenceDate: data.TravelDate,
+        FromCityId: data.data.Origin.CityMasterId,
+        ToCityId: data.data.Destination.CityMasterId,
+        ReferenceDate: data.data.TravelDate,
         TravelRequestGroupType: [
           {
             UserMasterId: 4,
@@ -302,117 +295,6 @@ export class MainExpenseComponent {
         }
       })
     }
-    this.prepareExpenseRequestPayload();
-    this.snackbarService.success('Operation successful!');
-    // this.mainExpenseData.ExpenseRequestDetailType = this.mainExpenseData.ExpenseRequestDetailType ?? [];
-    // this.mainExpenseData.ExpenseRequestDetailType.push({
-    //   ExpenseRequestDetailId: 0,
-    //   ExpenseRequestId: 0,
-    //   ExpenseCategoryId: categoryFormData.categoryId,
-    //   CityId: 0,
-    //   CityGradeId: 0,
-    //   CountryId: 0,
-    //   CountryGradeId: 0,
-    //   ClaimDate: "2025-03-19T08:37:29.629Z",
-    //   PaymentModeId: data.PaymentType.KeyDataId || 0,
-    //   ClaimAmount: data.Amount || 0,
-    //   CurrencyId: data.Currency.Id || 0,
-    //   ConversionRate: data.ConversionRate || 0,
-    //   ClaimAmountInBaseCurrency: 0,
-    //   IsEntitlementActuals: true,
-    //   EntitlementAmount: 0,
-    //   EntitlementCurrencyId: 0,
-    //   EntitlementConversionRate: 0,
-    //   ApprovedAmount: 0,
-    //   ClaimStatusId: 0,
-    //   IsViolation: true,
-    //   Violation: "",
-    //   IsTravelRaiseRequest: true,
-    //   TaxAmount: ""
-    // });
-
-    // this.mainExpenseData.ExpenseRequestMetaDataType = [];
-    // this.mainExpenseData.ExpenseRequestDetailMetaDataType = this.mainExpenseData.ExpenseRequestDetailMetaDataType ?? [];
-    // this.mainExpenseData.ExpenseRequestDetailMetaDataType?.push(
-    //   {
-    //     ExpenseRequestMetaId: 1,
-    //     IntegerValue: data.TravelMode.Id || 0
-    //   }
-    // );
-    // this.mainExpenseData.ExpenseRequestDetailMetaDataType?.push(
-    //   {
-    //     ExpenseRequestMetaId: 2,
-    //     IntegerValue: data.AvailedClass.Id || 0
-    //   }
-    // );
-    // this.mainExpenseData.ExpenseRequestDetailMetaDataType?.push(
-    //   {
-    //     ExpenseRequestMetaId: 3,
-    //     DatetimeValue: data.TravelDate || ''
-    //   }
-    // );
-    // this.mainExpenseData.ExpenseRequestDetailMetaDataType?.push(
-    //   {
-    //     ExpenseRequestMetaId: 4,
-    //     IntegerValue: data.Origin.CityMasterId || 0
-    //   }
-    // );
-    // this.mainExpenseData.ExpenseRequestDetailMetaDataType?.push(
-    //   {
-    //     ExpenseRequestMetaId: 5,
-    //     IntegerValue: data.Destination.CityMasterId || 0
-    //   }
-    // );
-    // this.mainExpenseData.ExpenseRequestDetailMetaDataType?.push(
-    //   {
-    //     ExpenseRequestMetaId: 9,
-    //     VarcharValue: data.Remarks,
-    //   }
-    // );
-    // this.mainExpenseData.ExpenseRequestGstType = this.mainExpenseData.ExpenseRequestGstType ?? [];
-    // data?.GSTDetails?.data?.forEach((gstData: any) => {
-    //   this.mainExpenseData.ExpenseRequestGstType?.push({
-    //     ExpenseRequestGstTypeId: 0,
-    //     ExpenseRequestDetailId: 0,
-    //     GstIn: gstData.GstIn,
-    //     VendorName: "string",
-    //     InvoiceNumber: gstData.InvoiceNumber,
-    //     Amount: gstData.Amount,
-    //     Basic: 0,
-    //     CGST: gstData.CGST,
-    //     SGST: gstData.SGST,
-    //     IGST: gstData.IGST,
-    //     UGST: gstData.UGST,
-    //     CESS: 0,
-    //     Gross: 0,
-    //     CostcenterId: this.costcenterId
-    //   })
-    // })
-    // this.mainExpenseData.RelocationExpenseOtherVendorQuoteDetailsType = [];
-    // this.mainExpenseData.DocumentType = [];
-    // this.createTravelRequest();
-  }
-
-  prepareExpenseRequestPayload() {
-    this.mainExpenseData.ExpenseRequestId = 0;
-    this.mainExpenseData.RequestForId = this.travelRequestPreview.RequestForId;
-    this.mainExpenseData.RequesterId = 4;
-    this.mainExpenseData.TravelRequestId = this.travelRequestPreview.TravelRequestId;
-    this.mainExpenseData.RequestDate = new Date().toISOString();
-    this.mainExpenseData.Purpose = this.purpose;
-    this.mainExpenseData.CostCentreId = this.costcenterId;
-    this.mainExpenseData.BillableCostCentreId = this.mainExpenseData.CostCentreId;
-    this.mainExpenseData.Remarks = '';
-    this.mainExpenseData.IsDraft = false;
-    this.mainExpenseData.ActionBy = 0;
-  }
-
-  createTravelRequest() {
-    this.expenseService.expenseExpenseRequestCreate(this.mainExpenseData).pipe(take(1)).subscribe({
-      next: (response) => {
-        console.log();
-      }
-    })
   }
 
   getTextData(inputData: any) {
@@ -434,4 +316,102 @@ export class MainExpenseComponent {
     })
   }
 
+  onSelectDate(event: any, field: any) {
+    let dateValue = event.value.toISOString() || "";
+    this.expenseValidateUserLeaveDateForDuration.UserMasterId = 4;
+    this.expenseValidateUserLeaveDateForDuration.TravelRequestId = this.travelRequestId;
+    if(field.name == "Check-inDateTime") {
+      this.expenseValidateUserLeaveDateForDuration.FromDate = dateValue;
+      if(!this.expenseValidateUserLeaveDateForDuration.ToDate) {
+        this.expenseValidateUserLeaveDateForDuration.ToDate = dateValue;
+      }
+    }
+    if(field.name == "Check-outDateTime") {
+      this.expenseValidateUserLeaveDateForDuration.ToDate = dateValue;
+      if(!this.expenseValidateUserLeaveDateForDuration.FromDate) {
+        this.expenseValidateUserLeaveDateForDuration.FromDate = dateValue;
+      }
+    }
+    this.expenseService.expenseValidateUserLeaveDateForDuration(this.expenseValidateUserLeaveDateForDuration).pipe(take(1)).subscribe({
+      next: (res) => {
+        console.log(res.ResponseValue)
+      },
+      error: (error) => {
+        console.error('Error fetching expense Validate User Leave Date For Duration', error);
+      }
+    });
+  }
+
+  onSave(isDraft: boolean) {
+    this.mainExpenseData.ExpenseRequestId = 0;
+    this.mainExpenseData.RequestForId = this.travelRequestPreview.RequestForId;
+    this.mainExpenseData.RequesterId = 4;
+    this.mainExpenseData.TravelRequestId = this.travelRequestPreview.TravelRequestId;
+    this.mainExpenseData.RequestDate = new Date().toISOString();
+    this.mainExpenseData.Purpose = this.purpose;
+    this.mainExpenseData.CostCentreId = this.costcenterId;
+    this.mainExpenseData.BillableCostCentreId = this.mainExpenseData.CostCentreId;
+    this.mainExpenseData.Remarks = '';
+    this.mainExpenseData.IsDraft = isDraft;
+    this.mainExpenseData.ActionBy = 0;
+
+    this.confirmDialogService
+      .confirm({
+        title: 'Create Expense Request',
+        message: 'Are you sure you want to create Expense request?',
+        confirmText: 'Create',
+        cancelText: 'Cancel'
+      })
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          console.log('Created Expense request.');
+          this.expenseService.expenseExpenseRequestCreate(this.mainExpenseData).pipe(take(1)).subscribe({
+            next: (response) => {
+              console.log(response);
+              this.snackbarService.success('Operation successful!');
+            }
+          })
+        } else {
+          console.log('Failed');
+        }
+      });
+  }
+
+  openModal() {
+    const dialogRef = this.dialog.open(DateExtensionComponent, {
+      maxWidth: '1000px',
+      data: {
+        TravelDateFrom: this.travelRequestPreview?.TravelDateFromExtended,
+        TravelDateTo: this.travelRequestPreview?.TravelDateToExtended,
+        remarks: this.travelRequestPreview?.TravelRequestDateExtensionRemarks
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        result.TravelRequestId = this.travelRequestId;
+        this.confirmDialogService
+          .confirm({
+            title: 'Date Extension',
+            message: 'Are you sure you want to change the travel date? This action will affect the per diem claim!',
+            confirmText: 'Yes Update',
+            cancelText: 'No'
+          })
+          .subscribe((confirmed) => {
+            if (confirmed) {
+              this.travelService.travelTravelRequestDateExtension(result).pipe(take(1)).subscribe({
+                next: (response) => {
+                  this.getTravelRequestPreview();
+                  this.snackbarService.success('Record Updated Successfully.');
+                }
+              })
+            } else {
+              this.snackbarService.success('Failed To Update Record');
+            }
+          });
+
+      }
+    });
+  }
+  
 }
