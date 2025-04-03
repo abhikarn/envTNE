@@ -16,6 +16,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SnackbarService } from '../../../shared/service/snackbar.service';
 import { ConfirmDialogService } from '../../../shared/service/confirm-dialog.service';
 import { DatePipe } from '@angular/common';
+import { DateExtensionComponent } from '../date-extension/date-extension.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 interface DataEntry {
   parentId: number;
@@ -31,7 +33,8 @@ interface DataEntry {
     MatNativeDateModule,
     MatInputModule,
     MatAutocompleteModule,
-    DynamicFormComponent
+    DynamicFormComponent,
+    MatDialogModule
   ],
   templateUrl: './main-expense.component.html',
   styleUrl: './main-expense.component.scss',
@@ -72,7 +75,8 @@ export class MainExpenseComponent {
     private snackbarService: SnackbarService,
     private confirmDialogService: ConfirmDialogService,
     private eRef: ElementRef,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private dialog: MatDialog
   ) {
     
   }
@@ -150,20 +154,24 @@ export class MainExpenseComponent {
     });
   }
 
+  getTravelRequestPreview() {
+    this.travelService.travelGetTravelRequestPreview({ TravelRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
+      next: (response) => {
+        this.travelRequestPreview = response.ResponseValue;
+        this.costcenterId = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 4)?.IntegerValue;
+        this.purpose = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 1)?.IntegerValueReference;
+
+      },
+      error: (error) => {
+        console.error('Error fetching travel request preview:', error);
+      }
+    })
+  }
+
   onSelectTravelExpenseRequest(event: any) {
     this.travelRequestId = Number(event.target.value) || 0;
     if (this.travelRequestId) {
-      this.travelService.travelGetTravelRequestPreview({ TravelRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
-        next: (response) => {
-          this.travelRequestPreview = response.ResponseValue;
-          this.costcenterId = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 4)?.IntegerValue;
-          this.purpose = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 1)?.IntegerValueReference;
-
-        },
-        error: (error) => {
-          console.error('Error fetching travel request preview:', error);
-        }
-      })
+      this.getTravelRequestPreview();
 
       this.expenseService.expenseGetTravelRequestBookedDetail({ TravelRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
         next: (response) => {
@@ -249,7 +257,7 @@ export class MainExpenseComponent {
   }
 
   getFormData(data: any) {
-    const existingCategory = this.expenseRequestData.find((cat: any) => cat.parentId === data.parentId);
+    const existingCategory = this.expenseRequestData.find((cat: any) => cat.formControlId === data.formControlId);
 
     if (existingCategory) {
       existingCategory.data.push(data.data);
@@ -368,4 +376,42 @@ export class MainExpenseComponent {
         }
       });
   }
+
+  openModal() {
+    const dialogRef = this.dialog.open(DateExtensionComponent, {
+      maxWidth: '1000px',
+      data: {
+        TravelDateFrom: this.travelRequestPreview?.TravelDateFromExtended,
+        TravelDateTo: this.travelRequestPreview?.TravelDateToExtended,
+        remarks: this.travelRequestPreview?.TravelRequestDateExtensionRemarks
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        result.TravelRequestId = this.travelRequestId;
+        this.confirmDialogService
+          .confirm({
+            title: 'Date Extension',
+            message: 'Are you sure you want to change the travel date? This action will affect the per diem claim!',
+            confirmText: 'Yes Update',
+            cancelText: 'No'
+          })
+          .subscribe((confirmed) => {
+            if (confirmed) {
+              this.travelService.travelTravelRequestDateExtension(result).pipe(take(1)).subscribe({
+                next: (response) => {
+                  this.getTravelRequestPreview();
+                  this.snackbarService.success('Record Updated Successfully.');
+                }
+              })
+            } else {
+              this.snackbarService.success('Failed To Update Record');
+            }
+          });
+
+      }
+    });
+  }
+  
 }

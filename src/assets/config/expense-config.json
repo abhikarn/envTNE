@@ -170,12 +170,6 @@
                 "label": "Upload File",
                 "multiple": true,
                 "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
-                "validations": [
-                    {
-                        "type": "required",
-                        "message": "File is required"
-                    }
-                ]
             }
         ]
     },

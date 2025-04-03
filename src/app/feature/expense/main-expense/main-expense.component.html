@@ -26,9 +26,12 @@
               <div class="common-block  mb-3">
                 <div class="d-flex align-items-center justify-content-between">
                   <h6 class="common-title fw-bold mb-3">Travel Details </h6>
-                  <div class="date-extension"><button type="button" data-bs-toggle="modal" data-bs-target="#dateextension"
-                      class="btn btn-secondary btn-sm ">Date
-                      Extension </button> </div>
+                  <div class="date-extension">
+                    <button type="button" [disabled]="!travelRequestId"
+                      class="btn btn-secondary btn-sm " (click)="openModal()">
+                      Date Extension 
+                    </button> 
+                  </div>
                 </div>
   
                 <div class="row">

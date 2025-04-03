@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>Date Extension</h2>
+
+<div mat-dialog-content class="modal-content">
+    <form [formGroup]="travelForm" class="row">
+
+        <!-- Travel From Date Time -->
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Travel From Date</mat-label>
+                <input matInput [matDatepicker]="fromDatePicker" formControlName="travelFromDate" required>
+                <mat-datepicker-toggle matIconSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #fromDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Travel From Time</mat-label>
+                <input matInput type="time" formControlName="travelFromTime" required>
+            </mat-form-field>
+        </div>
+
+        <!-- Travel To Date Time -->
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Travel To Date</mat-label>
+                <input matInput [matDatepicker]="toDatePicker" formControlName="travelToDate" required>
+                <mat-datepicker-toggle matIconSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #toDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Travel To Time</mat-label>
+                <input matInput type="time" formControlName="travelToTime" required>
+            </mat-form-field>
+        </div>
+
+        <!-- Remarks -->
+        <mat-form-field appearance="outline">
+            <mat-label>Remarks</mat-label>
+            <textarea matInput formControlName="remarks" required></textarea>
+        </mat-form-field>
+
+    </form>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="onClose()">Close</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="travelForm.invalid">
+        Submit
+    </button>
+</div>
