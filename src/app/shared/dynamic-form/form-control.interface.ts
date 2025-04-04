@@ -27,4 +27,5 @@ export interface IFormControl {
   apiMethod?: string;
   events?: any;
   dependentCases?: any;
+  readonly?: boolean;
 }

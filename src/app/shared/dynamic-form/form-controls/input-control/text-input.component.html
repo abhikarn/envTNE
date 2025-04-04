@@ -16,7 +16,7 @@
   }
   @else {
   <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'"
-    (blur)="onBlur()" (input)="onInput($event)" />
+    (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" />
   }
 
   @if (control.invalid && control.touched) {

@@ -41,6 +41,7 @@
                 "value": null,
                 "dependentCases": [
                     {
+                        "key":"Id",
                         "inputControls": {
                             "Currency": "CurrencyId",
                             "TravelDate": "ReferenceDate"
@@ -135,6 +136,7 @@
                 "label": "Amount",
                 "dependentCases": [
                     {
+                        "key":"Id",
                         "inputControls": {
                             "Currency": "CurrencyId",
                             "TravelDate": "ReferenceDate"
@@ -238,6 +240,41 @@
                 "name": "Check-inDateTime",
                 "label": "Check-in Date Time",
                 "value": null,
+                "dependentCases": [
+                    {
+                        "key":"Id",
+                        "inputControls": {
+                            "Currency": "CurrencyId",
+                            "Check-inDateTime": "ReferenceDate"
+                        },
+                        "outputControl": {
+                            "ClaimedConversionRate": "ResponseValue.Value"
+                        },
+                        "autoFormat": {
+                            "decimal": ".00"
+                        },
+                        "event": "dateChange",
+                        "requestBody": {},
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                    },
+                    {
+                        "key":"CityMasterId",
+                        "inputControls": {
+                            "City": "CityId",
+                            "Check-inDateTime": "ReferenceDate"
+                        },
+                        "outputControl": {
+                            "CityGrade": "ResponseValue.Grade"
+                        },
+                        "event": "dateChange",
+                        "requestBody": {
+                            "Type": "53"
+                        },
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetCityGrade"
+                    }
+                ],
                 "validations": [
                     {
                         "type": "required",
@@ -265,6 +302,24 @@
                 "isExcluded": true,
                 "label": "City",
                 "option$": [],
+                "dependentCases": [
+                    {
+                        "key":"CityMasterId",
+                        "inputControls": {
+                            "City": "CityId",
+                            "Check-inDateTime": "ReferenceDate"
+                        },
+                        "outputControl": {
+                            "CityGrade": "ResponseValue.Grade"
+                        },
+                        "event": "autoComplete",
+                        "requestBody": {
+                            "Type": "53"
+                        },
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetCityGrade"
+                    }
+                ],
                 "validations": [
                     {
                         "type": "required",
@@ -276,6 +331,7 @@
                 "type": "text",
                 "subType": "text",
                 "name": "CityGrade",
+                "readonly": true,
                 "isExcluded": true,
                 "label": "City Grade",
                 "validations": [
@@ -379,6 +435,14 @@
                 "name": "Currency",
                 "isExcluded": true,
                 "label": "Currency",
+                "defaultValue": {
+                    "Id": 1,
+                    "Code": "INR",
+                    "Name": "Indian Rupee",
+                    "Alias": "Indian Rupee",
+                    "IsBaseCurrency": true,
+                    "Display": "Indian Rupee : INR"
+                },
                 "options": [],
                 "validations": [
                     {
@@ -389,9 +453,40 @@
             },
             {
                 "type": "text",
-                "subType": "number",
+                "subType": "text",
                 "name": "ClaimedAmount",
                 "label": "Claimed Amount",
+                "dependentCases": [
+                    {
+                        "key":"Id",
+                        "inputControls": {
+                            "Currency": "CurrencyId",
+                            "Check-inDateTime": "ReferenceDate"
+                        },
+                        "outputControl": {
+                            "ClaimedConversionRate": "ResponseValue.Value"
+                        },
+                        "autoFormat": {
+                            "decimal": ".00"
+                        },
+                        "event": "onBlur",
+                        "requestBody": {},
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                    }
+                ],
+                "autoFormat": {
+                    "patterns": [
+                        "[^0-9]",
+                        "^0+(?=\\d)"
+                    ],
+                    "range": {
+                        "min": 0,
+                        "max": 10
+                    },
+                    "decimal": ".00",
+                    "setValue": "0.00"
+                },
                 "validations": [
                     {
                         "type": "required",
@@ -499,6 +594,7 @@
                 "type": "text",
                 "subType": "text",
                 "name": "CityGrade",
+                "readonly": true,
                 "isExcluded": true,
                 "label": "City Grade",
                 "validations": [
@@ -709,6 +805,7 @@
                 "type": "text",
                 "subType": "text",
                 "name": "CityGrade",
+                "readonly": true,
                 "isExcluded": true,
                 "label": "City Grade",
                 "validations": [
@@ -883,6 +980,7 @@
                 "type": "text",
                 "subType": "text",
                 "name": "CityGrade",
+                "readonly": true,
                 "isExcluded": true,
                 "label": "City Grade"
             },
@@ -968,6 +1066,7 @@
                 "type": "text",
                 "subType": "text",
                 "name": "CityGrade",
+                "readonly": true,
                 "isExcluded": true,
                 "label": "City Grade"
             },

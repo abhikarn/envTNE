@@ -78,19 +78,20 @@ export class DateInputComponent {
 
     if (apiService && typeof apiService[dependentCase.apiMethod] === "function") {
       // Dynamically populate request body from input controls
-      let requestBody: any = {};
+      let requestBody: any = dependentCase.requestBody;
+      let shouldMakeApiCall = true;
       Object.entries(dependentCase.inputControls).forEach(([controlName, requestKey]) => {
         if (typeof requestKey === 'string') { // Ensure requestKey is a string
           const controlValue = this.form.get(controlName)?.value;
           if (!controlValue) {
             this.snackbarService.error(`Please Select a ${controlName}.`);
-            requestBody = null;
+            shouldMakeApiCall = false;
           } else {
-            requestBody[requestKey] = controlValue?.Id ?? controlValue; // Extract Id if it's an object
+            requestBody[requestKey] = controlValue[dependentCase.key] ?? controlValue; // Extract Id if it's an object
           }
         }
       });
-      if (requestBody) {
+      if (shouldMakeApiCall) {
         apiSubscription = apiService[dependentCase.apiMethod](requestBody).subscribe(
           (response: any) => {
             // Dynamically set output controls based on response mapping
@@ -105,7 +106,11 @@ export class DateInputComponent {
               for (const [outputControl, responsePath] of Object.entries(dependentCase.outputControl) as [string, string][]) {
                 const value = this.extractValueFromPath(response, responsePath);
                 if (value !== undefined) {
-                  this.form.get(outputControl)?.setValue(`${value}${dependentCase.autoFormat.decimal}`, { emitEvent: false });
+                  if(dependentCase.autoFormat?.decimal) {
+                    this.form.get(outputControl)?.setValue(`${value}${dependentCase.autoFormat.decimal}`, { emitEvent: false });
+                  } else {
+                    this.form.get(outputControl)?.setValue(value, { emitEvent: false });
+                  }
                 }
               }
             }
