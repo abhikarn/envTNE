@@ -17,7 +17,7 @@ import { SnackbarService } from '../../../service/snackbar.service';
 export class GstComponent {
   @Input() control: any;
   @Input() controlConfig: IFormControl = { name: '' };
-  @Input() amountControl: any;
+  @Input() form: any;
   companyGSTForm: FormGroup;
   gstDetailsForm: FormGroup;
   gstDetails: any = {
@@ -73,7 +73,7 @@ export class GstComponent {
     const cgst = parseFloat(this.gstDetailsForm.get('CGST')?.value || "0");
     const igst = parseFloat(this.gstDetailsForm.get('IGST')?.value || "0");
     const utgst = parseFloat(this.gstDetailsForm.get('UGST')?.value || "0");
-    const claimedAmount = parseFloat(this.amountControl?.value || "0");
+    const claimedAmount = parseFloat(this.form.get('Amount')?.value || "0");
     const gstBreakupAmount = sgst + cgst + igst + utgst;
 
     if (gstBreakupAmount > 0 && gstBreakupAmount <= gstNum && gstNum > 0) {

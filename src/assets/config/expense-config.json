@@ -39,6 +39,24 @@
                 "name": "TravelDate",
                 "label": "Travel Date",
                 "value": null,
+                "dependentCases": [
+                    {
+                        "inputControls": {
+                            "Currency": "CurrencyId",
+                            "TravelDate": "ReferenceDate"
+                        },
+                        "outputControl": {
+                            "ConversionRate": "ResponseValue.Value"
+                        },
+                        "autoFormat": {
+                            "decimal": ".00"
+                        },
+                        "event": "dateChange",
+                        "requestBody": {},
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                    }
+                ],
                 "validations": [
                     {
                         "type": "required",
@@ -115,8 +133,29 @@
                 "name": "Amount",
                 "isExcluded": true,
                 "label": "Amount",
+                "dependentCases": [
+                    {
+                        "inputControls": {
+                            "Currency": "CurrencyId",
+                            "TravelDate": "ReferenceDate"
+                        },
+                        "outputControl": {
+                            "ConversionRate": "ResponseValue.Value"
+                        },
+                        "autoFormat": {
+                            "decimal": ".00"
+                        },
+                        "event": "onBlur",
+                        "requestBody": {},
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                    }
+                ],
                 "autoFormat": {
-                    "patterns" : ["[^0-9]", "^0+(?=\\d)"],
+                    "patterns": [
+                        "[^0-9]",
+                        "^0+(?=\\d)"
+                    ],
                     "range": {
                         "min": 0,
                         "max": 10
@@ -128,7 +167,7 @@
                     {
                         "type": "required",
                         "message": "Amount is required"
-                    }   
+                    }
                 ]
             },
             {
@@ -139,7 +178,10 @@
                 "label": "Conversion Rate",
                 "defaultValue": "1",
                 "autoFormat": {
-                    "patterns" : ["[^0-9]", "^0+(?=\\d)"],
+                    "patterns": [
+                        "[^0-9]",
+                        "^0+(?=\\d)"
+                    ],
                     "range": {
                         "min": 0,
                         "max": 10
@@ -157,7 +199,8 @@
             {
                 "type": "gst",
                 "name": "GSTDetails",
-                "label": "GSTDetails"
+                "label": "GSTDetails",
+                "getControl": "Amount"
             },
             {
                 "type": "textarea",

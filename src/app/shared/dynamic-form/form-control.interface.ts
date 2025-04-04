@@ -26,4 +26,5 @@ export interface IFormControl {
   apiService?: string;
   apiMethod?: string;
   events?: any;
+  dependentCases?: any;
 }
