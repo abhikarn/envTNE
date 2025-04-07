@@ -242,6 +242,7 @@
                 "value": null,
                 "dependentCases": [
                     {
+                        "isGeneral": true,
                         "key":"Id",
                         "inputControls": {
                             "Currency": "CurrencyId",
@@ -259,6 +260,7 @@
                         "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
                     },
                     {
+                        "isGeneral": true,
                         "key":"CityMasterId",
                         "inputControls": {
                             "City": "CityId",
@@ -273,6 +275,25 @@
                         },
                         "apiService": "DataService",
                         "apiMethod": "dataGetCityGrade"
+                    },
+                    {
+                        "isGeneral": false,
+                        "inputControls": {
+                            "CityGrade": "CityGradeId",
+                            "Check-inDateTime": "ReferenceDate"
+                        },
+                        "outputControl": {
+                            "CityGrade": "ResponseValue.Grade"
+                        },
+                        "event": "dateChange",
+                        "requestBody": {
+                            "ClaimTypeId": 53,
+                            "UserMasterId": 4,
+                            "ExpenseCategoryId": 3,
+                            "PolicyReferenceId": 53
+                        },
+                        "apiService": "ExpenseService",
+                        "apiMethod": "expenseGetExpensePolicyEntitlement"
                     }
                 ],
                 "validations": [

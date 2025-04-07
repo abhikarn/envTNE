@@ -30,6 +30,7 @@ export class DateInputComponent {
   @Input() maxDate?: Date;
   @Input() form: any;
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
+  @Output() emitSpecificCase = new EventEmitter<any>();
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -63,8 +64,12 @@ export class DateInputComponent {
     this.valueChange.emit({ event, control: this.controlConfig });
     if (this.controlConfig.dependentCases?.length > 0) {
       this.controlConfig.dependentCases.forEach((dependentCase: any) => {
-        if (dependentCase.event === "dateChange") {
-          this.handleDependentCase(dependentCase);
+        if (dependentCase.isGeneral) {
+          if(dependentCase.event === "dateChange") {
+            this.handleDependentCase(dependentCase);
+          }
+        } else {
+          this.emitSpecificCase.emit(dependentCase);
         }
       });
     }

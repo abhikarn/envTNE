@@ -33,6 +33,7 @@ import { GstComponent } from './form-controls/gst/gst.component';
   styleUrls: ['./dynamic-form.component.scss']
 })
 export class DynamicFormComponent implements OnInit {
+  @Input() id: any;
   @Input() parentId: number = 0;
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
@@ -111,6 +112,11 @@ export class DynamicFormComponent implements OnInit {
 
   getInputValue(inputValue: any) {
     this.emitTextData.emit(inputValue);
+  }
+
+  getSpecificCase(specificCaseData: any) {
+    console.log(this.id);
+    console.log(specificCaseData);
   }
 
 }
