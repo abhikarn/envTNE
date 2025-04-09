@@ -28,19 +28,21 @@ import { GstComponent } from './form-controls/gst/gst.component';
     DynamicTableComponent,
     RadioInputComponent,
     GstComponent
-],
+  ],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
 })
 export class DynamicFormComponent implements OnInit {
   @Input() id: any;
-  @Input() parentId: number = 0;
+  @Input() name: number = 0;
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
   @Input() minSelectableDate?: Date;
   @Input() maxSelectableDate?: Date;
+  @Input() existingData: any;
   @Output() emitFormData = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();
+  @Output() emitFormConfigData = new EventEmitter<any>();
   form: FormGroup = new FormGroup({});
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
   tableData: any = [];
@@ -71,42 +73,73 @@ export class DynamicFormComponent implements OnInit {
       this.eventHandler[handlerName](event, field);
     } else {
       console.warn(`Handler '${handlerName}' is not defined for ${field.name}.`);
-          }
+    }
   }
 
   onSubmit() {
-    if(this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-    this.formData.parentId = this.parentId;
+    // if(this.form.invalid) {
+    //   this.form.markAllAsTouched();
+    //   return;
+    // }
+    console.log(this.form.value);
+    this.formData.name = this.name;
+
     this.formControls.forEach(control => {
+      const type = control.formConfig.type;
       const fieldName = control.formConfig.name;
-      const fieldValue = this.form.value[fieldName];
-      if (!this.formData.excludedData) {
-        this.formData.excludedData = {};
-      }
+      let fieldValue = this.form.value[fieldName];
+      
+      control.formConfig.value = fieldValue;
       if (!this.formData.data) {
         this.formData.data = {};
       }
+      if (!this.formData.data?.excludedData) {
+        this.formData.data.excludedData = {};
+      }
       if (control.formConfig.isExcluded) {
-        this.formData.excludedData[fieldName] = fieldValue ?? null;
+        this.formData.data.excludedData[fieldName] = fieldValue ?? null;
       } else {
         this.formData.data[fieldName] = fieldValue ?? null;
       }
     })
-    // this.formData.data = this.form.value;
+
+    this.formControls.forEach(control => {
+      const { type, name, autoComplete, options } = control.formConfig;
+      if ((type == "select" || autoComplete) && name in this.form.value) {
+        let selected = this.form.value[name];
+        if (selected && typeof selected == "object") {
+          selected = selected.value;
+        }
+        const matchedOption = options?.find(option => option.value === selected);
+        if (matchedOption) {
+          this.form.get(name)?.setValue(matchedOption);
+        }
+      }
+    });
+
     this.tableData.push(this.form.value);
     this.emitFormData.emit(this.formData);
+    this.emitFormConfigData.emit(this.formConfig)
     this.form.reset();
   }
 
   onEditRow(row: any) {
     this.selectedRow = { ...row }; // Pass selected row to form
     Object?.keys(this.selectedRow).forEach(key => {
-      if (this.form.controls[key]) {
-        this.form.controls[key].setValue(this.selectedRow[key]); // Set values from selected row
-      }
+      this.formControls.forEach(control => {
+        const { type, name } = control.formConfig;
+        if (type == "select" && name == key) {
+          if (this.form.controls[key]) {
+            if (typeof this.selectedRow[key] == "object") {
+              this.form.controls[key].setValue(this.selectedRow[key].value);
+            } else {
+              this.form.controls[key].setValue(this.selectedRow[key]);
+            }
+          }
+        } else {
+          this.form.controls[key].setValue(this.selectedRow[key]);
+        }
+      })
     });
   }
 

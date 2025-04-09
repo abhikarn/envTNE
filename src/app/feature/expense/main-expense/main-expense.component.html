@@ -107,8 +107,8 @@
                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                           <div class="common-block mb-3">
                             <h6 class="common-title fw-bold mb-3">{{category.name}}</h6>
-                            <app-dynamic-form [id]="travelRequestId" [parentId]="category.parentId" [formConfig]="category.formControls" [eventHandler]="this"
-                              (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
+                            <app-dynamic-form [id]="travelRequestId" [name]="category.name" [formConfig]="category.formControls" [eventHandler]="this"
+                              (emitFormData)="getFormData($event)" (emitFormConfigData)="getFormConfigData($event)" (emitTextData)="getTextData($event)"
                               [minSelectableDate]="travelRequestPreview?.TravelDateFrom" [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
                             </app-dynamic-form>
                           </div>

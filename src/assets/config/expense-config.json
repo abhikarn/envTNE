@@ -1,14 +1,19 @@
 [
     {
-        "parentId": 1,
         "name": "Tickets Expense",
+        "label": "Tickets Expense",
         "formControls": [
             {
                 "type": "select",
+                "dataType": "int",
                 "name": "TravelMode",
+                "isExcluded": false,
                 "label": "Travel Mode",
                 "placeholder": "Select Travel Mode",
+                "value": 0,
                 "options": [],
+                "labelKey": "Name",
+                "valueKey": "Id",
                 "apiService": "DataService",
                 "apiMethod": "dataGetTravelMode",
                 "events": {
@@ -23,10 +28,15 @@
             },
             {
                 "type": "select",
+                "dataType": "int",
                 "name": "AvailedClass",
+                "isExcluded": false,
                 "label": "Availed Class",
                 "placeholder": "Select Availed Class",
                 "options": [],
+                "labelKey": "Name",
+                "valueKey": "Id",
+                "value": 0,
                 "validations": [
                     {
                         "type": "required",
@@ -36,9 +46,11 @@
             },
             {
                 "type": "date",
+                "dataType": "datetime",
                 "name": "TravelDate",
+                "isExcluded": false,
                 "label": "Travel Date",
-                "value": null,
+                "value": "",
                 "dependentCases": [
                     {
                         "key":"Id",
@@ -68,10 +80,15 @@
             {
                 "type": "text",
                 "subType": "text",
+                "dataType": "int",
                 "autoComplete": true,
                 "name": "Origin",
+                "isExcluded": false,
                 "label": "Origin",
-                "option$": [],
+                "value": 0,
+                "options": [],
+                "labelKey": "City",
+                "valueKey": "CityMasterId",
                 "validations": [
                     {
                         "type": "required",
@@ -82,10 +99,15 @@
             {
                 "type": "text",
                 "subType": "text",
+                "dataType": "int",
                 "autoComplete": true,
                 "name": "Destination",
+                "isExcluded": false,
                 "label": "Destination",
-                "option$": [],
+                "value": 0,
+                "options": [],
+                "labelKey": "City",
+                "valueKey": "CityMasterId",
                 "validations": [
                     {
                         "type": "required",
@@ -95,11 +117,17 @@
             },
             {
                 "type": "select",
+                "dataType": "int",
                 "name": "PaymentType",
                 "isExcluded": true,
                 "label": "Payment Type",
                 "placeholder": "Select Payment Type",
+                "value": "",
                 "options": [],
+                "labelKey": "KeyData",
+                "valueKey": "KeyDataId",
+                "apiService": "DataService",
+                "apiMethod": "dataGetPaymentType",
                 "validations": [
                     {
                         "type": "required",
@@ -109,9 +137,13 @@
             },
             {
                 "type": "select",
+                "dataType": "int",
                 "name": "Currency",
                 "isExcluded": true,
                 "label": "Currency",
+                "labelKey": "Name",
+                "valueKey": "Id",
+                "value": 0,
                 "defaultValue": {
                     "Id": 1,
                     "Code": "INR",
@@ -131,9 +163,11 @@
             {
                 "type": "text",
                 "subType": "text",
+                "dataType": "numeric",
                 "name": "Amount",
                 "isExcluded": true,
                 "label": "Amount",
+                "value": 0,
                 "dependentCases": [
                     {
                         "key":"Id",
@@ -175,9 +209,11 @@
             {
                 "type": "text",
                 "subType": "text",
+                "dataType": "numeric",
                 "name": "ConversionRate",
                 "isExcluded": true,
                 "label": "Conversion Rate",
+                "value": "",
                 "defaultValue": "1",
                 "autoFormat": {
                     "patterns": [
@@ -200,34 +236,50 @@
             },
             {
                 "type": "gst",
+                "dataType": "object",
                 "name": "GSTDetails",
+                "isExcluded": false,
                 "label": "GSTDetails",
+                "value": null,
                 "getControl": "Amount"
             },
             {
                 "type": "textarea",
+                "dataType": "string",
                 "name": "Remarks",
-                "label": "Remarks"
+                "isExcluded": false,
+                "label": "Remarks",
+                "value": ""
             },
             {
                 "type": "file",
+                "dataType": "file",
                 "name": "attachment",
+                "isExcluded": false,
                 "label": "Upload File",
+                "value": "",
                 "multiple": true,
                 "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx"
             }
         ]
     },
     {
-        "parentId": 3,
         "name": "Accommodation",
+        "label": "Accommodation",
         "formControls": [
             {
                 "type": "select",
+                "dataType": "int",
                 "name": "AccommodationType",
+                "isExcluded": false,
                 "label": "Accommodation Type",
                 "placeholder": "Select Accommodation Type",
+                "value": 0,
                 "options": [],
+                "labelKey": "KeyData",
+                "valueKey": "KeyDataId",
+                "apiService": "DataService",
+                "apiMethod": "dataGetStayType",
                 "validations": [
                     {
                         "type": "required",
@@ -237,7 +289,9 @@
             },
             {
                 "type": "date",
+                "dataType": "datetime",
                 "name": "Check-inDateTime",
+                "isExcluded": false,
                 "label": "Check-in Date Time",
                 "value": null,
                 "dependentCases": [
@@ -305,7 +359,9 @@
             },
             {
                 "type": "date",
+                "dataType": "datetime",
                 "name": "Check-outDateTime",
+                "isExcluded": false,
                 "label": "Check-out Date Time",
                 "value": null,
                 "validations": [
@@ -318,10 +374,12 @@
             {
                 "type": "text",
                 "subType": "text",
+                "dataType": "int",
                 "autoComplete": true,
                 "name": "City",
                 "isExcluded": true,
                 "label": "City",
+                "value": 0,
                 "option$": [],
                 "dependentCases": [
                     {
@@ -351,10 +409,12 @@
             {
                 "type": "text",
                 "subType": "text",
+                "dataType": "string",
                 "name": "CityGrade",
                 "readonly": true,
                 "isExcluded": true,
                 "label": "City Grade",
+                "value": "",
                 "validations": [
                     {
                         "type": "required",
@@ -365,8 +425,11 @@
             {
                 "type": "text",
                 "subType": "text",
+                "dataType": "string",
                 "name": "HotelName",
+                "isExcluded": false,
                 "label": "Hotel Name",
+                "value": "",
                 "validations": [
                     {
                         "type": "required",
@@ -377,8 +440,11 @@
             {
                 "type": "text",
                 "subType": "text",
+                "dataType": "string",
                 "name": "BillNumber",
+                "isExcluded": false,
                 "label": "Bill Number",
+                "value": "",
                 "validations": [
                     {
                         "type": "required",
@@ -388,7 +454,9 @@
             },
             {
                 "type": "date",
+                "dataType": "datetime",
                 "name": "BillDate",
+                "isExcluded": false,
                 "label": "Bill Date",
                 "value": null,
                 "validations": [
@@ -400,11 +468,17 @@
             },
             {
                 "type": "select",
+                "dataType": "int",
                 "name": "PaymentType",
                 "isExcluded": true,
                 "label": "Payment Type",
                 "placeholder": "Select Payment Type",
+                "value": "",
                 "options": [],
+                "labelKey": "KeyData",
+                "valueKey": "KeyDataId",
+                "apiService": "DataService",
+                "apiMethod": "dataGetPaymentType",
                 "validations": [
                     {
                         "type": "required",
@@ -414,9 +488,13 @@
             },
             {
                 "type": "select",
+                "dataType": "int",
                 "name": "EntitlementCurrency",
                 "isExcluded": true,
                 "label": "Entitlement Currency",
+                "labelKey": "Name",
+                "valueKey": "Id",
+                "value": 0,
                 "options": [],
                 "validations": [
                     {
@@ -427,10 +505,12 @@
             },
             {
                 "type": "text",
-                "subType": "number",
+                "subType": "text",
+                "dataType": "numeric",
                 "name": "EntitlementAmount",
                 "isExcluded": true,
                 "label": "Entitlement Amount",
+                "value": 0,
                 "validations": [
                     {
                         "type": "required",
@@ -440,10 +520,12 @@
             },
             {
                 "type": "text",
-                "subType": "number",
+                "subType": "text",
+                "dataType": "numeric",
                 "name": "EntitlementConversionRate",
                 "isExcluded": true,
                 "label": "Entitlement Conversion Rate",
+                "value": 0,
                 "validations": [
                     {
                         "type": "required",
@@ -453,9 +535,13 @@
             },
             {
                 "type": "select",
+                "dataType": "int",
                 "name": "Currency",
                 "isExcluded": true,
                 "label": "Currency",
+                "labelKey": "Name",
+                "valueKey": "Id",
+                "value": 0,
                 "defaultValue": {
                     "Id": 1,
                     "Code": "INR",
@@ -475,8 +561,11 @@
             {
                 "type": "text",
                 "subType": "text",
+                "dataType": "numeric",
                 "name": "ClaimedAmount",
+                "isExcluded": false,
                 "label": "Claimed Amount",
+                "value": 0,
                 "dependentCases": [
                     {
                         "key":"Id",
@@ -517,10 +606,12 @@
             },
             {
                 "type": "text",
-                "subType": "number",
+                "subType": "text",
+                "dataType": "numeric",
                 "name": "ClaimedConversionRate",
                 "isExcluded": true,
                 "label": "Claimed Conversion Rate",
+                "value": 0,
                 "validations": [
                     {
                         "type": "required",
@@ -530,16 +621,21 @@
             },
             {
                 "type": "text",
-                "subType": "number",
+                "subType": "text",
+                "dataType": "numeric",
                 "name": "TaxAmount",
                 "isExcluded": true,
-                "label": "Tax Amount"
+                "label": "Tax Amount",
+                "value": 0
             },
             {
                 "type": "text",
-                "subType": "number",
+                "subType": "text",
+                "dataType": "numeric",
                 "name": "DifferentialAmount(INR)",
+                "isExcluded": false,
                 "label": "Differential Amount(INR)",
+                "value": 0,
                 "validations": [
                     {
                         "type": "required",
@@ -549,14 +645,17 @@
             },
             {
                 "type": "textarea",
+                "dataType": "string",
                 "name": "Justification",
-                "label": "Justification"
+                "isExcluded": false,
+                "label": "Justification",
+                "value": ""
             }
         ]
     },
     {
-        "parentId": 2,
         "name": "Per Diem",
+        "label": "Per Diem",
         "formControls": [
             {
                 "type": "date",
@@ -749,8 +848,8 @@
         ]
     },
     {
-        "parentId": 28,
         "name": "Lump sum",
+        "label": "Lump sum",
         "formControls": [
             {
                 "type": "select",
@@ -948,8 +1047,8 @@
         ]
     },
     {
-        "parentId": 21,
         "name": "Local Conveyance",
+        "label": "Local Conveyance",
         "formControls": [
             {
                 "type": "date",
@@ -1054,6 +1153,7 @@
     },
     {
         "name": "Miscellaneous Expense",
+        "label": "Miscellaneous Expense",
         "formControls": [
             {
                 "type": "date",
@@ -1151,8 +1251,8 @@
         ]
     },
     {
-        "parentId": 30,
         "name": "Visa",
+        "label": "Visa",
         "formControls": [
             {
                 "type": "date",
@@ -1209,8 +1309,8 @@
         ]
     },
     {
-        "parentId": 31,
         "name": "Travel Insurance",
+        "label": "Travel Insurance",
         "formControls": [
             {
                 "type": "date",
@@ -1267,8 +1367,8 @@
         ]
     },
     {
-        "parentId": 32,
         "name": "Roaming",
+        "label": "Roaming",
         "formControls": [
             {
                 "type": "date",
@@ -1343,8 +1443,8 @@
         ]
     },
     {
-        "parentId": 26,
         "name": "Transit Allowance",
+        "label": "Transit Allowance",
         "formControls": [
             {
                 "type": "date",
@@ -1442,8 +1542,8 @@
         ]
     },
     {
-        "parentId": 27,
         "name": "Baggage and Outfit Allowance",
+        "label": "Baggage and Outfit Allowance",
         "formControls": [
             {
                 "type": "date",
@@ -1520,8 +1620,8 @@
         ]
     },
     {
-        "parentId": 5,
         "name": "Porterage Expenses",
+        "label": "Porterage Expenses",
         "formControls": [
             {
                 "type": "date",
@@ -1586,8 +1686,8 @@
         ]
     },
     {
-        "parentId": 9,
         "name": "Advance Return",
+        "label": "Advance Return",
         "formControls": [
             {
                 "type": "date",

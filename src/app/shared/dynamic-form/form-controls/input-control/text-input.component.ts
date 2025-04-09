@@ -171,7 +171,7 @@ export class TextInputComponent implements OnInit {
     return 'Invalid selection'; // Default fallback message
   }
 
-  displayFn(city: any): string {
-    return city ? city.City : '';
+  displayFn(option: any): string {
+    return option ? option.label : '';
   }
 }

@@ -41,7 +41,7 @@ export class SelectInputComponent {
 
   ngOnInit() {
     if (this.controlConfig.defaultValue) {
-      this.control.setValue(this.controlConfig.defaultValue);
+      this.control.setValue(this.controlConfig.defaultValue.Id);
     }
     
     if (this.controlConfig.disable) {
@@ -58,7 +58,12 @@ export class SelectInputComponent {
     if (apiService && typeof apiService[this.controlConfig.apiMethod] === 'function') {
       this.apiSubscription = apiService[this.controlConfig.apiMethod]().subscribe(
         (data: any) => {
-          this.controlConfig.options = data.ResponseValue || [];
+          const labelKey = this.controlConfig.labelKey || 'label';
+          const valueKey = this.controlConfig.valueKey || 'value';
+          this.controlConfig.options = data.ResponseValue.map((item: any) => ({
+            label: item[labelKey],
+            value: item[valueKey]
+          }));
         },
         (error: any) => {
           console.error('API Error:', error);
@@ -83,7 +88,6 @@ export class SelectInputComponent {
 
   // Emit selection change event
   onSelectionChange(event: any) {
-    console.log(this.controlConfig)
     this.valueChange.emit({ event, control: this.controlConfig });
   }
 }
