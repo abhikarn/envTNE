@@ -67,8 +67,8 @@
   <div class="col-md-12">
     <div class="common-block-white mb-3">
       <div class=" d-flex cladd-btn justify-content-end mb-3">
-        <a class="  btn btn-outline-secondary clear  w-10">Clear</a>
-        <a class="btn btn-dark w-10" id="btnAddLtcData" (click)="onSubmit()">Add </a>
+        <a class="  btn btn-outline-secondary clear  w-10" (click)="clear()">Clear</a>
+        <a class="btn btn-dark w-10" id="btnAddLtcData" (click)="onSubmit()">{{ editIndex ? "Edit" : "Add" }} </a>
       </div>
     </div>
   </div>

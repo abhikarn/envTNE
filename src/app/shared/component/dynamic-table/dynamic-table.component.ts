@@ -35,8 +35,12 @@ export class DynamicTableComponent {
     return value !== null && typeof value === 'object';
   }
 
-  edit(row: any) {
-    this.editRow.emit(row); // Send row data to Dynamic Form Component
+  edit(row: any, index: any) {
+    let rowData = {
+      row: row,
+      index: index
+    }
+    this.editRow.emit(rowData); // Send row data to Dynamic Form Component
   }
 
   toggleRow(index: number) {

@@ -143,6 +143,8 @@
                 "label": "Currency",
                 "labelKey": "Name",
                 "valueKey": "Id",
+                "apiService": "DataService",
+                "apiMethod": "dataGetCurrencyView",
                 "value": 0,
                 "defaultValue": {
                     "Id": 1,

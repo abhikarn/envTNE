@@ -48,6 +48,7 @@ export class DynamicFormComponent implements OnInit {
   tableData: any = [];
   selectedRow: any;
   formData: any = {};
+  editIndex = 0;
 
   constructor() { }
 
@@ -57,6 +58,24 @@ export class DynamicFormComponent implements OnInit {
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
     });
+
+    this.existingData?.forEach((data: any) => {
+      // Preparing Data for Dynamic table
+      this.formControls.forEach(control => {
+        const { type, name, autoComplete, options } = control.formConfig;
+        if ((type == "select" || autoComplete) && name in data) {
+          let selected = data[name];
+          if (selected && typeof selected == "object") {
+            selected = selected.value;
+          }
+          const matchedOption = options?.find(option => option.value === selected);
+          if (matchedOption) {
+            data.name = matchedOption
+          }
+        }
+      });
+    })
+    this.tableData = this.existingData;
   }
 
   /**
@@ -81,9 +100,24 @@ export class DynamicFormComponent implements OnInit {
     //   this.form.markAllAsTouched();
     //   return;
     // }
-    console.log(this.form.value);
-    this.formData.name = this.name;
+    // Logic for autocomplete field like city to save the object value for display purpose
+    this.formControls.forEach(control => {
+      let { name, autoComplete } = control.formConfig;
+      if (autoComplete && name in this.form.value) {
+        let selected = this.form.value[name];
+        if (selected && typeof selected == "object") {
+          if (!control.formConfig.options) {
+            control.formConfig.options = [];
+          }
+          control.formConfig.options.push(selected);
+          selected = selected.value;
+        }
+        this.form.get(name)?.setValue(selected);
+      }
+    });
 
+    // Preparing form json
+    this.formData.name = this.name;
     this.formControls.forEach(control => {
       const type = control.formConfig.type;
       const fieldName = control.formConfig.name;
@@ -91,7 +125,9 @@ export class DynamicFormComponent implements OnInit {
       
       control.formConfig.value = fieldValue;
       if (!this.formData.data) {
-        this.formData.data = {};
+        this.formData.data = {
+          referanceId: 0
+        };
       }
       if (!this.formData.data?.excludedData) {
         this.formData.data.excludedData = {};
@@ -102,7 +138,10 @@ export class DynamicFormComponent implements OnInit {
         this.formData.data[fieldName] = fieldValue ?? null;
       }
     })
+    console.log(this.formData)
+    this.emitFormData.emit(this.formData);
 
+    // Preparing Data for Dynamic table
     this.formControls.forEach(control => {
       const { type, name, autoComplete, options } = control.formConfig;
       if ((type == "select" || autoComplete) && name in this.form.value) {
@@ -117,30 +156,42 @@ export class DynamicFormComponent implements OnInit {
       }
     });
 
-    this.tableData.push(this.form.value);
-    this.emitFormData.emit(this.formData);
+
+    if(!this.editIndex) { //Create
+      this.tableData.push(this.form.value);
+    } else { // Edit
+      this.tableData[this.editIndex - 1] = this.form.value;
+      this.editIndex = 0;
+    }
+    
     this.emitFormConfigData.emit(this.formConfig)
     this.form.reset();
   }
 
-  onEditRow(row: any) {
-    this.selectedRow = { ...row }; // Pass selected row to form
-    Object?.keys(this.selectedRow).forEach(key => {
-      this.formControls.forEach(control => {
-        const { type, name } = control.formConfig;
-        if (type == "select" && name == key) {
-          if (this.form.controls[key]) {
-            if (typeof this.selectedRow[key] == "object") {
-              this.form.controls[key].setValue(this.selectedRow[key].value);
-            } else {
-              this.form.controls[key].setValue(this.selectedRow[key]);
-            }
-          }
-        } else {
-          this.form.controls[key].setValue(this.selectedRow[key]);
-        }
-      })
+  onEditRow(rowData: any) {
+    this.editIndex = rowData.index;
+    this.selectedRow = { ...rowData.row };
+    console.log(this.selectedRow);
+  
+    this.formControls.forEach(control => {
+      const { name, type } = control.formConfig;
+  
+      if (!this.form.controls[name]) return;
+  
+      const value = this.selectedRow[name];
+  
+      if (type === 'select') {
+        // If the value is an object with `.value`, extract it
+        this.form.controls[name].setValue(typeof value === 'object' && value !== null ? value.value : value);
+      } else {
+        this.form.controls[name].setValue(value);
+      }
     });
+  }
+  
+
+  clear() {
+    this.form.reset();
   }
 
   getInputValue(inputValue: any) {

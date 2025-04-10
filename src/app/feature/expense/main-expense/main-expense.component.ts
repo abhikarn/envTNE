@@ -18,6 +18,7 @@ import { ConfirmDialogService } from '../../../shared/service/confirm-dialog.ser
 import { DatePipe } from '@angular/common';
 import { DateExtensionComponent } from '../date-extension/date-extension.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { NewExpenseService } from '../service/new-expense.service';
 
 interface DataEntry {
   name: number;
@@ -50,7 +51,6 @@ export class MainExpenseComponent {
   cities = [];
   // filteredCities$: Observable<{ CityMasterId: number; City: string }[]>;
   travelPaymentList: any;
-  currencyList: any;
   accomodationTypeList: any;
   baggageTypeList: any;
   otherTypeList: any;
@@ -64,9 +64,10 @@ export class MainExpenseComponent {
   purpose: any;
   expenseRequestData: any = [];
   travelRequestId: number = 0;
-  private dialogOpen = false;
+  dialogOpen = false;
   expenseValidateUserLeaveDateForDuration:any = {};
   expenseRequestConfigData: any = [];
+  existingExpenseRequestData = [];
 
   constructor(
     private expenseService: ExpenseService,
@@ -77,7 +78,8 @@ export class MainExpenseComponent {
     private confirmDialogService: ConfirmDialogService,
     private eRef: ElementRef,
     private datePipe: DatePipe,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private newExpenseService: NewExpenseService
   ) {
     
   }
@@ -103,7 +105,6 @@ export class MainExpenseComponent {
   ngOnInit() {
     forkJoin({
       pendingTravelRequests: this.expenseService.expenseGetTravelRequestsPendingForClaim({ UserMasterId: 4, TravelTypeId: 0 }),
-      currencyList: this.dataService.dataGetCurrencyView(),
       baggageTypeList: this.dataService.dataGetBaggageType(),
       // otherTypeList: this.expenseService.getOtherTypeList(),
       boMealsList: this.dataService.dataGetMealType(),
@@ -115,14 +116,12 @@ export class MainExpenseComponent {
         // Handle all the API responses here
         console.log('responses', responses);
         this.travelRequests = responses.pendingTravelRequests.ResponseValue;
-        this.currencyList = responses.currencyList.ResponseValue;
         this.baggageTypeList = responses.baggageTypeList.ResponseValue;
         this.localTravelTypeList = responses.localTravelTypeList.ResponseValue;
         this.localTravelModeList = responses.localTravelModeList.ResponseValue;
         this.boMealsList = responses.boMealsList.ResponseValue;
 
         const optionMapping: { [key: string]: any[] } = {
-          Currency: this.currencyList,
           BaggageType: this.baggageTypeList,
           // OtherType: responses.otherTypeList.ResponseValue,
           BoMeals: this.boMealsList,
@@ -375,6 +374,18 @@ export class MainExpenseComponent {
         if (confirmed) {
           console.log('Created Expense request.');
           console.log(this.mainExpenseData);
+          let payload = this.simplifyObject(this.expenseRequestData);
+          
+          this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
+            next: (response) => {
+              console.log(response);
+              this.snackbarService.success('Operation successful with New API!');
+            },
+            error: (err) => {
+              console.error(err);
+              this.snackbarService.error('Something went wrong with the API.');
+            }
+          });
           // this.expenseService.expenseExpenseRequestCreate(this.mainExpenseData).pipe(take(1)).subscribe({
           //   next: (response) => {
           //     console.log(response);
@@ -423,5 +434,41 @@ export class MainExpenseComponent {
       }
     });
   }
+
+  simplifyObject(obj: any): any {
+    if (Array.isArray(obj)) {
+      return obj.map(item => this.simplifyObject(item));
+    } else if (typeof obj === 'object' && obj !== null) {
+      const newObj: any = {};
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          const value = obj[key];
+  
+          // Check for { label: ..., value: ... } structure
+          if (
+            value &&
+            typeof value === 'object' &&
+            'value' in value &&
+            Object.keys(value).length === 2 &&
+            'label' in value
+          ) {
+            newObj[key] = value.value;
+          } 
+          // Check if the value is a date string and format it
+          else if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
+            newObj[key] = value.split('T')[0]; // Keep only the date part
+          } 
+          else {
+            newObj[key] = this.simplifyObject(value);
+          }
+        }
+      }
+      return newObj;
+    }
+    return obj;
+  }
+  
   
 }
+
+
