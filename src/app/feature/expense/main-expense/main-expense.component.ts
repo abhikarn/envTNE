@@ -18,9 +18,11 @@ import { ConfirmDialogService } from '../../../shared/service/confirm-dialog.ser
 import { DatePipe } from '@angular/common';
 import { DateExtensionComponent } from '../date-extension/date-extension.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { NewExpenseService } from '../service/new-expense.service';
+import { ActivatedRoute } from '@angular/router';
 
 interface DataEntry {
-  parentId: number;
+  name: number;
   data: any;
 }
 
@@ -44,13 +46,12 @@ export class MainExpenseComponent {
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
   travelRequestBookedDetail: any;
-  travelRequestPreview: any;
+  expenseRequestPreview: any;
   travelClassList: any;
   originControl = new FormControl('');
   cities = [];
   // filteredCities$: Observable<{ CityMasterId: number; City: string }[]>;
   travelPaymentList: any;
-  currencyList: any;
   accomodationTypeList: any;
   baggageTypeList: any;
   otherTypeList: any;
@@ -59,13 +60,16 @@ export class MainExpenseComponent {
   localTravelModeList: any;
   private destroyRef = inject(DestroyRef);
   categories: any = [];
-  mainExpenseData: ExpenseRequestModel = {};
+  mainExpenseData: any = {};
   costcenterId: any;
   purpose: any;
   expenseRequestData: any = [];
   travelRequestId: number = 0;
-  private dialogOpen = false;
+  dialogOpen = false;
   expenseValidateUserLeaveDateForDuration:any = {};
+  expenseRequestConfigData: any = [];
+  existingExpenseRequestData = [];
+  cid: string | null = null;
 
   constructor(
     private expenseService: ExpenseService,
@@ -76,7 +80,9 @@ export class MainExpenseComponent {
     private confirmDialogService: ConfirmDialogService,
     private eRef: ElementRef,
     private datePipe: DatePipe,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private newExpenseService: NewExpenseService,
+    private route: ActivatedRoute
   ) {
     
   }
@@ -100,11 +106,14 @@ export class MainExpenseComponent {
   }
 
   ngOnInit() {
+    // Get 'cid' from query params
+    this.route.queryParamMap.subscribe(params => {
+      this.cid = params.get('cid');
+      console.log('CID:', this.cid);
+    });
+
     forkJoin({
       pendingTravelRequests: this.expenseService.expenseGetTravelRequestsPendingForClaim({ UserMasterId: 4, TravelTypeId: 0 }),
-      travelPaymentTypeList: this.dataService.dataGetPaymentType(),
-      currencyList: this.dataService.dataGetCurrencyView(),
-      accommodationTypeList: this.dataService.dataGetStayType(),
       baggageTypeList: this.dataService.dataGetBaggageType(),
       // otherTypeList: this.expenseService.getOtherTypeList(),
       boMealsList: this.dataService.dataGetMealType(),
@@ -116,18 +125,12 @@ export class MainExpenseComponent {
         // Handle all the API responses here
         console.log('responses', responses);
         this.travelRequests = responses.pendingTravelRequests.ResponseValue;
-        this.travelPaymentList = responses.travelPaymentTypeList.ResponseValue;
-        this.currencyList = responses.currencyList.ResponseValue;
-        this.accomodationTypeList = responses.accommodationTypeList.ResponseValue;
         this.baggageTypeList = responses.baggageTypeList.ResponseValue;
         this.localTravelTypeList = responses.localTravelTypeList.ResponseValue;
         this.localTravelModeList = responses.localTravelModeList.ResponseValue;
         this.boMealsList = responses.boMealsList.ResponseValue;
 
         const optionMapping: { [key: string]: any[] } = {
-          PaymentType: this.travelPaymentList,
-          Currency: this.currencyList,
-          AccommodationType: this.accomodationTypeList,
           BaggageType: this.baggageTypeList,
           // OtherType: responses.otherTypeList.ResponseValue,
           BoMeals: this.boMealsList,
@@ -155,11 +158,11 @@ export class MainExpenseComponent {
   }
 
   getTravelRequestPreview() {
-    this.travelService.travelGetTravelRequestPreview({ TravelRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
+    this.expenseService.expenseExpenseRequestPreview({ ExpenseRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
       next: (response) => {
-        this.travelRequestPreview = response.ResponseValue;
-        this.costcenterId = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 4)?.IntegerValue;
-        this.purpose = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 1)?.IntegerValueReference;
+        this.expenseRequestPreview = response.ResponseValue;
+        this.costcenterId = this.expenseRequestPreview.ExpenseRequestMetaData.find((data: any) => data.ExpenseRequestMetaId === 4)?.IntegerValue;
+        this.purpose = this.expenseRequestPreview.ExpenseRequestMetaData.find((data: any) => data.ExpenseRequestMetaId === 1)?.IntegerValueReference;
 
       },
       error: (error) => {
@@ -207,7 +210,7 @@ export class MainExpenseComponent {
   }
 
   onTravelModeChange(event: any, field: any) {
-    const selectedTravelModeId = event.value.Id || 0;
+    const selectedTravelModeId = event.value || 0;
 
     if (!selectedTravelModeId) {
       console.warn('No Travel Mode selected, skipping update.');
@@ -222,7 +225,12 @@ export class MainExpenseComponent {
         this.categories.forEach((category: any) => {
           category.formControls.forEach((control: any) => {
             if (control.name === 'AvailedClass') {
-              control.options = this.travelClassList; // Update only options, avoid object replacement
+              const labelKey = control.labelKey || 'label';
+              const valueKey = control.valueKey || 'value';
+              control.options = this.travelClassList.map((item: any) => ({
+                label: item[labelKey],
+                value: item[valueKey]
+              }));
             }
           });
         });
@@ -237,8 +245,8 @@ export class MainExpenseComponent {
     const mergedMap = new Map<number, any>();
 
     entries.forEach(entry => {
-      if (mergedMap.has(entry.parentId)) {
-        let existingData = mergedMap.get(entry.parentId);
+      if (mergedMap.has(entry.name)) {
+        let existingData = mergedMap.get(entry.name);
 
         if (Array.isArray(existingData.data)) {
           existingData.data.push(entry.data);
@@ -246,8 +254,8 @@ export class MainExpenseComponent {
           existingData.data = [existingData.data, entry.data];
         }
       } else {
-        mergedMap.set(entry.parentId, {
-          parentId: entry.parentId,
+        mergedMap.set(entry.name, {
+          name: entry.name,
           data: entry.data,
         });
       }
@@ -256,29 +264,32 @@ export class MainExpenseComponent {
     return Array.from(mergedMap.values());
   }
 
+  getFormConfigData(formCongigData: any) {
+    this.expenseRequestConfigData.push(formCongigData);
+    console.log(this.expenseRequestConfigData)
+  }
+
   getFormData(data: any) {
-    const existingCategory = this.expenseRequestData.find((cat: any) => cat.formControlId === data.formControlId);
+    const existingCategory = this.expenseRequestData.find((cat: any) => cat.name === data.name);
 
     if (existingCategory) {
       existingCategory.data.push(data.data);
-      existingCategory.excludedData.push(data.excludedData);
     } else {
       this.expenseRequestData.push({
-        parentId: data.parentId,
-        data: [data.data],
-        excludedData: [data.excludedData]
+        name: data.name,
+        data: [data.data]
       });
     }
 
     console.log(this.expenseRequestData)
 
-    if (data.parentId == 1) { // Ticket Expense
+    if (data.name == "Ticket Expense") { // Ticket Expense
       const requestBody = {
         UserMasterId: 4,
-        TravelTypeId: this.travelRequestPreview.TravelTypeId,
+        TravelTypeId: this.expenseRequestPreview.TravelRequestId,
         TravelModeId: data.data.TravelMode.Id,
         TravelClassId: data.data.AvailedClass.Id,
-        RequestForId: this.travelRequestPreview.RequestForId,
+        RequestForId: this.expenseRequestPreview.RequestForId,
         FromCityId: data.data.Origin.CityMasterId,
         ToCityId: data.data.Destination.CityMasterId,
         ReferenceDate: data.data.TravelDate,
@@ -300,7 +311,7 @@ export class MainExpenseComponent {
   getTextData(inputData: any) {
     const requestBody = {
       "SearchText": inputData,
-      "TravelTypeId": this.travelRequestPreview.TravelTypeId || 0
+      "TravelTypeId": this.expenseRequestPreview.TravelRequestId || 0
     }
     this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
       next: (response: any) => {
@@ -308,7 +319,12 @@ export class MainExpenseComponent {
         this.categories.forEach((category: any) => {
           category.formControls.forEach((control: any) => {
             if (control.autoComplete) {
-              control.options = response.ResponseValue; // Update only options, avoid object replacement
+              const labelKey = control.labelKey || 'label';
+              const valueKey = control.valueKey || 'value';
+              control.options = response.ResponseValue?.map((item: any) => ({
+                label: item[labelKey],
+                value: item[valueKey]
+              }));
             }
           });
         });
@@ -344,9 +360,9 @@ export class MainExpenseComponent {
 
   onSave(isDraft: boolean) {
     this.mainExpenseData.ExpenseRequestId = 0;
-    this.mainExpenseData.RequestForId = this.travelRequestPreview.RequestForId;
+    this.mainExpenseData.RequestForId = this.expenseRequestPreview.RequestForId;
     this.mainExpenseData.RequesterId = 4;
-    this.mainExpenseData.TravelRequestId = this.travelRequestPreview.TravelRequestId;
+    this.mainExpenseData.TravelRequestId = this.expenseRequestPreview.TravelRequestId;
     this.mainExpenseData.RequestDate = new Date().toISOString();
     this.mainExpenseData.Purpose = this.purpose;
     this.mainExpenseData.CostCentreId = this.costcenterId;
@@ -354,6 +370,7 @@ export class MainExpenseComponent {
     this.mainExpenseData.Remarks = '';
     this.mainExpenseData.IsDraft = isDraft;
     this.mainExpenseData.ActionBy = 0;
+    this.mainExpenseData.expenseRequestData = this.expenseRequestData;
 
     this.confirmDialogService
       .confirm({
@@ -365,12 +382,25 @@ export class MainExpenseComponent {
       .subscribe((confirmed) => {
         if (confirmed) {
           console.log('Created Expense request.');
-          this.expenseService.expenseExpenseRequestCreate(this.mainExpenseData).pipe(take(1)).subscribe({
+          console.log(this.mainExpenseData);
+          let payload = this.simplifyObject(this.expenseRequestData);
+          
+          this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
             next: (response) => {
               console.log(response);
-              this.snackbarService.success('Operation successful!');
+              this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
+            },
+            error: (err) => {
+              console.error(err);
+              this.snackbarService.error('Something went wrong with the API.');
             }
-          })
+          });
+          // this.expenseService.expenseExpenseRequestCreate(this.mainExpenseData).pipe(take(1)).subscribe({
+          //   next: (response) => {
+          //     console.log(response);
+          //     this.snackbarService.success('Operation successful!');
+          //   }
+          // })
         } else {
           console.log('Failed');
         }
@@ -381,9 +411,9 @@ export class MainExpenseComponent {
     const dialogRef = this.dialog.open(DateExtensionComponent, {
       maxWidth: '1000px',
       data: {
-        TravelDateFrom: this.travelRequestPreview?.TravelDateFromExtended,
-        TravelDateTo: this.travelRequestPreview?.TravelDateToExtended,
-        remarks: this.travelRequestPreview?.TravelRequestDateExtensionRemarks
+        TravelDateFrom: this.expenseRequestPreview?.TravelDateFromExtended,
+        TravelDateTo: this.expenseRequestPreview?.TravelDateToExtended,
+        remarks: this.expenseRequestPreview?.TravelDateExtensionRemarks
       }
     });
 
@@ -413,5 +443,41 @@ export class MainExpenseComponent {
       }
     });
   }
+
+  simplifyObject(obj: any): any {
+    if (Array.isArray(obj)) {
+      return obj.map(item => this.simplifyObject(item));
+    } else if (typeof obj === 'object' && obj !== null) {
+      const newObj: any = {};
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          const value = obj[key];
+  
+          // Check for { label: ..., value: ... } structure
+          if (
+            value &&
+            typeof value === 'object' &&
+            'value' in value &&
+            Object.keys(value).length === 2 &&
+            'label' in value
+          ) {
+            newObj[key] = value.value;
+          } 
+          // Check if the value is a date string and format it
+          else if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
+            newObj[key] = value.split('T')[0]; // Keep only the date part
+          } 
+          else {
+            newObj[key] = this.simplifyObject(value);
+          }
+        }
+      }
+      return newObj;
+    }
+    return obj;
+  }
+  
   
 }
+
+

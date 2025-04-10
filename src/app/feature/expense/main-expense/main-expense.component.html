@@ -42,7 +42,7 @@
                           <label>Travel From Date</label>
                         </div>
                         <div class="trl-req-detail">
-                          <span>{{ travelRequestPreview?.TravelDateTimeFromString }}</span>
+                          <span>{{ expenseRequestPreview?.TravelDateFromActualString }}</span>
                         </div>
                       </div>
                     </div>
@@ -54,13 +54,13 @@
                           <label>Travel To Date</label>
                         </div>
                         <div class="trl-req-detail">
-                          <span>{{ travelRequestPreview?.TravelDateTimeToString }}</span>
+                          <span>{{ expenseRequestPreview?.TravelDateToActualString }}</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                  @for (item of travelRequestPreview?.TravelRequestMetaData; track item; let i = $index) {
-                  @if (item.TravelRequestMetaId == 1 || item.TravelRequestMetaId == 7) {
+                  @for (item of expenseRequestPreview?.ExpenseRequestMetaData; track item; let i = $index) {
+                  @if (item.ExpenseRequestMetaId == 1 || item.ExpenseRequestMetaId == 4) {
                   <div class="col-md-6">
                     <div class="trl-preview-wrapper">
                       <div class="trl-readview-item">
@@ -68,7 +68,7 @@
                           <label>{{ item.FieldName }}</label>
                         </div>
                         <div class="trl-req-detail">
-                          <span [id]="item.TravelRequestMetaDataId">{{ item.IntegerValueReference }}</span>
+                          <span [id]="item.ExpenseRequestMetaId">{{ item.IntegerValueReference }}</span>
                           @if (item.hiddenFields) {
                           <div>
                             @for (field of item.hiddenFields; track field) {
@@ -89,7 +89,7 @@
                           <label>LeaveSummary</label>
                         </div>
                         <div class="trl-req-detail">
-                          <span>{{ travelRequestPreview?.UserLeaveSummary }}</span>
+                          <span>{{ expenseRequestPreview?.UserLeaveSummary }}</span>
                         </div>
                       </div>
                     </div>
@@ -107,9 +107,9 @@
                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                           <div class="common-block mb-3">
                             <h6 class="common-title fw-bold mb-3">{{category.name}}</h6>
-                            <app-dynamic-form [parentId]="category.parentId" [formConfig]="category.formControls" [eventHandler]="this"
-                              (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
-                              [minSelectableDate]="travelRequestPreview?.TravelDateFrom" [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
+                            <app-dynamic-form [id]="travelRequestId" [existingData]="existingExpenseRequestData" [name]="category.name" [formConfig]="category.formControls" [eventHandler]="this"
+                              (emitFormData)="getFormData($event)" (emitFormConfigData)="getFormConfigData($event)" (emitTextData)="getTextData($event)"
+                              [minSelectableDate]="expenseRequestPreview?.TravelDateFromActual" [maxSelectableDate]="expenseRequestPreview?.TravelDateToActual">
                             </app-dynamic-form>
                           </div>
                         </div>

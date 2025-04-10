@@ -3,27 +3,30 @@ import { IValidationConfig } from './validation-config.interface';
 import { Observable } from 'rxjs';
 
 export interface IFormControl {
-  parentId?: number;
-  name: string;
-  label?: string;
-  placeholder?: string;
   type?: string;
   subType?: string;
-  // control: FormControl;
-  options?: any[];
-  option$?: Observable<any[]>;
+  dataType?: string;
+  name: string;
+  label?: string;
+  isExcluded?: boolean;
+  placeholder?: string;
   value?: any;
   value$?:any;
-  validations?: IValidationConfig[];
-  validationMessages?: any;
-  multiple?: boolean;
-  accept?: string;
-  autoComplete?: boolean,
-  isExcluded?: boolean;
-  disable?: boolean;
-  defaultValue?: any;
-  autoFormat?: any;
+  options?: any[];
+  option$?: Observable<any[]>;
+  labelKey?: string;
+  valueKey?: string;
   apiService?: string;
   apiMethod?: string;
   events?: any;
+  autoComplete?: boolean,
+  disable?: boolean;
+  defaultValue?: any;
+  autoFormat?: any;
+  dependentCases?: any;
+  readonly?: boolean;
+  multiple?: boolean; // File Control
+  accept?: string; // File Control
+  validations?: IValidationConfig[];
+  validationMessages?: any;
 }

@@ -20,14 +20,14 @@
               @if (isDate(row[column])) {
               {{ row[column] | date:'dd-MMM-yyyy' }}
               } @else if (isObject(row[column])) {
-              {{ row[column]?.Name || '-' }}
+              {{ row[column]?.label || '-' }}
               } @else {
               {{ row[column] || '-' }}
               }
             </td>
             }
             <td>
-              <i class="fas fa-edit" (click)="edit(row)"></i>
+              <i class="fas fa-edit" (click)="edit(row, i+1)"></i>
               <i class="fas fa-chevron-down" (click)="toggleRow(i)" [class.rotate]="expandedRowIndex === i"></i>
               @if (row?.hasPolicyViolation) {
               <i class="fas fa-exclamation-triangle text-danger"></i>
