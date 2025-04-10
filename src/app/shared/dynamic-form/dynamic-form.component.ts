@@ -49,6 +49,7 @@ export class DynamicFormComponent implements OnInit {
   selectedRow: any;
   formData: any = {};
   editIndex = 0;
+  referenceId = 0;
 
   constructor() { }
 
@@ -58,24 +59,25 @@ export class DynamicFormComponent implements OnInit {
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
     });
-
-    this.existingData?.forEach((data: any) => {
-      // Preparing Data for Dynamic table
-      this.formControls.forEach(control => {
-        const { type, name, autoComplete, options } = control.formConfig;
-        if ((type == "select" || autoComplete) && name in data) {
-          let selected = data[name];
-          if (selected && typeof selected == "object") {
-            selected = selected.value;
+    setTimeout(() => {
+      this.existingData.data?.forEach((data: any) => {
+        // Preparing Data for Dynamic table
+        this.formControls.forEach(control => {
+          const { type, name, autoComplete, options } = control.formConfig;
+          if ((type == "select" || autoComplete) && name in data) {
+            let selected = data[name];
+            if (selected && typeof selected == "object") {
+              selected = selected.value;
+            }
+            const matchedOption = options?.find(option => option.value === selected);
+            if (matchedOption) {
+              data[name] = matchedOption
+            }
           }
-          const matchedOption = options?.find(option => option.value === selected);
-          if (matchedOption) {
-            data.name = matchedOption
-          }
-        }
-      });
-    })
-    this.tableData = this.existingData;
+        });
+        this.tableData.push(data)
+      })
+    }, 2000);
   }
 
   /**
@@ -122,12 +124,14 @@ export class DynamicFormComponent implements OnInit {
       const type = control.formConfig.type;
       const fieldName = control.formConfig.name;
       let fieldValue = this.form.value[fieldName];
-      
+
       control.formConfig.value = fieldValue;
       if (!this.formData.data) {
         this.formData.data = {
-          referanceId: 0
+          ReferenceId: 0
         };
+      } else {
+        this.formData.data.ReferenceId = this.referenceId
       }
       if (!this.formData.data?.excludedData) {
         this.formData.data.excludedData = {};
@@ -138,8 +142,8 @@ export class DynamicFormComponent implements OnInit {
         this.formData.data[fieldName] = fieldValue ?? null;
       }
     })
-    console.log(this.formData)
     this.emitFormData.emit(this.formData);
+    this.formData = {};
 
     // Preparing Data for Dynamic table
     this.formControls.forEach(control => {
@@ -157,29 +161,30 @@ export class DynamicFormComponent implements OnInit {
     });
 
 
-    if(!this.editIndex) { //Create
+    if (!this.editIndex) { //Create
       this.tableData.push(this.form.value);
     } else { // Edit
       this.tableData[this.editIndex - 1] = this.form.value;
       this.editIndex = 0;
     }
-    
+
     this.emitFormConfigData.emit(this.formConfig)
     this.form.reset();
   }
 
   onEditRow(rowData: any) {
     this.editIndex = rowData.index;
+    this.referenceId = rowData.row.ReferenceId;
     this.selectedRow = { ...rowData.row };
     console.log(this.selectedRow);
-  
+
     this.formControls.forEach(control => {
       const { name, type } = control.formConfig;
-  
+
       if (!this.form.controls[name]) return;
-  
+
       const value = this.selectedRow[name];
-  
+
       if (type === 'select') {
         // If the value is an object with `.value`, extract it
         this.form.controls[name].setValue(typeof value === 'object' && value !== null ? value.value : value);
@@ -188,7 +193,7 @@ export class DynamicFormComponent implements OnInit {
       }
     });
   }
-  
+
 
   clear() {
     this.form.reset();
@@ -202,5 +207,5 @@ export class DynamicFormComponent implements OnInit {
     console.log(this.id);
     console.log(specificCaseData);
   }
-
+ 
 }

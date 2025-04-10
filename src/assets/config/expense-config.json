@@ -1,6 +1,6 @@
 [
     {
-        "name": "Tickets Expense",
+        "name": "Travel Ticket",
         "label": "Tickets Expense",
         "formControls": [
             {
@@ -118,7 +118,7 @@
             {
                 "type": "select",
                 "dataType": "int",
-                "name": "PaymentType",
+                "name": "PaymentMode",
                 "isExcluded": true,
                 "label": "Payment Type",
                 "placeholder": "Select Payment Type",
@@ -166,7 +166,7 @@
                 "type": "text",
                 "subType": "text",
                 "dataType": "numeric",
-                "name": "Amount",
+                "name": "ClaimAmount",
                 "isExcluded": true,
                 "label": "Amount",
                 "value": 0,

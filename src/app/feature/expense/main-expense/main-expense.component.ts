@@ -66,7 +66,7 @@ export class MainExpenseComponent {
   expenseRequestData: any = [];
   travelRequestId: number = 0;
   dialogOpen = false;
-  expenseValidateUserLeaveDateForDuration:any = {};
+  expenseValidateUserLeaveDateForDuration: any = {};
   expenseRequestConfigData: any = [];
   existingExpenseRequestData = [];
   cid: string | null = null;
@@ -84,13 +84,13 @@ export class MainExpenseComponent {
     private newExpenseService: NewExpenseService,
     private route: ActivatedRoute
   ) {
-    
+
   }
 
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event) {
     const dropdown = this.eRef.nativeElement.querySelector('#ddlTravelExpenseRequest');
-    
+
     if (!this.dialogOpen && dropdown && !dropdown.contains(event.target) && this.travelRequestId == 0) {
       this.dialogOpen = true;
       this.confirmDialogService
@@ -100,7 +100,7 @@ export class MainExpenseComponent {
           confirmText: 'Ok',
         })
         .subscribe(() => {
-          this.dialogOpen = false; 
+          this.dialogOpen = false;
         });
     }
   }
@@ -109,7 +109,6 @@ export class MainExpenseComponent {
     // Get 'cid' from query params
     this.route.queryParamMap.subscribe(params => {
       this.cid = params.get('cid');
-      console.log('CID:', this.cid);
     });
 
     forkJoin({
@@ -123,7 +122,6 @@ export class MainExpenseComponent {
     }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (responses) => {
         // Handle all the API responses here
-        console.log('responses', responses);
         this.travelRequests = responses.pendingTravelRequests.ResponseValue;
         this.baggageTypeList = responses.baggageTypeList.ResponseValue;
         this.localTravelTypeList = responses.localTravelTypeList.ResponseValue;
@@ -148,7 +146,77 @@ export class MainExpenseComponent {
           }))
         }));
 
-        console.log('categories', this.categories);
+        if (this.cid) {
+          this.travelRequestId = Number(this.cid);
+          this.onSelectTravelExpenseRequest(null);
+          let requestBody = {
+            status: "Active",
+            expenseRequestId: this.cid
+          }
+          this.newExpenseService.getExpenseRequest(requestBody).pipe(take(1)).subscribe({
+            next: (response) => {
+              if (response) {
+                // Create a map for quick lookup by category name
+                const categoryMap = new Map(this.categories.map((cat: any) => [cat.name, cat]));
+
+                // Step 1: Filter data properties based on formControls
+                response.forEach((dataItem: any) => {
+                  const category: any = categoryMap.get(dataItem.name);
+                  if (category) {
+                    const validControlNames = category.formControls.map((c: any) => c.name);
+                    validControlNames.push('ReferenceId');
+
+                    dataItem.data = dataItem.data.map((entry: any) => {
+                      const filteredEntry: any = {};
+                      validControlNames.forEach((key: any) => {
+                        if (key in entry) {
+                          filteredEntry[key] = entry[key];
+                        }
+                      });
+                      return filteredEntry;
+                    });
+                  }
+                });
+
+                // Deep clone to avoid mutation in step 2
+                this.existingExpenseRequestData = JSON.parse(JSON.stringify(response[0]));
+
+                this.expenseRequestData = response;
+
+                // Step 2: Format the data and apply exclusion logic
+                this.expenseRequestData.forEach((requestData: any) => {
+                  const category: any = categoryMap.get(requestData.name);
+                  if (category) {
+                    requestData.data = requestData.data.map((entry: any) => {
+                      const formattedData: any = {
+                        ReferenceId: entry.ReferenceId,
+                        excludedData: {}
+                      };
+
+                      category.formControls.forEach((control: any) => {
+                        const fieldName = control.name;
+                        const fieldValue = entry[fieldName];
+                        control.value = fieldValue;
+
+                        if (control.isExcluded) {
+                          formattedData.excludedData[fieldName] = fieldValue ?? null;
+                        } else {
+                          formattedData[fieldName] = fieldValue ?? null;
+                        }
+                      });
+
+                      // Clean up excludedData if empty
+                      if (Object.keys(formattedData.excludedData).length === 0) {
+                        delete formattedData.excludedData;
+                      }
+                      return formattedData;
+                    });
+                  }
+                });
+              }
+            }
+          })
+        }
       },
       error: (err) => {
         // Handle any errors
@@ -172,7 +240,10 @@ export class MainExpenseComponent {
   }
 
   onSelectTravelExpenseRequest(event: any) {
-    this.travelRequestId = Number(event.target.value) || 0;
+    if (!this.travelRequestId) {
+      this.travelRequestId = Number(event.target.value) || 0;
+    }
+
     if (this.travelRequestId) {
       this.getTravelRequestPreview();
 
@@ -270,18 +341,30 @@ export class MainExpenseComponent {
   }
 
   getFormData(data: any) {
+    console.log(data)
     const existingCategory = this.expenseRequestData.find((cat: any) => cat.name === data.name);
 
     if (existingCategory) {
-      existingCategory.data.push(data.data);
+      const incomingData = data.data;
+      const existingEntryIndex = existingCategory.data?.findIndex((entry: any) => entry.ReferenceId === incomingData.ReferenceId);
+
+      if (existingEntryIndex !== -1) {
+        // Update existing entry
+        existingCategory.data[existingEntryIndex] = incomingData;
+      } else {
+        // Add new entry
+        existingCategory.data.push(incomingData);
+      }
     } else {
+      // Create new category with the incoming data
       this.expenseRequestData.push({
         name: data.name,
         data: [data.data]
       });
     }
 
-    console.log(this.expenseRequestData)
+    console.log(this.expenseRequestData);
+
 
     if (data.name == "Ticket Expense") { // Ticket Expense
       const requestBody = {
@@ -336,15 +419,15 @@ export class MainExpenseComponent {
     let dateValue = event.value.toISOString() || "";
     this.expenseValidateUserLeaveDateForDuration.UserMasterId = 4;
     this.expenseValidateUserLeaveDateForDuration.TravelRequestId = this.travelRequestId;
-    if(field.name == "Check-inDateTime") {
+    if (field.name == "Check-inDateTime") {
       this.expenseValidateUserLeaveDateForDuration.FromDate = dateValue;
-      if(!this.expenseValidateUserLeaveDateForDuration.ToDate) {
+      if (!this.expenseValidateUserLeaveDateForDuration.ToDate) {
         this.expenseValidateUserLeaveDateForDuration.ToDate = dateValue;
       }
     }
-    if(field.name == "Check-outDateTime") {
+    if (field.name == "Check-outDateTime") {
       this.expenseValidateUserLeaveDateForDuration.ToDate = dateValue;
-      if(!this.expenseValidateUserLeaveDateForDuration.FromDate) {
+      if (!this.expenseValidateUserLeaveDateForDuration.FromDate) {
         this.expenseValidateUserLeaveDateForDuration.FromDate = dateValue;
       }
     }
@@ -382,19 +465,19 @@ export class MainExpenseComponent {
       .subscribe((confirmed) => {
         if (confirmed) {
           console.log('Created Expense request.');
-          console.log(this.mainExpenseData);
           let payload = this.simplifyObject(this.expenseRequestData);
-          
-          this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
-            next: (response) => {
-              console.log(response);
-              this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
-            },
-            error: (err) => {
-              console.error(err);
-              this.snackbarService.error('Something went wrong with the API.');
-            }
-          });
+          console.log(payload)
+
+          // this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
+          //   next: (response) => {
+          //     console.log(response);
+          //     this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
+          //   },
+          //   error: (err) => {
+          //     console.error(err);
+          //     this.snackbarService.error('Something went wrong with the API.');
+          //   }
+          // });
           // this.expenseService.expenseExpenseRequestCreate(this.mainExpenseData).pipe(take(1)).subscribe({
           //   next: (response) => {
           //     console.log(response);
@@ -452,7 +535,7 @@ export class MainExpenseComponent {
       for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
           const value = obj[key];
-  
+
           // Check for { label: ..., value: ... } structure
           if (
             value &&
@@ -462,11 +545,11 @@ export class MainExpenseComponent {
             'label' in value
           ) {
             newObj[key] = value.value;
-          } 
+          }
           // Check if the value is a date string and format it
           else if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
             newObj[key] = value.split('T')[0]; // Keep only the date part
-          } 
+          }
           else {
             newObj[key] = this.simplifyObject(value);
           }
@@ -476,8 +559,8 @@ export class MainExpenseComponent {
     }
     return obj;
   }
-  
-  
+
+
 }
 
 
