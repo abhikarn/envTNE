@@ -19,6 +19,7 @@ import { DatePipe } from '@angular/common';
 import { DateExtensionComponent } from '../date-extension/date-extension.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NewExpenseService } from '../service/new-expense.service';
+import { ActivatedRoute } from '@angular/router';
 
 interface DataEntry {
   name: number;
@@ -45,7 +46,7 @@ export class MainExpenseComponent {
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
   travelRequestBookedDetail: any;
-  travelRequestPreview: any;
+  expenseRequestPreview: any;
   travelClassList: any;
   originControl = new FormControl('');
   cities = [];
@@ -68,6 +69,7 @@ export class MainExpenseComponent {
   expenseValidateUserLeaveDateForDuration:any = {};
   expenseRequestConfigData: any = [];
   existingExpenseRequestData = [];
+  cid: string | null = null;
 
   constructor(
     private expenseService: ExpenseService,
@@ -79,7 +81,8 @@ export class MainExpenseComponent {
     private eRef: ElementRef,
     private datePipe: DatePipe,
     private dialog: MatDialog,
-    private newExpenseService: NewExpenseService
+    private newExpenseService: NewExpenseService,
+    private route: ActivatedRoute
   ) {
     
   }
@@ -103,6 +106,12 @@ export class MainExpenseComponent {
   }
 
   ngOnInit() {
+    // Get 'cid' from query params
+    this.route.queryParamMap.subscribe(params => {
+      this.cid = params.get('cid');
+      console.log('CID:', this.cid);
+    });
+
     forkJoin({
       pendingTravelRequests: this.expenseService.expenseGetTravelRequestsPendingForClaim({ UserMasterId: 4, TravelTypeId: 0 }),
       baggageTypeList: this.dataService.dataGetBaggageType(),
@@ -149,11 +158,11 @@ export class MainExpenseComponent {
   }
 
   getTravelRequestPreview() {
-    this.travelService.travelGetTravelRequestPreview({ TravelRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
+    this.expenseService.expenseExpenseRequestPreview({ ExpenseRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
       next: (response) => {
-        this.travelRequestPreview = response.ResponseValue;
-        this.costcenterId = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 4)?.IntegerValue;
-        this.purpose = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 1)?.IntegerValueReference;
+        this.expenseRequestPreview = response.ResponseValue;
+        this.costcenterId = this.expenseRequestPreview.ExpenseRequestMetaData.find((data: any) => data.ExpenseRequestMetaId === 4)?.IntegerValue;
+        this.purpose = this.expenseRequestPreview.ExpenseRequestMetaData.find((data: any) => data.ExpenseRequestMetaId === 1)?.IntegerValueReference;
 
       },
       error: (error) => {
@@ -277,10 +286,10 @@ export class MainExpenseComponent {
     if (data.name == "Ticket Expense") { // Ticket Expense
       const requestBody = {
         UserMasterId: 4,
-        TravelTypeId: this.travelRequestPreview.TravelTypeId,
+        TravelTypeId: this.expenseRequestPreview.TravelRequestId,
         TravelModeId: data.data.TravelMode.Id,
         TravelClassId: data.data.AvailedClass.Id,
-        RequestForId: this.travelRequestPreview.RequestForId,
+        RequestForId: this.expenseRequestPreview.RequestForId,
         FromCityId: data.data.Origin.CityMasterId,
         ToCityId: data.data.Destination.CityMasterId,
         ReferenceDate: data.data.TravelDate,
@@ -302,7 +311,7 @@ export class MainExpenseComponent {
   getTextData(inputData: any) {
     const requestBody = {
       "SearchText": inputData,
-      "TravelTypeId": this.travelRequestPreview.TravelTypeId || 0
+      "TravelTypeId": this.expenseRequestPreview.TravelRequestId || 0
     }
     this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
       next: (response: any) => {
@@ -351,9 +360,9 @@ export class MainExpenseComponent {
 
   onSave(isDraft: boolean) {
     this.mainExpenseData.ExpenseRequestId = 0;
-    this.mainExpenseData.RequestForId = this.travelRequestPreview.RequestForId;
+    this.mainExpenseData.RequestForId = this.expenseRequestPreview.RequestForId;
     this.mainExpenseData.RequesterId = 4;
-    this.mainExpenseData.TravelRequestId = this.travelRequestPreview.TravelRequestId;
+    this.mainExpenseData.TravelRequestId = this.expenseRequestPreview.TravelRequestId;
     this.mainExpenseData.RequestDate = new Date().toISOString();
     this.mainExpenseData.Purpose = this.purpose;
     this.mainExpenseData.CostCentreId = this.costcenterId;
@@ -379,7 +388,7 @@ export class MainExpenseComponent {
           this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
             next: (response) => {
               console.log(response);
-              this.snackbarService.success('Operation successful with New API!');
+              this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
             },
             error: (err) => {
               console.error(err);
@@ -402,9 +411,9 @@ export class MainExpenseComponent {
     const dialogRef = this.dialog.open(DateExtensionComponent, {
       maxWidth: '1000px',
       data: {
-        TravelDateFrom: this.travelRequestPreview?.TravelDateFromExtended,
-        TravelDateTo: this.travelRequestPreview?.TravelDateToExtended,
-        remarks: this.travelRequestPreview?.TravelRequestDateExtensionRemarks
+        TravelDateFrom: this.expenseRequestPreview?.TravelDateFromExtended,
+        TravelDateTo: this.expenseRequestPreview?.TravelDateToExtended,
+        remarks: this.expenseRequestPreview?.TravelDateExtensionRemarks
       }
     });
 
