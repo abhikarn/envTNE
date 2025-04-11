@@ -15,4 +15,7 @@ export class NewExpenseService {
     return this.httpClient.post<any>(`${this.basePath}ExpensesRequestCreate`, request);
   }
   
+  getExpenseRequest(request: any) {
+    return this.httpClient.post<any>(`${this.basePath}ExpensesRequestGet`, request);
+  }
 }
