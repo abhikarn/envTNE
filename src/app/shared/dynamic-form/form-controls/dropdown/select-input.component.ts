@@ -3,7 +3,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../form-control.interface';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 import { Subscription } from 'rxjs';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
@@ -47,6 +47,13 @@ export class SelectInputComponent {
     if (this.controlConfig.disable) {
       this.control.disable();
     }
+
+    this.control.valueChanges.subscribe((value) => {
+      if (this.control.value) {
+        const fakeEvent = { value: this.control.value };
+        this.onSelectionChange(fakeEvent as MatSelectChange);
+      }
+    })
 
     this.loadOptions();
   }

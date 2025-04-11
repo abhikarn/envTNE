@@ -40,7 +40,11 @@ export class TextInputComponent implements OnInit {
     if (this.controlConfig.autoComplete) {
       this.control.valueChanges.subscribe(inputValue => {
         if (inputValue) {
-          this.emitInputValue.emit(inputValue);
+          let input = {
+            inputValue: inputValue,
+            control: this.control
+          }
+          this.emitInputValue.emit(input);
           if (typeof inputValue == "object") {
             if (this.controlConfig.dependentCases?.length > 0) {
               this.controlConfig.dependentCases.forEach((dependentCase: any) => {

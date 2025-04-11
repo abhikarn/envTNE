@@ -392,27 +392,54 @@ export class MainExpenseComponent {
   }
 
   getTextData(inputData: any) {
-    const requestBody = {
-      "SearchText": inputData,
-      "TravelTypeId": this.expenseRequestPreview.TravelRequestId || 0
-    }
-    this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
-      next: (response: any) => {
-        // Update only the relevant control instead of replacing the whole categories array
-        this.categories.forEach((category: any) => {
-          category.formControls.forEach((control: any) => {
-            if (control.autoComplete) {
-              const labelKey = control.labelKey || 'label';
-              const valueKey = control.valueKey || 'value';
-              control.options = response.ResponseValue?.map((item: any) => ({
-                label: item[labelKey],
-                value: item[valueKey]
-              }));
-            }
-          });
+    console.log(typeof inputData.inputValue)
+    // Discuss with Muttappa for new API requirement
+    if (typeof inputData.inputValue == 'number') {
+      console.log(inputData)
+      let response = [
+        { CityMasterId: 2, City: "Bangalore [ BLR ]" },
+        { CityMasterId: 40, City: "Chennai [ MAA ]" }
+      ];
+
+      this.categories.forEach((category: any) => {
+        category.formControls.forEach((control: any) => {
+          if (control.autoComplete && control.value == inputData.inputValue) {
+            control.options = response.filter(r => r.CityMasterId == inputData.inputValue);
+            const labelKey = control.labelKey || 'label';
+            const valueKey = control.valueKey || 'value';
+            control.options = control.options?.map((item: any) => ({
+              label: item[labelKey],
+              value: item[valueKey]
+            }));
+            console.log(control)
+            inputData.control.setValue(control.options[0])
+          }
         });
+      });
+    } else {
+      const requestBody = {
+        "SearchText": inputData.inputValue,
+        "TravelTypeId": this.expenseRequestPreview.TravelRequestId || 0
       }
-    })
+      this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
+        next: (response: any) => {
+          // Update only the relevant control instead of replacing the whole categories array
+          this.categories.forEach((category: any) => {
+            category.formControls.forEach((control: any) => {
+              if (control.autoComplete) {
+                const labelKey = control.labelKey || 'label';
+                const valueKey = control.valueKey || 'value';
+                control.options = response.ResponseValue?.map((item: any) => ({
+                  label: item[labelKey],
+                  value: item[valueKey]
+                }));
+              }
+            });
+          });
+        }
+      })
+    }
+
   }
 
   onSelectDate(event: any, field: any) {
@@ -468,16 +495,16 @@ export class MainExpenseComponent {
           let payload = this.simplifyObject(this.expenseRequestData);
           console.log(payload)
 
-          // this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
-          //   next: (response) => {
-          //     console.log(response);
-          //     this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
-          //   },
-          //   error: (err) => {
-          //     console.error(err);
-          //     this.snackbarService.error('Something went wrong with the API.');
-          //   }
-          // });
+          this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
+            next: (response) => {
+              console.log(response);
+              this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
+            },
+            error: (err) => {
+              console.error(err);
+              this.snackbarService.error('Something went wrong with the API.');
+            }
+          });
           // this.expenseService.expenseExpenseRequestCreate(this.mainExpenseData).pipe(take(1)).subscribe({
           //   next: (response) => {
           //     console.log(response);

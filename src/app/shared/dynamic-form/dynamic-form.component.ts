@@ -77,7 +77,7 @@ export class DynamicFormComponent implements OnInit {
         });
         this.tableData.push(data)
       })
-    }, 2000);
+    }, 1000);
   }
 
   /**
@@ -199,8 +199,8 @@ export class DynamicFormComponent implements OnInit {
     this.form.reset();
   }
 
-  getInputValue(inputValue: any) {
-    this.emitTextData.emit(inputValue);
+  getInputValue(input: any) {
+    this.emitTextData.emit(input);
   }
 
   getSpecificCase(specificCaseData: any) {
