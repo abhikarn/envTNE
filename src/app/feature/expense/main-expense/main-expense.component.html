@@ -99,7 +99,7 @@
               </div>
               <!-- expense category -->
               <div class="expense-core-wrapper" [class.disabled]="!travelRequestId">
-                <mat-tab-group fitInkBarToContent>
+                <mat-tab-group fitInkBarToContent (selectedTabChange)="onTabChange($event)">
                   @for (category of categories; track category) {
                   <mat-tab [label]="category.name">
                     <ng-template matTabContent>

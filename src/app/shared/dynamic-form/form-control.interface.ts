@@ -29,4 +29,5 @@ export interface IFormControl {
   accept?: string; // File Control
   validations?: IValidationConfig[];
   validationMessages?: any;
+  getControl?: any; // GST
 }

@@ -243,7 +243,7 @@
                 "isExcluded": false,
                 "label": "GSTDetails",
                 "value": null,
-                "getControl": "Amount"
+                "getControl": "ClaimAmount"
             },
             {
                 "type": "textarea",
@@ -292,7 +292,7 @@
             {
                 "type": "date",
                 "dataType": "datetime",
-                "name": "Check-inDateTime",
+                "name": "CheckInDateTime",
                 "isExcluded": false,
                 "label": "Check-in Date Time",
                 "value": null,
@@ -362,7 +362,7 @@
             {
                 "type": "date",
                 "dataType": "datetime",
-                "name": "Check-outDateTime",
+                "name": "CheckOutDateTime",
                 "isExcluded": false,
                 "label": "Check-out Date Time",
                 "value": null,

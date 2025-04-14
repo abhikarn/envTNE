@@ -40,6 +40,7 @@ export class SelectInputComponent {
   }
 
   ngOnInit() {
+    this.loadOptions();
     if (this.controlConfig.defaultValue) {
       this.control.setValue(this.controlConfig.defaultValue.Id);
     }
@@ -54,8 +55,6 @@ export class SelectInputComponent {
         this.onSelectionChange(fakeEvent as MatSelectChange);
       }
     })
-
-    this.loadOptions();
   }
 
   private loadOptions() {

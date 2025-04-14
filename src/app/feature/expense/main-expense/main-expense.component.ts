@@ -1,7 +1,7 @@
 
 import { Component, DestroyRef, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { CityAutocompleteParam, DataService, ExpenseRequestModel, ExpenseService, TravelService } from '../../../../../tne-api';
 import { forkJoin, map, Observable, of, startWith, switchMap, take } from 'rxjs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -70,6 +70,7 @@ export class MainExpenseComponent {
   expenseRequestConfigData: any = [];
   existingExpenseRequestData = [];
   cid: string | null = null;
+  responseData: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -180,6 +181,8 @@ export class MainExpenseComponent {
 
                 // Deep clone to avoid mutation in step 2
                 this.existingExpenseRequestData = JSON.parse(JSON.stringify(response[0]));
+                this.responseData = JSON.parse(JSON.stringify(response));
+
 
                 this.expenseRequestData = response;
 
@@ -223,6 +226,11 @@ export class MainExpenseComponent {
         console.error(err);
       }
     });
+  }
+
+  onTabChange(event: MatTabChangeEvent) {
+    const tabLabel = event.tab.textLabel;
+    console.log('Selected Tab:', tabLabel);
   }
 
   getTravelRequestPreview() {
