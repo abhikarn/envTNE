@@ -101,12 +101,12 @@
               <div class="expense-core-wrapper" [class.disabled]="!travelRequestId">
                 <mat-tab-group fitInkBarToContent (selectedTabChange)="onTabChange($event)">
                   @for (category of categories; track category) {
-                  <mat-tab [label]="category.name">
+                  <mat-tab [label]="category.label">
                     <ng-template matTabContent>
                       <div class="expense-item-hold">
                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                           <div class="common-block mb-3">
-                            <h6 class="common-title fw-bold mb-3">{{category.name}}</h6>
+                            <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
                             <app-dynamic-form [id]="travelRequestId" [existingData]="existingExpenseRequestData" [name]="category.name" [formConfig]="category.formControls" [eventHandler]="this"
                               (emitFormData)="getFormData($event)" (emitFormConfigData)="getFormConfigData($event)" (emitTextData)="getTextData($event)"
                               [minSelectableDate]="expenseRequestPreview?.TravelDateFromActual" [maxSelectableDate]="expenseRequestPreview?.TravelDateToActual">

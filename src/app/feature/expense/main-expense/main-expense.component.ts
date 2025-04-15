@@ -180,10 +180,8 @@ export class MainExpenseComponent {
                 });
 
                 // Deep clone to avoid mutation in step 2
-                this.existingExpenseRequestData = JSON.parse(JSON.stringify(response[0]));
                 this.responseData = JSON.parse(JSON.stringify(response));
-
-
+                this.onTabChange(0);
                 this.expenseRequestData = response;
 
                 // Step 2: Format the data and apply exclusion logic
@@ -228,8 +226,20 @@ export class MainExpenseComponent {
     });
   }
 
-  onTabChange(event: MatTabChangeEvent) {
-    const tabLabel = event.tab.textLabel;
+  onTabChange(eventOrIndex?: MatTabChangeEvent | number) {
+    let tabIndex: number;
+    if (typeof eventOrIndex === 'number') {
+      tabIndex = eventOrIndex;
+    } else if (eventOrIndex?.index !== undefined) {
+      tabIndex = eventOrIndex.index;
+    } else {
+      tabIndex = 0; // default
+    }
+    const tabLabel = this.categories[tabIndex].name;
+    if (this.responseData) {
+      const tab = this.responseData.find((t: any) => t.name == tabLabel);
+      this.existingExpenseRequestData = tab ? tab.data : [];
+    }
   }
 
   getTravelRequestPreview() {

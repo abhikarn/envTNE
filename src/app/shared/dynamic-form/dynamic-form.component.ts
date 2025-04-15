@@ -57,9 +57,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['existingData'] && this.existingData?.data?.length) {
-      this.prepareOptions(this.existingData.data).then(() => {
-        this.populateTableData(this.existingData.data);
+    if (changes['existingData'] && this.existingData?.length) {
+      this.prepareOptions(this.existingData).then(() => {
+        this.populateTableData(this.existingData);
       });
     }
   }
@@ -274,8 +274,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     if (!this.editIndex) { //Create
       this.tableData.push(this.form.value);
+      this.existingData.push(this.form.value);
     } else { // Edit
       this.tableData[this.editIndex - 1] = this.form.value;
+      this.existingData[this.editIndex - 1] = this.form.value;
       this.editIndex = 0;
     }
 
