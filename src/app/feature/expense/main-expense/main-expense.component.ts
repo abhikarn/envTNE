@@ -230,7 +230,6 @@ export class MainExpenseComponent {
 
   onTabChange(event: MatTabChangeEvent) {
     const tabLabel = event.tab.textLabel;
-    console.log('Selected Tab:', tabLabel);
   }
 
   getTravelRequestPreview() {
@@ -313,11 +312,9 @@ export class MainExpenseComponent {
 
   getFormConfigData(formCongigData: any) {
     this.expenseRequestConfigData.push(formCongigData);
-    console.log(this.expenseRequestConfigData)
   }
 
   getFormData(data: any) {
-    console.log(data)
     const existingCategory = this.expenseRequestData.find((cat: any) => cat.name === data.name);
 
     if (existingCategory) {
@@ -338,9 +335,6 @@ export class MainExpenseComponent {
         data: [data.data]
       });
     }
-
-    console.log(this.expenseRequestData);
-
 
     if (data.name == "Ticket Expense") { // Ticket Expense
       const requestBody = {
@@ -368,10 +362,8 @@ export class MainExpenseComponent {
   }
 
   getTextData(inputData: any) {
-    console.log(typeof inputData.inputValue)
     // Discuss with Muttappa for new API requirement
     if (typeof inputData.inputValue == 'number') {
-      console.log(inputData)
       let response = [
         { CityMasterId: 2, City: "Bangalore [ BLR ]" },
         { CityMasterId: 40, City: "Chennai [ MAA ]" }
@@ -387,7 +379,6 @@ export class MainExpenseComponent {
               label: item[labelKey],
               value: item[valueKey]
             }));
-            console.log(control)
             inputData.control.setValue(control.options[0])
           }
         });
@@ -467,13 +458,10 @@ export class MainExpenseComponent {
       })
       .subscribe((confirmed) => {
         if (confirmed) {
-          console.log('Created Expense request.');
           let payload = this.simplifyObject(this.expenseRequestData);
-          console.log(payload)
 
           this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
             next: (response) => {
-              console.log(response);
               this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
             },
             error: (err) => {

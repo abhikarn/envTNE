@@ -21,7 +21,7 @@ export class FileUploadComponent {
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    console.log(input.files)
+    // console.log(input.files)
     if (input.files && input.files.length > 0) {
       this.selectedFiles = [...this.selectedFiles, ...Array.from(input.files)];
       this.control.setValue(this.selectedFiles);

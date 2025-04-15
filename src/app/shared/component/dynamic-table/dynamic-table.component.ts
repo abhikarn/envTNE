@@ -18,7 +18,7 @@ export class DynamicTableComponent implements OnInit {
   expandedRowIndex: number | null = null;
 
   ngOnInit() {
-    console.log('Dynamic Table Data', this.tableData);
+    // console.log('Dynamic Table Data', this.tableData);
   }
 
   // Exclude Remarks & Attachment from columns

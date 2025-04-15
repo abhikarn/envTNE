@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormControlFactory } from './form-control.factory';
 import { IFormControl } from './form-control.interface';
@@ -33,7 +33,7 @@ import { ServiceRegistryService } from '../service/service-registry.service';
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
 })
-export class DynamicFormComponent implements OnInit {
+export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() id: any;
   @Input() name: number = 0;
   @Input() formConfig: IFormControl[] = [];
@@ -56,45 +56,122 @@ export class DynamicFormComponent implements OnInit {
     private serviceRegistry: ServiceRegistryService
   ) { }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['existingData'] && this.existingData?.data?.length) {
+      this.prepareOptions(this.existingData.data).then(() => {
+        this.populateTableData(this.existingData.data);
+      });
+    }
+  }
+
+  private async prepareOptions(dataArray: any[]): Promise<void> {
+    const controlLoaders: Promise<void>[] = [];
+
+    this.formConfig
+      .filter(ctrl => (ctrl.payloadKey) && ctrl.apiService && ctrl.apiMethod)
+      .forEach((ctrl: any) => {
+        const service = this.serviceRegistry.getService(ctrl.apiService);
+        const apiMethod = ctrl.apiMethod;
+
+        if (!service || typeof service[apiMethod] !== 'function') return;
+
+        const labelKey = ctrl.labelKey || 'label';
+        const valueKey = ctrl.valueKey || 'value';
+        const payloadKey = ctrl.payloadKey || ctrl.dependsOn;
+
+        const optionCache = new Map<string, any[]>(); // key: payloadValue, value: options
+
+        dataArray.forEach(row => {
+          const payloadValue = ctrl.dependsOn ? row[ctrl.dependsOn] : null;
+          const cacheKey = payloadValue ?? 'default';
+
+          if (optionCache.has(cacheKey)) return;
+
+          const payload: any = {};
+          if (payloadKey && payloadValue != null) {
+            payload[payloadKey] = payloadValue;
+          }
+
+          const loadOptions = service[apiMethod](payload).toPromise().then((response: any) => {
+            const options = response.ResponseValue.map((item: any) => ({
+              label: item[labelKey],
+              value: item[valueKey]
+            }));
+            optionCache.set(cacheKey, options);
+          });
+
+          controlLoaders.push(loadOptions);
+        });
+
+        // Attach cache to control for label mapping later
+        ctrl.optionCache = optionCache;
+      });
+
+    await Promise.all(controlLoaders);
+  }
+
+  private async populateTableData(dataArray: any[]) {
+    const updatedDataArray = await Promise.all(
+      dataArray.map(async (data) => {
+        for (const control of this.formControls) {
+          const { type, name, autoComplete, options, apiService, apiMethod, dependsOn, payloadKey, labelKey, valueKey } = control.formConfig;
+
+          if ((type === 'select' || autoComplete) && name in data) {
+            let selected = data[name];
+            if (selected && typeof selected === 'object') {
+              selected = selected.value;
+            }
+
+            // For dependent dropdowns: fetch options if not present
+            if ((!options || options.length === 0) && apiService && apiMethod && dependsOn) {
+              const dependsOnValue = data[dependsOn];
+              const payload = { [payloadKey || 'id']: dependsOnValue?.value || dependsOnValue };
+
+              const service = this.serviceRegistry.getService(apiService);
+              if (service && typeof service[apiMethod] === 'function') {
+                const response = await service[apiMethod](payload).toPromise();
+                const resultOptions = response?.ResponseValue?.map((item: any) => ({
+                  label: item[labelKey || 'label'],
+                  value: item[valueKey || 'value']
+                })) || [];
+                control.formConfig.options = resultOptions;
+              }
+            }
+
+            const matchedOption = control.formConfig.options?.find(opt => opt.value === selected);
+            if (matchedOption) {
+              data[name] = matchedOption;
+            }
+          }
+        }
+
+        return data;
+      })
+    );
+
+    this.tableData = updatedDataArray;
+  }
+
   ngOnInit() {
     this.formConfig.forEach(config => {
       const control = FormControlFactory.createControl(config);
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
     });
-    setTimeout(() => {
-      this.existingData.data?.forEach((data: any) => {
-        // Preparing Data for Dynamic table
-        this.formControls.forEach(control => {
-          const { type, name, autoComplete, options } = control.formConfig;
-          if ((type == "select" || autoComplete) && name in data) {
-            let selected = data[name];
-            if (selected && typeof selected == "object") {
-              selected = selected.value;
-            }
-            const matchedOption = options?.find(option => option.value === selected);
-            if (matchedOption) {
-              data[name] = matchedOption
-            }
-          }
-        });
-        this.tableData.push(data)
-      })
-    }, 1000);
   }
 
   onDropdownValueChange({ event, control }: { event: any; control: IFormControl }) {
     const changedControlName = control.name;
     const selectedValue = event.value;
-  
+
     this.formConfig.forEach((ctrlConfig: any) => {
       if (ctrlConfig.dependsOn === changedControlName) {
         const service = this.serviceRegistry.getService(ctrlConfig.apiService);
         const apiMethod = ctrlConfig.apiMethod;
         const payloadKey = ctrlConfig.payloadKey || `${changedControlName}Id`; // fallback if not defined
-  
+
         const payload = { [payloadKey]: selectedValue }; // 👈 Dynamic payload
-  
+
         if (service && typeof service[apiMethod] === 'function') {
           service[apiMethod](payload).subscribe((data: any) => {
             const labelKey = ctrlConfig.labelKey || 'label';
@@ -103,7 +180,7 @@ export class DynamicFormComponent implements OnInit {
               label: item[labelKey],
               value: item[valueKey]
             }));
-  
+
             // Reset dependent control
             const dependentControl = this.form.get(ctrlConfig.name);
             dependentControl?.reset();
@@ -112,8 +189,8 @@ export class DynamicFormComponent implements OnInit {
       }
     });
   }
-  
-  
+
+
   /**
    * Handles dynamic event execution
    * @param eventType - Event type (e.g., change, input)
@@ -210,7 +287,6 @@ export class DynamicFormComponent implements OnInit {
     this.editIndex = rowData.index;
     this.referenceId = rowData.row.ReferenceId;
     this.selectedRow = { ...rowData.row };
-    console.log(this.selectedRow);
 
     this.formControls.forEach((control: any) => {
       const { name, type } = control.formConfig;
@@ -220,7 +296,7 @@ export class DynamicFormComponent implements OnInit {
       const value = this.selectedRow[name];
 
       if (type === 'select') {
-        if (!control.formConfig.options?.length) {
+        if (control.formConfig.payloadKey) {
           const service = this.serviceRegistry.getService(control.formConfig.apiService);
           const apiMethod = control.formConfig.apiMethod;
           const dependsOnValue = this.selectedRow[control.formConfig.dependsOn || ''];
@@ -238,7 +314,6 @@ export class DynamicFormComponent implements OnInit {
             }));
           });
         }
-
         // If the value is an object with `.value`, extract it
         this.form.controls[name].setValue(typeof value === 'object' && value !== null ? value.value : value);
       } else {
@@ -257,8 +332,6 @@ export class DynamicFormComponent implements OnInit {
   }
 
   getSpecificCase(specificCaseData: any) {
-    console.log(this.id);
-    console.log(specificCaseData);
   }
- 
+
 }
