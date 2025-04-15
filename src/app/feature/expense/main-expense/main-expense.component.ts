@@ -288,38 +288,6 @@ export class MainExpenseComponent {
     })
   }
 
-  onTravelModeChange(event: any, field: any) {
-    const selectedTravelModeId = event.value || 0;
-
-    if (!selectedTravelModeId) {
-      console.warn('No Travel Mode selected, skipping update.');
-      return;
-    }
-
-    this.dataService.dataGetTravelClass({ TravelModeId: selectedTravelModeId }).pipe(take(1)).subscribe({
-      next: (travelClasses) => {
-        this.travelClassList = travelClasses.ResponseValue;
-
-        // Update only the relevant control instead of replacing the whole categories array
-        this.categories.forEach((category: any) => {
-          category.formControls.forEach((control: any) => {
-            if (control.name === 'AvailedClass') {
-              const labelKey = control.labelKey || 'label';
-              const valueKey = control.valueKey || 'value';
-              control.options = this.travelClassList.map((item: any) => ({
-                label: item[labelKey],
-                value: item[valueKey]
-              }));
-            }
-          });
-        });
-      },
-      error: (error) => {
-        console.error('Error fetching travel class list:', error);
-      }
-    });
-  }
-
   mergeData(entries: DataEntry[]): any[] {
     const mergedMap = new Map<number, any>();
 

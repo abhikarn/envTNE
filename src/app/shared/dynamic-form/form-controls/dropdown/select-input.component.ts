@@ -49,16 +49,10 @@ export class SelectInputComponent {
       this.control.disable();
     }
 
-    this.control.valueChanges.subscribe((value) => {
-      if (this.control.value) {
-        const fakeEvent = { value: this.control.value };
-        this.onSelectionChange(fakeEvent as MatSelectChange);
-      }
-    })
   }
 
   private loadOptions() {
-    if (!this.controlConfig.apiService || !this.controlConfig.apiMethod) return;
+    if (!this.controlConfig.apiService || !this.controlConfig.apiMethod || this.controlConfig.payloadKey) return;
   
     const apiService = this.serviceRegistry.getService(this.controlConfig.apiService);
     if (apiService && typeof apiService[this.controlConfig.apiMethod] === 'function') {

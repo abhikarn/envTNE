@@ -12,6 +12,7 @@ import { FileUploadComponent } from './form-controls/file-upload/file-upload.com
 import { DynamicTableComponent } from '../component/dynamic-table/dynamic-table.component';
 import { RadioInputComponent } from './form-controls/radio/radio-input.component';
 import { GstComponent } from './form-controls/gst/gst.component';
+import { ServiceRegistryService } from '../service/service-registry.service';
 
 
 @Component({
@@ -51,7 +52,9 @@ export class DynamicFormComponent implements OnInit {
   editIndex = 0;
   referenceId = 0;
 
-  constructor() { }
+  constructor(
+    private serviceRegistry: ServiceRegistryService
+  ) { }
 
   ngOnInit() {
     this.formConfig.forEach(config => {
@@ -80,6 +83,37 @@ export class DynamicFormComponent implements OnInit {
     }, 1000);
   }
 
+  onDropdownValueChange({ event, control }: { event: any; control: IFormControl }) {
+    const changedControlName = control.name;
+    const selectedValue = event.value;
+  
+    this.formConfig.forEach((ctrlConfig: any) => {
+      if (ctrlConfig.dependsOn === changedControlName) {
+        const service = this.serviceRegistry.getService(ctrlConfig.apiService);
+        const apiMethod = ctrlConfig.apiMethod;
+        const payloadKey = ctrlConfig.payloadKey || `${changedControlName}Id`; // fallback if not defined
+  
+        const payload = { [payloadKey]: selectedValue }; // 👈 Dynamic payload
+  
+        if (service && typeof service[apiMethod] === 'function') {
+          service[apiMethod](payload).subscribe((data: any) => {
+            const labelKey = ctrlConfig.labelKey || 'label';
+            const valueKey = ctrlConfig.valueKey || 'value';
+            ctrlConfig.options = data.ResponseValue.map((item: any) => ({
+              label: item[labelKey],
+              value: item[valueKey]
+            }));
+  
+            // Reset dependent control
+            const dependentControl = this.form.get(ctrlConfig.name);
+            dependentControl?.reset();
+          });
+        }
+      }
+    });
+  }
+  
+  
   /**
    * Handles dynamic event execution
    * @param eventType - Event type (e.g., change, input)
@@ -178,7 +212,7 @@ export class DynamicFormComponent implements OnInit {
     this.selectedRow = { ...rowData.row };
     console.log(this.selectedRow);
 
-    this.formControls.forEach(control => {
+    this.formControls.forEach((control: any) => {
       const { name, type } = control.formConfig;
 
       if (!this.form.controls[name]) return;
@@ -186,6 +220,25 @@ export class DynamicFormComponent implements OnInit {
       const value = this.selectedRow[name];
 
       if (type === 'select') {
+        if (!control.formConfig.options?.length) {
+          const service = this.serviceRegistry.getService(control.formConfig.apiService);
+          const apiMethod = control.formConfig.apiMethod;
+          const dependsOnValue = this.selectedRow[control.formConfig.dependsOn || ''];
+          const payloadValue = typeof dependsOnValue === 'object' ? dependsOnValue?.value : dependsOnValue;
+
+          const payload = {
+            [control.formConfig.payloadKey || 'id']: payloadValue
+          };
+          service?.[apiMethod]?.(payload).subscribe((data: any) => {
+            const labelKey = control.formConfig.labelKey || 'label';
+            const valueKey = control.formConfig.valueKey || 'value';
+            control.formConfig.options = data.ResponseValue.map((item: any) => ({
+              label: item[labelKey],
+              value: item[valueKey]
+            }));
+          });
+        }
+
         // If the value is an object with `.value`, extract it
         this.form.controls[name].setValue(typeof value === 'object' && value !== null ? value.value : value);
       } else {

@@ -29,5 +29,7 @@ export interface IFormControl {
   accept?: string; // File Control
   validations?: IValidationConfig[];
   validationMessages?: any;
-  getControl?: any; // GST
+  getControl?: any; // GST,
+  dependsOn?: any;
+  payloadKey?: string;
 }

@@ -16,9 +16,6 @@
                 "valueKey": "Id",
                 "apiService": "DataService",
                 "apiMethod": "dataGetTravelMode",
-                "events": {
-                    "change": "onTravelModeChange"
-                },
                 "validations": [
                     {
                         "type": "required",
@@ -30,12 +27,16 @@
                 "type": "select",
                 "dataType": "int",
                 "name": "AvailedClass",
+                "dependsOn": "TravelMode",
                 "isExcluded": false,
                 "label": "Availed Class",
                 "placeholder": "Select Availed Class",
                 "options": [],
                 "labelKey": "Name",
                 "valueKey": "Id",
+                "apiService": "DataService",
+                "apiMethod": "dataGetTravelClass",
+                "payloadKey": "TravelModeId",
                 "value": 0,
                 "validations": [
                     {
