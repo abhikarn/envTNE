@@ -1,7 +1,7 @@
 
 import { Component, DestroyRef, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { CityAutocompleteParam, DataService, ExpenseRequestModel, ExpenseService, TravelService } from '../../../../../tne-api';
 import { forkJoin, map, Observable, of, startWith, switchMap, take } from 'rxjs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -70,6 +70,7 @@ export class MainExpenseComponent {
   expenseRequestConfigData: any = [];
   existingExpenseRequestData = [];
   cid: string | null = null;
+  responseData: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -179,8 +180,8 @@ export class MainExpenseComponent {
                 });
 
                 // Deep clone to avoid mutation in step 2
-                this.existingExpenseRequestData = JSON.parse(JSON.stringify(response[0]));
-
+                this.responseData = JSON.parse(JSON.stringify(response));
+                this.onTabChange(0);
                 this.expenseRequestData = response;
 
                 // Step 2: Format the data and apply exclusion logic
@@ -223,6 +224,22 @@ export class MainExpenseComponent {
         console.error(err);
       }
     });
+  }
+
+  onTabChange(eventOrIndex?: MatTabChangeEvent | number) {
+    let tabIndex: number;
+    if (typeof eventOrIndex === 'number') {
+      tabIndex = eventOrIndex;
+    } else if (eventOrIndex?.index !== undefined) {
+      tabIndex = eventOrIndex.index;
+    } else {
+      tabIndex = 0; // default
+    }
+    const tabLabel = this.categories[tabIndex].name;
+    if (this.responseData) {
+      const tab = this.responseData.find((t: any) => t.name == tabLabel);
+      this.existingExpenseRequestData = tab ? tab.data : [];
+    }
   }
 
   getTravelRequestPreview() {
@@ -280,38 +297,6 @@ export class MainExpenseComponent {
     })
   }
 
-  onTravelModeChange(event: any, field: any) {
-    const selectedTravelModeId = event.value || 0;
-
-    if (!selectedTravelModeId) {
-      console.warn('No Travel Mode selected, skipping update.');
-      return;
-    }
-
-    this.dataService.dataGetTravelClass({ TravelModeId: selectedTravelModeId }).pipe(take(1)).subscribe({
-      next: (travelClasses) => {
-        this.travelClassList = travelClasses.ResponseValue;
-
-        // Update only the relevant control instead of replacing the whole categories array
-        this.categories.forEach((category: any) => {
-          category.formControls.forEach((control: any) => {
-            if (control.name === 'AvailedClass') {
-              const labelKey = control.labelKey || 'label';
-              const valueKey = control.valueKey || 'value';
-              control.options = this.travelClassList.map((item: any) => ({
-                label: item[labelKey],
-                value: item[valueKey]
-              }));
-            }
-          });
-        });
-      },
-      error: (error) => {
-        console.error('Error fetching travel class list:', error);
-      }
-    });
-  }
-
   mergeData(entries: DataEntry[]): any[] {
     const mergedMap = new Map<number, any>();
 
@@ -337,11 +322,9 @@ export class MainExpenseComponent {
 
   getFormConfigData(formCongigData: any) {
     this.expenseRequestConfigData.push(formCongigData);
-    console.log(this.expenseRequestConfigData)
   }
 
   getFormData(data: any) {
-    console.log(data)
     const existingCategory = this.expenseRequestData.find((cat: any) => cat.name === data.name);
 
     if (existingCategory) {
@@ -362,9 +345,6 @@ export class MainExpenseComponent {
         data: [data.data]
       });
     }
-
-    console.log(this.expenseRequestData);
-
 
     if (data.name == "Ticket Expense") { // Ticket Expense
       const requestBody = {
@@ -392,10 +372,8 @@ export class MainExpenseComponent {
   }
 
   getTextData(inputData: any) {
-    console.log(typeof inputData.inputValue)
     // Discuss with Muttappa for new API requirement
     if (typeof inputData.inputValue == 'number') {
-      console.log(inputData)
       let response = [
         { CityMasterId: 2, City: "Bangalore [ BLR ]" },
         { CityMasterId: 40, City: "Chennai [ MAA ]" }
@@ -411,7 +389,6 @@ export class MainExpenseComponent {
               label: item[labelKey],
               value: item[valueKey]
             }));
-            console.log(control)
             inputData.control.setValue(control.options[0])
           }
         });
@@ -491,13 +468,10 @@ export class MainExpenseComponent {
       })
       .subscribe((confirmed) => {
         if (confirmed) {
-          console.log('Created Expense request.');
           let payload = this.simplifyObject(this.expenseRequestData);
-          console.log(payload)
 
           this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
             next: (response) => {
-              console.log(response);
               this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
             },
             error: (err) => {

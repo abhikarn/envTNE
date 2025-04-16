@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -11,11 +11,15 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './dynamic-table.component.html',
   styleUrl: './dynamic-table.component.scss'
 })
-export class DynamicTableComponent {
+export class DynamicTableComponent implements OnInit {
   @Input() tableData: any[] = [];
   @Output() editRow = new EventEmitter<any>();
 
   expandedRowIndex: number | null = null;
+
+  ngOnInit() {
+    // console.log('Dynamic Table Data', this.tableData);
+  }
 
   // Exclude Remarks & Attachment from columns
   get displayedColumns(): string[] {

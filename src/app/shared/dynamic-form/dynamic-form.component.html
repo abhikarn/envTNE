@@ -14,7 +14,7 @@
   @case ('select') {
   <div class="col-md-4">
     <lib-select-input [controlConfig]="control.formConfig" [control]="control.control"
-      (valueChange)="handleEvent('change', $event)">
+      (valueChange)="onDropdownValueChange($event)">
     </lib-select-input>
   </div>
   }

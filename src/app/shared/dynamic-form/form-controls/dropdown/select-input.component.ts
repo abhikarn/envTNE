@@ -40,6 +40,7 @@ export class SelectInputComponent {
   }
 
   ngOnInit() {
+    this.loadOptions();
     if (this.controlConfig.defaultValue) {
       this.control.setValue(this.controlConfig.defaultValue.Id);
     }
@@ -48,18 +49,10 @@ export class SelectInputComponent {
       this.control.disable();
     }
 
-    this.control.valueChanges.subscribe((value) => {
-      if (this.control.value) {
-        const fakeEvent = { value: this.control.value };
-        this.onSelectionChange(fakeEvent as MatSelectChange);
-      }
-    })
-
-    this.loadOptions();
   }
 
   private loadOptions() {
-    if (!this.controlConfig.apiService || !this.controlConfig.apiMethod) return;
+    if (!this.controlConfig.apiService || !this.controlConfig.apiMethod || this.controlConfig.payloadKey) return;
   
     const apiService = this.serviceRegistry.getService(this.controlConfig.apiService);
     if (apiService && typeof apiService[this.controlConfig.apiMethod] === 'function') {

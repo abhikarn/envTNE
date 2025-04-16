@@ -16,9 +16,6 @@
                 "valueKey": "Id",
                 "apiService": "DataService",
                 "apiMethod": "dataGetTravelMode",
-                "events": {
-                    "change": "onTravelModeChange"
-                },
                 "validations": [
                     {
                         "type": "required",
@@ -30,12 +27,16 @@
                 "type": "select",
                 "dataType": "int",
                 "name": "AvailedClass",
+                "dependsOn": "TravelMode",
                 "isExcluded": false,
                 "label": "Availed Class",
                 "placeholder": "Select Availed Class",
                 "options": [],
                 "labelKey": "Name",
                 "valueKey": "Id",
+                "apiService": "DataService",
+                "apiMethod": "dataGetTravelClass",
+                "payloadKey": "TravelModeId",
                 "value": 0,
                 "validations": [
                     {
@@ -243,7 +244,7 @@
                 "isExcluded": false,
                 "label": "GSTDetails",
                 "value": null,
-                "getControl": "Amount"
+                "getControl": "ClaimAmount"
             },
             {
                 "type": "textarea",
@@ -292,7 +293,7 @@
             {
                 "type": "date",
                 "dataType": "datetime",
-                "name": "Check-inDateTime",
+                "name": "CheckInDateTime",
                 "isExcluded": false,
                 "label": "Check-in Date Time",
                 "value": null,
@@ -362,7 +363,7 @@
             {
                 "type": "date",
                 "dataType": "datetime",
-                "name": "Check-outDateTime",
+                "name": "CheckOutDateTime",
                 "isExcluded": false,
                 "label": "Check-out Date Time",
                 "value": null,
