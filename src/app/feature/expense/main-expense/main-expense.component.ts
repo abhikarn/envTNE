@@ -345,30 +345,6 @@ export class MainExpenseComponent {
         data: [data.data]
       });
     }
-
-    if (data.name == "Ticket Expense") { // Ticket Expense
-      const requestBody = {
-        UserMasterId: 4,
-        TravelTypeId: this.expenseRequestPreview.TravelRequestId,
-        TravelModeId: data.data.TravelMode.Id,
-        TravelClassId: data.data.AvailedClass.Id,
-        RequestForId: this.expenseRequestPreview.RequestForId,
-        FromCityId: data.data.Origin.CityMasterId,
-        ToCityId: data.data.Destination.CityMasterId,
-        ReferenceDate: data.data.TravelDate,
-        TravelRequestGroupType: [
-          {
-            UserMasterId: 4,
-            IsGroupLeader: true
-          }
-        ]
-      }
-      this.travelService.travelValidateTravelTicketPolicy(requestBody).pipe(take(1)).subscribe({
-        next: (response) => {
-          console.log();
-        }
-      })
-    }
   }
 
   getTextData(inputData: any) {

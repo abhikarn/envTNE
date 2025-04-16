@@ -1,12 +1,13 @@
 <form [formGroup]="form" class="row">
   @for (control of formControls; track control) {
+  @if (control.formConfig.type !== 'hidden' && control.formConfig.showInUI !== false) {
   <!-- Using ngSwitch to handle different control types -->
   @switch (control.formConfig.type) {
   <!-- Handling 'text' type controls -->
   @case ('text') {
   <div class="col-md-4">
-    <lib-text-input [controlConfig]="control.formConfig" [control]="control.control" (emitInputValue)="getInputValue($event)"
-    [form]="form">
+    <lib-text-input [controlConfig]="control.formConfig" [control]="control.control"
+      (emitInputValue)="getInputValue($event)" [form]="form">
     </lib-text-input>
   </div>
   }
@@ -64,6 +65,8 @@
   }
   }
 
+  }
+
   <div class="col-md-12">
     <div class="common-block-white mb-3">
       <div class=" d-flex cladd-btn justify-content-end mb-3">
@@ -72,10 +75,10 @@
       </div>
     </div>
   </div>
-@if (tableData.length > 0) {
-<app-dynamic-table [tableData]="tableData" (editRow)="onEditRow($event)"></app-dynamic-table>
-}
-  
+  @if (tableData.length > 0) {
+  <app-dynamic-table [tableData]="tableData" (editRow)="onEditRow($event)"></app-dynamic-table>
+  }
+
 </form>
 
 

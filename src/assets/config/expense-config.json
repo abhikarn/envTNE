@@ -54,7 +54,7 @@
                 "value": "",
                 "dependentCases": [
                     {
-                        "key":"Id",
+                        "key": "Id",
                         "inputControls": {
                             "Currency": "CurrencyId",
                             "TravelDate": "ReferenceDate"
@@ -173,7 +173,7 @@
                 "value": 0,
                 "dependentCases": [
                     {
-                        "key":"Id",
+                        "key": "Id",
                         "inputControls": {
                             "Currency": "CurrencyId",
                             "TravelDate": "ReferenceDate"
@@ -263,8 +263,40 @@
                 "value": "",
                 "multiple": true,
                 "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx"
+            },
+            {
+                "type": "hidden",
+                "name": "IsViolation",
+                "value": false,
+                "showInUI": false
             }
-        ]
+        ],
+        "submitPolicyValidationApi": {
+            "apiService": "TravelService",
+            "apiMethod": "travelValidateTravelTicketPolicy",
+            "requestBody": {},
+            "otherControls": {
+                "UserMasterId": "UserMasterId",
+                "TravelTypeId": "ClaimTypeId",
+                "RequestForId": "RequestForId"
+            },
+            "inputControls": {
+                "TravelMode": "TravelModeId",
+                "AvailedClass": "TravelClassId",
+                "Origin": "FromCityId",
+                "Destination": "ToCityId",
+                "TravelDate": "ReferenceDate"
+            },
+            "outputControl": {
+                "IsViolation": "ResponseValue.IsPolicyViolation"
+            },
+            "confirmPopup": {
+                "title": "Tickets Expense",
+                "message": "ResponseValue.Message",
+                "confirmText": "Ok",
+                "cancelText": "Cancel"
+            }
+        }
     },
     {
         "name": "Accommodation",
@@ -300,7 +332,7 @@
                 "dependentCases": [
                     {
                         "isGeneral": true,
-                        "key":"Id",
+                        "key": "Id",
                         "inputControls": {
                             "Currency": "CurrencyId",
                             "Check-inDateTime": "ReferenceDate"
@@ -318,7 +350,7 @@
                     },
                     {
                         "isGeneral": true,
-                        "key":"CityMasterId",
+                        "key": "CityMasterId",
                         "inputControls": {
                             "City": "CityId",
                             "Check-inDateTime": "ReferenceDate"
@@ -386,7 +418,7 @@
                 "option$": [],
                 "dependentCases": [
                     {
-                        "key":"CityMasterId",
+                        "key": "CityMasterId",
                         "inputControls": {
                             "City": "CityId",
                             "Check-inDateTime": "ReferenceDate"
@@ -571,7 +603,7 @@
                 "value": 0,
                 "dependentCases": [
                     {
-                        "key":"Id",
+                        "key": "Id",
                         "inputControls": {
                             "Currency": "CurrencyId",
                             "Check-inDateTime": "ReferenceDate"
