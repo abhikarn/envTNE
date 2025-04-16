@@ -13,6 +13,7 @@ import { DynamicTableComponent } from '../component/dynamic-table/dynamic-table.
 import { RadioInputComponent } from './form-controls/radio/radio-input.component';
 import { GstComponent } from './form-controls/gst/gst.component';
 import { ServiceRegistryService } from '../service/service-registry.service';
+import { ConfirmDialogService } from '../service/confirm-dialog.service';
 
 
 @Component({
@@ -34,8 +35,8 @@ import { ServiceRegistryService } from '../service/service-registry.service';
   styleUrls: ['./dynamic-form.component.scss']
 })
 export class DynamicFormComponent implements OnInit, OnChanges {
-  @Input() id: any;
-  @Input() name: number = 0;
+  @Input() moduleData: any;
+  @Input() category: any;
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
   @Input() minSelectableDate?: Date;
@@ -53,7 +54,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   referenceId = 0;
 
   constructor(
-    private serviceRegistry: ServiceRegistryService
+    private serviceRegistry: ServiceRegistryService,
+    private confirmDialogService: ConfirmDialogService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -153,6 +155,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.formControls = []; // Reset to avoid duplication
+    this.form = new FormGroup({});
     this.formConfig.forEach(config => {
       const control = FormControlFactory.createControl(config);
       this.formControls.push({ formConfig: config, control: control });
@@ -213,6 +217,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     //   this.form.markAllAsTouched();
     //   return;
     // }
+
+    this.validatePolicyViolation();
+    
     // Logic for autocomplete field like city to save the object value for display purpose
     this.formControls.forEach(control => {
       let { name, autoComplete } = control.formConfig;
@@ -230,7 +237,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     });
 
     // Preparing form json
-    this.formData.name = this.name;
+    this.formData.name = this.category.name;
     this.formControls.forEach(control => {
       const type = control.formConfig.type;
       const fieldName = control.formConfig.name;
@@ -324,9 +331,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     });
   }
 
-
   clear() {
-    this.form.reset();
+    
+    // this.form.reset();
   }
 
   getInputValue(input: any) {
@@ -334,6 +341,76 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   getSpecificCase(specificCaseData: any) {
+  }
+
+  validatePolicyViolation() {
+    let confirmPopupData: any = {};
+    if (this.category.submitPolicyValidationApi) {
+      const service = this.serviceRegistry.getService(this.category.submitPolicyValidationApi.apiService);
+      const apiMethod = this.category.submitPolicyValidationApi.apiMethod;
+      let requestBody: any = this.category.submitPolicyValidationApi.requestBody;
+      Object.entries(this.category.submitPolicyValidationApi.inputControls).forEach(([controlName, requestKey]) => {
+        if (typeof requestKey === 'string') { // Ensure requestKey is a string
+          const controlValue = this.form.get(controlName)?.value;
+          requestBody[requestKey] = controlValue; // Extract Id if it's an object
+        }
+      });
+
+      const output = this.mapOtherControls(this.moduleData, this.category.submitPolicyValidationApi.otherControls);
+      console.log({ ...requestBody, ...output })
+      service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
+        (response: any) => {
+          if (typeof this.category.submitPolicyValidationApi.outputControl === 'object') {
+            // Multiple fields case
+            for (const [outputControl, responsePath] of Object.entries(this.category.submitPolicyValidationApi.outputControl) as [string, string][]) {
+              const value = this.extractValueFromPath(response, responsePath);
+              if (value !== undefined) {
+                this.form.get(outputControl)?.setValue(value, { emitEvent: false });
+              }
+            }
+          }
+          if (typeof this.category.submitPolicyValidationApi.confirmPopup === 'object') {
+            // Multiple fields case
+            for (const [confirmPopup, responsePath] of Object.entries(this.category.submitPolicyValidationApi.confirmPopup) as [string, string][]) {
+              const value = this.extractValueFromPath(response, responsePath);
+              if (value !== undefined) {
+                confirmPopupData[confirmPopup] = value;
+              } else {
+                confirmPopupData[confirmPopup] = responsePath;
+              }
+            }
+          }
+        });
+    }
+
+    if (this.form.value.IsViolation) {
+      this.confirmDialogService
+        .confirm(confirmPopupData)
+        .subscribe((confirmed) => {
+          if (confirmed) {
+
+          }
+        });
+    }
+
+  }
+
+  mapOtherControls(data: any, otherControls: Record<string, string>): Record<string, any> {
+    const mappedResult: Record<string, any> = {};
+
+    for (const [outputKey, sourceKey] of Object.entries(otherControls)) {
+      mappedResult[outputKey] = data[sourceKey] ?? null; // fallback to null if key not found
+    }
+
+    return mappedResult;
+  }
+
+  /**
+   * Extracts a nested value from an object using a dot-separated path.
+   * Example: extractValueFromPath({ ResponseValue: { Value: 1 } }, "ResponseValue.Value") => 1
+   */
+  private extractValueFromPath(obj: any, path: string): any {
+    return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
   }
 
 }

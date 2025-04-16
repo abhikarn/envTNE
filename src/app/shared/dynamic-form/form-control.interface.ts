@@ -32,4 +32,5 @@ export interface IFormControl {
   getControl?: any; // GST,
   dependsOn?: any;
   payloadKey?: string;
+  showInUI?: boolean;
 }
