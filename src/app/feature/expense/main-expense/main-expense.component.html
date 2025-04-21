@@ -111,7 +111,7 @@
                           <app-dynamic-form [moduleData]="expenseRequestPreview"
                             [existingData]="existingExpenseRequestData" [category]="category"
                             [formConfig]="category.formControls" [eventHandler]="this"
-                            (emitFormData)="getFormData($event)" (emitFormConfigData)="getFormConfigData($event)"
+                            (emitFormData)="getFormData($event)"
                             (emitTextData)="getTextData($event)"
                             [minSelectableDate]="expenseRequestPreview?.TravelDateFromActual"
                             [maxSelectableDate]="expenseRequestPreview?.TravelDateToActual">

@@ -378,10 +378,6 @@ export class MainExpenseComponent {
     return Array.from(mergedMap.values());
   }
 
-  getFormConfigData(formCongigData: any) {
-    this.expenseRequestConfigData.push(formCongigData);
-  }
-
   getFormData(data: any) {
     const existingCategory = this.expenseRequestData.find((cat: any) => cat.name === data.name);
 

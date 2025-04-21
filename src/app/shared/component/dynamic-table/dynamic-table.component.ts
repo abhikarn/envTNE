@@ -25,7 +25,7 @@ export class DynamicTableComponent implements OnInit {
   get displayedColumns(): string[] {
     if (this.tableData.length > 0) {
       return Object.keys(this.tableData[0]).filter(
-        col => col !== 'Remarks' && col !== 'attachment' && col !== 'GSTDetails' && col !== 'ReferenceId'
+        col => col !== 'Remarks' && col !== 'attachment' && col !== 'GSTDetails' && col !== 'ReferenceId' && col !== 'IsViolation'
       );
     }
     return [];
