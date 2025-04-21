@@ -20,6 +20,8 @@ import { DateExtensionComponent } from '../date-extension/date-extension.compone
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NewExpenseService } from '../service/new-expense.service';
 import { ActivatedRoute } from '@angular/router';
+import { FormControlFactory } from '../../../shared/dynamic-form/form-control.factory';
+import { ServiceRegistryService } from '../../../shared/service/service-registry.service';
 
 interface DataEntry {
   name: number;
@@ -45,6 +47,7 @@ interface DataEntry {
   styleUrl: './main-expense.component.scss',
   providers: [DatePipe]
 })
+
 export class MainExpenseComponent {
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
@@ -93,6 +96,8 @@ export class MainExpenseComponent {
     totalCategory: 7210
   };
   expenseConfig: any;
+  expenseRequestForm: FormGroup = new FormGroup({});
+  formControls: any = [];
 
   constructor(
     private expenseService: ExpenseService,
@@ -105,7 +110,8 @@ export class MainExpenseComponent {
     private datePipe: DatePipe,
     private dialog: MatDialog,
     private newExpenseService: NewExpenseService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private serviceRegistry: ServiceRegistryService
   ) {
 
   }
@@ -117,14 +123,26 @@ export class MainExpenseComponent {
     if (!this.dialogOpen && dropdown && !dropdown.contains(event.target) && this.travelRequestId == 0) {
       this.dialogOpen = true;
       this.confirmDialogService
-        .confirm({
-          title: 'Travel Request',
-          message: 'Please select a Travel Request.',
-          confirmText: 'Ok',
-        })
+        .confirm(this.expenseConfig.request.confirmPopup)
         .subscribe(() => {
           this.dialogOpen = false;
         });
+    }
+  }
+
+  getTravelRequestList() {
+    const service = this.serviceRegistry.getService(this.expenseConfig.request.apiService);
+    const apiMethod = this.expenseConfig.request.apiMethod;
+    const payload = this.expenseConfig.request.requestBody;
+    if (service && typeof service[apiMethod] === 'function') {
+      service[apiMethod](payload).subscribe((data: any) => {
+        const labelKey = this.expenseConfig.request.labelKey || 'label';
+        const valueKey = this.expenseConfig.request.valueKey || 'value';
+        this.travelRequests = data.ResponseValue.map((item: any) => ({
+          label: item[labelKey],
+          value: item[valueKey]
+        }));
+      });
     }
   }
 
@@ -134,8 +152,8 @@ export class MainExpenseComponent {
       this.cid = params.get('cid');
     });
 
+
     forkJoin({
-      pendingTravelRequests: this.expenseService.expenseGetTravelRequestsPendingForClaim({ UserMasterId: 4, TravelTypeId: 0 }),
       baggageTypeList: this.dataService.dataGetBaggageType(),
       // otherTypeList: this.expenseService.getOtherTypeList(),
       boMealsList: this.dataService.dataGetMealType(),
@@ -145,12 +163,19 @@ export class MainExpenseComponent {
     }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (responses) => {
         // Handle all the API responses here
-        this.travelRequests = responses.pendingTravelRequests.ResponseValue;
         this.baggageTypeList = responses.baggageTypeList.ResponseValue;
         this.localTravelTypeList = responses.localTravelTypeList.ResponseValue;
         this.localTravelModeList = responses.localTravelModeList.ResponseValue;
         this.boMealsList = responses.boMealsList.ResponseValue;
         this.expenseConfig = responses.expenseConfig;
+        if (this.expenseConfig?.request) {
+          this.getTravelRequestList();
+          const control = FormControlFactory.createControl(this.expenseConfig.request);
+          this.formControls.push({ formConfig: this.expenseConfig.request, control: control });
+          this.expenseRequestForm.addControl(this.expenseConfig.request.name, control);
+        }
+
+        console.log(this.expenseRequestForm)
 
         const optionMapping: { [key: string]: any[] } = {
           BaggageType: this.baggageTypeList,
@@ -573,6 +598,13 @@ export class MainExpenseComponent {
 
   onAction(type: string) {
     console.log(type)
+  }
+
+  toggleAccordion(activeId: string): void {
+    this.summaries = this.summaries.map((summary: any) => ({
+      ...summary,
+      isOpen: summary.id === activeId
+    }));
   }
 }
 

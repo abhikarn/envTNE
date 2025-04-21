@@ -1,4 +1,4 @@
-<div class="app-main-wrapper">
+<div [formGroup]="expenseRequestForm" class="app-main-wrapper">
   <div class="inn-main-hold">
     <div class="flex-wrapper-top">
       <div class="all-data-wrapper">
@@ -8,17 +8,19 @@
               <h6 class="common-title fw-bold mb-3">Select Request </h6>
               <div class="row">
                 <div class="col-md-4">
-                  <div class="form-group chm-formgroup new-form-grp">
-                    <label>Request </label>
-                    <select id="ddlTravelExpenseRequest" name="ExpenseRequest" class="form-control chm-formselect"
-                      (change)="onSelectTravelExpenseRequest($event)">
-                      <option value="0">Select Travel Request</option>
-                      @for (req of travelRequests; track req) {
-                      <option [value]="req.TravelRequestId">
-                        {{req.TravelRequestNumber}} </option>
-                      }
-                    </select>
-                  </div>
+                  @if (expenseConfig?.request) {
+                    <div class="form-group chm-formgroup new-form-grp">
+                      <label>{{this.expenseConfig.request.label}} </label>
+                      <select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest" name="ExpenseRequest" class="form-control chm-formselect"
+                        (change)="onSelectTravelExpenseRequest($event)">
+                        <option value="0">Select Travel Request</option>
+                        @for (req of travelRequests; track req) {
+                        <option [value]="req.value">
+                          {{req.label}} </option>
+                        }
+                      </select>
+                    </div>
+                  }
                 </div>
               </div>
             </div>
@@ -249,11 +251,12 @@
                   <h2 class="accordion-header" [id]="'heading-' + summary.id">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                       [attr.data-bs-target]="'#collapse-' + summary.id" aria-expanded="false"
-                      [attr.aria-controls]="'collapse-' + summary.id">
+                      [attr.aria-controls]="'collapse-' + summary.id" [class.collapsed]="!summary.isOpen"
+                      (click)="toggleAccordion(summary.id)">
                       {{ summary.title }}
                     </button>
                   </h2>
-                  <div [id]="'collapse-' + summary.id" class="accordion-collapse collapse"
+                  <div [id]="'collapse-' + summary.id" class="accordion-collapse collapse" [class.show]="summary.isOpen"
                     [attr.aria-labelledby]="'heading-' + summary.id" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                       <ul class="summary-list">

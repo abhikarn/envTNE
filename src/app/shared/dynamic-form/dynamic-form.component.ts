@@ -174,7 +174,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         const apiMethod = ctrlConfig.apiMethod;
         const payloadKey = ctrlConfig.payloadKey || `${changedControlName}Id`; // fallback if not defined
 
-        const payload = { [payloadKey]: selectedValue }; // 👈 Dynamic payload
+        const payload = { [payloadKey]: selectedValue }; // Dynamic payload
 
         if (service && typeof service[apiMethod] === 'function') {
           service[apiMethod](payload).subscribe((data: any) => {

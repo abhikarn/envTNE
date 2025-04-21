@@ -1,6 +1,24 @@
 {
     "request": {
-        
+        "type": "select",
+        "dataType": "int",
+        "name": "TravelRequest",
+        "label": "Request",
+        "placeholder": "Select Travel Request",
+        "value": 0,
+        "labelKey": "TravelRequestNumber",
+        "valueKey": "TravelRequestId",
+        "apiService": "ExpenseService",
+        "apiMethod": "expenseGetTravelRequestsPendingForClaim",
+        "requestBody": {
+            "UserMasterId": 4,
+            "TravelTypeId": 0
+        },
+        "confirmPopup": {
+            "title": "Travel Request",
+            "message": "Please select a Travel Request.",
+            "confirmText": "Ok"
+        }
     },
     "category": [
         {
@@ -1816,6 +1834,7 @@
         {
             "id": "expense-summary",
             "title": "Expense Summary",
+            "isOpen": false,
             "type": "summary",
             "items": [
                 {
@@ -1847,6 +1866,7 @@
         {
             "id": "category-wise",
             "title": "Category wise Expense",
+            "isOpen": true,
             "type": "category",
             "items": [
                 {
