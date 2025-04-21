@@ -8,14 +8,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IFormControl } from '../../../shared/dynamic-form/form-control.interface';
 import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
 import { HttpClient } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SnackbarService } from '../../../shared/service/snackbar.service';
 import { ConfirmDialogService } from '../../../shared/service/confirm-dialog.service';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { DateExtensionComponent } from '../date-extension/date-extension.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NewExpenseService } from '../service/new-expense.service';
@@ -29,6 +29,9 @@ interface DataEntry {
 @Component({
   selector: 'app-main-expense',
   imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatTabsModule,
     MatBadgeModule,
     MatDatepickerModule,
@@ -71,6 +74,25 @@ export class MainExpenseComponent {
   existingExpenseRequestData = [];
   cid: string | null = null;
   responseData: any;
+  justificationForm: any = new FormGroup({
+    justification: new FormControl('', Validators.required)
+  });
+  summaries: any;
+  data: any = {
+    totalExpense: 6000,
+    lessAdvance: 20000,
+    amountPaidByCompany: 0,
+    corporateCreditCard: 0,
+    cash: 0,
+    amountPayable: 26000,
+    localConveyance: 600,
+    foodAllowance: 800,
+    accommodation: 5000,
+    boardingAllowance: 750,
+    others: 0,
+    totalCategory: 7210
+  };
+  expenseConfig: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -128,6 +150,7 @@ export class MainExpenseComponent {
         this.localTravelTypeList = responses.localTravelTypeList.ResponseValue;
         this.localTravelModeList = responses.localTravelModeList.ResponseValue;
         this.boMealsList = responses.boMealsList.ResponseValue;
+        this.expenseConfig = responses.expenseConfig;
 
         const optionMapping: { [key: string]: any[] } = {
           BaggageType: this.baggageTypeList,
@@ -136,7 +159,7 @@ export class MainExpenseComponent {
           LocalTravelType: this.localTravelTypeList,
           LocalTravelMode: this.localTravelModeList
         };
-        this.categories = responses.expenseConfig.map((category: any) => ({
+        this.categories = this.expenseConfig.category.map((category: any) => ({
           ...category,
           formControls: category.formControls.map((control: any) => ({
             ...control,
@@ -146,6 +169,16 @@ export class MainExpenseComponent {
             //   : undefined
           }))
         }));
+
+        this.summaries = this.expenseConfig.summaries;
+
+        const justificationCfg = this.expenseConfig.justification;
+        if (justificationCfg?.required) {
+          this.justificationForm.controls[justificationCfg.controlName].setValidators([
+            Validators.required,
+            Validators.maxLength(justificationCfg.maxLength || 2000)
+          ]);
+        }
 
         if (this.cid) {
           this.travelRequestId = Number(this.cid);
@@ -538,6 +571,9 @@ export class MainExpenseComponent {
   }
 
 
+  onAction(type: string) {
+    console.log(type)
+  }
 }
 
 

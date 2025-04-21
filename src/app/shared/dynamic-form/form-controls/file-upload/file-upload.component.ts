@@ -26,6 +26,7 @@ export class FileUploadComponent {
       this.selectedFiles = [...this.selectedFiles, ...Array.from(input.files)];
       this.control.setValue(this.selectedFiles);
     }
+    console.log(this.selectedFiles)
   }
 
   removeFile(index: number) {

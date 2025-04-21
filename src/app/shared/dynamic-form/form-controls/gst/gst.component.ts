@@ -4,6 +4,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Va
 import { MatRadioModule } from '@angular/material/radio';
 import { IFormControl } from '../../form-control.interface';
 import { SnackbarService } from '../../../service/snackbar.service';
+import { FormControlFactory } from '../../form-control.factory';
 
 @Component({
   selector: 'app-gst',
@@ -41,19 +42,23 @@ export class GstComponent {
     this.companyGSTForm = this.fb.group({
       IsBillRaisedInCompanyGST: [false, Validators.required]
     });
-    this.gstDetailsForm = this.fb.group({
-      GstIn: ['', [Validators.required, this.validateGST]],
-      InvoiceNumber: ['', Validators.required],
-      Amount: ['', [Validators.required, Validators.min(0)]],
-      SGST: ['', Validators.required],
-      CGST: ['', Validators.required],
-      IGST: ['', Validators.required],
-      UGST: ['', Validators.required]
-    });
+    this.gstDetailsForm = this.fb.group({});
   }
 
   ngOnInit() {
     // console.log(this.controlConfig)
+    this.initGstDetailsForm();
+  }
+
+  initGstDetailsForm() {
+    const group: any = {};
+    const fields = this.controlConfig.fields || [];
+
+    for (const field of fields) {
+      group[field.name] = FormControlFactory.createControl(field);
+    }
+
+    this.gstDetailsForm = this.fb.group(group);
   }
 
   trackByFn(index: number): any {
@@ -70,17 +75,18 @@ export class GstComponent {
     let isValidGst = false;
     let gstAmount = 0;
     const gstNum = parseFloat(this.gstDetailsForm.get('Amount')?.value || "0");
-    const sgst = parseFloat(this.gstDetailsForm.get('SGST')?.value || "0");
-    const cgst = parseFloat(this.gstDetailsForm.get('CGST')?.value || "0");
-    const igst = parseFloat(this.gstDetailsForm.get('IGST')?.value || "0");
-    const utgst = parseFloat(this.gstDetailsForm.get('UGST')?.value || "0");
     const claimedAmount = parseFloat(this.form.get(`${this.controlConfig.getControl}`)?.value || "0");
-    const gstBreakupAmount = sgst + cgst + igst + utgst;
+    const gstFieldNames = this.controlConfig.fields?.map((f: any)=> f.name).filter((name: any) => name !== 'GstIn' && name !== 'InvoiceNumber' && name !== 'Amount') || [];
+    let gstBreakupAmount = 0;
+
+    for (const name of gstFieldNames) {
+      gstBreakupAmount += parseFloat(this.gstDetailsForm.get(name)?.value || "0");
+    }
 
     if (gstBreakupAmount > 0 && gstBreakupAmount <= gstNum && gstNum > 0) {
       // Get all GST values
       this.gstDetails.data?.forEach((gst: any) => {
-        gstAmount = gstAmount + gst.Amount
+        gstAmount = Number(gstAmount) + Number(gst.Amount)
       })
       if (claimedAmount > 0) {
         if (gstNum > 0) {
@@ -111,7 +117,7 @@ export class GstComponent {
   }
 
   removeGstRow(index: number): void {
-    if (this.gstDetails.data.length > 1) {
+    if (this.gstDetails.data.length > 0) {
       this.gstDetails.data.splice(index, 1);
     }
   }

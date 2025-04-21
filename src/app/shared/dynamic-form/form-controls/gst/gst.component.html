@@ -20,91 +20,25 @@
                         <table id="tblTeGST" class="table   color-table d-table table-cust tbl-sml">
                             <thead>
                                 <tr>
-                                    <th class="thd-w25"><span>GSTIN</span></th>
-                                    <th class="thd-w15"><span>Invoice Number</span></th>
-                                    <th class="thd-w15"><span>Amount</span></th>
-                                    <th class="thd-w10"><span>SGST</span></th>
-                                    <th class="thd-w10"><span>CGST</span></th>
-                                    <th class="thd-w10"><span>IGST</span></th>
-                                    <th class="thd-w10"><span>UTGST</span></th>
+                                    <th *ngFor="let field of controlConfig.fields" class="thd-w10">
+                                        <span>{{field.name}}</span>
+                                    </th>
                                     <th class="thd-w5"><span>Action</span></th>
                                 </tr>
+
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>
+                                    <td *ngFor="let field of controlConfig.fields">
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
-                                            <input type="text" formControlName="GstIn"
-                                                class="form-control chm-forminput teGst gsttxt" id="txtTeGSTNo"
-                                                placeholder="">
+                                            <input type="text" 
+                                            [formControlName]="field.name" 
+                                            [placeholder]="field.name"
+                                            class="form-control chm-forminput teGst gsttxt" />
                                             <span class="validate-error-message teGst"
-                                                id="validate-error-message-txtTeGSTNo"
-                                                *ngIf="gstDetailsForm.controls['GstIn'].invalid && gstDetailsForm.controls['GstIn'].touched">
-                                                {{ gstDetailsForm.controls['GstIn'].hasError('required') ? 'Required' : 'Invalid GST Number' }}
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group chm-formgroup new-form-grp mt-0">
-                                            <input type="text" formControlName="InvoiceNumber" maxlength="30"
-                                                class="form-control chm-forminput teGst" id="txtTeInvNo" placeholder="">
-                                            <span class="validate-error-message teGst"
-                                                id="validate-error-message-txtTeInvNo"
-                                                *ngIf="gstDetailsForm.controls['InvoiceNumber'].invalid && gstDetailsForm.controls['InvoiceNumber'].touched">
+                                                *ngIf="gstDetailsForm.get(field.name)?.invalid && gstDetailsForm.get(field.name)?.touched">
                                                 Required
                                             </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group chm-formgroup new-form-grp mt-0">
-                                            <input type="number" formControlName="Amount"
-                                                class="form-control chm-forminput teGst allowDecimal text-right enav-only-numeric amount-tag-rt"
-                                                id="txtTeGSTValue" placeholder="">
-                                            <span class="validate-error-message teGst"
-                                                id="validate-error-message-txtTeGSTValue"
-                                                *ngIf="gstDetailsForm.controls['Amount'].invalid && gstDetailsForm.controls['Amount'].touched">
-                                                Required
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group chm-formgroup new-form-grp mt-0">
-                                            <input type="number" formControlName="SGST"
-                                                class="form-control chm-forminput teGst allowDecimal text-right"
-                                                id="txtTeSGST" placeholder="">
-                                            <span class="validate-error-message teGst"
-                                                id="validate-error-message-txtTeSGST"
-                                                style="display: none">Required</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group chm-formgroup new-form-grp mt-0">
-                                            <input type="number" formControlName="CGST"
-                                                class="form-control chm-forminput teGst allowDecimal text-right"
-                                                id="txtTeCGST" placeholder="">
-                                            <span class="validate-error-message teGst"
-                                                id="validate-error-message-txtTeCGST"
-                                                style="display: none">Required</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group chm-formgroup new-form-grp mt-0">
-                                            <input type="number" formControlName="IGST"
-                                                class="form-control chm-forminput teGst allowDecimal text-right enav-only-numeric amount-tag-rt"
-                                                id="txtTeIGST" placeholder="">
-                                            <span class="validate-error-message teGst"
-                                                id="validate-error-message-txtTeIGST"
-                                                style="display: none">Required</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group chm-formgroup new-form-grp mt-0">
-                                            <input type="number" formControlName="UGST"
-                                                class="form-control chm-forminput teGst allowDecimal text-right enav-only-numeric amount-tag-rt"
-                                                id="txtTeUTGST" placeholder="">
-                                            <span class="validate-error-message teGst"
-                                                id="validate-error-message-txtTeUTGST"
-                                                style="display: none">Required</span>
                                         </div>
                                     </td>
                                     <td>
@@ -114,6 +48,7 @@
                                         </a>
                                     </td>
                                 </tr>
+
                                 <ng-container *ngIf="gstDetails.data.length > 0">
                                     <tr *ngFor="let gst of gstDetails.data;let i = index">
                                         <td>{{gst.GstIn}}</td>
