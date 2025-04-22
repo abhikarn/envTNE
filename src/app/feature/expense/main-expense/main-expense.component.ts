@@ -19,7 +19,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { DateExtensionComponent } from '../date-extension/date-extension.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NewExpenseService } from '../service/new-expense.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControlFactory } from '../../../shared/dynamic-form/form-control.factory';
 import { ServiceRegistryService } from '../../../shared/service/service-registry.service';
 
@@ -51,7 +51,6 @@ interface DataEntry {
 export class MainExpenseComponent {
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
-  travelRequestBookedDetail: any;
   expenseRequestPreview: any;
   travelClassList: any;
   originControl = new FormControl('');
@@ -75,7 +74,6 @@ export class MainExpenseComponent {
   expenseValidateUserLeaveDateForDuration: any = {};
   expenseRequestConfigData: any = [];
   existingExpenseRequestData = [];
-  cid: string | null = null;
   responseData: any;
   justificationForm: any = new FormGroup({
     justification: new FormControl('', Validators.required)
@@ -98,6 +96,8 @@ export class MainExpenseComponent {
   expenseConfig: any;
   expenseRequestForm: FormGroup = new FormGroup({});
   formControls: any = [];
+  expenseRequestId: any = 0;
+  userMasterId: number = 0;
 
   constructor(
     private expenseService: ExpenseService,
@@ -111,16 +111,17 @@ export class MainExpenseComponent {
     private dialog: MatDialog,
     private newExpenseService: NewExpenseService,
     private route: ActivatedRoute,
-    private serviceRegistry: ServiceRegistryService
+    private serviceRegistry: ServiceRegistryService,
+    private router: Router
   ) {
 
   }
 
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event) {
-    const dropdown = this.eRef.nativeElement.querySelector('#ddlTravelExpenseRequest');
+    const element = this.eRef.nativeElement.querySelector('#expenseCategories');
 
-    if (!this.dialogOpen && dropdown && !dropdown.contains(event.target) && this.travelRequestId == 0) {
+    if (!this.dialogOpen && element && element.contains(event.target) && this.travelRequestId == 0) {
       this.dialogOpen = true;
       this.confirmDialogService
         .confirm(this.expenseConfig.request.confirmPopup)
@@ -138,7 +139,7 @@ export class MainExpenseComponent {
       service[apiMethod](payload).subscribe((data: any) => {
         const labelKey = this.expenseConfig.request.labelKey || 'label';
         const valueKey = this.expenseConfig.request.valueKey || 'value';
-        this.travelRequests = data.ResponseValue.map((item: any) => ({
+        this.travelRequests = data.ResponseValue?.map((item: any) => ({
           label: item[labelKey],
           value: item[valueKey]
         }));
@@ -147,11 +148,8 @@ export class MainExpenseComponent {
   }
 
   ngOnInit() {
-    // Get 'cid' from query params
-    this.route.queryParamMap.subscribe(params => {
-      this.cid = params.get('cid');
-    });
-
+    this.userMasterId = Number(localStorage.getItem('userMasterId'));
+    this.expenseRequestId = this.route.snapshot.paramMap.get('id');
 
     forkJoin({
       baggageTypeList: this.dataService.dataGetBaggageType(),
@@ -205,12 +203,12 @@ export class MainExpenseComponent {
           ]);
         }
 
-        if (this.cid) {
-          this.travelRequestId = Number(this.cid);
+        if (this.expenseRequestId) {
+          this.travelRequestId = Number(this.expenseRequestId);
           this.onSelectTravelExpenseRequest(null);
           let requestBody = {
             status: "Active",
-            expenseRequestId: this.cid
+            expenseRequestId: this.expenseRequestId
           }
           this.newExpenseService.getExpenseRequest(requestBody).pipe(take(1)).subscribe({
             next: (response) => {
@@ -239,6 +237,10 @@ export class MainExpenseComponent {
 
                 // Deep clone to avoid mutation in step 2
                 this.responseData = JSON.parse(JSON.stringify(response));
+                this.categories?.forEach((cat: any) => {
+                  const matchedData = this.responseData.find((data: any) => data.name == cat.name);
+                  cat.count = matchedData ? matchedData.data.length : 0;
+                });
                 this.onTabChange(0);
                 this.expenseRequestData = response;
 
@@ -304,6 +306,7 @@ export class MainExpenseComponent {
     this.expenseService.expenseExpenseRequestPreview({ ExpenseRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
       next: (response) => {
         this.expenseRequestPreview = response.ResponseValue;
+        this.expenseRequestPreview.UserMasterId = this.userMasterId;
         this.costcenterId = this.expenseRequestPreview.ExpenseRequestMetaData.find((data: any) => data.ExpenseRequestMetaId === 4)?.IntegerValue;
         this.purpose = this.expenseRequestPreview.ExpenseRequestMetaData.find((data: any) => data.ExpenseRequestMetaId === 1)?.IntegerValueReference;
 
@@ -321,16 +324,6 @@ export class MainExpenseComponent {
 
     if (this.travelRequestId) {
       this.getTravelRequestPreview();
-
-      this.expenseService.expenseGetTravelRequestBookedDetail({ TravelRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
-        next: (response) => {
-          this.travelRequestBookedDetail = response.ResponseValue;
-        },
-        error: (error) => {
-          console.error('Error fetching travel request json info:', error);
-        }
-      })
-
     }
   }
 
@@ -455,6 +448,18 @@ export class MainExpenseComponent {
   }
 
   onAction(type: string) {
+    if (type == "submit") {
+      this.mainExpenseData.IsDraft = false;
+      this.createExpenseRequest();
+    } else if (type == "draft") {
+      this.mainExpenseData.IsDraft = true;
+      this.createExpenseRequest();
+    } else {
+      this.router.navigate(['expense/expense/landing'])
+    }
+  }
+
+  createExpenseRequest() {
     this.mainExpenseData.ExpenseRequestId = 0;
     this.mainExpenseData.RequestForId = this.expenseRequestPreview.RequestForId;
     this.mainExpenseData.RequesterId = 4;
@@ -466,13 +471,6 @@ export class MainExpenseComponent {
     this.mainExpenseData.Remarks = this.justificationForm.get(this.expenseConfig.justification.controlName).value;
     this.mainExpenseData.ActionBy = 4;
     this.mainExpenseData.expenseRequestData = this.simplifyObject(this.expenseRequestData);
-    if (type == "submit") {
-      this.mainExpenseData.IsDraft = false;
-    } else if (type == "draft") {
-      this.mainExpenseData.IsDraft = true;
-    } else {
-
-    }
     this.confirmDialogService
       .confirm({
         title: 'Create Expense Request',

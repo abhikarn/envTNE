@@ -353,6 +353,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       const service = this.serviceRegistry.getService(this.category.submitPolicyValidationApi.apiService);
       const apiMethod = this.category.submitPolicyValidationApi.apiMethod;
       let requestBody: any = this.category.submitPolicyValidationApi.requestBody;
+
       Object.entries(this.category.submitPolicyValidationApi.inputControls).forEach(([controlName, requestKey]) => {
         if (typeof requestKey === 'string') { // Ensure requestKey is a string
           const controlValue = this.form.get(controlName)?.value;
@@ -361,7 +362,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       });
 
       const output = this.mapOtherControls(this.moduleData, this.category.submitPolicyValidationApi.otherControls);
-      console.log({ ...requestBody, ...output })
+      
       service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
         (response: any) => {
           if (typeof this.category.submitPolicyValidationApi.outputControl === 'object') {

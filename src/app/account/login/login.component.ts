@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit {
               debugger;
               localStorage.setItem('sessionId', this.sessionId);
               localStorage.setItem('userData', JSON.stringify(userDataResponse));
+              localStorage.setItem('userMasterId',userDataResponse.token.userMasterId);
               console.log(userDataResponse);
               this.router.navigate(['/expense/expense/create-expense']);
             },

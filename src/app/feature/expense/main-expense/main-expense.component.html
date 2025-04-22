@@ -99,12 +99,12 @@
 
             </div>
             <!-- expense category -->
-            <div class="expense-core-wrapper" [class.disabled]="!travelRequestId">
+            <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
               <mat-tab-group fitInkBarToContent (selectedTabChange)="onTabChange($event)">
                 @for (category of categories; track category) {
                 <mat-tab>
                   <ng-template mat-tab-label>
-                    <span [matBadge]="existingExpenseRequestData.length" matBadgeOverlap="false">{{category.label}}</span>
+                    <span [matBadge]="category.count" matBadgeOverlap="false">{{category.label}}</span>
                   </ng-template>
                   <ng-template matTabContent>
                     <div class="expense-item-hold">
@@ -299,8 +299,8 @@
                 <div class="main-btn-hold d-flex flex-column mt-2" style="align-items:end;">
                   <div class="d-flex align-items-center w-100 mb-2">
                     @if (expenseConfig.actions[0]) {
-                    <a href="javascript:void(0)" [ngClass]="expenseConfig.actions[0].class"
-                      (click)="onAction(expenseConfig.actions[0].type)">
+                    <a [ngClass]="expenseConfig.actions[0].class"
+                      (click)="onAction(expenseConfig.actions[0].type);">
                       {{ expenseConfig.actions[0].label }}
                     </a>
                     }
