@@ -8,18 +8,20 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IFormControl } from '../../../shared/dynamic-form/form-control.interface';
 import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
 import { HttpClient } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SnackbarService } from '../../../shared/service/snackbar.service';
 import { ConfirmDialogService } from '../../../shared/service/confirm-dialog.service';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { DateExtensionComponent } from '../date-extension/date-extension.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NewExpenseService } from '../service/new-expense.service';
 import { ActivatedRoute } from '@angular/router';
+import { FormControlFactory } from '../../../shared/dynamic-form/form-control.factory';
+import { ServiceRegistryService } from '../../../shared/service/service-registry.service';
 
 interface DataEntry {
   name: number;
@@ -29,6 +31,9 @@ interface DataEntry {
 @Component({
   selector: 'app-main-expense',
   imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatTabsModule,
     MatBadgeModule,
     MatDatepickerModule,
@@ -42,6 +47,7 @@ interface DataEntry {
   styleUrl: './main-expense.component.scss',
   providers: [DatePipe]
 })
+
 export class MainExpenseComponent {
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
@@ -71,6 +77,27 @@ export class MainExpenseComponent {
   existingExpenseRequestData = [];
   cid: string | null = null;
   responseData: any;
+  justificationForm: any = new FormGroup({
+    justification: new FormControl('', Validators.required)
+  });
+  summaries: any;
+  data: any = {
+    totalExpense: 6000,
+    lessAdvance: 20000,
+    amountPaidByCompany: 0,
+    corporateCreditCard: 0,
+    cash: 0,
+    amountPayable: 26000,
+    localConveyance: 600,
+    foodAllowance: 800,
+    accommodation: 5000,
+    boardingAllowance: 750,
+    others: 0,
+    totalCategory: 7210
+  };
+  expenseConfig: any;
+  expenseRequestForm: FormGroup = new FormGroup({});
+  formControls: any = [];
 
   constructor(
     private expenseService: ExpenseService,
@@ -83,7 +110,8 @@ export class MainExpenseComponent {
     private datePipe: DatePipe,
     private dialog: MatDialog,
     private newExpenseService: NewExpenseService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private serviceRegistry: ServiceRegistryService
   ) {
 
   }
@@ -95,14 +123,26 @@ export class MainExpenseComponent {
     if (!this.dialogOpen && dropdown && !dropdown.contains(event.target) && this.travelRequestId == 0) {
       this.dialogOpen = true;
       this.confirmDialogService
-        .confirm({
-          title: 'Travel Request',
-          message: 'Please select a Travel Request.',
-          confirmText: 'Ok',
-        })
+        .confirm(this.expenseConfig.request.confirmPopup)
         .subscribe(() => {
           this.dialogOpen = false;
         });
+    }
+  }
+
+  getTravelRequestList() {
+    const service = this.serviceRegistry.getService(this.expenseConfig.request.apiService);
+    const apiMethod = this.expenseConfig.request.apiMethod;
+    const payload = this.expenseConfig.request.requestBody;
+    if (service && typeof service[apiMethod] === 'function') {
+      service[apiMethod](payload).subscribe((data: any) => {
+        const labelKey = this.expenseConfig.request.labelKey || 'label';
+        const valueKey = this.expenseConfig.request.valueKey || 'value';
+        this.travelRequests = data.ResponseValue.map((item: any) => ({
+          label: item[labelKey],
+          value: item[valueKey]
+        }));
+      });
     }
   }
 
@@ -112,8 +152,8 @@ export class MainExpenseComponent {
       this.cid = params.get('cid');
     });
 
+
     forkJoin({
-      pendingTravelRequests: this.expenseService.expenseGetTravelRequestsPendingForClaim({ UserMasterId: 4, TravelTypeId: 0 }),
       baggageTypeList: this.dataService.dataGetBaggageType(),
       // otherTypeList: this.expenseService.getOtherTypeList(),
       boMealsList: this.dataService.dataGetMealType(),
@@ -123,11 +163,19 @@ export class MainExpenseComponent {
     }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (responses) => {
         // Handle all the API responses here
-        this.travelRequests = responses.pendingTravelRequests.ResponseValue;
         this.baggageTypeList = responses.baggageTypeList.ResponseValue;
         this.localTravelTypeList = responses.localTravelTypeList.ResponseValue;
         this.localTravelModeList = responses.localTravelModeList.ResponseValue;
         this.boMealsList = responses.boMealsList.ResponseValue;
+        this.expenseConfig = responses.expenseConfig;
+        if (this.expenseConfig?.request) {
+          this.getTravelRequestList();
+          const control = FormControlFactory.createControl(this.expenseConfig.request);
+          this.formControls.push({ formConfig: this.expenseConfig.request, control: control });
+          this.expenseRequestForm.addControl(this.expenseConfig.request.name, control);
+        }
+
+        console.log(this.expenseRequestForm)
 
         const optionMapping: { [key: string]: any[] } = {
           BaggageType: this.baggageTypeList,
@@ -136,7 +184,7 @@ export class MainExpenseComponent {
           LocalTravelType: this.localTravelTypeList,
           LocalTravelMode: this.localTravelModeList
         };
-        this.categories = responses.expenseConfig.map((category: any) => ({
+        this.categories = this.expenseConfig.category.map((category: any) => ({
           ...category,
           formControls: category.formControls.map((control: any) => ({
             ...control,
@@ -146,6 +194,16 @@ export class MainExpenseComponent {
             //   : undefined
           }))
         }));
+
+        this.summaries = this.expenseConfig.summaries;
+
+        const justificationCfg = this.expenseConfig.justification;
+        if (justificationCfg?.required) {
+          this.justificationForm.controls[justificationCfg.controlName].setValidators([
+            Validators.required,
+            Validators.maxLength(justificationCfg.maxLength || 2000)
+          ]);
+        }
 
         if (this.cid) {
           this.travelRequestId = Number(this.cid);
@@ -276,27 +334,6 @@ export class MainExpenseComponent {
     }
   }
 
-  fetchExpensePolicyEntitlement() {
-    const requestBody = {
-      ClaimTypeId: 53,
-      UserMasterId: 4,
-      ExpenseCategoryId: 3,
-      ReferenceDate: '06-Mar-2024',
-      CityGradeId: 8,
-      CountryGradeId: 0,
-      PolicyReferenceId: 53,
-      TravelRequestId: 37
-    };
-    this.expenseService.expenseGetExpensePolicyEntitlement(requestBody).pipe(take(1)).subscribe({
-      next: (response) => {
-        console.log();
-      },
-      error: (error) => {
-        console.error('Error fetching travel payments:', error);
-      }
-    })
-  }
-
   mergeData(entries: DataEntry[]): any[] {
     const mergedMap = new Map<number, any>();
 
@@ -318,10 +355,6 @@ export class MainExpenseComponent {
     });
 
     return Array.from(mergedMap.values());
-  }
-
-  getFormConfigData(formCongigData: any) {
-    this.expenseRequestConfigData.push(formCongigData);
   }
 
   getFormData(data: any) {
@@ -421,7 +454,7 @@ export class MainExpenseComponent {
     });
   }
 
-  onSave(isDraft: boolean) {
+  onAction(type: string) {
     this.mainExpenseData.ExpenseRequestId = 0;
     this.mainExpenseData.RequestForId = this.expenseRequestPreview.RequestForId;
     this.mainExpenseData.RequesterId = 4;
@@ -430,11 +463,16 @@ export class MainExpenseComponent {
     this.mainExpenseData.Purpose = this.purpose;
     this.mainExpenseData.CostCentreId = this.costcenterId;
     this.mainExpenseData.BillableCostCentreId = this.mainExpenseData.CostCentreId;
-    this.mainExpenseData.Remarks = '';
-    this.mainExpenseData.IsDraft = isDraft;
-    this.mainExpenseData.ActionBy = 0;
-    this.mainExpenseData.expenseRequestData = this.expenseRequestData;
+    this.mainExpenseData.Remarks = this.justificationForm.get(this.expenseConfig.justification.controlName).value;
+    this.mainExpenseData.ActionBy = 4;
+    this.mainExpenseData.expenseRequestData = this.simplifyObject(this.expenseRequestData);
+    if (type == "submit") {
+      this.mainExpenseData.IsDraft = false;
+    } else if (type == "draft") {
+      this.mainExpenseData.IsDraft = true;
+    } else {
 
+    }
     this.confirmDialogService
       .confirm({
         title: 'Create Expense Request',
@@ -444,23 +482,15 @@ export class MainExpenseComponent {
       })
       .subscribe((confirmed) => {
         if (confirmed) {
-          let payload = this.simplifyObject(this.expenseRequestData);
-
-          this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
-            next: (response) => {
-              this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
-            },
-            error: (err) => {
-              console.error(err);
-              this.snackbarService.error('Something went wrong with the API.');
-            }
-          });
-          // this.expenseService.expenseExpenseRequestCreate(this.mainExpenseData).pipe(take(1)).subscribe({
+          // this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
           //   next: (response) => {
-          //     console.log(response);
-          //     this.snackbarService.success('Operation successful!');
+          //     this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
+          //   },
+          //   error: (err) => {
+          //     console.error(err);
+          //     this.snackbarService.error('Something went wrong with the API.');
           //   }
-          // })
+          // });
         } else {
           console.log('Failed');
         }
@@ -538,6 +568,13 @@ export class MainExpenseComponent {
   }
 
 
+
+  toggleAccordion(activeId: string): void {
+    this.summaries = this.summaries.map((summary: any) => ({
+      ...summary,
+      isOpen: summary.id === activeId
+    }));
+  }
 }
 
 

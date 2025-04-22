@@ -3,42 +3,51 @@
     <label class="form-label">{{ controlConfig.label }}</label>
     <div class="upload-container excel-TBL-hold">
       <label for="{{ controlConfig.name }}" class="custom-upload">Click to Choose File</label>
-      <input type="file" [id]="controlConfig.name" [multiple]="controlConfig.multiple"
-        (change)="onFileSelected($event)" [accept]="controlConfig.accept">
-      </div>
-
-      <!-- Table to Display Selected Files -->
-      @if (selectedFiles.length > 0) {
-        <table id="tblLtcDocument"
-          class="table mt-2 grey-table d-table table-cust tbl-sml no-sorting td-firstdata-center vioColor tblTeFile">
-          <thead>
-            <tr>
-              <th class="thd-w15"><span>Sl No</span></th>
-              <th class="thd-w70"><span>Document</span></th>
-              <th class="thd-w15"><span>Action</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (file of selectedFiles; track file; let i = $index) {
-              <tr>
-                <td>{{ i + 1 }}</td>
-                <td>{{ file.name }}</td>
-                <td>
-                  <a href="#" (click)="removeFile(i)">
-                    <i class="fa-solid fa-trash"></i>
-                  </a>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      }
-
-      <!-- Validation Message -->
-      @if (control.invalid && control.touched) {
-        <div class="text-danger">
-          {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
-        </div>
-      }
+      <input type="file" [id]="controlConfig.name" [multiple]="controlConfig.multiple" (change)="onFileSelected($event)"
+        [accept]="controlConfig.accept">
     </div>
+
+    <!-- Table to Display Selected Files -->
+    @if (selectedFiles.length > 0) {
+    <table id="tblLtcDocument"
+      class="table mt-2 grey-table d-table table-cust tbl-sml no-sorting td-firstdata-center vioColor tblTeFile">
+      <thead>
+        <tr>
+          <th class="thd-w15"><span>Sl No</span></th>
+          <th class="thd-w70"><span>Document</span></th>
+          <th class="thd-w15"><span>Action</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (file of selectedFiles; track file; let i = $index) {
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ file?.FileName }}</td>
+          <td class="text-center">
+            <!-- Preview Action -->
+            <a class="me-2" title="Preview" (click)="previewFile(file)">
+              <i class="fa-solid fa-eye text-primary"></i>
+            </a>
+            <!-- Download Action -->
+            <a class="me-2" title="Download" (click)="downloadFile(file)">
+              <i class="fa-solid fa-download text-success"></i>
+            </a>
+            <!-- Delete Action -->
+            <a title="Delete" (click)="removeFile(i)">
+              <i class="fa-solid fa-trash text-danger"></i>
+            </a>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    }
+
+    <!-- Validation Message -->
+    @if (control.invalid && control.touched) {
+    <div class="text-danger">
+      {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
+    </div>
+    }
   </div>
+</div>

@@ -1,233 +1,240 @@
-<div class="app-main-wrapper">
-    <div class="inn-main-hold">
-      <div class="flex-wrapper-top">
-        <div class="all-data-wrapper">
-          <div class="global-container-hold">
-            <div class="left-container-wider scroll-left-align mar-tmd3">
-              <div class="common-block mb-3">
-                <h6 class="common-title fw-bold mb-3">Select Request </h6>
-                <div class="row">
-                  <div class="col-md-4">
+<div [formGroup]="expenseRequestForm" class="app-main-wrapper">
+  <div class="inn-main-hold">
+    <div class="flex-wrapper-top">
+      <div class="all-data-wrapper">
+        <div class="global-container-hold">
+          <div class="left-container-wider scroll-left-align mar-tmd3">
+            <div class="common-block mb-3">
+              <h6 class="common-title fw-bold mb-3">Select Request </h6>
+              <div class="row">
+                <div class="col-md-4">
+                  @if (expenseConfig?.request) {
                     <div class="form-group chm-formgroup new-form-grp">
-                      <label>Request </label>
-                      <select id="ddlTravelExpenseRequest" name="ExpenseRequest" class="form-control chm-formselect"
+                      <label>{{this.expenseConfig.request.label}} </label>
+                      <select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest" name="ExpenseRequest" class="form-control chm-formselect"
                         (change)="onSelectTravelExpenseRequest($event)">
                         <option value="0">Select Travel Request</option>
                         @for (req of travelRequests; track req) {
-                        <option [value]="req.TravelRequestId">
-                          {{req.TravelRequestNumber}} </option>
+                        <option [value]="req.value">
+                          {{req.label}} </option>
                         }
                       </select>
-                      <span id="spanTravelExpenseRequest" data-tid="0" style="display:none;">NA</span>
                     </div>
-                  </div>
+                  }
                 </div>
               </div>
-              <div class="common-block  mb-3">
-                <div class="d-flex align-items-center justify-content-between">
-                  <h6 class="common-title fw-bold mb-3">Travel Details </h6>
-                  <div class="date-extension">
-                    <button type="button" [disabled]="!travelRequestId"
-                      class="btn btn-secondary btn-sm " (click)="openModal()">
-                      Date Extension 
-                    </button> 
+            </div>
+            <div class="common-block  mb-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <h6 class="common-title fw-bold mb-3">Travel Details </h6>
+                <div class="date-extension">
+                  <button type="button" [disabled]="!travelRequestId" class="btn btn-secondary btn-sm "
+                    (click)="openModal()">
+                    Date Extension
+                  </button>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="trl-preview-wrapper">
+                    <div class="trl-readview-item">
+                      <div class="trl-req-head">
+                        <label>Travel From Date</label>
+                      </div>
+                      <div class="trl-req-detail">
+                        <span>{{ expenseRequestPreview?.TravelDateFromActualString }}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-  
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="trl-preview-wrapper">
-                      <div class="trl-readview-item">
-                        <div class="trl-req-head">
-                          <label>Travel From Date</label>
-                        </div>
-                        <div class="trl-req-detail">
-                          <span>{{ expenseRequestPreview?.TravelDateFromActualString }}</span>
-                        </div>
+                <div class="col-md-6">
+                  <div class="trl-preview-wrapper">
+                    <div class="trl-readview-item">
+                      <div class="trl-req-head">
+                        <label>Travel To Date</label>
+                      </div>
+                      <div class="trl-req-detail">
+                        <span>{{ expenseRequestPreview?.TravelDateToActualString }}</span>
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="trl-preview-wrapper">
-                      <div class="trl-readview-item">
-                        <div class="trl-req-head">
-                          <label>Travel To Date</label>
-                        </div>
-                        <div class="trl-req-detail">
-                          <span>{{ expenseRequestPreview?.TravelDateToActualString }}</span>
-                        </div>
+                </div>
+                @for (item of expenseRequestPreview?.ExpenseRequestMetaData; track item; let i = $index) {
+                @if (item.ExpenseRequestMetaId == 1 || item.ExpenseRequestMetaId == 4) {
+                <div class="col-md-6">
+                  <div class="trl-preview-wrapper">
+                    <div class="trl-readview-item">
+                      <div class="trl-req-head">
+                        <label>{{ item.FieldName }}</label>
                       </div>
-                    </div>
-                  </div>
-                  @for (item of expenseRequestPreview?.ExpenseRequestMetaData; track item; let i = $index) {
-                  @if (item.ExpenseRequestMetaId == 1 || item.ExpenseRequestMetaId == 4) {
-                  <div class="col-md-6">
-                    <div class="trl-preview-wrapper">
-                      <div class="trl-readview-item">
-                        <div class="trl-req-head">
-                          <label>{{ item.FieldName }}</label>
-                        </div>
-                        <div class="trl-req-detail">
-                          <span [id]="item.ExpenseRequestMetaId">{{ item.IntegerValueReference }}</span>
-                          @if (item.hiddenFields) {
-                          <div>
-                            @for (field of item.hiddenFields; track field) {
-                            <input type="hidden" [id]="field.id" [name]="field.id" [value]="field.value">
-                            }
-                          </div>
+                      <div class="trl-req-detail">
+                        <span [id]="item.ExpenseRequestMetaId">{{ item.IntegerValueReference }}</span>
+                        @if (item.hiddenFields) {
+                        <div>
+                          @for (field of item.hiddenFields; track field) {
+                          <input type="hidden" [id]="field.id" [name]="field.id" [value]="field.value">
                           }
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  }
-                  }
-                  <div class="col-md-6">
-                    <div class="trl-preview-wrapper">
-                      <div class="trl-readview-item">
-                        <div class="trl-req-head">
-                          <label>LeaveSummary</label>
-                        </div>
-                        <div class="trl-req-detail">
-                          <span>{{ expenseRequestPreview?.UserLeaveSummary }}</span>
-                        </div>
+                        }
                       </div>
                     </div>
                   </div>
                 </div>
-  
+                }
+                }
+                <div class="col-md-6">
+                  <div class="trl-preview-wrapper">
+                    <div class="trl-readview-item">
+                      <div class="trl-req-head">
+                        <label>LeaveSummary</label>
+                      </div>
+                      <div class="trl-req-detail">
+                        <span>{{ expenseRequestPreview?.UserLeaveSummary }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <!-- expense category -->
-              <div class="expense-core-wrapper" [class.disabled]="!travelRequestId">
-                <mat-tab-group fitInkBarToContent (selectedTabChange)="onTabChange($event)">
-                  @for (category of categories; track category) {
-                  <mat-tab [label]="category.label">
-                    <ng-template matTabContent>
-                      <div class="expense-item-hold">
-                        <div class="other-sectionaa hidehtgnm" style="display: block;">
-                          <div class="common-block mb-3">
-                            <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
-                            <app-dynamic-form [moduleData]="expenseRequestPreview" [existingData]="existingExpenseRequestData" [category]="category" [formConfig]="category.formControls" [eventHandler]="this"
-                              (emitFormData)="getFormData($event)" (emitFormConfigData)="getFormConfigData($event)" (emitTextData)="getTextData($event)"
-                              [minSelectableDate]="expenseRequestPreview?.TravelDateFromActual" [maxSelectableDate]="expenseRequestPreview?.TravelDateToActual">
-                            </app-dynamic-form>
-                          </div>
+
+            </div>
+            <!-- expense category -->
+            <div class="expense-core-wrapper" [class.disabled]="!travelRequestId">
+              <mat-tab-group fitInkBarToContent (selectedTabChange)="onTabChange($event)">
+                @for (category of categories; track category) {
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <span [matBadge]="existingExpenseRequestData.length" matBadgeOverlap="false">{{category.label}}</span>
+                  </ng-template>
+                  <ng-template matTabContent>
+                    <div class="expense-item-hold">
+                      <div class="other-sectionaa hidehtgnm" style="display: block;">
+                        <div class="common-block mb-3">
+                          <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
+                          <app-dynamic-form [moduleData]="expenseRequestPreview"
+                            [existingData]="existingExpenseRequestData" [category]="category"
+                            [formConfig]="category.formControls" [eventHandler]="this"
+                            (emitFormData)="getFormData($event)"
+                            (emitTextData)="getTextData($event)"
+                            [minSelectableDate]="expenseRequestPreview?.TravelDateFromActual"
+                            [maxSelectableDate]="expenseRequestPreview?.TravelDateToActual">
+                          </app-dynamic-form>
                         </div>
                       </div>
-                    </ng-template>
-                  </mat-tab>
-                  }
-                </mat-tab-group>
-  
-              </div>
-              <div class="row mt-2">
-                <div class="col-md-12">
-                  <ul class="nav nav-tabs common-tab" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-policyV"
-                        type="button" role="tab" aria-controls="home" aria-selected="true">Policy Violations</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#approval-D"
-                        type="button" role="tab" aria-controls="profile" aria-selected="false">Approval
-                        details</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#logdetails-D"
-                        type="button" role="tab" aria-controls="profile" aria-selected="false">Log Details</button>
-                    </li>
-                  </ul>
-                  <div class="tab-content common-tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home-policyV" role="tabpanel" aria-labelledby="home-tab">
-                      <ul class="policy-vio-list">
-                        <li><span class="fa-pv"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>Lorem
-                          ipsum dolor sit amet,
-                          consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                          labore et</li>
-                        <li><span class="fa-pv"><i class="fa fa-exclamation-triangle"
-                              aria-hidden="true"></i></span>consectetur adipiscing elit,
-                          sed do eiusmod tempor Lorem ipsum dolor sit amet,Lorem ipsum dolor
-                          sit amet, incididunt ut labore et</li>
-                        <li><span class="fa-pv"><i class="fa fa-exclamation-triangle"
-                              aria-hidden="true"></i></span>consectetur adipiscing elit,
-                          sed do eiusmod tempor Lorem ipsum dolor sit amet,Lorem ipsum dolor
-                          sit amet, incididunt ut labore et</li>
-                      </ul>
                     </div>
-                    <div class="tab-pane fade" id="approval-D" role="tabpanel" aria-labelledby="profile-tab">
-                    </div>
-                    <div class="tab-pane fade" id="logdetails-D" role="tabpanel" aria-labelledby="profile-tab">
-                      <div class="row mt-2">
-                        <div class="col-md-12">
-                          <div class="time-frame-wrapper">
-                            <div class="time-log-axis">
-                              <div class="tfl-child">
-                                <ul>
-                                  <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>22-10-2022
-                                  </li>
-                                  <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Approved</li>
-                                  <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Smitha</li>
-                                  <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
-                                    irure
-                                    dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu</li>
-                                </ul>
-                              </div>
-                              <div class="tfl-child">
-                                <ul>
-                                  <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>20-10-2022
-                                  </li>
-                                  <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Expense
-                                    request
-                                    approved</li>
-                                  <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Ashish GH</li>
-                                  <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
-                                    irure
-                                    dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu</li>
-                                </ul>
-                              </div>
-                              <div class="tfl-child">
-                                <ul>
-                                  <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>17-10-2022
-                                  </li>
-                                  <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Expense
-                                    request
-                                    approved</li>
-                                  <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Rajesh Murthy
-                                  </li>
-                                  <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
-                                    irure
-                                    dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu</li>
-                                </ul>
-                              </div>
-                              <div class="tfl-child">
-                                <ul>
-                                  <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>16-10-2022
-                                  </li>
-                                  <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Approved
-                                    Reuest
-                                  </li>
-                                  <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Raghava</li>
-                                  <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
-                                    irure
-                                    dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu</li>
-                                </ul>
-                              </div>
-                              <div class="tfl-child">
-                                <ul>
-                                  <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>15-10-2022
-                                  </li>
-                                  <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Approved</li>
-                                  <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Smitha</li>
-                                  <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
-                                    irure
-                                    dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu</li>
-                                </ul>
-                              </div>
+                  </ng-template>
+                </mat-tab>
+                }
+              </mat-tab-group>
+
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <ul class="nav nav-tabs common-tab" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-policyV"
+                      type="button" role="tab" aria-controls="home" aria-selected="true">Policy Violations</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#approval-D"
+                      type="button" role="tab" aria-controls="profile" aria-selected="false">Approval
+                      details</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#logdetails-D"
+                      type="button" role="tab" aria-controls="profile" aria-selected="false">Log Details</button>
+                  </li>
+                </ul>
+                <div class="tab-content common-tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="home-policyV" role="tabpanel" aria-labelledby="home-tab">
+                    <ul class="policy-vio-list">
+                      <li><span class="fa-pv"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>Lorem
+                        ipsum dolor sit amet,
+                        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et</li>
+                      <li><span class="fa-pv"><i class="fa fa-exclamation-triangle"
+                            aria-hidden="true"></i></span>consectetur adipiscing elit,
+                        sed do eiusmod tempor Lorem ipsum dolor sit amet,Lorem ipsum dolor
+                        sit amet, incididunt ut labore et</li>
+                      <li><span class="fa-pv"><i class="fa fa-exclamation-triangle"
+                            aria-hidden="true"></i></span>consectetur adipiscing elit,
+                        sed do eiusmod tempor Lorem ipsum dolor sit amet,Lorem ipsum dolor
+                        sit amet, incididunt ut labore et</li>
+                    </ul>
+                  </div>
+                  <div class="tab-pane fade" id="approval-D" role="tabpanel" aria-labelledby="profile-tab">
+                  </div>
+                  <div class="tab-pane fade" id="logdetails-D" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row mt-2">
+                      <div class="col-md-12">
+                        <div class="time-frame-wrapper">
+                          <div class="time-log-axis">
+                            <div class="tfl-child">
+                              <ul>
+                                <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>22-10-2022
+                                </li>
+                                <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Approved</li>
+                                <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Smitha</li>
+                                <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
+                                  irure
+                                  dolor in reprehenderit in voluptate velit esse
+                                  cillum dolore eu</li>
+                              </ul>
+                            </div>
+                            <div class="tfl-child">
+                              <ul>
+                                <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>20-10-2022
+                                </li>
+                                <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Expense
+                                  request
+                                  approved</li>
+                                <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Ashish GH</li>
+                                <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
+                                  irure
+                                  dolor in reprehenderit in voluptate velit esse
+                                  cillum dolore eu</li>
+                              </ul>
+                            </div>
+                            <div class="tfl-child">
+                              <ul>
+                                <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>17-10-2022
+                                </li>
+                                <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Expense
+                                  request
+                                  approved</li>
+                                <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Rajesh Murthy
+                                </li>
+                                <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
+                                  irure
+                                  dolor in reprehenderit in voluptate velit esse
+                                  cillum dolore eu</li>
+                              </ul>
+                            </div>
+                            <div class="tfl-child">
+                              <ul>
+                                <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>16-10-2022
+                                </li>
+                                <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Approved
+                                  Reuest
+                                </li>
+                                <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Raghava</li>
+                                <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
+                                  irure
+                                  dolor in reprehenderit in voluptate velit esse
+                                  cillum dolore eu</li>
+                              </ul>
+                            </div>
+                            <div class="tfl-child">
+                              <ul>
+                                <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>15-10-2022
+                                </li>
+                                <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Approved</li>
+                                <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Smitha</li>
+                                <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
+                                  irure
+                                  dolor in reprehenderit in voluptate velit esse
+                                  cillum dolore eu</li>
+                              </ul>
                             </div>
                           </div>
                         </div>
@@ -237,84 +244,90 @@
                 </div>
               </div>
             </div>
-            <!-- left-container-wider -->
-            <div class="right-container-nrw rt-aside-fixed">
-              <div class="row-wrapper common-block px-3 py-3">
-                <div class="accordion accordion-flush preview-standard-view" id="accordionFlushExample">
-                  <!-- accordion-item -->
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOneOne">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#flush-collapseOneOne" aria-expanded="false" aria-controls="flush-collapseOneOne">
-                        Expense Summary
-                      </button>
-                    </h2>
-                    <div id="flush-collapseOneOne" class="accordion-collapse collapse"
-                      aria-labelledby="flush-headingOneOne" data-bs-parent="#accordionFlushExample">
-                      <div class="accordion-body">
-                        <ul class="summary-list">
-                          <li>Total Expense <span>6000.00</span></li>
-                          <li>Less Advance<span>20000.00</span></li>
-                          <li>Amount Paid by Company <span>0.00</span></li>
-                          <li>Corporate Credit Card <span>0.00</span></li>
-                          <li>Cash <span>0.00</span></li>
-                          <li>Amount Payable / Receivable <span>26000.00</span></li>
-                        </ul>
-                      </div>
+          </div>
+          <!-- left-container-wider -->
+          <div class="right-container-nrw rt-aside-fixed">
+            <div class="row-wrapper common-block px-3 py-3">
+              <div class="accordion accordion-flush preview-standard-view" id="accordionFlushExample">
+                @for (summary of summaries; track summary) {
+                <div class="accordion-item">
+                  <h2 class="accordion-header" [id]="'heading-' + summary.id">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      [attr.data-bs-target]="'#collapse-' + summary.id" aria-expanded="false"
+                      [attr.aria-controls]="'collapse-' + summary.id" [class.collapsed]="!summary.isOpen"
+                      (click)="toggleAccordion(summary.id)">
+                      {{ summary.title }}
+                    </button>
+                  </h2>
+                  <div [id]="'collapse-' + summary.id" class="accordion-collapse collapse" [class.show]="summary.isOpen"
+                    [attr.aria-labelledby]="'heading-' + summary.id" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      <ul class="summary-list">
+                        @for (item of summary.items; track item) {
+                        <li>
+                          {{ item.label }}
+                          <span>{{ data[item.key] || '0.00' }}</span>
+                        </li>
+                        }
+                      </ul>
                     </div>
                   </div>
-                  <!-- accordion-item -->
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingTwo">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#flush-collapseTwo" aria-expanded="true" aria-controls="flush-collapseTwo">
-                        Category wise Expense
-                      </button>
-                    </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse show"
-                      aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                      <div class="accordion-body">
-                        <ul class="summary-list">
-                          <li>Local Conveyance <span>600.00</span></li>
-                          <li>Food Allowance <span>800.00</span></li>
-                          <li>Accommodation <span>5000.00</span></li>
-                          <li>Boarding Allowance <span>750.00</span></li>
-                          <li>Others <span>0.00</span></li>
-                          <li>Total<span>7210.00</span></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- accordion-item -->
                 </div>
-                <div class="row mt-3">
+                }
+              </div>
+
+              @if (expenseConfig?.justification) {
+                <div [formGroup]="justificationForm" class="row mt-3">
                   <div class="col-md-12">
                     <div class="form-group chm-formgroup mb-2">
-                      <label>Justification</label>
-                      <textarea maxlength="2000" id="expenseRemark" type="text"
-                        class="form-control chm-formtextarea max-tr-md mar-align-0" rows="3" placeholder=""
-                        value=""></textarea>
-                      <span class="validate-error-message" id="validate-error-message-expenseRemark"
-                        style="display: none">Required</span>
+                      <label>{{ expenseConfig.justification.label }}</label>
+                      <textarea [formControlName]="expenseConfig.justification.controlName"
+                        [attr.maxLength]="expenseConfig.justification.maxLength"
+                        class="form-control chm-formtextarea max-tr-md mar-align-0" rows="3"></textarea>
+                      @if (justificationForm.controls.justification?.invalid &&
+                      justificationForm.controls.justification?.touched) {
+                      <span class="validate-error-message">
+                        Required
+                      </span>
+                      }
                     </div>
                   </div>
-  
-  
-  
                 </div>
+              }
+             
+              @if (expenseConfig?.actions) {
                 <div class="main-btn-hold d-flex flex-column mt-2" style="align-items:end;">
                   <div class="d-flex align-items-center w-100 mb-2">
-                    <a href=" " class="btn btn-outline-secondary me-2 w-50">Cancel</a>
-                    <button type="button" id="expenseSaveAsDraft" data-draftvalue="false"
-                      class="btn btn-outline-primary w-50" (click)="onSave(true)">Save as Draft</button>
+                    @if (expenseConfig.actions[0]) {
+                    <a href="javascript:void(0)" [ngClass]="expenseConfig.actions[0].class"
+                      (click)="onAction(expenseConfig.actions[0].type)">
+                      {{ expenseConfig.actions[0].label }}
+                    </a>
+                    }
+                    @if (expenseConfig.actions[1]) {
+                    <button type="button" [ngClass]="expenseConfig.actions[1].class"
+                      (click)="onAction(expenseConfig.actions[1].type)">
+                      {{ expenseConfig.actions[1].label }}
+                    </button>
+                    }
                   </div>
-                  <button type="button" id="expenseSubmit" class="btn btn-primary w-100" (click)="onSave(false)">Submit</button>
+                  @if (expenseConfig.actions[2]) {
+                  <button type="button" [ngClass]="expenseConfig.actions[2].class"
+                    (click)="onAction(expenseConfig.actions[2].type)">
+                    {{ expenseConfig.actions[2].label }}
+                  </button>
+                  }
                 </div>
-              </div>
+              }
+              
             </div>
           </div>
+
         </div>
-        <!-- all-data-wrapper -->
       </div>
+      <!-- all-data-wrapper -->
     </div>
   </div>
+</div>
+
+<!-- <pre>{{mainExpenseData | json}}</pre> -->

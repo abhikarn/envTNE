@@ -13,7 +13,7 @@
         </thead>
         <tbody>
           @for (row of tableData; track row; let i = $index) {
-          <tr [ngClass]="{ 'violation-border': row?.hasPolicyViolation }">
+          <tr [ngClass]="{ 'violation-border': row?.IsViolation }">
             <td>{{ i + 1 }}</td> <!-- Serial Number -->
             @for (column of displayedColumns; track column) {
             <td>
@@ -29,7 +29,7 @@
             <td>
               <i class="fas fa-edit" (click)="edit(row, i+1)"></i>
               <i class="fas fa-chevron-down" (click)="toggleRow(i)" [class.rotate]="expandedRowIndex === i"></i>
-              @if (row?.hasPolicyViolation) {
+              @if (row?.IsViolation) {
               <i class="fas fa-exclamation-triangle text-danger"></i>
               }
             </td>
@@ -39,7 +39,7 @@
           @if (expandedRowIndex === i) {
           <tr>
             <td [attr.colspan]="displayedColumns.length + 2">
-              <div class="expanded-content" [ngClass]="{ 'violation-bg': row?.hasPolicyViolation }">
+              <div class="expanded-content" [ngClass]="{ 'violation-bg': row?.IsViolation }">
                 <p><strong>Claim Amount:</strong> {{ row.ClaimAmount || '-' }}</p>
                 <p><strong>Claim in Base Currency:</strong> {{ row.BaseCurrency || '-' }}</p>
                 <p><strong>Remarks:</strong> {{ row.Remarks || 'No remarks' }}</p>

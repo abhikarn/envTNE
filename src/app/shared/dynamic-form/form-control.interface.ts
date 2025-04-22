@@ -33,4 +33,5 @@ export interface IFormControl {
   dependsOn?: any;
   payloadKey?: string;
   showInUI?: boolean;
+  fields?: any;
 }
