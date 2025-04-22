@@ -2,6 +2,9 @@
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
+import { DocumentService } from '../../../../../../tne-api';
+import { take } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'lib-file-upload',
@@ -13,9 +16,12 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 export class FileUploadComponent {
   @Input() controlConfig: any;
   @Input() control!: FormControl;
-  selectedFiles: File[] = [];
+  selectedFiles: any = [];
 
-  constructor() {
+  constructor(
+    private documentService: DocumentService,
+    private domSanitizer: DomSanitizer
+  ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
 
@@ -23,14 +29,58 @@ export class FileUploadComponent {
     const input = event.target as HTMLInputElement;
     // console.log(input.files)
     if (input.files && input.files.length > 0) {
-      this.selectedFiles = [...this.selectedFiles, ...Array.from(input.files)];
+      const newFiles = Array.from(input.files);
+      newFiles.forEach((file: any) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64 = (reader.result as string).split(',')[1];
+          const payload = {
+            ImageString: base64,
+            FileName: file.name,
+            FileExtension: '.' + file.name.split('.').pop()
+          };
+          this.uploadFile(payload);
+          console.log('Prepared File Payload:', payload); 
+        };
+        reader.readAsDataURL(file);
+      });
       this.control.setValue(this.selectedFiles);
     }
-    console.log(this.selectedFiles)
+  }
+
+  uploadFile(payload: any) {
+    if(payload) {
+      this.documentService.documentDocumentUpload(payload).pipe(take(1)).subscribe({
+        next: (res: any) => {
+          console.log('Files uploaded successfully', res);
+          this.selectedFiles.push(res.ResponseValue);
+          this.control.setValue(this.selectedFiles);
+          console.log(this.control)
+        },
+        error: (err: any) => {
+          console.log(err)
+        }
+      })
+    }
   }
 
   removeFile(index: number) {
     this.selectedFiles.splice(index, 1);
+  }
+
+  previewFile(file: any) {
+    const url = file?.fileUrl || file?.Url; // adjust based on your backend response
+    if (url) {
+      window.open(url, '_blank');
+    }
+  }
+
+  downloadFile(file: any) {
+    const url = this.domSanitizer.bypassSecurityTrustResourceUrl(file?.fileUrl || file?.Url);
+    const link = document.createElement('a');
+    link.href = url.toString();
+    link.download = file?.FileName || 'downloaded-file';
+    link.click();
   }
 
   getErrorMessage() {

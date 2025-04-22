@@ -102,7 +102,10 @@
             <div class="expense-core-wrapper" [class.disabled]="!travelRequestId">
               <mat-tab-group fitInkBarToContent (selectedTabChange)="onTabChange($event)">
                 @for (category of categories; track category) {
-                <mat-tab [label]="category.label">
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <span [matBadge]="existingExpenseRequestData.length" matBadgeOverlap="false">{{category.label}}</span>
+                  </ng-template>
                   <ng-template matTabContent>
                     <div class="expense-item-hold">
                       <div class="other-sectionaa hidehtgnm" style="display: block;">
