@@ -21,9 +21,7 @@ export class GstComponent {
   @Input() form: any;
   companyGSTForm: FormGroup;
   gstDetailsForm: FormGroup;
-  gstDetails: any = {
-    data: []
-  };
+  gstDetails: any = [];
   options = [
     {
       "label": "Yes",
@@ -85,7 +83,7 @@ export class GstComponent {
 
     if (gstBreakupAmount > 0 && gstBreakupAmount <= gstNum && gstNum > 0) {
       // Get all GST values
-      this.gstDetails.data?.forEach((gst: any) => {
+      this.gstDetails?.forEach((gst: any) => {
         gstAmount = Number(gstAmount) + Number(gst.Amount)
       })
       if (claimedAmount > 0) {
@@ -109,16 +107,16 @@ export class GstComponent {
 
   addGstRow(): void {
     if (this.validateGSTWithClaimed()) {
-      this.gstDetails.IsBillRaisedInCompanyGST = this.companyGSTForm.value.IsBillRaisedInCompanyGST;
-      this.gstDetails.data.push(this.gstDetailsForm.value);
+      // this.gstDetails.IsBillRaisedInCompanyGST = this.companyGSTForm.value.IsBillRaisedInCompanyGST;
+      this.gstDetails.push(this.gstDetailsForm.value);
       this.control.setValue(this.gstDetails);
       this.gstDetailsForm.reset();
     }
   }
 
   removeGstRow(index: number): void {
-    if (this.gstDetails.data.length > 0) {
-      this.gstDetails.data.splice(index, 1);
+    if (this.gstDetails.length > 0) {
+      this.gstDetails.splice(index, 1);
     }
   }
 }

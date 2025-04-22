@@ -396,13 +396,13 @@ export class DynamicFormComponent implements OnInit, OnChanges {
                   this.form.reset();
                 }
               });
+          } else {
+            this.setAutoCompleteFields();
+            this.prepareFormJson();
+            this.addDataToDynamicTable();
+            this.form.reset();
           }
         });
-    } else {
-      this.setAutoCompleteFields();
-      this.prepareFormJson();
-      this.addDataToDynamicTable();
-      this.form.reset();
     }
   }
 

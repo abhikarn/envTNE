@@ -262,9 +262,9 @@
                 {
                     "type": "gst",
                     "dataType": "object",
-                    "name": "GSTDetails",
+                    "name": "gst",
                     "isExcluded": false,
-                    "label": "GST Details",
+                    "label": "GST",
                     "value": null,
                     "getControl": "ClaimAmount",
                     "fields": [

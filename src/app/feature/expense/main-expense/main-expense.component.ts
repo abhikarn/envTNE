@@ -334,27 +334,6 @@ export class MainExpenseComponent {
     }
   }
 
-  fetchExpensePolicyEntitlement() {
-    const requestBody = {
-      ClaimTypeId: 53,
-      UserMasterId: 4,
-      ExpenseCategoryId: 3,
-      ReferenceDate: '06-Mar-2024',
-      CityGradeId: 8,
-      CountryGradeId: 0,
-      PolicyReferenceId: 53,
-      TravelRequestId: 37
-    };
-    this.expenseService.expenseGetExpensePolicyEntitlement(requestBody).pipe(take(1)).subscribe({
-      next: (response) => {
-        console.log();
-      },
-      error: (error) => {
-        console.error('Error fetching travel payments:', error);
-      }
-    })
-  }
-
   mergeData(entries: DataEntry[]): any[] {
     const mergedMap = new Map<number, any>();
 
@@ -475,7 +454,7 @@ export class MainExpenseComponent {
     });
   }
 
-  onSave(isDraft: boolean) {
+  onAction(type: string) {
     this.mainExpenseData.ExpenseRequestId = 0;
     this.mainExpenseData.RequestForId = this.expenseRequestPreview.RequestForId;
     this.mainExpenseData.RequesterId = 4;
@@ -484,11 +463,16 @@ export class MainExpenseComponent {
     this.mainExpenseData.Purpose = this.purpose;
     this.mainExpenseData.CostCentreId = this.costcenterId;
     this.mainExpenseData.BillableCostCentreId = this.mainExpenseData.CostCentreId;
-    this.mainExpenseData.Remarks = '';
-    this.mainExpenseData.IsDraft = isDraft;
-    this.mainExpenseData.ActionBy = 0;
-    this.mainExpenseData.expenseRequestData = this.expenseRequestData;
+    this.mainExpenseData.Remarks = this.justificationForm.get(this.expenseConfig.justification.controlName).value;
+    this.mainExpenseData.ActionBy = 4;
+    this.mainExpenseData.expenseRequestData = this.simplifyObject(this.expenseRequestData);
+    if (type == "submit") {
+      this.mainExpenseData.IsDraft = false;
+    } else if (type == "draft") {
+      this.mainExpenseData.IsDraft = true;
+    } else {
 
+    }
     this.confirmDialogService
       .confirm({
         title: 'Create Expense Request',
@@ -498,23 +482,15 @@ export class MainExpenseComponent {
       })
       .subscribe((confirmed) => {
         if (confirmed) {
-          let payload = this.simplifyObject(this.expenseRequestData);
-
-          this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
-            next: (response) => {
-              this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
-            },
-            error: (err) => {
-              console.error(err);
-              this.snackbarService.error('Something went wrong with the API.');
-            }
-          });
-          // this.expenseService.expenseExpenseRequestCreate(this.mainExpenseData).pipe(take(1)).subscribe({
+          // this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
           //   next: (response) => {
-          //     console.log(response);
-          //     this.snackbarService.success('Operation successful!');
+          //     this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
+          //   },
+          //   error: (err) => {
+          //     console.error(err);
+          //     this.snackbarService.error('Something went wrong with the API.');
           //   }
-          // })
+          // });
         } else {
           console.log('Failed');
         }
@@ -592,9 +568,6 @@ export class MainExpenseComponent {
   }
 
 
-  onAction(type: string) {
-    console.log(type)
-  }
 
   toggleAccordion(activeId: string): void {
     this.summaries = this.summaries.map((summary: any) => ({
