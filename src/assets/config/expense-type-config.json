@@ -1,0 +1,65 @@
+[
+    {
+        "title": "Travel Expense",
+        "img": "assets/images/expense-travel.png",
+        "link": "/claim-expense",
+        "colorClass": "expense-color1",
+        "alt": "Travel Expense"
+    },
+    {
+        "title": "Local Travel Conveyance Expense",
+        "img": "assets/images/expense-local.png",
+        "link": "/claim-expense",
+        "colorClass": "expense-color2",
+        "alt": "Local Travel Conveyance Expense"
+    },
+    {
+        "title": "Joining Expense",
+        "img": "assets/images/expense-join.png",
+        "link": "/claim-expense",
+        "colorClass": "expense-color3",
+        "alt": "Joining Expense"
+    },
+    {
+        "title": "Transfer Expense",
+        "img": "assets/images/expense-transfer.png",
+        "link": "/claim-expense",
+        "colorClass": "expense-color4",
+        "alt": "Transfer Expense"
+    },
+    {
+        "title": "Mobile Expense",
+        "img": "assets/images/expense-mobile.png",
+        "link": "/claim-expense",
+        "colorClass": "expense-color5",
+        "alt": "Mobile Expense"
+    },
+    {
+        "title": "Broadband Expenses",
+        "img": "assets/images/expense-datacard.png",
+        "link": "/claim-expense",
+        "colorClass": "expense-color6",
+        "alt": "Broadband Expenses"
+    },
+    {
+        "title": "Other Expense",
+        "img": "assets/images/expense-other.png",
+        "link": "/claim-expense",
+        "colorClass": "expense-color7",
+        "alt": "Other Expense"
+    },
+    {
+        "title": "Training and Certification Expense",
+        "img": "assets/images/expense-certificate.png",
+        "link": "/claim-expense",
+        "colorClass": "expense-color8",
+        "alt": "Training and Certification Expense"
+    },
+    {
+        "title": "Deputation Expense",
+        "img": "assets/images/expense-deputation.png",
+        "link": "/claim-expense",
+        "colorClass": "expense-color9",
+        "alt": "Deputation Expense"
+    }
+]

@@ -1,0 +1,82 @@
+<div class="app-main-wrapper">
+    <div class="two-roles-wrapper">
+       <div class="tabs-page-hold">
+         <!-- <div class="row mt-3 gx-2">
+            <a *ngFor="let expense of expenses" [href]="expense.link" class="col-md-2">
+              <div class="expense-block" [ngClass]="expense.colorClass" style="padding: 25px 0px;">
+                <img [src]="expense.img" [alt]="expense.alt">
+                <span>{{ expense.title }}</span>
+              </div>
+            </a>
+          </div> -->
+          
+          <div class="row mt-3 gx-2">
+            <div class="col-md-2" *ngFor="let expense of expenses">
+              <mat-card class="expense-block" [ngClass]="expense.colorClass"   (click)="navigateTo(expense.link)">
+                <img width="59px" height="40px" [src]="expense.img" [alt]="expense.alt"  >
+                <mat-card-content>
+                  <span>{{ expense.title }}</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+          
+          <!-- <div class="row mt-3 gx-2">
+             <a href="claim-expense.html" class="col-md-2">
+                <div class="expense-block expense-color1" style="padding: 25px 0px;">
+                   <img src="../../../../assets/images/expense-travel.png">
+                   <span>Travel Expense </span>
+                </div>
+             </a>
+             <a href="claim-expense.html" class="col-md-2">
+                <div class="expense-block expense-color2">
+                   <img src="../../../../assets/images/expense-local.png" alt="Local Travel Conveyance">
+                   <span>Local Travel Conveyance Expense</span>
+                </div>
+             </a>
+             <a href="claim-expense.html" class="col-md-2">
+                <div class="expense-block  expense-color3">
+                   <img src="../../../../assets/images/expense-join.png">
+                   <span>Joining Expense   </span>
+                </div>
+             </a>
+             <a href="claim-expense.html" class="col-md-2">
+                <div class="expense-block  expense-color4">
+                   <img src="../../../../assets/images/expense-transfer.png">
+                   <span>Transfer Expense</span>
+                </div>
+             </a>
+             <a href="claim-expense.html" class="col-md-2">
+                <div class="expense-block  expense-color5">
+                   <img src="../../../../assets/images/expense-mobile.png">
+                   <span>Mobile Expense </span>
+                </div>
+             </a>
+             <a href="claim-expense.html" class="col-md-2">
+                <div class="expense-block  expense-color6">
+                   <img src="../../../../assets/images/expense-datacard.png">
+                   <span>Broadband Expenses</span>
+                </div>
+             </a>
+             <a href="claim-expense.html" class="col-md-2">
+                <div class="expense-block  expense-color7">
+                   <img src="../../../../assets/images/expense-other.png">
+                   <span> Other Expense </span>
+                </div>
+             </a>
+             <a href="claim-expense.html" class="col-md-2">
+                <div class="expense-block  expense-color8">
+                   <img src="../../../../assets/images/expense-certificate.png">
+                   <span>Training and Certification Expense </span>
+                </div>
+             </a>
+             <a href="claim-expense.html" class="col-md-2">
+                <div class="expense-block  expense-color9">
+                   <img src="../../../../assets/images/expense-deputation.png">
+                   <span>Deputation Expense  </span>
+                </div>
+             </a>                    
+          </div> -->
+       </div>
+    </div>
+ </div>
