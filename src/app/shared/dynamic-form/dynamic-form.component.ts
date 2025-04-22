@@ -44,7 +44,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() existingData: any;
   @Output() emitFormData = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();
-  @Output() emitFormConfigData = new EventEmitter<any>();
   form: FormGroup = new FormGroup({});
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
   tableData: any = [];
@@ -52,6 +51,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   formData: any = {};
   editIndex = 0;
   referenceId = 0;
+  isValid = true;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -174,7 +174,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         const apiMethod = ctrlConfig.apiMethod;
         const payloadKey = ctrlConfig.payloadKey || `${changedControlName}Id`; // fallback if not defined
 
-        const payload = { [payloadKey]: selectedValue }; // 👈 Dynamic payload
+        const payload = { [payloadKey]: selectedValue }; // Dynamic payload
 
         if (service && typeof service[apiMethod] === 'function') {
           service[apiMethod](payload).subscribe((data: any) => {
@@ -219,7 +219,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     // }
 
     this.validatePolicyViolation();
-    
+
+  }
+
+  setAutoCompleteFields() {
     // Logic for autocomplete field like city to save the object value for display purpose
     this.formControls.forEach(control => {
       let { name, autoComplete } = control.formConfig;
@@ -235,7 +238,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         this.form.get(name)?.setValue(selected);
       }
     });
+  }
 
+  prepareFormJson() {
     // Preparing form json
     this.formData.name = this.category.name;
     this.formControls.forEach(control => {
@@ -262,7 +267,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     })
     this.emitFormData.emit(this.formData);
     this.formData = {};
+  }
 
+  addDataToDynamicTable() {
+    let tableData = this.form;
     // Preparing Data for Dynamic table
     this.formControls.forEach(control => {
       const { type, name, autoComplete, options } = control.formConfig;
@@ -273,23 +281,19 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
         const matchedOption = options?.find(option => option.value === selected);
         if (matchedOption) {
-          this.form.get(name)?.setValue(matchedOption);
+          tableData.get(name)?.setValue(matchedOption);
         }
       }
     });
 
-
     if (!this.editIndex) { //Create
-      this.tableData.push(this.form.value);
-      this.existingData.push(this.form.value);
+      this.tableData.push(tableData.value);
+      this.existingData.push(tableData.value);
     } else { // Edit
-      this.tableData[this.editIndex - 1] = this.form.value;
-      this.existingData[this.editIndex - 1] = this.form.value;
+      this.tableData[this.editIndex - 1] = tableData.value;
+      this.existingData[this.editIndex - 1] = tableData.value;
       this.editIndex = 0;
     }
-
-    this.emitFormConfigData.emit(this.formConfig)
-    this.form.reset();
   }
 
   onEditRow(rowData: any) {
@@ -332,7 +336,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   clear() {
-    
+
     // this.form.reset();
   }
 
@@ -380,19 +384,26 @@ export class DynamicFormComponent implements OnInit, OnChanges {
               }
             }
           }
-        });
-    }
 
-    if (this.form.value.IsViolation) {
-      this.confirmDialogService
-        .confirm(confirmPopupData)
-        .subscribe((confirmed) => {
-          if (confirmed) {
-
+          if (this.form.value.IsViolation) {
+            this.confirmDialogService
+              .confirm(confirmPopupData)
+              .subscribe((confirmed) => {
+                if (confirmed) {
+                  this.setAutoCompleteFields();
+                  this.prepareFormJson();
+                  this.addDataToDynamicTable();
+                  this.form.reset();
+                }
+              });
+          } else {
+            this.setAutoCompleteFields();
+            this.prepareFormJson();
+            this.addDataToDynamicTable();
+            this.form.reset();
           }
         });
     }
-
   }
 
   mapOtherControls(data: any, otherControls: Record<string, string>): Record<string, any> {
