@@ -51,7 +51,7 @@ interface DataEntry {
 export class MainExpenseComponent {
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
-  expenseRequestPreview: any;
+  travelRequestPreview: any;
   travelClassList: any;
   originControl = new FormControl('');
   cities = [];
@@ -204,7 +204,7 @@ export class MainExpenseComponent {
         }
 
         if (this.expenseRequestId) {
-          this.travelRequestId = Number(this.expenseRequestId);
+          this.expenseRequestId = Number(this.expenseRequestId);
           this.onSelectTravelExpenseRequest(null);
           let requestBody = {
             status: "Active",
@@ -303,12 +303,12 @@ export class MainExpenseComponent {
   }
 
   getTravelRequestPreview() {
-    this.expenseService.expenseExpenseRequestPreview({ ExpenseRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
+    this.travelService.travelGetTravelRequestPreview({ TravelRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
       next: (response) => {
-        this.expenseRequestPreview = response.ResponseValue;
-        this.expenseRequestPreview.UserMasterId = this.userMasterId;
-        this.costcenterId = this.expenseRequestPreview.ExpenseRequestMetaData.find((data: any) => data.ExpenseRequestMetaId === 4)?.IntegerValue;
-        this.purpose = this.expenseRequestPreview.ExpenseRequestMetaData.find((data: any) => data.ExpenseRequestMetaId === 1)?.IntegerValueReference;
+        this.travelRequestPreview = response.ResponseValue;
+        this.travelRequestPreview.UserMasterId = this.userMasterId;
+        this.costcenterId = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 4)?.IntegerValue;
+        this.purpose = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 1)?.IntegerValueReference;
 
       },
       error: (error) => {
@@ -398,7 +398,7 @@ export class MainExpenseComponent {
     } else {
       const requestBody = {
         "SearchText": inputData.inputValue,
-        "TravelTypeId": this.expenseRequestPreview.TravelRequestId || 0
+        "TravelTypeId": this.travelRequestPreview.TravelRequestId || 0
       }
       this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
         next: (response: any) => {
@@ -460,10 +460,10 @@ export class MainExpenseComponent {
   }
 
   createExpenseRequest() {
-    this.mainExpenseData.ExpenseRequestId = 0;
-    this.mainExpenseData.RequestForId = this.expenseRequestPreview.RequestForId;
+    this.mainExpenseData.ExpenseRequestId = this.expenseRequestId;
+    this.mainExpenseData.RequestForId = this.travelRequestPreview.RequestForId;
     this.mainExpenseData.RequesterId = 4;
-    this.mainExpenseData.TravelRequestId = this.expenseRequestPreview.TravelRequestId;
+    this.mainExpenseData.TravelRequestId = this.travelRequestPreview.TravelRequestId;
     this.mainExpenseData.RequestDate = new Date().toISOString();
     this.mainExpenseData.Purpose = this.purpose;
     this.mainExpenseData.CostCentreId = this.costcenterId;
@@ -499,9 +499,9 @@ export class MainExpenseComponent {
     const dialogRef = this.dialog.open(DateExtensionComponent, {
       maxWidth: '1000px',
       data: {
-        TravelDateFrom: this.expenseRequestPreview?.TravelDateFromExtended,
-        TravelDateTo: this.expenseRequestPreview?.TravelDateToExtended,
-        remarks: this.expenseRequestPreview?.TravelDateExtensionRemarks
+        TravelDateFrom: this.travelRequestPreview?.TravelDateFromExtended,
+        TravelDateTo: this.travelRequestPreview?.TravelDateToExtended,
+        remarks: this.travelRequestPreview?.TravelDateExtensionRemarks
       }
     });
 
