@@ -110,7 +110,7 @@ export class GstComponent {
       // this.gstDetails.IsBillRaisedInCompanyGST = this.companyGSTForm.value.IsBillRaisedInCompanyGST;
       this.gstDetails.push(this.gstDetailsForm.value);
       this.control.setValue(this.gstDetails);
-      this.gstDetailsForm.reset();
+      this.initGstDetailsForm();
     }
   }
 

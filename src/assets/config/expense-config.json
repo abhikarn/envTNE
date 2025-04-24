@@ -430,6 +430,7 @@
                 {
                     "type": "hidden",
                     "name": "IsViolation",
+                    "isExcluded": true,
                     "value": false,
                     "showInUI": false
                 }
@@ -2029,5 +2030,8 @@
             "type": "submit",
             "class": "btn btn-primary w-100"
         }
-    ]
+    ],
+    "notifications": {
+        "AtLeastOneClaimDataEntry": "Please add at least one claim data entry!"
+    }
 }

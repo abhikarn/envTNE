@@ -62,17 +62,19 @@
 
                                 @if (gstDetails.length > 0) {
                                 @for (gst of gstDetails; track $index) {
-                                @for (field of controlConfig.fields; track $index) {
-                                @if (field.showInUI) {
-                                <td>{{gst[field.name]}}</td>
-                                }
-                                }
-                                <td>
-                                    <a type="button" id="btnAddGstTe" class="btn btn-light btn-sm rounded-circle "
-                                        (click)="removeGstRow($index)">
-                                        <span class="ti-minus ti-rotate"></span>
-                                    </a>
-                                </td>
+                                <tr>
+                                    @for (field of controlConfig.fields; track $index) {
+                                    @if (field.showInUI) {
+                                    <td>{{gst[field.name]}}</td>
+                                    }
+                                    }
+                                    <td>
+                                        <a type="button" id="btnAddGstTe" class="btn btn-light btn-sm rounded-circle "
+                                            (click)="removeGstRow($index)">
+                                            <span class="ti-minus ti-rotate"></span>
+                                        </a>
+                                    </td>
+                                </tr>
                                 }
                                 }
                             </tbody>

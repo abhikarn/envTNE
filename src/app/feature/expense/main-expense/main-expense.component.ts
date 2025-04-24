@@ -442,6 +442,10 @@ export class MainExpenseComponent {
   }
 
   onAction(type: string) {
+    if(!this.travelRequestId) {
+      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+      return;
+    }
     if(this.expenseRequestForm.invalid) {
       this.expenseRequestForm.markAllAsTouched();
       return;
