@@ -269,8 +269,21 @@
                     "getControl": "ClaimAmount",
                     "fields": [
                         {
+                            "name": "ExpenseRequestGstTypeId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "ExpenseRequestDetailId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
                             "name": "GstIn",
                             "type": "text",
+                            "showInUI": true,
                             "validations": [
                                 {
                                     "type": "required",
@@ -286,6 +299,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "showInUI": true,
                             "validations": [
                                 {
                                     "type": "required",
@@ -295,7 +309,20 @@
                         },
                         {
                             "name": "Amount",
-                            "type": "number",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            },
                             "validations": [
                                 {
                                     "type": "required",
@@ -309,21 +336,78 @@
                         },
                         {
                             "name": "SGST",
-                            "type": "number"
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            }
                         },
                         {
                             "name": "CGST",
-                            "type": "number"
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            }
                         },
                         {
                             "name": "IGST",
-                            "type": "number"
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            }
                         },
                         {
                             "name": "UGST",
-                            "type": "number"
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            }
                         }
-                    ]
+                    ],
+                    "notifications": {
+                        "GSTAmount": "The GST amount should not be greater than the claimed amount.",
+                        "validGSTAmount": "Please enter a valid GST amount.",
+                        "claimedAmount": "Please enter a claimed amount." 
+                    }
                 },
                 {
                     "type": "textarea",
@@ -1907,34 +1991,18 @@
             ]
         },
         {
-            "id": "category-wise",
+            "id": "category-wise-expense",
             "title": "Category wise Expense",
             "isOpen": false,
             "type": "category",
             "items": [
                 {
-                    "label": "Local Conveyance",
-                    "key": "localConveyance"
-                },
-                {
-                    "label": "Food Allowance",
-                    "key": "foodAllowance"
+                    "label": "Tickets Expense",
+                    "key": "Travel Ticket"
                 },
                 {
                     "label": "Accommodation",
                     "key": "accommodation"
-                },
-                {
-                    "label": "Boarding Allowance",
-                    "key": "boardingAllowance"
-                },
-                {
-                    "label": "Others",
-                    "key": "others"
-                },
-                {
-                    "label": "Total",
-                    "key": "totalCategory"
                 }
             ]
         }

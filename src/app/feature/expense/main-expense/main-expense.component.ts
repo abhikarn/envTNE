@@ -160,8 +160,6 @@ export class MainExpenseComponent {
           this.expenseRequestForm.addControl(this.expenseConfig.request.name, control);
         }
 
-        console.log(this.expenseRequestForm)
-
         const optionMapping: { [key: string]: any[] } = {
           BaggageType: this.baggageTypeList,
           // OtherType: responses.otherTypeList.ResponseValue,
@@ -444,6 +442,14 @@ export class MainExpenseComponent {
   }
 
   onAction(type: string) {
+    if(this.expenseRequestForm.invalid) {
+      this.expenseRequestForm.markAllAsTouched();
+      return;
+    }
+    if(this.justificationForm.invalid) {
+      this.justificationForm.markAllAsTouched();
+      return;
+    }
     if (type == "submit") {
       this.mainExpenseData.IsDraft = false;
       this.createExpenseRequest();
@@ -572,54 +578,77 @@ export class MainExpenseComponent {
   }
 
   calculatTotalExpenseAmount() {
-    this.summaries?.forEach((summary: any) => {
-      if (summary.id == "expense-summary") {
-        summary?.items?.forEach((item: any) => {
-          item.value = 0;
-        })
-      }
-    })
+    const EXPENSE_SUMMARY_ID = "expense-summary";
+    const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense"
+    const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
+    const PAYABLE_KEYS = [91, 94];
+    let CATEGORY_NAME = '';
+  
+    const summary = this.summaries?.find((s: any) => s.id === EXPENSE_SUMMARY_ID);
+    if (!summary) return;
+  
+    // Reset all values to 0.00
+    summary.items?.forEach((item: any) => {
+      item.value = 0.00;
+    });
+  
+    // Add claim amounts to respective payment modes
     this.expenseRequestData?.forEach((expenseRequest: any) => {
+      CATEGORY_NAME = expenseRequest.name;
       expenseRequest.data?.forEach((request: any) => {
-        this.setExpenseSummary(request?.excludedData?.PaymentMode, request?.excludedData?.ClaimAmount);
+        const { PaymentMode, ClaimAmount } = request?.excludedData || {};
+        this.updateExpenseItem(summary, PaymentMode, ClaimAmount);
       });
-    })
-  }
-
-  setExpenseSummary(paymentModeId: any, Amount: any) {
-    this.summaries?.forEach((summary: any) => {
-      if (summary.id == "expense-summary") {
-        let totalExpense = 0;
-        let amountPayable = 0;
-        summary?.items?.forEach((item: any) => {
-          if (item?.paymentModeId == paymentModeId) {
-            item.value = item.value + Number(Amount);
-          }
-          if ([91, 92, 93, 94].includes(item?.paymentModeId)) {
-            totalExpense = totalExpense + item.value;
-          }
-          if([91,94].includes(item?.paymentModeId)) {
-            amountPayable = amountPayable + item.value
-          }
-        })
-
-        summary?.items?.forEach((item: any) => {
-          if (item.key == 'totalExpense') {
-            item.value = totalExpense;
-          }
-        })
-
-        
-        summary?.items?.forEach((item: any) => {
-          if (item.key == 'amountPayable') {
-            item.value = amountPayable;
-          }
-        })
-
-
+    });
+  
+    // Calculate totals
+    let totalExpense = 0.00;
+    let amountPayable = 0.00;
+  
+    summary.items?.forEach((item: any) => {
+      const value = Number(item.value);
+      if (TOTAL_EXPENSE_KEYS.includes(item.paymentModeId)) {
+        totalExpense += value;
       }
-    })
+      if (PAYABLE_KEYS.includes(item.paymentModeId)) {
+        amountPayable += value;
+      }
+      // Ensure value is in 2 decimal places
+      item.value = value.toFixed(2);
+    });
+  
+    // Set totalExpense and amountPayable
+    summary.items?.forEach((item: any) => {
+      if (item.key === 'totalExpense') item.value = totalExpense.toFixed(2);
+      if (item.key === 'amountPayable') item.value = amountPayable.toFixed(2);
+    });
+
+    // Category wise expense logic
+    const categoryWiseExpense = this.summaries?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
+    if (!categoryWiseExpense) return;
+
+    // Reset all values to 0.00
+    categoryWiseExpense.items?.forEach((item: any) => {
+      item.value = 0.00;
+    });
+
+    categoryWiseExpense.items?.forEach((item: any) => {
+      if(item.key == CATEGORY_NAME) {
+        item.value = totalExpense;
+      }
+    });
+
   }
+  
+  updateExpenseItem(summary: any, paymentModeId: any, amount: any) {
+    const targetItem = summary.items?.find((item: any) => item.paymentModeId === paymentModeId);
+    if (targetItem) {
+      const currentValue = Number(targetItem.value) || 0;
+      const addedValue = Number(amount) || 0;
+      targetItem.value = (currentValue + addedValue).toFixed(2);
+    }
+  }
+  
 }
 
 

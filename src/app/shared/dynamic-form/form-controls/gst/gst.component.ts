@@ -89,18 +89,18 @@ export class GstComponent {
       if (claimedAmount > 0) {
         if (gstNum > 0) {
           if (gstAmount + gstNum > claimedAmount) {
-            this.snackbarService.error("The GST amount should not be greater than the claimed amount.");
+            this.snackbarService.error(this.controlConfig.notifications.GSTAmount);
           } else {
             isValidGst = true;
           }
         } else {
-          this.snackbarService.error("Please enter a valid GST amount.");
+          this.snackbarService.error(this.controlConfig.notifications.validGSTAmount);
         }
       } else {
-        this.snackbarService.error("Please enter a claimed amount.");
+        this.snackbarService.error(this.controlConfig.notifications.claimedAmount);
       }
     } else {
-      this.snackbarService.error("Please enter a valid GST amount.");
+      this.snackbarService.error(this.controlConfig.notifications.validGSTAmount);
     }
     return isValidGst;
   }
@@ -120,14 +120,43 @@ export class GstComponent {
     }
   }
 
-  getFirstValidationMessage(errors: any, fieldName: string): string {
+  getValidationMessage(errors: any, fieldName: string): string {
     if (!errors) return '';
     
     const fieldConfig = this.controlConfig.fields.find((f: any) => f.name === fieldName);
     const validationMessages = fieldConfig?.validations || {};
   
-    const errorKey = Object.keys(errors)[0]; // First error
+    const errorKey = Object.keys(errors)[0];
     return validationMessages[errorKey] || 'Invalid value';
+  }
+
+  onBlur(field: any) {
+    if (field.autoFormat) {
+      let value = this.gstDetailsForm.get(field.name)?.value;
+      if (value == 0) {
+        this.gstDetailsForm.get(field.name)?.setValue(field.autoFormat.setValue, { emitEvent: false });
+        return;
+      }
+      if (value && value !== '' && !value.includes('.')) {
+        this.gstDetailsForm.get(field.name)?.setValue(`${value}${field.autoFormat.decimal}`, { emitEvent: false });
+      }
+    }
+    if (field.defaultValue) {
+      this.gstDetailsForm.get(field.name)?.setValue(`${field.defaultValue}${field.autoFormat.decimal}`, { emitEvent: false });
+    }
+  }
+
+  onInput(event: any, field: any) {
+    if (field?.autoFormat) {
+      let inputValue = (event.target.value).toString();
+      field.autoFormat.patterns?.forEach((pattern: any) => {
+        inputValue = inputValue.replace(new RegExp(pattern), '');
+      })
+      if (inputValue.length > field.autoFormat.range.max) {
+        inputValue = inputValue.substring(0, field.autoFormat.range.max);
+      }
+      this.gstDetailsForm.get(field.name)?.setValue(inputValue, { emitEvent: false });
+    }
   }
   
 }

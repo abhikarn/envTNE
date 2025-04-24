@@ -213,10 +213,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    // if(this.form.invalid) {
-    //   this.form.markAllAsTouched();
-    //   return;
-    // }
+    if(this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     this.validatePolicyViolation();
 

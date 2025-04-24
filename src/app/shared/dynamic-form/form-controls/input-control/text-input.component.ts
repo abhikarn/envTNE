@@ -61,7 +61,7 @@ export class TextInputComponent implements OnInit {
 
   onInput(event: any) {
     if (this.controlConfig.autoFormat) {
-      let inputValue = parseInt(event.target.value).toString();
+      let inputValue = (event.target.value).toString();
       this.controlConfig.autoFormat.patterns?.forEach((pattern: any) => {
         inputValue = inputValue.replace(new RegExp(pattern), '');
       })

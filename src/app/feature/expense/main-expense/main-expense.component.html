@@ -14,7 +14,7 @@
                     <select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest"
                       name="ExpenseRequest" class="form-control chm-formselect"
                       (change)="onSelectTravelExpenseRequest($event)">
-                      <option value="0">Select Travel Request</option>
+                      <option value="">{{expenseConfig.request.placeholder}}</option>
                       @for (req of travelRequests; track req) {
                       <option [value]="req.value">
                         {{req.label}} </option>
