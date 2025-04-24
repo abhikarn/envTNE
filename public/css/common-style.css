@@ -29295,3 +29295,43 @@ label.bg-gray-label {
 	font-size: 13px;
 }
 
+/* Material CSS */
+
+.mat-mdc-form-field-infix {min-height: inherit!important; padding: 5px 0!important;}
+.mat-mdc-form-field-infix {width: auto!important;}
+.mat-mdc-form-field-subscript-wrapper { display: none!important;}
+.mat-mdc-text-field-wrapper { padding: 0 5px!important;} 
+.mat-mdc-header-row {
+    
+    height: 34px!important;
+   
+}.mdc-notched-outline {
+    display: none!important;
+    
+}.mat-mdc-form-field-flex {
+   
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    padding-left: 10px;
+} td .mat-mdc-form-field-flex {
+    background: transparent;
+    border-bottom: 1px solid #0000002b;
+    border-radius: 0;
+    font-size: 12px;
+    padding-left: 0;
+}
+ 
+
+
+td .mat-mdc-form-field-flex .mat-mdc-input-element::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #f2f2f2;
+  }
+  td .mat-mdc-form-field-flex .mat-mdc-input-element::-moz-placeholder { /* Firefox 19+ */
+    color: #f2f2f2;
+  }
+  td .mat-mdc-form-field-flex .mat-mdc-input-element:-ms-input-placeholder { /* IE 10+ */
+    color: #f2f2f2;
+  }
+  td .mat-mdc-form-field-flex .mat-mdc-input-element:-moz-placeholder { /* Firefox 18- */
+    color: #f2f2f2;
+  }

@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    debugger;
     this.submitted = true;
     this.errorMessage = '';
 
@@ -51,7 +50,6 @@ export class LoginComponent implements OnInit {
 
     this.http.post('https://localhost:7073/api/Account/EmployeeAuth', payload).subscribe({
       next: (response: any) => {
-        debugger;
         const result = response.responseValue;
         if (result.isAuthenticated) {
           this.sessionId = result.sessionId;
@@ -60,11 +58,10 @@ export class LoginComponent implements OnInit {
             sessionId: this.sessionId
           }).subscribe({
             next: (userDataResponse: any) => {
-              debugger;
               localStorage.setItem('sessionId', this.sessionId);
               localStorage.setItem('userData', JSON.stringify(userDataResponse));
               console.log(userDataResponse);
-              this.router.navigate(['/expense/expense/create-expense']);
+              this.router.navigate(['/expense/expense/dashboard']);
             },
             error: () => {
               this.errorMessage = 'Unable to retrieve user data.';
