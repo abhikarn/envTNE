@@ -119,4 +119,15 @@ export class GstComponent {
       this.gstDetails.splice(index, 1);
     }
   }
+
+  getFirstValidationMessage(errors: any, fieldName: string): string {
+    if (!errors) return '';
+    
+    const fieldConfig = this.controlConfig.fields.find((f: any) => f.name === fieldName);
+    const validationMessages = fieldConfig?.validations || {};
+  
+    const errorKey = Object.keys(errors)[0]; // First error
+    return validationMessages[errorKey] || 'Invalid value';
+  }
+  
 }

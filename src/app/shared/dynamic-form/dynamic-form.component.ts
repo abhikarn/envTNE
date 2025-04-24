@@ -265,7 +265,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         this.formData.data[fieldName] = fieldValue ?? null;
       }
     })
-    this.emitFormData.emit(this.formData);
+    this.emitFormData.emit({
+      formData: this.formData,
+      editIndex: this.editIndex - 1
+    });
     this.formData = {};
   }
 
@@ -298,7 +301,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   onEditRow(rowData: any) {
     this.editIndex = rowData.index;
-    this.referenceId = rowData.row.ReferenceId;
+    this.referenceId = rowData.row.ReferenceId || 0;
     this.selectedRow = { ...rowData.row };
 
     this.formControls.forEach((control: any) => {

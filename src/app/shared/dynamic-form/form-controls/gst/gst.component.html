@@ -31,13 +31,14 @@
                                 <tr>
                                     <td *ngFor="let field of controlConfig.fields">
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
-                                            <input type="text" 
-                                            [formControlName]="field.name" 
-                                            [placeholder]="field.name"
-                                            class="form-control chm-forminput teGst gsttxt" />
+                                            <input type="text" [formControlName]="field.name" [placeholder]="field.name"
+                                                class="form-control chm-forminput teGst gsttxt" />
                                             <span class="validate-error-message teGst"
-                                                *ngIf="gstDetailsForm.get(field.name)?.invalid && gstDetailsForm.get(field.name)?.touched">
-                                                Required
+                                                *ngIf="gstDetailsForm.get(field.name)?.errors && gstDetailsForm.get(field.name)?.touched">
+                                                {{
+                                                getFirstValidationMessage(gstDetailsForm.get(field.name)?.errors,
+                                                field.name)
+                                                }}
                                             </span>
                                         </div>
                                     </td>

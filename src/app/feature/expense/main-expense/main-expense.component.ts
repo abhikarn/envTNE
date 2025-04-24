@@ -79,20 +79,7 @@ export class MainExpenseComponent {
     justification: new FormControl('', Validators.required)
   });
   summaries: any;
-  data: any = {
-    totalExpense: 6000,
-    lessAdvance: 20000,
-    amountPaidByCompany: 0,
-    corporateCreditCard: 0,
-    cash: 0,
-    amountPayable: 26000,
-    localConveyance: 600,
-    foodAllowance: 800,
-    accommodation: 5000,
-    boardingAllowance: 750,
-    others: 0,
-    totalCategory: 7210
-  };
+  expenseSummary: any = {};
   expenseConfig: any;
   expenseRequestForm: FormGroup = new FormGroup({});
   formControls: any = [];
@@ -149,7 +136,7 @@ export class MainExpenseComponent {
 
   ngOnInit() {
     this.userMasterId = Number(localStorage.getItem('userMasterId'));
-    this.expenseRequestId = this.route.snapshot.paramMap.get('id');
+    this.expenseRequestId = this.route.snapshot.paramMap.get('id') || 0;
 
     forkJoin({
       baggageTypeList: this.dataService.dataGetBaggageType(),
@@ -318,7 +305,7 @@ export class MainExpenseComponent {
   }
 
   onSelectTravelExpenseRequest(event: any) {
-    if (!this.travelRequestId) {
+    if (event) {
       this.travelRequestId = Number(event.target.value) || 0;
     }
 
@@ -350,13 +337,20 @@ export class MainExpenseComponent {
     return Array.from(mergedMap.values());
   }
 
-  getFormData(data: any) {
+  getFormData(formData: any) {
+    let data = formData.formData;
+    let editIndex = formData.editIndex;
     const existingCategory = this.expenseRequestData.find((cat: any) => cat.name === data.name);
 
     if (existingCategory) {
       const incomingData = data.data;
-      const existingEntryIndex = existingCategory.data?.findIndex((entry: any) => entry.ReferenceId === incomingData.ReferenceId);
-
+      let existingEntryIndex = -1;
+      if (incomingData.ReferenceId) {
+        existingEntryIndex = existingCategory.data?.findIndex((entry: any) => entry.ReferenceId === incomingData.ReferenceId);
+      } else {
+        console.log(editIndex)
+        existingEntryIndex = editIndex;
+      }
       if (existingEntryIndex !== -1) {
         // Update existing entry
         existingCategory.data[existingEntryIndex] = incomingData;
@@ -371,6 +365,8 @@ export class MainExpenseComponent {
         data: [data.data]
       });
     }
+    console.log(this.expenseRequestData)
+    this.calculatTotalExpenseAmount();
   }
 
   getTextData(inputData: any) {
@@ -398,7 +394,7 @@ export class MainExpenseComponent {
     } else {
       const requestBody = {
         "SearchText": inputData.inputValue,
-        "TravelTypeId": this.travelRequestPreview.TravelRequestId || 0
+        "TravelTypeId": this.travelRequestPreview.TravelTypeId || 0
       }
       this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
         next: (response: any) => {
@@ -471,6 +467,7 @@ export class MainExpenseComponent {
     this.mainExpenseData.Remarks = this.justificationForm.get(this.expenseConfig.justification.controlName).value;
     this.mainExpenseData.ActionBy = 4;
     this.mainExpenseData.expenseRequestData = this.simplifyObject(this.expenseRequestData);
+    console.log(this.expenseRequestData)
     this.confirmDialogService
       .confirm({
         title: 'Create Expense Request',
@@ -552,9 +549,9 @@ export class MainExpenseComponent {
             newObj[key] = value.value;
           }
           // Check if the value is a date string and format it
-          else if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
-            newObj[key] = value.split('T')[0]; // Keep only the date part
-          }
+          // else if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
+          //   newObj[key] = value.split('T')[0]; // Keep only the date part
+          // }
           else {
             newObj[key] = this.simplifyObject(value);
           }
@@ -572,6 +569,56 @@ export class MainExpenseComponent {
       ...summary,
       isOpen: summary.id === activeId
     }));
+  }
+
+  calculatTotalExpenseAmount() {
+    this.summaries?.forEach((summary: any) => {
+      if (summary.id == "expense-summary") {
+        summary?.items?.forEach((item: any) => {
+          item.value = 0;
+        })
+      }
+    })
+    this.expenseRequestData?.forEach((expenseRequest: any) => {
+      expenseRequest.data?.forEach((request: any) => {
+        this.setExpenseSummary(request?.excludedData?.PaymentMode, request?.excludedData?.ClaimAmount);
+      });
+    })
+  }
+
+  setExpenseSummary(paymentModeId: any, Amount: any) {
+    this.summaries?.forEach((summary: any) => {
+      if (summary.id == "expense-summary") {
+        let totalExpense = 0;
+        let amountPayable = 0;
+        summary?.items?.forEach((item: any) => {
+          if (item?.paymentModeId == paymentModeId) {
+            item.value = item.value + Number(Amount);
+          }
+          if ([91, 92, 93, 94].includes(item?.paymentModeId)) {
+            totalExpense = totalExpense + item.value;
+          }
+          if([91,94].includes(item?.paymentModeId)) {
+            amountPayable = amountPayable + item.value
+          }
+        })
+
+        summary?.items?.forEach((item: any) => {
+          if (item.key == 'totalExpense') {
+            item.value = totalExpense;
+          }
+        })
+
+        
+        summary?.items?.forEach((item: any) => {
+          if (item.key == 'amountPayable') {
+            item.value = amountPayable;
+          }
+        })
+
+
+      }
+    })
   }
 }
 

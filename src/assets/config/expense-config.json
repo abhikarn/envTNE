@@ -273,7 +273,13 @@
                             "type": "text",
                             "validations": [
                                 {
-                                    "type": "required"
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "custom",
+                                    "name": "validateGST",
+                                    "message": "Invalid GST number"
                                 }
                             ]
                         },
@@ -282,7 +288,8 @@
                             "type": "text",
                             "validations": [
                                 {
-                                    "type": "required"
+                                    "type": "required",
+                                    "message": "Required"
                                 }
                             ]
                         },
@@ -291,7 +298,8 @@
                             "type": "number",
                             "validations": [
                                 {
-                                    "type": "required"
+                                    "type": "required",
+                                    "message": "Required"
                                 },
                                 {
                                     "type": "min",
@@ -348,7 +356,7 @@
                 "requestBody": {},
                 "otherControls": {
                     "UserMasterId": "UserMasterId",
-                    "TravelTypeId": "ClaimTypeId",
+                    "TravelTypeId": "TravelTypeId",
                     "RequestForId": "RequestForId"
                 },
                 "inputControls": {
@@ -1830,43 +1838,78 @@
             ]
         }
     ],
+    "otherDetails": [
+        {
+            "name": "PolicyViolations",
+            "label": "Policy Violations",
+            "Travel Ticket": "You Are Not Eligible To Travel in the selected Mode and Class."
+        },
+        {
+            "name": "Approvaldetails",
+            "label": "Approval details"
+        },
+        {
+            "name": "LogDetails",
+            "label": "Log Details"
+        }
+    ],
     "summaries": [
         {
             "id": "expense-summary",
             "title": "Expense Summary",
-            "isOpen": false,
+            "isOpen": true,
             "type": "summary",
             "items": [
                 {
                     "label": "Total Expense",
-                    "key": "totalExpense"
+                    "key": "totalExpense",
+                    "value": 0.00
                 },
                 {
                     "label": "Less Advance",
-                    "key": "lessAdvance"
+                    "key": "lessAdvance",
+                    "value": 0.00
                 },
                 {
                     "label": "Amount Paid by Company",
-                    "key": "amountPaidByCompany"
+                    "key": "amountPaidByCompany",
+                    "paymentModeId": 93,
+                    "value": 0.00
                 },
                 {
                     "label": "Corporate Credit Card",
-                    "key": "corporateCreditCard"
+                    "key": "corporateCreditCard",
+                    "paymentModeId": 92,
+                    "value": 0.00
                 },
                 {
-                    "label": "Cash",
-                    "key": "cash"
+                    "label": "Credit Card",
+                    "key": "creditCard",
+                    "paymentModeId": 94,
+                    "value": 0.00
+                },
+                {
+                    "label": "Paid By Employee",
+                    "key": "paidByEmployee",
+                    "paymentModeId": 91,
+                    "value": 0.00
+                },
+                {
+                    "label": "Advance Return",
+                    "key": "advanceReturn",
+                    "value": 0.00
                 },
                 {
                     "label": "Amount Payable / Receivable",
-                    "key": "amountPayable"
+                    "key": "amountPayable",
+                    "value": 0.00
                 }
             ]
         },
         {
             "id": "category-wise",
             "title": "Category wise Expense",
-            "isOpen": true,
+            "isOpen": false,
             "type": "category",
             "items": [
                 {
