@@ -36,7 +36,7 @@ export class FileUploadComponent {
           const base64 = (reader.result as string).split(',')[1];
           const payload = {
             ImageString: base64,
-            FileName: file.name,
+            FileName: file.name.split('.').shift(),
             FileExtension: '.' + file.name.split('.').pop()
           };
           this.uploadFile(payload);
@@ -50,10 +50,18 @@ export class FileUploadComponent {
 
   uploadFile(payload: any) {
     if(payload) {
-      this.documentService.documentDocumentUpload(payload).pipe(take(1)).subscribe({
+      this.documentService.documentDocumentWebUpload(payload).pipe(take(1)).subscribe({
         next: (res: any) => {
           console.log('Files uploaded successfully', res);
-          this.selectedFiles.push(res.ResponseValue);
+          let filterResponse: any = {};
+          filterResponse.ReferenceType = this.controlConfig.referenceType;
+          filterResponse.ReferenceId = res.ResponseValue.ReferenceId;
+          filterResponse.DocumentId = res.ResponseValue.DocumentId;
+          filterResponse.FileName = res.ResponseValue.FileName;
+          filterResponse.Location = res.ResponseValue.Location;
+          filterResponse.Guid = res.ResponseValue.Guid;
+
+          this.selectedFiles.push(filterResponse);
           this.control.setValue(this.selectedFiles);
           console.log(this.control)
         },
@@ -69,14 +77,14 @@ export class FileUploadComponent {
   }
 
   previewFile(file: any) {
-    const url = file?.fileUrl || file?.Url; // adjust based on your backend response
+    const url = file?.fileUrl || file?.Location; // adjust based on your backend response
     if (url) {
       window.open(url, '_blank');
     }
   }
 
   downloadFile(file: any) {
-    const url = this.domSanitizer.bypassSecurityTrustResourceUrl(file?.fileUrl || file?.Url);
+    const url = this.domSanitizer.bypassSecurityTrustResourceUrl(file?.fileUrl || file?.Location);
     const link = document.createElement('a');
     link.href = url.toString();
     link.download = file?.FileName || 'downloaded-file';
