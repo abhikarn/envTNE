@@ -425,7 +425,8 @@
                     "label": "Upload File",
                     "value": "",
                     "multiple": true,
-                    "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx"
+                    "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
+                    "referenceType": 123
                 },
                 {
                     "type": "hidden",

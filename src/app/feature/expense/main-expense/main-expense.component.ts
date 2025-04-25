@@ -476,8 +476,8 @@ export class MainExpenseComponent {
     this.mainExpenseData.BillableCostCentreId = this.mainExpenseData.CostCentreId;
     this.mainExpenseData.Remarks = this.justificationForm.get(this.expenseConfig.justification.controlName).value;
     this.mainExpenseData.ActionBy = 4;
-    this.mainExpenseData.expenseRequestData = this.simplifyObject(this.expenseRequestData);
-    console.log(this.expenseRequestData)
+    this.mainExpenseData.dynamicExpenseDetailModels = this.simplifyObject(this.expenseRequestData);
+
     this.confirmDialogService
       .confirm({
         title: 'Create Expense Request',
@@ -487,15 +487,16 @@ export class MainExpenseComponent {
       })
       .subscribe((confirmed) => {
         if (confirmed) {
-          // this.newExpenseService.expenseRequestCreatePost(payload).pipe(take(1)).subscribe({
-          //   next: (response) => {
-          //     this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
-          //   },
-          //   error: (err) => {
-          //     console.error(err);
-          //     this.snackbarService.error('Something went wrong with the API.');
-          //   }
-          // });
+          console.log(this.mainExpenseData)
+          this.newExpenseService.expenseRequestCreatePost(this.mainExpenseData).pipe(take(1)).subscribe({
+            next: (response) => {
+              this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
+            },
+            error: (err) => {
+              console.error(err);
+              this.snackbarService.error('Something went wrong with the API.');
+            }
+          });
         } else {
           console.log('Failed');
         }
