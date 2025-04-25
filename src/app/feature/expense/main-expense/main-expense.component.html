@@ -9,17 +9,18 @@
               <div class="row">
                 <div class="col-md-4">
                   @if (expenseConfig?.request) {
-                    <div class="form-group chm-formgroup new-form-grp">
-                      <label>{{this.expenseConfig.request.label}} </label>
-                      <select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest" name="ExpenseRequest" class="form-control chm-formselect"
-                        (change)="onSelectTravelExpenseRequest($event)">
-                        <option value="0">Select Travel Request</option>
-                        @for (req of travelRequests; track req) {
-                        <option [value]="req.value">
-                          {{req.label}} </option>
-                        }
-                      </select>
-                    </div>
+                  <div class="form-group chm-formgroup new-form-grp">
+                    <label>{{this.expenseConfig.request.label}} </label>
+                    <select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest"
+                      name="ExpenseRequest" class="form-control chm-formselect"
+                      (change)="onSelectTravelExpenseRequest($event)">
+                      <option value="">{{expenseConfig.request.placeholder}}</option>
+                      @for (req of travelRequests; track req) {
+                      <option [value]="req.value">
+                        {{req.label}} </option>
+                      }
+                    </select>
+                  </div>
                   }
                 </div>
               </div>
@@ -43,7 +44,7 @@
                         <label>Travel From Date</label>
                       </div>
                       <div class="trl-req-detail">
-                        <span>{{ expenseRequestPreview?.TravelDateFromActualString }}</span>
+                        <span>{{ travelRequestPreview?.TravelDateFromString }}</span>
                       </div>
                     </div>
                   </div>
@@ -55,13 +56,13 @@
                         <label>Travel To Date</label>
                       </div>
                       <div class="trl-req-detail">
-                        <span>{{ expenseRequestPreview?.TravelDateToActualString }}</span>
+                        <span>{{ travelRequestPreview?.TravelDateToString }}</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                @for (item of expenseRequestPreview?.ExpenseRequestMetaData; track item; let i = $index) {
-                @if (item.ExpenseRequestMetaId == 1 || item.ExpenseRequestMetaId == 4) {
+                @for (item of travelRequestPreview?.TravelRequestMetaData; track item; let i = $index) {
+                @if (item.TravelRequestMetaId == 1 || item.TravelRequestMetaId == 4) {
                 <div class="col-md-6">
                   <div class="trl-preview-wrapper">
                     <div class="trl-readview-item">
@@ -69,7 +70,8 @@
                         <label>{{ item.FieldName }}</label>
                       </div>
                       <div class="trl-req-detail">
-                        <span [id]="item.ExpenseRequestMetaId">{{ item.IntegerValueReference }}</span>
+                        <span [id]="item.TravelRequestMetaId">{{ item.IntegerValueReference || item.VarcharValue
+                          }}</span>
                         @if (item.hiddenFields) {
                         <div>
                           @for (field of item.hiddenFields; track field) {
@@ -90,7 +92,7 @@
                         <label>LeaveSummary</label>
                       </div>
                       <div class="trl-req-detail">
-                        <span>{{ expenseRequestPreview?.UserLeaveSummary }}</span>
+                        <span>{{ travelRequestPreview?.UserLeaveSummary }}</span>
                       </div>
                     </div>
                   </div>
@@ -99,25 +101,24 @@
 
             </div>
             <!-- expense category -->
-            <div class="expense-core-wrapper" [class.disabled]="!travelRequestId">
+            <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
               <mat-tab-group fitInkBarToContent (selectedTabChange)="onTabChange($event)">
                 @for (category of categories; track category) {
                 <mat-tab>
                   <ng-template mat-tab-label>
-                    <span [matBadge]="existingExpenseRequestData.length" matBadgeOverlap="false">{{category.label}}</span>
+                    <span [matBadge]="category.count" matBadgeOverlap="false">{{category.label}}</span>
                   </ng-template>
                   <ng-template matTabContent>
                     <div class="expense-item-hold">
                       <div class="other-sectionaa hidehtgnm" style="display: block;">
                         <div class="common-block mb-3">
                           <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
-                          <app-dynamic-form [moduleData]="expenseRequestPreview"
+                          <app-dynamic-form [moduleData]="travelRequestPreview"
                             [existingData]="existingExpenseRequestData" [category]="category"
                             [formConfig]="category.formControls" [eventHandler]="this"
-                            (emitFormData)="getFormData($event)"
-                            (emitTextData)="getTextData($event)"
-                            [minSelectableDate]="expenseRequestPreview?.TravelDateFromActual"
-                            [maxSelectableDate]="expenseRequestPreview?.TravelDateToActual">
+                            (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
+                            [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
+                            [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
                           </app-dynamic-form>
                         </div>
                       </div>
@@ -128,43 +129,44 @@
               </mat-tab-group>
 
             </div>
+            <!-- Other Details -->
             <div class="row mt-2">
               <div class="col-md-12">
-                <ul class="nav nav-tabs common-tab" id="myTab" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-policyV"
-                      type="button" role="tab" aria-controls="home" aria-selected="true">Policy Violations</button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#approval-D"
-                      type="button" role="tab" aria-controls="profile" aria-selected="false">Approval
-                      details</button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#logdetails-D"
-                      type="button" role="tab" aria-controls="profile" aria-selected="false">Log Details</button>
-                  </li>
-                </ul>
-                <div class="tab-content common-tab-content" id="myTabContent">
-                  <div class="tab-pane fade show active" id="home-policyV" role="tabpanel" aria-labelledby="home-tab">
-                    <ul class="policy-vio-list">
-                      <li><span class="fa-pv"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>Lorem
-                        ipsum dolor sit amet,
-                        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et</li>
-                      <li><span class="fa-pv"><i class="fa fa-exclamation-triangle"
-                            aria-hidden="true"></i></span>consectetur adipiscing elit,
-                        sed do eiusmod tempor Lorem ipsum dolor sit amet,Lorem ipsum dolor
-                        sit amet, incididunt ut labore et</li>
-                      <li><span class="fa-pv"><i class="fa fa-exclamation-triangle"
-                            aria-hidden="true"></i></span>consectetur adipiscing elit,
-                        sed do eiusmod tempor Lorem ipsum dolor sit amet,Lorem ipsum dolor
-                        sit amet, incididunt ut labore et</li>
-                    </ul>
-                  </div>
-                  <div class="tab-pane fade" id="approval-D" role="tabpanel" aria-labelledby="profile-tab">
-                  </div>
-                  <div class="tab-pane fade" id="logdetails-D" role="tabpanel" aria-labelledby="profile-tab">
+                <mat-tab-group fitInkBarToContent>
+                  @for (detail of expenseConfig?.otherDetails; track detail) {
+                  <mat-tab>
+                    @switch (detail.name) {
+                    @case ("PolicyViolations") {
+                    <ng-template mat-tab-label>
+                      <span>{{detail.label}}</span>
+                    </ng-template>
+                    
+                    
+                      @for (expenseRequest of expenseRequestData; track $index) {
+                        @for (data of expenseRequest.data; track $index) {
+                          @if (data?.IsViolation) {
+                            <ul class="policy-vio-list">
+                              <li>
+                                <span class="fa-pv"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+                                {{expenseRequest.name}}: {{detail[expenseRequest.name]}}
+                              </li>
+                            </ul>
+                          }
+                        }
+                      }
+                    }
+                    @case ("Approvaldetails") {
+                    <ng-template mat-tab-label>
+                      <span>{{detail.label}}</span>
+                    </ng-template>
+                    <ng-template matTabContent>
+
+                    </ng-template>
+                    }
+                    @case ("LogDetails") {
+                    <ng-template mat-tab-label>
+                      <span>{{detail.label}}</span>
+                    </ng-template>
                     <div class="row mt-2">
                       <div class="col-md-12">
                         <div class="time-frame-wrapper">
@@ -240,8 +242,11 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
+                    }
+                    }
+                  </mat-tab>
+                  }
+                </mat-tab-group>
               </div>
             </div>
           </div>
@@ -266,7 +271,7 @@
                         @for (item of summary.items; track item) {
                         <li>
                           {{ item.label }}
-                          <span>{{ data[item.key] || '0.00' }}</span>
+                          <span>{{ item.value || '0.00' }}</span>
                         </li>
                         }
                       </ul>
@@ -277,49 +282,48 @@
               </div>
 
               @if (expenseConfig?.justification) {
-                <div [formGroup]="justificationForm" class="row mt-3">
-                  <div class="col-md-12">
-                    <div class="form-group chm-formgroup mb-2">
-                      <label>{{ expenseConfig.justification.label }}</label>
-                      <textarea [formControlName]="expenseConfig.justification.controlName"
-                        [attr.maxLength]="expenseConfig.justification.maxLength"
-                        class="form-control chm-formtextarea max-tr-md mar-align-0" rows="3"></textarea>
-                      @if (justificationForm.controls.justification?.invalid &&
-                      justificationForm.controls.justification?.touched) {
-                      <span class="validate-error-message">
-                        Required
-                      </span>
-                      }
-                    </div>
+              <div [formGroup]="justificationForm" class="row mt-3">
+                <div class="col-md-12">
+                  <div class="form-group chm-formgroup mb-2">
+                    <label>{{ expenseConfig.justification.label }}</label>
+                    <textarea [formControlName]="expenseConfig.justification.controlName"
+                      [attr.maxLength]="expenseConfig.justification.maxLength"
+                      class="form-control chm-formtextarea max-tr-md mar-align-0" rows="3"></textarea>
+                    @if (justificationForm.controls.justification?.invalid &&
+                    justificationForm.controls.justification?.touched) {
+                    <span class="validate-error-message">
+                      Required
+                    </span>
+                    }
                   </div>
                 </div>
+              </div>
               }
-             
+
               @if (expenseConfig?.actions) {
-                <div class="main-btn-hold d-flex flex-column mt-2" style="align-items:end;">
-                  <div class="d-flex align-items-center w-100 mb-2">
-                    @if (expenseConfig.actions[0]) {
-                    <a href="javascript:void(0)" [ngClass]="expenseConfig.actions[0].class"
-                      (click)="onAction(expenseConfig.actions[0].type)">
-                      {{ expenseConfig.actions[0].label }}
-                    </a>
-                    }
-                    @if (expenseConfig.actions[1]) {
-                    <button type="button" [ngClass]="expenseConfig.actions[1].class"
-                      (click)="onAction(expenseConfig.actions[1].type)">
-                      {{ expenseConfig.actions[1].label }}
-                    </button>
-                    }
-                  </div>
-                  @if (expenseConfig.actions[2]) {
-                  <button type="button" [ngClass]="expenseConfig.actions[2].class"
-                    (click)="onAction(expenseConfig.actions[2].type)">
-                    {{ expenseConfig.actions[2].label }}
+              <div class="main-btn-hold d-flex flex-column mt-2" style="align-items:end;">
+                <div class="d-flex align-items-center w-100 mb-2">
+                  @if (expenseConfig.actions[0]) {
+                  <a [ngClass]="expenseConfig.actions[0].class" (click)="onAction(expenseConfig.actions[0].type);">
+                    {{ expenseConfig.actions[0].label }}
+                  </a>
+                  }
+                  @if (expenseConfig.actions[1]) {
+                  <button type="button" [ngClass]="expenseConfig.actions[1].class"
+                    (click)="onAction(expenseConfig.actions[1].type)">
+                    {{ expenseConfig.actions[1].label }}
                   </button>
                   }
                 </div>
+                @if (expenseConfig.actions[2]) {
+                <button type="button" [ngClass]="expenseConfig.actions[2].class"
+                  (click)="onAction(expenseConfig.actions[2].type)">
+                  {{ expenseConfig.actions[2].label }}
+                </button>
+                }
+              </div>
               }
-              
+
             </div>
           </div>
 
@@ -330,4 +334,4 @@
   </div>
 </div>
 
-<!-- <pre>{{mainExpenseData | json}}</pre> -->
+<pre>{{mainExpenseData | json}}</pre>

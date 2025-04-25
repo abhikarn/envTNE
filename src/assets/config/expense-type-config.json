@@ -2,7 +2,7 @@
     {
         "title": "Travel Expense",
         "img": "assets/images/expense-travel.png",
-        "link": "/claim-expense",
+        "link": "expense/expense/create-expense",
         "colorClass": "expense-color1",
         "alt": "Travel Expense"
     },
