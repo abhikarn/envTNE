@@ -85,6 +85,7 @@ export class MainExpenseComponent {
   formControls: any = [];
   expenseRequestId: any = 0;
   userMasterId: number = 0;
+  editMode = false;
 
   constructor(
     private expenseService: ExpenseService,
@@ -137,6 +138,9 @@ export class MainExpenseComponent {
   ngOnInit() {
     this.userMasterId = Number(localStorage.getItem('userMasterId'));
     this.expenseRequestId = this.route.snapshot.paramMap.get('id') || 0;
+    if(this.expenseRequestId) {
+      this.editMode = true;
+    }
 
     forkJoin({
       baggageTypeList: this.dataService.dataGetBaggageType(),
@@ -190,7 +194,7 @@ export class MainExpenseComponent {
 
         if (this.expenseRequestId) {
           this.expenseRequestId = Number(this.expenseRequestId);
-          this.onSelectTravelExpenseRequest(null);
+          // this.onSelectTravelExpenseRequest(null);
           let requestBody = {
             status: "Active",
             expenseRequestId: this.expenseRequestId
@@ -198,11 +202,15 @@ export class MainExpenseComponent {
           this.newExpenseService.getExpenseRequest(requestBody).pipe(take(1)).subscribe({
             next: (response) => {
               if (response) {
+                console.log(response)
+                this.travelRequestId = response.travelRequestId;
+                this.justificationForm.get(this.expenseConfig.justification.controlName).setValue(response?.remarks);
+                this.getTravelRequestPreview();
                 // Create a map for quick lookup by category name
                 const categoryMap = new Map(this.categories.map((cat: any) => [cat.name, cat]));
 
                 // Step 1: Filter data properties based on formControls
-                response.forEach((dataItem: any) => {
+                response?.dynamicExpenseDetailModels?.forEach((dataItem: any) => {
                   const category: any = categoryMap.get(dataItem.name);
                   if (category) {
                     const validControlNames = category.formControls.map((c: any) => c.name);
@@ -223,14 +231,16 @@ export class MainExpenseComponent {
                 // Deep clone to avoid mutation in step 2
                 this.responseData = JSON.parse(JSON.stringify(response));
                 this.categories?.forEach((cat: any) => {
-                  const matchedData = this.responseData.find((data: any) => data.name == cat.name);
+                  const matchedData = this.responseData?.dynamicExpenseDetailModels?.find((data: any) => data.name == cat.name);
                   cat.count = matchedData ? matchedData.data.length : 0;
                 });
                 this.onTabChange(0);
                 this.expenseRequestData = response;
-
+                setTimeout(() => {
+                  this.calculatTotalExpenseAmount();
+                }, 1000);
                 // Step 2: Format the data and apply exclusion logic
-                this.expenseRequestData.forEach((requestData: any) => {
+                this.expenseRequestData?.dynamicExpenseDetailModels?.forEach((requestData: any) => {
                   const category: any = categoryMap.get(requestData.name);
                   if (category) {
                     requestData.data = requestData.data.map((entry: any) => {
@@ -282,7 +292,7 @@ export class MainExpenseComponent {
     }
     const tabLabel = this.categories[tabIndex].name;
     if (this.responseData) {
-      const tab = this.responseData.find((t: any) => t.name == tabLabel);
+      const tab = this.responseData?.dynamicExpenseDetailModels?.find((t: any) => t.name == tabLabel);
       this.existingExpenseRequestData = tab ? tab.data : [];
     }
   }
@@ -338,7 +348,7 @@ export class MainExpenseComponent {
   getFormData(formData: any) {
     let data = formData.formData;
     let editIndex = formData.editIndex;
-    const existingCategory = this.expenseRequestData.find((cat: any) => cat.name === data.name);
+    const existingCategory = this.expenseRequestData?.dynamicExpenseDetailModels?.find((cat: any) => cat.name === data.name);
 
     if (existingCategory) {
       const incomingData = data.data;
@@ -358,7 +368,7 @@ export class MainExpenseComponent {
       }
     } else {
       // Create new category with the incoming data
-      this.expenseRequestData.push({
+      this.expenseRequestData?.dynamicExpenseDetailModels.push({
         name: data.name,
         data: [data.data]
       });
@@ -476,7 +486,7 @@ export class MainExpenseComponent {
     this.mainExpenseData.BillableCostCentreId = this.mainExpenseData.CostCentreId;
     this.mainExpenseData.Remarks = this.justificationForm.get(this.expenseConfig.justification.controlName).value;
     this.mainExpenseData.ActionBy = 4;
-    this.mainExpenseData.dynamicExpenseDetailModels = this.simplifyObject(this.expenseRequestData);
+    this.mainExpenseData.dynamicExpenseDetailModels = this.simplifyObject(this.expenseRequestData?.dynamicExpenseDetailModels);
 
     this.confirmDialogService
       .confirm({
@@ -491,6 +501,7 @@ export class MainExpenseComponent {
           this.newExpenseService.expenseRequestCreatePost(this.mainExpenseData).pipe(take(1)).subscribe({
             next: (response) => {
               this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
+              this.router.navigate(['/expense/expense/dashboard']);
             },
             error: (err) => {
               console.error(err);
@@ -509,7 +520,7 @@ export class MainExpenseComponent {
       data: {
         TravelDateFrom: this.travelRequestPreview?.TravelDateFromExtended,
         TravelDateTo: this.travelRequestPreview?.TravelDateToExtended,
-        remarks: this.travelRequestPreview?.TravelDateExtensionRemarks
+        remarks: this.travelRequestPreview?.TravelRequestDateExtensionRemarks
       }
     });
 
@@ -598,7 +609,7 @@ export class MainExpenseComponent {
     });
   
     // Add claim amounts to respective payment modes
-    this.expenseRequestData?.forEach((expenseRequest: any) => {
+    this.expenseRequestData?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
       CATEGORY_NAME = expenseRequest.name;
       expenseRequest.data?.forEach((request: any) => {
         const { PaymentMode, ClaimAmount } = request?.excludedData || {};

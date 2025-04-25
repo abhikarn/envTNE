@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dynamic-table',
@@ -16,6 +17,10 @@ export class DynamicTableComponent implements OnInit {
   @Output() editRow = new EventEmitter<any>();
 
   expandedRowIndex: number | null = null;
+
+  constructor(
+    private domSanitizer: DomSanitizer
+  ) {}
 
   ngOnInit() {
     // console.log('Dynamic Table Data', this.tableData);
@@ -49,6 +54,18 @@ export class DynamicTableComponent implements OnInit {
 
   toggleRow(index: number) {
     this.expandedRowIndex = this.expandedRowIndex === index ? null : index;
+  }
+
+  previewFile(file: any) {
+
+  }
+
+  downloadFile(file: any) {
+    const url = this.domSanitizer.bypassSecurityTrustResourceUrl(file?.fileUrl || file?.Location);
+    const link = document.createElement('a');
+    link.href = url.toString();
+    link.download = file?.fileName || 'downloaded-file';
+    link.click();
   }
 
 }

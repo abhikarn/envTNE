@@ -192,7 +192,7 @@
                     "name": "ClaimAmount",
                     "isExcluded": true,
                     "label": "Amount",
-                    "value": 0,
+                    "value": null,
                     "dependentCases": [
                         {
                             "key": "Id",

@@ -5,7 +5,8 @@
         <div class="global-container-hold">
           <div class="left-container-wider scroll-left-align mar-tmd3">
             <div class="common-block mb-3">
-              <h6 class="common-title fw-bold mb-3">Select Request </h6>
+              @if (!editMode) {
+                <h6 class="common-title fw-bold mb-3">Select Request </h6>
               <div class="row">
                 <div class="col-md-4">
                   @if (expenseConfig?.request) {
@@ -24,6 +25,12 @@
                   }
                 </div>
               </div>
+              } @else {
+                <div class="row">
+                  <span><span class="common-title fw-bold mb-3">Request</span> &nbsp;&nbsp; {{expenseRequestData?.travelRequestNumber}}</span>
+                </div>
+              }
+              
             </div>
             <div class="common-block  mb-3">
               <div class="d-flex align-items-center justify-content-between">
@@ -44,7 +51,7 @@
                         <label>Travel From Date</label>
                       </div>
                       <div class="trl-req-detail">
-                        <span>{{ travelRequestPreview?.TravelDateFromString }}</span>
+                        <span>{{ travelRequestPreview?.TravelDateTimeFromString }}</span>
                       </div>
                     </div>
                   </div>
@@ -56,13 +63,13 @@
                         <label>Travel To Date</label>
                       </div>
                       <div class="trl-req-detail">
-                        <span>{{ travelRequestPreview?.TravelDateToString }}</span>
+                        <span>{{ travelRequestPreview?.TravelDateTimeToString }}</span>
                       </div>
                     </div>
                   </div>
                 </div>
                 @for (item of travelRequestPreview?.TravelRequestMetaData; track item; let i = $index) {
-                @if (item.TravelRequestMetaId == 1 || item.TravelRequestMetaId == 4) {
+                @if (item.TravelRequestMetaId == 1 || item.TravelRequestMetaId == 7) {
                 <div class="col-md-6">
                   <div class="trl-preview-wrapper">
                     <div class="trl-readview-item">
@@ -142,7 +149,7 @@
                     </ng-template>
                     
                     
-                      @for (expenseRequest of expenseRequestData; track $index) {
+                      @for (expenseRequest of expenseRequestData?.dynamicExpenseDetailModels; track $index) {
                         @for (data of expenseRequest.data; track $index) {
                           @if (data?.IsViolation) {
                             <ul class="policy-vio-list">
@@ -171,73 +178,17 @@
                       <div class="col-md-12">
                         <div class="time-frame-wrapper">
                           <div class="time-log-axis">
-                            <div class="tfl-child">
-                              <ul>
-                                <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>22-10-2022
-                                </li>
-                                <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Approved</li>
-                                <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Smitha</li>
-                                <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
-                                  irure
-                                  dolor in reprehenderit in voluptate velit esse
-                                  cillum dolore eu</li>
-                              </ul>
-                            </div>
-                            <div class="tfl-child">
-                              <ul>
-                                <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>20-10-2022
-                                </li>
-                                <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Expense
-                                  request
-                                  approved</li>
-                                <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Ashish GH</li>
-                                <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
-                                  irure
-                                  dolor in reprehenderit in voluptate velit esse
-                                  cillum dolore eu</li>
-                              </ul>
-                            </div>
-                            <div class="tfl-child">
-                              <ul>
-                                <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>17-10-2022
-                                </li>
-                                <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Expense
-                                  request
-                                  approved</li>
-                                <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Rajesh Murthy
-                                </li>
-                                <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
-                                  irure
-                                  dolor in reprehenderit in voluptate velit esse
-                                  cillum dolore eu</li>
-                              </ul>
-                            </div>
-                            <div class="tfl-child">
-                              <ul>
-                                <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>16-10-2022
-                                </li>
-                                <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Approved
-                                  Reuest
-                                </li>
-                                <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Raghava</li>
-                                <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
-                                  irure
-                                  dolor in reprehenderit in voluptate velit esse
-                                  cillum dolore eu</li>
-                              </ul>
-                            </div>
-                            <div class="tfl-child">
-                              <ul>
-                                <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>15-10-2022
-                                </li>
-                                <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Approved</li>
-                                <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Smitha</li>
-                                <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute
-                                  irure
-                                  dolor in reprehenderit in voluptate velit esse
-                                  cillum dolore eu</li>
-                              </ul>
-                            </div>
+                            @for (log of expenseRequestData?.expenseRequestLog; track $index) {
+                              <div class="tfl-child">
+                                <ul>
+                                  <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>{{log?.actionDatetimeString}}
+                                  </li>
+                                  <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>{{log?.actionStatus}}</li>
+                                  <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>{{log?.actionByName}}</li>
+                                  <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>{{log?.actionRemarks}}</li>
+                                </ul>
+                              </div>
+                            }
                           </div>
                         </div>
                       </div>
