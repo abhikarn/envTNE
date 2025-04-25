@@ -9,7 +9,7 @@ export const routes: Routes = [
       component: FeatureComponent,
       children: [
         {
-          path: '',
+          path: 'expense',
           loadChildren: () => import('./expense/expense.module').then(m => m.ExpenseModule)
         },
       ]

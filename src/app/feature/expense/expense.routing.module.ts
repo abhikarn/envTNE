@@ -9,12 +9,20 @@ export const routes: Routes = [
     component: BaseExpenseComponent,
     children: [
       {
-        path: '',
+        path: 'create-expense',
         loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
       },
+      {
+        path: 'edit-expense/:id',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent)
+      },
+      {
+        path: 'landing',
+        loadComponent: () => import('./landing/landing.component').then(m => m.LandingComponent),
+      }
     ]
   },
- 
+
   { path: '**', redirectTo: '' }
 
 ];

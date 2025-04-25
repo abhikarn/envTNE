@@ -20,27 +20,38 @@
                         <table id="tblTeGST" class="table   color-table d-table table-cust tbl-sml">
                             <thead>
                                 <tr>
-                                    <th *ngFor="let field of controlConfig.fields" class="thd-w10">
+                                    @for (field of controlConfig.fields; track $index) {
+                                    @if (field.showInUI) {
+                                    <th class="thd-w10">
                                         <span>{{field.name}}</span>
                                     </th>
+                                    }
+                                    }
                                     <th class="thd-w5"><span>Action</span></th>
                                 </tr>
 
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td *ngFor="let field of controlConfig.fields">
+                                    @for (field of controlConfig.fields; track $index) {
+                                    @if (field.showInUI) {
+                                    <td>
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
-                                            <input type="text" 
-                                            [formControlName]="field.name" 
-                                            [placeholder]="field.name"
-                                            class="form-control chm-forminput teGst gsttxt" />
+                                            <input [type]="field.type" [formControlName]="field.name"
+                                                [placeholder]="field.name" (blur)="onBlur(field)"
+                                                (input)="onInput($event, field)"
+                                                class="form-control chm-forminput teGst gsttxt" />
                                             <span class="validate-error-message teGst"
-                                                *ngIf="gstDetailsForm.get(field.name)?.invalid && gstDetailsForm.get(field.name)?.touched">
-                                                Required
+                                                *ngIf="gstDetailsForm.get(field.name)?.errors && gstDetailsForm.get(field.name)?.touched">
+                                                {{
+                                                getValidationMessage(gstDetailsForm.get(field.name)?.errors,
+                                                field.name)
+                                                }}
                                             </span>
                                         </div>
                                     </td>
+                                    }
+                                    }
                                     <td>
                                         <a type="button" id="btnAddGstTe" class="btn btn-light btn-sm rounded-circle "
                                             (click)="addGstRow()">
@@ -49,23 +60,23 @@
                                     </td>
                                 </tr>
 
-                                <ng-container *ngIf="gstDetails.length > 0">
-                                    <tr *ngFor="let gst of gstDetails;let i = index">
-                                        <td>{{gst.GstIn}}</td>
-                                        <td>{{gst.InvoiceNumber}}</td>
-                                        <td>{{gst.Amount}}</td>
-                                        <td>{{gst.SGST}}</td>
-                                        <td>{{gst.CGST}}</td>
-                                        <td>{{gst.IGST}}</td>
-                                        <td>{{gst.UGST}}</td>
-                                        <td>
-                                            <a type="button" id="btnAddGstTe"
-                                                class="btn btn-light btn-sm rounded-circle " (click)="removeGstRow(i)">
-                                                <span class="ti-minus ti-rotate"></span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </ng-container>
+                                @if (gstDetails.length > 0) {
+                                @for (gst of gstDetails; track $index) {
+                                <tr>
+                                    @for (field of controlConfig.fields; track $index) {
+                                    @if (field.showInUI) {
+                                    <td>{{gst[field.name]}}</td>
+                                    }
+                                    }
+                                    <td>
+                                        <a type="button" id="btnAddGstTe" class="btn btn-light btn-sm rounded-circle "
+                                            (click)="removeGstRow($index)">
+                                            <span class="ti-minus ti-rotate"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                }
+                                }
                             </tbody>
                         </table>
                     </div>

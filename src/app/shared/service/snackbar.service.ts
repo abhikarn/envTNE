@@ -16,11 +16,12 @@ export class SnackbarService {
     duration: number = 3000,
     panelClass: string[] = ['snackbar-default']
   ) {
+    console.log(panelClass)
     this.snackBar.open(message, action, {
       duration,
       horizontalPosition: 'right',
       verticalPosition: 'top',
-      panelClass,
+      panelClass
     });
   }
 

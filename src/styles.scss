@@ -33,3 +33,28 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-mdc-form-field-required-marker {
   color: red !important;
 }
+
+.snackbar-default .mdc-snackbar__surface {
+  background-color: #323232 !important;
+  color: #fff !important;
+}
+
+.snackbar-success .mdc-snackbar__surface {
+  background-color: #4caf50 !important;
+  color: #fff !important;
+}
+
+.snackbar-error .mdc-snackbar__surface {
+  background-color: #f44336 !important;
+  color: #fff !important;
+}
+
+.snackbar-warning .mdc-snackbar__surface {
+  background-color: #ff9800 !important;
+  color: #fff !important;
+}
+
+.snackbar-info .mdc-snackbar__surface {
+  background-color: #2196f3 !important;
+  color: #fff !important;
+}
