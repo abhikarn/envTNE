@@ -61,13 +61,13 @@
                   <tbody>
                     @for (gstRow of row.gst; track gstRow) {
                     <tr>
-                      <td>{{ gstRow.gstIn }}</td>
-                      <td>{{ gstRow.invoiceNumber }}</td>
-                      <td>{{ gstRow.amount }}</td>
-                      <td>{{ gstRow.sgst }}</td>
-                      <td>{{ gstRow.cgst }}</td>
-                      <td>{{ gstRow.igst }}</td>
-                      <td>{{ gstRow.ugst }}</td>
+                      <td>{{ gstRow.GstIn }}</td>
+                      <td>{{ gstRow.InvoiceNumber }}</td>
+                      <td>{{ gstRow.Amount }}</td>
+                      <td>{{ gstRow.SGST }}</td>
+                      <td>{{ gstRow.CGST }}</td>
+                      <td>{{ gstRow.IGST }}</td>
+                      <td>{{ gstRow.UGST }}</td>
                     </tr>
                     }
                   </tbody>
@@ -86,7 +86,7 @@
                     <tbody>
                       @for (file of row.attachment; track file) {
                       <tr>
-                        <td>{{ file.fileName }}</td>
+                        <td>{{ file.FileName }}</td>
                         <td class="text-center">
                           <!-- Preview Action -->
                           <a class="me-2" title="Preview" (click)="previewFile(file)">
