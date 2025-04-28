@@ -18,4 +18,8 @@ export class NewExpenseService {
   getExpenseRequest(request: any) {
     return this.httpClient.post<any>(`${this.basePath}ExpensesRequestGet`, request);
   }
+
+  getMasterNameById(request: any) {
+    return this.httpClient.post<any>(`${this.basePath}GetMasterNameById`, request);
+  }
 }

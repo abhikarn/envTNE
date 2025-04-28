@@ -380,47 +380,63 @@ export class MainExpenseComponent {
   getTextData(inputData: any) {
     // Discuss with Muttappa for new API requirement
     if (typeof inputData.inputValue == 'number') {
-      let response = [
-        { CityMasterId: 2, City: "Bangalore [ BLR ]" },
-        { CityMasterId: 40, City: "Chennai [ MAA ]" }
-      ];
-
-      this.categories.forEach((category: any) => {
-        category.formControls.forEach((control: any) => {
-          if (control.autoComplete && control.value == inputData.inputValue) {
-            control.options = response.filter(r => r.CityMasterId == inputData.inputValue);
-            const labelKey = control.labelKey || 'label';
-            const valueKey = control.valueKey || 'value';
-            control.options = control.options?.map((item: any) => ({
-              label: item[labelKey],
-              value: item[valueKey]
-            }));
-            inputData.control.setValue(control.options[0])
-          }
-        });
-      });
-    } else {
-      const requestBody = {
-        "SearchText": inputData.inputValue,
-        "TravelTypeId": this.travelRequestPreview.TravelTypeId || 0
-      }
-      this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
-        next: (response: any) => {
-          // Update only the relevant control instead of replacing the whole categories array
-          this.categories.forEach((category: any) => {
-            category.formControls.forEach((control: any) => {
-              if (control.autoComplete) {
-                const labelKey = control.labelKey || 'label';
-                const valueKey = control.valueKey || 'value';
-                control.options = response.ResponseValue?.map((item: any) => ({
-                  label: item[labelKey],
-                  value: item[valueKey]
-                }));
-              }
-            });
-          });
+      const requestBody = [
+        {
+          id: inputData.inputValue,
+          name: "",
+          masterName: "City"
         }
-      })
+      ]
+
+      this.newExpenseService.getMasterNameById(requestBody).pipe(take(1)).subscribe({
+        next: (response: any) => {
+          if(response) {
+            response = response?.map((item: any) => ({
+              CityMasterId: item.id,
+              City: item.name
+            }));
+            this.categories.forEach((category: any) => {
+              category.formControls.forEach((control: any) => {
+                if (control.autoComplete && control.value == inputData.inputValue) {
+                  control.options = response.filter((r: any) => r[control.valueKey] == inputData.inputValue);
+                  const labelKey = control.labelKey || 'label';
+                  const valueKey = control.valueKey || 'value';
+                  control.options = control.options?.map((item: any) => ({
+                    label: item[labelKey],
+                    value: item[valueKey]
+                  }));
+                  inputData.control.setValue(control.options[0])
+                }
+              });
+            });
+          }
+        }
+      });
+
+    } else {
+      if (typeof inputData.inputValue == 'string') {
+        const requestBody = {
+          "SearchText": inputData.inputValue,
+          "TravelTypeId": this.travelRequestPreview.TravelTypeId || 0
+        }
+        this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
+          next: (response: any) => {
+            // Update only the relevant control instead of replacing the whole categories array
+            this.categories.forEach((category: any) => {
+              category.formControls.forEach((control: any) => {
+                if (control.autoComplete) {
+                  const labelKey = control.labelKey || 'label';
+                  const valueKey = control.valueKey || 'value';
+                  control.options = response.ResponseValue?.map((item: any) => ({
+                    label: item[labelKey],
+                    value: item[valueKey]
+                  }));
+                }
+              });
+            });
+          }
+        })
+      }
     }
 
   }
