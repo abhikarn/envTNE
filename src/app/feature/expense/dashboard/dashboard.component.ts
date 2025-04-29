@@ -1,5 +1,5 @@
 
-import { Component, DestroyRef, Directive, ElementRef, HostListener, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, Directive, ElementRef, HostListener, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { CityAutocompleteParam, DashboardService, DataService, ExpenseRequestModel, ExpenseService, TravelService, ExpenseRequestDashboardParam } from '../../../../../tne-api';
@@ -58,7 +58,8 @@ export const ELEMENT_DATA: any[] = [];
     RouterModule
   ],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrl: './dashboard.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 
 export class DashboardComponent implements OnInit {
