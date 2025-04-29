@@ -23,6 +23,10 @@ export const routes: Routes = [
       {
         path:'dashboard',
         loadComponent:()=>import('./dashboard/dashboard.component').then(m=>m.DashboardComponent)
+      },
+      {
+        path:'preview',
+        loadComponent:()=>import('./preview/preview.component').then(m=>m.PreviewComponent)
       }
     ]
   },
