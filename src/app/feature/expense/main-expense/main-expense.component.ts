@@ -162,6 +162,7 @@ export class MainExpenseComponent {
           const control = FormControlFactory.createControl(this.expenseConfig.request);
           this.formControls.push({ formConfig: this.expenseConfig.request, control: control });
           this.expenseRequestForm.addControl(this.expenseConfig.request.name, control);
+          this.formControls = [];
         }
 
         const optionMapping: { [key: string]: any[] } = {
@@ -297,6 +298,28 @@ export class MainExpenseComponent {
     }
   }
 
+  setCurrencyDropdown() {
+    const isTravelTypeWithoutCurrency = this.travelRequestPreview?.TravelTypeId == '52' || this.travelRequestPreview?.TravelTypeId == '54';
+    
+    const defaultCurrency = {
+      Id: 1,
+      Code: "INR",
+      Name: "Indian Rupee",
+      Alias: "Indian Rupee",
+      IsBaseCurrency: true,
+      Display: "Indian Rupee : INR"
+    };
+  
+    this.categories?.forEach((category: any) => {
+      console.log(category);
+      category.formControls?.forEach((control: any) => {
+        if (control?.name === 'Currency') {
+          control.defaultValue = isTravelTypeWithoutCurrency ? null : defaultCurrency;
+        }
+      });
+    });
+  }
+
   getTravelRequestPreview() {
     this.travelService.travelGetTravelRequestPreview({ TravelRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
       next: (response) => {
@@ -304,7 +327,7 @@ export class MainExpenseComponent {
         this.travelRequestPreview.UserMasterId = this.userMasterId;
         this.costcenterId = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 4)?.IntegerValue;
         this.purpose = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 1)?.IntegerValueReference;
-
+        this.setCurrencyDropdown();
       },
       error: (error) => {
         console.error('Error fetching travel request preview:', error);
