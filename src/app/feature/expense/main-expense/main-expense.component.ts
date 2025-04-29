@@ -22,6 +22,8 @@ import { NewExpenseService } from '../service/new-expense.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControlFactory } from '../../../shared/dynamic-form/form-control.factory';
 import { ServiceRegistryService } from '../../../shared/service/service-registry.service';
+import { SummaryComponent } from '../../../shared/component/summary/summary.component';
+import { UtilsService } from '../../../shared/service/utils.service';
 
 interface DataEntry {
   name: number;
@@ -41,7 +43,8 @@ interface DataEntry {
     MatInputModule,
     MatAutocompleteModule,
     DynamicFormComponent,
-    MatDialogModule
+    MatDialogModule,
+    SummaryComponent
   ],
   templateUrl: './main-expense.component.html',
   styleUrl: './main-expense.component.scss',
@@ -49,6 +52,7 @@ interface DataEntry {
 })
 
 export class MainExpenseComponent {
+  @ViewChild(SummaryComponent) summaryComponent: any;
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
   travelRequestPreview: any;
@@ -100,7 +104,8 @@ export class MainExpenseComponent {
     private newExpenseService: NewExpenseService,
     private route: ActivatedRoute,
     private serviceRegistry: ServiceRegistryService,
-    private router: Router
+    private router: Router,
+    private utilsService: UtilsService
   ) {
 
   }
@@ -136,171 +141,210 @@ export class MainExpenseComponent {
   }
 
   ngOnInit() {
+    this.initializeBasicFields();
+    this.loadInitialData();
+  }
+
+  // Set up basic fields like userMasterId, expenseRequestId, and editMode flag.
+  initializeBasicFields() {
     this.userMasterId = Number(localStorage.getItem('userMasterId'));
     this.expenseRequestId = this.route.snapshot.paramMap.get('id') || 0;
-    if(this.expenseRequestId) {
+    if (this.expenseRequestId) {
       this.editMode = true;
     }
+  }
 
+  // Load master data (baggage types, meals, travel modes) and expense config file.
+  loadInitialData() {
     forkJoin({
       baggageTypeList: this.dataService.dataGetBaggageType(),
-      // otherTypeList: this.expenseService.getOtherTypeList(),
       boMealsList: this.dataService.dataGetMealType(),
       localTravelTypeList: this.dataService.dataGetLocalTravelType(),
       localTravelModeList: this.dataService.dataGetLocalTravelMode(),
       expenseConfig: this.http.get<any>('/assets/config/expense-config.json')
-    }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: (responses) => {
-        // Handle all the API responses here
-        this.baggageTypeList = responses.baggageTypeList.ResponseValue;
-        this.localTravelTypeList = responses.localTravelTypeList.ResponseValue;
-        this.localTravelModeList = responses.localTravelModeList.ResponseValue;
-        this.boMealsList = responses.boMealsList.ResponseValue;
-        this.expenseConfig = responses.expenseConfig;
-        if (this.expenseConfig?.request) {
-          this.getTravelRequestList();
-          const control = FormControlFactory.createControl(this.expenseConfig.request);
-          this.formControls.push({ formConfig: this.expenseConfig.request, control: control });
-          this.expenseRequestForm.addControl(this.expenseConfig.request.name, control);
-          this.formControls = [];
-        }
+    })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (responses) => this.handleInitialResponses(responses),
+        error: (err) => console.error(err)
+      });
+  }
 
-        const optionMapping: { [key: string]: any[] } = {
-          BaggageType: this.baggageTypeList,
-          // OtherType: responses.otherTypeList.ResponseValue,
-          BoMeals: this.boMealsList,
-          LocalTravelType: this.localTravelTypeList,
-          LocalTravelMode: this.localTravelModeList
-        };
-        this.categories = this.expenseConfig.category.map((category: any) => ({
-          ...category,
-          formControls: category.formControls.map((control: any) => ({
-            ...control,
-            options: optionMapping[control.name] || control.options,
-            // option$: typeof control.option$ === 'string' && control.option$ === 'filteredCities$'
-            //   ? this.filteredCities$.pipe(map(cities => cities.map(c => ({ value: c.City }))))
-            //   : undefined
-          }))
-        }));
+  // Handle forkJoin API responses and initialize form structures and categories.
+  handleInitialResponses(responses: any) {
+    this.baggageTypeList = responses.baggageTypeList.ResponseValue;
+    this.localTravelTypeList = responses.localTravelTypeList.ResponseValue;
+    this.localTravelModeList = responses.localTravelModeList.ResponseValue;
+    this.boMealsList = responses.boMealsList.ResponseValue;
+    this.expenseConfig = responses.expenseConfig;
 
-        this.summaries = this.expenseConfig.summaries;
+    this.setupExpenseConfig();
+    this.setupCategories();
+    this.setupJustificationForm();
 
-        const justificationCfg = this.expenseConfig.justification;
-        if (justificationCfg?.required) {
-          this.justificationForm.controls[justificationCfg.controlName].setValidators([
-            Validators.required,
-            Validators.maxLength(justificationCfg.maxLength || 2000)
-          ]);
-        }
+    if (this.expenseRequestId) {
+      this.loadExistingExpenseRequest();
+    }
+  }
 
-        if (this.expenseRequestId) {
-          this.expenseRequestId = Number(this.expenseRequestId);
-          // this.onSelectTravelExpenseRequest(null);
-          let requestBody = {
-            status: "Active",
-            expenseRequestId: this.expenseRequestId
+  // Setup initial dynamic form control based on expenseConfig request object.
+  setupExpenseConfig() {
+    if (this.expenseConfig?.request) {
+      this.getTravelRequestList();
+      const control = FormControlFactory.createControl(this.expenseConfig.request);
+      this.formControls.push({ formConfig: this.expenseConfig.request, control: control });
+      this.expenseRequestForm.addControl(this.expenseConfig.request.name, control);
+      this.formControls = [];
+    }
+  }
+
+  // Setup form categories with dynamic options mapping from master data.
+  setupCategories() {
+    const optionMapping: { [key: string]: any[] } = {
+      BaggageType: this.baggageTypeList,
+      BoMeals: this.boMealsList,
+      LocalTravelType: this.localTravelTypeList,
+      LocalTravelMode: this.localTravelModeList
+    };
+
+    this.categories = this.expenseConfig.category.map((category: any) => ({
+      ...category,
+      formControls: category.formControls.map((control: any) => ({
+        ...control,
+        options: optionMapping[control.name] || control.options
+      }))
+    }));
+
+    this.summaries = this.expenseConfig.summaries;
+  }
+
+  // Setup validation rules for justification text field if required.
+  setupJustificationForm() {
+    const justificationCfg = this.expenseConfig.justification;
+    if (justificationCfg?.required) {
+      this.justificationForm.controls[justificationCfg.controlName].setValidators([
+        Validators.required,
+        Validators.maxLength(justificationCfg.maxLength || 2000)
+      ]);
+    }
+  }
+
+  // Load an existing saved expense request if editing mode is active.
+  loadExistingExpenseRequest() {
+    const requestBody = {
+      status: "Active",
+      expenseRequestId: Number(this.expenseRequestId)
+    };
+
+    this.newExpenseService.getExpenseRequest(requestBody)
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.populateExistingExpenseData(response);
           }
-          this.newExpenseService.getExpenseRequest(requestBody).pipe(take(1)).subscribe({
-            next: (response) => {
-              if (response) {
-                console.log(response)
-                this.travelRequestId = response.travelRequestId;
-                this.justificationForm.get(this.expenseConfig.justification.controlName).setValue(response?.remarks);
-                this.getTravelRequestPreview();
-                // Create a map for quick lookup by category name
-                const categoryMap = new Map(this.categories.map((cat: any) => [cat.name, cat]));
-
-                // Step 1: Filter data properties based on formControls
-                response?.dynamicExpenseDetailModels?.forEach((dataItem: any) => {
-                  const category: any = categoryMap.get(dataItem.name);
-                  if (category) {
-                    const validControlNames = category.formControls.map((c: any) => c.name);
-                    validControlNames.push('ReferenceId');
-
-                    dataItem.data = dataItem.data.map((entry: any) => {
-                      const filteredEntry: any = {};
-                      validControlNames.forEach((key: any) => {
-                        if (key in entry) {
-                          filteredEntry[key] = entry[key];
-                        }
-                      });
-                      return filteredEntry;
-                    });
-                  }
-                });
-
-                // Deep clone to avoid mutation in step 2
-                this.responseData = JSON.parse(JSON.stringify(response));
-                this.categories?.forEach((cat: any) => {
-                  const matchedData = this.responseData?.dynamicExpenseDetailModels?.find((data: any) => data.name == cat.name);
-                  cat.count = matchedData ? matchedData.data.length : 0;
-                });
-                this.onTabChange(0);
-                this.expenseRequestData = response;
-                setTimeout(() => {
-                  this.calculatTotalExpenseAmount();
-                }, 1000);
-                // Step 2: Format the data and apply exclusion logic
-                this.expenseRequestData?.dynamicExpenseDetailModels?.forEach((requestData: any) => {
-                  const category: any = categoryMap.get(requestData.name);
-                  if (category) {
-                    requestData.data = requestData.data.map((entry: any) => {
-                      const formattedData: any = {
-                        ReferenceId: entry.ReferenceId,
-                        excludedData: {}
-                      };
-
-                      category.formControls.forEach((control: any) => {
-                        const fieldName = control.name;
-                        const fieldValue = entry[fieldName];
-                        control.value = fieldValue;
-
-                        if (control.isExcluded) {
-                          formattedData.excludedData[fieldName] = fieldValue ?? null;
-                        } else {
-                          formattedData[fieldName] = fieldValue ?? null;
-                        }
-                      });
-
-                      // Clean up excludedData if empty
-                      if (Object.keys(formattedData.excludedData).length === 0) {
-                        delete formattedData.excludedData;
-                      }
-                      return formattedData;
-                    });
-                  }
-                });
-              }
-            }
-          })
         }
-      },
-      error: (err) => {
-        // Handle any errors
-        console.error(err);
+      });
+  }
+
+  // Populate existing expense request data into form structure for editing.
+  populateExistingExpenseData(response: any) {
+    this.travelRequestId = response.travelRequestId;
+    this.justificationForm.get(this.expenseConfig.justification.controlName).setValue(response?.remarks);
+    this.getTravelRequestPreview();
+
+    const categoryMap = new Map(this.categories.map((cat: any) => [cat.name, cat]));
+
+    response?.dynamicExpenseDetailModels?.forEach((dataItem: any) => {
+      const category: any = categoryMap.get(dataItem.name);
+      if (category) {
+        const validControlNames = category.formControls.map((c: any) => c.name);
+        validControlNames.push('ReferenceId');
+
+        dataItem.data = dataItem.data.map((entry: any) => {
+          const filteredEntry: any = {};
+          validControlNames.forEach((key: any) => {
+            if (key in entry) {
+              filteredEntry[key] = entry[key];
+            }
+          });
+          return filteredEntry;
+        });
+      }
+    });
+
+    this.responseData = JSON.parse(JSON.stringify(response));
+    this.updateCategoryCounts();
+    this.expenseRequestData = response;
+
+    setTimeout(() => {
+      this.summaryComponent.calculatTotalExpenseAmount();
+    }, 1000);
+
+    this.applyExcludedFields();
+    this.onTabChange(0);
+  }
+
+  // Update category item counts based on populated existing data.
+  updateCategoryCounts() {
+    this.categories?.forEach((cat: any) => {
+      const matchedData = this.responseData?.dynamicExpenseDetailModels?.find((data: any) => data.name == cat.name);
+      cat.count = matchedData ? matchedData.data.length : 0;
+    });
+  }
+
+  // Apply field exclusion rules for each category when editing existing entries.
+  applyExcludedFields() {
+    const categoryMap = new Map(this.categories.map((cat: any) => [cat.name, cat]));
+
+    this.expenseRequestData?.dynamicExpenseDetailModels?.forEach((requestData: any) => {
+      const category: any = categoryMap.get(requestData.name);
+      if (category) {
+        requestData.data = requestData.data.map((entry: any) => {
+          const formattedData: any = {
+            ReferenceId: entry.ReferenceId,
+            excludedData: {}
+          };
+
+          category.formControls.forEach((control: any) => {
+            const fieldName = control.name;
+            const fieldValue = entry[fieldName];
+            control.value = fieldValue;
+
+            if (control.isExcluded) {
+              formattedData.excludedData[fieldName] = fieldValue ?? null;
+            } else {
+              formattedData[fieldName] = fieldValue ?? null;
+            }
+          });
+
+          if (Object.keys(formattedData.excludedData).length === 0) {
+            delete formattedData.excludedData;
+          }
+
+          return formattedData;
+        });
       }
     });
   }
 
+  // Update existingExpenseRequestData based on the selected tab index or tab change event.
   onTabChange(eventOrIndex?: MatTabChangeEvent | number) {
-    let tabIndex: number;
-    if (typeof eventOrIndex === 'number') {
-      tabIndex = eventOrIndex;
-    } else if (eventOrIndex?.index !== undefined) {
-      tabIndex = eventOrIndex.index;
-    } else {
-      tabIndex = 0; // default
-    }
-    const tabLabel = this.categories[tabIndex].name;
-    if (this.responseData) {
-      const tab = this.responseData?.dynamicExpenseDetailModels?.find((t: any) => t.name == tabLabel);
-      this.existingExpenseRequestData = tab ? tab.data : [];
-    }
+    if (!this.categories?.length) return;
+
+    const tabIndex = typeof eventOrIndex === 'number'
+      ? eventOrIndex
+      : eventOrIndex?.index ?? 0;
+
+    const tabLabel = this.categories[tabIndex]?.name;
+    this.existingExpenseRequestData = this.responseData?.dynamicExpenseDetailModels
+      ?.find((t: any) => t.name === tabLabel)?.data || [];
   }
 
+  // Set default currency for 'Currency' fields based on travel type.
   setCurrencyDropdown() {
-    const isTravelTypeWithoutCurrency = this.travelRequestPreview?.TravelTypeId == '52' || this.travelRequestPreview?.TravelTypeId == '54';
-    
+    const isWithoutCurrency = ['52', '54'].includes(this.travelRequestPreview?.TravelTypeId);
+
     const defaultCurrency = {
       Id: 1,
       Code: "INR",
@@ -309,79 +353,64 @@ export class MainExpenseComponent {
       IsBaseCurrency: true,
       Display: "Indian Rupee : INR"
     };
-  
-    this.categories?.forEach((category: any) => {
-      console.log(category);
+
+    this.categories?.forEach((category: any) =>
       category.formControls?.forEach((control: any) => {
         if (control?.name === 'Currency') {
-          control.defaultValue = isTravelTypeWithoutCurrency ? null : defaultCurrency;
+          control.defaultValue = isWithoutCurrency ? null : defaultCurrency;
+        }
+      })
+    );
+  }
+
+
+  // Fetch travel request preview and extract user, cost center, and purpose info.
+  getTravelRequestPreview() {
+    this.travelService
+      .travelGetTravelRequestPreview({ TravelRequestId: this.travelRequestId })
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          const preview = response.ResponseValue;
+          this.travelRequestPreview = { ...preview, UserMasterId: this.userMasterId };
+
+          const meta = this.travelRequestPreview.TravelRequestMetaData || [];
+          this.costcenterId = meta.find((d: any) => d.TravelRequestMetaId === 4)?.IntegerValue;
+          this.purpose = meta.find((d: any) => d.TravelRequestMetaId === 1)?.IntegerValueReference;
+
+          this.setCurrencyDropdown();
+        },
+        error: (error) => {
+          console.error('Error fetching travel request preview:', error);
         }
       });
-    });
   }
 
-  getTravelRequestPreview() {
-    this.travelService.travelGetTravelRequestPreview({ TravelRequestId: this.travelRequestId }).pipe(take(1)).subscribe({
-      next: (response) => {
-        this.travelRequestPreview = response.ResponseValue;
-        this.travelRequestPreview.UserMasterId = this.userMasterId;
-        this.costcenterId = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 4)?.IntegerValue;
-        this.purpose = this.travelRequestPreview.TravelRequestMetaData.find((data: any) => data.TravelRequestMetaId === 1)?.IntegerValueReference;
-        this.setCurrencyDropdown();
-      },
-      error: (error) => {
-        console.error('Error fetching travel request preview:', error);
-      }
-    })
-  }
 
-  onSelectTravelExpenseRequest(event: any) {
-    if (event) {
-      this.travelRequestId = Number(event.target.value) || 0;
-    }
+  // Update travelRequestId based on user selection and fetch travel request preview.
+  onSelectTravelExpenseRequest(event: Event) {
+    const target = event?.target as HTMLSelectElement;
+    this.travelRequestId = Number(target?.value) || 0;
 
     if (this.travelRequestId) {
       this.getTravelRequestPreview();
     }
   }
 
-  mergeData(entries: DataEntry[]): any[] {
-    const mergedMap = new Map<number, any>();
 
-    entries.forEach(entry => {
-      if (mergedMap.has(entry.name)) {
-        let existingData = mergedMap.get(entry.name);
-
-        if (Array.isArray(existingData.data)) {
-          existingData.data.push(entry.data);
-        } else {
-          existingData.data = [existingData.data, entry.data];
-        }
-      } else {
-        mergedMap.set(entry.name, {
-          name: entry.name,
-          data: entry.data,
-        });
-      }
-    });
-
-    return Array.from(mergedMap.values());
-  }
-
+  // Add or update form data in the expense request based on ReferenceId or editIndex.
   getFormData(formData: any) {
-    let data = formData.formData;
-    let editIndex = formData.editIndex;
-    const existingCategory = this.expenseRequestData?.dynamicExpenseDetailModels?.find((cat: any) => cat.name === data.name);
+    const { formData: data, editIndex } = formData;
+
+    const existingCategory = this.expenseRequestData?.dynamicExpenseDetailModels
+      ?.find((cat: any) => cat.name === data.name);
 
     if (existingCategory) {
       const incomingData = data.data;
-      let existingEntryIndex = -1;
-      if (incomingData.ReferenceId) {
-        existingEntryIndex = existingCategory.data?.findIndex((entry: any) => entry.ReferenceId === incomingData.ReferenceId);
-      } else {
-        console.log(editIndex)
-        existingEntryIndex = editIndex;
-      }
+      const existingEntryIndex = incomingData.ReferenceId
+        ? existingCategory.data?.findIndex((entry: any) => entry.ReferenceId === incomingData.ReferenceId)
+        : editIndex;
+
       if (existingEntryIndex !== -1) {
         // Update existing entry
         existingCategory.data[existingEntryIndex] = incomingData;
@@ -389,6 +418,7 @@ export class MainExpenseComponent {
         // Add new entry
         existingCategory.data.push(incomingData);
       }
+
     } else {
       // Create new category with the incoming data
       this.expenseRequestData?.dynamicExpenseDetailModels.push({
@@ -396,136 +426,139 @@ export class MainExpenseComponent {
         data: [data.data]
       });
     }
-    console.log(this.expenseRequestData)
-    this.calculatTotalExpenseAmount();
+
+    this.summaryComponent.calculatTotalExpenseAmount();
   }
 
+
+  // Populate autoComplete options by input value (ID or search text) and update matching control.
   getTextData(inputData: any) {
-    // Discuss with Muttappa for new API requirement
-    if (typeof inputData.inputValue == 'number') {
-      const requestBody = [
-        {
-          id: inputData.inputValue,
-          name: "",
-          masterName: "City"
-        }
-      ]
+    const { inputValue, control } = inputData;
+
+    if (typeof inputValue === 'number') {
+      const requestBody = [{ id: inputValue, name: '', masterName: 'City' }];
 
       this.newExpenseService.getMasterNameById(requestBody).pipe(take(1)).subscribe({
-        next: (response: any) => {
-          if(response) {
-            response = response?.map((item: any) => ({
-              CityMasterId: item.id,
-              City: item.name
-            }));
-            this.categories.forEach((category: any) => {
-              category.formControls.forEach((control: any) => {
-                if (control.autoComplete && control.value == inputData.inputValue) {
-                  control.options = response.filter((r: any) => r[control.valueKey] == inputData.inputValue);
-                  const labelKey = control.labelKey || 'label';
-                  const valueKey = control.valueKey || 'value';
-                  control.options = control.options?.map((item: any) => ({
-                    label: item[labelKey],
-                    value: item[valueKey]
-                  }));
-                  inputData.control.setValue(control.options[0])
-                }
-              });
-            });
-          }
+        next: (response: any[]) => {
+          const formatted = response?.map(item => ({ CityMasterId: item.id, City: item.name })) || [];
+          this.updateMatchingControls(inputValue, formatted, control);
         }
       });
-
-    } else {
-      if (typeof inputData.inputValue == 'string') {
-        const requestBody = {
-          "SearchText": inputData.inputValue,
-          "TravelTypeId": this.travelRequestPreview.TravelTypeId || 0
-        }
-        this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
-          next: (response: any) => {
-            // Update only the relevant control instead of replacing the whole categories array
-            this.categories.forEach((category: any) => {
-              category.formControls.forEach((control: any) => {
-                if (control.autoComplete) {
-                  const labelKey = control.labelKey || 'label';
-                  const valueKey = control.valueKey || 'value';
-                  control.options = response.ResponseValue?.map((item: any) => ({
-                    label: item[labelKey],
-                    value: item[valueKey]
-                  }));
-                }
-              });
-            });
-          }
-        })
-      }
     }
 
+    if (typeof inputValue === 'string') {
+      const requestBody = {
+        SearchText: inputValue,
+        TravelTypeId: this.travelRequestPreview?.TravelTypeId || 0
+      };
+
+      this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
+        next: (response: any) => {
+          this.categories.forEach((category: any) => {
+            category.formControls.forEach((control: any) => {
+              if (control.autoComplete) {
+                const labelKey = control.labelKey || 'label';
+                const valueKey = control.valueKey || 'value';
+                control.options = response.ResponseValue?.map((item: any) => ({
+                  label: item[labelKey],
+                  value: item[valueKey]
+                })) || [];
+              }
+            });
+          });
+        }
+      });
+    }
   }
 
-  onSelectDate(event: any, field: any) {
-    let dateValue = event.value.toISOString() || "";
-    this.expenseValidateUserLeaveDateForDuration.UserMasterId = 4;
-    this.expenseValidateUserLeaveDateForDuration.TravelRequestId = this.travelRequestId;
-    if (field.name == "Check-inDateTime") {
-      this.expenseValidateUserLeaveDateForDuration.FromDate = dateValue;
-      if (!this.expenseValidateUserLeaveDateForDuration.ToDate) {
-        this.expenseValidateUserLeaveDateForDuration.ToDate = dateValue;
-      }
-    }
-    if (field.name == "Check-outDateTime") {
-      this.expenseValidateUserLeaveDateForDuration.ToDate = dateValue;
-      if (!this.expenseValidateUserLeaveDateForDuration.FromDate) {
-        this.expenseValidateUserLeaveDateForDuration.FromDate = dateValue;
-      }
-    }
-    this.expenseService.expenseValidateUserLeaveDateForDuration(this.expenseValidateUserLeaveDateForDuration).pipe(take(1)).subscribe({
-      next: (res) => {
-        console.log(res.ResponseValue)
-      },
-      error: (error) => {
-        console.error('Error fetching expense Validate User Leave Date For Duration', error);
-      }
+  private updateMatchingControls(inputValue: number, data: any[], controlRef: any) {
+    this.categories.forEach((category: any) => {
+      category.formControls.forEach((control: any) => {
+        if (control.autoComplete && control.value === inputValue) {
+          const labelKey = control.labelKey || 'label';
+          const valueKey = control.valueKey || 'value';
+          control.options = data
+            .filter(item => item[valueKey] === inputValue)
+            .map(item => ({
+              label: item[labelKey],
+              value: item[valueKey]
+            }));
+
+          controlRef.setValue(control.options[0]);
+        }
+      });
     });
   }
 
+  // Set and validate FromDate and ToDate based on selected Check-in or Check-out date.
+  onSelectDate(event: any, field: any) {
+    const dateValue = event.value?.toISOString() || '';
+
+    this.expenseValidateUserLeaveDateForDuration.UserMasterId = 4;
+    this.expenseValidateUserLeaveDateForDuration.TravelRequestId = this.travelRequestId;
+
+    if (field.name === 'Check-inDateTime') {
+      this.expenseValidateUserLeaveDateForDuration.FromDate = dateValue;
+      this.expenseValidateUserLeaveDateForDuration.ToDate ||= dateValue;
+    }
+
+    if (field.name === 'Check-outDateTime') {
+      this.expenseValidateUserLeaveDateForDuration.ToDate = dateValue;
+      this.expenseValidateUserLeaveDateForDuration.FromDate ||= dateValue;
+    }
+
+    this.expenseService
+      .expenseValidateUserLeaveDateForDuration(this.expenseValidateUserLeaveDateForDuration)
+      .pipe(take(1))
+      .subscribe({
+        next: (res) => console.log(res.ResponseValue),
+        error: (error) => console.error('Error fetching expense Validate User Leave Date For Duration', error)
+      });
+  }
+
+
+  // Handle submit, draft, or navigation actions after validating forms.
   onAction(type: string) {
-    if(!this.travelRequestId) {
+    if (!this.travelRequestId) {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return;
     }
-    if(this.expenseRequestForm.invalid) {
+
+    if (this.expenseRequestForm.invalid) {
       this.expenseRequestForm.markAllAsTouched();
       return;
     }
-    if(this.justificationForm.invalid) {
+
+    if (this.justificationForm.invalid) {
       this.justificationForm.markAllAsTouched();
       return;
     }
-    if (type == "submit") {
-      this.mainExpenseData.IsDraft = false;
-      this.createExpenseRequest();
-    } else if (type == "draft") {
-      this.mainExpenseData.IsDraft = true;
+
+    if (type === 'submit' || type === 'draft') {
+      this.mainExpenseData.IsDraft = type === 'draft';
       this.createExpenseRequest();
     } else {
-      this.router.navigate(['expense/expense/landing'])
+      this.router.navigate(['expense/expense/landing']);
     }
   }
 
+
+  // Prepare and submit the main expense request after confirmation.
   createExpenseRequest() {
-    this.mainExpenseData.ExpenseRequestId = this.expenseRequestId;
-    this.mainExpenseData.RequestForId = this.travelRequestPreview.RequestForId;
-    this.mainExpenseData.RequesterId = 4;
-    this.mainExpenseData.TravelRequestId = this.travelRequestPreview.TravelRequestId;
-    this.mainExpenseData.RequestDate = new Date().toISOString();
-    this.mainExpenseData.Purpose = this.purpose;
-    this.mainExpenseData.CostCentreId = this.costcenterId;
-    this.mainExpenseData.BillableCostCentreId = this.mainExpenseData.CostCentreId;
-    this.mainExpenseData.Remarks = this.justificationForm.get(this.expenseConfig.justification.controlName).value;
-    this.mainExpenseData.ActionBy = 4;
-    this.mainExpenseData.dynamicExpenseDetailModels = this.simplifyObject(this.expenseRequestData?.dynamicExpenseDetailModels);
+    this.mainExpenseData = {
+      ...this.mainExpenseData,
+      ExpenseRequestId: this.expenseRequestId,
+      RequestForId: this.travelRequestPreview.RequestForId,
+      RequesterId: 4,
+      TravelRequestId: this.travelRequestPreview.TravelRequestId,
+      RequestDate: new Date().toISOString(),
+      Purpose: this.purpose,
+      CostCentreId: this.costcenterId,
+      BillableCostCentreId: this.costcenterId,
+      Remarks: this.justificationForm.get(this.expenseConfig.justification.controlName)?.value,
+      ActionBy: this.userMasterId,
+      dynamicExpenseDetailModels: this.utilsService.simplifyObject(this.expenseRequestData?.dynamicExpenseDetailModels)
+    };
 
     this.confirmDialogService
       .confirm({
@@ -536,23 +569,26 @@ export class MainExpenseComponent {
       })
       .subscribe((confirmed) => {
         if (confirmed) {
-          console.log(this.mainExpenseData)
-          this.newExpenseService.expenseRequestCreatePost(this.mainExpenseData).pipe(take(1)).subscribe({
-            next: (response) => {
-              this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
-              this.router.navigate(['/expense/expense/dashboard']);
-            },
-            error: (err) => {
-              console.error(err);
-              this.snackbarService.error('Something went wrong with the API.');
-            }
-          });
+          this.newExpenseService.expenseRequestCreatePost(this.mainExpenseData)
+            .pipe(take(1))
+            .subscribe({
+              next: (response) => {
+                this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
+                this.router.navigate(['/expense/expense/dashboard']);
+              },
+              error: (err) => {
+                console.error(err);
+                this.snackbarService.error('Something went wrong with the API.');
+              }
+            });
         } else {
-          console.log('Failed');
+          console.log('Expense request creation cancelled.');
         }
       });
   }
 
+
+  // Open travel date extension modal and handle update confirmation.
   openModal() {
     const dialogRef = this.dialog.open(DateExtensionComponent, {
       maxWidth: '1000px',
@@ -564,146 +600,34 @@ export class MainExpenseComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        result.TravelRequestId = this.travelRequestId;
-        this.confirmDialogService
-          .confirm({
-            title: 'Date Extension',
-            message: 'Are you sure you want to change the travel date? This action will affect the per diem claim!',
-            confirmText: 'Yes Update',
-            cancelText: 'No'
-          })
-          .subscribe((confirmed) => {
-            if (confirmed) {
-              this.travelService.travelTravelRequestDateExtension(result).pipe(take(1)).subscribe({
-                next: (response) => {
+      if (!result) return;
+
+      result.TravelRequestId = this.travelRequestId;
+
+      this.confirmDialogService
+        .confirm({
+          title: 'Date Extension',
+          message: 'Are you sure you want to change the travel date? This action will affect the per diem claim!',
+          confirmText: 'Yes Update',
+          cancelText: 'No'
+        })
+        .subscribe((confirmed) => {
+          if (confirmed) {
+            this.travelService.travelTravelRequestDateExtension(result)
+              .pipe(take(1))
+              .subscribe({
+                next: () => {
                   this.getTravelRequestPreview();
                   this.snackbarService.success('Record Updated Successfully.');
                 }
-              })
-            } else {
-              this.snackbarService.success('Failed To Update Record');
-            }
-          });
-
-      }
-    });
-  }
-
-  simplifyObject(obj: any): any {
-    if (Array.isArray(obj)) {
-      return obj.map(item => this.simplifyObject(item));
-    } else if (typeof obj === 'object' && obj !== null) {
-      const newObj: any = {};
-      for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          const value = obj[key];
-
-          // Check for { label: ..., value: ... } structure
-          if (
-            value &&
-            typeof value === 'object' &&
-            'value' in value &&
-            Object.keys(value).length === 2 &&
-            'label' in value
-          ) {
-            newObj[key] = value.value;
+              });
+          } else {
+            this.snackbarService.success('Failed To Update Record');
           }
-          // Check if the value is a date string and format it
-          // else if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
-          //   newObj[key] = value.split('T')[0]; // Keep only the date part
-          // }
-          else {
-            newObj[key] = this.simplifyObject(value);
-          }
-        }
-      }
-      return newObj;
-    }
-    return obj;
+        });
+    });
   }
 
-
-
-  toggleAccordion(activeId: string): void {
-    this.summaries = this.summaries.map((summary: any) => ({
-      ...summary,
-      isOpen: summary.id === activeId
-    }));
-  }
-
-  calculatTotalExpenseAmount() {
-    const EXPENSE_SUMMARY_ID = "expense-summary";
-    const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense"
-    const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
-    const PAYABLE_KEYS = [91, 94];
-    let CATEGORY_NAME = '';
-  
-    const summary = this.summaries?.find((s: any) => s.id === EXPENSE_SUMMARY_ID);
-    if (!summary) return;
-  
-    // Reset all values to 0.00
-    summary.items?.forEach((item: any) => {
-      item.value = 0.00;
-    });
-  
-    // Add claim amounts to respective payment modes
-    this.expenseRequestData?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
-      CATEGORY_NAME = expenseRequest.name;
-      expenseRequest.data?.forEach((request: any) => {
-        const { PaymentMode, ClaimAmount } = request?.excludedData || {};
-        this.updateExpenseItem(summary, PaymentMode, ClaimAmount);
-      });
-    });
-  
-    // Calculate totals
-    let totalExpense = 0.00;
-    let amountPayable = 0.00;
-  
-    summary.items?.forEach((item: any) => {
-      const value = Number(item.value);
-      if (TOTAL_EXPENSE_KEYS.includes(item.paymentModeId)) {
-        totalExpense += value;
-      }
-      if (PAYABLE_KEYS.includes(item.paymentModeId)) {
-        amountPayable += value;
-      }
-      // Ensure value is in 2 decimal places
-      item.value = value.toFixed(2);
-    });
-  
-    // Set totalExpense and amountPayable
-    summary.items?.forEach((item: any) => {
-      if (item.key === 'totalExpense') item.value = totalExpense.toFixed(2);
-      if (item.key === 'amountPayable') item.value = amountPayable.toFixed(2);
-    });
-
-    // Category wise expense logic
-    const categoryWiseExpense = this.summaries?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
-    if (!categoryWiseExpense) return;
-
-    // Reset all values to 0.00
-    categoryWiseExpense.items?.forEach((item: any) => {
-      item.value = 0.00;
-    });
-
-    categoryWiseExpense.items?.forEach((item: any) => {
-      if(item.key == CATEGORY_NAME) {
-        item.value = totalExpense;
-      }
-    });
-
-  }
-  
-  updateExpenseItem(summary: any, paymentModeId: any, amount: any) {
-    const targetItem = summary.items?.find((item: any) => item.paymentModeId === paymentModeId);
-    if (targetItem) {
-      const currentValue = Number(targetItem.value) || 0;
-      const addedValue = Number(amount) || 0;
-      targetItem.value = (currentValue + addedValue).toFixed(2);
-    }
-  }
-  
 }
 
 
