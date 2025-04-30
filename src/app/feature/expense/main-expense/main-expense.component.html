@@ -204,33 +204,8 @@
           <!-- left-container-wider -->
           <div class="right-container-nrw rt-aside-fixed">
             <div class="row-wrapper common-block px-3 py-3">
-              <div class="accordion accordion-flush preview-standard-view" id="accordionFlushExample">
-                @for (summary of summaries; track summary) {
-                <div class="accordion-item">
-                  <h2 class="accordion-header" [id]="'heading-' + summary.id">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      [attr.data-bs-target]="'#collapse-' + summary.id" aria-expanded="false"
-                      [attr.aria-controls]="'collapse-' + summary.id" [class.collapsed]="!summary.isOpen"
-                      (click)="toggleAccordion(summary.id)">
-                      {{ summary.title }}
-                    </button>
-                  </h2>
-                  <div [id]="'collapse-' + summary.id" class="accordion-collapse collapse" [class.show]="summary.isOpen"
-                    [attr.aria-labelledby]="'heading-' + summary.id" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                      <ul class="summary-list">
-                        @for (item of summary.items; track item) {
-                        <li>
-                          {{ item.label }}
-                          <span>{{ item.value || '0.00' }}</span>
-                        </li>
-                        }
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                }
-              </div>
+              <!-- Summary -->
+              <app-summary [summaries]="summaries" [expenseRequestData]="expenseRequestData"></app-summary>
 
               @if (expenseConfig?.justification) {
               <div [formGroup]="justificationForm" class="row mt-3">
