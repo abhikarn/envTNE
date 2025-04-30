@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
   title = 'envTNE';
   isAuthenticated = false;
 
-
   constructor(private translate: TranslateService, private authService: AuthService, private router: Router) {
     this.translate.setDefaultLang('en');
     const browserLang = navigator.language.split('-')[0];
@@ -30,9 +29,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger;
     this.gettoken()
-
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
@@ -41,11 +38,10 @@ export class AppComponent implements OnInit {
   }
 
   gettoken() {
-    const token = this.authService.getToken();  
+    const token = this.authService.getToken();
     if (token && token.jwtTokenModel?.expireDateTime) {
       const expireTime = new Date(token.jwtTokenModel.expireDateTime).getTime();
       const currentTime = new Date().getTime();
-  
       if (currentTime < expireTime) {
         this.isAuthenticated = true;
       } else {
@@ -56,8 +52,4 @@ export class AppComponent implements OnInit {
       this.isAuthenticated = false;
     }
   }
-  // changeLanguage(lang: string) {
-  //   this.translate.use(lang);
-  // }
-
 }

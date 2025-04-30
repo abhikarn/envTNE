@@ -22,8 +22,20 @@ export class AuthService {
     return null;
   }
 
+  getUserMasterId(): number | 0 {
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      try {
+        const parsedData = JSON.parse(userData);
+        return parsedData.token.userMasterId || 0;
+      } catch (error) {
+        return 0;
+      }
+    }
+    return 0;
+  }
+
   Logout(): void {
-    debugger;
     localStorage.removeItem('userData');
     this.router.navigate(['/account']); // Adjust route as needed
   }

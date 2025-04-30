@@ -41,11 +41,11 @@
             <td [attr.colspan]="displayedColumns.length + 2">
               <div class="expanded-content" [ngClass]="{ 'violation-bg': row?.IsViolation }">
                 <p><strong>Claim Amount:</strong> {{ row.ClaimAmount || '-' }}</p>
-                <p><strong>Claim in Base Currency:</strong> {{ row.BaseCurrency || '-' }}</p>
+                <p><strong>Claim in Base Currency:</strong> {{ row.ClaimAmountInBaseCurrency || '-' }}</p>
                 <p><strong>Remarks:</strong> {{ row.Remarks || 'No remarks' }}</p>
 
                 <!-- Show GST Table Only When GST Data Exists -->
-                @if (row?.gstData?.length > 0) {
+                @if (row?.gst?.length > 0) {
                 <table class="gst-table">
                   <thead>
                     <tr>
@@ -59,20 +59,53 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @for (gstRow of row.gstData; track gstRow) {
+                    @for (gstRow of row.gst; track gstRow) {
                     <tr>
-                      <td>{{ gstRow.vendorGSTNumber }}</td>
-                      <td>{{ gstRow.invoiceNumber }}</td>
-                      <td>{{ gstRow.gstValue }}</td>
-                      <td>{{ gstRow.sgst }}</td>
-                      <td>{{ gstRow.cgst }}</td>
-                      <td>{{ gstRow.igst }}</td>
-                      <td>{{ gstRow.utgst }}</td>
+                      <td>{{ gstRow.GstIn }}</td>
+                      <td>{{ gstRow.InvoiceNumber }}</td>
+                      <td>{{ gstRow.Amount }}</td>
+                      <td>{{ gstRow.SGST }}</td>
+                      <td>{{ gstRow.CGST }}</td>
+                      <td>{{ gstRow.IGST }}</td>
+                      <td>{{ gstRow.UGST }}</td>
                     </tr>
                     }
                   </tbody>
                 </table>
                 }
+
+                <!-- Show Attachment Table Only When File Data Exists -->
+                @if (row?.attachment?.length > 0) {
+                  <table class="gst-table">
+                    <thead>
+                      <tr>
+                        <th>File Name</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (file of row.attachment; track file) {
+                      <tr>
+                        <td>{{ file.FileName }}</td>
+                        <td class="text-center">
+                          <!-- Preview Action -->
+                          <a class="me-2" title="Preview" (click)="previewFile(file)">
+                            <i class="fa-solid fa-eye text-primary"></i>
+                          </a>
+                          <!-- Download Action -->
+                          <a class="me-2" title="Download" (click)="downloadFile(file)">
+                            <i class="fa-solid fa-download text-success"></i>
+                          </a>
+                          <!-- Delete Action -->
+                          <a title="Delete">
+                            <i class="fa-solid fa-trash text-danger"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      }
+                    </tbody>
+                  </table>
+                  }
               </div>
             </td>
           </tr>

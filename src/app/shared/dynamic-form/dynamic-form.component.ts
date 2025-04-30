@@ -118,7 +118,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         for (const control of this.formControls) {
           const { type, name, autoComplete, options, apiService, apiMethod, dependsOn, payloadKey, labelKey, valueKey } = control.formConfig;
 
-          if ((type === 'select' || autoComplete) && name in data) {
+          if ((type === 'select') && name in data) {
             let selected = data[name];
             if (selected && typeof selected === 'object') {
               selected = selected.value;
@@ -143,6 +143,41 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             const matchedOption = control.formConfig.options?.find(opt => opt.value === selected);
             if (matchedOption) {
               data[name] = matchedOption;
+            }
+          }
+
+          if (autoComplete && name in data) {
+            let selected = data[name];
+            if ((!options || options.length === 0) && apiService && apiMethod) {
+              const requestBody = [
+                {
+                  id: selected,
+                  name: "",
+                  masterName: "City"
+                }
+              ];
+              const service = this.serviceRegistry.getService(apiService);
+              service[apiMethod](requestBody).subscribe({
+                next: (response: any) => {
+                  if (response) {
+                    response = response?.map((item: any) => ({
+                      CityMasterId: item.id,
+                      City: item.name
+                    }));
+                    if (labelKey && valueKey) {
+                      control.formConfig.options = response.filter((r: any) => r[valueKey] == selected);
+                      control.formConfig.options = control.formConfig.options?.map((item: any) => ({
+                        label: item[labelKey],
+                        value: item[valueKey]
+                      }));
+                      const matchedOption = control.formConfig.options?.find(opt => opt.value === selected);
+                      if (matchedOption) {
+                        data[name] = matchedOption;
+                      }
+                    }
+                  }
+                }
+              });
             }
           }
         }
@@ -213,7 +248,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
@@ -365,7 +400,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       });
 
       const output = this.mapOtherControls(this.moduleData, this.category.submitPolicyValidationApi.otherControls);
-      
+
       service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
         (response: any) => {
           if (typeof this.category.submitPolicyValidationApi.outputControl === 'object') {
