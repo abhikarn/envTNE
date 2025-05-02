@@ -1,582 +1,679 @@
 {
-    "request": {
-        "type": "select",
-        "dataType": "int",
-        "name": "TravelRequest",
-        "label": "Request",
-        "placeholder": "Select Travel Request",
-        "value": 0,
-        "labelKey": "TravelRequestNumber",
-        "valueKey": "TravelRequestId",
-        "apiService": "ExpenseService",
-        "apiMethod": "expenseGetTravelRequestsPendingForClaim",
-        "requestBody": {
-            "UserMasterId": 4,
-            "TravelTypeId": 0
+    "expenseRequest": {
+        "request": {
+            "type": "select",
+            "dataType": "int",
+            "name": "TravelRequest",
+            "label": "Request",
+            "placeholder": "Select Travel Request",
+            "value": 0,
+            "labelKey": "TravelRequestNumber",
+            "valueKey": "TravelRequestId",
+            "apiService": "ExpenseService",
+            "apiMethod": "expenseGetTravelRequestsPendingForClaim",
+            "requestBody": {
+                "UserMasterId": 4,
+                "TravelTypeId": 0
+            },
+            "confirmPopup": {
+                "title": "Travel Request",
+                "message": "Please select a Travel Request.",
+                "confirmText": "Ok"
+            }
         },
-        "confirmPopup": {
-            "title": "Travel Request",
-            "message": "Please select a Travel Request.",
-            "confirmText": "Ok"
-        }
-    },
-    "category": [
-        {
-            "name": "Travel Ticket",
-            "label": "Tickets Expense",
-            "formControls": [
-                {
-                    "type": "select",
-                    "dataType": "int",
-                    "name": "TravelMode",
-                    "isExcluded": false,
-                    "label": "Travel Mode",
-                    "placeholder": "Select Travel Mode",
-                    "value": 0,
-                    "options": [],
-                    "labelKey": "Name",
-                    "valueKey": "Id",
-                    "apiService": "DataService",
-                    "apiMethod": "dataGetTravelMode",
-                    "validations": [
-                        {
-                            "type": "required",
-                            "message": "Travel Mode is required"
-                        }
-                    ]
-                },
-                {
-                    "type": "select",
-                    "dataType": "int",
-                    "name": "AvailedClass",
-                    "dependsOn": "TravelMode",
-                    "isExcluded": false,
-                    "label": "Availed Class",
-                    "placeholder": "Select Availed Class",
-                    "options": [],
-                    "labelKey": "Name",
-                    "valueKey": "Id",
-                    "apiService": "DataService",
-                    "apiMethod": "dataGetTravelClass",
-                    "payloadKey": "TravelModeId",
-                    "value": 0,
-                    "validations": [
-                        {
-                            "type": "required",
-                            "message": "Availed Class is required"
-                        }
-                    ]
-                },
-                {
-                    "type": "date",
-                    "dataType": "datetime",
-                    "name": "TravelDate",
-                    "isExcluded": false,
-                    "label": "Travel Date",
-                    "value": "",
-                    "dependentCases": [
-                        {
-                            "key": "Id",
-                            "inputControls": {
-                                "Currency": "CurrencyId",
-                                "TravelDate": "ReferenceDate"
-                            },
-                            "outputControl": {
-                                "ConversionRate": "ResponseValue.Value"
-                            },
-                            "autoFormat": {
-                                "decimal": ".00"
-                            },
-                            "event": "dateChange",
-                            "requestBody": {},
-                            "apiService": "DataService",
-                            "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
-                        }
-                    ],
-                    "validations": [
-                        {
-                            "type": "required",
-                            "message": "Travel Date is required"
-                        }
-                    ]
-                },
-                {
-                    "type": "text",
-                    "subType": "text",
-                    "dataType": "int",
-                    "autoComplete": true,
-                    "name": "Origin",
-                    "isExcluded": false,
-                    "label": "Origin",
-                    "value": 0,
-                    "options": [],
-                    "labelKey": "City",
-                    "valueKey": "CityMasterId",
-                    "apiService": "NewExpenseService",
-                    "apiMethod": "getMasterNameById",
-                    "validations": [
-                        {
-                            "type": "required",
-                            "message": "Origin is required"
-                        }
-                    ]
-                },
-                {
-                    "type": "text",
-                    "subType": "text",
-                    "dataType": "int",
-                    "autoComplete": true,
-                    "name": "Destination",
-                    "isExcluded": false,
-                    "label": "Destination",
-                    "value": 0,
-                    "options": [],
-                    "labelKey": "City",
-                    "valueKey": "CityMasterId",
-                    "apiService": "NewExpenseService",
-                    "apiMethod": "getMasterNameById",
-                    "validations": [
-                        {
-                            "type": "required",
-                            "message": "Destination is required"
-                        }
-                    ]
-                },
-                {
-                    "type": "select",
-                    "dataType": "int",
-                    "name": "PaymentMode",
-                    "isExcluded": true,
-                    "label": "Payment Type",
-                    "placeholder": "Select Payment Type",
-                    "value": "",
-                    "options": [],
-                    "labelKey": "KeyData",
-                    "valueKey": "KeyDataId",
-                    "apiService": "DataService",
-                    "apiMethod": "dataGetPaymentType",
-                    "validations": [
-                        {
-                            "type": "required",
-                            "message": "Payment Type is required"
-                        }
-                    ]
-                },
-                {
-                    "type": "select",
-                    "dataType": "int",
-                    "name": "Currency",
-                    "isExcluded": true,
-                    "label": "Currency",
-                    "labelKey": "Name",
-                    "valueKey": "Id",
-                    "apiService": "DataService",
-                    "apiMethod": "dataGetCurrencyView",
-                    "value": 0,
-                    "defaultValue": {
-                        "Id": 1,
-                        "Code": "INR",
-                        "Name": "Indian Rupee",
-                        "Alias": "Indian Rupee",
-                        "IsBaseCurrency": true,
-                        "Display": "Indian Rupee : INR"
+        "category": [
+            {
+                "name": "Travel Ticket",
+                "label": "Tickets Expense",
+                "formControls": [
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "TravelMode",
+                        "isExcluded": false,
+                        "label": "Travel Mode",
+                        "placeholder": "Select Travel Mode",
+                        "value": 0,
+                        "options": [],
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetTravelMode",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Travel Mode is required"
+                            }
+                        ]
                     },
-                    "options": [],
-                    "validations": [
-                        {
-                            "type": "required",
-                            "message": "Currency is required"
-                        }
-                    ]
-                },
-                {
-                    "type": "text",
-                    "subType": "text",
-                    "dataType": "numeric",
-                    "name": "ClaimAmount",
-                    "isExcluded": true,
-                    "label": "Amount",
-                    "value": null,
-                    "dependentCases": [
-                        {
-                            "key": "Id",
-                            "inputControls": {
-                                "Currency": "CurrencyId",
-                                "TravelDate": "ReferenceDate"
-                            },
-                            "outputControl": {
-                                "ConversionRate": "ResponseValue.Value"
-                            },
-                            "autoFormat": {
-                                "decimal": ".00"
-                            },
-                            "event": "onBlur",
-                            "requestBody": {},
-                            "apiService": "DataService",
-                            "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
-                        }
-                    ],
-                    "autoFormat": {
-                        "patterns": [
-                            "[^0-9]",
-                            "^0+(?=\\d)"
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "AvailedClass",
+                        "dependsOn": "TravelMode",
+                        "isExcluded": false,
+                        "label": "Availed Class",
+                        "placeholder": "Select Availed Class",
+                        "options": [],
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetTravelClass",
+                        "payloadKey": "TravelModeId",
+                        "value": 0,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Availed Class is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "TravelDate",
+                        "isExcluded": false,
+                        "label": "Travel Date",
+                        "value": "",
+                        "dependentCases": [
+                            {
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "TravelDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "autoFormat": {
+                                    "decimal": ".00"
+                                },
+                                "event": "dateChange",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                            }
                         ],
-                        "range": {
-                            "min": 0,
-                            "max": 10
-                        },
-                        "decimal": ".00",
-                        "setValue": "0.00"
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Travel Date is required"
+                            }
+                        ]
                     },
-                    "validations": [
-                        {
-                            "type": "required",
-                            "message": "Amount is required"
-                        }
-                    ]
-                },
-                {
-                    "type": "text",
-                    "subType": "text",
-                    "dataType": "numeric",
-                    "name": "ConversionRate",
-                    "isExcluded": true,
-                    "label": "Conversion Rate",
-                    "value": "",
-                    "defaultValue": "1",
-                    "autoFormat": {
-                        "patterns": [
-                            "[^0-9]",
-                            "^0+(?=\\d)"
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "int",
+                        "autoComplete": true,
+                        "name": "Origin",
+                        "isExcluded": false,
+                        "label": "Origin",
+                        "value": 0,
+                        "options": [],
+                        "labelKey": "City",
+                        "valueKey": "CityMasterId",
+                        "apiService": "NewExpenseService",
+                        "apiMethod": "getMasterNameById",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Origin is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "int",
+                        "autoComplete": true,
+                        "name": "Destination",
+                        "isExcluded": false,
+                        "label": "Destination",
+                        "value": 0,
+                        "options": [],
+                        "labelKey": "City",
+                        "valueKey": "CityMasterId",
+                        "apiService": "NewExpenseService",
+                        "apiMethod": "getMasterNameById",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Destination is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "PaymentMode",
+                        "isExcluded": true,
+                        "label": "Payment Type",
+                        "placeholder": "Select Payment Type",
+                        "value": "",
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetPaymentType",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Payment Type is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetCurrencyView",
+                        "value": 0,
+                        "defaultValue": {
+                            "Id": 1,
+                            "Code": "INR",
+                            "Name": "Indian Rupee",
+                            "Alias": "Indian Rupee",
+                            "IsBaseCurrency": true,
+                            "Display": "Indian Rupee : INR"
+                        },
+                        "options": [],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Currency is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "ClaimAmount",
+                        "isExcluded": true,
+                        "label": "Amount",
+                        "value": null,
+                        "dependentCases": [
+                            {
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "TravelDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "autoFormat": {
+                                    "decimal": ".00"
+                                },
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                            }
                         ],
-                        "range": {
-                            "min": 0,
-                            "max": 10
-                        },
-                        "decimal": ".00",
-                        "setValue": "1.00"
-                    },
-                    "validations": [
-                        {
-                            "type": "required",
-                            "message": "Conversion Rate is required"
-                        }
-                    ]
-                },
-                {
-                    "type": "gst",
-                    "dataType": "object",
-                    "name": "gst",
-                    "isExcluded": false,
-                    "label": "GST",
-                    "value": null,
-                    "getControl": "ClaimAmount",
-                    "fields": [
-                        {
-                            "name": "ExpenseRequestGstTypeId",
-                            "type": "number",
-                            "value": 0,
-                            "showInUI": false
-                        },
-                        {
-                            "name": "ExpenseRequestDetailId",
-                            "type": "number",
-                            "value": 0,
-                            "showInUI": false
-                        },
-                        {
-                            "name": "GstIn",
-                            "type": "text",
-                            "showInUI": true,
-                            "validations": [
-                                {
-                                    "type": "required",
-                                    "message": "Required"
-                                },
-                                {
-                                    "type": "custom",
-                                    "name": "validateGST",
-                                    "message": "Invalid GST number"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "InvoiceNumber",
-                            "type": "text",
-                            "showInUI": true,
-                            "validations": [
-                                {
-                                    "type": "required",
-                                    "message": "Required"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Amount",
-                            "type": "text",
-                            "showInUI": true,
-                            "autoFormat": {
-                                "patterns": [
-                                    "[^0-9]",
-                                    "^0+(?=\\d)"
-                                ],
-                                "range": {
-                                    "min": 0,
-                                    "max": 10
-                                },
-                                "decimal": ".00",
-                                "setValue": "0.00"
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
                             },
-                            "validations": [
-                                {
-                                    "type": "required",
-                                    "message": "Required"
+                            "decimal": ".00",
+                            "setValue": "0.00"
+                        },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Amount is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "ConversionRate",
+                        "isExcluded": true,
+                        "label": "Conversion Rate",
+                        "value": "",
+                        "defaultValue": "1",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "decimal": ".00",
+                            "setValue": "1.00"
+                        },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Conversion Rate is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "gst",
+                        "dataType": "object",
+                        "name": "gst",
+                        "isExcluded": false,
+                        "label": "GST",
+                        "value": null,
+                        "getControl": "ClaimAmount",
+                        "fields": [
+                            {
+                                "name": "ExpenseRequestGstTypeId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false
+                            },
+                            {
+                                "name": "ExpenseRequestDetailId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false
+                            },
+                            {
+                                "name": "GstIn",
+                                "type": "text",
+                                "showInUI": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    },
+                                    {
+                                        "type": "custom",
+                                        "name": "validateGST",
+                                        "message": "Invalid GST number"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "type": "text",
+                                "showInUI": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Amount",
+                                "type": "text",
+                                "showInUI": true,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    },
+                                    "decimal": ".00",
+                                    "setValue": "0.00"
                                 },
-                                {
-                                    "type": "min",
-                                    "value": 0
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    },
+                                    {
+                                        "type": "min",
+                                        "value": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "SGST",
+                                "type": "text",
+                                "showInUI": true,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    },
+                                    "decimal": ".00",
+                                    "setValue": "0.00"
                                 }
-                            ]
-                        },
-                        {
-                            "name": "SGST",
-                            "type": "text",
-                            "showInUI": true,
-                            "autoFormat": {
-                                "patterns": [
-                                    "[^0-9]",
-                                    "^0+(?=\\d)"
-                                ],
-                                "range": {
-                                    "min": 0,
-                                    "max": 10
-                                },
-                                "decimal": ".00",
-                                "setValue": "0.00"
+                            },
+                            {
+                                "name": "CGST",
+                                "type": "text",
+                                "showInUI": true,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    },
+                                    "decimal": ".00",
+                                    "setValue": "0.00"
+                                }
+                            },
+                            {
+                                "name": "IGST",
+                                "type": "text",
+                                "showInUI": true,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    },
+                                    "decimal": ".00",
+                                    "setValue": "0.00"
+                                }
+                            },
+                            {
+                                "name": "UGST",
+                                "type": "text",
+                                "showInUI": true,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    },
+                                    "decimal": ".00",
+                                    "setValue": "0.00"
+                                }
                             }
-                        },
-                        {
-                            "name": "CGST",
-                            "type": "text",
-                            "showInUI": true,
-                            "autoFormat": {
-                                "patterns": [
-                                    "[^0-9]",
-                                    "^0+(?=\\d)"
-                                ],
-                                "range": {
-                                    "min": 0,
-                                    "max": 10
-                                },
-                                "decimal": ".00",
-                                "setValue": "0.00"
-                            }
-                        },
-                        {
-                            "name": "IGST",
-                            "type": "text",
-                            "showInUI": true,
-                            "autoFormat": {
-                                "patterns": [
-                                    "[^0-9]",
-                                    "^0+(?=\\d)"
-                                ],
-                                "range": {
-                                    "min": 0,
-                                    "max": 10
-                                },
-                                "decimal": ".00",
-                                "setValue": "0.00"
-                            }
-                        },
-                        {
-                            "name": "UGST",
-                            "type": "text",
-                            "showInUI": true,
-                            "autoFormat": {
-                                "patterns": [
-                                    "[^0-9]",
-                                    "^0+(?=\\d)"
-                                ],
-                                "range": {
-                                    "min": 0,
-                                    "max": 10
-                                },
-                                "decimal": ".00",
-                                "setValue": "0.00"
-                            }
+                        ],
+                        "notifications": {
+                            "GSTAmount": "The GST amount should not be greater than the claimed amount.",
+                            "validGSTAmount": "Please enter a valid GST amount.",
+                            "claimedAmount": "Please enter a claimed amount."
                         }
-                    ],
-                    "notifications": {
-                        "GSTAmount": "The GST amount should not be greater than the claimed amount.",
-                        "validGSTAmount": "Please enter a valid GST amount.",
-                        "claimedAmount": "Please enter a claimed amount." 
+                    },
+                    {
+                        "type": "textarea",
+                        "dataType": "string",
+                        "name": "Remarks",
+                        "isExcluded": false,
+                        "label": "Remarks",
+                        "value": ""
+                    },
+                    {
+                        "type": "file",
+                        "dataType": "file",
+                        "name": "attachment",
+                        "isExcluded": false,
+                        "label": "Upload File",
+                        "value": "",
+                        "multiple": true,
+                        "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
+                        "referenceType": 123
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsViolation",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
-                },
-                {
-                    "type": "textarea",
-                    "dataType": "string",
-                    "name": "Remarks",
-                    "isExcluded": false,
-                    "label": "Remarks",
-                    "value": ""
-                },
-                {
-                    "type": "file",
-                    "dataType": "file",
-                    "name": "attachment",
-                    "isExcluded": false,
-                    "label": "Upload File",
-                    "value": "",
-                    "multiple": true,
-                    "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
-                    "referenceType": 123
-                },
-                {
-                    "type": "hidden",
-                    "name": "IsViolation",
-                    "isExcluded": true,
-                    "value": false,
-                    "showInUI": false
-                }
-            ],
-            "submitPolicyValidationApi": {
-                "apiService": "TravelService",
-                "apiMethod": "travelValidateTravelTicketPolicy",
-                "requestBody": {},
-                "otherControls": {
-                    "UserMasterId": "UserMasterId",
-                    "TravelTypeId": "TravelTypeId",
-                    "RequestForId": "RequestForId"
-                },
-                "inputControls": {
-                    "TravelMode": "TravelModeId",
-                    "AvailedClass": "TravelClassId",
-                    "Origin": "FromCityId",
-                    "Destination": "ToCityId",
-                    "TravelDate": "ReferenceDate"
-                },
-                "outputControl": {
-                    "IsViolation": "ResponseValue.IsPolicyViolation"
-                },
-                "confirmPopup": {
-                    "title": "Tickets Expense",
-                    "message": "ResponseValue.Message",
-                    "confirmText": "Ok",
-                    "cancelText": "Cancel"
+                ],
+                "submitPolicyValidationApi": {
+                    "apiService": "TravelService",
+                    "apiMethod": "travelValidateTravelTicketPolicy",
+                    "requestBody": {},
+                    "otherControls": {
+                        "UserMasterId": "UserMasterId",
+                        "TravelTypeId": "TravelTypeId",
+                        "RequestForId": "RequestForId"
+                    },
+                    "inputControls": {
+                        "TravelMode": "TravelModeId",
+                        "AvailedClass": "TravelClassId",
+                        "Origin": "FromCityId",
+                        "Destination": "ToCityId",
+                        "TravelDate": "ReferenceDate"
+                    },
+                    "outputControl": {
+                        "IsViolation": "ResponseValue.IsPolicyViolation"
+                    },
+                    "confirmPopup": {
+                        "title": "Tickets Expense",
+                        "message": "ResponseValue.Message",
+                        "confirmText": "Ok",
+                        "cancelText": "Cancel"
+                    }
                 }
             }
-        }
-    ],
-    "otherDetails": [
-        {
-            "name": "PolicyViolations",
-            "label": "Policy Violations",
-            "Travel Ticket": "You Are Not Eligible To Travel in the selected Mode and Class."
+        ],
+        "otherDetails": [
+            {
+                "name": "PolicyViolations",
+                "label": "Policy Violations",
+                "Travel Ticket": "You Are Not Eligible To Travel in the selected Mode and Class."
+            },
+            {
+                "name": "Approvaldetails",
+                "label": "Approval details"
+            },
+            {
+                "name": "LogDetails",
+                "label": "Log Details"
+            }
+        ],
+        "summaries": [
+            {
+                "id": "expense-summary",
+                "title": "Expense Summary",
+                "isOpen": true,
+                "type": "summary",
+                "items": [
+                    {
+                        "label": "Total Expense",
+                        "key": "totalExpense",
+                        "value": 0.00
+                    },
+                    {
+                        "label": "Less Advance",
+                        "key": "lessAdvance",
+                        "value": 0.00
+                    },
+                    {
+                        "label": "Amount Paid by Company",
+                        "key": "amountPaidByCompany",
+                        "paymentModeId": 93,
+                        "value": 0.00
+                    },
+                    {
+                        "label": "Corporate Credit Card",
+                        "key": "corporateCreditCard",
+                        "paymentModeId": 92,
+                        "value": 0.00
+                    },
+                    {
+                        "label": "Credit Card",
+                        "key": "creditCard",
+                        "paymentModeId": 94,
+                        "value": 0.00
+                    },
+                    {
+                        "label": "Paid By Employee",
+                        "key": "paidByEmployee",
+                        "paymentModeId": 91,
+                        "value": 0.00
+                    },
+                    {
+                        "label": "Advance Return",
+                        "key": "advanceReturn",
+                        "value": 0.00
+                    },
+                    {
+                        "label": "Amount Payable / Receivable",
+                        "key": "amountPayable",
+                        "value": 0.00
+                    }
+                ]
+            },
+            {
+                "id": "category-wise-expense",
+                "title": "Category wise Expense",
+                "isOpen": false,
+                "type": "category",
+                "items": [
+                    {
+                        "label": "Tickets Expense",
+                        "key": "Travel Ticket"
+                    },
+                    {
+                        "label": "Accommodation",
+                        "key": "accommodation"
+                    }
+                ]
+            }
+        ],
+        "justification": {
+            "label": "Justification",
+            "controlName": "justification",
+            "maxLength": 2000,
+            "required": true
         },
-        {
-            "name": "Approvaldetails",
-            "label": "Approval details"
-        },
-        {
-            "name": "LogDetails",
-            "label": "Log Details"
+        "actions": [
+            {
+                "label": "Cancel",
+                "type": "cancel",
+                "class": "btn btn-outline-secondary w-50 mr-10"
+            },
+            {
+                "label": "Save as Draft",
+                "type": "draft",
+                "class": "btn btn-outline-primary w-50"
+            },
+            {
+                "label": "Submit",
+                "type": "submit",
+                "class": "btn btn-primary w-100"
+            }
+        ],
+        "notifications": {
+            "AtLeastOneClaimDataEntry": "Please add at least one claim data entry!"
         }
-    ],
-    "summaries": [
-        {
-            "id": "expense-summary",
-            "title": "Expense Summary",
-            "isOpen": true,
-            "type": "summary",
-            "items": [
-                {
-                    "label": "Total Expense",
-                    "key": "totalExpense",
-                    "value": 0.00
-                },
-                {
-                    "label": "Less Advance",
-                    "key": "lessAdvance",
-                    "value": 0.00
-                },
-                {
-                    "label": "Amount Paid by Company",
-                    "key": "amountPaidByCompany",
-                    "paymentModeId": 93,
-                    "value": 0.00
-                },
-                {
-                    "label": "Corporate Credit Card",
-                    "key": "corporateCreditCard",
-                    "paymentModeId": 92,
-                    "value": 0.00
-                },
-                {
-                    "label": "Credit Card",
-                    "key": "creditCard",
-                    "paymentModeId": 94,
-                    "value": 0.00
-                },
-                {
-                    "label": "Paid By Employee",
-                    "key": "paidByEmployee",
-                    "paymentModeId": 91,
-                    "value": 0.00
-                },
-                {
-                    "label": "Advance Return",
-                    "key": "advanceReturn",
-                    "value": 0.00
-                },
-                {
-                    "label": "Amount Payable / Receivable",
-                    "key": "amountPayable",
-                    "value": 0.00
-                }
-            ]
-        },
-        {
-            "id": "category-wise-expense",
-            "title": "Category wise Expense",
-            "isOpen": false,
-            "type": "category",
-            "items": [
-                {
-                    "label": "Tickets Expense",
-                    "key": "Travel Ticket"
-                },
-                {
-                    "label": "Accommodation",
-                    "key": "accommodation"
-                }
-            ]
-        }
-    ],
-    "justification": {
-        "label": "Justification",
-        "controlName": "justification",
-        "maxLength": 2000,
-        "required": true
     },
-    "actions": [
-        {
-            "label": "Cancel",
-            "type": "cancel",
-            "class": "btn btn-outline-secondary w-50 mr-10"
-        },
-        {
-            "label": "Save as Draft",
-            "type": "draft",
-            "class": "btn btn-outline-primary w-50"
-        },
-        {
-            "label": "Submit",
-            "type": "submit",
-            "class": "btn btn-primary w-100"
-        }
-    ],
-    "notifications": {
-        "AtLeastOneClaimDataEntry": "Please add at least one claim data entry!"
+    "expenseRequestPreviewAndApproval": {
+        "dynamicExpenseDetailModels": [
+            {
+                "name": "Travel Ticket",
+                "label": "Ticket",
+                "data": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [
+                    {
+                        "name": "ClaimDate",
+                        "label": "Date",
+                        "visible": true
+                    },
+                    {
+                        "name": "Origin",
+                        "label": "Origin",
+                        "visible": true
+                    },
+                    {
+                        "name": "Destination",
+                        "label": "Destination",
+                        "visible": true
+                    },
+                    {
+                        "name": "ClaimAmount",
+                        "label": "Claimed",
+                        "visible": true
+                    },
+                    {
+                        "name": "Approved",
+                        "label": "Approved",
+                        "visible": true
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true
+                    },
+                    {
+                        "name": "ConversionRate",
+                        "label": "Conversion",
+                        "visible": true
+                    },
+                    {
+                        "name": "Approved(INR)",
+                        "label": "Approved(INR)",
+                        "visible": true
+                    }
+                ],
+                "nestedTables": [
+                    {
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
     }
 }

@@ -176,7 +176,7 @@ export class MainExpenseComponent {
     this.localTravelTypeList = responses.localTravelTypeList.ResponseValue;
     this.localTravelModeList = responses.localTravelModeList.ResponseValue;
     this.boMealsList = responses.boMealsList.ResponseValue;
-    this.expenseConfig = responses.expenseConfig;
+    this.expenseConfig = responses.expenseConfig.expenseRequest;
 
     this.setupExpenseConfig();
     this.setupCategories();

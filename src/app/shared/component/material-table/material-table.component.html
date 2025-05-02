@@ -1,0 +1,58 @@
+<table mat-table [dataSource]="processedData" multiTemplateDataRows class="mat-elevation-z2">
+
+    <!-- Serial Number Column -->
+    <ng-container matColumnDef="slNo">
+        <th mat-header-cell *matHeaderCellDef>{{ slNoLabel }}</th>
+        <td mat-cell *matCellDef="let row">{{ row.slNo }}</td>
+    </ng-container>
+
+    <!-- Dynamic Columns -->
+    <ng-container *ngFor="let col of visibleColumns" [matColumnDef]="col.name">
+        <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
+        <td mat-cell *matCellDef="let row">{{ row[col.name] }}</td>
+    </ng-container>
+
+    <!-- Header Row -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <!-- Data Row -->
+    <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"></tr>
+
+    <!-- Expand Button Column -->
+    <ng-container matColumnDef="expand">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+            <div class="icons-new">
+                <span class="btn btn-showhide" (click)="toggleRow(row)">
+                    <i [ngClass]="isExpanded(row) ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+                </span>
+            </div>
+        </td>
+    </ng-container>
+
+    <!-- Expanded Detail Row -->
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+
+    <!-- Detail Row Template -->
+    <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
+            <div *ngIf="isExpanded(row)" class="expanded-container">
+
+                <ng-container *ngFor="let nested of nestedTables">
+                    <h4>{{ nested.title }}</h4>
+                    <table mat-table [dataSource]="row[nested.dataKey]" class="sub-table">
+                        <ng-container *ngFor="let col of nested.columns" [matColumnDef]="col.name">
+                            <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
+                            <td mat-cell *matCellDef="let entry">{{ entry[col.name] }}</td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="getNestedColumnKeys(nested.columns)"></tr>
+                        <tr mat-row *matRowDef="let entry; columns: getNestedColumnKeys(nested.columns)"></tr>
+                    </table>
+                </ng-container>
+
+            </div>
+        </td>
+    </ng-container>
+
+
+</table>
