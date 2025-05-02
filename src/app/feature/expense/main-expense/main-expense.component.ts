@@ -82,8 +82,7 @@ export class MainExpenseComponent {
   justificationForm: any = new FormGroup({
     justification: new FormControl('', Validators.required)
   });
-  summaries: any;
-  expenseSummary: any = {};
+  expenseSummary: any;
   expenseConfig: any;
   expenseRequestForm: FormGroup = new FormGroup({});
   formControls: any = [];
@@ -215,7 +214,7 @@ export class MainExpenseComponent {
       }))
     }));
 
-    this.summaries = this.expenseConfig.summaries;
+    this.expenseSummary = this.expenseConfig.summaries;
   }
 
   // Setup validation rules for justification text field if required.

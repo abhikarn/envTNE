@@ -1,28 +1,32 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ExpansionPanelComponent } from '../../../shared/component/expansion-panel/expansion-panel.component';
 import { MaterialTableComponent } from '../../../shared/component/material-table/material-table.component';
 import { ActivatedRoute } from '@angular/router';
 import { NewExpenseService } from '../service/new-expense.service';
 import { take } from 'rxjs';
+import { SummaryComponent } from '../../../shared/component/summary/summary.component';
 
 @Component({
   selector: 'app-preview',
   imports: [
     CommonModule,
     ExpansionPanelComponent,
-    MaterialTableComponent
+    MaterialTableComponent,
+    SummaryComponent
   ],
   templateUrl: './preview.component.html',
   styleUrl: './preview.component.scss'
 })
 export class PreviewComponent {
+  @ViewChild(SummaryComponent) summaryComponent: any;
   expenseRequestPreviewData: any;
 
   expenseRequestPreviewConfig: any;
 
   loadData = false;
   expenseRequestId: any = 0;
+  expenseSummary: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +40,7 @@ export class PreviewComponent {
       next: (response: any) => {
         if (response) {
           this.expenseRequestPreviewConfig = response.expenseRequestPreviewAndApproval;
+          this.expenseSummary = response.expenseRequest.summaries;
         }
       }
     });
@@ -64,6 +69,9 @@ export class PreviewComponent {
           }
         })
       })
+      setTimeout(() => {
+        this.summaryComponent.calculatTotalExpenseAmountPreview();
+      }, 1000);
       this.loadData = true;
     }
   }

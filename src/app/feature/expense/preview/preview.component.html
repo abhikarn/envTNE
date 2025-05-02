@@ -1072,49 +1072,10 @@
                    <!-- left-container-wider -->
                    <div class="right-container-nrw rt-aside-fixed">
                       <div class="row-wrapper common-block px-3 py-3">
-                         <div class="accordion accordion-flush preview-standard-view" id="accordionFlushExample">
-                            <!-- accordion-item -->
-                            <div class="accordion-item">
-                               <h2 class="accordion-header" id="flush-headingOneOne">
-                                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneOne" aria-expanded="true" aria-controls="flush-collapseOneOne" fdprocessedid="skeknp">
-                                  Expense Summary
-                                  </button>
-                               </h2>
-                               <div id="flush-collapseOneOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOneOne" data-bs-parent="#accordionFlushExample" style="">
-                                  <div class="accordion-body">
-                                     <ul class="summary-list">
-                                        <li>Total Expense <span>6000.00</span></li>
-                                        <li>Less Advance<span>20000.00</span></li>
-                                        <li>Amount Paid by Company <span>0.00</span></li>
-                                        <li>Corporate Credit Card <span>0.00</span></li>
-                                        <li>Cash <span>0.00</span></li>
-                                        <li>Amount Payable / Receivable <span>26000.00</span></li>
-                                     </ul>
-                                  </div>
-                               </div>
-                            </div>
-                            <!-- accordion-item -->
-                            <div class="accordion-item">
-                               <h2 class="accordion-header" id="flush-headingTwo">
-                                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="true" aria-controls="flush-collapseTwo" fdprocessedid="ygmf9c">
-                                  Category wise Expense 
-                                  </button>
-                               </h2>
-                               <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample" style="">
-                                  <div class="accordion-body">
-                                     <ul class="summary-list">
-                                        <li>Local Conveyance <span>600.00</span></li>
-                                        <li>Food Allowance <span>800.00</span></li>
-                                        <li>Accommodation <span>5000.00</span></li>
-                                        <li>Boarding Allowance <span>750.00</span></li>
-                                        <li>Others <span>0.00</span></li>
-                                        <li>Total<span>7210.00</span></li>
-                                     </ul>
-                                  </div>
-                               </div>
-                            </div>
-                            <!-- accordion-item -->
-                         </div>
+                         <!-- Summary -->
+                          @if (loadData) {
+                           <app-summary [summaries]="expenseSummary" [expenseRequestData]="expenseRequestPreviewData"></app-summary>
+                          }
                          <div class="row mt-3">
                             <div class="col-md-12">
                                <div class="form-group chm-formgroup mb-2">
