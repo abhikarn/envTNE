@@ -1,0 +1,24 @@
+.modal-header {
+    background: #0f8dc0;
+    color: white;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: 16px;
+    background: white;
+}
+
+.attachment-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.attachment-table th,
+.attachment-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #ddd;
+}

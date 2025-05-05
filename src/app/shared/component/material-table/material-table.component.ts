@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { AttachmentModalComponent } from '../attachment-modal/attachment-modal.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-material-table',
@@ -9,7 +12,8 @@ import { MatTableModule } from '@angular/material/table';
   imports: [
     CommonModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
   ],
   templateUrl: './material-table.component.html',
   styleUrl: './material-table.component.scss'
@@ -19,9 +23,12 @@ export class MaterialTableComponent implements OnChanges {
   @Input() columnConfig: any[] = [];
   @Input() slNoLabel: string = 'Sl. No.';
   @Input() nestedTables: any[] = [];
+  @Input() otherFields: any[] = [];
 
   expandedRow: any | null = null;
   processedData: any[] = [];
+
+  constructor(private dialog: MatDialog) { }
 
   ngOnChanges(changes: SimpleChanges) {
     // Update processedData when input changes
@@ -33,6 +40,9 @@ export class MaterialTableComponent implements OnChanges {
     } else {
       this.processedData = [];
     }
+  }
+
+  ngOnInit() {
   }
 
   get visibleColumns() {
@@ -58,5 +68,15 @@ export class MaterialTableComponent implements OnChanges {
   getNestedColumnKeys(columns: any[]): string[] {
     return columns?.map(c => c.name) ?? [];
   }
-  
+
+  showAttachments(attachments: any[]) {
+    if (!attachments || attachments.length === 0) return;
+
+    this.dialog.open(AttachmentModalComponent, {
+      width: '500px',
+      data: { attachments },
+      panelClass: 'custom-modal-panel'
+    });
+  }
+
 }

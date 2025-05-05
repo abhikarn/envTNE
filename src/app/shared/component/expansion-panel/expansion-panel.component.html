@@ -3,6 +3,11 @@
         <mat-panel-title>
             {{ title }}
         </mat-panel-title>
+        <mat-panel-description>
+            @if (amount) {
+            {{ amount }}
+            }
+        </mat-panel-description>
     </mat-expansion-panel-header>
 
     <ng-content></ng-content>

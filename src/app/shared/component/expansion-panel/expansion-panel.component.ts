@@ -12,4 +12,5 @@ import { MatExpansionModule } from '@angular/material/expansion';
 export class ExpansionPanelComponent {
   @Input() title: string = '';
   @Input() expanded: boolean = false;
+  @Input() amount = 0;
 }

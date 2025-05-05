@@ -587,6 +587,7 @@
                 "name": "Travel Ticket",
                 "label": "Ticket",
                 "data": [],
+                "amount": 0,
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
@@ -671,6 +672,23 @@
                                 "visible": true
                             }
                         ]
+                    }
+                ],
+                "otherFields": [
+                    {
+                        "name": "TravelMode",
+                        "label": "Travel Mode",
+                        "value": ""
+                    },
+                    {
+                        "name": "AvailedClass",
+                        "label": "AvailedClass",
+                        "value": ""
+                    },
+                    {
+                        "name": "Remarks",
+                        "label": "Remarks",
+                        "value": ""
                     }
                 ]
             }
