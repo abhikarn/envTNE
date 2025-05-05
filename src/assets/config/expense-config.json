@@ -477,7 +477,27 @@
             },
             {
                 "name": "Approvaldetails",
-                "label": "Approval details"
+                "label": "Approval details",
+                "table": {
+                    "columns": [
+                        {
+                            "name": "actionTakenBy",
+                            "label": "Approver Name"
+                        },
+                        {
+                            "name": "actionTakenOnString",
+                            "label": "Action Date"
+                        },
+                        {
+                            "name": "actionStatus",
+                            "label": "Status"
+                        },
+                        {
+                            "name": "remarks",
+                            "label": "Remarks"
+                        }
+                    ]
+                }
             },
             {
                 "name": "LogDetails",
@@ -612,7 +632,7 @@
                         "visible": true
                     },
                     {
-                        "name": "Approved",
+                        "name": "ApprovedAmount",
                         "label": "Approved",
                         "visible": true
                     },
