@@ -22,4 +22,12 @@ export class NewExpenseService {
   getMasterNameById(request: any) {
     return this.httpClient.post<any>(`${this.basePath}GetMasterNameById`, request);
   }
+
+  getExpenseRequestDetailPreview(request: any) {
+    return this.httpClient.post<any>(`${this.basePath}ExpensesRequestDetailPreviewGet`, request);
+  }
+
+  getExpenseConfig() {
+    return this.httpClient.get<any>('/assets/config/expense-config.json');
+  }
 }

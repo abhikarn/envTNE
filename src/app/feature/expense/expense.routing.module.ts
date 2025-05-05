@@ -25,7 +25,7 @@ export const routes: Routes = [
         loadComponent:()=>import('./dashboard/dashboard.component').then(m=>m.DashboardComponent)
       },
       {
-        path:'preview',
+        path:'preview/:id',
         loadComponent:()=>import('./preview/preview.component').then(m=>m.PreviewComponent)
       }
     ]
