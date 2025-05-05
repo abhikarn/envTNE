@@ -1,242 +1,264 @@
- 
-    <div class="page-title">
-       <h2 class="page-header">Travel Expense Request Preview</h2>
-    </div>
-    <div class="app-main-wrapper">
-       <div class="inn-main-hold">
-          <div class="flex-wrapper-top">
-             <div class="all-data-wrapper">
-                <div class="global-container-hold">
-                   <div class="left-container-wider scroll-left-align mar-tmd3">
-                      <div class="preview-child-section mb-3">
-                         <div class="preview-head-view">
-                            <div class="preview-head-child d-flex align-items-start justify-content-between">
-                               <span class="phv-icon me-2"><i class="fa-solid fa-file-signature"></i></span>
-                               <div>
-                                  <label class="name-label-head">Request No :</label> <br>
-                                  <span class="name-label-det">TR/2022/2/110</span>
-                               </div>
-                            </div>
-                            <div class="preview-head-child d-flex align-items-start justify-content-between">
-                               <span class="phv-icon me-2"><i class="fa fa-user" aria-hidden="true"></i></span>
-                               <div>
-                                  <label class="name-label-head">Requester Name :</label><br>
-                                  <span class="name-label-det"><a href="#" class="phv-link" data-bs-toggle="modal" data-bs-target="#req-all-details">Ramesh Gupta</a></span>
-                               </div>
-                            </div>
-                            <div class="preview-head-child d-flex align-items-start justify-content-between">
-                               <span class="phv-icon me-2"><i class="fa-solid fa-user-gear"></i></span>
-                               <div>
-                                  <label class="name-label-head">Pending:</label><br>
-                                  <span class="name-label-det">EMPLOYEE5 | SDS00288</span>
-                               </div>
-                            </div>
-                            <div class="preview-head-child d-flex align-items-start justify-content-between">
-                               <span class="phv-icon me-2"><i class="fa-solid fa-pencil"></i></span>
-                               <div>
-                                  <label class="name-label-head">Status:</label><br>
-                                  <span class="status-blue status-common">
-                                  PENDING FOR APPROVAL
-                                  </span>
-                               </div>
-                            </div>
-                         </div>
-                      </div>
-                      <div class="common-block  mb-3">
-                         <div class="d-flex align-items-center justify-content-between">
-                            <h6 class="common-title fw-bold mb-3">Request Details </h6>
-                         </div>
-                         <div class="row">
-                            <div class="col-md-6">
-                               <div class="trl-preview-wrapper">
-                                  <div class="trl-readview-item">
-                                     <div class="trl-req-head">
-                                        <label>Base Location</label>
-                                     </div>
-                                     <div class="trl-req-detail">
-                                        <span>LOC-78</span>
-                                     </div>
-                                  </div>
-                               </div>
-                               <div class="trl-preview-wrapper">
-                                  <div class="trl-readview-item">
-                                     <div class="trl-req-head">
-                                        <label>Linked Request </label>
-                                     </div>
-                                     <div class="trl-req-detail">
-                                        <p data-bs-toggle="modal" data-bs-target="#travel-previewreadonly">TR/2022/2/71</p>
-                                     </div>
-                                  </div>
-                               </div>
-                               <div class="trl-preview-wrapper">
-                                  <div class="trl-readview-item">
-                                     <div class="trl-req-head">
-                                        <label>Designation   </label>
-                                     </div>
-                                     <div class="trl-req-detail"> 
-                                        <span>Management Trainee </span>
-                                     </div>
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="col-md-6">
-                               <div class="trl-preview-wrapper">
-                                  <div class="trl-readview-item">
-                                     <div class="trl-req-head">
-                                        <label>Billable Cost Centre</label>
-                                     </div>
-                                     <div class="trl-req-detail">
-                                        <span>COO - Office [ 16050 ]</span>
-                                     </div>
-                                  </div>
-                               </div>
-                               <div class="trl-preview-wrapper">
-                                  <div class="trl-readview-item">
-                                     <div class="trl-req-head">
-                                        <label>Department </label>
-                                     </div>
-                                     <div class="trl-req-detail">
-                                        <span>DEPT-3617
-                                        </span>
-                                     </div>
-                                  </div>
-                               </div>
-                               <div class="trl-preview-wrapper">
-                                  <div class="trl-readview-item">
-                                     <div class="trl-req-head">
-                                        <label>Grade </label>
-                                     </div>
-                                     <div class="trl-req-detail">
-                                        <span> M6
-                                        </span>
-                                     </div>
-                                  </div>
-                               </div>
-                            </div>
-                         </div>
-                      </div>
-
-                      <div class="row-wrapper common-block px-3 py-3">
-                        <div class="accordion accordion-flush preview-standard-view" id="accordionFlushExample">
-                           @if(loadData) {
-                              @for (category of expenseRequestPreviewConfig?.dynamicExpenseDetailModels; track category) {
-                                 <app-expansion-panel [title]="category.label" [expanded]="category.expanded" [amount]="category.amount">
-                                    @if(category.columns) {
-                                       <app-material-table
-                                         [data]="category.data"
-                                         [columnConfig]="category.columns"
-                                         [slNoLabel]="category.slNoLabel"
-                                         [nestedTables]="category.nestedTables"
-                                         [otherFields]="otherFields">
-                                       </app-material-table>
-                                     }
-                                 </app-expansion-panel>
-                               }
-                           }
-                          
+<div class="page-title">
+   <h2 class="page-header">Travel Expense Request Preview</h2>
+</div>
+<div class="app-main-wrapper">
+   <div class="inn-main-hold">
+      <div class="flex-wrapper-top">
+         <div class="all-data-wrapper">
+            <div class="global-container-hold">
+               <div class="left-container-wider scroll-left-align mar-tmd3">
+                  <div class="preview-child-section mb-3">
+                     <div class="preview-head-view">
+                        <div class="preview-head-child d-flex align-items-start justify-content-between">
+                           <span class="phv-icon me-2"><i class="fa-solid fa-file-signature"></i></span>
+                           <div>
+                              <label class="name-label-head">Request No :</label> <br>
+                              <span class="name-label-det">TR/2022/2/110</span>
+                           </div>
+                        </div>
+                        <div class="preview-head-child d-flex align-items-start justify-content-between">
+                           <span class="phv-icon me-2"><i class="fa fa-user" aria-hidden="true"></i></span>
+                           <div>
+                              <label class="name-label-head">Requester Name :</label><br>
+                              <span class="name-label-det"><a href="#" class="phv-link" data-bs-toggle="modal"
+                                    data-bs-target="#req-all-details">Ramesh Gupta</a></span>
+                           </div>
+                        </div>
+                        <div class="preview-head-child d-flex align-items-start justify-content-between">
+                           <span class="phv-icon me-2"><i class="fa-solid fa-user-gear"></i></span>
+                           <div>
+                              <label class="name-label-head">Pending:</label><br>
+                              <span class="name-label-det">EMPLOYEE5 | SDS00288</span>
+                           </div>
+                        </div>
+                        <div class="preview-head-child d-flex align-items-start justify-content-between">
+                           <span class="phv-icon me-2"><i class="fa-solid fa-pencil"></i></span>
+                           <div>
+                              <label class="name-label-head">Status:</label><br>
+                              <span class="status-blue status-common">
+                                 PENDING FOR APPROVAL
+                              </span>
+                           </div>
                         </div>
                      </div>
+                  </div>
+                  <div class="common-block  mb-3">
+                     <div class="d-flex align-items-center justify-content-between">
+                        <h6 class="common-title fw-bold mb-3">Request Details </h6>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="trl-preview-wrapper">
+                              <div class="trl-readview-item">
+                                 <div class="trl-req-head">
+                                    <label>Base Location</label>
+                                 </div>
+                                 <div class="trl-req-detail">
+                                    <span>LOC-78</span>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="trl-preview-wrapper">
+                              <div class="trl-readview-item">
+                                 <div class="trl-req-head">
+                                    <label>Linked Request </label>
+                                 </div>
+                                 <div class="trl-req-detail">
+                                    <p data-bs-toggle="modal" data-bs-target="#travel-previewreadonly">TR/2022/2/71</p>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="trl-preview-wrapper">
+                              <div class="trl-readview-item">
+                                 <div class="trl-req-head">
+                                    <label>Designation </label>
+                                 </div>
+                                 <div class="trl-req-detail">
+                                    <span>Management Trainee </span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="trl-preview-wrapper">
+                              <div class="trl-readview-item">
+                                 <div class="trl-req-head">
+                                    <label>Billable Cost Centre</label>
+                                 </div>
+                                 <div class="trl-req-detail">
+                                    <span>COO - Office [ 16050 ]</span>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="trl-preview-wrapper">
+                              <div class="trl-readview-item">
+                                 <div class="trl-req-head">
+                                    <label>Department </label>
+                                 </div>
+                                 <div class="trl-req-detail">
+                                    <span>DEPT-3617
+                                    </span>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="trl-preview-wrapper">
+                              <div class="trl-readview-item">
+                                 <div class="trl-req-head">
+                                    <label>Grade </label>
+                                 </div>
+                                 <div class="trl-req-detail">
+                                    <span> M6
+                                    </span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
 
-                     <!-- Other Details -->
-                     <div class="row mt-2">
-                        <div class="col-md-12">
-                           <mat-tab-group fitInkBarToContent>
-                              @for (detail of otherDetails; track detail) {
-                              <mat-tab>
-                                 @switch (detail.name) {
-                                 @case ("PolicyViolations") {
-                                 <ng-template mat-tab-label>
-                                    <span>{{detail.label}}</span>
-                                 </ng-template>
-                     
-                                 @for (expenseRequest of expenseRequestPreviewData?.dynamicExpenseDetailModels; track $index) {
-                                 @for (data of expenseRequest.data; track $index) {
-                                 @if (data?.IsViolation) {
-                                 <ul class="policy-vio-list">
-                                    <li>
-                                       <span class="fa-pv"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
-                                       {{expenseRequest.name}}: {{detail[expenseRequest.name]}}
-                                    </li>
-                                 </ul>
-                                 }
-                                 }
-                                 }
-                                 }
-                                 @case ("Approvaldetails") {
-                                 <ng-template mat-tab-label>
-                                    <span>{{detail.label}}</span>
-                                 </ng-template>
-                                 <ng-template matTabContent>
-                     
-                                 </ng-template>
-                                 }
-                                 @case ("LogDetails") {
-                                 <ng-template mat-tab-label>
-                                    <span>{{detail.label}}</span>
-                                 </ng-template>
-                                 <div class="row mt-2">
-                                    <div class="col-md-12">
-                                       <div class="time-frame-wrapper">
-                                          <div class="time-log-axis">
-                                             @for (log of expenseRequestPreviewData?.expenseRequestLog; track $index) {
-                                             <div class="tfl-child">
-                                                <ul>
-                                                   <li><span><i class="fa fa-calendar-check-o"
-                                                            aria-hidden="true"></i></span>{{log?.actionDatetimeString}}
-                                                   </li>
-                                                   <li><span><i class="fa fa-check-square-o"
-                                                            aria-hidden="true"></i></span>{{log?.actionStatus}}</li>
-                                                   <li><span><i class="fa fa-user-circle-o"
-                                                            aria-hidden="true"></i></span>{{log?.actionByName}}</li>
-                                                   <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>{{log?.actionRemarks}}
-                                                   </li>
-                                                </ul>
-                                             </div>
-                                             }
+                  <div class="row-wrapper common-block px-3 py-3">
+                     <div class="accordion accordion-flush preview-standard-view" id="accordionFlushExample">
+                        @if(loadData) {
+                        @for (category of expenseRequestPreviewConfig?.dynamicExpenseDetailModels; track category) {
+                        <app-expansion-panel [title]="category.label" [expanded]="category.expanded"
+                           [amount]="category.amount">
+                           @if(category.columns) {
+                           <app-material-table [data]="category.data" [columnConfig]="category.columns"
+                              [slNoLabel]="category.slNoLabel" [nestedTables]="category.nestedTables"
+                              [otherFields]="otherFields">
+                           </app-material-table>
+                           }
+                        </app-expansion-panel>
+                        }
+                        }
+
+                     </div>
+                  </div>
+
+                  <!-- Other Details -->
+                  <div class="row mt-2">
+                     <div class="col-md-12">
+                        <mat-tab-group fitInkBarToContent>
+                           @for (detail of otherDetails; track detail) {
+                           <mat-tab>
+                              @switch (detail.name) {
+                              @case ("PolicyViolations") {
+                              <ng-template mat-tab-label>
+                                 <span>{{detail.label}}</span>
+                              </ng-template>
+
+                              @for (expenseRequest of expenseRequestPreviewData?.dynamicExpenseDetailModels; track
+                              $index) {
+                              @for (data of expenseRequest.data; track $index) {
+                              @if (data?.IsViolation) {
+                              <ul class="policy-vio-list">
+                                 <li>
+                                    <span class="fa-pv"><i class="fa fa-exclamation-triangle"
+                                          aria-hidden="true"></i></span>
+                                    {{expenseRequest.name}}: {{detail[expenseRequest.name]}}
+                                 </li>
+                              </ul>
+                              }
+                              }
+                              }
+                              }
+                              @case ("Approvaldetails") {
+                              <ng-template mat-tab-label>
+                                 <span>{{detail.label}}</span>
+                              </ng-template>
+                              <div class="table-responsive mt-3">
+                                 <table
+                                    class="table color-table d-table table-cust tbl-sml no-sorting td-firstdata-center vioColor">
+                                    <thead>
+                                       <tr>
+                                          <th>Sl.No</th>
+                                          @for (column of detail?.table.columns; track column) {
+                                          <th>{{ column?.label }}</th>
+                                          }
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       @for (approvalTransaction of
+                                       expenseRequestPreviewData?.expenseApprovalTransaction; track $index) {
+                                       <tr>
+                                          <td>{{ $index + 1 }}</td> <!-- Serial Number -->
+                                          @for (column of detail?.table.columns; track $index) {
+                                          <td>{{ approvalTransaction [column?.name] }}</td>
+                                          }
+                                       </tr>
+                                       }
+                                    </tbody>
+                                 </table>
+                              </div>
+                              }
+                              @case ("LogDetails") {
+                              <ng-template mat-tab-label>
+                                 <span>{{detail.label}}</span>
+                              </ng-template>
+                              <div class="row mt-2">
+                                 <div class="col-md-12">
+                                    <div class="time-frame-wrapper">
+                                       <div class="time-log-axis">
+                                          @for (log of expenseRequestPreviewData?.expenseRequestLog; track $index) {
+                                          <div class="tfl-child">
+                                             <ul>
+                                                <li><span><i class="fa fa-calendar-check-o"
+                                                         aria-hidden="true"></i></span>{{log?.actionDatetimeString}}
+                                                </li>
+                                                <li><span><i class="fa fa-check-square-o"
+                                                         aria-hidden="true"></i></span>{{log?.actionStatus}}</li>
+                                                <li><span><i class="fa fa-user-circle-o"
+                                                         aria-hidden="true"></i></span>{{log?.actionByName}}</li>
+                                                <li><span><i class="fa fa-commenting"
+                                                         aria-hidden="true"></i></span>{{log?.actionRemarks}}
+                                                </li>
+                                             </ul>
                                           </div>
+                                          }
                                        </div>
                                     </div>
                                  </div>
-                                 }
-                                 }
-                              </mat-tab>
+                              </div>
                               }
-                           </mat-tab-group>
+                              }
+                           </mat-tab>
+                           }
+                        </mat-tab-group>
+                     </div>
+                  </div>
+               </div>
+               <!-- left-container-wider -->
+               <div class="right-container-nrw rt-aside-fixed">
+                  <div class="row-wrapper common-block px-3 py-3">
+                     <!-- Summary -->
+                     @if (loadData) {
+                     <app-summary [summaries]="expenseSummary"
+                        [expenseRequestData]="expenseRequestPreviewData"></app-summary>
+                     }
+                     <div class="row mt-3">
+                        <div class="col-md-12">
+                           <div class="form-group chm-formgroup mb-2">
+                              <label>Justification</label>
+                              <p>
+                                 {{expenseRequestPreviewData?.remarks || ''}}
+                              </p>
+                           </div>
                         </div>
                      </div>
-                   </div>
-                   <!-- left-container-wider -->
-                   <div class="right-container-nrw rt-aside-fixed">
-                      <div class="row-wrapper common-block px-3 py-3">
-                         <!-- Summary -->
-                          @if (loadData) {
-                           <app-summary [summaries]="expenseSummary" [expenseRequestData]="expenseRequestPreviewData"></app-summary>
-                          }
-                         <div class="row mt-3">
-                            <div class="col-md-12">
-                               <div class="form-group chm-formgroup mb-2">
-                                  <label>Justification</label>
-                                  <p>
-                                     {{expenseRequestPreviewData?.remarks || ''}} 
-                                  </p>
-                               </div>
-                            </div>
-                         </div>
-                      </div>
-                      <div class="row mt-3">
-                         <div class="col-md-12">
-                            <div class="main-btn-hold d-flex flex-column  ">
-                               <div class="text-end">
-                                  <a href="claim-expense.html" class="btn btn-outline-secondary me-2 w-50">Back</a>
-                               </div>
-                            </div>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-             </div>
-             <!-- all-data-wrapper -->
-          </div>
-       </div>
-    </div>
- 
+                  </div>
+                  <div class="row mt-3">
+                     <div class="col-md-12">
+                        <div class="main-btn-hold d-flex flex-column  ">
+                           <div class="text-end">
+                              <a href="claim-expense.html" class="btn btn-outline-secondary me-2 w-50">Back</a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- all-data-wrapper -->
+      </div>
+   </div>
+</div>

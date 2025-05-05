@@ -67,3 +67,11 @@ h4 {
   pointer-events: none;
   cursor: default;
 }
+
+.violation-row {
+  background-color: #ffe5e5 !important;
+}
+
+.violation-icon {
+  color: #d32f2f !important; // red shade
+}
