@@ -90,4 +90,5 @@ export class SummaryComponent {
       targetItem.value = (currentValue + addedValue).toFixed(2);
     }
   }
+
 }

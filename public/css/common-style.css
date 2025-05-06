@@ -11304,19 +11304,7 @@ button:focus {
             margin: 10px 0 16px 0;
         }
 
-.preview-head-view {
-    width: 100%;
-    border: 1px solid rgba(255, 130, 1, 0.4);
-    background: rgba(255, 130, 1, 0.08);
-    padding: 10px;
-    box-sizing: border-box;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    position: relative;
-}
-
+ 
 .preview-child-section.child-wrapper-body {
 }
 
@@ -11325,18 +11313,7 @@ button:focus {
     margin-bottom: 5px;
 }
 
-    .preview-head-view .preview-head-child .phv-icon {
-        background: rgba(255, 130, 1, 0.4);
-        color: rgba(0, 0, 0, 0.5);
-        width: 30px;
-        height: 30px;
-        display: inline-flex;
-        border-radius: 500px;
-        justify-content: center;
-        align-items: center;
-        font-size: 18px;
-        margin-right: 4px;
-    }
+ 
 
     .preview-head-view .preview-head-child .name-label-head {
         color: #333333;
@@ -11347,24 +11324,7 @@ button:focus {
         margin: 0 0;
     }
 
-    .preview-head-view .preview-head-child .name-label-det {
-        color: #777777;
-        font-weight: 600;
-        font-size: 14px;
-        margin-left: 5px;
-    }
-
-a.phv-link {
-    background: rgba(232, 87, 58, 0.1);
-    padding: 5px 20px;
-    border: 1px dashed rgba(232, 87, 58, 0.6);
-    border-radius: 4px;
-    color: #e8573a;
-    text-decoration: none;
-    cursor: pointer;
-    font-weight: 500;
-}
-
+ 
     a.phv-link .more-details {
         cursor: pointer;
     }
@@ -17637,18 +17597,16 @@ button:focus {
             margin: 10px 0 16px 0;
         }
 
-.preview-head-view {
-    width: 100%;
-    border: 1px solid rgba(132, 206, 209, 0.4);
-    background: rgba(132, 206, 209, 0.1);
-    padding: 10px;
-    box-sizing: border-box;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
+        .preview-head-view {
+            width: 100%;
+            background: #F7F7FA;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        } 
 .preview-child-section.child-wrapper-body {
 }
 
@@ -17656,45 +17614,25 @@ button:focus {
     margin-right: 30px;
 }
 
-    .preview-head-view .preview-head-child .phv-icon {
-        background: rgba(0, 180, 216, 0.15);
-        color: #777777;
-        width: 30px;
-        height: 30px;
-        display: inline-flex;
-        border-radius: 500px;
-        justify-content: center;
-        align-items: center;
-        font-size: 18px;
-        margin-right: 4px;
-    }
+ 
 
-    .preview-head-view .preview-head-child .name-label-head {
-        color: #333333;
-        font-weight: 600;
-        line-height: 16px;
-        font-size: 14px;
-        padding: 0 0;
-        margin: 0 0;
-    }
-
-    .preview-head-view .preview-head-child .name-label-det {
-        color: #555555;
-        font-weight: 600;
-        font-size: 14px;
-        margin-left: 5px;
-    }
-
-a.phv-link {
-    background: rgba(0, 119, 182, 0.1);
-    padding: 5px 20px;
-    border: 1px dashed rgba(0, 119, 182, 0.6);
-    border-radius: 4px;
-    color: #03045e;
-    text-decoration: none;
-    cursor: pointer;
+.preview-head-view .preview-head-child .name-label-head {
+    color: #8F90A6;
+    font-weight: 600;
+    line-height: 16px;
+    font-size: 12px;
+    padding: 0 0;
+    margin: 0 0;
 }
 
+.preview-head-view .preview-head-child .name-label-det {
+    /* color: #555555; */
+    /* font-weight: 600; */
+    font-size: 12px;
+     margin-left: 0px;  
+}
+
+ 
     a.phv-link .more-details {
         cursor: pointer;
     }
@@ -22054,17 +21992,12 @@ span.status-grey.mw50 {
             min-width: calc(100% - 150px);
             width: calc(100% - 150px);
         }
-
-            .trl-preview-wrapper .trl-readview-item .trl-req-detail p {
-                font-size: inherit;
-                color: #242424;
-                font-weight: 500;
-                line-height: 16px;
-                padding: 0 0;
-                margin: 0 0;
-                letter-spacing: 0.2px;
-            }
-
+        .trl-preview-wrapper .trl-readview-item .trl-req-detail p {
+            font-size: 12px;
+            line-height: 16px;
+            padding: 0 0;
+            margin: 0 0;
+        }
 
 .containerCB {
     display: block;

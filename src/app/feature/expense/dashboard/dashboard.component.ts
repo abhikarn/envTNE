@@ -1,5 +1,5 @@
 
-import { Component, DestroyRef, Directive, ElementRef, HostListener, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, Directive, ElementRef, HostListener, inject, OnInit, viewChild, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { CityAutocompleteParam, DashboardService, DataService, ExpenseRequestModel, ExpenseService, TravelService, ExpenseRequestDashboardParam } from '../../../../../tne-api';
@@ -59,6 +59,7 @@ export const ELEMENT_DATA: any[] = [];
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
+  // encapsulation:viewChild,
   encapsulation: ViewEncapsulation.None
 })
 
@@ -115,7 +116,7 @@ export class DashboardComponent implements OnInit {
       ActionBy: this.authService.getUserMasterId(),
     }
     this.dashboardService.dashboardGetExpenseRequestDashboard(payloadData).subscribe(data => {
-      debugger;
+      
       let requestData = data;
       this.expenseRequesData = requestData.ResponseValue as any[];
       this.statusWiseExpenseDataCount = {

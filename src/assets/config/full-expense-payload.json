@@ -1,0 +1,70 @@
+{
+    "IsDraft": true,
+    "ExpenseRequestId": 0,
+    "RequestForId": 80,
+    "RequesterId": 4,
+    "TravelRequestId": 183,
+    "RequestDate": "2025-04-24T04:48:35.465Z",
+    "Purpose": " Residential Program",
+    "CostCentreId": 0,
+    "BillableCostCentreId": 0,
+    "Remarks": "Test Justification",
+    "ActionBy": 4,
+    "dynamicExpenseDetailModels": [
+        {
+            "name": "Travel Ticket",
+            "data": [
+                {
+                    "ReferenceId": 0,
+                    "TravelMode": 3,
+                    "AvailedClass": 7,
+                    "TravelDate": "2024-03-24T18:30:00.000Z",
+                    "Origin": 2,
+                    "Destination": 12,
+                    "Remarks": "Test",                    
+                    "excludedData": {
+                        "PaymentMode": 91,
+                        "Currency": 1,
+                        "ClaimAmount": "1000.00",
+                        "ConversionRate": "1.00",
+                        "IsViolation": false
+                    },
+                    "gst": [
+                        {
+                            "ExpenseRequestGstTypeId":0,
+                            "ExpenseRequestDetailId":0,
+                            "GstIn": "XXAABPU1234C1Z5",
+                            "InvoiceNumber": "B01",
+                            "Amount": "500",
+                            "SGST": "5",
+                            "CGST": "5",
+                            "IGST": "5",
+                            "UGST": "5"
+                        },
+                        {
+                            "ExpenseRequestGstTypeId":0,
+                            "ExpenseRequestDetailId":0,
+                            "GstIn": "XXAABPU1234C1Z5",
+                            "InvoiceNumber": "B02",
+                            "Amount": "400",
+                            "SGST": "4",
+                            "CGST": "4",
+                            "IGST": "4",
+                            "UGST": "4"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "ReferenceType": 123,
+                            "ReferenceId": 0,
+                            "DocumentId": 0,
+                            "FileName": "BengaluruHolidayList-2025.pdf",
+                            "Location": "D:\\Project\\TnE\\EnavExpense\\Development\\EnavExpense.Web\\Document\\",
+                            "Guid": "96d977ba-dcf1-4fe2-9ba9-c79de7f59731"                            
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
