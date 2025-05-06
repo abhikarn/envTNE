@@ -1,0 +1,38 @@
+{
+    "requestDetails": [
+      {
+        "iconClass": "fa-file-signature",
+        "label": "Request No",
+        "propertyName":"requestNumber",
+        "value": "",
+        "isLink": false,
+        "order": 2
+      },
+      {
+        "iconClass": "fa-user",
+        "label": "Requester Name",
+        "propertyName":"requester",
+        "value": "",
+        "isLink": true,
+        "order": 1
+      },
+      {
+        "iconClass": "fa-user-gear",
+        "label": "Pending",
+        "propertyName":"Pending",
+        "value": "",
+        "isLink": true,
+        "order": 3
+      },
+      {
+        "iconClass": "fa-pencil",
+        "label": "Status",
+        "propertyName":"claimStatus",
+        "value": "",
+        "isLink": false,
+        "statusClass": "status-blue",        
+        "order": 4
+      } 
+    ]
+  }
+  
