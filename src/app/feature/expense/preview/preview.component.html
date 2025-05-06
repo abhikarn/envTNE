@@ -9,37 +9,25 @@
                <div class="left-container-wider scroll-left-align mar-tmd3">
                   <div class="preview-child-section mb-3">
                      <div class="preview-head-view">
-                        <div class="preview-head-child d-flex align-items-start justify-content-between">
-                           <span class="phv-icon me-2"><i class="fa-solid fa-file-signature"></i></span>
+                        <div *ngFor="let item of requestHeaderDetails" class="preview-head-child d-flex align-items-start justify-content-between">
+                           <span class="phv-icon me-2"><i class="fa-solid" [ngClass]="item.iconClass"></i></span>
                            <div>
-                              <label class="name-label-head">Request No :</label> <br>
-                              <span class="name-label-det">TR/2022/2/110</span>
+                             <label class="name-label-head">{{ item.label }}:</label><br>
+                             <ng-container *ngIf="item.isLink; else normalText">
+                               <span class="name-label-det">
+                                 <a href="#" class="phv-link" data-bs-toggle="modal" data-bs-target="#req-all-details">{{ item.value }}</a>
+                               </span>
+                             </ng-container>
+                             <ng-template #normalText>
+                               <span
+                                 class="name-label-det"
+                                 [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''"
+                               >
+                                 {{ item.value }}
+                               </span>
+                             </ng-template>
                            </div>
-                        </div>
-                        <div class="preview-head-child d-flex align-items-start justify-content-between">
-                           <span class="phv-icon me-2"><i class="fa fa-user" aria-hidden="true"></i></span>
-                           <div>
-                              <label class="name-label-head">Requester Name :</label><br>
-                              <span class="name-label-det"><a href="#" class="phv-link" data-bs-toggle="modal"
-                                    data-bs-target="#req-all-details">Ramesh Gupta</a></span>
-                           </div>
-                        </div>
-                        <div class="preview-head-child d-flex align-items-start justify-content-between">
-                           <span class="phv-icon me-2"><i class="fa-solid fa-user-gear"></i></span>
-                           <div>
-                              <label class="name-label-head">Pending:</label><br>
-                              <span class="name-label-det">EMPLOYEE5 | SDS00288</span>
-                           </div>
-                        </div>
-                        <div class="preview-head-child d-flex align-items-start justify-content-between">
-                           <span class="phv-icon me-2"><i class="fa-solid fa-pencil"></i></span>
-                           <div>
-                              <label class="name-label-head">Status:</label><br>
-                              <span class="status-blue status-common">
-                                 PENDING FOR APPROVAL
-                              </span>
-                           </div>
-                        </div>
+                         </div>                         
                      </div>
                   </div>
                   <div class="common-block  mb-3">
@@ -47,75 +35,23 @@
                         <h6 class="common-title fw-bold mb-3">Request Details </h6>
                      </div>
                      <div class="row">
-                        <div class="col-md-6">
-                           <div class="trl-preview-wrapper">
-                              <div class="trl-readview-item">
-                                 <div class="trl-req-head">
-                                    <label>Base Location</label>
-                                 </div>
-                                 <div class="trl-req-detail">
-                                    <span>LOC-78</span>
-                                 </div>
+                        <div class="col-md-4" *ngFor="let item of requestDetails">
+                          <div class="trl-preview-wrapper">
+                            <div class="trl-readview-item">
+                              <div class="trl-req-head">
+                                <label>{{ item.label }}</label>
                               </div>
-                           </div>
-                           <div class="trl-preview-wrapper">
-                              <div class="trl-readview-item">
-                                 <div class="trl-req-head">
-                                    <label>Linked Request </label>
-                                 </div>
-                                 <div class="trl-req-detail">
-                                    <p data-bs-toggle="modal" data-bs-target="#travel-previewreadonly">TR/2022/2/71</p>
-                                 </div>
+                              <div class="trl-req-detail">
+                                <span *ngIf="!item.isLink">{{ item.value || '-' }}</span>
+                                <a *ngIf="item.isLink" href="javascript:void(0)">
+                                  {{ item.value || '-' }}
+                                </a>
                               </div>
-                           </div>
-                           <div class="trl-preview-wrapper">
-                              <div class="trl-readview-item">
-                                 <div class="trl-req-head">
-                                    <label>Designation </label>
-                                 </div>
-                                 <div class="trl-req-detail">
-                                    <span>Management Trainee </span>
-                                 </div>
-                              </div>
-                           </div>
+                            </div>
+                          </div>
                         </div>
-                        <div class="col-md-6">
-                           <div class="trl-preview-wrapper">
-                              <div class="trl-readview-item">
-                                 <div class="trl-req-head">
-                                    <label>Billable Cost Centre</label>
-                                 </div>
-                                 <div class="trl-req-detail">
-                                    <span>COO - Office [ 16050 ]</span>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="trl-preview-wrapper">
-                              <div class="trl-readview-item">
-                                 <div class="trl-req-head">
-                                    <label>Department </label>
-                                 </div>
-                                 <div class="trl-req-detail">
-                                    <span>DEPT-3617
-                                    </span>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="trl-preview-wrapper">
-                              <div class="trl-readview-item">
-                                 <div class="trl-req-head">
-                                    <label>Grade </label>
-                                 </div>
-                                 <div class="trl-req-detail">
-                                    <span> M6
-                                    </span>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                      </div>                      
                   </div>
-
                   <div class="row-wrapper common-block px-3 py-3">
                      <div class="accordion accordion-flush preview-standard-view" id="accordionFlushExample">
                         @if(loadData) {

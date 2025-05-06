@@ -1,0 +1,10 @@
+{
+    "apiBaseUrl": "https://localhost:7073/api",
+    "endpoints": {
+      "employeeAuth": "Account/EmployeeAuth",
+      "getUserData": "Account/GetUserData",
+      "getExpenseDetails": "Expense/GetExpenseDetails",
+      "submitExpense": "Expense/SubmitExpense"
+    }
+  }
+  

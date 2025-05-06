@@ -27,7 +27,9 @@ export class PreviewComponent {
   expenseRequestPreviewConfig: any;
 
   loadData = false;
-  expenseRequestId: any = 0;
+  expenseRequestId: any = 40;
+  requestHeaderDetails: any;
+  requestDetails: any;
   expenseSummary: any;
   otherDetails: any;
   otherFields: any;
@@ -52,6 +54,7 @@ export class PreviewComponent {
   }
 
   getExpenseRequestPreviewDetails() {
+    debugger;
     let requestBody = {
       expenseRequestId: this.expenseRequestId
     }
@@ -67,6 +70,27 @@ export class PreviewComponent {
 
   loadExpenseRequestPreviewData() {
     if (!this.loadData) {
+      debugger;
+      this.requestHeaderDetails = this.expenseRequestPreviewConfig?.requestHeaderDetails;
+      const requestData = this.expenseRequestPreviewData;
+      this.requestHeaderDetails?.forEach((config: any) => {
+        const prop = config.name;
+        if (requestData && requestData.hasOwnProperty(prop)) {
+          config.value = requestData[prop];
+        }
+      });
+      this.requestHeaderDetails?.sort((a: any, b: any) => a.order - b.order);
+
+      this.requestDetails = this.expenseRequestPreviewConfig?.requestDetails;
+      const requestDeatilData = this.expenseRequestPreviewData;
+      this.requestHeaderDetails?.forEach((config: any) => {
+        const prop = config.name;
+        if (requestDeatilData && requestDeatilData.hasOwnProperty(prop)) {
+          config.value = requestDeatilData[prop];
+        }
+      });
+      this.requestDetails?.sort((a: any, b: any) => a.order - b.order);
+
       this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((configData: any) => {
         this.expenseRequestPreviewData.dynamicExpenseDetailModels?.forEach((previewData: any) => {
           if (configData?.name == previewData.name) {
@@ -88,7 +112,6 @@ export class PreviewComponent {
       this.loadData = true;
     }
   }
-
 
   ngOnInit() {
     this.expenseRequestId = this.route.snapshot.paramMap.get('id') || 0;
