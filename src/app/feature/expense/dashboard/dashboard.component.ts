@@ -29,6 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 import { AuthService } from '../../../shared/service/auth.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 interface ColumnConfig {
   key: string;
@@ -55,7 +56,8 @@ export const ELEMENT_DATA: any[] = [];
     MatFormFieldModule,
     MatIconModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
+    MatTooltipModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -104,6 +106,7 @@ export class DashboardComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.dataSource.data=[];
     this.getMyExpenseRequestDashBoard();
   }
 
@@ -125,6 +128,7 @@ export class DashboardComponent implements OnInit {
         rejected: this.expenseRequesData.filter(x => x.ClaimStatusId == 30).length,
       };
       this.dataSource.data = requestData.ResponseValue as any[];
+      console.log(this.dataSource.data);
     })
   }
 

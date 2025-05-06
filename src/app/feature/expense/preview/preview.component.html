@@ -15,7 +15,7 @@
                              <label class="name-label-head">{{ item.label }}:</label><br>
                              <ng-container *ngIf="item.isLink; else normalText">
                                <span class="name-label-det">
-                                 <a href="#" class="phv-link" data-bs-toggle="modal" data-bs-target="#req-all-details">{{ item.value }}</a>
+                                 <a href="#" class="phv-link" (click)="openDetailsDialog(4)" data-bs-toggle="modal" data-bs-target="#req-all-details">{{ item.value }}</a>
                                </span>
                              </ng-container>
                              <ng-template #normalText>
@@ -67,7 +67,6 @@
                         </app-expansion-panel>
                         }
                         }
-
                      </div>
                   </div>
 

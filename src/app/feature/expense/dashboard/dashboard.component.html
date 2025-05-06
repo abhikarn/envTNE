@@ -726,7 +726,8 @@
                                                                       
                                                                           <ng-template #columnContent>
                                                                             <ng-container *ngIf="column.key === 'PolicyViolationCount'; else requestDateColumn">
-                                                                              <mat-icon [ngClass]="element[column.key] > 0 ? 'violation-icon-red' : 'violation-icon-green'">
+                                                                              <mat-icon [ngClass]="element[column.key] > 0 ? 'violation-icon-red' : 'violation-icon-green'"
+                                                                                [matTooltip]="element[column.key] > 0 ? 'Policy Violation' : 'No Policy Violation'">
                                                                                 {{ element[column.key] > 0 ? 'cancel' : 'check_circle' }}
                                                                               </mat-icon>
                                                                             </ng-container>
@@ -740,20 +741,25 @@
                                                                                 <ng-container *ngIf="column.key === 'action'; else defaultColumn">
                                                                                   <div class="TBL-actions">
                                                                                     <ul class="action-icons">
+                                                                                      <li *ngIf="element.ClaimStatusId==26">
+                                                                                        <a [routerLink]="['/expense/expense/edit-expense',element.ExpenseRequestId]" class="btn-icon-action btn-icon-view">
+                                                                                          <span data-bs-toggle="tooltip" class="fa fa-pencil" aria-label="Edit" matTooltip="Edit" ></span>
+                                                                                        </a>
+                                                                                      </li>
                                                                                       <li>
-                                                                                        <a href="#" class="btn-icon-action btn-icon-view">
-                                                                                          <span data-bs-toggle="tooltip" title="View" class="fa-eye fa-regular" aria-label="View"></span>
+                                                                                        <a [routerLink]="['/expense/expense/preview',element.ExpenseRequestId]" class="btn-icon-action btn-icon-view">
+                                                                                          <span data-bs-toggle="tooltip" class="fa-eye fa-regular" aria-label="View" matTooltip="View" ></span>
                                                                                         </a>
                                                                                       </li>
                                                                                       <li>
                                                                                         <a href="#" class="btn-icon-action btn-icon-view">
-                                                                                          <span data-bs-toggle="tooltip" title="PDF" class="fa-regular fa-file-pdf" aria-label="PDF"></span>
+                                                                                          <span data-bs-toggle="tooltip" class="fa-regular fa-file-pdf" aria-label="PDF" matTooltip="PDF" ></span>
                                                                                         </a>
                                                                                       </li>
                                                                                       <li>
                                                                                         <a href="#" class="btn-icon-action btn-icon-view p-relative"
-                                                                                           [attr.requestid]="element.requestId"
-                                                                                           [attr.requesttype]="element.requestType"
+                                                                                           [attr.requestid]="element.ExpenseRequestId"
+                                                                                           [attr.requesttype]="element.ExpenseRequestType"
                                                                                            id="communicationThread">
                                                                                           <span data-toggle="tooltip" title="Communication" class="fa-comment-dots fa-regular"></span>
                                                                                           <div class="communication-count">
@@ -794,7 +800,7 @@
 
                                                                 </table>
                                                                 <mat-paginator [length]="dataSource.data.length"
-                                                                    [pageSize]="10" [pageSizeOptions]="[5, 10, 25]"
+                                                                    [pageSize]="5" [pageSizeOptions]="[5, 10, 25]"
                                                                     showFirstLastButtons>
                                                                 </mat-paginator>
                                                             </div>

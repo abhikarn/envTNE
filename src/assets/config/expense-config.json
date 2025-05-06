@@ -654,61 +654,68 @@
                 "order": 1
             },
             {
-                "label": "Billable Cost Centre",
-                "name": "billableCostcentre",
-                "isLink":false,
-                "value": "",
-                "order": 2
-            },
-            {
-                "label": "Default Cost Centre",
-                "name": "billableCostcentre",
-                "isLink":false,
-                "value": "",
-                "order": 3
-            },
-            {
-                "label": "Linked Request",
-                "name": "travelRequestNumber",
-                "isLink":true,
-                "value": "",
-                "order": 4
-            },
-            {
                 "label": "Department",
                 "name": "department",
                 "isLink":false,
                 "value": "",
-                "order": 5
+                "order": 2
             },
             {
                 "label": "Designation",
                 "name": "designation",
                 "isLink":false,
                 "value": "",
-                "order": 6
+                "order": 3
             },
             {
                 "label": "Grade",
                 "name": "grade",
                 "isLink":false,
                 "value": "",
+                "order": 4
+            }, 
+            {
+                "label": "Billable Cost Centre",
+                "name": "billableCostcentre",
+                "isLink":false,
+                "value": "NA",
+                "order": 6
+            },
+            {
+                "label": "Default Cost Centre",
+                "name": "costCentre",
+                "isLink":false,
+                "value": "NA",
+                "order": 5
+            },
+            {
+                "label": "Linked Request",
+                "name": "travelRequestNumber",
+                "isLink":true,
+                "value": "",
                 "order": 7
             },
             {
-                "label": "Travel To Date Time",
-                "name": "designation",
+                "label": "Travel From Date Time",
+                "name": "travelDateFromActualString",
                 "isLink":false,
                 "value": "",
                 "order": 8
             },
             {
-                "label": "Travel From Date Time",
-                "name": "grade",
+                "label": "Travel To Date Time",
+                "name": "travelDateToActualString",
                 "isLink":false,
                 "value": "",
                 "order": 9
-            } 
+            },
+            {
+                "label": "Purpose Of Travel",
+                "name": "purpose",
+                "isLink":false,
+                "value": "",
+                "order": 10
+            }           
         ],
         "dynamicExpenseDetailModels": [
             {

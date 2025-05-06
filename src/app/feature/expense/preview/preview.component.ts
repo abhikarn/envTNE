@@ -2,11 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { ExpansionPanelComponent } from '../../../shared/component/expansion-panel/expansion-panel.component';
 import { MaterialTableComponent } from '../../../shared/component/material-table/material-table.component';
+import { RequesterDetailsDialogComponent } from '../../../shared/component/requester-details-dialog/requester-details-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { NewExpenseService } from '../service/new-expense.service';
 import { take } from 'rxjs';
 import { SummaryComponent } from '../../../shared/component/summary/summary.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../../shared/service/auth.service';
 
 @Component({
   selector: 'app-preview',
@@ -27,7 +31,8 @@ export class PreviewComponent {
   expenseRequestPreviewConfig: any;
 
   loadData = false;
-  expenseRequestId: any = 40;
+  expenseRequestId: any;
+  requestorId: any;
   requestHeaderDetails: any;
   requestDetails: any;
   expenseSummary: any;
@@ -36,9 +41,41 @@ export class PreviewComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private newExpenseService: NewExpenseService
+    private newExpenseService: NewExpenseService,
+    private dialog: MatDialog,
+    private http: HttpClient,
+    private authService: AuthService
   ) {
 
+  }
+
+  openDetailsDialog(id: number): void { 
+    debugger; 
+    let requestBody = {
+      expenseRequestId: this.expenseRequestId
+    }
+    this.newExpenseService.getExpenseRequestDetailPreview(requestBody).pipe(take(1)).subscribe({
+      next: (response: any) => {
+        if (response) {
+          this.requestorId=response.requesterId
+          const body = {
+            UserMasterId: this.requestorId,
+          };
+          this.newExpenseService.getRequestorInfo(body).subscribe({
+            next: (response) => {
+              if (response?.ResponseCode === 200) {
+                this.dialog.open(RequesterDetailsDialogComponent, {
+                  width: '1300px',
+                  maxWidth: '100vw',
+                  panelClass: 'custom-dialog-container',
+                  data: response.ResponseValue
+                });
+              }
+            }
+          });
+        }
+      }
+    });      
   }
 
   getExpenseConfig() {
@@ -53,8 +90,7 @@ export class PreviewComponent {
     });
   }
 
-  getExpenseRequestPreviewDetails() {
-    debugger;
+  getExpenseRequestPreviewDetails() {    
     let requestBody = {
       expenseRequestId: this.expenseRequestId
     }
@@ -70,8 +106,9 @@ export class PreviewComponent {
 
   loadExpenseRequestPreviewData() {
     if (!this.loadData) {
-      debugger;
+      
       this.requestHeaderDetails = this.expenseRequestPreviewConfig?.requestHeaderDetails;
+      this.requestorId = this.requestHeaderDetails.requesterId
       const requestData = this.expenseRequestPreviewData;
       this.requestHeaderDetails?.forEach((config: any) => {
         const prop = config.name;
@@ -83,7 +120,7 @@ export class PreviewComponent {
 
       this.requestDetails = this.expenseRequestPreviewConfig?.requestDetails;
       const requestDeatilData = this.expenseRequestPreviewData;
-      this.requestHeaderDetails?.forEach((config: any) => {
+      this.requestDetails?.forEach((config: any) => {
         const prop = config.name;
         if (requestDeatilData && requestDeatilData.hasOwnProperty(prop)) {
           config.value = requestDeatilData[prop];
@@ -114,6 +151,7 @@ export class PreviewComponent {
   }
 
   ngOnInit() {
+    
     this.expenseRequestId = this.route.snapshot.paramMap.get('id') || 0;
     if (this.expenseRequestId) {
       this.getExpenseConfig();
