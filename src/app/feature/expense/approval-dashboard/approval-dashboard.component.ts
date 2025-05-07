@@ -1,4 +1,3 @@
-
 import { Component, DestroyRef, Directive, ElementRef, HostListener, inject, OnInit, viewChild, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
@@ -59,13 +58,12 @@ export const ELEMENT_DATA: any[] = [];
     RouterModule,
     MatTooltipModule
   ],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
-  // encapsulation:viewChild,
+ templateUrl: './approval-dashboard.component.html',
+  styleUrl: './approval-dashboard.component.scss',
   encapsulation: ViewEncapsulation.None
 })
 
-export class DashboardComponent implements OnInit {
+export class ApprovalDashboardComponent implements OnInit {
 
   expenseDashboardParam: ExpenseRequestDashboardParam = {}
   expenseRequesData: any[] = []
@@ -118,7 +116,7 @@ export class DashboardComponent implements OnInit {
       UserMasterId: this.authService.getUserMasterId(),
       ActionBy: this.authService.getUserMasterId(),
     }
-    this.dashboardService.dashboardGetExpenseRequestDashboard(payloadData).subscribe(data => {
+    this.dashboardService.dashboardGetExpenseRequestApprovalDashboard(payloadData).subscribe(data => {
       
       let requestData = data;
       this.expenseRequesData = requestData.ResponseValue as any[];
