@@ -1,45 +1,74 @@
 <table mat-table [dataSource]="processedData" multiTemplateDataRows class="mat-elevation-z2">
 
-    <!-- Serial Number Column -->
-    <ng-container matColumnDef="slNo">
+    <!-- Approval Mode: Checkbox Column -->
+    @if (mode === 'approval' || mode === 'finance-approval') {
+    <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+            <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" />
+        </th>
+        <td mat-cell *matCellDef="let row">
+            <input type="checkbox" [(ngModel)]="row.selected" (change)="onRowSelectionChange(row)" />
+        </td>
+    </ng-container>
+    }
+
+    <!-- Preview Mode: Serial Number Column -->
+    <ng-container *ngIf="mode === 'preview'" matColumnDef="slNo">
         <th mat-header-cell *matHeaderCellDef>{{ slNoLabel }}</th>
-        <td mat-cell *matCellDef="let row">{{ row.slNo }} &nbsp;
-            <i class="fa fa-calculator" aria-hidden="true" [matTooltip]="'GL Code: ' + row?.GLCode" matTooltipPosition="above"
-                [matTooltipDisabled]="!row?.GLCode"></i> &nbsp;
+        <td mat-cell *matCellDef="let row">{{ row.slNo }}</td>
+    </ng-container>
+
+    <!-- Common Action Icons -->
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+            <i class="fa fa-calculator" [matTooltip]="'GL Code: ' + row?.GLCode" matTooltipPosition="above"
+                [matTooltipDisabled]="!row?.GLCode"></i>&nbsp;
             <i class="fa fa-paperclip" (click)="showAttachments(row?.attachment)" matTooltip="Documents"
                 matTooltipPosition="above" [ngClass]="{ 'disabled-icon': !row?.attachment?.length }"
-                [matTooltipDisabled]="!row?.attachment?.length">
-            </i> &nbsp;
-            <i class="fa fa-credit-card" [matTooltip]="'Payment Type: ' + row?.PaymentMode" matTooltipPosition="above"
-                [matTooltipDisabled]="!row?.PaymentMode" aria-hidden="true"></i>
+                [matTooltipDisabled]="!row?.attachment?.length"></i>&nbsp;
+            <i class="fa fa-credit-card" [matTooltip]="'Payment Type: ' + row?.PaymentMode"
+                [matTooltipDisabled]="!row?.PaymentMode" matTooltipPosition="above"></i>
         </td>
     </ng-container>
 
     <!-- Dynamic Columns -->
     <ng-container *ngFor="let col of visibleColumns" [matColumnDef]="col.name">
         <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
-        <td mat-cell *matCellDef="let row">{{ row[col.name] }}</td>
+        <td mat-cell *matCellDef="let row">
+            @if (mode === 'finance-approval' && col.name === 'ApprovedAmount') {
+            <input type="number" class="form-control" [(ngModel)]="row.ApprovedAmount" [disabled]="!row.selected"
+                (ngModelChange)="onApprovedAmountChange(row)" min="0" />
+            } @else {
+            {{ row[col.name] }}
+            }
+        </td>
     </ng-container>
-
-    <!-- Header Row -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <!-- Data Row -->
-    <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;"
-        [ngClass]="{ 'violation-row': row?.IsViolation }"></tr>
 
     <!-- Expand Button Column -->
     <ng-container matColumnDef="expand">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
             <div class="icons-new">
-                <i *ngIf="row?.IsViolation" class="fa fa-exclamation-triangle violation-icon" [matTooltip]="row?.Violation"
-                    matTooltipPosition="above" aria-hidden="true"></i>
+                <i *ngIf="row?.IsViolation" class="fa fa-exclamation-triangle violation-icon"
+                    [matTooltip]="row?.Violation" matTooltipPosition="above"></i>
                 <span class="btn btn-showhide" (click)="toggleRow(row)">
                     <i [ngClass]="isExpanded(row) ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
                 </span>
             </div>
         </td>
     </ng-container>
+
+    <!-- Header Row -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <!-- Data Row -->
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="{ 'violation-row': row?.IsViolation }"></tr>
+
+    <!-- Approval Mode: Remarks Row -->
+    @if (mode === 'approval' || mode === 'finance-approval') {
+    <tr mat-row *matRowDef="let row; columns: ['remarksRow']" class="remarks-row"></tr>
+    }
 
     <!-- Expanded Detail Row -->
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
@@ -48,6 +77,10 @@
     <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
             <div *ngIf="isExpanded(row)" class="expanded-container">
+                @if (mode === 'finance-approval') {
+                <app-add-gst [categoryGST]="categoryGST" [amount]="row?.ApprovedAmount"></app-add-gst>
+                }
+
                 <ng-container *ngFor="let nested of nestedTables">
                     @if (row[nested.dataKey]?.length) {
                     <table mat-table [dataSource]="row[nested.dataKey]" class="sub-table">
@@ -55,17 +88,27 @@
                             <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
                             <td mat-cell *matCellDef="let entry">{{ entry[col.name] }}</td>
                         </ng-container>
-
                         <tr mat-header-row *matHeaderRowDef="getNestedColumnKeys(nested.columns)"></tr>
                         <tr mat-row *matRowDef="let entry; columns: getNestedColumnKeys(nested.columns)"></tr>
                     </table>
                     }
                 </ng-container>
 
-                <ng-container *ngFor="let field of otherFields">
-                    &nbsp;&nbsp;&nbsp;{{field.label}}&nbsp;:&nbsp;{{field.value}} &nbsp;&nbsp;&nbsp;
-                </ng-container>
+                <div class="mt-3">
+                    <ng-container *ngFor="let field of otherFields">
+                        &nbsp;&nbsp;&nbsp;{{ field.label }} : {{ field.value }}&nbsp;&nbsp;&nbsp;
+                    </ng-container>
+                </div>
+            </div>
+        </td>
+    </ng-container>
 
+    <!-- Remarks Full Width Row -->
+    <ng-container matColumnDef="remarksRow">
+        <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
+            <div class="remarks-container">
+                <label class="remarks-label">Remarks</label>
+                <textarea [(ngModel)]="row.remarks" class="form-control" rows="2"></textarea>
             </div>
         </td>
     </ng-container>

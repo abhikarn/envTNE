@@ -27,6 +27,14 @@ export const routes: Routes = [
       {
         path:'preview/:id',
         loadComponent:()=>import('./preview/preview.component').then(m=>m.PreviewComponent)
+      },
+      {
+        path:'approval/:id',
+        loadComponent:()=>import('./preview/preview.component').then(m=>m.PreviewComponent)
+      },
+      {
+        path:'finance-approval/:id',
+        loadComponent:()=>import('./preview/preview.component').then(m=>m.PreviewComponent)
       }
     ]
   },

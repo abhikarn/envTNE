@@ -9,25 +9,25 @@
                <div class="left-container-wider scroll-left-align mar-tmd3">
                   <div class="preview-child-section mb-3">
                      <div class="preview-head-view">
-                        <div *ngFor="let item of requestHeaderDetails" class="preview-head-child d-flex align-items-start justify-content-between">
+                        <div *ngFor="let item of requestHeaderDetails"
+                           class="preview-head-child d-flex align-items-start justify-content-between">
                            <span class="phv-icon me-2"><i class="fa-solid" [ngClass]="item.iconClass"></i></span>
                            <div>
-                             <label class="name-label-head">{{ item.label }}:</label><br>
-                             <ng-container *ngIf="item.isLink; else normalText">
-                               <span class="name-label-det">
-                                 <a href="#" class="phv-link" data-bs-toggle="modal" data-bs-target="#req-all-details">{{ item.value }}</a>
-                               </span>
-                             </ng-container>
-                             <ng-template #normalText>
-                               <span
-                                 class="name-label-det"
-                                 [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''"
-                               >
-                                 {{ item.value }}
-                               </span>
-                             </ng-template>
+                              <label class="name-label-head">{{ item.label }}:</label><br>
+                              <ng-container *ngIf="item.isLink; else normalText">
+                                 <span class="name-label-det">
+                                    <a href="#" class="phv-link" data-bs-toggle="modal"
+                                       data-bs-target="#req-all-details">{{ item.value }}</a>
+                                 </span>
+                              </ng-container>
+                              <ng-template #normalText>
+                                 <span class="name-label-det"
+                                    [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''">
+                                    {{ item.value }}
+                                 </span>
+                              </ng-template>
                            </div>
-                         </div>                         
+                        </div>
                      </div>
                   </div>
                   <div class="common-block  mb-3">
@@ -36,21 +36,21 @@
                      </div>
                      <div class="row">
                         <div class="col-md-4" *ngFor="let item of requestDetails">
-                          <div class="trl-preview-wrapper">
-                            <div class="trl-readview-item">
-                              <div class="trl-req-head">
-                                <label>{{ item.label }}</label>
+                           <div class="trl-preview-wrapper">
+                              <div class="trl-readview-item">
+                                 <div class="trl-req-head">
+                                    <label>{{ item.label }}</label>
+                                 </div>
+                                 <div class="trl-req-detail">
+                                    <span *ngIf="!item.isLink">{{ item.value || '-' }}</span>
+                                    <a *ngIf="item.isLink" href="javascript:void(0)">
+                                       {{ item.value || '-' }}
+                                    </a>
+                                 </div>
                               </div>
-                              <div class="trl-req-detail">
-                                <span *ngIf="!item.isLink">{{ item.value || '-' }}</span>
-                                <a *ngIf="item.isLink" href="javascript:void(0)">
-                                  {{ item.value || '-' }}
-                                </a>
-                              </div>
-                            </div>
-                          </div>
+                           </div>
                         </div>
-                      </div>                      
+                     </div>
                   </div>
                   <div class="row-wrapper common-block px-3 py-3">
                      <div class="accordion accordion-flush preview-standard-view" id="accordionFlushExample">
@@ -59,9 +59,9 @@
                         <app-expansion-panel [title]="category.label" [expanded]="category.expanded"
                            [amount]="category.amount">
                            @if(category.columns) {
-                           <app-material-table [data]="category.data" [columnConfig]="category.columns"
+                           <app-material-table [categoryName]="category.name" [categoryGST]="category?.gst" [mode]="mode" [data]="category.data" [columnConfig]="category.columns"
                               [slNoLabel]="category.slNoLabel" [nestedTables]="category.nestedTables"
-                              [otherFields]="otherFields">
+                              [otherFields]="otherFields" (selectionChanged)="getSelection($event)">
                            </app-material-table>
                            }
                         </app-expansion-panel>
@@ -184,9 +184,33 @@
                   </div>
                   <div class="row mt-3">
                      <div class="col-md-12">
-                        <div class="main-btn-hold d-flex flex-column  ">
+                        @if (mode == "approval" && expenseRequestPreviewConfig?.actions) {
+                        <div class="main-btn-hold d-flex flex-column mt-2" style="align-items:end;">
+                           <div class="d-flex align-items-center w-100 mb-2">
+                              @if (expenseRequestPreviewConfig.actions[0]) {
+                              <a [ngClass]="expenseRequestPreviewConfig.actions[0].class"
+                                 (click)="onAction(expenseRequestPreviewConfig.actions[0].type);">
+                                 {{ expenseRequestPreviewConfig.actions[0].label }}
+                              </a>
+                              }
+                              @if (expenseRequestPreviewConfig.actions[1]) {
+                              <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[1].class"
+                                 (click)="onAction(expenseRequestPreviewConfig.actions[1].type)">
+                                 {{ expenseRequestPreviewConfig.actions[1].label }}
+                              </button>
+                              }
+                           </div>
+                           @if (expenseRequestPreviewConfig.actions[2]) {
+                           <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[2].class"
+                              (click)="onAction(expenseRequestPreviewConfig.actions[2].type)">
+                              {{ expenseRequestPreviewConfig.actions[2].label }}
+                           </button>
+                           }
+                        </div>
+                        }
+                        <div class="main-btn-hold d-flex flex-column mt-2 ">
                            <div class="text-end">
-                              <a href="claim-expense.html" class="btn btn-outline-secondary me-2 w-50">Back</a>
+                              <a href="claim-expense.html" class="btn btn-outline-secondary me-2 w-100">Back</a>
                            </div>
                         </div>
                      </div>
