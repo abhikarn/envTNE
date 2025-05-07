@@ -602,6 +602,114 @@
         }
     },
     "expenseRequestPreviewAndApproval": {
+        "requestHeaderDetails": [
+            {
+                "iconClass": "fa-file-signature",
+                "label": "Request No",
+                "name": "requestNumber",
+                "value": "",
+                "isLink": false,
+                "order": 2
+            },
+            {
+                "iconClass": "fa-user",
+                "label": "Requester Name",
+                "name": "requester",
+                "value": "",
+                "isLink": true,
+                "order": 1
+            },
+            {
+                "iconClass": "fa-user-gear",
+                "label": "Pending",
+                "name": "Pending",
+                "value": "",
+                "isLink": false,
+                "order": 3
+            },
+            {
+                "iconClass": "fa-pencil",
+                "label": "Status",
+                "name": "claimStatus",
+                "value": "",
+                "isLink": false,
+                "statusClass": "status-blue",
+                "order": 4
+            },
+            {
+                "iconClass": "fa fa-location",
+                "label": "Request For",
+                "name": "requestFor",
+                "value": "",
+                "isLink": false,
+                "order": 5
+            }
+        ],
+        "requestDetails": [
+            {
+                "label": "Base Location",
+                "name": "baseLocation",
+                "value": "",
+                "isLink":false,
+                "order": 1
+            },
+            {
+                "label": "Billable Cost Centre",
+                "name": "billableCostcentre",
+                "isLink":false,
+                "value": "",
+                "order": 2
+            },
+            {
+                "label": "Default Cost Centre",
+                "name": "billableCostcentre",
+                "isLink":false,
+                "value": "",
+                "order": 3
+            },
+            {
+                "label": "Linked Request",
+                "name": "travelRequestNumber",
+                "isLink":true,
+                "value": "",
+                "order": 4
+            },
+            {
+                "label": "Department",
+                "name": "department",
+                "isLink":false,
+                "value": "",
+                "order": 5
+            },
+            {
+                "label": "Designation",
+                "name": "designation",
+                "isLink":false,
+                "value": "",
+                "order": 6
+            },
+            {
+                "label": "Grade",
+                "name": "grade",
+                "isLink":false,
+                "value": "",
+                "order": 7
+            },
+            {
+                "label": "Travel To Date Time",
+                "name": "designation",
+                "isLink":false,
+                "value": "",
+                "order": 8
+            },
+            {
+                "label": "Travel From Date Time",
+                "name": "grade",
+                "isLink":false,
+                "value": "",
+                "order": 9
+            } 
+        ],
         "dynamicExpenseDetailModels": [
             {
                 "name": "Travel Ticket",
@@ -652,6 +760,153 @@
                         "visible": true
                     }
                 ],
+                "gst": {
+                    "name": "gst",
+                    "label": "GST",
+                    "value": null,
+                    "getControl": "ApprovedAmount",
+                    "fields": [
+                        {
+                            "name": "ExpenseRequestGstTypeId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "ExpenseRequestDetailId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "GstIn",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "custom",
+                                    "name": "validateGST",
+                                    "message": "Invalid GST number"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "InvoiceNumber",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            },
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "min",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "SGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            }
+                        },
+                        {
+                            "name": "CGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            }
+                        },
+                        {
+                            "name": "IGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            }
+                        },
+                        {
+                            "name": "UGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            }
+                        }
+                    ],
+                    "notifications": {
+                        "GSTAmount": "The GST amount should not be greater than the approved amount.",
+                        "validGSTAmount": "Please enter a valid GST amount.",
+                        "claimedAmount": "Please enter a approved amount."
+                    }
+                },
                 "nestedTables": [
                     {
                         "dataKey": "gst",
@@ -711,6 +966,23 @@
                         "value": ""
                     }
                 ]
+            }
+        ],
+        "actions": [
+            {
+                "label": "Seek Clarification",
+                "type": "seekClarification",
+                "class": "btn btn-outline-secondary w-50 mr-10"
+            },
+            {
+                "label": "Reject",
+                "type": "reject",
+                "class": "btn btn-outline-primary w-50"
+            },
+            {
+                "label": "Approve",
+                "type": "approve",
+                "class": "btn btn-primary w-100"
             }
         ]
     }

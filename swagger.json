@@ -2479,6 +2479,240 @@
         }
       }
     },
+    "/api/Dashboard/ApprovalsFinanceExpenseRequest": {
+      "post": {
+        "tags": [
+          "Finance"
+        ],
+        "operationId": "Finance_ApprovalsFinanceExpenseRequest",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "financeSettlementDashboardGetParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FinanceSettlementDashboardGetParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Dashboard/ExpenseRequestFinanceApproval": {
+      "post": {
+        "tags": [
+          "Finance"
+        ],
+        "operationId": "Finance_ExpenseRequestFinanceApproval",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "expenseActionParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExpenseActionParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Dashboard/GetGstDataList": {
+      "post": {
+        "tags": [
+          "Finance"
+        ],
+        "operationId": "Finance_GetGstDataList",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "expenseRequestGstGetParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExpenseRequestGstGetParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Dashboard/ExpenseRequestGstIu": {
+      "post": {
+        "tags": [
+          "Finance"
+        ],
+        "operationId": "Finance_ExpenseRequestGstIu",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "expenseRequestGstInsertParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExpenseRequestGstInsertParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Dashboard/ExpenseRequestGstRemove": {
+      "post": {
+        "tags": [
+          "Finance"
+        ],
+        "operationId": "Finance_ExpenseRequestGstRemove",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "expenseRequestGstRemoveParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExpenseRequestGstRemoveParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Dashboard/ExpenseBillableCostCentreUpdate": {
+      "post": {
+        "tags": [
+          "Finance"
+        ],
+        "operationId": "Finance_ExpenseBillableCostCentreUpdate",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "billableCostCentreUpdateParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExpenseBillableCostCentreUpdateParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Integration/SearchYatra": {
       "post": {
         "tags": [
@@ -5219,6 +5453,202 @@
         },
         "Amount": {
           "type": "string"
+        }
+      }
+    },
+    "FinanceSettlementDashboardGetParam": {
+      "type": "object",
+      "properties": {
+        "UserMasterId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "IsActive": {
+          "type": "boolean"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "ActionBy": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "TransactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "CommunicationSeenCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ExpenseRequestGstGetParam": {
+      "type": "object",
+      "properties": {
+        "ExpenseRequestId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ExpenseRequestDetailId": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "ExpenseRequestGstInsertParam": {
+      "type": "object",
+      "properties": {
+        "ExpenseRequestGstId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ExpenseRequestDetailId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "GstIn": {
+          "type": "string"
+        },
+        "VendorName": {
+          "type": "string"
+        },
+        "InvoiceNumber": {
+          "type": "string"
+        },
+        "Amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "Basic": {
+          "format": "double",
+          "type": "number"
+        },
+        "CGST": {
+          "format": "double",
+          "type": "number"
+        },
+        "SGST": {
+          "format": "double",
+          "type": "number"
+        },
+        "IGST": {
+          "format": "double",
+          "type": "number"
+        },
+        "UGST": {
+          "format": "double",
+          "type": "number"
+        },
+        "CESS": {
+          "format": "double",
+          "type": "number"
+        },
+        "Gross": {
+          "format": "double",
+          "type": "number"
+        },
+        "HSN_SAC_Code": {
+          "type": "string"
+        },
+        "StateCode": {
+          "type": "string"
+        },
+        "TaxCode": {
+          "type": "string"
+        },
+        "CostcenterId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "TransactionReference": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "IsActive": {
+          "type": "boolean"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "ActionBy": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "TransactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "CommunicationSeenCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ExpenseRequestGstRemoveParam": {
+      "type": "object",
+      "properties": {
+        "ExpenseRequestGstId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "IsActive": {
+          "type": "boolean"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "ActionBy": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "TransactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "CommunicationSeenCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ExpenseBillableCostCentreUpdateParam": {
+      "type": "object",
+      "properties": {
+        "UserMasterId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ExpenseRequestId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "BillableCostCentreId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "IsActive": {
+          "type": "boolean"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "ActionBy": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "TransactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "CommunicationSeenCount": {
+          "format": "int32",
+          "type": "integer"
         }
       }
     },

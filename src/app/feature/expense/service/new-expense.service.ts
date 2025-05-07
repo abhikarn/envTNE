@@ -24,7 +24,7 @@ export class NewExpenseService {
   }
 
   getExpenseRequestDetailPreview(request: any) {
-    return this.httpClient.post<any>(`${this.basePath}ExpensesRequestDetailPreviewGet`, request);
+    return this.httpClient.post<any>(`${this.basePath}GetExpensesRequestDetailPreviewGet`, request);
   }
 
   getExpenseConfig() {
