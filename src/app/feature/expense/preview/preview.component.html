@@ -13,19 +13,20 @@
                            class="preview-head-child d-flex align-items-start justify-content-between">
                            <span class="phv-icon me-2"><i class="fa-solid" [ngClass]="item.iconClass"></i></span>
                            <div>
-                              <label class="name-label-head">{{ item.label }}:</label><br>
-                              <ng-container *ngIf="item.isLink; else normalText">
-                                 <span class="name-label-det">
-                                    <a href="#" class="phv-link" data-bs-toggle="modal"
-                                       data-bs-target="#req-all-details">{{ item.value }}</a>
-                                 </span>
-                              </ng-container>
-                              <ng-template #normalText>
-                                 <span class="name-label-det"
-                                    [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''">
-                                    {{ item.value }}
-                                 </span>
-                              </ng-template>
+                             <label class="name-label-head">{{ item.label }}:</label><br>
+                             <ng-container *ngIf="item.isLink; else normalText">
+                               <span class="name-label-det">
+                                 <a href="#" class="phv-link" (click)="openDetailsDialog(4)" data-bs-toggle="modal" data-bs-target="#req-all-details">{{ item.value }}</a>
+                               </span>
+                             </ng-container>
+                             <ng-template #normalText>
+                               <span
+                                 class="name-label-det"
+                                 [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''"
+                               >
+                                 {{ item.value }}
+                               </span>
+                             </ng-template>
                            </div>
                         </div>
                      </div>
@@ -67,7 +68,6 @@
                         </app-expansion-panel>
                         }
                         }
-
                      </div>
                   </div>
 

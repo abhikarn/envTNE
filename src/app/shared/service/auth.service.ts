@@ -35,6 +35,32 @@ export class AuthService {
     return 0;
   }
 
+  getUserDisplayCode(): string | '' {
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      try {
+        const parsedData = JSON.parse(userData);
+        return parsedData.token.displayCode || "";
+      } catch (error) {
+        return "";
+      }
+    }
+    return "";
+  }
+
+  getUserDisplayName(): string | '' {
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      try {
+        const parsedData = JSON.parse(userData);
+        return parsedData.token.displayName || "";
+      } catch (error) {
+        return "";
+      }
+    }
+    return "";
+  }
+
   Logout(): void {
     localStorage.removeItem('userData');
     this.router.navigate(['/account']); // Adjust route as needed
