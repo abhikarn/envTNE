@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../../../core/core.module';
+import { AuthService } from '../../../app/shared/service/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,11 +12,19 @@ import { CoreModule } from '../../../core/core.module';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
-  constructor(private router: Router) { }
+export class HeaderComponent implements OnInit {
+  displayCode:string=''
+  displayName:string=''
+  constructor(private router: Router,
+    private auth:AuthService
+  ) { }
 
+  ngOnInit(): void {
+    this.displayCode=this.auth.getUserDisplayCode()
+    this.displayName=this.auth.getUserDisplayName()
+  }
+  
   Logout(): void {
-    debugger;
     localStorage.removeItem('userData');
     this.router.navigate(['/account']); // Adjust route as needed
   }

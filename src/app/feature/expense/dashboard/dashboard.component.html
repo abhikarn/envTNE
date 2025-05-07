@@ -6,8 +6,8 @@
         <div class="tabs-page-hold">
             <div id="page-wrapper-tabs" class="custom-wrapper-general mt-3 mb-3 w-100">
                 <ul class="nav nav-tabs common-tab" id="myTab" role="tablist">
-                    <li><a id="menu-dashboard-my" href="dashboard.html" class="active">My Dashboard</a></li>
-                    <li><a id="menu-dashboard-action" href="approval-dashboard.html">Approver Dashboard</a></li>
+                    <li><a id="menu-dashboard-my" [routerLink]="['/expense/expense/my']" class="active">My Dashboard</a></li>
+                    <li><a id="menu-dashboard-action" [routerLink]="['/expense/expense/approval']">Approver Dashboard</a></li>
                 </ul>
             </div>
             <div class=" pt-1">
