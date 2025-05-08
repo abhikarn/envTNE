@@ -975,6 +975,12 @@
                 ]
             }
         ],
+        "justification": {
+            "label": "Justification",
+            "controlName": "justification",
+            "maxLength": 2000,
+            "required": true
+        },
         "actions": [
             {
                 "label": "Seek Clarification",

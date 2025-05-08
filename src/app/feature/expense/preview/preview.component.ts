@@ -11,6 +11,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../shared/service/auth.service';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ExpenseService, FinanceService } from '../../../../../tne-api';
 
 @Component({
   selector: 'app-preview',
@@ -19,7 +21,8 @@ import { AuthService } from '../../../shared/service/auth.service';
     ExpansionPanelComponent,
     MaterialTableComponent,
     SummaryComponent,
-    MatTabsModule
+    MatTabsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './preview.component.html',
   styleUrl: './preview.component.scss'
@@ -27,9 +30,7 @@ import { AuthService } from '../../../shared/service/auth.service';
 export class PreviewComponent {
   @ViewChild(SummaryComponent) summaryComponent: any;
   expenseRequestPreviewData: any;
-
   expenseRequestPreviewConfig: any;
-
   loadData = false;
   expenseRequestId: any;
   requestorId: any;
@@ -39,26 +40,33 @@ export class PreviewComponent {
   otherDetails: any;
   otherFields: any;
   mode: 'preview' | 'approval' | 'finance-approval' = 'preview';
+  expenseRequestApprovalDetailType: any = [];
+  expenseRequestGstType: any = [];
+  justificationForm: any = new FormGroup({
+    justification: new FormControl('', Validators.required)
+  });
 
   constructor(
     private route: ActivatedRoute,
     private newExpenseService: NewExpenseService,
     private dialog: MatDialog,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private expenseService: ExpenseService,
+    private financeService: FinanceService
   ) {
 
   }
 
-  openDetailsDialog(id: number): void { 
-    debugger; 
+  openDetailsDialog(id: number): void {
+    debugger;
     let requestBody = {
       expenseRequestId: this.expenseRequestId
     }
     this.newExpenseService.getExpenseRequestDetailPreview(requestBody).pipe(take(1)).subscribe({
       next: (response: any) => {
         if (response) {
-          this.requestorId=response.requesterId
+          this.requestorId = response.requesterId
           const body = {
             UserMasterId: this.requestorId,
           };
@@ -76,7 +84,7 @@ export class PreviewComponent {
           });
         }
       }
-    });      
+    });
   }
 
   getExpenseConfig() {
@@ -86,12 +94,13 @@ export class PreviewComponent {
           this.expenseRequestPreviewConfig = response.expenseRequestPreviewAndApproval;
           this.otherDetails = response.expenseRequest.otherDetails;
           this.expenseSummary = response.expenseRequest.summaries;
+          this.mode == 'preview' || this.mode == 'finance-approval' ? this.setupJustificationForm() : ''
         }
       }
     });
   }
 
-  getExpenseRequestPreviewDetails() {    
+  getExpenseRequestPreviewDetails() {
     let requestBody = {
       expenseRequestId: this.expenseRequestId
     }
@@ -99,6 +108,25 @@ export class PreviewComponent {
       next: (response: any) => {
         if (response) {
           this.expenseRequestPreviewData = response;
+          this.expenseRequestPreviewData?.dynamicExpenseDetailModels?.forEach((details: any) => {
+            details?.data?.forEach((expense: any) => {
+              expense.selected = true;
+              if (expense?.selected) {
+                if(expense.gst?.length > 0) {
+                  expense.gst.forEach((gst: any) => {
+                    this.expenseRequestGstType.push(gst);
+                  })
+                }
+                this.expenseRequestApprovalDetailType.push({
+                  ExpenseRequestDetailId: expense?.ExpenseRequestDetailId || 0,
+                  ApprovedAmount: expense?.ApprovedAmount || 0,
+                  ApproverId: Number(localStorage.getItem('userMasterId')),
+                  ApproverRemarks: expense?.remarks || "",
+                  ActionStatusId: 0
+                });
+              }
+            });
+          })
           this.loadExpenseRequestPreviewData();
         }
       }
@@ -107,9 +135,8 @@ export class PreviewComponent {
 
   loadExpenseRequestPreviewData() {
     if (!this.loadData) {
-      
       this.requestHeaderDetails = this.expenseRequestPreviewConfig?.requestHeaderDetails;
-      this.requestorId = this.requestHeaderDetails.requesterId
+      this.requestorId = this.requestHeaderDetails.requesterId;
       const requestData = this.expenseRequestPreviewData;
       this.requestHeaderDetails?.forEach((config: any) => {
         const prop = config.name;
@@ -142,7 +169,8 @@ export class PreviewComponent {
             })
           }
         })
-      })
+      });
+      this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName).setValue(this.expenseRequestPreviewData?.remarks);
       setTimeout(() => {
         this.calculatTotalExpenseAmountPreview();
         this.setCategoryWiseAmount();
@@ -152,7 +180,6 @@ export class PreviewComponent {
   }
 
   ngOnInit() {
-    
     this.expenseRequestId = this.route.snapshot.paramMap.get('id') || 0;
     if (this.expenseRequestId) {
       this.getExpenseConfig();
@@ -160,11 +187,22 @@ export class PreviewComponent {
     }
     const segments = this.route.snapshot.url;
     const segment = segments[0]?.path;
-    if(segment == 'approval') {
+    if (segment == 'approval') {
       this.mode = 'approval';
     }
-    if(segment == 'finance-approval') {
+    if (segment == 'finance-approval') {
       this.mode = 'finance-approval';
+    }
+  }
+
+  // Setup validation rules for justification text field if required.
+  setupJustificationForm() {
+    const justificationCfg = this.expenseRequestPreviewConfig.justification;
+    if (justificationCfg?.required) {
+      this.justificationForm.controls[justificationCfg.controlName].setValidators([
+        Validators.required,
+        Validators.maxLength(justificationCfg.maxLength || 2000)
+      ]);
     }
   }
 
@@ -255,9 +293,10 @@ export class PreviewComponent {
   }
 
   getSelection(category: any) {
+    this.expenseRequestApprovalDetailType = [];
     let dynamicExpenseDetailModels = this.expenseRequestPreviewData?.dynamicExpenseDetailModels || [];
     dynamicExpenseDetailModels?.forEach((cat: any) => {
-      if(cat?.name == category?.name) {
+      if (cat?.name == category?.name) {
         cat.data = category?.data || [];
       }
     })
@@ -280,7 +319,7 @@ export class PreviewComponent {
       CATEGORY_NAME = expenseRequest.name;
       expenseRequest.data?.forEach((request: any) => {
         const { PaymentModeId, ApprovedAmount, selected } = request || {};
-        if(selected) {
+        if (selected) {
           this.updateExpenseItem(summary, PaymentModeId, ApprovedAmount);
         }
       });
@@ -324,10 +363,67 @@ export class PreviewComponent {
     });
 
     this.setCategoryWiseAmount();
+    dynamicExpenseDetailModels?.forEach((details: any) => {
+      details?.data?.forEach((expense: any) => {
+        if (expense?.selected) {
+          if(expense.gst?.length > 0) {
+            expense.gst.forEach((gst: any) => {
+              this.expenseRequestGstType.push(gst);
+            })
+          }
+          this.expenseRequestApprovalDetailType.push({
+            ExpenseRequestDetailId: expense?.ExpenseRequestDetailId || 0,
+            ApprovedAmount: expense?.ApprovedAmount || 0,
+            ApproverId: Number(localStorage.getItem('userMasterId')),
+            ApproverRemarks: expense?.remarks || "",
+            ActionStatusId: 0
+          });
+        }
+      });
+    })
     dynamicExpenseDetailModels = [];
   }
 
   onAction(type: string) {
-    console.log(type)
+    if (this.justificationForm.invalid) {
+      this.justificationForm.markAllAsTouched();
+      return;
+    }
+    if (this.mode == 'approval') {
+      const approvalPayload = {
+        ExpenseRequestId: this.expenseRequestPreviewData?.expenseRequestId || 0,
+        Remarks: this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.value,
+        ApprovalAction: type == 'approve' ? 113 : (type == 'seekClarification' ? 114 : 115),
+        ExpenseRequestApprovalDetailType: this.expenseRequestApprovalDetailType,
+        ExpenseRequestGstType: [],
+        ActionBy: Number(localStorage.getItem('userMasterId'))
+      }
+      console.log(approvalPayload)
+      this.expenseService.expenseExpenseRequestApprovals(approvalPayload).pipe(take(1)).subscribe({
+        next: (res: any) => {
+          console.log(res);
+        }
+      });
+      
+    }
+    if (this.mode == 'finance-approval') {
+      const financePayload = {
+        ExpenseRequestId: this.expenseRequestPreviewData?.expenseRequestId || 0,
+        Remarks: this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.value,
+        AdjustmentRemarks: "",
+        ApprovalAction: type == 'approve' ? 113 : (type == 'seekClarification' ? 114 : 115),
+        AdjustmentAmount: 0,
+        AdjustmentCurrencyId: 0,
+        ExpenseRequestApprovalDetailType: this.expenseRequestApprovalDetailType,
+        ExpenseRequestGstType: this.expenseRequestGstType,
+        ActionBy: Number(localStorage.getItem('userMasterId'))
+      }
+      console.log(financePayload)
+      this.financeService.financeExpenseRequestFinanceApproval(financePayload).pipe(take(1)).subscribe({
+        next: (res: any) => {
+          console.log(res)
+        }
+      });
+    }
   }
 }

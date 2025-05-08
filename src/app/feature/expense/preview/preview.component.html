@@ -172,19 +172,42 @@
                         [expenseRequestData]="expenseRequestPreviewData"></app-summary>
                      }
                      <div class="row mt-3">
-                        <div class="col-md-12">
-                           <div class="form-group chm-formgroup mb-2">
-                              <label>Justification</label>
-                              <p>
-                                 {{expenseRequestPreviewData?.remarks || ''}}
-                              </p>
+                        @if (mode == 'preview') {
+                           <div class="col-md-12">
+                              <div class="form-group chm-formgroup mb-2">
+                                 <label>Justification</label>
+                                 <p>
+                                    {{expenseRequestPreviewData?.remarks || ''}}
+                                 </p>
+                              </div>
                            </div>
-                        </div>
+                        }
+
+                        @if (mode == 'approval' || mode == 'finance-approval') {
+                           @if (expenseRequestPreviewConfig?.justification) {
+                              <div [formGroup]="justificationForm" class="row mt-3">
+                                <div class="col-md-12">
+                                  <div class="form-group chm-formgroup mb-2">
+                                    <label>{{ expenseRequestPreviewConfig.justification.label }}</label>
+                                    <textarea [formControlName]="expenseRequestPreviewConfig.justification.controlName"
+                                      [attr.maxLength]="expenseRequestPreviewConfig.justification.maxLength"
+                                      class="form-control chm-formtextarea max-tr-md mar-align-0" rows="3"></textarea>
+                                    @if (justificationForm.controls.justification?.invalid &&
+                                    justificationForm.controls.justification?.touched) {
+                                    <span class="validate-error-message">
+                                      Required
+                                    </span>
+                                    }
+                                  </div>
+                                </div>
+                              </div>
+                              }
+                        }
                      </div>
                   </div>
                   <div class="row mt-3">
                      <div class="col-md-12">
-                        @if (mode == "approval" && expenseRequestPreviewConfig?.actions) {
+                        @if ((mode == "approval" || mode == 'finance-approval') && expenseRequestPreviewConfig?.actions) {
                         <div class="main-btn-hold d-flex flex-column mt-2" style="align-items:end;">
                            <div class="d-flex align-items-center w-100 mb-2">
                               @if (expenseRequestPreviewConfig.actions[0]) {

@@ -4,6 +4,8 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 import { IFormControl } from '../../../form-control.interface';
 import { SnackbarService } from '../../../../service/snackbar.service';
 import { FormControlFactory } from '../../../form-control.factory';
+import { FinanceService } from '../../../../../../../tne-api';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-add-gst',
@@ -20,6 +22,8 @@ export class AddGstComponent {
   @Input() form: any;
   @Input() categoryGST: any;
   @Input() amount: any;
+  @Input() ExpenseRequestDetailId: any;
+  @Input() gstData: any = [];
   gstDetailsForm: FormGroup;
   gstDetails: any = [];
   fields: any;
@@ -27,12 +31,14 @@ export class AddGstComponent {
 
   constructor(
     private fb: FormBuilder,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private financeService: FinanceService
   ) {
     this.gstDetailsForm = this.fb.group({});
   }
 
   ngOnInit() {
+    this.gstDetails = this.gstData;
     this.initGstDetailsForm();
   }
 
@@ -111,15 +117,29 @@ export class AddGstComponent {
       if(this.control) {
         this.control.setValue(this.gstDetails);
       } else {
-        this.categoryGST.value = this.gstDetails;
+        console.log(this.gstDetailsForm.value);
+        this.gstDetailsForm.value.ExpenseRequestDetailId = this.ExpenseRequestDetailId;
+        this.financeService.financeExpenseRequestGstIu(this.gstDetailsForm.value).pipe(take(1)).subscribe({
+          next: (res: any) => {
+            this.snackbarService.success(res?.ResponseValue?.Message);
+          }
+        });
       }
       this.initGstDetailsForm();
     }
   }
 
   removeGstRow(index: number): void {
-    if (this.gstDetails.length > 0) {
+    if (this.control && this.gstDetails.length > 0) {
       this.gstDetails.splice(index, 1);
+    }
+    if (!this.control) {
+      this.financeService.financeExpenseRequestGstRemove({ ExpenseRequestGstId: this.gstDetails[index]?.ExpenseRequestGstId || 0 }).pipe(take(1)).subscribe({
+        next: (res: any) => {
+          this.snackbarService.success(res?.ResponseValue?.Message);
+          this.gstDetails.splice(index, 1);
+        }
+      })
     }
   }
 
