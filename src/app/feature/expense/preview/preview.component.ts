@@ -5,14 +5,14 @@ import { MaterialTableComponent } from '../../../shared/component/material-table
 import { RequesterDetailsDialogComponent } from '../../../shared/component/requester-details-dialog/requester-details-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NewExpenseService } from '../service/new-expense.service';
-import { take } from 'rxjs';
+import { debounceTime, switchMap, take } from 'rxjs';
 import { SummaryComponent } from '../../../shared/component/summary/summary.component';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../shared/service/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ExpenseService, FinanceService } from '../../../../../tne-api';
+import { DataService, ExpenseService, FinanceService } from '../../../../../tne-api';
 import { FormControlFactory } from '../../../shared/dynamic-form/form-control.factory';
 import { IFormControl } from '../../../shared/dynamic-form/form-control.interface';
 import { TextInputComponent } from '../../../shared/dynamic-form/form-controls/input-control/text-input.component';
@@ -20,6 +20,9 @@ import { SelectInputComponent } from '../../../shared/dynamic-form/form-controls
 import { TextAreaInputComponent } from '../../../shared/dynamic-form/form-controls/text-area/text-area-input.component';
 import { ConfirmDialogService } from '../../../shared/service/confirm-dialog.service';
 import { SnackbarService } from '../../../shared/service/snackbar.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-preview',
@@ -32,7 +35,10 @@ import { SnackbarService } from '../../../shared/service/snackbar.service';
     ReactiveFormsModule,
     TextInputComponent,
     SelectInputComponent,
-    TextAreaInputComponent
+    TextAreaInputComponent,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatInputModule
   ],
   templateUrl: './preview.component.html',
   styleUrl: './preview.component.scss'
@@ -58,6 +64,9 @@ export class PreviewComponent {
   });
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
   form: FormGroup = new FormGroup({});
+  filteredOptions: any = [];
+  billableControl = new FormControl('', Validators.required);
+  defaultCostCentreId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -69,7 +78,8 @@ export class PreviewComponent {
     private financeService: FinanceService,
     private confirmDialogService: ConfirmDialogService,
     private snackbarService: SnackbarService,
-    private router: Router
+    private router: Router,
+    private dataService: DataService
   ) {
 
   }
@@ -124,6 +134,7 @@ export class PreviewComponent {
       next: (response: any) => {
         if (response) {
           this.expenseRequestPreviewData = response;
+          this.billableControl.setValue(response.costCentre); 
           this.expenseRequestPreviewData?.dynamicExpenseDetailModels?.forEach((details: any) => {
             details?.data?.forEach((expense: any) => {
               expense.selected = true;
@@ -196,6 +207,23 @@ export class PreviewComponent {
   }
 
   ngOnInit() {
+    this.billableControl.valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap(searchText =>
+          this.dataService.dataGetCostCentreAutocomplete({ SearchText: searchText || '' })
+        )
+      )
+      .subscribe({
+        next: (res) => {
+          this.filteredOptions = res?.ResponseValue || [];
+        },
+        error: (err) => {
+          console.error('Failed to fetch cost centres', err);
+          this.filteredOptions = [];
+        }
+      });
+
     this.expenseRequestId = this.route.snapshot.paramMap.get('id') || 0;
     if (this.expenseRequestId) {
       this.getExpenseConfig();
@@ -212,6 +240,31 @@ export class PreviewComponent {
       this.pageTitle = 'Travel Expense Request Finance Approval'
     }
   }
+
+  onOptionSelected(event: any, item: any) {
+    const selectedDisplay = event.option.value;
+    const selected = this.filteredOptions.find((opt: any) => opt[item.displayKey] === selectedDisplay);
+  
+    if (selected) {
+      item.value = selected[item.displayKey];
+      this.updateBillableCostCentre(selected[item.valueKey]);
+    }
+  }
+  
+  updateBillableCostCentre(costCentreId: number) {
+    const payload = {
+      UserMasterId: Number(localStorage.getItem('userMasterId')),
+      ExpenseRequestId: this.expenseRequestId,
+      BillableCostCentreId: costCentreId
+    };
+  
+    this.financeService.financeExpenseBillableCostCentreUpdate(payload).subscribe({
+      next: (res: any) => {
+        console.log(res)
+      }
+    })
+  }
+  
 
   // Setup validation rules for justification text field if required.
   setupJustificationForm() {
@@ -443,6 +496,11 @@ export class PreviewComponent {
     if (this.mode == 'finance-approval') {
       if (this.form.invalid) {
         this.form.markAllAsTouched();
+        return;
+      }
+
+      if (this.billableControl.invalid) {
+        this.billableControl.markAsTouched();
         return;
       }
 

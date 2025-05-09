@@ -747,7 +747,11 @@
                 "name": "billableCostcentre",
                 "isLink": false,
                 "value": "NA",
-                "order": 6
+                "order": 6,
+                "controlType": "autocomplete",
+                "apiUrl": "/api/Data/CostCentreAutocomplete",
+                "displayKey": "Display",
+                "valueKey": "CostCentreId"
             },
             {
                 "label": "Default Cost Centre",
