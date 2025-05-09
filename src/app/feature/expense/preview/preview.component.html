@@ -1,5 +1,5 @@
 <div class="page-title">
-   <h2 class="page-header">Travel Expense Request Preview</h2>
+   <h2 class="page-header">{{ pageTitle }}</h2>
 </div>
 <div class="app-main-wrapper">
    <div class="inn-main-hold">
@@ -74,7 +74,7 @@
                   <!-- Other Details -->
                   <div class="row mt-2">
                      <div class="col-md-12">
-                        <mat-tab-group fitInkBarToContent>
+                        <mat-tab-group fitInkBarToContent (selectedTabChange)="onTabChange($event)">
                            @for (detail of otherDetails; track detail) {
                            <mat-tab>
                               @switch (detail.name) {
@@ -156,6 +156,52 @@
                                  </div>
                               </div>
                               }
+                              @case ("Adjustment") {
+                              @if (mode == 'finance-approval') {
+                              <ng-template mat-tab-label>
+                                 <span>{{detail.label}}</span>
+                              </ng-template>
+                              <div class="row mt-2">
+                                 <div class="col-md-12">
+                                    <form [formGroup]="form" class="row adjustemnt-container">
+                                       @for (control of formControls; track control) {
+                                       @if (control.formConfig.type !== 'hidden' && control.formConfig.showInUI !== false) {
+                                       <!-- Using ngSwitch to handle different control types -->
+                                       @switch (control.formConfig.type) {
+                                       <!-- Handling 'text' type controls -->
+                                       @case ('text') {
+                                       <div class="col-md-4">
+                                          <lib-text-input [controlConfig]="control.formConfig" [control]="control.control">
+                                          </lib-text-input>
+                                       </div>
+                                       }
+                                       <!-- Handling 'select' type controls -->
+                                       @case ('select') {
+                                       <div class="col-md-4">
+                                          <lib-select-input [controlConfig]="control.formConfig" [control]="control.control">
+                                          </lib-select-input>
+                                       </div>
+                                       }
+                                    
+                                       <!-- Handling 'textarea' type controls -->
+                                       @case ('textarea') {
+                                       <lib-text-area-input [controlConfig]="control.formConfig" [control]="control.control">
+                                       </lib-text-area-input>
+                                       }
+                                       <!-- Optional: Default case if control type doesn't match -->
+                                       @default {
+                                       <div>
+                                          <p>Unsupported control type: {{ control.formConfig.type }}</p>
+                                       </div>
+                                       }
+                                       }
+                                       }
+                                       }
+                                    </form>
+                                 </div>
+                              </div>
+                              }
+                              }
                               }
                            </mat-tab>
                            }
@@ -212,20 +258,20 @@
                            <div class="d-flex align-items-center w-100 mb-2">
                               @if (expenseRequestPreviewConfig.actions[0]) {
                               <a [ngClass]="expenseRequestPreviewConfig.actions[0].class"
-                                 (click)="onAction(expenseRequestPreviewConfig.actions[0].type);">
+                                 (click)="onAction(expenseRequestPreviewConfig.actions[0]);">
                                  {{ expenseRequestPreviewConfig.actions[0].label }}
                               </a>
                               }
                               @if (expenseRequestPreviewConfig.actions[1]) {
                               <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[1].class"
-                                 (click)="onAction(expenseRequestPreviewConfig.actions[1].type)">
+                                 (click)="onAction(expenseRequestPreviewConfig.actions[1])">
                                  {{ expenseRequestPreviewConfig.actions[1].label }}
                               </button>
                               }
                            </div>
                            @if (expenseRequestPreviewConfig.actions[2]) {
                            <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[2].class"
-                              (click)="onAction(expenseRequestPreviewConfig.actions[2].type)">
+                              (click)="onAction(expenseRequestPreviewConfig.actions[2])">
                               {{ expenseRequestPreviewConfig.actions[2].label }}
                            </button>
                            }

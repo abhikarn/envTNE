@@ -502,6 +502,74 @@
             {
                 "name": "LogDetails",
                 "label": "Log Details"
+            },
+            {
+                "name": "Adjustment",
+                "label": "Adjustment",
+                "formControls": [
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetCurrencyView",
+                        "value": 0,
+                        "defaultValue": {
+                            "Id": 1,
+                            "Code": "INR",
+                            "Name": "Indian Rupee",
+                            "Alias": "Indian Rupee",
+                            "IsBaseCurrency": true,
+                            "Display": "Indian Rupee : INR"
+                        },
+                        "options": [],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Currency is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "AdjustmentAmount",
+                        "isExcluded": true,
+                        "label": "Amount",
+                        "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "decimal": ".00",
+                            "setValue": "0.00"
+                        },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Amount is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "textarea",
+                        "dataType": "string",
+                        "name": "AdjustmentRemarks",
+                        "isExcluded": false,
+                        "label": "Adjustment Remarks",
+                        "value": ""
+                    }
+                ]
             }
         ],
         "summaries": [
@@ -650,72 +718,72 @@
                 "label": "Base Location",
                 "name": "baseLocation",
                 "value": "",
-                "isLink":false,
+                "isLink": false,
                 "order": 1
             },
             {
                 "label": "Department",
                 "name": "department",
-                "isLink":false,
+                "isLink": false,
                 "value": "",
                 "order": 2
             },
             {
                 "label": "Designation",
                 "name": "designation",
-                "isLink":false,
+                "isLink": false,
                 "value": "",
                 "order": 3
             },
             {
                 "label": "Grade",
                 "name": "grade",
-                "isLink":false,
+                "isLink": false,
                 "value": "",
                 "order": 4
-            }, 
+            },
             {
                 "label": "Billable Cost Centre",
                 "name": "billableCostcentre",
-                "isLink":false,
+                "isLink": false,
                 "value": "NA",
                 "order": 6
             },
             {
                 "label": "Default Cost Centre",
                 "name": "costCentre",
-                "isLink":false,
+                "isLink": false,
                 "value": "NA",
                 "order": 5
             },
             {
                 "label": "Linked Request",
                 "name": "travelRequestNumber",
-                "isLink":true,
+                "isLink": true,
                 "value": "",
                 "order": 7
             },
             {
                 "label": "Travel From Date Time",
                 "name": "travelDateFromActualString",
-                "isLink":false,
+                "isLink": false,
                 "value": "",
                 "order": 8
             },
             {
                 "label": "Travel To Date Time",
                 "name": "travelDateToActualString",
-                "isLink":false,
+                "isLink": false,
                 "value": "",
                 "order": 9
             },
             {
                 "label": "Purpose Of Travel",
                 "name": "purpose",
-                "isLink":false,
+                "isLink": false,
                 "value": "",
                 "order": 10
-            }           
+            }
         ],
         "dynamicExpenseDetailModels": [
             {
@@ -727,6 +795,7 @@
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
+                        "type": "date",
                         "name": "ClaimDate",
                         "label": "Date",
                         "visible": true
@@ -748,8 +817,10 @@
                     },
                     {
                         "name": "ApprovedAmount",
-                        "label": "Approved",
-                        "visible": true
+                        "label": "Approved Amount",
+                        "visible": true,
+                        "type": "number",
+                        "controlType": "input"
                     },
                     {
                         "name": "Currency",
@@ -985,17 +1056,35 @@
             {
                 "label": "Seek Clarification",
                 "type": "seekClarification",
-                "class": "btn btn-outline-secondary w-50 mr-10"
+                "class": "btn btn-outline-secondary w-50 mr-10",
+                "confirmPopup": {
+                    "message": "Are you sure you want to Seek Clarification the claim?",
+                    "confirmText": "Yes, SeekClarification",
+                    "cancelText": "No, Cancel"
+                },
+                "Success": "Expense Request Sent For Seek Clarification"
             },
             {
                 "label": "Reject",
                 "type": "reject",
-                "class": "btn btn-outline-primary w-50"
+                "class": "btn btn-outline-primary w-50",
+                "confirmPopup": {
+                    "message": "Are you sure you want to reject the claim?",
+                    "confirmText": "Yes, Reject",
+                    "cancelText": "No, Cancel"
+                },
+                "Success": "Expense Request Rejected"
             },
             {
                 "label": "Approve",
                 "type": "approve",
-                "class": "btn btn-primary w-100"
+                "class": "btn btn-primary w-100",
+                "confirmPopup": {
+                    "message": "Are you sure you want to approve the claim?",
+                    "confirmText": "Yes, Approve",
+                    "cancelText": "No, Cancel"
+                },
+                "Success": "Expense Request Approved"
             }
         ]
     }
