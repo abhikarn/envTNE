@@ -1,8 +1,7 @@
-
 import { Component, DestroyRef, Directive, ElementRef, HostListener, inject, OnInit, viewChild, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
-import { CityAutocompleteParam, DashboardService, DataService, ExpenseRequestModel, ExpenseService, TravelService, ExpenseRequestDashboardParam } from '../../../../../tne-api';
+import { CityAutocompleteParam, DashboardService, DataService, ExpenseRequestModel, ExpenseService, TravelService, ExpenseRequestDashboardParam, FinanceService } from '../../../../../tne-api';
 import { forkJoin, map, Observable, of, startWith, switchMap, take } from 'rxjs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -59,13 +58,12 @@ export const ELEMENT_DATA: any[] = [];
     RouterModule,
     MatTooltipModule
   ],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
-  // encapsulation:viewChild,
+  templateUrl: './finance.component.html',
+  styleUrl: './finance.component.scss',
   encapsulation: ViewEncapsulation.None
 })
 
-export class DashboardComponent implements OnInit {
+export class FinanceComponent implements OnInit {
 
   expenseDashboardParam: ExpenseRequestDashboardParam = {}
   expenseRequesData: any[] = []
@@ -76,14 +74,17 @@ export class DashboardComponent implements OnInit {
   };
 
   displayedColumns: ColumnConfig[] = [
-    { key: 'slNo', label: 'Sl.No', sortable: false },
-    { key: 'Requester', label: 'Requester', sortable: true },
+    { key: 'slNo', label: 'Sl.No', sortable: false },    
     { key: 'RequestNumber', label: 'Request Number', sortable: true },
+    { key: 'TravelRequestNumber', label: 'Reference Request', sortable: true },
+    { key: 'Requester', label: 'Requester', sortable: true },
+        
+    { key: 'ExpenseClaimTypeDescription', label: 'Claim Type', sortable: true },
+    { key: 'Age', label: 'Age(Days)', sortable: true },
     { key: 'RequestDate', label: 'Request Date', sortable: true },
-    { key: 'ExpenseClaimTypeDescription', label: 'Expense Type', sortable: true },
-    { key: 'ApprovedAmount', label: 'Amount', sortable: true },
-    { key: 'PolicyViolationCount', label: 'Policy Violation', sortable: true },
-    { key: 'ClaimStatus', label: 'Status', sortable: true },
+    { key: 'TotalApprovedAmount', label: 'Total', sortable: true },
+    // { key: 'PolicyViolationCount', label: 'Policy Violation', sortable: true },
+     { key: 'ClaimStatus', label: 'Status', sortable: true },   
     { key: 'action', label: 'Action', sortable: false }
   ];
 
@@ -94,6 +95,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private expenseService: ExpenseService,
     private dashboardService: DashboardService,
+    private financeService: FinanceService,
     private dataService: DataService,
     private travelService: TravelService,
     private http: HttpClient,
@@ -106,7 +108,7 @@ export class DashboardComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.dataSource.data=[];
+    this.dataSource.data = [];
     this.getMyExpenseRequestDashBoard();
   }
 
@@ -118,8 +120,8 @@ export class DashboardComponent implements OnInit {
       UserMasterId: this.authService.getUserMasterId(),
       ActionBy: this.authService.getUserMasterId(),
     }
-    this.dashboardService.dashboardGetExpenseRequestDashboard(payloadData).subscribe(data => {
-      
+    this.financeService.financeApprovalsFinanceExpenseRequest(payloadData).subscribe(data => {
+
       let requestData = data;
       this.expenseRequesData = requestData.ResponseValue as any[];
       this.statusWiseExpenseDataCount = {
@@ -181,6 +183,3 @@ export class DashboardComponent implements OnInit {
     FileSaver.saveAs(data, 'ExpenseRequestData.xlsx');
   }
 }
-
-
-

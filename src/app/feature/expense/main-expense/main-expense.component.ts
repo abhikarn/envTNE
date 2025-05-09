@@ -275,6 +275,7 @@ export class MainExpenseComponent {
     this.responseData = JSON.parse(JSON.stringify(response));
     this.updateCategoryCounts();
     this.expenseRequestData = response;
+    this.setCurrencyDropdown();
 
     setTimeout(() => {
       this.summaryComponent.calculatTotalExpenseAmount();
@@ -342,7 +343,7 @@ export class MainExpenseComponent {
 
   // Set default currency for 'Currency' fields based on travel type.
   setCurrencyDropdown() {
-    const isWithoutCurrency = ['52', '54'].includes(this.travelRequestPreview?.TravelTypeId);
+    const isWithoutCurrency = ['52', '54'].includes(this.travelRequestPreview?.TravelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId);
 
     const defaultCurrency = {
       Id: 1,

@@ -101,4 +101,13 @@ input.form-control[disabled] {
   cursor: not-allowed;
 }
 
+.is-invalid {
+  border-color: red;
+}
+
+.error-msg {
+  color: red;
+  font-size: 12px;
+}
+
 

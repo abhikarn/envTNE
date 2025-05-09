@@ -1,0 +1,39 @@
+<h2 mat-dialog-title class="dialog-header">Requester Details</h2>
+<mat-dialog-content class="dialog-content">
+    <div class="details-container">
+        <div class="left-column">
+            <mat-list>
+                <mat-list-item><strong>Employee Code:</strong> {{data.EmployeeCode}}</mat-list-item>
+                <mat-list-item><strong>Name:</strong> {{data.EmployeeName}}</mat-list-item>
+                <mat-list-item><strong>Email:</strong> {{data.EmployeeEmail}}</mat-list-item>
+                <mat-list-item><strong>Designation:</strong> {{data.Designation}}</mat-list-item>
+                <mat-list-item><strong>Company:</strong> {{data.Company}}</mat-list-item>
+                <mat-list-item><strong>Business Unit:</strong> {{data.PersonnelSubArea}}</mat-list-item>
+                <mat-list-item><strong>Division:</strong> {{data.PersonnelArea}}</mat-list-item>
+                <mat-list-item><strong>Department:</strong> {{data.Department}}</mat-list-item>
+                <mat-list-item><strong>Sub Department:</strong> {{data.Department}}</mat-list-item>
+                <mat-list-item><strong>Grade:</strong> {{data.Grade}}</mat-list-item>
+                <mat-list-item><strong>Gender:</strong> {{data.Gender}}</mat-list-item>
+            </mat-list>
+        </div>
+
+        <div class="right-column">
+            <mat-list>
+                <mat-list-item><strong>L1 Manager:</strong> {{data.ReportingManager}}</mat-list-item>
+                <mat-list-item><strong>HOD:</strong> {{data.HodPersonnel}}</mat-list-item>
+                <mat-list-item><strong>DOB:</strong> {{data.DateOfBirthString}}</mat-list-item>
+                <mat-list-item><strong>DOJ:</strong> {{data.DateOfJoinString}}</mat-list-item>
+                <mat-list-item><strong>Mobile Number:</strong> {{data.MobileNumber}}</mat-list-item>
+                <mat-list-item><strong>Cost Centre:</strong> {{data.CostCentre}}</mat-list-item>
+                <mat-list-item><strong>City:</strong> {{data.City}}</mat-list-item>
+                <mat-list-item><strong>Country:</strong> {{data.Country}}</mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</mat-dialog-actions>

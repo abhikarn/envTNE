@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class NewExpenseService {
   basePath = "https://localhost:7073/api/Expense/"
+  newbasePath = "https://localhost:44301/api/"
 
   constructor(
     private httpClient: HttpClient
@@ -25,6 +26,10 @@ export class NewExpenseService {
 
   getExpenseRequestDetailPreview(request: any) {
     return this.httpClient.post<any>(`${this.basePath}GetExpensesRequestDetailPreviewGet`, request);
+  }
+
+  getRequestorInfo(request: any) {
+    return this.httpClient.post<any>(`${this.newbasePath}User/EmployeeProfile`, request);
   }
 
   getExpenseConfig() {

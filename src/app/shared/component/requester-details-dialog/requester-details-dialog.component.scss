@@ -1,0 +1,33 @@
+.dialog-header {
+    background-color: #0077b6;
+    color: #fff;
+    padding: 16px;
+    font-size: 18px;
+  }
+  
+  .dialog-content {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+  }
+  
+  .details-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  
+  .left-column, .right-column {
+    flex: 1 1 45%;
+  }
+  
+  mat-list-item {
+    padding: 4px 0;
+    font-size: 14px;
+  }
+  
+  mat-dialog-actions {
+    padding: 8px 16px;
+  }
+  
