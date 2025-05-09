@@ -21,6 +21,11 @@
                 "confirmText": "Ok"
             }
         },
+        "dateExtension": {
+            "label": "Date Extension",
+            "visible": true,
+            "class": "btn btn-secondary btn-sm"
+        },
         "category": [
             {
                 "name": "Travel Ticket",

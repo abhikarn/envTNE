@@ -6,7 +6,7 @@
           <div class="left-container-wider scroll-left-align mar-tmd3">
             <div class="common-block mb-3">
               @if (!editMode) {
-                <h6 class="common-title fw-bold mb-3">Select Request </h6>
+              <h6 class="common-title fw-bold mb-3">Select Request </h6>
               <div class="row">
                 <div class="col-md-4">
                   @if (expenseConfig?.request) {
@@ -26,21 +26,24 @@
                 </div>
               </div>
               } @else {
-                <div class="row">
-                  <span><span class="common-title fw-bold mb-3">Request</span> &nbsp;&nbsp; {{expenseRequestData?.travelRequestNumber}}</span>
-                </div>
+              <div class="row">
+                <span><span class="common-title fw-bold mb-3">Request</span> &nbsp;&nbsp;
+                  {{expenseRequestData?.travelRequestNumber}}</span>
+              </div>
               }
-              
+
             </div>
             <div class="common-block  mb-3">
               <div class="d-flex align-items-center justify-content-between">
                 <h6 class="common-title fw-bold mb-3">Travel Details </h6>
+                @if (expenseConfig?.dateExtension?.visible) {
                 <div class="date-extension">
-                  <button type="button" [disabled]="!travelRequestId" class="btn btn-secondary btn-sm "
+                  <button type="button" [class]="expenseConfig.dateExtension.class" [disabled]="!travelRequestId"
                     (click)="openModal()">
-                    Date Extension
+                    {{ expenseConfig.dateExtension.label }}
                   </button>
                 </div>
+                }
               </div>
 
               <div class="row">
@@ -147,20 +150,20 @@
                     <ng-template mat-tab-label>
                       <span>{{detail.label}}</span>
                     </ng-template>
-                    
-                    
-                      @for (expenseRequest of expenseRequestData?.dynamicExpenseDetailModels; track $index) {
-                        @for (data of expenseRequest.data; track $index) {
-                          @if (data?.IsViolation) {
-                            <ul class="policy-vio-list">
-                              <li>
-                                <span class="fa-pv"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
-                                {{expenseRequest.name}}: {{detail[expenseRequest.name]}}
-                              </li>
-                            </ul>
-                          }
-                        }
-                      }
+
+
+                    @for (expenseRequest of expenseRequestData?.dynamicExpenseDetailModels; track $index) {
+                    @for (data of expenseRequest.data; track $index) {
+                    @if (data?.IsViolation) {
+                    <ul class="policy-vio-list">
+                      <li>
+                        <span class="fa-pv"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+                        {{expenseRequest.name}}: {{detail[expenseRequest.name]}}
+                      </li>
+                    </ul>
+                    }
+                    }
+                    }
                     }
                     @case ("Approvaldetails") {
                     <ng-template mat-tab-label>
@@ -179,15 +182,19 @@
                         <div class="time-frame-wrapper">
                           <div class="time-log-axis">
                             @for (log of expenseRequestData?.expenseRequestLog; track $index) {
-                              <div class="tfl-child">
-                                <ul>
-                                  <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>{{log?.actionDatetimeString}}
-                                  </li>
-                                  <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>{{log?.actionStatus}}</li>
-                                  <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>{{log?.actionByName}}</li>
-                                  <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>{{log?.actionRemarks}}</li>
-                                </ul>
-                              </div>
+                            <div class="tfl-child">
+                              <ul>
+                                <li><span><i class="fa fa-calendar-check-o"
+                                      aria-hidden="true"></i></span>{{log?.actionDatetimeString}}
+                                </li>
+                                <li><span><i class="fa fa-check-square-o"
+                                      aria-hidden="true"></i></span>{{log?.actionStatus}}</li>
+                                <li><span><i class="fa fa-user-circle-o"
+                                      aria-hidden="true"></i></span>{{log?.actionByName}}</li>
+                                <li><span><i class="fa fa-commenting"
+                                      aria-hidden="true"></i></span>{{log?.actionRemarks}}</li>
+                              </ul>
+                            </div>
                             }
                           </div>
                         </div>
