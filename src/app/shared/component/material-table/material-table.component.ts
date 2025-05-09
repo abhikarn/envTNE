@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,6 +7,8 @@ import { AttachmentModalComponent } from '../attachment-modal/attachment-modal.c
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { AddGstComponent } from '../../dynamic-form/form-controls/gst/add-gst/add-gst.component';
+import { GlobalDatePipe } from '../../pipes/global-date.pipe';
+import { ConfirmDialogService } from '../../service/confirm-dialog.service';
 
 @Component({
   selector: 'app-material-table',
@@ -17,10 +19,12 @@ import { AddGstComponent } from '../../dynamic-form/form-controls/gst/add-gst/ad
     MatIconModule,
     MatTooltipModule,
     FormsModule,
-    AddGstComponent
+    AddGstComponent,
+    GlobalDatePipe
   ],
   templateUrl: './material-table.component.html',
-  styleUrl: './material-table.component.scss'
+  styleUrl: './material-table.component.scss',
+  providers: [DatePipe]
 })
 export class MaterialTableComponent implements OnChanges {
   @Input() categoryName: string = '';
@@ -37,7 +41,10 @@ export class MaterialTableComponent implements OnChanges {
   expandedRow: any | null = null;
   processedData: any[] = [];
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private confirmDialogService: ConfirmDialogService
+  ) { }
 
   ngOnChanges(changes: SimpleChanges) {
     // Update processedData when input changes
@@ -96,6 +103,10 @@ export class MaterialTableComponent implements OnChanges {
     });
   }
 
+  showRemarks(expenseRequestDetailId: any) {
+    console.log(expenseRequestDetailId)
+  }
+
   toggleSelectAll() {
     this.processedData.forEach(row => {
       row.selected = this.selectAll;
@@ -122,6 +133,50 @@ export class MaterialTableComponent implements OnChanges {
       name: this.categoryName,
       data: this.processedData
     });
+  }
+
+  preventInvalidKeys(event: KeyboardEvent): void {
+    const invalidKeys = ['-', '+', 'e', 'E'];
+    if (invalidKeys.includes(event.key)) {
+      event.preventDefault();
+    }
+  }
+
+  enforceLimit(event: Event, row: any, key: string): void {
+    const input = event.target as HTMLInputElement;
+    let value = parseInt(input.value || '0', 10);
+
+    if (isNaN(value)) {
+      value = 0;
+    }
+
+    // Clamp the value
+    if (value < 0) value = 0;
+    if (value > 9999999999) value = 9999999999;
+
+    // Update both view and model
+    input.value = value.toString();
+    row[key] = value;
+  }
+
+  validateApprovedAmount(row: any): void {
+    const approved = +row.ApprovedAmount;
+    const claimed = +row.ClaimAmount;
+
+    if (approved > claimed) {
+      this.confirmDialogService
+        .confirm({
+          title: 'Approved amount',
+          message: 'Approved amount should not be greater than claimed amount!',
+          confirmText: 'Ok',
+          cancelText: ''
+        })
+        .subscribe((confirmed) => {
+          if (confirmed) {
+            row.ApprovedAmount = 0;
+          }
+        });
+    }
   }
 
 }

@@ -21,6 +21,11 @@
                 "confirmText": "Ok"
             }
         },
+        "dateExtension": {
+            "label": "Date Extension",
+            "visible": true,
+            "class": "btn btn-secondary btn-sm"
+        },
         "category": [
             {
                 "name": "Travel Ticket",
@@ -502,6 +507,74 @@
             {
                 "name": "LogDetails",
                 "label": "Log Details"
+            },
+            {
+                "name": "Adjustment",
+                "label": "Adjustment",
+                "formControls": [
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetCurrencyView",
+                        "value": 0,
+                        "defaultValue": {
+                            "Id": 1,
+                            "Code": "INR",
+                            "Name": "Indian Rupee",
+                            "Alias": "Indian Rupee",
+                            "IsBaseCurrency": true,
+                            "Display": "Indian Rupee : INR"
+                        },
+                        "options": [],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Currency is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "AdjustmentAmount",
+                        "isExcluded": true,
+                        "label": "Amount",
+                        "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "decimal": ".00",
+                            "setValue": "0.00"
+                        },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Amount is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "textarea",
+                        "dataType": "string",
+                        "name": "AdjustmentRemarks",
+                        "isExcluded": false,
+                        "label": "Adjustment Remarks",
+                        "value": ""
+                    }
+                ]
             }
         ],
         "summaries": [
@@ -569,7 +642,7 @@
                     },
                     {
                         "label": "Accommodation",
-                        "key": "accommodation"
+                        "key": "Accommodation"
                     }
                 ]
             }
@@ -650,72 +723,76 @@
                 "label": "Base Location",
                 "name": "baseLocation",
                 "value": "",
-                "isLink":false,
+                "isLink": false,
                 "order": 1
             },
             {
                 "label": "Department",
                 "name": "department",
-                "isLink":false,
+                "isLink": false,
                 "value": "",
                 "order": 2
             },
             {
                 "label": "Designation",
                 "name": "designation",
-                "isLink":false,
+                "isLink": false,
                 "value": "",
                 "order": 3
             },
             {
                 "label": "Grade",
                 "name": "grade",
-                "isLink":false,
+                "isLink": false,
                 "value": "",
                 "order": 4
-            }, 
+            },
             {
                 "label": "Billable Cost Centre",
                 "name": "billableCostcentre",
-                "isLink":false,
+                "isLink": false,
                 "value": "NA",
-                "order": 6
+                "order": 6,
+                "controlType": "autocomplete",
+                "apiUrl": "/api/Data/CostCentreAutocomplete",
+                "displayKey": "Display",
+                "valueKey": "CostCentreId"
             },
             {
                 "label": "Default Cost Centre",
                 "name": "costCentre",
-                "isLink":false,
+                "isLink": false,
                 "value": "NA",
                 "order": 5
             },
             {
                 "label": "Linked Request",
                 "name": "travelRequestNumber",
-                "isLink":true,
+                "isLink": true,
                 "value": "",
                 "order": 7
             },
             {
                 "label": "Travel From Date Time",
                 "name": "travelDateFromActualString",
-                "isLink":false,
+                "isLink": false,
                 "value": "",
                 "order": 8
             },
             {
                 "label": "Travel To Date Time",
                 "name": "travelDateToActualString",
-                "isLink":false,
+                "isLink": false,
                 "value": "",
                 "order": 9
             },
             {
                 "label": "Purpose Of Travel",
                 "name": "purpose",
-                "isLink":false,
+                "isLink": false,
                 "value": "",
                 "order": 10
-            }           
+            }
         ],
         "dynamicExpenseDetailModels": [
             {
@@ -727,6 +804,7 @@
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
+                        "type": "date",
                         "name": "ClaimDate",
                         "label": "Date",
                         "visible": true
@@ -748,8 +826,10 @@
                     },
                     {
                         "name": "ApprovedAmount",
-                        "label": "Approved",
-                        "visible": true
+                        "label": "Approved Amount",
+                        "visible": true,
+                        "type": "number",
+                        "controlType": "input"
                     },
                     {
                         "name": "Currency",
@@ -762,7 +842,7 @@
                         "visible": true
                     },
                     {
-                        "name": "Approved(INR)",
+                        "name": "ClaimAmountInBaseCurrency",
                         "label": "Approved(INR)",
                         "visible": true
                     }
@@ -973,23 +1053,343 @@
                         "value": ""
                     }
                 ]
+            },
+            {
+                "name": "Accommodation",
+                "label": "Accommodation Expense",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [
+                    {
+                        "name": "Type",
+                        "label": "Type",
+                        "visible": true
+                    },
+                    {
+                        "type": "date",
+                        "name": "FromDate",
+                        "label": "From Date",
+                        "visible": true
+                    },
+                    {
+                        "type": "date",
+                        "name": "ToDate",
+                        "label": "To Date",
+                        "visible": true
+                    },
+                    {
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement",
+                        "visible": true
+                    },
+                    {
+                        "name": "ClaimAmount",
+                        "label": "Claimed",
+                        "visible": true
+                    },
+                    {
+                        "name": "AppovedAmount",
+                        "label": "Approved Amount",
+                        "visible": true,
+                        "type": "number",
+                        "controlType": "input"
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true
+                    },
+                    {
+                        "name": "ConversionRate",
+                        "label": "Conversion",
+                        "visible": true
+                    },
+                    {
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Approved(INR)",
+                        "visible": true
+                    }
+                ],
+                "gst": {
+                    "name": "gst",
+                    "label": "GST",
+                    "value": null,
+                    "getControl": "ApprovedAmount",
+                    "fields": [
+                        {
+                            "name": "ExpenseRequestGstTypeId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "ExpenseRequestDetailId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "GstIn",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "custom",
+                                    "name": "validateGST",
+                                    "message": "Invalid GST number"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "InvoiceNumber",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            },
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "min",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "SGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            }
+                        },
+                        {
+                            "name": "CGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            }
+                        },
+                        {
+                            "name": "IGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            }
+                        },
+                        {
+                            "name": "UGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                },
+                                "decimal": ".00",
+                                "setValue": "0.00"
+                            }
+                        }
+                    ],
+                    "notifications": {
+                        "GSTAmount": "The GST amount should not be greater than the approved amount.",
+                        "validGSTAmount": "Please enter a valid GST amount.",
+                        "claimedAmount": "Please enter a approved amount."
+                    }
+                },
+                "nestedTables": [
+                    {
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
+                    }
+                ],
+                "otherFields": [
+                    {
+                        "name": "",
+                        "label": "Stay Name",
+                        "value": ""
+                    },
+                    {
+                        "name": "",
+                        "label": "Bill Number",
+                        "value": ""
+                    },
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "label": "Bill Date",
+                        "value": ""
+                    },
+                    {
+                        "name": "City",
+                        "label": "City",
+                        "value": ""
+                    },
+                    {
+                        "name": "CityGrade",
+                        "label": "City Grade",
+                        "value": ""
+                    },
+                    {
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount(INR)",
+                        "value": ""
+                    },
+                    {
+                        "name": "",
+                        "label": "Differential Amount(INR)",
+                        "value": ""
+                    },
+                    {
+                        "name": "TaxAmount",
+                        "label": "Tax Amount",
+                        "value": ""
+                    },
+                    {
+                        "name": "",
+                        "label": "Justification",
+                        "value": ""
+                    }
+                ]
             }
         ],
+        "justification": {
+            "label": "Justification",
+            "controlName": "justification",
+            "maxLength": 2000,
+            "required": true
+        },
         "actions": [
             {
                 "label": "Seek Clarification",
                 "type": "seekClarification",
-                "class": "btn btn-outline-secondary w-50 mr-10"
+                "class": "btn btn-outline-secondary w-50 mr-10",
+                "confirmPopup": {
+                    "message": "Are you sure you want to Seek Clarification the claim?",
+                    "confirmText": "Yes, SeekClarification",
+                    "cancelText": "No, Cancel"
+                },
+                "Success": "Expense Request Sent For Seek Clarification"
             },
             {
                 "label": "Reject",
                 "type": "reject",
-                "class": "btn btn-outline-primary w-50"
+                "class": "btn btn-outline-primary w-50",
+                "confirmPopup": {
+                    "message": "Are you sure you want to reject the claim?",
+                    "confirmText": "Yes, Reject",
+                    "cancelText": "No, Cancel"
+                },
+                "Success": "Expense Request Rejected"
             },
             {
                 "label": "Approve",
                 "type": "approve",
-                "class": "btn btn-primary w-100"
+                "class": "btn btn-primary w-100",
+                "confirmPopup": {
+                    "message": "Are you sure you want to approve the claim?",
+                    "confirmText": "Yes, Approve",
+                    "cancelText": "No, Cancel"
+                },
+                "Success": "Expense Request Approved"
             }
         ]
     }

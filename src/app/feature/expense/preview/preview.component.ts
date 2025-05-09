@@ -3,14 +3,26 @@ import { Component, ViewChild } from '@angular/core';
 import { ExpansionPanelComponent } from '../../../shared/component/expansion-panel/expansion-panel.component';
 import { MaterialTableComponent } from '../../../shared/component/material-table/material-table.component';
 import { RequesterDetailsDialogComponent } from '../../../shared/component/requester-details-dialog/requester-details-dialog.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NewExpenseService } from '../service/new-expense.service';
-import { take } from 'rxjs';
+import { debounceTime, switchMap, take } from 'rxjs';
 import { SummaryComponent } from '../../../shared/component/summary/summary.component';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../shared/service/auth.service';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DataService, ExpenseService, FinanceService } from '../../../../../tne-api';
+import { FormControlFactory } from '../../../shared/dynamic-form/form-control.factory';
+import { IFormControl } from '../../../shared/dynamic-form/form-control.interface';
+import { TextInputComponent } from '../../../shared/dynamic-form/form-controls/input-control/text-input.component';
+import { SelectInputComponent } from '../../../shared/dynamic-form/form-controls/dropdown/select-input.component';
+import { TextAreaInputComponent } from '../../../shared/dynamic-form/form-controls/text-area/text-area-input.component';
+import { ConfirmDialogService } from '../../../shared/service/confirm-dialog.service';
+import { SnackbarService } from '../../../shared/service/snackbar.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-preview',
@@ -19,7 +31,14 @@ import { AuthService } from '../../../shared/service/auth.service';
     ExpansionPanelComponent,
     MaterialTableComponent,
     SummaryComponent,
-    MatTabsModule
+    MatTabsModule,
+    ReactiveFormsModule,
+    TextInputComponent,
+    SelectInputComponent,
+    TextAreaInputComponent,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatInputModule
   ],
   templateUrl: './preview.component.html',
   styleUrl: './preview.component.scss'
@@ -27,9 +46,7 @@ import { AuthService } from '../../../shared/service/auth.service';
 export class PreviewComponent {
   @ViewChild(SummaryComponent) summaryComponent: any;
   expenseRequestPreviewData: any;
-
   expenseRequestPreviewConfig: any;
-
   loadData = false;
   expenseRequestId: any;
   requestorId: any;
@@ -39,26 +56,43 @@ export class PreviewComponent {
   otherDetails: any;
   otherFields: any;
   mode: 'preview' | 'approval' | 'finance-approval' = 'preview';
+  pageTitle = 'Travel Expense Request Preview';
+  expenseRequestApprovalDetailType: any = [];
+  expenseRequestGstType: any = [];
+  justificationForm: any = new FormGroup({
+    justification: new FormControl('', Validators.required)
+  });
+  formControls: { formConfig: IFormControl, control: FormControl }[] = [];
+  form: FormGroup = new FormGroup({});
+  filteredOptions: any = [];
+  billableControl = new FormControl('', Validators.required);
+  defaultCostCentreId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private newExpenseService: NewExpenseService,
     private dialog: MatDialog,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private expenseService: ExpenseService,
+    private financeService: FinanceService,
+    private confirmDialogService: ConfirmDialogService,
+    private snackbarService: SnackbarService,
+    private router: Router,
+    private dataService: DataService
   ) {
 
   }
 
-  openDetailsDialog(id: number): void { 
-    debugger; 
+  openDetailsDialog(id: number): void {
+    debugger;
     let requestBody = {
       expenseRequestId: this.expenseRequestId
     }
     this.newExpenseService.getExpenseRequestDetailPreview(requestBody).pipe(take(1)).subscribe({
       next: (response: any) => {
         if (response) {
-          this.requestorId=response.requesterId
+          this.requestorId = response.requesterId
           const body = {
             UserMasterId: this.requestorId,
           };
@@ -76,7 +110,7 @@ export class PreviewComponent {
           });
         }
       }
-    });      
+    });
   }
 
   getExpenseConfig() {
@@ -86,12 +120,13 @@ export class PreviewComponent {
           this.expenseRequestPreviewConfig = response.expenseRequestPreviewAndApproval;
           this.otherDetails = response.expenseRequest.otherDetails;
           this.expenseSummary = response.expenseRequest.summaries;
+          this.mode == 'preview' || this.mode == 'finance-approval' ? this.setupJustificationForm() : '';
         }
       }
     });
   }
 
-  getExpenseRequestPreviewDetails() {    
+  getExpenseRequestPreviewDetails() {
     let requestBody = {
       expenseRequestId: this.expenseRequestId
     }
@@ -99,6 +134,26 @@ export class PreviewComponent {
       next: (response: any) => {
         if (response) {
           this.expenseRequestPreviewData = response;
+          this.billableControl.setValue(response.costCentre); 
+          this.expenseRequestPreviewData?.dynamicExpenseDetailModels?.forEach((details: any) => {
+            details?.data?.forEach((expense: any) => {
+              expense.selected = true;
+              if (expense?.selected) {
+                if (expense.gst?.length > 0) {
+                  expense.gst.forEach((gst: any) => {
+                    this.expenseRequestGstType.push(gst);
+                  })
+                }
+                this.expenseRequestApprovalDetailType.push({
+                  ExpenseRequestDetailId: expense?.ExpenseRequestDetailId || 0,
+                  ApprovedAmount: expense?.ApprovedAmount || 0,
+                  ApproverId: Number(localStorage.getItem('userMasterId')),
+                  ApproverRemarks: expense?.remarks || "",
+                  ActionStatusId: 0
+                });
+              }
+            });
+          })
           this.loadExpenseRequestPreviewData();
         }
       }
@@ -107,9 +162,8 @@ export class PreviewComponent {
 
   loadExpenseRequestPreviewData() {
     if (!this.loadData) {
-      
       this.requestHeaderDetails = this.expenseRequestPreviewConfig?.requestHeaderDetails;
-      this.requestorId = this.requestHeaderDetails.requesterId
+      this.requestorId = this.requestHeaderDetails.requesterId;
       const requestData = this.expenseRequestPreviewData;
       this.requestHeaderDetails?.forEach((config: any) => {
         const prop = config.name;
@@ -142,17 +196,34 @@ export class PreviewComponent {
             })
           }
         })
-      })
+      });
+      this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName).setValue(this.expenseRequestPreviewData?.remarks);
       setTimeout(() => {
         this.calculatTotalExpenseAmountPreview();
-        this.setCategoryWiseAmount();
+        this.calculatCategoryWiseExpensePreview();
       }, 1000);
       this.loadData = true;
     }
   }
 
   ngOnInit() {
-    
+    this.billableControl.valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap(searchText =>
+          this.dataService.dataGetCostCentreAutocomplete({ SearchText: searchText || '' })
+        )
+      )
+      .subscribe({
+        next: (res) => {
+          this.filteredOptions = res?.ResponseValue || [];
+        },
+        error: (err) => {
+          console.error('Failed to fetch cost centres', err);
+          this.filteredOptions = [];
+        }
+      });
+
     this.expenseRequestId = this.route.snapshot.paramMap.get('id') || 0;
     if (this.expenseRequestId) {
       this.getExpenseConfig();
@@ -160,15 +231,54 @@ export class PreviewComponent {
     }
     const segments = this.route.snapshot.url;
     const segment = segments[0]?.path;
-    if(segment == 'approval') {
+    if (segment == 'approval') {
       this.mode = 'approval';
+      this.pageTitle = 'Travel Expense Request Approval'
     }
-    if(segment == 'finance-approval') {
+    if (segment == 'finance-approval') {
       this.mode = 'finance-approval';
+      this.pageTitle = 'Travel Expense Request Finance Approval'
+    }
+  }
+
+  onOptionSelected(event: any, item: any) {
+    const selectedDisplay = event.option.value;
+    const selected = this.filteredOptions.find((opt: any) => opt[item.displayKey] === selectedDisplay);
+  
+    if (selected) {
+      item.value = selected[item.displayKey];
+      this.updateBillableCostCentre(selected[item.valueKey]);
+    }
+  }
+  
+  updateBillableCostCentre(costCentreId: number) {
+    const payload = {
+      UserMasterId: Number(localStorage.getItem('userMasterId')),
+      ExpenseRequestId: this.expenseRequestId,
+      BillableCostCentreId: costCentreId
+    };
+  
+    this.financeService.financeExpenseBillableCostCentreUpdate(payload).subscribe({
+      next: (res: any) => {
+        console.log(res)
+      }
+    })
+  }
+  
+
+  // Setup validation rules for justification text field if required.
+  setupJustificationForm() {
+    const justificationCfg = this.expenseRequestPreviewConfig.justification;
+    if (justificationCfg?.required) {
+      this.justificationForm.controls[justificationCfg.controlName].setValidators([
+        Validators.required,
+        Validators.maxLength(justificationCfg.maxLength || 2000)
+      ]);
     }
   }
 
   setCategoryWiseAmount() {
+    console.log(this.expenseSummary);
     const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
     const categoryWiseExpense = this.expenseSummary?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
     if (!categoryWiseExpense) return;
@@ -178,14 +288,13 @@ export class PreviewComponent {
       const categoryName = expenseRequest.name;
       const matchedItem = categoryWiseExpense.items?.find((item: any) => item.key === categoryName);
       if (matchedItem) {
-        expenseRequest.amount = (matchedItem.value).toFixed(2);
+        expenseRequest.amount = matchedItem.value;
       }
     });
   }
 
   calculatTotalExpenseAmountPreview() {
     const EXPENSE_SUMMARY_ID = "expense-summary";
-    const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense"
     const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
     const PAYABLE_KEYS = [91, 94];
     let CATEGORY_NAME = '';
@@ -229,20 +338,6 @@ export class PreviewComponent {
       if (item.key === 'amountPayable') item.value = amountPayable.toFixed(2);
     });
 
-    // Category wise expense logic
-    const categoryWiseExpense = this.expenseSummary?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
-    if (!categoryWiseExpense) return;
-
-    // Reset all values to 0.00
-    categoryWiseExpense.items?.forEach((item: any) => {
-      item.value = 0.00;
-    });
-
-    categoryWiseExpense.items?.forEach((item: any) => {
-      if (item.key == CATEGORY_NAME) {
-        item.value = totalExpense;
-      }
-    });
   }
 
   updateExpenseItem(summary: any, paymentModeId: any, amount: any) {
@@ -254,15 +349,42 @@ export class PreviewComponent {
     }
   }
 
+  calculatCategoryWiseExpensePreview() {
+    const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
+    let CATEGORY_NAME = '';
+
+    const summary = this.expenseSummary?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
+    if (!summary) return;
+
+    summary.items?.forEach((item: any) => {
+      item.value = 0.00;
+    });
+
+    // Add claim amounts to respective payment modes
+    this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
+      CATEGORY_NAME = expenseRequest.name;
+      summary?.items?.forEach((item: any) => {
+          if(item.key == CATEGORY_NAME) {
+            let totalCategoryExpense = 0;
+            expenseRequest.data?.forEach((request: any) => {
+              totalCategoryExpense = totalCategoryExpense + request.ClaimAmount
+            });
+            item.value = totalCategoryExpense.toFixed(2);
+          }
+      })
+    });
+    this.setCategoryWiseAmount();
+  }
+
   getSelection(category: any) {
+    this.expenseRequestApprovalDetailType = [];
     let dynamicExpenseDetailModels = this.expenseRequestPreviewData?.dynamicExpenseDetailModels || [];
     dynamicExpenseDetailModels?.forEach((cat: any) => {
-      if(cat?.name == category?.name) {
+      if (cat?.name == category?.name) {
         cat.data = category?.data || [];
       }
     })
     const EXPENSE_SUMMARY_ID = "expense-summary";
-    const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense"
     const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
     const PAYABLE_KEYS = [91, 94];
     let CATEGORY_NAME = '';
@@ -280,7 +402,7 @@ export class PreviewComponent {
       CATEGORY_NAME = expenseRequest.name;
       expenseRequest.data?.forEach((request: any) => {
         const { PaymentModeId, ApprovedAmount, selected } = request || {};
-        if(selected) {
+        if (selected) {
           this.updateExpenseItem(summary, PaymentModeId, ApprovedAmount);
         }
       });
@@ -308,26 +430,137 @@ export class PreviewComponent {
       if (item.key === 'amountPayable') item.value = amountPayable.toFixed(2);
     });
 
-    // Category wise expense logic
-    const categoryWiseExpense = this.expenseSummary?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
-    if (!categoryWiseExpense) return;
+    this.calculatCategoryWiseExpensePreview();
 
-    // Reset all values to 0.00
-    categoryWiseExpense.items?.forEach((item: any) => {
-      item.value = 0.00;
-    });
-
-    categoryWiseExpense.items?.forEach((item: any) => {
-      if (item.key == CATEGORY_NAME) {
-        item.value = totalExpense;
-      }
-    });
-
-    this.setCategoryWiseAmount();
+    dynamicExpenseDetailModels?.forEach((details: any) => {
+      details?.data?.forEach((expense: any) => {
+        if (expense?.selected) {
+          if (expense.gst?.length > 0) {
+            expense.gst.forEach((gst: any) => {
+              this.expenseRequestGstType.push(gst);
+            })
+          }
+          this.expenseRequestApprovalDetailType.push({
+            ExpenseRequestDetailId: expense?.ExpenseRequestDetailId || 0,
+            ApprovedAmount: expense?.ApprovedAmount || 0,
+            ApproverId: Number(localStorage.getItem('userMasterId')),
+            ApproverRemarks: expense?.remarks || "",
+            ActionStatusId: 0
+          });
+        }
+      });
+    })
     dynamicExpenseDetailModels = [];
   }
 
-  onAction(type: string) {
-    console.log(type)
+  onAction(buttonData: any) {
+    if (this.justificationForm.invalid) {
+      this.justificationForm.markAllAsTouched();
+      return;
+    }
+    if (this.mode == 'approval') {
+      const approvalPayload = {
+        ExpenseRequestId: this.expenseRequestPreviewData?.expenseRequestId || 0,
+        Remarks: this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.value,
+        ApprovalAction: buttonData.type == 'approve' ? 113 : (buttonData.type == 'seekClarification' ? 114 : 115),
+        ExpenseRequestApprovalDetailType: this.expenseRequestApprovalDetailType,
+        ExpenseRequestGstType: [],
+        ActionBy: Number(localStorage.getItem('userMasterId'))
+      }
+      console.log(approvalPayload)
+      this.confirmDialogService
+        .confirm({
+          title: '',
+          message: buttonData.confirmPopup.message,
+          confirmText: buttonData.confirmPopup.confirmText,
+          cancelText: buttonData.confirmPopup.cancelText
+        })
+        .subscribe((confirmed) => {
+          if (confirmed) {
+            this.expenseService.expenseExpenseRequestApprovals(approvalPayload).pipe(take(1)).subscribe({
+              next: (res: any) => {
+                this.snackbarService.success(buttonData.Success);
+                this.router.navigate(['/expense/expense/dashboard']);
+              },
+              error: (err) => {
+                console.error(err);
+                this.snackbarService.error('Something went wrong with the API.');
+              }
+            });
+          }
+        });
+
+    }
+    if (this.mode == 'finance-approval') {
+      if (this.form.invalid) {
+        this.form.markAllAsTouched();
+        return;
+      }
+
+      if (this.billableControl.invalid) {
+        this.billableControl.markAsTouched();
+        return;
+      }
+
+      const financePayload = {
+        ExpenseRequestId: this.expenseRequestPreviewData?.expenseRequestId || 0,
+        Remarks: this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.value,
+        AdjustmentRemarks: this.form.value.AdjustmentRemarks || '',
+        ApprovalAction: buttonData.type == 'approve' ? 113 : (buttonData.type == 'seekClarification' ? 114 : 115),
+        AdjustmentAmount: this.form.value.AdjustmentAmount || 0,
+        AdjustmentCurrencyId: this.form.value.Currency || 0,
+        ExpenseRequestApprovalDetailType: this.expenseRequestApprovalDetailType,
+        ExpenseRequestGstType: this.expenseRequestGstType,
+        ActionBy: Number(localStorage.getItem('userMasterId'))
+      }
+      console.log(financePayload)
+      this.confirmDialogService
+        .confirm({
+          title: '',
+          message: buttonData.confirmPopup.message,
+          confirmText: buttonData.confirmPopup.confirmText,
+          cancelText: buttonData.confirmPopup.cancelText
+        })
+        .subscribe((confirmed) => {
+          if (confirmed) {
+            this.financeService.financeExpenseRequestFinanceApproval(financePayload).pipe(take(1)).subscribe({
+              next: (res: any) => {
+                this.snackbarService.success(buttonData.Success);
+                this.router.navigate(['/expense/expense/dashboard']);
+              },
+              error: (err) => {
+                console.error(err);
+                this.snackbarService.error('Something went wrong with the API.');
+              }
+            });
+          }
+        });
+    }
+  }
+
+  onTabChange(eventOrIndex?: MatTabChangeEvent | number) {
+    const tabIndex = typeof eventOrIndex === 'number'
+      ? eventOrIndex
+      : eventOrIndex?.index ?? 0;
+
+    const tabLabel = this.otherDetails[tabIndex]?.name;
+    if (tabLabel == 'Adjustment') {
+      // Set Adjustment Form
+      this.formControls = []; // Reset to avoid duplication
+      this.form = new FormGroup({});
+      this.otherDetails?.forEach((details: any) => {
+        if (details?.name == 'Adjustment') {
+          details?.formControls?.forEach((config: any) => {
+            const control = FormControlFactory.createControl(config);
+            this.formControls.push({ formConfig: config, control: control });
+            this.form.addControl(config.name, control);
+          });
+        }
+      })
+      console.log(this.form);
+    } else {
+      this.formControls = []; // Reset to avoid duplication
+      this.form = new FormGroup({});
+    }
   }
 }

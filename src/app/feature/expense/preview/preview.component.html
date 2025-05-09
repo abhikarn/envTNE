@@ -1,5 +1,5 @@
 <div class="page-title">
-   <h2 class="page-header">Travel Expense Request Preview</h2>
+   <h2 class="page-header">{{ pageTitle }}</h2>
 </div>
 <div class="app-main-wrapper">
    <div class="inn-main-hold">
@@ -13,20 +13,19 @@
                            class="preview-head-child d-flex align-items-start justify-content-between">
                            <span class="phv-icon me-2"><i class="fa-solid" [ngClass]="item.iconClass"></i></span>
                            <div>
-                             <label class="name-label-head">{{ item.label }}:</label><br>
-                             <ng-container *ngIf="item.isLink; else normalText">
-                               <span class="name-label-det">
-                                 <a href="#" class="phv-link" (click)="openDetailsDialog(4)" data-bs-toggle="modal" data-bs-target="#req-all-details">{{ item.value }}</a>
-                               </span>
-                             </ng-container>
-                             <ng-template #normalText>
-                               <span
-                                 class="name-label-det"
-                                 [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''"
-                               >
-                                 {{ item.value }}
-                               </span>
-                             </ng-template>
+                              <label class="name-label-head">{{ item.label }}:</label><br>
+                              <ng-container *ngIf="item.isLink; else normalText">
+                                 <span class="name-label-det">
+                                    <a href="#" class="phv-link" (click)="openDetailsDialog(4)" data-bs-toggle="modal"
+                                       data-bs-target="#req-all-details">{{ item.value }}</a>
+                                 </span>
+                              </ng-container>
+                              <ng-template #normalText>
+                                 <span class="name-label-det"
+                                    [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''">
+                                    {{ item.value }}
+                                 </span>
+                              </ng-template>
                            </div>
                         </div>
                      </div>
@@ -43,7 +42,24 @@
                                     <label>{{ item.label }}</label>
                                  </div>
                                  <div class="trl-req-detail">
-                                    <span *ngIf="!item.isLink">{{ item.value || '-' }}</span>
+                                    @if (!item.isLink) {
+                                    @if (item?.controlType === 'autocomplete' && mode == 'finance-approval') {
+                                    <mat-form-field appearance="fill" class="full-width">
+                                       <input matInput [formControl]="billableControl" [matAutocomplete]="auto">
+                                       <mat-autocomplete #auto="matAutocomplete"
+                                          (optionSelected)="onOptionSelected($event, item)">
+                                          <mat-option *ngFor="let option of filteredOptions"
+                                             [value]="option[item.displayKey]">
+                                             {{ option[item.displayKey] }}
+                                          </mat-option>
+                                       </mat-autocomplete>
+                                    </mat-form-field>
+
+                                    } @else {
+                                    <span>{{ item.value || '-' }}</span>
+                                    }
+                                    }
+
                                     <a *ngIf="item.isLink" href="javascript:void(0)">
                                        {{ item.value || '-' }}
                                     </a>
@@ -60,7 +76,8 @@
                         <app-expansion-panel [title]="category.label" [expanded]="category.expanded"
                            [amount]="category.amount">
                            @if(category.columns) {
-                           <app-material-table [categoryName]="category.name" [categoryGST]="category?.gst" [mode]="mode" [data]="category.data" [columnConfig]="category.columns"
+                           <app-material-table [categoryName]="category.name" [categoryGST]="category?.gst"
+                              [mode]="mode" [data]="category.data" [columnConfig]="category.columns"
                               [slNoLabel]="category.slNoLabel" [nestedTables]="category.nestedTables"
                               [otherFields]="otherFields" (selectionChanged)="getSelection($event)">
                            </app-material-table>
@@ -74,7 +91,7 @@
                   <!-- Other Details -->
                   <div class="row mt-2">
                      <div class="col-md-12">
-                        <mat-tab-group fitInkBarToContent>
+                        <mat-tab-group fitInkBarToContent (selectedTabChange)="onTabChange($event)">
                            @for (detail of otherDetails; track detail) {
                            <mat-tab>
                               @switch (detail.name) {
@@ -156,6 +173,56 @@
                                  </div>
                               </div>
                               }
+                              @case ("Adjustment") {
+                              @if (mode == 'finance-approval') {
+                              <ng-template mat-tab-label>
+                                 <span>{{detail.label}}</span>
+                              </ng-template>
+                              <div class="row mt-2">
+                                 <div class="col-md-12">
+                                    <form [formGroup]="form" class="row adjustemnt-container">
+                                       @for (control of formControls; track control) {
+                                       @if (control.formConfig.type !== 'hidden' && control.formConfig.showInUI !==
+                                       false) {
+                                       <!-- Using ngSwitch to handle different control types -->
+                                       @switch (control.formConfig.type) {
+                                       <!-- Handling 'text' type controls -->
+                                       @case ('text') {
+                                       <div class="col-md-4">
+                                          <lib-text-input [controlConfig]="control.formConfig"
+                                             [control]="control.control">
+                                          </lib-text-input>
+                                       </div>
+                                       }
+                                       <!-- Handling 'select' type controls -->
+                                       @case ('select') {
+                                       <div class="col-md-4">
+                                          <lib-select-input [controlConfig]="control.formConfig"
+                                             [control]="control.control">
+                                          </lib-select-input>
+                                       </div>
+                                       }
+
+                                       <!-- Handling 'textarea' type controls -->
+                                       @case ('textarea') {
+                                       <lib-text-area-input [controlConfig]="control.formConfig"
+                                          [control]="control.control">
+                                       </lib-text-area-input>
+                                       }
+                                       <!-- Optional: Default case if control type doesn't match -->
+                                       @default {
+                                       <div>
+                                          <p>Unsupported control type: {{ control.formConfig.type }}</p>
+                                       </div>
+                                       }
+                                       }
+                                       }
+                                       }
+                                    </form>
+                                 </div>
+                              </div>
+                              }
+                              }
                               }
                            </mat-tab>
                            }
@@ -172,6 +239,7 @@
                         [expenseRequestData]="expenseRequestPreviewData"></app-summary>
                      }
                      <div class="row mt-3">
+                        @if (mode == 'preview') {
                         <div class="col-md-12">
                            <div class="form-group chm-formgroup mb-2">
                               <label>Justification</label>
@@ -180,29 +248,52 @@
                               </p>
                            </div>
                         </div>
+                        }
+
+                        @if (mode == 'approval' || mode == 'finance-approval') {
+                        @if (expenseRequestPreviewConfig?.justification) {
+                        <div [formGroup]="justificationForm" class="row mt-3">
+                           <div class="col-md-12">
+                              <div class="form-group chm-formgroup mb-2">
+                                 <label>{{ expenseRequestPreviewConfig.justification.label }}</label>
+                                 <textarea [formControlName]="expenseRequestPreviewConfig.justification.controlName"
+                                    [attr.maxLength]="expenseRequestPreviewConfig.justification.maxLength"
+                                    class="form-control chm-formtextarea max-tr-md mar-align-0" rows="3"></textarea>
+                                 @if (justificationForm.controls.justification?.invalid &&
+                                 justificationForm.controls.justification?.touched) {
+                                 <span class="validate-error-message">
+                                    Required
+                                 </span>
+                                 }
+                              </div>
+                           </div>
+                        </div>
+                        }
+                        }
                      </div>
                   </div>
                   <div class="row mt-3">
                      <div class="col-md-12">
-                        @if (mode == "approval" && expenseRequestPreviewConfig?.actions) {
+                        @if ((mode == "approval" || mode == 'finance-approval') && expenseRequestPreviewConfig?.actions)
+                        {
                         <div class="main-btn-hold d-flex flex-column mt-2" style="align-items:end;">
                            <div class="d-flex align-items-center w-100 mb-2">
                               @if (expenseRequestPreviewConfig.actions[0]) {
                               <a [ngClass]="expenseRequestPreviewConfig.actions[0].class"
-                                 (click)="onAction(expenseRequestPreviewConfig.actions[0].type);">
+                                 (click)="onAction(expenseRequestPreviewConfig.actions[0]);">
                                  {{ expenseRequestPreviewConfig.actions[0].label }}
                               </a>
                               }
                               @if (expenseRequestPreviewConfig.actions[1]) {
                               <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[1].class"
-                                 (click)="onAction(expenseRequestPreviewConfig.actions[1].type)">
+                                 (click)="onAction(expenseRequestPreviewConfig.actions[1])">
                                  {{ expenseRequestPreviewConfig.actions[1].label }}
                               </button>
                               }
                            </div>
                            @if (expenseRequestPreviewConfig.actions[2]) {
                            <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[2].class"
-                              (click)="onAction(expenseRequestPreviewConfig.actions[2].type)">
+                              (click)="onAction(expenseRequestPreviewConfig.actions[2])">
                               {{ expenseRequestPreviewConfig.actions[2].label }}
                            </button>
                            }
