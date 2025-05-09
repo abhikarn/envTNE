@@ -200,7 +200,7 @@ export class PreviewComponent {
       this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName).setValue(this.expenseRequestPreviewData?.remarks);
       setTimeout(() => {
         this.calculatTotalExpenseAmountPreview();
-        this.setCategoryWiseAmount();
+        this.calculatCategoryWiseExpensePreview();
       }, 1000);
       this.loadData = true;
     }
@@ -278,6 +278,7 @@ export class PreviewComponent {
   }
 
   setCategoryWiseAmount() {
+    console.log(this.expenseSummary);
     const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
     const categoryWiseExpense = this.expenseSummary?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
     if (!categoryWiseExpense) return;
@@ -287,14 +288,13 @@ export class PreviewComponent {
       const categoryName = expenseRequest.name;
       const matchedItem = categoryWiseExpense.items?.find((item: any) => item.key === categoryName);
       if (matchedItem) {
-        expenseRequest.amount = (matchedItem.value).toFixed(2);
+        expenseRequest.amount = matchedItem.value;
       }
     });
   }
 
   calculatTotalExpenseAmountPreview() {
     const EXPENSE_SUMMARY_ID = "expense-summary";
-    const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense"
     const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
     const PAYABLE_KEYS = [91, 94];
     let CATEGORY_NAME = '';
@@ -338,20 +338,6 @@ export class PreviewComponent {
       if (item.key === 'amountPayable') item.value = amountPayable.toFixed(2);
     });
 
-    // Category wise expense logic
-    const categoryWiseExpense = this.expenseSummary?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
-    if (!categoryWiseExpense) return;
-
-    // Reset all values to 0.00
-    categoryWiseExpense.items?.forEach((item: any) => {
-      item.value = 0.00;
-    });
-
-    categoryWiseExpense.items?.forEach((item: any) => {
-      if (item.key == CATEGORY_NAME) {
-        item.value = totalExpense;
-      }
-    });
   }
 
   updateExpenseItem(summary: any, paymentModeId: any, amount: any) {
@@ -363,6 +349,33 @@ export class PreviewComponent {
     }
   }
 
+  calculatCategoryWiseExpensePreview() {
+    const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
+    let CATEGORY_NAME = '';
+
+    const summary = this.expenseSummary?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
+    if (!summary) return;
+
+    summary.items?.forEach((item: any) => {
+      item.value = 0.00;
+    });
+
+    // Add claim amounts to respective payment modes
+    this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
+      CATEGORY_NAME = expenseRequest.name;
+      summary?.items?.forEach((item: any) => {
+          if(item.key == CATEGORY_NAME) {
+            let totalCategoryExpense = 0;
+            expenseRequest.data?.forEach((request: any) => {
+              totalCategoryExpense = totalCategoryExpense + request.ClaimAmount
+            });
+            item.value = totalCategoryExpense.toFixed(2);
+          }
+      })
+    });
+    this.setCategoryWiseAmount();
+  }
+
   getSelection(category: any) {
     this.expenseRequestApprovalDetailType = [];
     let dynamicExpenseDetailModels = this.expenseRequestPreviewData?.dynamicExpenseDetailModels || [];
@@ -372,7 +385,6 @@ export class PreviewComponent {
       }
     })
     const EXPENSE_SUMMARY_ID = "expense-summary";
-    const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense"
     const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
     const PAYABLE_KEYS = [91, 94];
     let CATEGORY_NAME = '';
@@ -418,22 +430,8 @@ export class PreviewComponent {
       if (item.key === 'amountPayable') item.value = amountPayable.toFixed(2);
     });
 
-    // Category wise expense logic
-    const categoryWiseExpense = this.expenseSummary?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
-    if (!categoryWiseExpense) return;
+    this.calculatCategoryWiseExpensePreview();
 
-    // Reset all values to 0.00
-    categoryWiseExpense.items?.forEach((item: any) => {
-      item.value = 0.00;
-    });
-
-    categoryWiseExpense.items?.forEach((item: any) => {
-      if (item.key == CATEGORY_NAME) {
-        item.value = totalExpense;
-      }
-    });
-
-    this.setCategoryWiseAmount();
     dynamicExpenseDetailModels?.forEach((details: any) => {
       details?.data?.forEach((expense: any) => {
         if (expense?.selected) {
