@@ -421,7 +421,8 @@ export class MainExpenseComponent {
 
     } else {
       // Create new category with the incoming data
-      this.expenseRequestData?.dynamicExpenseDetailModels.push({
+      this.expenseRequestData.dynamicExpenseDetailModels ??= [];
+      this.expenseRequestData.dynamicExpenseDetailModels.push({
         name: data.name,
         data: [data.data]
       });
@@ -519,6 +520,11 @@ export class MainExpenseComponent {
 
   // Handle submit, draft, or navigation actions after validating forms.
   onAction(type: string) {
+    console.log(type)
+    if(type == "cancel") {
+      this.router.navigate(['../expense/expense/landing']);
+      return;
+    }
     if (!this.travelRequestId) {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return;
