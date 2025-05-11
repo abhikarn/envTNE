@@ -20,6 +20,7 @@ export class GstComponent {
   @Input() control: any;
   @Input() controlConfig: IFormControl = { name: '' };
   @Input() form: any;
+  gstData: any;
   companyGSTForm: FormGroup;
   options = [
     {
@@ -45,6 +46,10 @@ export class GstComponent {
 
   trackByFn(index: number): any {
     return index;
+  }
+
+  setCompanyGSTFlag(value: boolean): void {
+    this.companyGSTForm.get('IsBillRaisedInCompanyGST')?.setValue(value);
   }
 
 }

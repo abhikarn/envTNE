@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormControlFactory } from './form-control.factory';
 import { IFormControl } from './form-control.interface';
@@ -35,6 +35,7 @@ import { ConfirmDialogService } from '../service/confirm-dialog.service';
   styleUrls: ['./dynamic-form.component.scss']
 })
 export class DynamicFormComponent implements OnInit, OnChanges {
+  @ViewChild(GstComponent) gstComponentRef!: GstComponent;
   @Input() moduleData: any;
   @Input() category: any;
   @Input() formConfig: IFormControl[] = [];
@@ -52,6 +53,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   editIndex = 0;
   referenceId = 0;
   isValid = true;
+  selectedFiles: any = [];
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -335,6 +337,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onEditRow(rowData: any) {
+    if(rowData.row?.gst?.length > 0) {
+      this.gstComponentRef.setCompanyGSTFlag(true);
+      this.gstComponentRef.gstData = rowData.row?.gst;
+    }
+    this.selectedFiles = rowData.row?.attachment;
     this.editIndex = rowData.index;
     this.referenceId = rowData.row.ReferenceId || 0;
     this.selectedRow = { ...rowData.row };
@@ -374,8 +381,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   clear() {
-
-    // this.form.reset();
+    this.gstComponentRef.setCompanyGSTFlag(false);
+    this.gstComponentRef.gstData = [];
+    this.selectedFiles = [];
   }
 
   getInputValue(input: any) {
@@ -433,6 +441,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
                   this.prepareFormJson();
                   this.addDataToDynamicTable();
                   this.form.reset();
+                  this.clear();
                 }
               });
           } else {
@@ -440,6 +449,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             this.prepareFormJson();
             this.addDataToDynamicTable();
             this.form.reset();
+            this.clear();
           }
         });
     }

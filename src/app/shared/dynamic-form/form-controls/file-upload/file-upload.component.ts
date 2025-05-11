@@ -16,7 +16,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class FileUploadComponent {
   @Input() controlConfig: any;
   @Input() control!: FormControl;
-  selectedFiles: any = [];
+  @Input() selectedFiles: any = [];
 
   constructor(
     private documentService: DocumentService,
@@ -63,7 +63,6 @@ export class FileUploadComponent {
 
           this.selectedFiles.push(filterResponse);
           this.control.setValue(this.selectedFiles);
-          console.log(this.control)
         },
         error: (err: any) => {
           console.log(err)

@@ -11,5 +11,5 @@
     </div>
 </form>
 @if (companyGSTForm.get('IsBillRaisedInCompanyGST')?.value) {
-<app-add-gst [control]="control" [controlConfig]="controlConfig" [form]="form"></app-add-gst>
+<app-add-gst [control]="control" [controlConfig]="controlConfig" [form]="form" [gstData]="gstData"></app-add-gst>
 }
