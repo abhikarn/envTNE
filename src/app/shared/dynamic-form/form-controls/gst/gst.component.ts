@@ -20,7 +20,7 @@ export class GstComponent {
   @Input() control: any;
   @Input() controlConfig: IFormControl = { name: '' };
   @Input() form: any;
-  gstData: any;
+  gstData: any = [];
   companyGSTForm: FormGroup;
   options = [
     {
