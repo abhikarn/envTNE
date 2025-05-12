@@ -440,16 +440,20 @@ export class DynamicFormComponent implements OnInit, OnChanges {
                   this.setAutoCompleteFields();
                   this.prepareFormJson();
                   this.addDataToDynamicTable();
-                  this.form.reset();
-                  this.clear();
+                  setTimeout(() => {
+                    this.form.reset();
+                    this.clear();
+                  }, 300);
                 }
               });
           } else {
             this.setAutoCompleteFields();
             this.prepareFormJson();
             this.addDataToDynamicTable();
-            this.form.reset();
-            this.clear();
+            setTimeout(() => {
+              this.form.reset();
+              this.clear();
+            }, 300);
           }
         });
     }
