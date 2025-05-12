@@ -65,7 +65,6 @@ export class PreviewComponent {
   form: FormGroup = new FormGroup({});
   filteredOptions: any = [];
   billableControl = new FormControl('', Validators.required);
-  defaultCostCentreId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -133,7 +132,7 @@ export class PreviewComponent {
       next: (response: any) => {
         if (response) {
           this.expenseRequestPreviewData = response;
-          this.billableControl.setValue(response.costCentre); 
+          this.billableControl.setValue(response?.billableCostcentre || 0); 
           this.expenseRequestPreviewData?.dynamicExpenseDetailModels?.forEach((details: any) => {
             details?.data?.forEach((expense: any) => {
               expense.selected = true;
@@ -199,7 +198,21 @@ export class PreviewComponent {
   }
 
   ngOnInit() {
-    this.billableControl.valueChanges
+    this.expenseRequestId = this.route.snapshot.paramMap.get('id') || 0;
+    if (this.expenseRequestId) {
+      this.getExpenseConfig();
+      this.getExpenseRequestPreviewDetails();
+    }
+    const segments = this.route.snapshot.url;
+    const segment = segments[0]?.path;
+    if (segment == 'approval') {
+      this.mode = 'approval';
+      this.pageTitle = 'Travel Expense Request Approval'
+    }
+    if (segment == 'finance-approval') {
+      this.mode = 'finance-approval';
+      this.pageTitle = 'Travel Expense Request Finance Approval';
+      this.billableControl.valueChanges
       .pipe(
         debounceTime(300),
         switchMap(searchText =>
@@ -215,21 +228,6 @@ export class PreviewComponent {
           this.filteredOptions = [];
         }
       });
-
-    this.expenseRequestId = this.route.snapshot.paramMap.get('id') || 0;
-    if (this.expenseRequestId) {
-      this.getExpenseConfig();
-      this.getExpenseRequestPreviewDetails();
-    }
-    const segments = this.route.snapshot.url;
-    const segment = segments[0]?.path;
-    if (segment == 'approval') {
-      this.mode = 'approval';
-      this.pageTitle = 'Travel Expense Request Approval'
-    }
-    if (segment == 'finance-approval') {
-      this.mode = 'finance-approval';
-      this.pageTitle = 'Travel Expense Request Finance Approval'
     }
   }
 
@@ -243,16 +241,21 @@ export class PreviewComponent {
     }
   }
   
-  updateBillableCostCentre(costCentreId: number) {
+  updateBillableCostCentre(billableCostcentreId: number) {
     const payload = {
       UserMasterId: Number(localStorage.getItem('userMasterId')),
       ExpenseRequestId: this.expenseRequestId,
-      BillableCostCentreId: costCentreId
+      BillableCostCentreId: billableCostcentreId,
+      ActionBy: Number(localStorage.getItem('userMasterId'))
     };
   
     this.financeService.financeExpenseBillableCostCentreUpdate(payload).subscribe({
       next: (res: any) => {
-        console.log(res)
+        if(res?.ResponseValue?.Result == "FAILED") {
+          this.snackbarService.error(res?.ResponseValue?.Message);
+        } else {
+          this.snackbarService.success(res?.ResponseValue?.Message);
+        }
       }
     })
   }
