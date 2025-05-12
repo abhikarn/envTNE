@@ -381,6 +381,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   clear() {
+    this.form.reset();
     this.gstComponentRef.setCompanyGSTFlag(false);
     this.gstComponentRef.gstData = [];
     this.selectedFiles = [];
@@ -440,16 +441,18 @@ export class DynamicFormComponent implements OnInit, OnChanges {
                   this.setAutoCompleteFields();
                   this.prepareFormJson();
                   this.addDataToDynamicTable();
-                  this.form.reset();
-                  this.clear();
+                  setTimeout(() => {
+                    this.clear();
+                  }, 300);
                 }
               });
           } else {
             this.setAutoCompleteFields();
             this.prepareFormJson();
             this.addDataToDynamicTable();
-            this.form.reset();
-            this.clear();
+            setTimeout(() => {
+              this.clear();
+            }, 300);
           }
         });
     }

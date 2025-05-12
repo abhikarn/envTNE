@@ -1,7 +1,19 @@
-.adjustemnt-container {
-    width: 100%;
-    margin: 10px 0;
-    border: 1px solid black;
-    border-radius: 3px;
-    padding: 10px;
+app-preview {
+    .adjustemnt-container {
+        width: 100%;
+        margin: 10px 0;
+        border: 1px solid black;
+        border-radius: 3px;
+        padding: 10px;
+    }
+
+    .mat-mdc-form-field-infix {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        min-height: 0 !important;
+    }
+
+    .mat-mdc-form-field-bottom-align::before {
+        display: none;
+    }
 }
