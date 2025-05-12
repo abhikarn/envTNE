@@ -381,6 +381,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   clear() {
+    this.form.reset();
     this.gstComponentRef.setCompanyGSTFlag(false);
     this.gstComponentRef.gstData = [];
     this.selectedFiles = [];
@@ -441,7 +442,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
                   this.prepareFormJson();
                   this.addDataToDynamicTable();
                   setTimeout(() => {
-                    this.form.reset();
                     this.clear();
                   }, 300);
                 }
@@ -451,7 +451,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             this.prepareFormJson();
             this.addDataToDynamicTable();
             setTimeout(() => {
-              this.form.reset();
               this.clear();
             }, 300);
           }
