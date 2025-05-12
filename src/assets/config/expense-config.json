@@ -275,7 +275,7 @@
                         "name": "gst",
                         "isExcluded": false,
                         "label": "GST",
-                        "value": null,
+                        "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
                             {
@@ -433,7 +433,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload File",
-                        "value": "",
+                        "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
                         "referenceType": 123
@@ -876,7 +876,7 @@
                 "gst": {
                     "name": "gst",
                     "label": "GST",
-                    "value": null,
+                    "value": [],
                     "getControl": "ApprovedAmount",
                     "fields": [
                         {
@@ -1197,7 +1197,7 @@
                 "gst": {
                     "name": "gst",
                     "label": "GST",
-                    "value": null,
+                    "value": [],
                     "getControl": "ApprovedAmount",
                     "fields": [
                         {
