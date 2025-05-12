@@ -5,6 +5,7 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 import { DocumentService } from '../../../../../../tne-api';
 import { take } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SnackbarService } from '../../../service/snackbar.service';
 
 @Component({
   selector: 'lib-file-upload',
@@ -20,14 +21,15 @@ export class FileUploadComponent {
 
   constructor(
     private documentService: DocumentService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private snackbarService: SnackbarService
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    // console.log(input.files)
+    const maxSizeBytes = (this.controlConfig.maxSizeMB ?? 20) * 1024 * 1024; 
     if (input.files && input.files.length > 0) {
       const newFiles = Array.from(input.files);
       newFiles.forEach((file: any) => {
@@ -39,8 +41,13 @@ export class FileUploadComponent {
             FileName: file.name.split('.').shift(),
             FileExtension: '.' + file.name.split('.').pop()
           };
-          this.uploadFile(payload);
+          if (file.size > maxSizeBytes) {
+            this.snackbarService.error(`File "${file.name}" exceeds the ${this.controlConfig.maxSizeMB} MB limit.`);
+            return;
+          } else {
+            this.uploadFile(payload);
           console.log('Prepared File Payload:', payload); 
+          }
         };
         reader.readAsDataURL(file);
       });

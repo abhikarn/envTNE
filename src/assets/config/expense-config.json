@@ -436,7 +436,8 @@
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
-                        "referenceType": 123
+                        "referenceType": 123,
+                        "maxSizeMB": 15
                     },
                     {
                         "type": "hidden",
