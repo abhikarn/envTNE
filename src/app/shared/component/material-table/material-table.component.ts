@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
@@ -24,6 +24,7 @@ import { ConfirmDialogService } from '../../service/confirm-dialog.service';
   ],
   templateUrl: './material-table.component.html',
   styleUrl: './material-table.component.scss',
+  encapsulation: ViewEncapsulation.None,
   providers: [DatePipe]
 })
 export class MaterialTableComponent implements OnChanges {

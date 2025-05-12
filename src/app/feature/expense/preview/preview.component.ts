@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ExpansionPanelComponent } from '../../../shared/component/expansion-panel/expansion-panel.component';
 import { MaterialTableComponent } from '../../../shared/component/material-table/material-table.component';
 import { RequesterDetailsDialogComponent } from '../../../shared/component/requester-details-dialog/requester-details-dialog.component';
@@ -41,7 +41,8 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule
   ],
   templateUrl: './preview.component.html',
-  styleUrl: './preview.component.scss'
+  styleUrl: './preview.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class PreviewComponent {
   @ViewChild(SummaryComponent) summaryComponent: any;
