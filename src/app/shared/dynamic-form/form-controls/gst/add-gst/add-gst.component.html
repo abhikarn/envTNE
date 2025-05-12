@@ -47,7 +47,7 @@
                                     </td>
                                 </tr>
 
-                                @if (gstDetails.length > 0) {
+                                @if (gstDetails?.length > 0) {
                                 @for (gst of gstDetails; track $index) {
                                 <tr>
                                     @for (field of fields; track $index) {

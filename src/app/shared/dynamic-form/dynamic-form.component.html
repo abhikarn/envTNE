@@ -53,7 +53,7 @@
   }
   <!-- Handling 'file' type controls -->
   @case ('file') {
-  <lib-file-upload [controlConfig]="control.formConfig" [control]="control.control">
+  <lib-file-upload [controlConfig]="control.formConfig" [control]="control.control" [selectedFiles]="selectedFiles">
   </lib-file-upload>
   }
   <!-- Optional: Default case if control type doesn't match -->

@@ -3,7 +3,7 @@
           class="fa-solid fa-angles-right"></i></a>
     <section class="sidebar" style="height: auto;">
        <ul class="sidebar-menu tree" data-widget="tree">
-          <li id="menu-dashboard">
+          <li id="menu-dashboard" routerLinkActive="active">
              <a [routerLink]="['../expense/expense/dashboard']">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                    xmlns="http://www.w3.org/2000/svg">
@@ -14,7 +14,7 @@
                 <span>Dashboard</span>
              </a>
           </li>
-          <li id="menu-travel">
+          <li id="menu-travel" routerLinkActive="active">
              <a href=" ">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                    xmlns="http://www.w3.org/2000/svg">
@@ -36,8 +36,8 @@
                 <span>Backdated Travel</span>
              </a>
           </li>
-          <li id="menu-expense" class="active">
-             <a href=" ">
+          <li id="menu-expense" routerLinkActive="active">
+             <a [routerLink]="['../expense/expense/landing']">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                    xmlns="http://www.w3.org/2000/svg">
                    <path

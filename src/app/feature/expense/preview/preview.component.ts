@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ExpansionPanelComponent } from '../../../shared/component/expansion-panel/expansion-panel.component';
 import { MaterialTableComponent } from '../../../shared/component/material-table/material-table.component';
 import { RequesterDetailsDialogComponent } from '../../../shared/component/requester-details-dialog/requester-details-dialog.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NewExpenseService } from '../service/new-expense.service';
 import { debounceTime, switchMap, take } from 'rxjs';
 import { SummaryComponent } from '../../../shared/component/summary/summary.component';
@@ -54,7 +54,6 @@ export class PreviewComponent {
   requestDetails: any;
   expenseSummary: any;
   otherDetails: any;
-  otherFields: any;
   mode: 'preview' | 'approval' | 'finance-approval' = 'preview';
   pageTitle = 'Travel Expense Request Preview';
   expenseRequestApprovalDetailType: any = [];
@@ -149,7 +148,7 @@ export class PreviewComponent {
                   ApprovedAmount: expense?.ApprovedAmount || 0,
                   ApproverId: Number(localStorage.getItem('userMasterId')),
                   ApproverRemarks: expense?.remarks || "",
-                  ActionStatusId: 0
+                  ActionStatusId: 6
                 });
               }
             });
@@ -187,13 +186,6 @@ export class PreviewComponent {
         this.expenseRequestPreviewData.dynamicExpenseDetailModels?.forEach((previewData: any) => {
           if (configData?.name == previewData.name) {
             configData.data = previewData.data;
-            this.otherFields = configData?.otherFields?.map((field: any) => {
-              const value = previewData.data[0]?.[field.name] ?? '';
-              return {
-                ...field,
-                value: value
-              };
-            })
           }
         })
       });
@@ -445,7 +437,7 @@ export class PreviewComponent {
             ApprovedAmount: expense?.ApprovedAmount || 0,
             ApproverId: Number(localStorage.getItem('userMasterId')),
             ApproverRemarks: expense?.remarks || "",
-            ActionStatusId: 0
+            ActionStatusId: 6
           });
         }
       });
@@ -562,5 +554,9 @@ export class PreviewComponent {
       this.formControls = []; // Reset to avoid duplication
       this.form = new FormGroup({});
     }
+  }
+
+  goBack() {
+    this.router.navigate(['/expense/expense/dashboard']);
   }
 }

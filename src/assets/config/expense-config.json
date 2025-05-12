@@ -38,7 +38,7 @@
                         "isExcluded": false,
                         "label": "Travel Mode",
                         "placeholder": "Select Travel Mode",
-                        "value": 0,
+                        "value": null,
                         "options": [],
                         "labelKey": "Name",
                         "valueKey": "Id",
@@ -65,7 +65,7 @@
                         "apiService": "DataService",
                         "apiMethod": "dataGetTravelClass",
                         "payloadKey": "TravelModeId",
-                        "value": 0,
+                        "value": null,
                         "validations": [
                             {
                                 "type": "required",
@@ -114,7 +114,7 @@
                         "name": "Origin",
                         "isExcluded": false,
                         "label": "Origin",
-                        "value": 0,
+                        "value": null,
                         "options": [],
                         "labelKey": "City",
                         "valueKey": "CityMasterId",
@@ -135,7 +135,7 @@
                         "name": "Destination",
                         "isExcluded": false,
                         "label": "Destination",
-                        "value": 0,
+                        "value": null,
                         "options": [],
                         "labelKey": "City",
                         "valueKey": "CityMasterId",
@@ -275,7 +275,7 @@
                         "name": "gst",
                         "isExcluded": false,
                         "label": "GST",
-                        "value": null,
+                        "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
                             {
@@ -433,10 +433,11 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload File",
-                        "value": "",
+                        "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
-                        "referenceType": 123
+                        "referenceType": 123,
+                        "maxSizeMB": 15
                     },
                     {
                         "type": "hidden",
@@ -807,50 +808,76 @@
                         "type": "date",
                         "name": "ClaimDate",
                         "label": "Date",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
                     },
                     {
                         "name": "Origin",
                         "label": "Origin",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
                     },
                     {
                         "name": "Destination",
                         "label": "Destination",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
                     },
                     {
                         "name": "ClaimAmount",
                         "label": "Claimed",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
                     },
                     {
                         "name": "ApprovedAmount",
                         "label": "Approved Amount",
                         "visible": true,
                         "type": "number",
-                        "controlType": "input"
+                        "controlType": "input",
+                        "position": "in"
                     },
                     {
                         "name": "Currency",
                         "label": "Currency",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
                     },
                     {
                         "name": "ConversionRate",
                         "label": "Conversion",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
                     },
                     {
                         "name": "ClaimAmountInBaseCurrency",
                         "label": "Approved(INR)",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "TravelMode",
+                        "label": "Travel Mode",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "AvailedClass",
+                        "label": "AvailedClass",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "Remarks",
+                        "label": "Remarks",
+                        "visible": true,
+                        "position": "out"
                     }
                 ],
                 "gst": {
                     "name": "gst",
                     "label": "GST",
-                    "value": null,
+                    "value": [],
                     "getControl": "ApprovedAmount",
                     "fields": [
                         {
@@ -1034,23 +1061,6 @@
                                 "visible": true
                             }
                         ]
-                    }
-                ],
-                "otherFields": [
-                    {
-                        "name": "TravelMode",
-                        "label": "Travel Mode",
-                        "value": ""
-                    },
-                    {
-                        "name": "AvailedClass",
-                        "label": "AvailedClass",
-                        "value": ""
-                    },
-                    {
-                        "name": "Remarks",
-                        "label": "Remarks",
-                        "value": ""
                     }
                 ]
             },
@@ -1059,63 +1069,136 @@
                 "label": "Accommodation Expense",
                 "data": [],
                 "amount": 0,
-                "expanded": true,
+                "expanded": false,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
                         "name": "Type",
                         "label": "Type",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
                     },
                     {
                         "type": "date",
                         "name": "FromDate",
                         "label": "From Date",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
                     },
                     {
                         "type": "date",
                         "name": "ToDate",
                         "label": "To Date",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
                     },
                     {
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
                     },
                     {
                         "name": "ClaimAmount",
                         "label": "Claimed",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
                     },
                     {
                         "name": "AppovedAmount",
                         "label": "Approved Amount",
                         "visible": true,
                         "type": "number",
-                        "controlType": "input"
+                        "controlType": "input",
+                        "position": "in"
                     },
                     {
                         "name": "Currency",
                         "label": "Currency",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
                     },
                     {
                         "name": "ConversionRate",
                         "label": "Conversion",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
                     },
                     {
                         "name": "ClaimAmountInBaseCurrency",
                         "label": "Approved(INR)",
-                        "visible": true
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "",
+                        "label": "Stay Name",
+                        "value": "",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "",
+                        "label": "Bill Number",
+                        "value": "",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "label": "Bill Date",
+                        "value": "",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "City",
+                        "label": "City",
+                        "value": "",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "CityGrade",
+                        "label": "City Grade",
+                        "value": "",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount(INR)",
+                        "value": "",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "",
+                        "label": "Differential Amount(INR)",
+                        "value": "",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "TaxAmount",
+                        "label": "Tax Amount",
+                        "value": "",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "",
+                        "label": "Justification",
+                        "value": "",
+                        "visible": true,
+                        "position": "out"
                     }
                 ],
                 "gst": {
                     "name": "gst",
                     "label": "GST",
-                    "value": null,
+                    "value": [],
                     "getControl": "ApprovedAmount",
                     "fields": [
                         {
@@ -1299,54 +1382,6 @@
                                 "visible": true
                             }
                         ]
-                    }
-                ],
-                "otherFields": [
-                    {
-                        "name": "",
-                        "label": "Stay Name",
-                        "value": ""
-                    },
-                    {
-                        "name": "",
-                        "label": "Bill Number",
-                        "value": ""
-                    },
-                    {
-                        "type": "date",
-                        "name": "ClaimDate",
-                        "label": "Bill Date",
-                        "value": ""
-                    },
-                    {
-                        "name": "City",
-                        "label": "City",
-                        "value": ""
-                    },
-                    {
-                        "name": "CityGrade",
-                        "label": "City Grade",
-                        "value": ""
-                    },
-                    {
-                        "name": "EntitlementAmountInBaseCurrency",
-                        "label": "Entitlement Amount(INR)",
-                        "value": ""
-                    },
-                    {
-                        "name": "",
-                        "label": "Differential Amount(INR)",
-                        "value": ""
-                    },
-                    {
-                        "name": "TaxAmount",
-                        "label": "Tax Amount",
-                        "value": ""
-                    },
-                    {
-                        "name": "",
-                        "label": "Justification",
-                        "value": ""
                     }
                 ]
             }

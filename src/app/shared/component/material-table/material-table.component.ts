@@ -32,7 +32,6 @@ export class MaterialTableComponent implements OnChanges {
   @Input() columnConfig: any[] = [];
   @Input() slNoLabel: string = 'Sl. No.';
   @Input() nestedTables: any[] = [];
-  @Input() otherFields: any[] = [];
   @Input() mode: 'preview' | 'approval' | 'finance-approval' = 'preview';
   @Input() categoryGST: any;
   @Output() selectionChanged = new EventEmitter<any>();
@@ -53,8 +52,8 @@ export class MaterialTableComponent implements OnChanges {
         ...row,
         slNo: index + 1,
         selected: true,
-        originalApproved: row.ApprovedAmount || 0,
-        ApprovedAmount: row.ApprovedAmount || 0,
+        originalApproved: row.ClaimAmount || 0,
+        ApprovedAmount: row.ClaimAmount || 0,
         remarks: row.remarks || ''
       }));
 
@@ -68,12 +67,16 @@ export class MaterialTableComponent implements OnChanges {
     this.selectAll = this.processedData.every(r => r.selected);
   }
 
-  get visibleColumns() {
-    return (this.columnConfig || []).filter((c: any) => c.visible && !!c.name);
+  get visibleTabelColumns() {
+    return (this.columnConfig || []).filter((c: any) => c.visible && !!c.name && c.position == 'in');
+  }
+
+  get visibleOtherColumns() {
+    return (this.columnConfig || []).filter((c: any) => c.visible && !!c.name && c.position == 'out');
   }
 
   get columnKeys() {
-    return this.visibleColumns?.map((c: any) => c.name);
+    return this.visibleTabelColumns?.map((c: any) => c.name);
   }
 
   get displayedColumns(): string[] {

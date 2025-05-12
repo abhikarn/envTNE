@@ -44,7 +44,7 @@ export class AddGstComponent {
 
   initGstDetailsForm() {
     const group: any = {};
-    if(this.controlConfig.fields) {
+    if(this.controlConfig?.fields) {
       this.fields = this.controlConfig.fields || [];
       this.notifications = this.controlConfig.notifications;
     }
@@ -72,10 +72,10 @@ export class AddGstComponent {
     let gstAmount = 0;
     const gstNum = parseFloat(this.gstDetailsForm.get('Amount')?.value || "0");
     let amount: any
-    if(this.controlConfig.getControl) {
+    if(this.controlConfig?.getControl) {
       amount = parseFloat(this.form.get(`${this.controlConfig.getControl}`)?.value || "0");
     }
-    if(this.categoryGST.getControl) {
+    if(this.categoryGST?.getControl) {
       amount = parseFloat(this.amount || 0)
     }
     
