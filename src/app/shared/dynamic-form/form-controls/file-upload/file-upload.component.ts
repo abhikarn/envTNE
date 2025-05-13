@@ -83,9 +83,11 @@ export class FileUploadComponent {
   }
 
   previewFile(file: any) {
-    const url = file?.fileUrl || file?.Location; // adjust based on your backend response
-    if (url) {
-      window.open(url, '_blank');
+    const extension = file.FileName.split('.').pop()?.toLowerCase();
+    const baseName = file.FileName.replace(/\.[^/.]+$/, '');
+    const fileUrl = `https://localhost:44364/Document/${baseName}-${file.Guid}.${extension}`;
+    if (fileUrl) {
+      window.open(fileUrl, '_blank');
     }
   }
 
