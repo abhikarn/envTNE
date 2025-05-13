@@ -1,31 +1,32 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewExpenseService {
-  basePath = "https://localhost:7073/api/Expense/"
-  newbasePath = "https://localhost:44301/api/"
+  basePath = `${environment.newApiUrl}`
+  newbasePath = `${environment.apiUrl}`
 
   constructor(
     private httpClient: HttpClient
   ) { }
 
   expenseRequestCreatePost(request: any) {
-    return this.httpClient.post<any>(`${this.basePath}ExpensesRequestCreate`, request);
+    return this.httpClient.post<any>(`${this.basePath}Expense/ExpensesRequestCreate`, request);
   }
   
   getExpenseRequest(request: any) {
-    return this.httpClient.post<any>(`${this.basePath}ExpensesRequestGet`, request);
+    return this.httpClient.post<any>(`${this.basePath}Expense/ExpensesRequestGet`, request);
   }
 
   getMasterNameById(request: any) {
-    return this.httpClient.post<any>(`${this.basePath}GetMasterNameById`, request);
+    return this.httpClient.post<any>(`${this.basePath}Expense/GetMasterNameById`, request);
   }
 
   getExpenseRequestDetailPreview(request: any) {
-    return this.httpClient.post<any>(`${this.basePath}GetExpensesRequestDetailPreviewGet`, request);
+    return this.httpClient.post<any>(`${this.basePath}Expense/GetExpensesRequestDetailPreviewGet`, request);
   }
 
   getRequestorInfo(request: any) {
