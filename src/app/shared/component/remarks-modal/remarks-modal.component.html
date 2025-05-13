@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <span>Remarks</span>
+    <mat-icon (click)="dialogRef.close()" aria-hidden="false" aria-label="Example home icon" fontIcon="close">
+    </mat-icon>
+</div>
+
+<div class="modal-body">
+    <table class="attachment-table">
+        <thead>
+            <tr>
+                <th>Sl.No</th>
+                <th>Action By</th>
+                <th>Action Date</th>
+                <th>Action</th>
+                <th>Approved Amount</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let approval of data.remarksData; index as i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ approval?.approver }}</td>
+                <td>{{ approval?.approvalDateTimeString }}</td>
+                <td>{{ approval?.actionStatus }}</td>
+                <td>{{ approval?.approvedAmount }}</td>
+                <td>{{ approval?.approverRemarks }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

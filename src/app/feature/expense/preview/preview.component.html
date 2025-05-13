@@ -78,7 +78,7 @@
                            @if(category.columns) {
                            <app-material-table [categoryName]="category.name" [categoryGST]="category?.gst" [mode]="mode" [data]="category.data"
                               [columnConfig]="category.columns" [slNoLabel]="category.slNoLabel" [nestedTables]="category.nestedTables"
-                              (selectionChanged)="getSelection($event)">
+                              (selectionChanged)="getSelection($event)" (emitExpenseRequestDetailId)="showRemarks($event)">
                            </app-material-table>
                            }
                         </app-expansion-panel>
