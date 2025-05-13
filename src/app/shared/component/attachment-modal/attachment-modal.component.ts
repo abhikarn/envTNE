@@ -23,6 +23,7 @@ export class AttachmentModalComponent {
   ) { }
 
   downloadFile(file: any) {
+    debugger;
     const url = this.domSanitizer.bypassSecurityTrustResourceUrl(file?.fileUrl || file?.Location);
     const link = document.createElement('a');
     link.href = url.toString();
