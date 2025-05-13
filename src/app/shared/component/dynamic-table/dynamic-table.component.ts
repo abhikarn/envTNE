@@ -57,7 +57,12 @@ export class DynamicTableComponent implements OnInit {
   }
 
   previewFile(file: any) {
-
+    const extension = file.FileName.split('.').pop()?.toLowerCase();
+    const baseName = file.FileName.replace(/\.[^/.]+$/, '');
+    const fileUrl = `https://localhost:44364/Document/${baseName}-${file.Guid}.${extension}`;
+    if (fileUrl) {
+      window.open(fileUrl, '_blank');
+    }
   }
 
   downloadFile(file: any) {
