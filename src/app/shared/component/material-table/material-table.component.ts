@@ -36,6 +36,7 @@ export class MaterialTableComponent implements OnChanges {
   @Input() mode: 'preview' | 'approval' | 'finance-approval' = 'preview';
   @Input() categoryGST: any;
   @Output() selectionChanged = new EventEmitter<any>();
+  @Output() emitExpenseRequestDetailId = new EventEmitter<any>();
   selectAll: boolean = false;
 
   expandedRow: any | null = null;
@@ -109,6 +110,7 @@ export class MaterialTableComponent implements OnChanges {
 
   showRemarks(expenseRequestDetailId: any) {
     console.log(expenseRequestDetailId)
+    this.emitExpenseRequestDetailId.emit(expenseRequestDetailId);
   }
 
   toggleSelectAll() {

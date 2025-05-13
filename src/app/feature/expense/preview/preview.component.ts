@@ -23,6 +23,7 @@ import { SnackbarService } from '../../../shared/service/snackbar.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { RemarksModalComponent } from '../../../shared/component/remarks-modal/remarks-modal.component';
 
 @Component({
   selector: 'app-preview',
@@ -133,7 +134,7 @@ export class PreviewComponent {
       next: (response: any) => {
         if (response) {
           this.expenseRequestPreviewData = response;
-          this.billableControl.setValue(response?.billableCostcentre || 0); 
+          this.billableControl.setValue(response?.billableCostcentre || 0);
           this.expenseRequestPreviewData?.dynamicExpenseDetailModels?.forEach((details: any) => {
             details?.data?.forEach((expense: any) => {
               expense.selected = true;
@@ -214,34 +215,34 @@ export class PreviewComponent {
       this.mode = 'finance-approval';
       this.pageTitle = 'Travel Expense Request Finance Approval';
       this.billableControl.valueChanges
-      .pipe(
-        debounceTime(300),
-        switchMap(searchText =>
-          this.dataService.dataGetCostCentreAutocomplete({ SearchText: searchText || '' })
+        .pipe(
+          debounceTime(300),
+          switchMap(searchText =>
+            this.dataService.dataGetCostCentreAutocomplete({ SearchText: searchText || '' })
+          )
         )
-      )
-      .subscribe({
-        next: (res) => {
-          this.filteredOptions = res?.ResponseValue || [];
-        },
-        error: (err) => {
-          console.error('Failed to fetch cost centres', err);
-          this.filteredOptions = [];
-        }
-      });
+        .subscribe({
+          next: (res) => {
+            this.filteredOptions = res?.ResponseValue || [];
+          },
+          error: (err) => {
+            console.error('Failed to fetch cost centres', err);
+            this.filteredOptions = [];
+          }
+        });
     }
   }
 
   onOptionSelected(event: any, item: any) {
     const selectedDisplay = event.option.value;
     const selected = this.filteredOptions.find((opt: any) => opt[item.displayKey] === selectedDisplay);
-  
+
     if (selected) {
       item.value = selected[item.displayKey];
       this.updateBillableCostCentre(selected[item.valueKey]);
     }
   }
-  
+
   updateBillableCostCentre(billableCostcentreId: number) {
     const payload = {
       UserMasterId: Number(localStorage.getItem('userMasterId')),
@@ -249,10 +250,10 @@ export class PreviewComponent {
       BillableCostCentreId: billableCostcentreId,
       ActionBy: Number(localStorage.getItem('userMasterId'))
     };
-  
+
     this.financeService.financeExpenseBillableCostCentreUpdate(payload).subscribe({
       next: (res: any) => {
-        if(res?.ResponseValue?.Result == "FAILED") {
+        if (res?.ResponseValue?.Result == "FAILED") {
           this.snackbarService.error(res?.ResponseValue?.Message);
         } else {
           this.snackbarService.success(res?.ResponseValue?.Message);
@@ -260,7 +261,7 @@ export class PreviewComponent {
       }
     })
   }
-  
+
 
   // Setup validation rules for justification text field if required.
   setupJustificationForm() {
@@ -360,13 +361,13 @@ export class PreviewComponent {
     this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
       CATEGORY_NAME = expenseRequest.name;
       summary?.items?.forEach((item: any) => {
-          if(item.key == CATEGORY_NAME) {
-            let totalCategoryExpense = 0;
-            expenseRequest.data?.forEach((request: any) => {
-              totalCategoryExpense = totalCategoryExpense + request.ClaimAmount
-            });
-            item.value = totalCategoryExpense.toFixed(2);
-          }
+        if (item.key == CATEGORY_NAME) {
+          let totalCategoryExpense = 0;
+          expenseRequest.data?.forEach((request: any) => {
+            totalCategoryExpense = totalCategoryExpense + request.ClaimAmount
+          });
+          item.value = totalCategoryExpense.toFixed(2);
+        }
       })
     });
     this.setCategoryWiseAmount();
@@ -563,4 +564,22 @@ export class PreviewComponent {
   goBack() {
     this.router.navigate(['/expense/expense/dashboard']);
   }
+
+  showRemarks(id: any) {
+    let remarksData: any = [];
+    this.expenseRequestPreviewData?.expenseRequestApprovalDetails?.forEach((approvalDetail: any) => {
+      if (approvalDetail?.expenseRequestDetailId == id) {
+        remarksData.push(approvalDetail);
+      }
+    });
+
+    if (!remarksData || remarksData.length === 0) return;
+
+    this.dialog.open(RemarksModalComponent, {
+      width: '1000px',
+      data: { remarksData },
+      panelClass: 'custom-modal-panel'
+    });
+  }
+
 }

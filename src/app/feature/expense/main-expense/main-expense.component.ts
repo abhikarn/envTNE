@@ -555,7 +555,7 @@ export class MainExpenseComponent {
       ...this.mainExpenseData,
       ExpenseRequestId: this.expenseRequestId,
       RequestForId: this.travelRequestPreview.RequestForId,
-      RequesterId: 4,
+      RequesterId: this.userMasterId,
       TravelRequestId: this.travelRequestPreview.TravelRequestId,
       RequestDate: new Date().toISOString(),
       Purpose: this.purpose,
