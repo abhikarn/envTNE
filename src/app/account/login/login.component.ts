@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../../../core/core.module';
+import { NewExpenseService } from '../../feature/expense/service/new-expense.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private newExpenseService:NewExpenseService
   ) { }
 
   ngOnInit(): void {
@@ -48,13 +50,13 @@ export class LoginComponent implements OnInit {
       browser: "chrome"
     };
 
-    this.http.post('https://localhost:7073/api/Account/EmployeeAuth', payload).subscribe({
+    this.newExpenseService.EmployeeAuth(payload).subscribe({
       next: (response: any) => {
         const result = response.responseValue;
         if (result.isAuthenticated) {
           this.sessionId = result.sessionId;
 
-          this.http.post('https://localhost:7073/api/Account/GetUserData', {
+          this.newExpenseService.GetUserData({
             sessionId: this.sessionId
           }).subscribe({
             next: (userDataResponse: any) => {
