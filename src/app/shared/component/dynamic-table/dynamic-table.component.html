@@ -40,8 +40,8 @@
           <tr>
             <td [attr.colspan]="displayedColumns.length + 2">
               <div class="expanded-content" [ngClass]="{ 'violation-bg': row?.IsViolation }">
-                <p><strong>Claim Amount:</strong> {{ row.ClaimAmount || '-' }}</p>
-                <p><strong>Claim in Base Currency:</strong> {{ row.ClaimAmountInBaseCurrency || '-' }}</p>
+                <p><strong>Claim Amount:</strong> {{ row.ClaimAmount || '0.00' }}</p>
+                <p><strong>Claim in Base Currency:</strong> {{ row.ClaimAmountInBaseCurrency || '0.00' }}</p>
                 <p><strong>Remarks:</strong> {{ row.Remarks || 'No remarks' }}</p>
 
                 <!-- Show GST Table Only When GST Data Exists -->
