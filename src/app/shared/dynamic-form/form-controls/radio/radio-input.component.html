@@ -1,6 +1,10 @@
 @if (!!controlConfig) {
 <div class="radio-group-container">
-    <label>{{ controlConfig.label }}</label>
+    <label>{{ controlConfig.label }}
+        @if (controlConfig.required) {
+        <span class="required-star">*</span>
+        }
+    </label>
 
     <mat-radio-group [formControl]="control">
         @for (option of controlConfig.options; track trackByFn($index, option)) {

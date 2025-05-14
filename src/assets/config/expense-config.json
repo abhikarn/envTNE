@@ -80,6 +80,7 @@
                         "valueKey": "Id",
                         "apiService": "DataService",
                         "apiMethod": "dataGetTravelMode",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
@@ -102,6 +103,7 @@
                         "apiMethod": "dataGetTravelClass",
                         "payloadKey": "TravelModeId",
                         "value": null,
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
@@ -135,6 +137,7 @@
                                 "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
                             }
                         ],
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
@@ -156,6 +159,7 @@
                         "valueKey": "CityMasterId",
                         "apiService": "NewExpenseService",
                         "apiMethod": "getMasterNameById",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
@@ -177,6 +181,7 @@
                         "valueKey": "CityMasterId",
                         "apiService": "NewExpenseService",
                         "apiMethod": "getMasterNameById",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
@@ -197,6 +202,7 @@
                         "valueKey": "KeyDataId",
                         "apiService": "DataService",
                         "apiMethod": "dataGetPaymentType",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
@@ -224,6 +230,7 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
@@ -270,6 +277,7 @@
                             "decimal": ".00",
                             "setValue": "0.00"
                         },
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
@@ -298,6 +306,7 @@
                             "decimal": ".00",
                             "setValue": "1.00"
                         },
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
@@ -330,6 +339,7 @@
                                 "name": "GstIn",
                                 "type": "text",
                                 "showInUI": true,
+                                "required": true,
                                 "validations": [
                                     {
                                         "type": "required",
@@ -346,6 +356,7 @@
                                 "name": "InvoiceNumber",
                                 "type": "text",
                                 "showInUI": true,
+                                "required": true,
                                 "validations": [
                                     {
                                         "type": "required",
@@ -369,6 +380,7 @@
                                     "decimal": ".00",
                                     "setValue": "0.00"
                                 },
+                                "required": true,
                                 "validations": [
                                     {
                                         "type": "required",
@@ -461,7 +473,8 @@
                         "name": "Remarks",
                         "isExcluded": false,
                         "label": "Remarks",
-                        "value": ""
+                        "value": "",
+                        "required": false
                     },
                     {
                         "type": "file",
@@ -473,7 +486,8 @@
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
                         "referenceType": 123,
-                        "maxSizeMB": 15
+                        "maxSizeMB": 15,
+                        "required": false
                     },
                     {
                         "type": "hidden",

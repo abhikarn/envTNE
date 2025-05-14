@@ -1,5 +1,9 @@
 <mat-form-field appearance="fill">
-  <mat-label>{{ controlConfig.label }}</mat-label>
+  <mat-label>{{ controlConfig.label }}
+    @if (controlConfig.required) {
+      <span class="required-star">*</span>
+    }
+  </mat-label>
 
   <input matInput [matDatepicker]="picker" [formControl]="control" (dateChange)="onDateSelect($event)" [min]="minDate"
     [max]="maxDate">

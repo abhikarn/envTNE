@@ -1,7 +1,11 @@
 @if (!!controlConfig) {
 @if (controlConfig.subType == 'text') {
 <mat-form-field appearance="fill">
-  <mat-label>{{controlConfig.label}}</mat-label>
+  <mat-label>{{controlConfig.label}}
+    @if (controlConfig.required) {
+      <span class="required-star">*</span>
+    }
+  </mat-label>
 
   @if (controlConfig.autoComplete) {
   <input type="text" matInput [formControl]="control" [matAutocomplete]="auto"

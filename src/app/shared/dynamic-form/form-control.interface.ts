@@ -35,4 +35,5 @@ export interface IFormControl {
   showInUI?: boolean;
   fields?: any;
   notifications?: any;
+  required?: boolean;
 }
