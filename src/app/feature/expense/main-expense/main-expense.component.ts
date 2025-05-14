@@ -151,6 +151,7 @@ export class MainExpenseComponent {
     if (this.expenseRequestId) {
       this.editMode = true;
     }
+    this.expenseRequestData = [];
   }
 
   // Load master data (baggage types, meals, travel modes) and expense config file.
@@ -393,6 +394,8 @@ export class MainExpenseComponent {
     this.travelRequestId = Number(target?.value) || 0;
 
     if (this.travelRequestId) {
+      this.initializeBasicFields();
+      this.loadInitialData();
       this.getTravelRequestPreview();
     }
   }
@@ -520,12 +523,22 @@ export class MainExpenseComponent {
 
   // Handle submit, draft, or navigation actions after validating forms.
   onAction(type: string) {
-    console.log(type)
     if(type == "cancel") {
       this.router.navigate(['../expense/expense/landing']);
       return;
     }
-    if (!this.travelRequestId) {
+
+    if (type === 'submit' || type === 'draft') {
+      this.mainExpenseData.IsDraft = type === 'draft';
+      this.createExpenseRequest();
+    } else {
+      this.router.navigate(['expense/expense/landing']);
+    }
+  }
+
+  // Prepare and submit the main expense request after confirmation.
+  createExpenseRequest() {
+    if (!this.travelRequestId || !this.expenseRequestData?.dynamicExpenseDetailModels) {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return;
     }
@@ -540,17 +553,6 @@ export class MainExpenseComponent {
       return;
     }
 
-    if (type === 'submit' || type === 'draft') {
-      this.mainExpenseData.IsDraft = type === 'draft';
-      this.createExpenseRequest();
-    } else {
-      this.router.navigate(['expense/expense/landing']);
-    }
-  }
-
-
-  // Prepare and submit the main expense request after confirmation.
-  createExpenseRequest() {
     this.mainExpenseData = {
       ...this.mainExpenseData,
       ExpenseRequestId: this.expenseRequestId,
