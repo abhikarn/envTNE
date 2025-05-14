@@ -89,6 +89,8 @@ export class MainExpenseComponent {
   expenseRequestId: any = 0;
   userMasterId: number = 0;
   editMode = false;
+  expenseRequestPreviewData: any;
+  travelDetails: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -196,6 +198,9 @@ export class MainExpenseComponent {
       this.expenseRequestForm.addControl(this.expenseConfig.request.name, control);
       this.formControls = [];
     }
+    if(this.expenseConfig?.travelDetails) {
+      this.travelDetails = this.expenseConfig?.travelDetails;
+    }
   }
 
   // Setup form categories with dynamic options mapping from master data.
@@ -241,6 +246,14 @@ export class MainExpenseComponent {
       .subscribe({
         next: (response) => {
           if (response) {
+            this.expenseRequestPreviewData = response;
+            this.travelDetails?.data?.forEach((config: any) => {
+              const prop = config.name;
+              if (this.expenseRequestPreviewData && this.expenseRequestPreviewData.hasOwnProperty(prop)) {
+                config.value = this.expenseRequestPreviewData[prop];
+              }
+            });
+            this.travelDetails?.data?.sort((a: any, b: any) => a.order - b.order);
             this.populateExistingExpenseData(response);
           }
         }
@@ -403,6 +416,7 @@ export class MainExpenseComponent {
 
   // Add or update form data in the expense request based on ReferenceId or editIndex.
   getFormData(formData: any) {
+    console.log("Form: ", formData);
     const { formData: data, editIndex } = formData;
 
     const existingCategory = this.expenseRequestData?.dynamicExpenseDetailModels
@@ -523,7 +537,7 @@ export class MainExpenseComponent {
 
   // Handle submit, draft, or navigation actions after validating forms.
   onAction(type: string) {
-    if(type == "cancel") {
+    if (type == "cancel") {
       this.router.navigate(['../expense/expense/landing']);
       return;
     }
