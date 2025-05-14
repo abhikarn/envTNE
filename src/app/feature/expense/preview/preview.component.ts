@@ -45,6 +45,7 @@ import { RemarksModalComponent } from '../../../shared/component/remarks-modal/r
   styleUrl: './preview.component.scss',
   encapsulation: ViewEncapsulation.None
 })
+
 export class PreviewComponent {
   @ViewChild(SummaryComponent) summaryComponent: any;
   expenseRequestPreviewData: any;
@@ -56,6 +57,7 @@ export class PreviewComponent {
   requestDetails: any;
   expenseSummary: any;
   otherDetails: any;
+  requestorDetail: any;
   mode: 'preview' | 'approval' | 'finance-approval' = 'preview';
   pageTitle = 'Travel Expense Request Preview';
   expenseRequestApprovalDetailType: any = [];
@@ -85,7 +87,7 @@ export class PreviewComponent {
   }
 
   openDetailsDialog(id: number): void {
-    debugger;
+
     let requestBody = {
       expenseRequestId: this.expenseRequestId
     }
@@ -161,6 +163,7 @@ export class PreviewComponent {
   }
 
   loadExpenseRequestPreviewData() {
+    
     if (!this.loadData) {
       this.requestHeaderDetails = this.expenseRequestPreviewConfig?.requestHeaderDetails;
       this.requestorId = this.requestHeaderDetails.requesterId;
@@ -175,6 +178,39 @@ export class PreviewComponent {
 
       this.requestDetails = this.expenseRequestPreviewConfig?.requestDetails;
       const requestDeatilData = this.expenseRequestPreviewData;
+      //requestorDetail detail
+      let requesterDetailData: any
+      const body = {
+        UserMasterId: requestData.requesterId,
+      };
+      this.newExpenseService.getRequestorInfo(body).subscribe((data) => {
+        requesterDetailData = data.ResponseValue;
+        this.requestDetails?.forEach((config: any) => {
+          const prop = config.name;   
+          if (requesterDetailData && requesterDetailData.hasOwnProperty(prop)) {
+            config.value = requesterDetailData[prop];
+          }     
+          // if (prop == "City") {
+          //   if (requesterDetailData && requesterDetailData.hasOwnProperty(prop)) {
+          //     config.value = requesterDetailData[prop];
+          //   }
+          // } else if (prop == "Department") {
+          //   if (requesterDetailData && requesterDetailData.hasOwnProperty(prop)) {
+          //     config.value = requesterDetailData[prop];
+          //   }
+          // } else if (prop == "Designation") {
+          //   if (requesterDetailData && requesterDetailData.hasOwnProperty(prop)) {
+          //     config.value = requesterDetailData[prop];
+          //   }
+          // } else if (prop == "Grade") {
+          //   if (requesterDetailData && requesterDetailData.hasOwnProperty(prop)) {
+          //     config.value = requesterDetailData[prop];
+          //   }
+          // }
+        });
+      });
+      //requestorDetail detail
+
       this.requestDetails?.forEach((config: any) => {
         const prop = config.name;
         if (requestDeatilData && requestDeatilData.hasOwnProperty(prop)) {
@@ -261,7 +297,6 @@ export class PreviewComponent {
       }
     })
   }
-
 
   // Setup validation rules for justification text field if required.
   setupJustificationForm() {
@@ -581,5 +616,4 @@ export class PreviewComponent {
       panelClass: 'custom-modal-panel'
     });
   }
-
 }
