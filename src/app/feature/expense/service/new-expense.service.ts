@@ -34,7 +34,7 @@ export class NewExpenseService {
   }
 
   EmployeeAuth(request: any) {
-    debugger;
+    
     return this.httpClient.post<any>(`${this.basePath}Account/EmployeeAuth`, request);
   }
 

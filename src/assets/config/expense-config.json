@@ -722,28 +722,28 @@
         "requestDetails": [
             {
                 "label": "Base Location",
-                "name": "baseLocation",
+                "name": "City",
                 "value": "",
                 "isLink": false,
                 "order": 1
             },
             {
                 "label": "Department",
-                "name": "department",
+                "name": "Department",
                 "isLink": false,
                 "value": "",
                 "order": 2
             },
             {
                 "label": "Designation",
-                "name": "designation",
+                "name": "Designation",
                 "isLink": false,
                 "value": "",
                 "order": 3
             },
             {
                 "label": "Grade",
-                "name": "grade",
+                "name": "Grade",
                 "isLink": false,
                 "value": "",
                 "order": 4
