@@ -337,7 +337,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onEditRow(rowData: any) {
-    if(rowData.row?.gst?.length > 0) {
+    if (rowData.row?.gst?.length > 0) {
       this.gstComponentRef.setCompanyGSTFlag(true);
       this.gstComponentRef.gstData = rowData.row?.gst;
     }

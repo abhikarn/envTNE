@@ -24,6 +24,12 @@ export class TextAreaInputComponent {
   constructor() {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
+
+  ngOnInit() {
+    if (this.controlConfig.disable) {
+      this.control.disable();
+    }
+  }
   
   getErrorMessage(status: boolean): string {
     if (!this.controlConfig?.validations) return '';

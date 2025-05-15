@@ -86,7 +86,9 @@
                                 "type": "required",
                                 "message": "Travel Mode is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "select",
@@ -109,7 +111,9 @@
                                 "type": "required",
                                 "message": "Availed Class is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "date",
@@ -143,7 +147,9 @@
                                 "type": "required",
                                 "message": "Travel Date is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "text",
@@ -165,7 +171,9 @@
                                 "type": "required",
                                 "message": "Origin is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "text",
@@ -187,7 +195,9 @@
                                 "type": "required",
                                 "message": "Destination is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "select",
@@ -208,7 +218,9 @@
                                 "type": "required",
                                 "message": "Payment Type is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "select",
@@ -236,7 +248,9 @@
                                 "type": "required",
                                 "message": "Currency is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "text",
@@ -283,7 +297,9 @@
                                 "type": "required",
                                 "message": "Amount is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "text",
@@ -312,7 +328,9 @@
                                 "type": "required",
                                 "message": "Conversion Rate is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": true
                     },
                     {
                         "type": "gst",
@@ -474,7 +492,9 @@
                         "isExcluded": false,
                         "label": "Remarks",
                         "value": "",
-                        "required": false
+                        "required": false,
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "file",
@@ -487,7 +507,8 @@
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
                         "referenceType": 123,
                         "maxSizeMB": 15,
-                        "required": false
+                        "required": false,
+                        "disable": false
                     },
                     {
                         "type": "hidden",

@@ -28,6 +28,7 @@ export class TextInputComponent implements OnInit {
   @Input() controlConfig: IFormControl = { name: '' };
   @Input() form: any;
   @Output() emitInputValue = new EventEmitter<any>();
+  displayValue: any;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -37,15 +38,25 @@ export class TextInputComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.controlConfig.disable) {
+      this.control.disable();
+    }
+    
     if (this.controlConfig.autoComplete) {
       this.control.valueChanges.subscribe(inputValue => {
-        if (inputValue) {
+        console.log(inputValue);
+        
+        if(typeof inputValue !== "object") {
           let input = {
             inputValue: inputValue,
             control: this.control
           }
           this.emitInputValue.emit(input);
-          if (typeof inputValue == "object") {
+          this.control.reset();
+          this.displayValue = inputValue;
+        }
+
+        if (typeof inputValue == "object") {
             if (this.controlConfig.dependentCases?.length > 0) {
               this.controlConfig.dependentCases.forEach((dependentCase: any) => {
                 if (dependentCase.event === "autoComplete") {
@@ -54,7 +65,6 @@ export class TextInputComponent implements OnInit {
               });
             }
           }
-        }
       });
     }
   }

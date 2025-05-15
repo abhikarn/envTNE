@@ -67,7 +67,7 @@
             <!-- expense category -->
             <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
               <mat-tab-group fitInkBarToContent (selectedTabChange)="onTabChange($event)">
-                @for (category of categories; track category.name) {
+                @for (category of categories; track category) {
                 <mat-tab>
                   <ng-template mat-tab-label>
                     <span [matBadge]="category.count" matBadgeOverlap="false">{{category.label}}</span>

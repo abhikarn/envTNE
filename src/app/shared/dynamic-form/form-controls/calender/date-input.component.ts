@@ -40,6 +40,10 @@ export class DateInputComponent {
   }
 
   ngOnInit() {
+    if (this.controlConfig.disable) {
+      this.control.disable();
+    }
+    
     this.control.valueChanges.subscribe(value => {
       if (value instanceof Date) {
         const isoDate = value.toISOString(); // Convert to ISO 8601 format

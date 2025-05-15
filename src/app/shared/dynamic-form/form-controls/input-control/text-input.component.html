@@ -8,8 +8,8 @@
   </mat-label>
 
   @if (controlConfig.autoComplete) {
-  <input type="text" matInput [formControl]="control" [matAutocomplete]="auto"
-    [placeholder]="controlConfig.placeholder || 'Enter text'" />
+  <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" [value]="displayValue"
+    [placeholder]="controlConfig.placeholder || 'Enter text'" [readonly]="controlConfig.readonly" />
   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
     @for (option of controlConfig.options; track trackByFn($index, option)) {
     <mat-option [value]="option">
@@ -33,7 +33,7 @@
 @else if (controlConfig.subType == 'number') {
 <mat-form-field appearance="fill">
   <mat-label>{{controlConfig.label}}</mat-label>
-  <input type="number" matInput [formControl]="control"/>
+  <input type="number" matInput [formControl]="control" [readonly]="controlConfig.readonly"/>
   @if (control.invalid && control.touched) {
   <mat-error>
     {{ getErrorMessage | fnWrap : control.invalid && control.touched }}

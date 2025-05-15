@@ -34,6 +34,12 @@ export class RadioInputComponent {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
 
+  ngOnInit() {
+    if (this.controlConfig.disable) {
+      this.control.disable();
+    }
+  }
+
   trackByFn(index: number, item: any): any {
     return item.value;
   }

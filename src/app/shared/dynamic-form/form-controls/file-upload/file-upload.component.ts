@@ -27,6 +27,12 @@ export class FileUploadComponent {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
 
+  ngOnInit() {
+    if (this.controlConfig.disable) {
+      this.control.disable();
+    }
+  }
+
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     const maxSizeBytes = (this.controlConfig.maxSizeMB ?? 20) * 1024 * 1024; 

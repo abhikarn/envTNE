@@ -5,7 +5,7 @@
     }
   </mat-label>
   <mat-select [formControl]="control" placeholder="{{controlConfig.placeholder || 'Select an option'}}"
-    (selectionChange)="onSelectionChange($event)">
+    (selectionChange)="onReadonlySelection($event);onSelectionChange($event)">
     @if (!!controlConfig.defaultValue) {
       <mat-option [value]="controlConfig.defaultValue.Id">{{controlConfig.defaultValue.Display}}</mat-option>
     }

@@ -8,7 +8,7 @@
     <div class="upload-container excel-TBL-hold">
       <label for="{{ controlConfig.name }}" class="custom-upload">Click to Choose File</label>
       <input type="file" [id]="controlConfig.name" [multiple]="controlConfig.multiple" (change)="onFileSelected($event)"
-        [accept]="controlConfig.accept">
+        [accept]="controlConfig.accept" [disabled]="controlConfig.disable">
     </div>
 
     <!-- Table to Display Selected Files -->
