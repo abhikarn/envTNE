@@ -33,6 +33,15 @@ export class NewExpenseService {
     return this.httpClient.post<any>(`${this.newbasePath}User/EmployeeProfile`, request);
   }
 
+  EmployeeAuth(request: any) {
+    
+    return this.httpClient.post<any>(`${this.basePath}Account/EmployeeAuth`, request);
+  }
+
+  GetUserData(request: any) {
+    return this.httpClient.post<any>(`${this.basePath}Account/GetUserData`, request);
+  }
+
   getExpenseConfig() {
     return this.httpClient.get<any>('/assets/config/expense-config.json');
   }

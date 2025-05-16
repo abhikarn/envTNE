@@ -1,0 +1,108 @@
+{
+    "images": {
+        "loginImage": "../../../assets/images/login-image.png",
+        "applicationLogo": "../../../assets/images/application-logo.png"
+    },
+    "titles": {
+        "loginPageTitle": "Enaviya | Travel and Expense",
+        "footerText": "Copyright © 2024-2025. All rights reserved."
+    },
+    "messages": {
+        "employeeCodeRequired": "Employee Code is required.",
+        "passwordRequired": "Password is required.",
+        "invalidCredentials": "Invalid Employee Code or Password.",
+        "placeholder": {
+            "employeeCode": "Employee Code",
+            "password": "Password"
+        }
+    },
+    "loginForm": {
+        "name": "LoginForm",
+        "label": "Login",
+        "formControls": [
+            {
+                "type": "select",
+                "dataType": "int",
+                "name": "Company",
+                "label": "Company",
+                "placeholder": "Select Company",
+                "value": null,
+                "options": [],
+                "labelKey": "Name",
+                "valueKey": "Id",
+                "apiService": "DataService",
+                "apiMethod": "dataGetTravelMode",
+                "validations": [
+                    {
+                        "type": "required",
+                        "message": "Company is required"
+                    }
+                ]
+            },
+            {
+                "type": "text",
+                "dataType": "string",
+                "name": "EmployeeCode",
+                "label": "Employee Code",
+                "value": null,
+                "options": [],
+                "labelKey": "City",
+                "valueKey": "CityMasterId",
+                "apiService": "NewExpenseService",
+                "apiMethod": "getMasterNameById",
+                "validations": [
+                    {
+                        "type": "required",
+                        "message": "Employee Code is required"
+                    }
+                ]
+            },
+            {
+                "type": "text",
+                "dataType": "string",
+                "name": "Password",
+                "label": "Password",
+                "value": null,
+                "options": [],
+                "labelKey": "City",
+                "valueKey": "CityMasterId",
+                "apiService": "NewExpenseService",
+                "apiMethod": "getMasterNameById",
+                "validations": [
+                    {
+                        "type": "required",
+                        "message": "Password is required"
+                    }
+                ]
+            }
+        ]
+    },
+    "buttons": {
+        "loginButton": "Login",
+        "forgotPasswordButton": "Forgot Password?",
+        "resetPasswordButton": "Reset Password",
+        "changePasswordButton": "Change Password",
+        "submitButton": "Submit",
+        "cancelButton": "Cancel",
+        "ssoLogin": "Login with SSO",
+        "loginWithGoogle": "Login with Google",
+        "loginWithMicrosoft": "Login with Microsoft"
+    },
+    "links": {
+        "forgotPasswordLink": "/forgot-password",
+        "resetPasswordLink": "/reset-password",
+        "changePasswordLink": "/change-password",
+        "loginLink": "/login"
+    },
+    "icons": {
+        "employeeCode": "fa fa-user icon",
+        "password": "fa fa-unlock-alt icon"
+    },
+    "features": {
+        "forgotPasswordEnabled": true,
+        "ssoLoginEnabled": true
+    },
+    "styles": {
+        "loginPageBackgroundColor": "linear-gradient(to bottom, #3850EC 0%, #C6D3FC 100%)"
+    }
+}

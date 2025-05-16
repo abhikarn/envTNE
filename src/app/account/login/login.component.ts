@@ -1,13 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../../../core/core.module';
+import { NewExpenseService } from '../../feature/expense/service/new-expense.service';
+import * as loginConfig from '../../../assets/config/login-config.json';
+import { IFormControl } from '../../shared/dynamic-form/form-control.interface';
+import { FormControlFactory } from '../../shared/dynamic-form/form-control.factory';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TextInputComponent } from '../../shared/dynamic-form/form-controls/input-control/text-input.component';
+import { SelectInputComponent } from '../../shared/dynamic-form/form-controls/dropdown/select-input.component';
+import { TextAreaInputComponent } from '../../shared/dynamic-form/form-controls/text-area/text-area-input.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, CoreModule, RouterModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, CoreModule, RouterModule, CommonModule,
+    // ExpansionPanelComponent,
+    // MaterialTableComponent,
+    // SummaryComponent,
+    MatTabsModule,
+    ReactiveFormsModule,
+    TextInputComponent,
+    SelectInputComponent,
+    TextAreaInputComponent,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatInputModule],
+
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -15,21 +38,35 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   footerText: string = "Copyright © 2024-2025. All rights reserved.";
   submitted = false;
-  sessionId: string = ''
-  isAuthenticated: boolean = false
+  sessionId: string = '';
+  isAuthenticated: boolean = false;
   errorMessage = '';
+  config: any = loginConfig;
+  formControls: { formConfig: IFormControl, control: FormControl }[] = [];
+  form: FormGroup = new FormGroup({});
+  loginFormControl: any = this.config.loginForm;
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2,
+    private newExpenseService: NewExpenseService
   ) { }
 
   ngOnInit(): void {
+    this.renderer.setStyle(
+      document.documentElement,
+      '--login-page-bg',
+      this.config.styles.loginPageBackgroundColor
+    );
+
     this.loginForm = this.fb.group({
       employeeCode: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', Validators.required],  
     });
+
+    this.createForm();
   }
 
   onSubmit(): void {
@@ -39,42 +76,79 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
+
     }
 
-    const payload = {
-      employeeCode: this.loginForm.value.employeeCode,
-      password: this.loginForm.value.password,
-      ipAddress: "10.52.556.56",
-      browser: "chrome"
-    };
+    this.getIPAddress().then((ipAddress) => {
+      const payload = {
+        employeeCode: this.loginForm.value.employeeCode,
+        password: this.loginForm.value.password,
+        ipAddress: ipAddress,
+        browser: "chrome",
+      };
 
-    this.http.post('https://localhost:7073/api/Account/EmployeeAuth', payload).subscribe({
-      next: (response: any) => {
-        const result = response.responseValue;
-        if (result.isAuthenticated) {
-          this.sessionId = result.sessionId;
-
-          this.http.post('https://localhost:7073/api/Account/GetUserData', {
-            sessionId: this.sessionId
-          }).subscribe({
-            next: (userDataResponse: any) => {
-              localStorage.setItem('sessionId', this.sessionId);
-              localStorage.setItem('userData', JSON.stringify(userDataResponse));
-              localStorage.setItem('userMasterId',userDataResponse.token.userMasterId);
-              console.log(userDataResponse);
-              this.router.navigate(['/expense/expense/dashboard']);
-            },
-            error: () => {
-              this.errorMessage = 'Unable to retrieve user data.';
-            }
-          });
-        } else {
+      this.newExpenseService.EmployeeAuth(payload).subscribe({
+        next: (response: any) => {
+          const result = response.responseValue;
+          if (result.isAuthenticated) {
+            this.sessionId = result.sessionId;
+            this.newExpenseService.GetUserData({
+              sessionId: this.sessionId,
+            }).subscribe({
+              next: (userDataResponse: any) => {
+                console.log('LoginComponent: GetUserData response', userDataResponse);
+                localStorage.setItem('sessionId', this.sessionId);
+                localStorage.setItem('userData', JSON.stringify(userDataResponse));
+                localStorage.setItem('userMasterId', userDataResponse.token.userMasterId);
+                console.log(userDataResponse);
+                this.router.navigate(['/expense/expense/dashboard']);
+              },
+              error: () => {
+                this.errorMessage = 'Unable to retrieve user data.';
+              },
+            });
+          } else {
+            this.errorMessage = 'Invalid credentials. Please try again.';
+          }
+        },
+        error: () => {
           this.errorMessage = 'Invalid credentials. Please try again.';
-        }
-      },
-      error: () => {
-        this.errorMessage = 'Invalid credentials. Please try again.';
-      }
+        },
+      });
     });
+  }
+
+  private async getIPAddress(): Promise<string> {
+    try {
+      const response = await this.http.get<{ ip: string }>('https://api.ipify.org?format=json').toPromise();
+      return response?.ip || '0.0.0.0';
+    } catch (error) {
+      console.error('Error fetching IP address:', error);
+      return '0.0.0.0';
+    }
+  }
+
+  createForm() {
+    
+    const tabIndex = "login";
+    const tabLabel = this.loginFormControl.name;
+    if (tabLabel == 'LoginForm') {
+      // Set Login Form
+      this.formControls = []; // Reset to avoid duplication
+      this.form = new FormGroup({});
+      if (this.loginFormControl) {
+        if (this.loginFormControl?.name == 'LoginForm') {
+          this.loginFormControl?.formControls?.forEach((config: any) => {
+            const control = FormControlFactory.createControl(config);
+            this.formControls.push({ formConfig: config, control: control });
+            this.form.addControl(config.name, control);
+          });
+        }
+      }
+      console.log(this.form);
+    } else {
+      this.formControls = []; // Reset to avoid duplication
+      this.form = new FormGroup({});
+    }
   }
 }

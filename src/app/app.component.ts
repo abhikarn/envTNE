@@ -11,10 +11,11 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../src/app/shared/service/auth.service'
 import { CoreModule } from '../core/core.module';
 import { filter } from 'rxjs';
+import { LoaderComponent } from './shared/loader/loader.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, SideMenuComponent, MatTabsModule, TranslateModule, MatSnackBarModule, CommonModule, CoreModule, RouterModule],
+  imports: [RouterOutlet,LoaderComponent, HeaderComponent, SideMenuComponent, MatTabsModule, TranslateModule, MatSnackBarModule, CommonModule, CoreModule, RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
