@@ -52,7 +52,6 @@ export class TextInputComponent implements OnInit {
             control: this.control
           }
           this.emitInputValue.emit(input);
-          this.control.reset();
           this.displayValue = inputValue;
         }
 
