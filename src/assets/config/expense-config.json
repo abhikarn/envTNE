@@ -592,7 +592,7 @@
                     },
                     {
                         "name": "ClaimAmount",
-                        "label": "Claimed",
+                        "label": "Amount",
                         "visible": true,
                         "position": "in"
                     },
@@ -801,47 +801,47 @@
                 "type": "summary",
                 "items": [
                     {
+                        "name": "totalExpense",
                         "label": "Total Expense",
-                        "key": "totalExpense",
                         "value": 0.00
                     },
                     {
+                        "name": "lessAdvance",
                         "label": "Less Advance",
-                        "key": "lessAdvance",
                         "value": 0.00
                     },
                     {
+                        "name": "amountPaidByCompany",
                         "label": "Amount Paid by Company",
-                        "key": "amountPaidByCompany",
                         "paymentModeId": 93,
                         "value": 0.00
                     },
                     {
+                        "name": "corporateCreditCard",
                         "label": "Corporate Credit Card",
-                        "key": "corporateCreditCard",
                         "paymentModeId": 92,
                         "value": 0.00
                     },
                     {
+                        "name": "creditCard",
                         "label": "Credit Card",
-                        "key": "creditCard",
                         "paymentModeId": 94,
                         "value": 0.00
                     },
                     {
+                        "name": "paidByEmployee",
                         "label": "Paid By Employee",
-                        "key": "paidByEmployee",
                         "paymentModeId": 91,
                         "value": 0.00
                     },
                     {
+                        "name": "advanceReturn",
                         "label": "Advance Return",
-                        "key": "advanceReturn",
                         "value": 0.00
                     },
                     {
+                        "name": "amountPayable",
                         "label": "Amount Payable / Receivable",
-                        "key": "amountPayable",
                         "value": 0.00
                     }
                 ]
@@ -853,12 +853,34 @@
                 "type": "category",
                 "items": [
                     {
-                        "label": "Tickets Expense",
-                        "key": "Travel Ticket"
+                        "name": "Travel Ticket",
+                        "label": "Tickets Expense"
                     },
                     {
-                        "label": "Accommodation",
-                        "key": "Accommodation"
+                        "name": "Per Diem",
+                        "label": "Per Dim"
+                    },
+                    {
+                        "name": "Accommodation",
+                        "label": "Accommodation Expenses"
+                        
+                    },
+                    {
+                        "name": "Lumpsum",
+                        "label": "Lump sum"
+                        
+                    },
+                    {
+                        "name": "Conveyance During Travel",
+                        "label": "Conveyance During Travel"
+                    },
+                    {
+                        "name": "Other Expenses",
+                        "label": "Miscellaneous"
+                    },
+                    {
+                        "name": "Total",
+                        "label": "Total"
                     }
                 ]
             }

@@ -293,6 +293,7 @@ export class MainExpenseComponent {
 
     setTimeout(() => {
       this.summaryComponent.calculatTotalExpenseAmount();
+      this.summaryComponent.calculatCategoryWiseExpense();
     }, 1000);
 
     this.applyExcludedFields();

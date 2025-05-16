@@ -312,20 +312,32 @@ export class PreviewComponent {
   }
 
   setCategoryWiseAmount() {
-    console.log(this.expenseSummary);
     const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
     const categoryWiseExpense = this.expenseSummary?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
     if (!categoryWiseExpense) return;
+    this.updateTotalAmount(categoryWiseExpense);
 
     // Distribute totalExpense to the matched category
     this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
       const categoryName = expenseRequest.name;
-      const matchedItem = categoryWiseExpense.items?.find((item: any) => item.key === categoryName);
+      const matchedItem = categoryWiseExpense.items?.find((item: any) => item.name === categoryName);
       if (matchedItem) {
         expenseRequest.amount = matchedItem.value;
       }
     });
   }
+
+  updateTotalAmount(categoryExpense: any) {
+    const total = categoryExpense.items
+      .filter((item: any) => item.name !== 'Total')
+      .reduce((sum: number, item: any) => sum + parseFloat(item.value || '0'), 0);
+
+    const totalItem = categoryExpense.items.find((item: any) => item.name === 'Total');
+    if (totalItem) {
+      totalItem.value = total.toFixed(2); // Keep it as string with 2 decimals
+    }
+  }
+
 
   calculatTotalExpenseAmountPreview() {
     const EXPENSE_SUMMARY_ID = "expense-summary";
@@ -368,8 +380,8 @@ export class PreviewComponent {
 
     // Set totalExpense and amountPayable
     summary.items?.forEach((item: any) => {
-      if (item.key === 'totalExpense') item.value = totalExpense.toFixed(2);
-      if (item.key === 'amountPayable') item.value = amountPayable.toFixed(2);
+      if (item.name === 'totalExpense') item.value = totalExpense.toFixed(2);
+      if (item.name === 'amountPayable') item.value = amountPayable.toFixed(2);
     });
 
   }
@@ -398,10 +410,11 @@ export class PreviewComponent {
     this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
       CATEGORY_NAME = expenseRequest.name;
       summary?.items?.forEach((item: any) => {
-        if (item.key == CATEGORY_NAME) {
+        if (item.name == CATEGORY_NAME) {
           let totalCategoryExpense = 0;
           expenseRequest.data?.forEach((request: any) => {
-            totalCategoryExpense = totalCategoryExpense + request.ClaimAmount
+            const { ClaimAmount } = request?.excludedData || request || {};
+            totalCategoryExpense = totalCategoryExpense + ClaimAmount
           });
           item.value = totalCategoryExpense.toFixed(2);
         }
@@ -460,8 +473,8 @@ export class PreviewComponent {
 
     // Set totalExpense and amountPayable
     summary.items?.forEach((item: any) => {
-      if (item.key === 'totalExpense') item.value = totalExpense.toFixed(2);
-      if (item.key === 'amountPayable') item.value = amountPayable.toFixed(2);
+      if (item.name === 'totalExpense') item.value = totalExpense.toFixed(2);
+      if (item.name === 'amountPayable') item.value = amountPayable.toFixed(2);
     });
 
     this.calculatCategoryWiseExpensePreview();
