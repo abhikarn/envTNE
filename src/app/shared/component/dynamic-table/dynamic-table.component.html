@@ -4,27 +4,17 @@
       <table class="table color-table d-table table-cust tbl-sml no-sorting td-firstdata-center vioColor">
         <thead>
           <tr>
-            <th>Sl.No</th>
-            @for (column of displayedColumns; track column) {
-            <th>{{ column }}</th>
+            @for (col of tableColumns; track col.name) {
+            <th>{{ col.label }}</th>
             }
-            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           @for (row of tableData; track row; let i = $index) {
           <tr [ngClass]="{ 'violation-border': row?.IsViolation }">
-            <td>{{ i + 1 }}</td> <!-- Serial Number -->
-            @for (column of displayedColumns; track column) {
-            <td>
-              @if (isDate(row[column])) {
-              {{ row[column] | date:'dd-MMM-yyyy' }}
-              } @else if (isObject(row[column])) {
-              {{ row[column]?.label || '-' }}
-              } @else {
-              {{ row[column] || '-' }}
-              }
-            </td>
+            <td>{{ i + 1 }}</td>
+            @for (col of tableColumns; track col.name) {
+            <td>{{ formatValue(col.name, row[col.name]) }}</td>
             }
             <td>
               <i class="fas fa-edit" (click)="edit(row, i+1)"></i>
@@ -35,77 +25,54 @@
             </td>
           </tr>
 
-          <!-- Expanded Row -->
           @if (expandedRowIndex === i) {
           <tr>
-            <td [attr.colspan]="displayedColumns.length + 2">
+            <td [attr.colspan]="tableColumns.length + 2">
               <div class="expanded-content" [ngClass]="{ 'violation-bg': row?.IsViolation }">
-                <p><strong>Claim Amount:</strong> {{ row.ClaimAmount || '0.00' }}</p>
-                <p><strong>Claim in Base Currency:</strong> {{ row.ClaimAmountInBaseCurrency || '0.00' }}</p>
-                <p><strong>Remarks:</strong> {{ row.Remarks || 'No remarks' }}</p>
+                @for (outField of tableOutFields; track outField.name) {
+                <p>
+                  <strong>{{ outField.label }}:</strong>
+                  {{ formatValue(outField.name, row[outField.name]) }}
+                </p>
+                }
 
-                <!-- Show GST Table Only When GST Data Exists -->
-                @if (row?.gst?.length > 0) {
+                @for (nestedTable of nestedTables; track nestedTable.dataKey) {
+                @if (row[nestedTable.dataKey]?.length > 0) {
+                <h6 class="mt-2">{{ nestedTable.dataKey | titlecase }} Details</h6>
                 <table class="gst-table">
                   <thead>
                     <tr>
-                      <th>Vendor GST Number</th>
-                      <th>Invoice Number</th>
-                      <th>GST Value</th>
-                      <th>SGST</th>
-                      <th>CGST</th>
-                      <th>IGST</th>
-                      <th>UTGST</th>
+                      @for (col of nestedTable.columns; track col.name) {
+                      <th>{{ col.label }}</th>
+                      }
                     </tr>
                   </thead>
                   <tbody>
-                    @for (gstRow of row.gst; track gstRow) {
+                    @for (nestedRow of row[nestedTable.dataKey]; track nestedRow) {
                     <tr>
-                      <td>{{ gstRow.GstIn }}</td>
-                      <td>{{ gstRow.InvoiceNumber }}</td>
-                      <td>{{ gstRow.Amount }}</td>
-                      <td>{{ gstRow.SGST }}</td>
-                      <td>{{ gstRow.CGST }}</td>
-                      <td>{{ gstRow.IGST }}</td>
-                      <td>{{ gstRow.UGST }}</td>
+                      @for (col of nestedTable.columns; track col.name) {
+                      <td>
+                        @if (col.type === 'actions') {
+                        <a class="me-2" title="Preview" (click)="previewFile(nestedRow)">
+                          <i class="fa-solid fa-eye text-primary"></i>
+                        </a>
+                        <a class="me-2" title="Download" (click)="downloadFile(nestedRow)">
+                          <i class="fa-solid fa-download text-success"></i>
+                        </a>
+                        <a title="Delete">
+                          <i class="fa-solid fa-trash text-danger"></i>
+                        </a>
+                        } @else {
+                        {{ formatValue(col.name, nestedRow[col.name]) }}
+                        }
+                      </td>
+                      }
                     </tr>
                     }
                   </tbody>
                 </table>
                 }
-
-                <!-- Show Attachment Table Only When File Data Exists -->
-                @if (row?.attachment?.length > 0) {
-                  <table class="gst-table">
-                    <thead>
-                      <tr>
-                        <th>File Name</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @for (file of row.attachment; track file) {
-                      <tr>
-                        <td>{{ file.FileName }}</td>
-                        <td class="text-center">
-                          <!-- Preview Action -->
-                          <a class="me-2" title="Preview" (click)="previewFile(file)">
-                            <i class="fa-solid fa-eye text-primary"></i>
-                          </a>
-                          <!-- Download Action -->
-                          <a class="me-2" title="Download" (click)="downloadFile(file)">
-                            <i class="fa-solid fa-download text-success"></i>
-                          </a>
-                          <!-- Delete Action -->
-                          <a title="Delete">
-                            <i class="fa-solid fa-trash text-danger"></i>
-                          </a>
-                        </td>
-                      </tr>
-                      }
-                    </tbody>
-                  </table>
-                  }
+                }
               </div>
             </td>
           </tr>

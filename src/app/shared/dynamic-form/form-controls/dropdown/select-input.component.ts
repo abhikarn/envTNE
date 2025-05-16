@@ -90,4 +90,11 @@ export class SelectInputComponent {
   onSelectionChange(event: any) {
     this.valueChange.emit({ event, control: this.controlConfig });
   }
+
+  onReadonlySelection(event: MatSelectChange): void {
+    if (this.controlConfig.readonly) {
+      event.source.writeValue(this.controlConfig.value); // revert back to original
+    }
+  }
+
 }

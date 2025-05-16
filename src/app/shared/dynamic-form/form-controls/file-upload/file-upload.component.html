@@ -1,10 +1,14 @@
 <div class="col-md-12">
   <div class="common-block-white mb-3">
-    <label class="form-label">{{ controlConfig.label }}</label>
+    <label class="form-label">{{ controlConfig.label }}
+      @if (controlConfig.required) {
+      <span class="required-star">*</span>
+      }
+    </label>
     <div class="upload-container excel-TBL-hold">
       <label for="{{ controlConfig.name }}" class="custom-upload">Click to Choose File</label>
       <input type="file" [id]="controlConfig.name" [multiple]="controlConfig.multiple" (change)="onFileSelected($event)"
-        [accept]="controlConfig.accept">
+        [accept]="controlConfig.accept" [disabled]="controlConfig.disable">
     </div>
 
     <!-- Table to Display Selected Files -->

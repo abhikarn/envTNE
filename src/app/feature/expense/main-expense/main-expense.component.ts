@@ -89,6 +89,8 @@ export class MainExpenseComponent {
   expenseRequestId: any = 0;
   userMasterId: number = 0;
   editMode = false;
+  expenseRequestPreviewData: any;
+  travelDetails: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -151,6 +153,7 @@ export class MainExpenseComponent {
     if (this.expenseRequestId) {
       this.editMode = true;
     }
+    this.expenseRequestData = [];
   }
 
   // Load master data (baggage types, meals, travel modes) and expense config file.
@@ -194,6 +197,9 @@ export class MainExpenseComponent {
       this.formControls.push({ formConfig: this.expenseConfig.request, control: control });
       this.expenseRequestForm.addControl(this.expenseConfig.request.name, control);
       this.formControls = [];
+    }
+    if(this.expenseConfig?.travelDetails) {
+      this.travelDetails = this.expenseConfig?.travelDetails;
     }
   }
 
@@ -240,6 +246,14 @@ export class MainExpenseComponent {
       .subscribe({
         next: (response) => {
           if (response) {
+            this.expenseRequestPreviewData = response;
+            this.travelDetails?.data?.forEach((config: any) => {
+              const prop = config.name;
+              if (this.expenseRequestPreviewData && this.expenseRequestPreviewData.hasOwnProperty(prop)) {
+                config.value = this.expenseRequestPreviewData[prop];
+              }
+            });
+            this.travelDetails?.data?.sort((a: any, b: any) => a.order - b.order);
             this.populateExistingExpenseData(response);
           }
         }
@@ -393,6 +407,8 @@ export class MainExpenseComponent {
     this.travelRequestId = Number(target?.value) || 0;
 
     if (this.travelRequestId) {
+      this.initializeBasicFields();
+      this.loadInitialData();
       this.getTravelRequestPreview();
     }
   }
@@ -400,6 +416,7 @@ export class MainExpenseComponent {
 
   // Add or update form data in the expense request based on ReferenceId or editIndex.
   getFormData(formData: any) {
+    console.log("Form: ", formData);
     const { formData: data, editIndex } = formData;
 
     const existingCategory = this.expenseRequestData?.dynamicExpenseDetailModels
@@ -520,12 +537,22 @@ export class MainExpenseComponent {
 
   // Handle submit, draft, or navigation actions after validating forms.
   onAction(type: string) {
-    console.log(type)
-    if(type == "cancel") {
+    if (type == "cancel") {
       this.router.navigate(['../expense/expense/landing']);
       return;
     }
-    if (!this.travelRequestId) {
+
+    if (type === 'submit' || type === 'draft') {
+      this.mainExpenseData.IsDraft = type === 'draft';
+      this.createExpenseRequest();
+    } else {
+      this.router.navigate(['expense/expense/landing']);
+    }
+  }
+
+  // Prepare and submit the main expense request after confirmation.
+  createExpenseRequest() {
+    if (!this.travelRequestId || !this.expenseRequestData?.dynamicExpenseDetailModels) {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return;
     }
@@ -540,17 +567,6 @@ export class MainExpenseComponent {
       return;
     }
 
-    if (type === 'submit' || type === 'draft') {
-      this.mainExpenseData.IsDraft = type === 'draft';
-      this.createExpenseRequest();
-    } else {
-      this.router.navigate(['expense/expense/landing']);
-    }
-  }
-
-
-  // Prepare and submit the main expense request after confirmation.
-  createExpenseRequest() {
     this.mainExpenseData = {
       ...this.mainExpenseData,
       ExpenseRequestId: this.expenseRequestId,

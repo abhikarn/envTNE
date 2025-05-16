@@ -21,6 +21,42 @@
                 "confirmText": "Ok"
             }
         },
+        "travelDetails": {
+            "name": "TravelDetails",
+            "label": "Travel Details",
+            "data": [
+                {
+                    "name": "travelDateFromActualString",
+                    "label": "Travel From Date",
+                    "value": null,
+                    "order": 1
+                },
+                {
+                    "name": "travelDateToActualString",
+                    "label": "Travel To Date",
+                    "value": null,
+                    "order": 2
+                },
+                {
+                    "name": "purpose",
+                    "label": "Purpose of Travel",
+                    "value": null,
+                    "order": 3
+                },
+                {
+                    "name": "costCentre",
+                    "label": "Cost center",
+                    "value": null,
+                    "order": 5
+                },
+                {
+                    "name": "leave Summary",
+                    "label": "LeaveSummary",
+                    "value": null,
+                    "order": 6
+                }
+            ]
+        },
         "dateExtension": {
             "label": "Date Extension",
             "visible": true,
@@ -44,12 +80,15 @@
                         "valueKey": "Id",
                         "apiService": "DataService",
                         "apiMethod": "dataGetTravelMode",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Travel Mode is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "select",
@@ -66,12 +105,15 @@
                         "apiMethod": "dataGetTravelClass",
                         "payloadKey": "TravelModeId",
                         "value": null,
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Availed Class is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "date",
@@ -99,12 +141,15 @@
                                 "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
                             }
                         ],
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Travel Date is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "text",
@@ -120,12 +165,15 @@
                         "valueKey": "CityMasterId",
                         "apiService": "NewExpenseService",
                         "apiMethod": "getMasterNameById",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Origin is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "text",
@@ -141,12 +189,15 @@
                         "valueKey": "CityMasterId",
                         "apiService": "NewExpenseService",
                         "apiMethod": "getMasterNameById",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Destination is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "select",
@@ -161,12 +212,15 @@
                         "valueKey": "KeyDataId",
                         "apiService": "DataService",
                         "apiMethod": "dataGetPaymentType",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Payment Type is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "select",
@@ -188,12 +242,15 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Currency is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "text",
@@ -234,12 +291,15 @@
                             "decimal": ".00",
                             "setValue": "0.00"
                         },
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Amount is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "text",
@@ -262,12 +322,15 @@
                             "decimal": ".00",
                             "setValue": "1.00"
                         },
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Conversion Rate is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": true
                     },
                     {
                         "type": "gst",
@@ -294,6 +357,7 @@
                                 "name": "GstIn",
                                 "type": "text",
                                 "showInUI": true,
+                                "required": true,
                                 "validations": [
                                     {
                                         "type": "required",
@@ -310,6 +374,7 @@
                                 "name": "InvoiceNumber",
                                 "type": "text",
                                 "showInUI": true,
+                                "required": true,
                                 "validations": [
                                     {
                                         "type": "required",
@@ -333,6 +398,7 @@
                                     "decimal": ".00",
                                     "setValue": "0.00"
                                 },
+                                "required": true,
                                 "validations": [
                                     {
                                         "type": "required",
@@ -425,7 +491,10 @@
                         "name": "Remarks",
                         "isExcluded": false,
                         "label": "Remarks",
-                        "value": ""
+                        "value": "",
+                        "required": false,
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "file",
@@ -437,7 +506,9 @@
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
                         "referenceType": 123,
-                        "maxSizeMB": 15
+                        "maxSizeMB": 15,
+                        "required": false,
+                        "disable": false
                     },
                     {
                         "type": "hidden",
@@ -472,7 +543,159 @@
                         "confirmText": "Ok",
                         "cancelText": "Cancel"
                     }
-                }
+                },
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [
+                    {
+                        "name": "__slNo",
+                        "label": "Sl. No",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "type": "date",
+                        "name": "TravelDate",
+                        "label": "Date",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "Origin",
+                        "label": "Origin",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "Destination",
+                        "label": "Destination",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "ClaimAmount",
+                        "label": "Claimed",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "ApprovedAmount",
+                        "label": "Approved Amount",
+                        "visible": true,
+                        "type": "number",
+                        "controlType": "input",
+                        "position": "in"
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "ConversionRate",
+                        "label": "Conversion",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Approved(INR)",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "TravelMode",
+                        "label": "Travel Mode",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "AvailedClass",
+                        "label": "AvailedClass",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "Remarks",
+                        "label": "Remarks",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "__actions",
+                        "label": "Actions",
+                        "visible": true,
+                        "position": "in"
+                    }
+                ],
+                "nestedTables": [
+                    {
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
+                    },
+                    {
+                        "dataKey": "attachment",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true
+                            },
+                            {
+                                "name": "FileName",
+                                "label": "File Name",
+                                "visible": true
+                            },
+                            {
+                                "name": "__actions",
+                                "label": "Action",
+                                "visible": true
+                            }
+                        ]
+                    }
+                ]
             }
         ],
         "otherDetails": [

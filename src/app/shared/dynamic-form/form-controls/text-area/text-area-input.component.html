@@ -1,7 +1,11 @@
 <div class="col-md-12">
   @if (!!controlConfig) {
     <mat-form-field appearance="fill">
-      <mat-label>{{ controlConfig.label }}</mat-label>
+      <mat-label>{{ controlConfig.label }}
+        @if (controlConfig.required) {
+        <span class="required-star">*</span>
+        }
+      </mat-label>
       <textarea matInput [formControl]="control" rows="4"></textarea>
       @if (control.invalid && control.touched) {
         <mat-error>
