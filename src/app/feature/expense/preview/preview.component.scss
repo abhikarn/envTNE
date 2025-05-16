@@ -7,13 +7,16 @@ app-preview {
         padding: 10px;
     }
 
-    .mat-mdc-form-field-infix {
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        min-height: 0 !important;
+    .form-field-class {
+        .mat-mdc-form-field-infix {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            min-height: 0 !important;
+        }
+
+        .mat-mdc-form-field-bottom-align::before {
+            display: none;
+        }
     }
 
-    .mat-mdc-form-field-bottom-align::before {
-        display: none;
-    }
 }

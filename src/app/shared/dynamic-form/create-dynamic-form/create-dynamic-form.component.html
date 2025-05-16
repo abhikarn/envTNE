@@ -1,0 +1,72 @@
+<form [formGroup]="form" class="row">
+    @for (control of formControls; track control) {
+    @if (control.formConfig.type !== 'hidden' && control.formConfig.showInUI !== false) {
+    <!-- Using ngSwitch to handle different control types -->
+    @switch (control.formConfig.type) {
+    <!-- Handling 'text' type controls -->
+    @case ('text') {
+    <div class="col-md-4">
+        <lib-text-input [controlConfig]="control.formConfig" [control]="control.control"
+            (emitInputValue)="getInputValue($event)" [form]="form">
+        </lib-text-input>
+    </div>
+    }
+    <!-- Handling 'select' type controls -->
+    @case ('select') {
+    <div class="col-md-4">
+        <lib-select-input [controlConfig]="control.formConfig" [control]="control.control"
+            (valueChange)="onDropdownValueChange($event)">
+        </lib-select-input>
+    </div>
+    }
+    <!-- Handling 'multi-select' type controls -->
+    @case ('multi-select') {
+    <div class="col-md-4">
+        <lib-multi-select-input [controlConfig]="control.formConfig" [control]="control.control">
+        </lib-multi-select-input>
+    </div>
+    }
+    <!-- Handling 'date' type controls -->
+    @case ('date') {
+    <div class="col-md-4">
+        <lib-date-input [controlConfig]="control.formConfig" [control]="control.control" [form]="form">
+        </lib-date-input>
+    </div>
+    }
+    <!-- Handling 'radio' type controls -->
+    @case ('radio') {
+    <div class="col-md-8">
+        <lib-radio-input [controlConfig]="control.formConfig" [control]="control.control">
+        </lib-radio-input>
+    </div>
+    }
+    <!-- Handling 'gst' type controls -->
+    @case ('gst') {
+    <app-gst [controlConfig]="control.formConfig" [control]="control.control" [form]="form"></app-gst>
+    }
+    <!-- Handling 'textarea' type controls -->
+    @case ('textarea') {
+    <lib-text-area-input [controlConfig]="control.formConfig" [control]="control.control">
+    </lib-text-area-input>
+    }
+    <!-- Handling 'file' type controls -->
+    @case ('file') {
+    <lib-file-upload [controlConfig]="control.formConfig" [control]="control.control">
+    </lib-file-upload>
+    }
+    <!-- Optional: Default case if control type doesn't match -->
+    @default {
+    <div>
+        <p>Unsupported control type: {{ control.formConfig.type }}</p>
+    </div>
+    }
+    }
+    }
+
+    }
+</form>
+
+
+
+
+<!-- <p>Form Value: {{ form.value | json }}</p> -->
