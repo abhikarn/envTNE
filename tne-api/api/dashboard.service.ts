@@ -192,7 +192,6 @@ export class DashboardService extends BaseService {
     public dashboardGetExpenseRequestDashboard(expenseRequestDashboardParam: ExpenseRequestDashboardParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
     public dashboardGetExpenseRequestDashboard(expenseRequestDashboardParam: ExpenseRequestDashboardParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
     public dashboardGetExpenseRequestDashboard(expenseRequestDashboardParam: ExpenseRequestDashboardParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        
         if (expenseRequestDashboardParam === null || expenseRequestDashboardParam === undefined) {
             throw new Error('Required parameter expenseRequestDashboardParam was null or undefined when calling dashboardGetExpenseRequestDashboard.');
         }

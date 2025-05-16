@@ -1,7 +1,6 @@
-
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { IFormControl } from '../../form-control.interface';
@@ -10,6 +9,7 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 import { Subscription } from 'rxjs';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
 import { SnackbarService } from '../../../service/snackbar.service';
+import { CustomDateAdapter } from '../../../../tokens/custom-date-adapter';
 
 @Component({
   selector: 'lib-date-input',
@@ -34,20 +34,29 @@ export class DateInputComponent {
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private dateAdapter: DateAdapter<any> // Inject DateAdapter
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
+    console.log('Using DateAdapter:', this.dateAdapter.constructor.name); // Log the adapter type
+    if (this.dateAdapter instanceof CustomDateAdapter) {
+        console.log('CustomDateAdapter is being used.');
+        alert('CustomDateAdapter is being used mss.'); // Debugging alert
+    } else {
+        console.warn('CustomDateAdapter is NOT being used.');
+         alert('CustomDateAdapter is being used mss.');
+    }
   }
 
   ngOnInit() {
     if (this.controlConfig.disable) {
       this.control.disable();
     }
-    
+
     this.control.valueChanges.subscribe(value => {
       if (value instanceof Date) {
-        const isoDate = value.toISOString(); // Convert to ISO 8601 format
-        this.control.setValue(isoDate, { emitEvent: false }); // Prevent infinite loop
+        // Remove ISO conversion to preserve formatted date
+        this.control.setValue(value, { emitEvent: false });
       }
     });
   }
@@ -69,7 +78,7 @@ export class DateInputComponent {
     if (this.controlConfig.dependentCases?.length > 0) {
       this.controlConfig.dependentCases.forEach((dependentCase: any) => {
         if (dependentCase.isGeneral) {
-          if(dependentCase.event === "dateChange") {
+          if (dependentCase.event === "dateChange") {
             this.handleDependentCase(dependentCase);
           }
         } else {
@@ -115,7 +124,7 @@ export class DateInputComponent {
               for (const [outputControl, responsePath] of Object.entries(dependentCase.outputControl) as [string, string][]) {
                 const value = this.extractValueFromPath(response, responsePath);
                 if (value !== undefined) {
-                  if(dependentCase.autoFormat?.decimal) {
+                  if (dependentCase.autoFormat?.decimal) {
                     this.form.get(outputControl)?.setValue(`${value}${dependentCase.autoFormat.decimal}`, { emitEvent: false });
                   } else {
                     this.form.get(outputControl)?.setValue(value, { emitEvent: false });

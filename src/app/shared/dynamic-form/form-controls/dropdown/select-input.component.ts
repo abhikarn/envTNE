@@ -7,8 +7,7 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 import { Subscription } from 'rxjs';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
-
-
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'lib-select-input',
@@ -18,13 +17,14 @@ import { ServiceRegistryService } from '../../../service/service-registry.servic
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    FunctionWrapperPipe
-],
+    FunctionWrapperPipe,
+    MatIconModule
+  ],
   templateUrl: './select-input.component.html'
 })
 export class SelectInputComponent {
   @Input() control: FormControl = new FormControl('');
-  @Input() controlConfig: IFormControl = {name: ''};
+  @Input() controlConfig: IFormControl = { name: '' };
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   disable: boolean = false;
   apiSubscription?: Subscription;
@@ -44,7 +44,7 @@ export class SelectInputComponent {
     if (this.controlConfig.defaultValue) {
       this.control.setValue(this.controlConfig.defaultValue.Id);
     }
-    
+
     if (this.controlConfig.disable) {
       this.control.disable();
     }
@@ -52,23 +52,46 @@ export class SelectInputComponent {
   }
 
   private loadOptions() {
-    if (!this.controlConfig.apiService || !this.controlConfig.apiMethod || this.controlConfig.payloadKey) return;
-  
-    const apiService = this.serviceRegistry.getService(this.controlConfig.apiService);
-    if (apiService && typeof apiService[this.controlConfig.apiMethod] === 'function') {
-      this.apiSubscription = apiService[this.controlConfig.apiMethod]().subscribe(
-        (data: any) => {
-          const labelKey = this.controlConfig.labelKey || 'label';
-          const valueKey = this.controlConfig.valueKey || 'value';
-          this.controlConfig.options = data.ResponseValue.map((item: any) => ({
-            label: item[labelKey],
-            value: item[valueKey]
-          }));
-        },
-        (error: any) => {
-          console.error('API Error:', error);
-        }
-      );
+    debugger;
+    if ((!this.controlConfig.apiService && !this.controlConfig.apiMethod)) return;
+
+    const apiService = this.serviceRegistry.getService(this.controlConfig.apiService || '');
+    if (apiService && typeof apiService[this.controlConfig.apiMethod || ''] === 'function') {
+
+      const payload = this.controlConfig.payloadKey ? this.controlConfig.payloadKey : null;
+      if (this.controlConfig.payloadKey) {
+
+      }
+      if (payload && typeof payload === 'object') {
+        this.apiSubscription = apiService[this.controlConfig.apiMethod || ''](payload).subscribe(
+          (data: any) => {
+            const labelKey = this.controlConfig.labelKey || 'label';
+            const valueKey = this.controlConfig.valueKey || 'value';
+            this.controlConfig.options = data.ResponseValue.map((item: any) => ({
+              label: item[labelKey],
+              value: item[valueKey]
+            }));
+          },
+          (error: any) => {
+            console.error('API Error:', error);
+          }
+        );
+      }
+      else {
+        this.apiSubscription = apiService[this.controlConfig.apiMethod || '']().subscribe(
+          (data: any) => {
+            const labelKey = this.controlConfig.labelKey || 'label';
+            const valueKey = this.controlConfig.valueKey || 'value';
+            this.controlConfig.options = data.ResponseValue.map((item: any) => ({
+              label: item[labelKey],
+              value: item[valueKey]
+            }));
+          },
+          (error: any) => {
+            console.error('API Error:', error);
+          }
+        );
+      }
     } else {
       console.warn(`Invalid API service or method: ${this.controlConfig.apiService}.${this.controlConfig.apiMethod}`);
     }
@@ -76,13 +99,13 @@ export class SelectInputComponent {
 
   getErrorMessage(status: boolean): string {
     if (!this?.controlConfig?.validations) return '';
-  
+
     for (const validation of this.controlConfig.validations) {
       if (this.control.hasError(validation.type)) {
         return validation.message;
       }
     }
-  
+
     return 'Invalid selection'; // Default fallback message
   }
 

@@ -1745,6 +1745,45 @@
         }
       }
     },
+    "/api/Data/GetOrganizationStructure": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "operationId": "Data_GetOrganizationStructure",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "organizationStructureGetParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/OrganizationStructureGetParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Document/Upload": {
       "post": {
         "tags": [
@@ -4495,6 +4534,38 @@
         },
         "VersionDetails": {
           "type": "string"
+        },
+        "IsActive": {
+          "type": "boolean"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "ActionBy": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "TransactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "CommunicationSeenCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "OrganizationStructureGetParam": {
+      "type": "object",
+      "properties": {
+        "OrganizationStructureTypeId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "OrganizationStructureId": {
+          "format": "int64",
+          "type": "integer"
         },
         "IsActive": {
           "type": "boolean"

@@ -4,6 +4,11 @@
       <span class="required-star">*</span>
     }
   </mat-label>
+
+  @if (controlConfig.icon) {
+    <mat-icon matPrefix>{{ controlConfig.icon }}</mat-icon>
+  }
+  
   <mat-select [formControl]="control" placeholder="{{controlConfig.placeholder || 'Select an option'}}"
     (selectionChange)="onReadonlySelection($event);onSelectionChange($event)">
     @if (!!controlConfig.defaultValue) {

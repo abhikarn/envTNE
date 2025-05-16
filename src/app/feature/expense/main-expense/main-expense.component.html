@@ -221,4 +221,13 @@
   </div>
 </div>
 
+<div [formGroup]="expenseRequestForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Travel Date</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="travelDate">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
+
 <!-- <pre>{{mainExpenseData | json}}</pre> -->

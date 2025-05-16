@@ -8,7 +8,8 @@ export class FormControlFactory {
     const validationConfigs: IValidationConfig[] = config.validations || [];
     const validators: ValidatorFn[] = validationConfigs.map((validationConfig: IValidationConfig) => {
       let validatorFn: ValidatorFn | null = null;
-      switch (validationConfig.type) {
+      debugger;
+      switch (validationConfig.type) {        
         case 'required':
           config.validations['required'] = validationConfig.message || 'This field is required';
           validatorFn = Validators.required;
@@ -35,6 +36,10 @@ export class FormControlFactory {
           break;
         case 'pattern':
           validatorFn = Validators.pattern(validationConfig.value);
+          break;
+        case 'email':
+          validatorFn = Validators.email;
+          config.validations['email'] = validationConfig.message || 'Invalid email format';
           break;
         case 'custom':
           const validatorKey = validationConfig.name as keyof typeof CustomValidators;
