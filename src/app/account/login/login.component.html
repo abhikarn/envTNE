@@ -1,59 +1,56 @@
 <div class="new-login-wrapper">
     <div class="login-holdinn p-relative">
         <div class="left-container">
-            <img src="../../../assets/images/login-image.png" alt="Enaviya" title="Enaviya | Travel and Expense">
+            <img [src]="config.images.loginImage" [alt]="config.titles.loginPageTitle"
+                [title]="config.titles.loginPageTitle">
         </div>
         <div class="right-container">
             <div class="bidder-login">
                 <div class="form-hold mt-0">
                     <div class="logo-inline-flex">
-                        <img src="../../../assets/images/application-logo.png" alt="Enaviya"
-                            title="Enaviya | Travel and Expense" class="logo-main">
+                        <img [src]="config.images.applicationLogo" [alt]="config.titles.loginPageTitle"
+                            [title]="config.titles.loginPageTitle" class="logo-main">
                     </div>
                 </div>
                 <form [formGroup]="loginForm">
                     <div class="form-hold">
                         <div class="input-container">
-                            <i class="fa fa-user icon"></i>
-                            <input class="input-field" type="text" placeholder="Employee Code" name="usrnm"
+                            <i class="{{ config.icons.employeeCode }}"></i>
+                            <input class="input-field" type="text" placeholder="{{ config.messages.placeholder.employeeCode }}" name="usrnm"
                                 formControlName="employeeCode">
                         </div>
-                        <div *ngIf="submitted &&  loginForm.get('employeeCode')?.invalid" class="text-danger">Employee
-                            Code is required.</div>
+                        <div *ngIf="submitted && loginForm.get('employeeCode')?.invalid" class="text-danger">
+                            {{ config.messages.employeeCodeRequired }}
+                        </div>
                     </div>
                     <div class="form-hold">
                         <div class="input-container">
-                            <i class="fa fa-unlock-alt icon"></i>
-                            <input class="input-field" type="password" placeholder="Password" name="psw"
+                            <i class="{{ config.icons.password }}"></i>
+                            <input class="input-field" type="password" placeholder="{{ config.messages.placeholder.password }}" name="psw"
                                 formControlName="password">
                         </div>
-                        <div *ngIf="submitted && loginForm.get('password')?.invalid" class="text-danger">Password is
-                            required.</div>
+                        <div *ngIf="submitted && loginForm.get('password')?.invalid" class="text-danger">
+                            {{ config.messages.passwordRequired }}
+                        </div>
                     </div>
                     <div class="form-hold mt-1">
                         <div class="form-listing">
                             <a href="javascript:void()" type="submit" class="btn btn-primary w-100"
-                                (click)="onSubmit()">Submit</a>
+                                (click)="onSubmit()">{{config.buttons.loginButton}}</a>
                         </div>
                         <div *ngIf="errorMessage" class="text-danger mt-1">{{ errorMessage }}</div>
                     </div>
                 </form>
-                <div class="form-hold">
+                
+                <div class="form-hold" *ngIf="config.features.ssoLoginEnabled || config.features.forgotPasswordEnabled">
                     <p class="p-sm"><strong>OR</strong></p>
                 </div>
-                <div class="form-hold">
+                <div class="form-hold" *ngIf="config.features.ssoLoginEnabled">
                     <a href="#" class="signin-button icon-with-text"><span><i class="fa fa-address-card-o"
-                                aria-hidden="true"></i></span>Login with SSO</a>
+                                aria-hidden="true"></i></span>{{config.buttons.ssoLogin}}</a>
                 </div>
-                <div class="form-hold">
-                    <p><a href=" " class="bottom-textl1">Forgot Password</a></p>
-                </div>
-                <div class="form-hold">
-                    <div class="login-notify">
-                        <p><span><i class="fa fa-info-circle" aria-hidden="true"></i></span><i>Pending for Client on who
-                                can use SSO &amp; Password</i>
-                        </p>
-                    </div>
+                <div class="form-hold" *ngIf="config.features.forgotPasswordEnabled">
+                    <p><a href=" " class="bottom-textl1">{{config.buttons.forgotPasswordButton}}</a></p>
                 </div>
             </div>
         </div>
@@ -61,6 +58,6 @@
 </div>
 <footer class="tne-app-footer">
     <div class="footer-custom">
-        <p>{{footerText}}</p>
+        <p>{{ config.titles.footerText }}</p>
     </div>
 </footer>
