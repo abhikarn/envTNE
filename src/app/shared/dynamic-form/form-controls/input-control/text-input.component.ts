@@ -11,8 +11,7 @@ import { FormControlFactory } from '../../form-control.factory';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
 import { SnackbarService } from '../../../service/snackbar.service';
-
-
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'lib-text-input',
@@ -20,7 +19,7 @@ import { SnackbarService } from '../../../service/snackbar.service';
   imports: [CommonModule, ReactiveFormsModule,
     MatFormFieldModule, MatInputModule,
     MatAutocompleteModule, MatOptionModule,
-    FunctionWrapperPipe],
+    FunctionWrapperPipe,MatIconModule],
   templateUrl: './text-input.component.html'
 })
 export class TextInputComponent implements OnInit {
@@ -29,6 +28,7 @@ export class TextInputComponent implements OnInit {
   @Input() form: any;
   @Output() emitInputValue = new EventEmitter<any>();
   displayValue: any;
+  passwordVisible: boolean = false;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -38,15 +38,17 @@ export class TextInputComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
+    console.log(this.controlConfig);
     if (this.controlConfig.disable) {
       this.control.disable();
     }
-    
+
     if (this.controlConfig.autoComplete) {
       this.control.valueChanges.subscribe(inputValue => {
         console.log(inputValue);
-        
-        if(typeof inputValue !== "object") {
+
+        if (typeof inputValue !== "object") {
           let input = {
             inputValue: inputValue,
             control: this.control
@@ -56,14 +58,14 @@ export class TextInputComponent implements OnInit {
         }
 
         if (typeof inputValue == "object") {
-            if (this.controlConfig.dependentCases?.length > 0) {
-              this.controlConfig.dependentCases.forEach((dependentCase: any) => {
-                if (dependentCase.event === "autoComplete") {
-                  this.handleDependentCase(dependentCase);
-                }
-              });
-            }
+          if (this.controlConfig.dependentCases?.length > 0) {
+            this.controlConfig.dependentCases.forEach((dependentCase: any) => {
+              if (dependentCase.event === "autoComplete") {
+                this.handleDependentCase(dependentCase);
+              }
+            });
           }
+        }
       });
     }
   }
@@ -173,6 +175,7 @@ export class TextInputComponent implements OnInit {
   }
 
   getErrorMessage(status: boolean): string {
+    debugger;
     if (!this.controlConfig?.validations) return '';
 
     for (const validation of this.controlConfig.validations) {

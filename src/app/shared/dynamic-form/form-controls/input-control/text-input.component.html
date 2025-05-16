@@ -3,9 +3,13 @@
 <mat-form-field appearance="fill">
   <mat-label>{{controlConfig.label}}
     @if (controlConfig.required) {
-      <span class="required-star">*</span>
+    <span class="required-star">*</span>
     }
   </mat-label>
+
+  @if (controlConfig.icon) {
+    <mat-icon matPrefix>{{ controlConfig.icon }}</mat-icon>
+  }
 
   @if (controlConfig.autoComplete) {
   <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" [value]="displayValue"
@@ -19,8 +23,26 @@
   </mat-autocomplete>
   }
   @else {
+  @if (controlConfig.type == 'password') {
+  <input [type]="passwordVisible ? 'text' : 'password'" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'"
+    (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" />
+    @if(controlConfig.passwordVisibility) {
+    <button mat-icon-button matSuffix (click)="passwordVisible = !passwordVisible" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="!passwordVisible">
+        <mat-icon>{{passwordVisible ? 'visibility' : 'visibility_off'}}</mat-icon>
+        </button>
+    }      
+  }
+  @else if (controlConfig.type == 'email') {
+  <input [type]="controlConfig.type" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'"
+    (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" />          
+  }
+  @else{
   <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'"
     (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" />
+  }
+  <!-- <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'"
+    (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" /> -->
   }
 
   @if (control.invalid && control.touched) {
@@ -33,7 +55,7 @@
 @else if (controlConfig.subType == 'number') {
 <mat-form-field appearance="fill">
   <mat-label>{{controlConfig.label}}</mat-label>
-  <input type="number" matInput [formControl]="control" [readonly]="controlConfig.readonly"/>
+  <input type="number" matInput [formControl]="control" [readonly]="controlConfig.readonly" />
   @if (control.invalid && control.touched) {
   <mat-error>
     {{ getErrorMessage | fnWrap : control.invalid && control.touched }}

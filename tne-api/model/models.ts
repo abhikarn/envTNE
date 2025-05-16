@@ -43,6 +43,7 @@ export * from './mobileAppDashboardDataParam';
 export * from './mobileHandSetPurchasePolicyParam';
 export * from './mobileVersionGetParam';
 export * from './mobileVersionInsertParam';
+export * from './organizationStructureGetParam';
 export * from './relocationExpenseOtherVendorQuoteDetailsType';
 export * from './resetPasswordParam';
 export * from './searchYatraParam';

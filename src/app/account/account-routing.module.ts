@@ -8,11 +8,15 @@ import { LoginComponent } from './login/login.component';
 export const routes: Routes = [
   {
     path: '',
-    component: LoginComponent,
+    // component: LoginComponent,
     children: [
       {
         path: '',
         loadComponent: () => import('./login/login.component').then(m => m.LoginComponent),
+      },
+      {
+        path: 'forgot-password',
+        loadComponent: () => import('./forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
       },
     ]
   },
