@@ -554,9 +554,21 @@
                         "position": "in"
                     },
                     {
+                        "name": "TravelMode",
+                        "label": "Travel Mode",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "AvailedClass",
+                        "label": "AvailedClass",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
                         "type": "date",
                         "name": "TravelDate",
-                        "label": "Date",
+                        "label": "Travel Date",
                         "visible": true,
                         "position": "in"
                     },
@@ -573,17 +585,15 @@
                         "position": "in"
                     },
                     {
-                        "name": "ClaimAmount",
-                        "label": "Claimed",
+                        "name": "PaymentMode",
+                        "label": "Payment Type",
                         "visible": true,
                         "position": "in"
                     },
                     {
-                        "name": "ApprovedAmount",
-                        "label": "Approved Amount",
+                        "name": "ClaimAmount",
+                        "label": "Claimed",
                         "visible": true,
-                        "type": "number",
-                        "controlType": "input",
                         "position": "in"
                     },
                     {
@@ -593,26 +603,14 @@
                         "position": "in"
                     },
                     {
-                        "name": "ConversionRate",
-                        "label": "Conversion",
+                        "name": "__actions",
+                        "label": "Actions",
                         "visible": true,
                         "position": "in"
                     },
                     {
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "Approved(INR)",
-                        "visible": true,
-                        "position": "in"
-                    },
-                    {
-                        "name": "TravelMode",
-                        "label": "Travel Mode",
-                        "visible": true,
-                        "position": "out"
-                    },
-                    {
-                        "name": "AvailedClass",
-                        "label": "AvailedClass",
+                        "label": "ClaimAmountInBaseCurrency",
                         "visible": true,
                         "position": "out"
                     },
@@ -621,12 +619,6 @@
                         "label": "Remarks",
                         "visible": true,
                         "position": "out"
-                    },
-                    {
-                        "name": "__actions",
-                        "label": "Actions",
-                        "visible": true,
-                        "position": "in"
                     }
                 ],
                 "nestedTables": [

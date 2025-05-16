@@ -12,17 +12,22 @@
         <tbody>
           @for (row of tableData; track row; let i = $index) {
           <tr [ngClass]="{ 'violation-border': row?.IsViolation }">
-            <td>{{ i + 1 }}</td>
             @for (col of tableColumns; track col.name) {
-            <td>{{ formatValue(col.name, row[col.name]) }}</td>
-            }
             <td>
+              @if (col.name === '__slNo') {
+              {{ i + 1 }}
+              } @else if (col.name === '__actions') {
               <i class="fas fa-edit" (click)="edit(row, i+1)"></i>
               <i class="fas fa-chevron-down" (click)="toggleRow(i)" [class.rotate]="expandedRowIndex === i"></i>
               @if (row?.IsViolation) {
               <i class="fas fa-exclamation-triangle text-danger"></i>
               }
+              } @else {
+              {{ formatValue(col.name, row[col.name]) }}
+              }
             </td>
+            }
+
           </tr>
 
           @if (expandedRowIndex === i) {
@@ -48,11 +53,13 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @for (nestedRow of row[nestedTable.dataKey]; track nestedRow) {
+                    @for (nestedRow of row[nestedTable.dataKey]; track nestedRow; let nestedRowIndex = $index) {
                     <tr>
                       @for (col of nestedTable.columns; track col.name) {
                       <td>
-                        @if (col.type === 'actions') {
+                        @if (col.name === '__slNo') {
+                        {{ nestedRowIndex + 1 }}
+                        } @else if (col.name === '__actions') {
                         <a class="me-2" title="Preview" (click)="previewFile(nestedRow)">
                           <i class="fa-solid fa-eye text-primary"></i>
                         </a>
@@ -67,6 +74,7 @@
                         }
                       </td>
                       }
+
                     </tr>
                     }
                   </tbody>
