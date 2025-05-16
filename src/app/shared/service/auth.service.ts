@@ -22,6 +22,19 @@ export class AuthService {
     return null;
   }
 
+  getJwtToken(): string | "" {
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      try {
+        const parsedData = JSON.parse(userData);
+        return parsedData.token.jwtTokenModel.jwtToken || "";
+      } catch (error) {
+        return "";
+      }
+    }
+    return "";
+  }
+
   getUserMasterId(): number | 0 {
     const userData = localStorage.getItem('userData');
     if (userData) {
@@ -60,7 +73,7 @@ export class AuthService {
     }
     return "";
   }
-
+ 
   Logout(): void {
     localStorage.removeItem('userData');
     this.router.navigate(['/account']); // Adjust route as needed

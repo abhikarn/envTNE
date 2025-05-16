@@ -1,25 +1,24 @@
-body{margin:0; padding:0; font-family: 'Inter', sans-serif !important;}
- 
+body { margin: 0; padding: 0; font-family: 'Inter', sans-serif !important; }
+
+:root {
+    --primary-color: #3850ec;
+    --secondary-color: #c6d3fc;
+    --text-color: #444;
+    --error-color: #ff0000;
+}
+
 .new-login-wrapper {
     width: 100%;
     height: 100vh;
     padding: 0px;
     margin: 0px;
-    background: #eceaea;
+    background: var(--login-page-bg) !important; // Use dynamic background color
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
-    background: rgba(56,80,236,1);
-    background: -moz-linear-gradient(top, rgba(56,80,236,1) 0%, rgba(198,211,252,1) 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(56,80,236,1)), color-stop(100%, rgba(198,211,252,1)));
-    background: -webkit-linear-gradient(top, rgba(56,80,236,1) 0%, rgba(198,211,252,1) 100%);
-    background: -o-linear-gradient(top, rgba(56,80,236,1) 0%, rgba(198,211,252,1) 100%);
-    background: -ms-linear-gradient(top, rgba(56,80,236,1) 0%, rgba(198,211,252,1) 100%);
-    background: linear-gradient(to bottom, rgba(56,80,236,1) 0%, rgba(198,211,252,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3850ec', endColorstr='#c6d3fc', GradientType=0 );
 }
 .new-login-wrapper .login-container{width:1000px; height:550px; position:relative;}
 .new-login-wrapper .login-holdinn .left-container {
@@ -107,7 +106,7 @@ body{margin:0; padding:0; font-family: 'Inter', sans-serif !important;}
     font-style: normal;
 }
 
- 
+
 img.logo1{max-width:160px;}
 p.p-sm {
     font-size: 14px;
@@ -133,9 +132,9 @@ a.signin-button.icon-with-text {
     box-sizing: border-box;
     border: 2px solid #1621A1;
 }
- 
+
 a.signin-button.icon-with-text span .fa{margin-right:5px}
- 
+
 .login-notify {width: 99%; display: flex; justify-content: flex-start; background: rgba(255,0,0, 0.08); padding: 5px 10px; box-sizing: border-box;
     border: 1px solid rgba(255,0,0, 0.1);  border-radius: 3px;}
 .login-notify span{margin-right: 5px;}
@@ -167,7 +166,7 @@ a.signin-button.icon-with-text span .fa{margin-right:5px}
     font-weight: 400;
     letter-spacing: 0.4px;
     box-sizing: border-box;
-	transition:0.3s ease all;
+    transition:0.3s ease all;
 }
 .content-row .input-field:focus {border: 1px solid rgba(0, 122, 56, 0.8);}
 .content-row .input-container {display: -ms-flexbox; display: flex;  width: 100%; margin-bottom: 15px; position: relative; margin: 0 auto;}
@@ -260,9 +259,8 @@ ul.common-dot-list li {
     margin: 5px 0;
     font-weight:500;
     list-style-type: none;
-	position:relative;
+    position:relative;
 }
-/*
 ul.common-dot-list li:before {
     content: '';
     background: #007a38;
@@ -274,7 +272,6 @@ ul.common-dot-list li:before {
     left: -12px;
     top: 10px;
 }
-*/
 
 .btn.btn-primary-green.login-btn-md {
     width: 100% !important;
@@ -293,7 +290,7 @@ ul.common-dot-list li:before {
     width: fit-content;
     display: block;
     bottom: 0px;
-	bottom: -35px;
+    bottom: -35px;
 }
 .powered-hold p {
     margin: 0 0;
@@ -315,8 +312,8 @@ ul.common-dot-list li:before {
     height:100%;
     display:block;
     background-size:cover;
-	border-radius:0px;
-	min-height:500px;
+    border-radius:0px;
+    min-height:500px;
 }
 
 .resetpw-img{background: url(.../../../../../assets/images/reset-pw-img.jpg) 00% 0% no-repeat;
@@ -324,8 +321,8 @@ ul.common-dot-list li:before {
     height:100%;
     display:block;
     background-size:cover;
-	border-radius:0px;
-	min-height:500px;
+    border-radius:0px;
+    min-height:500px;
 }
 
 .card-body1.no-pad {
@@ -338,7 +335,7 @@ ul.common-dot-list li:before {
     align-items: center; justify-content: center;  margin-right: 5px; font-weight: 600; background:url(.../../../../../assets/images//verified-icon.png) 0% 0%; position:relative; top:-5px;}
 .pw-font-red:before {content: ''; border:0px solid #FF0000; width:20px;  height:20px; display: inline-flex; border-radius: 500px;
     align-items: center; justify-content: center;  margin-right: 5px; font-weight: 600; background:url(.../../../../../assets/images/not-verified.png) 0% 0%; position:relative; top:-5px;}
-	
+
 .logo-inline-flex {
     width: 100%;
     display: flex;
@@ -390,7 +387,7 @@ footer.tne-app-footer .footer-custom p {
     opacity: 0.8;
 }
 footer.tne-app-footer .footer-custom p span{font-weight:500;}
-	
+
 .content-hold-lg {
     width:900px;
     margin: 0 auto;
@@ -422,12 +419,12 @@ h3.heading-md {
 
  .content-row.mar-mig{}
  .logo-align-mar60{margin-top:60px !important;}
- 
+
 .mid-wrapper-msg {
     width: 100%;
     margin-top: 60px;
 }
- 
+
  .widget-frame-custom {
     width: 90%;
     margin: 0 auto;
@@ -441,7 +438,7 @@ h3.heading-md {
     display: flex;
     align-items: center;
     justify-content: center;
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .common-frame-hold .common-mid-section {
@@ -546,7 +543,7 @@ h3.heading-md {
     text-align: center;
 }
 
-	
+
 .otp-block-input {display: flex; justify-content: center; align-items: center;}
 .otp-block-input .child-input{width: 30px; margin: 0 4px; box-sizing: border-box;}
 .otp-block-input .child-input .form-control.chm-forminput {text-align: center; padding: 0; margin: 0; font-weight: 600; color: #007A38;  line-height: 16px;  font-size: 14px; width:28px;}
@@ -580,10 +577,10 @@ h3.heading-md {
     min-width: 140px;
     max-width: fit-content;
     white-space: nowrap;
-	
+
 }
-	
-	input.form-control.chm-forminput {
+
+input.form-control.chm-forminput {
     border: 1px solid #cfcfcf;
     margin-top: 0px;
     font-size: 14px;
@@ -615,14 +612,14 @@ h3.heading-md {
 .content-row.align-center.mb-3 {
     margin-bottom: 10px !important;
 }
-	
+
 .common-frame-hold .common-mid-section .content-block-sec a {
     font-size: 14px;
     text-decoration: none;
     line-height: 22px;
     color: #02367a;
     font-weight: 700 !important;
-}	
+}
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -653,22 +650,26 @@ span.otp-validate-error {
 .d-none {
     display: none !important;
 }
-	
-	
+
+.text-danger {
+    color: var(--error-color);
+}
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
