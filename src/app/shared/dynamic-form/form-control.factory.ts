@@ -8,7 +8,6 @@ export class FormControlFactory {
     const validationConfigs: IValidationConfig[] = config.validations || [];
     const validators: ValidatorFn[] = validationConfigs.map((validationConfig: IValidationConfig) => {
       let validatorFn: ValidatorFn | null = null;
-      debugger;
       switch (validationConfig.type) {        
         case 'required':
           config.validations['required'] = validationConfig.message || 'This field is required';
