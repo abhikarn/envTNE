@@ -71,6 +71,7 @@ export class PreviewComponent {
   billableControl = new FormControl('', Validators.required);
   isCreateAdjustmentform: boolean = false;
   dynamicAdjustmentFormpayload: any = {};
+  transactionId: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -132,11 +133,12 @@ export class PreviewComponent {
 
   getExpenseRequestPreviewDetails() {
     let requestBody = {
-      expenseRequestId: this.expenseRequestId
+      transactionId: this.transactionId
     }
     this.newExpenseService.getExpenseRequestDetailPreview(requestBody).pipe(take(1)).subscribe({
       next: (response: any) => {
         if (response) {
+          this.expenseRequestId = response?.expenseRequestId;
           this.expenseRequestPreviewData = response;
           this.billableControl.setValue(response?.billableCostcentre || 0);
           this.expenseRequestPreviewData?.dynamicExpenseDetailModels?.forEach((details: any) => {
@@ -238,8 +240,8 @@ export class PreviewComponent {
   }
 
   ngOnInit() {
-    this.expenseRequestId = this.route.snapshot.paramMap.get('id') || 0;
-    if (this.expenseRequestId) {
+    this.transactionId = this.route.snapshot.paramMap.get('id') || 0;
+    if (this.transactionId) {
       this.getExpenseConfig();
       this.getExpenseRequestPreviewDetails();
     }
