@@ -1,3 +1,5 @@
+
+
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -17,31 +19,31 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-login',
+ selector: 'app-forgot-password',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, CoreModule, RouterModule, CommonModule,
     // ExpansionPanelComponent,
     // MaterialTableComponent,
     // SummaryComponent,
     MatTabsModule,
     ReactiveFormsModule,
-    // TextInputComponent,
-    // SelectInputComponent,
-    // TextAreaInputComponent,
+    TextInputComponent,
+    SelectInputComponent,
+    TextAreaInputComponent,
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule],
 
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  templateUrl: './forgot-password.component.html',
+  styleUrl: './forgot-password.component.scss'
 })
-export class LoginComponent implements OnInit {
+export class ForgotPasswordComponent implements OnInit {
   loginForm!: FormGroup;
   footerText: string = "Copyright © 2024-2025. All rights reserved.";
   submitted = false;
   sessionId: string = '';
   isAuthenticated: boolean = false;
   errorMessage = '';
-  config: any = loginConfig.LoginForm;
+  config: any = loginConfig.ForgotPasswordForm;
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
   form: FormGroup = new FormGroup({});
   loginFormControl: any = this.config.loginForm;

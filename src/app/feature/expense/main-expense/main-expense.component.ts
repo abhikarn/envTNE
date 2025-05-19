@@ -1,4 +1,3 @@
-
 import { Component, DestroyRef, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
@@ -24,6 +23,8 @@ import { FormControlFactory } from '../../../shared/dynamic-form/form-control.fa
 import { ServiceRegistryService } from '../../../shared/service/service-registry.service';
 import { SummaryComponent } from '../../../shared/component/summary/summary.component';
 import { UtilsService } from '../../../shared/service/utils.service';
+import { DateAdapter } from '@angular/material/core';
+import { CustomDateAdapter } from '../../../tokens/custom-date-adapter';
 
 interface DataEntry {
   name: number;
@@ -107,9 +108,16 @@ export class MainExpenseComponent {
     private route: ActivatedRoute,
     private serviceRegistry: ServiceRegistryService,
     private router: Router,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private dateAdapter: DateAdapter<any> // Inject DateAdapter
   ) {
-
+    console.log('Using DateAdapter:', this.dateAdapter.constructor.name); // Log the adapter type
+    if (this.dateAdapter instanceof CustomDateAdapter) {
+      console.log('CustomDateAdapter is being used.');
+      alert('CustomDateAdapter is being used in MainExpenseComponent.');
+    } else {
+      console.warn('CustomDateAdapter is NOT being used.');
+    }
   }
 
   @HostListener('document:click', ['$event'])

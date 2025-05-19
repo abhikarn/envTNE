@@ -63,6 +63,7 @@ model/mobileHandSetPurchasePolicyParam.ts
 model/mobileVersionGetParam.ts
 model/mobileVersionInsertParam.ts
 model/models.ts
+model/organizationStructureGetParam.ts
 model/relocationExpenseOtherVendorQuoteDetailsType.ts
 model/resetPasswordParam.ts
 model/searchYatraParam.ts

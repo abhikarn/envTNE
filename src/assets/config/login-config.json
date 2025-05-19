@@ -1,108 +1,164 @@
 {
-    "images": {
-        "loginImage": "../../../assets/images/login-image.png",
-        "applicationLogo": "../../../assets/images/application-logo.png"
-    },
-    "titles": {
-        "loginPageTitle": "Enaviya | Travel and Expense",
-        "footerText": "Copyright © 2024-2025. All rights reserved."
-    },
-    "messages": {
-        "employeeCodeRequired": "Employee Code is required.",
-        "passwordRequired": "Password is required.",
-        "invalidCredentials": "Invalid Employee Code or Password.",
-        "placeholder": {
-            "employeeCode": "Employee Code",
-            "password": "Password"
+    "LoginForm": {
+        "images": {
+            "loginImage": "../../../assets/images/login-image.png",
+            "applicationLogo": "../../../assets/images/application-logo.png"
+        },
+        "titles": {
+            "loginPageTitle": "Enaviya | Travel and Expense",
+            "footerText": "Copyright © 2024-2025. All rights reserved."
+        },
+        "messages": {
+            "employeeCodeRequired": "Employee Code is required.",
+            "passwordRequired": "Password is required.",
+            "invalidCredentials": "Invalid Employee Code or Password.",
+            "placeholder": {
+                "employeeCode": "Employee Code",
+                "password": "Password"
+            }
+        },
+        "loginForm": {
+            "name": "LoginForm",
+            "label": "Login",
+            "formControls": [
+                {
+                    "type": "select",
+                    "dataType": "int",
+                    "name": "company",
+                    "label": "Company",
+                    "placeholder": "Select Company",
+                    "value": null,
+                    "options": [],
+                    "icon": "corporate_fare",
+                    "labelKey": "OrganizationStructureCode",
+                    "valueKey": "OrganizationStructureId",
+                    "apiService": "DataService",
+                    "apiMethod": "dataGetOrganizationStructure",
+                    "payloadKey": {
+                        "OrganizationStructureTypeId": 2,
+                        "OrganizationStructureId": 0,
+                        "IsActive": true,
+                        "Status": "string",
+                        "ActionBy": 0,
+                        "TransactionId": "00000000-0000-0000-0000-000000000000",
+                        "CommunicationSeenCount": 0
+                    }
+                },
+                {
+                    "type": "text",
+                    "subType": "text",
+                    "dataType": "string",
+                    "name": "employeeCode",
+                    "icon": "badge",
+                    "label": "Employee Code",
+                    "value": null,
+                    "validations": [
+                        {
+                            "type": "required",
+                            "message": "Employee Code is required"
+                        }
+                    ]
+                },
+                {
+                    "type": "password",
+                    "subType": "text",
+                    "dataType": "string",
+                    "name": "password",
+                    "label": "Password",
+                    "value": null,
+                    "icon": "lock",
+                    "passwordVisibility": false,
+                    "validations": [
+                        {
+                            "type": "required",
+                            "message": "Password is required"
+                        },
+                        {
+                            "type": "pattern",
+                            "message": "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character, and be between 7 to 20 characters long.",
+                            "value": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{7,20}$"
+                        } 
+                    ]
+                }
+            ]
+        },
+        "buttons": {
+            "loginButton": "Login",
+            "forgotPasswordButton": "Forgot Password?",
+            "resetPasswordButton": "Reset Password",
+            "changePasswordButton": "Change Password",
+            "submitButton": "Submit",
+            "cancelButton": "Cancel",
+            "ssoLogin": "Login with SSO",
+            "loginWithGoogle": "Login with Google",
+            "loginWithMicrosoft": "Login with Microsoft"
+        },
+        "links": {
+            "forgotPasswordLink": "http://localhost:4200/account/forgot-password",
+            "resetPasswordLink": "/reset-password",
+            "changePasswordLink": "/change-password",
+            "loginLink": "/login"
+        },
+        "icons": {
+            "employeeCode": "fa fa-user icon",
+            "password": "fa fa-unlock-alt icon"
+        },
+        "features": {
+            "forgotPasswordEnabled": true,
+            "ssoLoginEnabled": true
+        },
+        "styles": {
+            "loginPageBackgroundColor": "linear-gradient(to bottom, #3850EC 0%, #C6D3FC 100%)"
         }
     },
-    "loginForm": {
-        "name": "LoginForm",
-        "label": "Login",
-        "formControls": [
-            {
-                "type": "select",
-                "dataType": "int",
-                "name": "Company",
-                "label": "Company",
-                "placeholder": "Select Company",
-                "value": null,
-                "options": [],
-                "labelKey": "Name",
-                "valueKey": "Id",
-                "apiService": "DataService",
-                "apiMethod": "dataGetTravelMode",
-                "validations": [
-                    {
-                        "type": "required",
-                        "message": "Company is required"
-                    }
-                ]
-            },
-            {
-                "type": "text",
-                "dataType": "string",
-                "name": "EmployeeCode",
-                "label": "Employee Code",
-                "value": null,
-                "options": [],
-                "labelKey": "City",
-                "valueKey": "CityMasterId",
-                "apiService": "NewExpenseService",
-                "apiMethod": "getMasterNameById",
-                "validations": [
-                    {
-                        "type": "required",
-                        "message": "Employee Code is required"
-                    }
-                ]
-            },
-            {
-                "type": "text",
-                "dataType": "string",
-                "name": "Password",
-                "label": "Password",
-                "value": null,
-                "options": [],
-                "labelKey": "City",
-                "valueKey": "CityMasterId",
-                "apiService": "NewExpenseService",
-                "apiMethod": "getMasterNameById",
-                "validations": [
-                    {
-                        "type": "required",
-                        "message": "Password is required"
-                    }
-                ]
-            }
-        ]
-    },
-    "buttons": {
-        "loginButton": "Login",
-        "forgotPasswordButton": "Forgot Password?",
-        "resetPasswordButton": "Reset Password",
-        "changePasswordButton": "Change Password",
-        "submitButton": "Submit",
-        "cancelButton": "Cancel",
-        "ssoLogin": "Login with SSO",
-        "loginWithGoogle": "Login with Google",
-        "loginWithMicrosoft": "Login with Microsoft"
-    },
-    "links": {
-        "forgotPasswordLink": "/forgot-password",
-        "resetPasswordLink": "/reset-password",
-        "changePasswordLink": "/change-password",
-        "loginLink": "/login"
-    },
-    "icons": {
-        "employeeCode": "fa fa-user icon",
-        "password": "fa fa-unlock-alt icon"
-    },
-    "features": {
-        "forgotPasswordEnabled": true,
-        "ssoLoginEnabled": true
-    },
-    "styles": {
-        "loginPageBackgroundColor": "linear-gradient(to bottom, #3850EC 0%, #C6D3FC 100%)"
+    "ForgotPasswordForm": {
+        "images": {
+            "loginImage": "../../../assets/images/login-image.png",
+            "applicationLogo": "../../../assets/images/application-logo.png"
+        },
+        "titles": {
+            "title": "Forgot Password",
+            "footerText": "Copyright © 2024-2025. All rights reserved."
+        },
+        "loginForm": {
+            "name": "LoginForm",
+            "label": "Login",
+            "formControls": [
+                {
+                    "type": "email",
+                    "subType": "text",
+                    "dataType": "string",
+                    "name": "Email",
+                    "label": "Employee Email",
+                    "value": null,
+                    "icon": "email",
+                    "placeholder": "Employee Email",
+                    "validations": [
+                        {
+                            "type": "required",
+                            "message": "Employee Email is required"
+                        },
+                        {
+                            "type": "email",
+                            "message": "Invalid Employee Email"
+                        }
+                    ]
+                }
+            ]
+        },
+        "buttons": {
+            "loginButton": "Submit",
+            "ssoLogin": "Back to Login"
+        },
+        "links": {
+            "loginLink": "http://localhost:4200/account/"
+        },
+        "icons": {
+            "employeeCode": "fa fa-user icon",
+            "password": "fa fa-unlock-alt icon"
+        },
+        "styles": {
+            "loginPageBackgroundColor": "linear-gradient(to bottom, #3850EC 0%, #C6D3FC 100%)"
+        }
     }
 }
