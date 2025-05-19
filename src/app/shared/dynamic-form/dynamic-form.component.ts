@@ -540,7 +540,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       });
 
       const calculatedValue = this.safeEvaluateFormula(formula, values);
-      debugger
       this.form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(this.configService.getDecimalPrecision()), { emitEvent: false });
     });
   }

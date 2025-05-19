@@ -10,7 +10,6 @@ export class GlobalConfigService {
   constructor(private http: HttpClient) { }
 
   loadConfig(): Promise<void> {
-    debugger
     return lastValueFrom(this.http.get<any>('/assets/config/global-config.json'))
       .then((data) => {
         this.config = data;
@@ -22,7 +21,6 @@ export class GlobalConfigService {
   }
 
   getDecimalPrecision(): number {
-    debugger
     return this.config.decimalPrecision || 2;
   }
 
