@@ -38,14 +38,7 @@ export class DateInputComponent {
     private dateAdapter: DateAdapter<any> // Inject DateAdapter
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
-    console.log('Using DateAdapter:', this.dateAdapter.constructor.name); // Log the adapter type
-    if (this.dateAdapter instanceof CustomDateAdapter) {
-        console.log('CustomDateAdapter is being used.');
-        alert('CustomDateAdapter is being used mss.'); // Debugging alert
-    } else {
-        console.warn('CustomDateAdapter is NOT being used.');
-         alert('CustomDateAdapter is being used mss.');
-    }
+     
   }
 
   ngOnInit() {
