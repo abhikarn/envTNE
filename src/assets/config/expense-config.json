@@ -513,7 +513,8 @@
                                 1
                             ],
                             "PaymentMode": [
-                                91                         ]
+                                91
+                            ]
                         },
                         "disable": false
                     },
@@ -527,9 +528,16 @@
                     {
                         "type": "hidden",
                         "name": "ClaimAmountInBaseCurrency",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "value": 0,
-                        "showInUI": false
+                        "showInUI": false,
+                        "calculate": {
+                            "formula": "ClaimAmount * ConversionRate",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "ConversionRate"
+                            ]
+                        }
                     }
                 ],
                 "submitPolicyValidationApi": {
@@ -1314,6 +1322,13 @@
                 ]
             },
             {
+                "name": "Per Diem",
+                "label": "Per Dim",
+                "data": [],
+                "amount": 0,
+                "expanded": false
+            },
+            {
                 "name": "Accommodation",
                 "label": "Accommodation Expense",
                 "data": [],
@@ -1633,6 +1648,27 @@
                         ]
                     }
                 ]
+            },
+            {
+                "name": "Lumpsum",
+                "label": "Lumpsum",
+                "data": [],
+                "amount": 0,
+                "expanded": false
+            },
+            {
+                "name": "Conveyance During Travel",
+                "label": "Conveyance During Travel",
+                "data": [],
+                "amount": 0,
+                "expanded": false
+            },
+            {
+                "name": "Other Expenses",
+                "label": "Miscellaneous",
+                "data": [],
+                "amount": 0,
+                "expanded": false
             }
         ],
         "justification": {

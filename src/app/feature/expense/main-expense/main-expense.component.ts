@@ -390,6 +390,7 @@ export class MainExpenseComponent {
 
   // Fetch travel request preview and extract user, cost center, and purpose info.
   getTravelRequestPreview() {
+    if (!this.travelRequestId) return;
     this.travelService
       .travelGetTravelRequestPreview({ TravelRequestId: this.travelRequestId })
       .pipe(take(1))
@@ -454,8 +455,8 @@ export class MainExpenseComponent {
         data: [data.data]
       });
     }
-
     this.summaryComponent.calculatTotalExpenseAmount();
+    this.summaryComponent.calculatCategoryWiseExpense();
   }
 
 

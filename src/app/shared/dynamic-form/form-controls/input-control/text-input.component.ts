@@ -38,7 +38,6 @@ export class TextInputComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
     console.log(this.controlConfig);
     if (this.controlConfig.disable) {
       this.control.disable();
@@ -175,7 +174,6 @@ export class TextInputComponent implements OnInit {
   }
 
   getErrorMessage(status: boolean): string {
-    debugger;
     if (!this.controlConfig?.validations) return '';
 
     for (const validation of this.controlConfig.validations) {
