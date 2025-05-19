@@ -508,6 +508,13 @@
                         "referenceType": 123,
                         "maxSizeMB": 15,
                         "required": false,
+                        "requiredIf": {
+                            "TravelMode": [
+                                1
+                            ],
+                            "PaymentMode": [
+                                91                         ]
+                        },
                         "disable": false
                     },
                     {
@@ -515,6 +522,13 @@
                         "name": "IsViolation",
                         "isExcluded": true,
                         "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "isExcluded": false,
+                        "value": 0,
                         "showInUI": false
                     }
                 ],
@@ -863,12 +877,10 @@
                     {
                         "name": "Accommodation",
                         "label": "Accommodation Expenses"
-                        
                     },
                     {
                         "name": "Lumpsum",
                         "label": "Lump sum"
-                        
                     },
                     {
                         "name": "Conveyance During Travel",

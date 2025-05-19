@@ -35,7 +35,7 @@ export class FileUploadComponent {
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    const maxSizeBytes = (this.controlConfig.maxSizeMB ?? 20) * 1024 * 1024; 
+    const maxSizeBytes = (this.controlConfig.maxSizeMB ?? 20) * 1024 * 1024;
     if (input.files && input.files.length > 0) {
       const newFiles = Array.from(input.files);
       newFiles.forEach((file: any) => {
@@ -52,7 +52,7 @@ export class FileUploadComponent {
             return;
           } else {
             this.uploadFile(payload);
-          console.log('Prepared File Payload:', payload); 
+            console.log('Prepared File Payload:', payload);
           }
         };
         reader.readAsDataURL(file);
@@ -62,7 +62,7 @@ export class FileUploadComponent {
   }
 
   uploadFile(payload: any) {
-    if(payload) {
+    if (payload) {
       this.documentService.documentDocumentWebUpload(payload).pipe(take(1)).subscribe({
         next: (res: any) => {
           console.log('Files uploaded successfully', res);
@@ -105,10 +105,21 @@ export class FileUploadComponent {
     link.click();
   }
 
-  getErrorMessage() {
-    if (this.control.hasError('required')) {
-      return this.controlConfig.validations.find((v: any) => v.type === 'required')?.message;
+  getErrorMessage(): string {
+    if (!this.control || !this.control.errors) return '';
+
+    const errors = this.control.errors;
+
+    if (errors['required']) {
+      return this.controlConfig?.validations?.find((v: any) => v.type === 'required')?.message || 'This field is required';
     }
-    return '';
+
+    if (errors['maxSize']) {
+      return `File size should not exceed ${this.controlConfig.maxSizeMB} MB`;
+    }
+
+    // Add other error checks if needed
+    return 'Invalid input';
   }
+
 }

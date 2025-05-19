@@ -36,4 +36,5 @@ export interface IFormControl {
   fields?: any;
   notifications?: any;
   required?: boolean;
+  requiredIf?: any;
 }
