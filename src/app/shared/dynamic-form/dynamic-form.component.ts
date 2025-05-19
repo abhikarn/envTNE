@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlFactory } from './form-control.factory';
 import { IFormControl } from './form-control.interface';
 
@@ -229,6 +229,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       }
     });
+    this.updateConditionalValidators();
   }
 
 
@@ -474,6 +475,31 @@ export class DynamicFormComponent implements OnInit, OnChanges {
    */
   private extractValueFromPath(obj: any, path: string): any {
     return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
+  }
+
+  updateConditionalValidators() {
+    const attachmentControl = this.form.get('attachment');
+    const config = this.formConfig.find(c => c.name === 'attachment');
+
+    if (config?.requiredIf) {
+      let isRequired = false;
+
+      Object.entries(config.requiredIf).forEach(([field, expectedValues]) => {
+        const value = this.form.get(field)?.value;
+        const actualValue = typeof value === 'object' ? value?.value : value;
+        if (Array.isArray(expectedValues) && expectedValues.includes(actualValue)) {
+          isRequired = true;
+        }
+      });
+
+      if (isRequired) {
+        attachmentControl?.setValidators([Validators.required]);
+      } else {
+        attachmentControl?.clearValidators();
+      }
+
+      attachmentControl?.updateValueAndValidity();
+    }
   }
 
 }

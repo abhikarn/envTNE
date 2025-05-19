@@ -44,7 +44,7 @@
                                  <div class="trl-req-detail">
                                     @if (!item.isLink) {
                                     @if (item?.controlType === 'autocomplete' && mode == 'finance-approval') {
-                                    <mat-form-field appearance="outline" class="full-width">
+                                    <mat-form-field appearance="outline" class="form-field-class">
                                        <input matInput [formControl]="billableControl" [matAutocomplete]="auto">
                                        <mat-autocomplete #auto="matAutocomplete"
                                           (optionSelected)="onOptionSelected($event, item)">
@@ -73,11 +73,14 @@
                         @if(loadData) {
                         @for (category of expenseRequestPreviewConfig?.dynamicExpenseDetailModels; track category) {
                         @if (category?.data?.length > 0) {
-                        <app-expansion-panel [title]="category.label" [expanded]="category.expanded" [amount]="category.amount">
+                        <app-expansion-panel [title]="category.label" [expanded]="category.expanded"
+                           [amount]="category.amount">
                            @if(category.columns) {
-                           <app-material-table [categoryName]="category.name" [categoryGST]="category?.gst" [mode]="mode" [data]="category.data"
-                              [columnConfig]="category.columns" [slNoLabel]="category.slNoLabel" [nestedTables]="category.nestedTables"
-                              (selectionChanged)="getSelection($event)" (emitExpenseRequestDetailId)="showRemarks($event)">
+                           <app-material-table [categoryName]="category.name" [categoryGST]="category?.gst"
+                              [mode]="mode" [data]="category.data" [columnConfig]="category.columns"
+                              [slNoLabel]="category.slNoLabel" [nestedTables]="category.nestedTables"
+                              (selectionChanged)="getSelection($event)"
+                              (emitExpenseRequestDetailId)="showRemarks($event)">
                            </app-material-table>
                            }
                         </app-expansion-panel>
@@ -179,45 +182,10 @@
                               </ng-template>
                               <div class="row mt-2">
                                  <div class="col-md-12">
-                                    <form [formGroup]="form" class="row adjustemnt-container">
-                                       @for (control of formControls; track control) {
-                                       @if (control.formConfig.type !== 'hidden' && control.formConfig.showInUI !==
-                                       false) {
-                                       <!-- Using ngSwitch to handle different control types -->
-                                       @switch (control.formConfig.type) {
-                                       <!-- Handling 'text' type controls -->
-                                       @case ('text') {
-                                       <div class="col-md-4">
-                                          <lib-text-input [controlConfig]="control.formConfig"
-                                             [control]="control.control">
-                                          </lib-text-input>
-                                       </div>
-                                       }
-                                       <!-- Handling 'select' type controls -->
-                                       @case ('select') {
-                                       <div class="col-md-4">
-                                          <lib-select-input [controlConfig]="control.formConfig"
-                                             [control]="control.control">
-                                          </lib-select-input>
-                                       </div>
-                                       }
-
-                                       <!-- Handling 'textarea' type controls -->
-                                       @case ('textarea') {
-                                       <lib-text-area-input [controlConfig]="control.formConfig"
-                                          [control]="control.control">
-                                       </lib-text-area-input>
-                                       }
-                                       <!-- Optional: Default case if control type doesn't match -->
-                                       @default {
-                                       <div>
-                                          <p>Unsupported control type: {{ control.formConfig.type }}</p>
-                                       </div>
-                                       }
-                                       }
-                                       }
-                                       }
-                                    </form>
+                                    @if(isCreateAdjustmentform) {
+                                    <app-create-dynamic-form
+                                       [formConfig]="detail.formControls"></app-create-dynamic-form>
+                                    }
                                  </div>
                               </div>
                               }

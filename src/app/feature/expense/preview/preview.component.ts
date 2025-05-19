@@ -24,6 +24,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { RemarksModalComponent } from '../../../shared/component/remarks-modal/remarks-modal.component';
+import { CreateDynamicFormComponent } from '../../../shared/dynamic-form/create-dynamic-form/create-dynamic-form.component';
 
 @Component({
   selector: 'app-preview',
@@ -34,12 +35,10 @@ import { RemarksModalComponent } from '../../../shared/component/remarks-modal/r
     SummaryComponent,
     MatTabsModule,
     ReactiveFormsModule,
-    TextInputComponent,
-    SelectInputComponent,
-    TextAreaInputComponent,
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatInputModule
+    MatInputModule,
+    CreateDynamicFormComponent
   ],
   templateUrl: './preview.component.html',
   styleUrl: './preview.component.scss',
@@ -47,6 +46,7 @@ import { RemarksModalComponent } from '../../../shared/component/remarks-modal/r
 })
 
 export class PreviewComponent {
+  @ViewChild(CreateDynamicFormComponent) createDynamicFormComponent!: CreateDynamicFormComponent;
   @ViewChild(SummaryComponent) summaryComponent: any;
   expenseRequestPreviewData: any;
   expenseRequestPreviewConfig: any;
@@ -69,6 +69,9 @@ export class PreviewComponent {
   form: FormGroup = new FormGroup({});
   filteredOptions: any = [];
   billableControl = new FormControl('', Validators.required);
+  isCreateAdjustmentform: boolean = false;
+  dynamicAdjustmentFormpayload: any = {};
+  transactionId: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -130,11 +133,12 @@ export class PreviewComponent {
 
   getExpenseRequestPreviewDetails() {
     let requestBody = {
-      expenseRequestId: this.expenseRequestId
+      transactionId: this.transactionId
     }
     this.newExpenseService.getExpenseRequestDetailPreview(requestBody).pipe(take(1)).subscribe({
       next: (response: any) => {
         if (response) {
+          this.expenseRequestId = response?.expenseRequestId;
           this.expenseRequestPreviewData = response;
           this.billableControl.setValue(response?.billableCostcentre || 0);
           this.expenseRequestPreviewData?.dynamicExpenseDetailModels?.forEach((details: any) => {
@@ -163,7 +167,7 @@ export class PreviewComponent {
   }
 
   loadExpenseRequestPreviewData() {
-    
+
     if (!this.loadData) {
       this.requestHeaderDetails = this.expenseRequestPreviewConfig?.requestHeaderDetails;
       this.requestorId = this.requestHeaderDetails.requesterId;
@@ -186,10 +190,10 @@ export class PreviewComponent {
       this.newExpenseService.getRequestorInfo(body).subscribe((data) => {
         requesterDetailData = data.ResponseValue;
         this.requestDetails?.forEach((config: any) => {
-          const prop = config.name;   
+          const prop = config.name;
           if (requesterDetailData && requesterDetailData.hasOwnProperty(prop)) {
             config.value = requesterDetailData[prop];
-          }     
+          }
           // if (prop == "City") {
           //   if (requesterDetailData && requesterDetailData.hasOwnProperty(prop)) {
           //     config.value = requesterDetailData[prop];
@@ -236,8 +240,8 @@ export class PreviewComponent {
   }
 
   ngOnInit() {
-    this.expenseRequestId = this.route.snapshot.paramMap.get('id') || 0;
-    if (this.expenseRequestId) {
+    this.transactionId = this.route.snapshot.paramMap.get('id') || 0;
+    if (this.transactionId) {
       this.getExpenseConfig();
       this.getExpenseRequestPreviewDetails();
     }
@@ -310,20 +314,32 @@ export class PreviewComponent {
   }
 
   setCategoryWiseAmount() {
-    console.log(this.expenseSummary);
     const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
     const categoryWiseExpense = this.expenseSummary?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
     if (!categoryWiseExpense) return;
+    this.updateTotalAmount(categoryWiseExpense);
 
     // Distribute totalExpense to the matched category
     this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
       const categoryName = expenseRequest.name;
-      const matchedItem = categoryWiseExpense.items?.find((item: any) => item.key === categoryName);
+      const matchedItem = categoryWiseExpense.items?.find((item: any) => item.name === categoryName);
       if (matchedItem) {
         expenseRequest.amount = matchedItem.value;
       }
     });
   }
+
+  updateTotalAmount(categoryExpense: any) {
+    const total = categoryExpense.items
+      .filter((item: any) => item.name !== 'Total')
+      .reduce((sum: number, item: any) => sum + parseFloat(item.value || '0'), 0);
+
+    const totalItem = categoryExpense.items.find((item: any) => item.name === 'Total');
+    if (totalItem) {
+      totalItem.value = total.toFixed(2); // Keep it as string with 2 decimals
+    }
+  }
+
 
   calculatTotalExpenseAmountPreview() {
     const EXPENSE_SUMMARY_ID = "expense-summary";
@@ -366,8 +382,8 @@ export class PreviewComponent {
 
     // Set totalExpense and amountPayable
     summary.items?.forEach((item: any) => {
-      if (item.key === 'totalExpense') item.value = totalExpense.toFixed(2);
-      if (item.key === 'amountPayable') item.value = amountPayable.toFixed(2);
+      if (item.name === 'totalExpense') item.value = totalExpense.toFixed(2);
+      if (item.name === 'amountPayable') item.value = amountPayable.toFixed(2);
     });
 
   }
@@ -396,10 +412,11 @@ export class PreviewComponent {
     this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
       CATEGORY_NAME = expenseRequest.name;
       summary?.items?.forEach((item: any) => {
-        if (item.key == CATEGORY_NAME) {
+        if (item.name == CATEGORY_NAME) {
           let totalCategoryExpense = 0;
           expenseRequest.data?.forEach((request: any) => {
-            totalCategoryExpense = totalCategoryExpense + request.ClaimAmount
+            const { ClaimAmount } = request?.excludedData || request || {};
+            totalCategoryExpense = totalCategoryExpense + ClaimAmount
           });
           item.value = totalCategoryExpense.toFixed(2);
         }
@@ -458,8 +475,8 @@ export class PreviewComponent {
 
     // Set totalExpense and amountPayable
     summary.items?.forEach((item: any) => {
-      if (item.key === 'totalExpense') item.value = totalExpense.toFixed(2);
-      if (item.key === 'amountPayable') item.value = amountPayable.toFixed(2);
+      if (item.name === 'totalExpense') item.value = totalExpense.toFixed(2);
+      if (item.name === 'amountPayable') item.value = amountPayable.toFixed(2);
     });
 
     this.calculatCategoryWiseExpensePreview();
@@ -483,6 +500,21 @@ export class PreviewComponent {
       });
     })
     dynamicExpenseDetailModels = [];
+  }
+
+  prepareAdjustmentFormPayload() {
+    this.dynamicAdjustmentFormpayload = {};
+
+    const adjustmentSection = this.otherDetails?.find((details: any) => details?.name === 'Adjustment');
+
+    if (adjustmentSection?.formControls?.length) {
+      adjustmentSection.formControls.forEach((control: any) => {
+        const formValue = this.createDynamicFormComponent?.form?.get(control.name)?.value;
+        const configValue = control.value ?? null;
+
+        this.dynamicAdjustmentFormpayload[control.name] = formValue ?? configValue;
+      });
+    }
   }
 
   onAction(buttonData: any) {
@@ -534,39 +566,44 @@ export class PreviewComponent {
         return;
       }
 
+      if (this.createDynamicFormComponent?.form.invalid) {
+        this.createDynamicFormComponent.form.markAllAsTouched();
+        console.log(this.createDynamicFormComponent.form);
+      }
+
+      this.prepareAdjustmentFormPayload();
+
       const financePayload = {
         ExpenseRequestId: this.expenseRequestPreviewData?.expenseRequestId || 0,
         Remarks: this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.value,
-        AdjustmentRemarks: this.form.value.AdjustmentRemarks || '',
         ApprovalAction: buttonData.type == 'approve' ? 113 : (buttonData.type == 'seekClarification' ? 114 : 115),
-        AdjustmentAmount: this.form.value.AdjustmentAmount || 0,
-        AdjustmentCurrencyId: this.form.value.Currency || 0,
         ExpenseRequestApprovalDetailType: this.expenseRequestApprovalDetailType,
         ExpenseRequestGstType: this.expenseRequestGstType,
-        ActionBy: Number(localStorage.getItem('userMasterId'))
+        ActionBy: Number(localStorage.getItem('userMasterId')),
+        ...this.dynamicAdjustmentFormpayload
       }
       console.log(financePayload)
-      this.confirmDialogService
-        .confirm({
-          title: '',
-          message: buttonData.confirmPopup.message,
-          confirmText: buttonData.confirmPopup.confirmText,
-          cancelText: buttonData.confirmPopup.cancelText
-        })
-        .subscribe((confirmed) => {
-          if (confirmed) {
-            this.financeService.financeExpenseRequestFinanceApproval(financePayload).pipe(take(1)).subscribe({
-              next: (res: any) => {
-                this.snackbarService.success(buttonData.Success);
-                this.router.navigate(['/expense/expense/dashboard']);
-              },
-              error: (err) => {
-                console.error(err);
-                this.snackbarService.error('Something went wrong with the API.');
-              }
-            });
-          }
-        });
+      // this.confirmDialogService
+      //   .confirm({
+      //     title: '',
+      //     message: buttonData.confirmPopup.message,
+      //     confirmText: buttonData.confirmPopup.confirmText,
+      //     cancelText: buttonData.confirmPopup.cancelText
+      //   })
+      //   .subscribe((confirmed) => {
+      //     if (confirmed) {
+      //       this.financeService.financeExpenseRequestFinanceApproval(financePayload).pipe(take(1)).subscribe({
+      //         next: (res: any) => {
+      //           this.snackbarService.success(buttonData.Success);
+      //           this.router.navigate(['/expense/expense/dashboard']);
+      //         },
+      //         error: (err) => {
+      //           console.error(err);
+      //           this.snackbarService.error('Something went wrong with the API.');
+      //         }
+      //       });
+      //     }
+      //   });
     }
   }
 
@@ -578,21 +615,13 @@ export class PreviewComponent {
     const tabLabel = this.otherDetails[tabIndex]?.name;
     if (tabLabel == 'Adjustment') {
       // Set Adjustment Form
-      this.formControls = []; // Reset to avoid duplication
-      this.form = new FormGroup({});
       this.otherDetails?.forEach((details: any) => {
         if (details?.name == 'Adjustment') {
-          details?.formControls?.forEach((config: any) => {
-            const control = FormControlFactory.createControl(config);
-            this.formControls.push({ formConfig: config, control: control });
-            this.form.addControl(config.name, control);
-          });
+          this.isCreateAdjustmentform = true;
         }
       })
-      console.log(this.form);
     } else {
-      this.formControls = []; // Reset to avoid duplication
-      this.form = new FormGroup({});
+      this.isCreateAdjustmentform = false;
     }
   }
 

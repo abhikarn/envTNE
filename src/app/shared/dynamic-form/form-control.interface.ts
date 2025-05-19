@@ -36,6 +36,7 @@ export interface IFormControl {
   fields?: any;
   notifications?: any;
   required?: boolean;
+  requiredIf?: any;
   passwordVisibility?: boolean;
   passwordSattings?: any;
   icon?: string;

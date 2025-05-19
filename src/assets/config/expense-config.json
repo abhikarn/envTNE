@@ -508,6 +508,13 @@
                         "referenceType": 123,
                         "maxSizeMB": 15,
                         "required": false,
+                        "requiredIf": {
+                            "TravelMode": [
+                                1
+                            ],
+                            "PaymentMode": [
+                                91                         ]
+                        },
                         "disable": false
                     },
                     {
@@ -515,6 +522,13 @@
                         "name": "IsViolation",
                         "isExcluded": true,
                         "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "isExcluded": false,
+                        "value": 0,
                         "showInUI": false
                     }
                 ],
@@ -554,9 +568,21 @@
                         "position": "in"
                     },
                     {
+                        "name": "TravelMode",
+                        "label": "Travel Mode",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "AvailedClass",
+                        "label": "AvailedClass",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
                         "type": "date",
                         "name": "TravelDate",
-                        "label": "Date",
+                        "label": "Travel Date",
                         "visible": true,
                         "position": "in"
                     },
@@ -573,17 +599,15 @@
                         "position": "in"
                     },
                     {
-                        "name": "ClaimAmount",
-                        "label": "Claimed",
+                        "name": "PaymentMode",
+                        "label": "Payment Type",
                         "visible": true,
                         "position": "in"
                     },
                     {
-                        "name": "ApprovedAmount",
-                        "label": "Approved Amount",
+                        "name": "ClaimAmount",
+                        "label": "Amount",
                         "visible": true,
-                        "type": "number",
-                        "controlType": "input",
                         "position": "in"
                     },
                     {
@@ -593,26 +617,14 @@
                         "position": "in"
                     },
                     {
-                        "name": "ConversionRate",
-                        "label": "Conversion",
+                        "name": "__actions",
+                        "label": "Actions",
                         "visible": true,
                         "position": "in"
                     },
                     {
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "Approved(INR)",
-                        "visible": true,
-                        "position": "in"
-                    },
-                    {
-                        "name": "TravelMode",
-                        "label": "Travel Mode",
-                        "visible": true,
-                        "position": "out"
-                    },
-                    {
-                        "name": "AvailedClass",
-                        "label": "AvailedClass",
+                        "label": "ClaimAmountInBaseCurrency",
                         "visible": true,
                         "position": "out"
                     },
@@ -621,12 +633,6 @@
                         "label": "Remarks",
                         "visible": true,
                         "position": "out"
-                    },
-                    {
-                        "name": "__actions",
-                        "label": "Actions",
-                        "visible": true,
-                        "position": "in"
                     }
                 ],
                 "nestedTables": [
@@ -809,47 +815,47 @@
                 "type": "summary",
                 "items": [
                     {
+                        "name": "totalExpense",
                         "label": "Total Expense",
-                        "key": "totalExpense",
                         "value": 0.00
                     },
                     {
+                        "name": "lessAdvance",
                         "label": "Less Advance",
-                        "key": "lessAdvance",
                         "value": 0.00
                     },
                     {
+                        "name": "amountPaidByCompany",
                         "label": "Amount Paid by Company",
-                        "key": "amountPaidByCompany",
                         "paymentModeId": 93,
                         "value": 0.00
                     },
                     {
+                        "name": "corporateCreditCard",
                         "label": "Corporate Credit Card",
-                        "key": "corporateCreditCard",
                         "paymentModeId": 92,
                         "value": 0.00
                     },
                     {
+                        "name": "creditCard",
                         "label": "Credit Card",
-                        "key": "creditCard",
                         "paymentModeId": 94,
                         "value": 0.00
                     },
                     {
+                        "name": "paidByEmployee",
                         "label": "Paid By Employee",
-                        "key": "paidByEmployee",
                         "paymentModeId": 91,
                         "value": 0.00
                     },
                     {
+                        "name": "advanceReturn",
                         "label": "Advance Return",
-                        "key": "advanceReturn",
                         "value": 0.00
                     },
                     {
+                        "name": "amountPayable",
                         "label": "Amount Payable / Receivable",
-                        "key": "amountPayable",
                         "value": 0.00
                     }
                 ]
@@ -861,12 +867,32 @@
                 "type": "category",
                 "items": [
                     {
-                        "label": "Tickets Expense",
-                        "key": "Travel Ticket"
+                        "name": "Travel Ticket",
+                        "label": "Tickets Expense"
                     },
                     {
-                        "label": "Accommodation",
-                        "key": "Accommodation"
+                        "name": "Per Diem",
+                        "label": "Per Dim"
+                    },
+                    {
+                        "name": "Accommodation",
+                        "label": "Accommodation Expenses"
+                    },
+                    {
+                        "name": "Lumpsum",
+                        "label": "Lump sum"
+                    },
+                    {
+                        "name": "Conveyance During Travel",
+                        "label": "Conveyance During Travel"
+                    },
+                    {
+                        "name": "Other Expenses",
+                        "label": "Miscellaneous"
+                    },
+                    {
+                        "name": "Total",
+                        "label": "Total"
                     }
                 ]
             }

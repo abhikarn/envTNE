@@ -92,6 +92,7 @@ export class MainExpenseComponent {
   editMode = false;
   expenseRequestPreviewData: any;
   travelDetails: any;
+  transactionId: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -157,8 +158,8 @@ export class MainExpenseComponent {
   // Set up basic fields like userMasterId, expenseRequestId, and editMode flag.
   initializeBasicFields() {
     this.userMasterId = Number(localStorage.getItem('userMasterId'));
-    this.expenseRequestId = this.route.snapshot.paramMap.get('id') || 0;
-    if (this.expenseRequestId) {
+    this.transactionId = this.route.snapshot.paramMap.get('id') || 0;
+    if (this.transactionId) {
       this.editMode = true;
     }
     this.expenseRequestData = [];
@@ -192,7 +193,7 @@ export class MainExpenseComponent {
     this.setupCategories();
     this.setupJustificationForm();
 
-    if (this.expenseRequestId) {
+    if (this.transactionId) {
       this.loadExistingExpenseRequest();
     }
   }
@@ -246,7 +247,7 @@ export class MainExpenseComponent {
   loadExistingExpenseRequest() {
     const requestBody = {
       status: "Active",
-      expenseRequestId: Number(this.expenseRequestId)
+      transactionId: this.transactionId
     };
 
     this.newExpenseService.getExpenseRequest(requestBody)
@@ -301,6 +302,7 @@ export class MainExpenseComponent {
 
     setTimeout(() => {
       this.summaryComponent.calculatTotalExpenseAmount();
+      this.summaryComponent.calculatCategoryWiseExpense();
     }, 1000);
 
     this.applyExcludedFields();
