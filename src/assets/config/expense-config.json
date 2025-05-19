@@ -513,7 +513,8 @@
                                 1
                             ],
                             "PaymentMode": [
-                                91                         ]
+                                91
+                            ]
                         },
                         "disable": false
                     },
@@ -529,7 +530,14 @@
                         "name": "ClaimAmountInBaseCurrency",
                         "isExcluded": false,
                         "value": 0,
-                        "showInUI": false
+                        "showInUI": false,
+                        "calculate": {
+                            "formula": "ClaimAmount * ConversionRate",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "ConversionRate"
+                            ]
+                        }
                     }
                 ],
                 "submitPolicyValidationApi": {

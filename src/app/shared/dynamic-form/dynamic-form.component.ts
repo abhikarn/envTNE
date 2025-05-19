@@ -439,6 +439,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
               .confirm(confirmPopupData)
               .subscribe((confirmed) => {
                 if (confirmed) {
+                  this.setCalculatedFields();
                   this.setAutoCompleteFields();
                   this.prepareFormJson();
                   this.addDataToDynamicTable();
@@ -448,6 +449,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
                 }
               });
           } else {
+            this.setCalculatedFields();
             this.setAutoCompleteFields();
             this.prepareFormJson();
             this.addDataToDynamicTable();
@@ -501,5 +503,41 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       attachmentControl?.updateValueAndValidity();
     }
   }
+
+  setCalculatedFields() {
+    this.formControls.forEach(control => {
+      const calculateConfig = control.formConfig.calculate;
+      if (!calculateConfig) return;
+
+      const { formula, dependsOn } = calculateConfig;
+      if (!formula || !dependsOn?.length) return;
+
+      const values: Record<string, number> = {};
+
+      dependsOn.forEach((depName: any) => {
+        const rawValue = this.form.get(depName)?.value;
+        const numeric = typeof rawValue === 'object' ? rawValue?.value ?? 0 : rawValue;
+        values[depName] = parseFloat(numeric ?? 0);
+      });
+
+      const calculatedValue = this.safeEvaluateFormula(formula, values);
+      this.form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(2), { emitEvent: false });
+    });
+  }
+
+
+  private safeEvaluateFormula(formula: string, values: Record<string, number>): number {
+    try {
+      const keys = Object.keys(values);
+      const vals = Object.values(values);
+      const fn = new Function(...keys, `return ${formula};`);
+      return fn(...vals);
+    } catch (e) {
+      console.warn('Formula evaluation error:', e);
+      return 0;
+    }
+  }
+
+
 
 }

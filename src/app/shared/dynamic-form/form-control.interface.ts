@@ -40,4 +40,5 @@ export interface IFormControl {
   passwordVisibility?: boolean;
   passwordSattings?: any;
   icon?: string;
+  calculate?: any;
 }
