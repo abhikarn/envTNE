@@ -288,8 +288,7 @@
                                 "min": 0,
                                 "max": 10
                             },
-                            "decimal": ".00",
-                            "setValue": "0.00"
+                            "decimalPrecision": "3"
                         },
                         "required": true,
                         "validations": [

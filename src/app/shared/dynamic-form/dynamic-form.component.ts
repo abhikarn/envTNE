@@ -14,6 +14,7 @@ import { RadioInputComponent } from './form-controls/radio/radio-input.component
 import { GstComponent } from './form-controls/gst/gst.component';
 import { ServiceRegistryService } from '../service/service-registry.service';
 import { ConfirmDialogService } from '../service/confirm-dialog.service';
+import { GlobalConfigService } from '../service/global-config.service';
 
 
 @Component({
@@ -57,7 +58,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
-    private confirmDialogService: ConfirmDialogService
+    private confirmDialogService: ConfirmDialogService,
+    private configService: GlobalConfigService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -195,10 +197,27 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.formControls = []; // Reset to avoid duplication
     this.form = new FormGroup({});
     this.formConfig.forEach(config => {
+      if (config.dataType === 'numeric') {
+        this.setupAutoFormat(config, this.configService);
+      }
       const control = FormControlFactory.createControl(config);
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
     });
+  }
+
+  setupAutoFormat(config: any, configService: GlobalConfigService): void {
+    const globalPrecision = configService.getDecimalPrecision();
+    const controlPrecision = parseInt(config?.autoFormat?.decimalPrecision ?? '', 10);
+
+    const finalPrecision = !isNaN(controlPrecision) ? controlPrecision : globalPrecision;
+    const decimalStr = `.${'0'.repeat(finalPrecision)}`; // e.g. .00, .000
+
+    if (!config.autoFormat) {
+      config.autoFormat = {};
+    }
+
+    config.autoFormat.decimal = decimalStr; // inject calculated format
   }
 
   onDropdownValueChange({ event, control }: { event: any; control: IFormControl }) {
@@ -521,7 +540,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       });
 
       const calculatedValue = this.safeEvaluateFormula(formula, values);
-      this.form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(2), { emitEvent: false });
+      debugger
+      this.form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(this.configService.getDecimalPrecision()), { emitEvent: false });
     });
   }
 

@@ -11,6 +11,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 import { CustomDateAdapter } from './tokens/custom-date-adapter';
+import { GlobalConfigService } from './shared/service/global-config.service';
 
 export const CUSTOM_DATE_FORMATS = {
   parse: {
@@ -51,5 +52,11 @@ export const appConfig: ApplicationConfig = {
      // ✅ Global date configuration
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, // Ensures dd/MM/yyyy calendar
     { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+    {
+      provide: 'APP_INITIALIZER',
+      useFactory: (configService: GlobalConfigService) => () => configService.loadConfig(),
+      deps: [GlobalConfigService],
+      multi: true
+    }
   ],
 };
