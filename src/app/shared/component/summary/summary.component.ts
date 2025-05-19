@@ -37,8 +37,8 @@ export class SummaryComponent {
     this.expenseRequestData?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
       CATEGORY_NAME = expenseRequest.name;
       expenseRequest.data?.forEach((request: any) => {
-        const { PaymentMode, ClaimAmount } = request?.excludedData || {};
-        this.updateExpenseItem(summary, PaymentMode, ClaimAmount);
+        const { PaymentMode, ClaimAmountInBaseCurrency } = request?.excludedData || request || {};
+        this.updateExpenseItem(summary, PaymentMode, ClaimAmountInBaseCurrency);
       });
     });
 
@@ -75,6 +75,7 @@ export class SummaryComponent {
   }
 
   calculatCategoryWiseExpense() {
+    debugger
     const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
     let CATEGORY_NAME = '';
 
@@ -92,8 +93,8 @@ export class SummaryComponent {
         if (item.name == CATEGORY_NAME) {
           let totalCategoryExpense = 0;
           expenseRequest.data?.forEach((request: any) => {
-            const { ClaimAmount } = request?.excludedData || request || {};
-            totalCategoryExpense = totalCategoryExpense + ClaimAmount
+            const { ClaimAmountInBaseCurrency } = request?.excludedData || request || {};
+            totalCategoryExpense = totalCategoryExpense + Number(ClaimAmountInBaseCurrency);
           });
           item.value = totalCategoryExpense.toFixed(2);
         }

@@ -359,8 +359,8 @@ export class PreviewComponent {
     this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
       CATEGORY_NAME = expenseRequest.name;
       expenseRequest.data?.forEach((request: any) => {
-        const { PaymentModeId, ClaimAmount } = request || {};
-        this.updateExpenseItem(summary, PaymentModeId, ClaimAmount);
+        const { PaymentModeId, ClaimAmountInBaseCurrency } = request || {};
+        this.updateExpenseItem(summary, PaymentModeId, ClaimAmountInBaseCurrency);
       });
     });
 
@@ -415,8 +415,8 @@ export class PreviewComponent {
         if (item.name == CATEGORY_NAME) {
           let totalCategoryExpense = 0;
           expenseRequest.data?.forEach((request: any) => {
-            const { ClaimAmount } = request?.excludedData || request || {};
-            totalCategoryExpense = totalCategoryExpense + ClaimAmount
+            const { ClaimAmountInBaseCurrency } = request?.excludedData || request || {};
+            totalCategoryExpense = totalCategoryExpense + Number(ClaimAmountInBaseCurrency);
           });
           item.value = totalCategoryExpense.toFixed(2);
         }

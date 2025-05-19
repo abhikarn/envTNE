@@ -455,8 +455,8 @@ export class MainExpenseComponent {
         data: [data.data]
       });
     }
-
     this.summaryComponent.calculatTotalExpenseAmount();
+    this.summaryComponent.calculatCategoryWiseExpense();
   }
 
 
