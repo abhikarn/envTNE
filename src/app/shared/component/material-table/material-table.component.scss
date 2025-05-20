@@ -110,5 +110,10 @@ app-material-table {
     color: red;
     font-size: 12px;
   }
+
+  .remarks-error textarea {
+  border: 1px solid red !important;
+  background-color: #ffe6e6; /* Optional: light red background */
+}
   
 }

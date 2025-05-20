@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { ExpansionPanelComponent } from '../../../shared/component/expansion-panel/expansion-panel.component';
 import { MaterialTableComponent } from '../../../shared/component/material-table/material-table.component';
 import { RequesterDetailsDialogComponent } from '../../../shared/component/requester-details-dialog/requester-details-dialog.component';
@@ -88,6 +88,7 @@ export class PreviewComponent {
   ) {
 
   }
+  @ViewChildren(MaterialTableComponent) materialTableComponents!: QueryList<MaterialTableComponent>;
 
   openDetailsDialog(id: number): void {
 
@@ -194,23 +195,6 @@ export class PreviewComponent {
           if (requesterDetailData && requesterDetailData.hasOwnProperty(prop)) {
             config.value = requesterDetailData[prop];
           }
-          // if (prop == "City") {
-          //   if (requesterDetailData && requesterDetailData.hasOwnProperty(prop)) {
-          //     config.value = requesterDetailData[prop];
-          //   }
-          // } else if (prop == "Department") {
-          //   if (requesterDetailData && requesterDetailData.hasOwnProperty(prop)) {
-          //     config.value = requesterDetailData[prop];
-          //   }
-          // } else if (prop == "Designation") {
-          //   if (requesterDetailData && requesterDetailData.hasOwnProperty(prop)) {
-          //     config.value = requesterDetailData[prop];
-          //   }
-          // } else if (prop == "Grade") {
-          //   if (requesterDetailData && requesterDetailData.hasOwnProperty(prop)) {
-          //     config.value = requesterDetailData[prop];
-          //   }
-          // }
         });
       });
       //requestorDetail detail
@@ -426,6 +410,7 @@ export class PreviewComponent {
   }
 
   getSelection(category: any) {
+
     this.expenseRequestApprovalDetailType = [];
     let dynamicExpenseDetailModels = this.expenseRequestPreviewData?.dynamicExpenseDetailModels || [];
     dynamicExpenseDetailModels?.forEach((cat: any) => {
@@ -483,20 +468,28 @@ export class PreviewComponent {
 
     dynamicExpenseDetailModels?.forEach((details: any) => {
       details?.data?.forEach((expense: any) => {
-        if (expense?.selected) {
-          if (expense.gst?.length > 0) {
-            expense.gst.forEach((gst: any) => {
-              this.expenseRequestGstType.push(gst);
-            })
-          }
-          this.expenseRequestApprovalDetailType.push({
-            ExpenseRequestDetailId: expense?.ExpenseRequestDetailId || 0,
-            ApprovedAmount: expense?.ApprovedAmount || 0,
-            ApproverId: Number(localStorage.getItem('userMasterId')),
-            ApproverRemarks: expense?.remarks || "",
-            ActionStatusId: 6
-          });
+        // if (expense?.selected) {
+        if (expense.gst?.length > 0) {
+          expense.gst.forEach((gst: any) => {
+            this.expenseRequestGstType.push(gst);
+          })
         }
+        let statusId = expense?.statusId || 0;
+        if (this.mode == 'approval') {
+          statusId = expense?.selected ? 4 : 5
+        }
+        if (this.mode == 'finance-approval') {
+          statusId = expense?.selected ? 6 : 4
+        }
+
+        this.expenseRequestApprovalDetailType.push({
+          ExpenseRequestDetailId: expense?.ExpenseRequestDetailId || 0,
+          ApprovedAmount: expense?.ApprovedAmount || 0,
+          ApproverId: Number(localStorage.getItem('userMasterId')),
+          ApproverRemarks: expense?.remarks || "",
+          ActionStatusId: statusId
+        });
+        // }
       });
     })
     dynamicExpenseDetailModels = [];
@@ -518,11 +511,35 @@ export class PreviewComponent {
   }
 
   onAction(buttonData: any) {
+    debugger;
+    const allSelectedData = this.materialTableComponents.map(table => table.getSelectedData());
+
+    const invalidItemFound = allSelectedData.some((data: any) => {
+      return data?.data?.some((item: any) => {
+        if (item?.selected === false && item?.remarks === '') {
+          this.snackbarService.error('Please provide justification reamrk for unselected items.');
+          return true; // Stop inner loop
+        }
+        return false;
+      });
+    });
+
+    if (invalidItemFound) {
+      return; // Stop further execution
+    }
+
+    allSelectedData.forEach((data: any) => {
+      if (data?.data?.length > 0) {
+        this.getSelection(data);
+      }
+    });
+
     if (this.justificationForm.invalid) {
       this.justificationForm.markAllAsTouched();
       return;
     }
     if (this.mode == 'approval') {
+      debugger;
       const approvalPayload = {
         ExpenseRequestId: this.expenseRequestPreviewData?.expenseRequestId || 0,
         Remarks: this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.value,

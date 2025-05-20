@@ -38,19 +38,45 @@ export class AppComponent implements OnInit {
       });
   }
 
+  // gettoken() {
+  //   const token = this.authService.getToken();
+  //   if (token && token.jwtTokenModel?.expireDateTime) {
+  //     const expireTime = new Date(token.jwtTokenModel.expireDateTime).getTime();
+  //     const currentTime = new Date().getTime();
+  //     if (currentTime < expireTime) {
+  //       this.isAuthenticated = true;
+  //     } else {
+  //       this.isAuthenticated = false;
+  //       this.authService.Logout(); // Token expired, force logout
+  //     }
+  //   } else {
+  //     this.isAuthenticated = false;
+  //   }
+  // }
+
   gettoken() {
-    const token = this.authService.getToken();
-    if (token && token.jwtTokenModel?.expireDateTime) {
-      const expireTime = new Date(token.jwtTokenModel.expireDateTime).getTime();
-      const currentTime = new Date().getTime();
-      if (currentTime < expireTime) {
-        this.isAuthenticated = true;
-      } else {
-        this.isAuthenticated = false;
-        this.authService.Logout(); // Token expired, force logout
-      }
+    debugger;
+  const token = this.authService.getToken();
+  if (token && token.jwtTokenModel?.expireDateTime) {
+    const expireTime = new Date(token.jwtTokenModel.expireDateTime).getTime();
+    const currentTime = new Date().getTime();
+
+    if (currentTime < expireTime) {
+      this.isAuthenticated = true;
     } else {
       this.isAuthenticated = false;
+
+      // Optional: show snack-bar notification
+      alert('Session expired. Please log in again.');
+
+      // Logout and redirect to login
+      this.authService.Logout();
+      this.router.navigate(['/account']); // Adjust route as needed
     }
+  } else {
+    this.isAuthenticated = false;
+    this.router.navigate(['/account']);
   }
+}
+
 }

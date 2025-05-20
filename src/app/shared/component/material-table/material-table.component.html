@@ -38,7 +38,7 @@
         <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
         <td mat-cell *matCellDef="let row">
             @if (col.controlType === 'input' && mode === 'finance-approval') {
-            <input [type]="col.type" class="form-control" [(ngModel)]="row[col.name]" [disabled]="!row.selected"
+            <input [type]="col.type" class="form-control" [(ngModel)]="row[col.name]" [readonly]="!col.isEditableInFinanceApproval" [disabled]="!row.selected"
                 (keydown)="preventInvalidKeys($event)" (ngModelChange)="onApprovedAmountChange(row)"
                 (blur)="validateApprovedAmount(row)" min="0" max="9999999999"
                 (input)="enforceLimit($event, row, col.name)" />
@@ -46,7 +46,16 @@
             @if (col.type == 'date') {
             {{ row[col.name] | globalDate }}
             } @else {
+            @if(mode==="approval" && col.name === 'ApprovedAmount') {
+
+            <input [type]="col.type" class="form-control" [(ngModel)]="row[col.name]" [readonly]="!col.isEditableInApproval" [disabled]="!row.selected"
+                (keydown)="preventInvalidKeys($event)" (ngModelChange)="onApprovedAmountChange(row)"
+                (blur)="validateApprovedAmount(row)" min="0" max="9999999999"
+                (input)="enforceLimit($event, row, col.name)" />
+            }@else{
             {{ row[col.name] }}
+            }
+            <!-- {{ row[col.name] }} -->
             }
             }
         </td>
@@ -118,9 +127,19 @@
     </ng-container>
 
     <!-- Remarks Full Width Row -->
-    <ng-container matColumnDef="remarksRow">
+    <!-- <ng-container matColumnDef="remarksRow">
         <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
             <div class="remarks-container">
+                <label class="remarks-label">Remarks</label>
+                <textarea [(ngModel)]="row.remarks" class="form-control" rows="2"></textarea>
+            </div>
+        </td>
+    </ng-container> -->
+
+    <!-- Remarks Full Width Row -->
+    <ng-container matColumnDef="remarksRow">
+        <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
+            <div class="remarks-container" [ngClass]="{ 'remarks-error': isRemarkInvalid(row) }">
                 <label class="remarks-label">Remarks</label>
                 <textarea [(ngModel)]="row.remarks" class="form-control" rows="2"></textarea>
             </div>
