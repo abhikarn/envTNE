@@ -55,7 +55,6 @@ export class AppComponent implements OnInit {
   // }
 
   gettoken() {
-    debugger;
   const token = this.authService.getToken();
   if (token && token.jwtTokenModel?.expireDateTime) {
     const expireTime = new Date(token.jwtTokenModel.expireDateTime).getTime();
