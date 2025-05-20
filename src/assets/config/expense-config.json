@@ -1271,6 +1271,7 @@
                 },
                 "nestedTables": [
                     {
+                        "name": "gst",
                         "dataKey": "gst",
                         "columns": [
                             {
@@ -1594,6 +1595,7 @@
                 },
                 "nestedTables": [
                     {
+                        "name": "gst",
                         "dataKey": "gst",
                         "columns": [
                             {
@@ -1607,26 +1609,31 @@
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "Amount",
                                 "label": "Amount",
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "SGST",
                                 "label": "SGST",
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "CGST",
                                 "label": "CGST",
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "IGST",
                                 "label": "IGST",
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "UGST",
                                 "label": "UTGST",
                                 "visible": true

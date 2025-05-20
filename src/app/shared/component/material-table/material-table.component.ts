@@ -82,6 +82,21 @@ export class MaterialTableComponent implements OnChanges {
         });
       }
     });
+    this.nestedTables.forEach((nestedTable: any) => {
+      nestedTable.columns.forEach((column: any) => {
+        if (column.type === 'number') {
+          this.processedData.forEach((row: any) => {
+            if (row[nestedTable.name]?.length > 0) {
+              row[nestedTable.name].forEach((nestedRow: any) => {
+                if (nestedRow[column.name] !== undefined) {
+                  nestedRow[column.name] = parseFloat(nestedRow[column.name]).toFixed(column.decimalPrecision || this.configService.getDecimalPrecision());
+                }
+              });
+            }
+          });
+        }
+      });
+    });
   }
 
   ngAfterViewInit() {

@@ -641,7 +641,15 @@ export class PreviewComponent {
   }
 
   goBack() {
-    this.router.navigate(['/expense/expense/dashboard']);
+    if (this.mode == 'preview') {
+      this.router.navigate(['/expense/expense/dashboard']);  
+    }  
+    if(this.mode == 'approval') {
+      this.router.navigate(['/expense/expense/approval']);
+    }
+    if(this.mode == 'finance-approval') {
+      this.router.navigate(['/expense/expense/finance']);
+    }
   }
 
   showRemarks(id: any) {
@@ -652,7 +660,7 @@ export class PreviewComponent {
       }
     });
 
-    if (!remarksData || remarksData.length === 0) return;
+    if (!remarksData) return;
 
     this.dialog.open(RemarksModalComponent, {
       width: '1000px',
