@@ -1,4 +1,3 @@
-
 import { Component, DestroyRef, Directive, ElementRef, HostListener, inject, OnInit, viewChild, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
@@ -30,6 +29,7 @@ import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 import { AuthService } from '../../../shared/service/auth.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { environment } from '../../../../environment';
 
 interface ColumnConfig {
   key: string;
@@ -66,26 +66,11 @@ export const ELEMENT_DATA: any[] = [];
 })
 
 export class DashboardComponent implements OnInit {
-
+  expenseDashboardConfig: any;
   expenseDashboardParam: ExpenseRequestDashboardParam = {}
   expenseRequesData: any[] = []
-  statusWiseExpenseDataCount: { approved: number; pending: number; rejected: number } = {
-    approved: 0,
-    pending: 0,
-    rejected: 0,
-  };
-
-  displayedColumns: ColumnConfig[] = [
-    { key: 'slNo', label: 'Sl.No', sortable: false },
-    { key: 'Requester', label: 'Requester', sortable: true },
-    { key: 'RequestNumber', label: 'Request Number', sortable: true },
-    { key: 'RequestDate', label: 'Request Date', sortable: true },
-    { key: 'ExpenseClaimTypeDescription', label: 'Expense Type', sortable: true },
-    { key: 'ApprovedAmount', label: 'Amount', sortable: true },
-    { key: 'PolicyViolationCount', label: 'Policy Violation', sortable: true },
-    { key: 'ClaimStatus', label: 'Status', sortable: true },
-    { key: 'action', label: 'Action', sortable: false }
-  ];
+  statusWiseExpenseDataCount: any;
+  displayedColumns: ColumnConfig[] = [];
 
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -106,12 +91,28 @@ export class DashboardComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.dataSource.data=[];
+    this.dataSource.data = [];
+    this.loadDisplayedColumns();
     this.getMyExpenseRequestDashBoard();
   }
 
-  columnKeys: string[] = this.displayedColumns.map(col => col.key);
-  filterColumnKeys: string[] = this.displayedColumns.map(col => col.key + '_filter');
+  loadDisplayedColumns(): void {
+     
+    this.http.get(`assets/config/expense-config.json`).subscribe((config: any) => {
+      this.expenseDashboardConfig = config;
+      const tableDetail = config.dashboard?.expenseStatement.tableDetail || [];
+      this.displayedColumns = tableDetail.map((col: any) => ({
+        key: col.key,
+        label: col.label,
+        sortable: col.sortable,
+      }));
+      this.columnKeys = this.displayedColumns.map(col => col.key);
+      this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');
+    });
+  }
+
+  columnKeys: string[] = [];
+  filterColumnKeys: string[] = [];
 
   getMyExpenseRequestDashBoard() {
     let payloadData = this.expenseDashboardParam = {
@@ -119,14 +120,15 @@ export class DashboardComponent implements OnInit {
       ActionBy: this.authService.getUserMasterId(),
     }
     this.dashboardService.dashboardGetExpenseRequestDashboard(payloadData).subscribe(data => {
-      
+
       let requestData = data;
       this.expenseRequesData = requestData.ResponseValue as any[];
-      this.statusWiseExpenseDataCount = {
-        approved: this.expenseRequesData.filter(x => x.ClaimStatusId == 23).length,
-        pending: this.expenseRequesData.filter(x => x.ClaimStatusId == 27 || x.ClaimStatusId === 31).length,
-        rejected: this.expenseRequesData.filter(x => x.ClaimStatusId == 30).length,
-      };
+      this.generateStatusWiseCount();
+      // this.statusWiseExpenseDataCount = {
+      //   approved: this.expenseRequesData.filter(x => x.ClaimStatusId == 23).length,
+      //   pending: this.expenseRequesData.filter(x => x.ClaimStatusId == 27 || x.ClaimStatusId === 31).length,
+      //   rejected: this.expenseRequesData.filter(x => x.ClaimStatusId == 30).length,
+      // };
       this.dataSource.data = requestData.ResponseValue as any[];
       console.log(this.dataSource.data);
     })
@@ -171,7 +173,7 @@ export class DashboardComponent implements OnInit {
           rowData[col.label] = row[col.key];
         }
       });
-      return rowData;
+      return rowData;  
     });
 
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
@@ -180,7 +182,14 @@ export class DashboardComponent implements OnInit {
     const data: Blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
     FileSaver.saveAs(data, 'ExpenseRequestData.xlsx');
   }
+
+  generateStatusWiseCount(): void {
+    this.statusWiseExpenseDataCount = [];
+    this.statusWiseExpenseDataCount = this.expenseDashboardConfig?.dashboard?.statusWiseExpenseRequest?.statusWise.filter((x: any) => x.displayStatus === true) || [];
+    this.statusWiseExpenseDataCount.forEach((item: any, index: any) => {
+      const count = this.expenseRequesData.filter(x => item.statusIds.includes(x.ClaimStatusId)).length;
+      this.statusWiseExpenseDataCount[index].count = count;
+      item.count = count; // Optional: update JSON as well
+    });
+  }
 }
-
-
-

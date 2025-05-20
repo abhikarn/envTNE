@@ -17,6 +17,8 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
+import { ApplicationMessageByFlagParam } from '../model/applicationMessageByFlagParam';
+// @ts-ignore
 import { AutoCompleteSearchTextParam } from '../model/autoCompleteSearchTextParam';
 // @ts-ignore
 import { CityAutocompleteParam } from '../model/cityAutocompleteParam';
@@ -40,6 +42,8 @@ import { MobileVersionGetParam } from '../model/mobileVersionGetParam';
 import { MobileVersionInsertParam } from '../model/mobileVersionInsertParam';
 // @ts-ignore
 import { OrganizationStructureGetParam } from '../model/organizationStructureGetParam';
+// @ts-ignore
+import { TransactionIdModel } from '../model/transactionIdModel';
 // @ts-ignore
 import { TravelClassViewParam } from '../model/travelClassViewParam';
 // @ts-ignore
@@ -204,6 +208,75 @@ export class DataService extends BaseService {
         return this.httpClient.request<DataSubmit>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                transferCache: localVarTransferCache,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param applicationMessageByFlagParam 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public dataGetApplicationMessage(applicationMessageByFlagParam: ApplicationMessageByFlagParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<DataSubmit>;
+    public dataGetApplicationMessage(applicationMessageByFlagParam: ApplicationMessageByFlagParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
+    public dataGetApplicationMessage(applicationMessageByFlagParam: ApplicationMessageByFlagParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
+    public dataGetApplicationMessage(applicationMessageByFlagParam: ApplicationMessageByFlagParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (applicationMessageByFlagParam === null || applicationMessageByFlagParam === undefined) {
+            throw new Error('Required parameter applicationMessageByFlagParam was null or undefined when calling dataGetApplicationMessage.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json',
+            'text/json',
+            'application/xml',
+            'text/xml'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/xml',
+            'text/xml',
+            'application/x-www-form-urlencoded'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/api/Data/GetApplicationMessage`;
+        return this.httpClient.request<DataSubmit>('post', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: applicationMessageByFlagParam,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
@@ -1761,6 +1834,75 @@ export class DataService extends BaseService {
         return this.httpClient.request<DataSubmit>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                transferCache: localVarTransferCache,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param transactionIdModel 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public dataGetTransactionId(transactionIdModel: TransactionIdModel, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<DataSubmit>;
+    public dataGetTransactionId(transactionIdModel: TransactionIdModel, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
+    public dataGetTransactionId(transactionIdModel: TransactionIdModel, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
+    public dataGetTransactionId(transactionIdModel: TransactionIdModel, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (transactionIdModel === null || transactionIdModel === undefined) {
+            throw new Error('Required parameter transactionIdModel was null or undefined when calling dataGetTransactionId.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json',
+            'text/json',
+            'application/xml',
+            'text/xml'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/xml',
+            'text/xml',
+            'application/x-www-form-urlencoded'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/api/Data/GetTransactionId`;
+        return this.httpClient.request<DataSubmit>('post', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: transactionIdModel,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
