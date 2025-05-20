@@ -6,6 +6,7 @@ import { SnackbarService } from '../../../../service/snackbar.service';
 import { FormControlFactory } from '../../../form-control.factory';
 import { FinanceService } from '../../../../../../../tne-api';
 import { take } from 'rxjs';
+import { GlobalConfigService } from '../../../../service/global-config.service';
 
 @Component({
   selector: 'app-add-gst',
@@ -32,7 +33,8 @@ export class AddGstComponent {
   constructor(
     private fb: FormBuilder,
     private snackbarService: SnackbarService,
-    private financeService: FinanceService
+    private financeService: FinanceService,
+    private globalConfig: GlobalConfigService
   ) {
     this.gstDetailsForm = this.fb.group({});
   }
@@ -44,12 +46,21 @@ export class AddGstComponent {
 
   initGstDetailsForm() {
     const group: any = {};
-    if(this.controlConfig?.fields) {
+    if (this.controlConfig?.fields) {
       this.fields = this.controlConfig.fields || [];
       this.notifications = this.controlConfig.notifications;
     }
-    
-    if(this.categoryGST?.fields) {
+
+    // Apply global decimalPrecision to fields lacking explicit setting
+    const globalPrecision = this.globalConfig.getDecimalPrecision();
+    this.fields.forEach((field: any) => {
+      if (field.autoFormat) {
+        // Use existing or fallback precision
+        field.autoFormat.decimalPrecision = field.autoFormat.decimalPrecision ?? globalPrecision;
+      }
+    });
+
+    if (this.categoryGST?.fields) {
       this.fields = this.categoryGST.fields || [];
       this.notifications = this.categoryGST.notifications;
     }
@@ -68,17 +79,18 @@ export class AddGstComponent {
   }
 
   validateGSTWithClaimed() {
+    debugger
     let isValidGst = false;
     let gstAmount = 0;
     const gstNum = parseFloat(this.gstDetailsForm.get('Amount')?.value || "0");
     let amount: any
-    if(this.controlConfig?.getControl) {
+    if (this.controlConfig?.getControl) {
       amount = parseFloat(this.form.get(`${this.controlConfig.getControl}`)?.value || "0");
     }
-    if(this.categoryGST?.getControl) {
+    if (this.categoryGST?.getControl) {
       amount = parseFloat(this.amount || 0)
     }
-    
+
     const gstFieldNames = this.fields?.map((f: any) => f.name).filter((name: any) => name !== 'GstIn' && name !== 'InvoiceNumber' && name !== 'Amount') || [];
     let gstBreakupAmount = 0;
 
@@ -86,7 +98,7 @@ export class AddGstComponent {
       gstBreakupAmount += parseFloat(this.gstDetailsForm.get(name)?.value || "0");
     }
 
-    if (gstBreakupAmount > 0 && gstBreakupAmount <= gstNum && gstNum > 0) {
+    if (gstBreakupAmount >= 0 && gstBreakupAmount <= gstNum && gstNum >= 0) {
       // Get all GST values
       this.gstDetails?.forEach((gst: any) => {
         gstAmount = Number(gstAmount) + Number(gst.Amount)
@@ -114,7 +126,7 @@ export class AddGstComponent {
     if (this.validateGSTWithClaimed()) {
       // this.gstDetails.IsBillRaisedInCompanyGST = this.companyGSTForm.value.IsBillRaisedInCompanyGST;
       this.gstDetails.push(this.gstDetailsForm.value);
-      if(this.control) {
+      if (this.control) {
         this.control.setValue(this.gstDetails);
       } else {
         console.log(this.gstDetailsForm.value);
@@ -153,19 +165,16 @@ export class AddGstComponent {
     return validationMessages[errorKey] || 'Invalid value';
   }
 
-  onBlur(field: any) {
-    if (field.autoFormat) {
-      let value = this.gstDetailsForm.get(field.name)?.value;
-      if (value == 0) {
-        this.gstDetailsForm.get(field.name)?.setValue(field.autoFormat.setValue, { emitEvent: false });
-        return;
-      }
-      if (value && value !== '' && !value.includes('.')) {
-        this.gstDetailsForm.get(field.name)?.setValue(`${value}${field.autoFormat.decimal}`, { emitEvent: false });
-      }
-    }
-    if (field.defaultValue) {
-      this.gstDetailsForm.get(field.name)?.setValue(`${field.defaultValue}${field.autoFormat.decimal}`, { emitEvent: false });
+  onBlur(field: any): void {
+    if (!field.autoFormat) return;
+    const control = this.gstDetailsForm.get(field.name);
+    const raw = control?.value;
+    if (raw == null || raw === '') return;
+
+    const num = parseFloat(raw);
+    if (!isNaN(num)) {
+      const precision = field.autoFormat.decimalPrecision;
+      control?.setValue(num.toFixed(precision), { emitEvent: false });
     }
   }
 
