@@ -25,6 +25,7 @@ import { SummaryComponent } from '../../../shared/component/summary/summary.comp
 import { UtilsService } from '../../../shared/service/utils.service';
 import { DateAdapter } from '@angular/material/core';
 import { CustomDateAdapter } from '../../../tokens/custom-date-adapter';
+import { ApplicationMessageService } from '../../../shared/service/application-message.service';
 
 interface DataEntry {
   name: number;
@@ -93,6 +94,7 @@ export class MainExpenseComponent {
   expenseRequestPreviewData: any;
   travelDetails: any;
   transactionId: any;
+  expenseConfirmMessage: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -109,7 +111,8 @@ export class MainExpenseComponent {
     private serviceRegistry: ServiceRegistryService,
     private router: Router,
     private utilsService: UtilsService,
-    private dateAdapter: DateAdapter<any> // Inject DateAdapter
+    private dateAdapter: DateAdapter<any>, // Inject DateAdapter,
+    private applicationMessageService: ApplicationMessageService
   ) {
     console.log('Using DateAdapter:', this.dateAdapter.constructor.name); // Log the adapter type
     if (this.dateAdapter instanceof CustomDateAdapter) {
@@ -207,7 +210,7 @@ export class MainExpenseComponent {
       this.expenseRequestForm.addControl(this.expenseConfig.request.name, control);
       this.formControls = [];
     }
-    if(this.expenseConfig?.travelDetails) {
+    if (this.expenseConfig?.travelDetails) {
       this.travelDetails = this.expenseConfig?.travelDetails;
     }
   }
@@ -548,14 +551,27 @@ export class MainExpenseComponent {
 
   // Handle submit, draft, or navigation actions after validating forms.
   onAction(type: string) {
+    debugger;
     if (type == "cancel") {
       this.router.navigate(['../expense/expense/landing']);
       return;
     }
 
+    // if (type === 'submit' || type === 'draft') {
+    //   this.mainExpenseData.IsDraft = type === 'draft';
+    //   this.expenseConfirmMessage= this.applicationMessageService.getApplicationMessage({Flag: 'ExpenseSubmitConfirm'})
+    //   this.createExpenseRequest();
+    // } else {
+    //   this.router.navigate(['expense/expense/landing']);
+    // }
     if (type === 'submit' || type === 'draft') {
       this.mainExpenseData.IsDraft = type === 'draft';
-      this.createExpenseRequest();
+
+      this.applicationMessageService.getApplicationMessage({ Flag: 'ExpenseSubmitConfirm' })
+        .subscribe((data: any) => {
+          this.expenseConfirmMessage = data?.ResponseValue?.Message;
+          this.createExpenseRequest();
+        });
     } else {
       this.router.navigate(['expense/expense/landing']);
     }
@@ -563,6 +579,7 @@ export class MainExpenseComponent {
 
   // Prepare and submit the main expense request after confirmation.
   createExpenseRequest() {
+    debugger;
     if (!this.travelRequestId || !this.expenseRequestData?.dynamicExpenseDetailModels) {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return;
@@ -593,10 +610,11 @@ export class MainExpenseComponent {
       dynamicExpenseDetailModels: this.utilsService.simplifyObject(this.expenseRequestData?.dynamicExpenseDetailModels)
     };
 
+
     this.confirmDialogService
       .confirm({
         title: 'Create Expense Request',
-        message: 'Are you sure you want to create Expense request?',
+        message: this.expenseConfirmMessage,
         confirmText: 'Create',
         cancelText: 'Cancel'
       })
@@ -660,7 +678,6 @@ export class MainExpenseComponent {
         });
     });
   }
-
 }
 
 

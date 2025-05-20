@@ -17,9 +17,11 @@ import { TextAreaInputComponent } from '../../shared/dynamic-form/form-controls/
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { AccountService, ForgotPasswordParam } from '../../../../tne-api';
+import { SnackbarService } from '../../shared/service/snackbar.service';
 
 @Component({
- selector: 'app-forgot-password',
+  selector: 'app-forgot-password',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, CoreModule, RouterModule, CommonModule,
     // ExpansionPanelComponent,
     // MaterialTableComponent,
@@ -53,7 +55,9 @@ export class ForgotPasswordComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private renderer: Renderer2,
-    private newExpenseService: NewExpenseService
+    private newExpenseService: NewExpenseService,
+    private accountService: AccountService,
+    private snackbarService: SnackbarService,
   ) { }
 
   ngOnInit(): void {
@@ -63,55 +67,33 @@ export class ForgotPasswordComponent implements OnInit {
       this.config.styles.loginPageBackgroundColor
     );
 
-    // this.loginForm = this.fb.group({
-    //   employeeCode: ['', Validators.required],
-    //   password: ['', Validators.required],
-    // });
-
     this.createForm();
   }
 
   onSubmit(): void {
-    
+
     this.submitted = true;
     this.errorMessage = '';
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
-      
+
     }
 
     this.getIPAddress().then((ipAddress) => {
-      const payload = {
-        employeeCode: this.form.value.employeeCode,
-        password: this.form.value.password,
-        ipAddress: ipAddress,
-        browser: "chrome",
-      };
+      let payload: ForgotPasswordParam = {
+        Email: this.form.get('Email')?.value,
+        Otp: this.form.get('Otp')?.value,
+      }
 
-      this.newExpenseService.EmployeeAuth(payload).subscribe({
+      this.accountService.accountForgotPassword(payload).subscribe({
         next: (response: any) => {
-          const result = response.responseValue;
-          if (result.isAuthenticated) {
-            this.sessionId = result.sessionId;
-            this.newExpenseService.GetUserData({
-              sessionId: this.sessionId,
-            }).subscribe({
-              next: (userDataResponse: any) => {
-                console.log('LoginComponent: GetUserData response', userDataResponse);
-                localStorage.setItem('sessionId', this.sessionId);
-                localStorage.setItem('userData', JSON.stringify(userDataResponse));
-                localStorage.setItem('userMasterId', userDataResponse.token.userMasterId);
-                console.log(userDataResponse);
-                this.router.navigate(['/expense/expense/dashboard']);
-              },
-              error: () => {
-                this.errorMessage = 'Unable to retrieve user data.';
-              },
-            });
-          } else {
-            this.errorMessage = 'Invalid credentials. Please try again.';
+          if (response.ResponseValue.Result == "FAILED") {
+            this.snackbarService.error(response.ResponseValue.Message);
+          }
+          else if (response.ResponseValue.Result == "SUCCESS") {
+            this.snackbarService.success(response.ResponseValue.Message);
           }
         },
         error: () => {
@@ -132,7 +114,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   createForm() {
-    
+
     const tabIndex = "login";
     const tabLabel = this.loginFormControl.name;
     if (tabLabel == 'LoginForm') {

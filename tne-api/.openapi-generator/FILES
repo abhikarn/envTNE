@@ -17,6 +17,7 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/applicationMessageByFlagParam.ts
 model/authenticationGetParam.ts
 model/autoCompleteSearchTextParam.ts
 model/cityAutocompleteParam.ts
@@ -69,6 +70,7 @@ model/resetPasswordParam.ts
 model/searchYatraParam.ts
 model/ticketApiConfigurationParam.ts
 model/ticketOptionsYatraParam.ts
+model/transactionIdModel.ts
 model/travelApprovalServiceType.ts
 model/travelCancellationServiceType.ts
 model/travelClassViewParam.ts

@@ -15,7 +15,7 @@ import { LoaderComponent } from './shared/loader/loader.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,LoaderComponent, HeaderComponent, SideMenuComponent, MatTabsModule, TranslateModule, MatSnackBarModule, CommonModule, CoreModule, RouterModule],
+  imports: [RouterOutlet, LoaderComponent, HeaderComponent, SideMenuComponent, MatTabsModule, TranslateModule, MatSnackBarModule, CommonModule, CoreModule, RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -30,52 +30,38 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.gettoken()
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.gettoken(); // Re-check auth state on every navigation
-      });
-  }
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      this.gettoken(event.urlAfterRedirects); // Use actual navigated URL
+    });
+  } 
 
-  // gettoken() {
-  //   const token = this.authService.getToken();
-  //   if (token && token.jwtTokenModel?.expireDateTime) {
-  //     const expireTime = new Date(token.jwtTokenModel.expireDateTime).getTime();
-  //     const currentTime = new Date().getTime();
-  //     if (currentTime < expireTime) {
-  //       this.isAuthenticated = true;
-  //     } else {
-  //       this.isAuthenticated = false;
-  //       this.authService.Logout(); // Token expired, force logout
-  //     }
-  //   } else {
-  //     this.isAuthenticated = false;
-  //   }
-  // }
+  gettoken(url: string) {    
+    const token = this.authService.getToken();
+    const currentUrl = url;
 
-  gettoken() {
-  const token = this.authService.getToken();
-  if (token && token.jwtTokenModel?.expireDateTime) {
-    const expireTime = new Date(token.jwtTokenModel.expireDateTime).getTime();
-    const currentTime = new Date().getTime();
+    // Define routes that don't require authentication
+    const publicRoutes = ['/account/forgot-password', '/account/reset-password'];
 
-    if (currentTime < expireTime) {
-      this.isAuthenticated = true;
+    if (token && token.jwtTokenModel?.expireDateTime) {
+      const expireTime = new Date(token.jwtTokenModel.expireDateTime).getTime();
+      const currentTime = new Date().getTime();
+
+      if (currentTime < expireTime) {
+        this.isAuthenticated = true;
+      } else {
+        this.isAuthenticated = false;
+        alert('Session expired. Please log in again.');
+        this.authService.Logout();
+        this.router.navigate(['/account']);
+      }
     } else {
       this.isAuthenticated = false;
 
-      // Optional: show snack-bar notification
-      alert('Session expired. Please log in again.');
-
-      // Logout and redirect to login
-      this.authService.Logout();
-      this.router.navigate(['/account']); // Adjust route as needed
+      // Redirect only if the current route is not in publicRoutes
+      if (!publicRoutes.includes(currentUrl.toLowerCase())) {
+        this.router.navigate(['/account']);
+      }
     }
-  } else {
-    this.isAuthenticated = false;
-    this.router.navigate(['/account']);
   }
-}
 
 }
