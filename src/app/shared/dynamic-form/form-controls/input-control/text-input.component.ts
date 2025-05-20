@@ -40,7 +40,7 @@ export class TextInputComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     console.log(this.controlConfig);
     if (this.controlConfig.disable) {
       this.control.disable();
@@ -112,12 +112,14 @@ export class TextInputComponent implements OnInit {
     }
   }
 
-  private getFormattedValue(value: number | string): string {
-    const precision = this.controlConfig.autoFormat?.decimalPrecision
-      ?? this.configService.getDecimalPrecision();
+  private getFormattedValue(value: number | string): any {
+    if (this.controlConfig.autoFormat) {
+      const precision = this.controlConfig.autoFormat?.decimalPrecision
+        ?? this.configService.getDecimalPrecision();
 
-    const numeric = parseFloat(value as string);
-    return isNaN(numeric) ? value.toString() : numeric.toFixed(precision);
+      const numeric = parseFloat(value as string);
+      return isNaN(numeric) ? value.toString() : numeric.toFixed(precision);
+    }
   }
 
   handleDependentCase(dependentCase: any) {
@@ -189,7 +191,7 @@ export class TextInputComponent implements OnInit {
   }
 
   getErrorMessage(status: boolean): string {
-    
+
     if (!this.controlConfig?.validations) return '';
 
     for (const validation of this.controlConfig.validations) {
