@@ -51,6 +51,11 @@ export class AddGstComponent {
       this.notifications = this.controlConfig.notifications;
     }
 
+    if (this.categoryGST?.fields) {
+      this.fields = this.categoryGST.fields || [];
+      this.notifications = this.categoryGST.notifications;
+    }
+
     // Apply global decimalPrecision to fields lacking explicit setting
     const globalPrecision = this.globalConfig.getDecimalPrecision();
     this.fields.forEach((field: any) => {
@@ -59,11 +64,6 @@ export class AddGstComponent {
         field.autoFormat.decimalPrecision = field.autoFormat.decimalPrecision ?? globalPrecision;
       }
     });
-
-    if (this.categoryGST?.fields) {
-      this.fields = this.categoryGST.fields || [];
-      this.notifications = this.categoryGST.notifications;
-    }
 
     for (const field of this.fields) {
       group[field.name] = FormControlFactory.createControl(field);
