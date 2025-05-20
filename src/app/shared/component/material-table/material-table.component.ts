@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { AddGstComponent } from '../../dynamic-form/form-controls/gst/add-gst/add-gst.component';
 import { GlobalDatePipe } from '../../pipes/global-date.pipe';
 import { ConfirmDialogService } from '../../service/confirm-dialog.service';
+import { GlobalConfigService } from '../../service/global-config.service';
 
 @Component({
   selector: 'app-material-table',
@@ -45,11 +46,11 @@ export class MaterialTableComponent implements OnChanges {
 
   constructor(
     private dialog: MatDialog,
-    private confirmDialogService: ConfirmDialogService
+    private confirmDialogService: ConfirmDialogService,
+    private configService: GlobalConfigService
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    debugger;
     // Update processedData when input changes
     if (this.data?.length > 0) {
       this.processedData = this.data.map((row, index) => ({
@@ -67,8 +68,20 @@ export class MaterialTableComponent implements OnChanges {
   }
 
   ngOnInit() {
-    console.log(this.categoryGST)
+    this.setDecimalPrecision();
     this.selectAll = this.processedData.every(r => r.selected);
+  }
+
+  setDecimalPrecision() {
+    this.columnConfig.forEach((column: any) => {
+      if (column.type === 'number') {
+        this.processedData.forEach((row: any) => {
+          if (row[column.name] !== undefined) {
+            row[column.name] = parseFloat(row[column.name]).toFixed(column.decimalPrecision || this.configService.getDecimalPrecision());
+          }
+        });
+      }
+    });
   }
 
   ngAfterViewInit() {

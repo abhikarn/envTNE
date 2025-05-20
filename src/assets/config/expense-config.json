@@ -318,8 +318,7 @@
                                 "min": 0,
                                 "max": 10
                             },
-                            "decimal": ".00",
-                            "setValue": "1.00"
+                            "setValue": "1"
                         },
                         "required": true,
                         "validations": [
@@ -612,10 +611,12 @@
                         "position": "in"
                     },
                     {
+                        "type": "number",
                         "name": "ClaimAmount",
                         "label": "Amount",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "decimalPrecision": "2"
                     },
                     {
                         "name": "Currency",
@@ -630,6 +631,7 @@
                         "position": "in"
                     },
                     {
+                        "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
                         "label": "ClaimAmountInBaseCurrency",
                         "visible": true,
@@ -644,6 +646,7 @@
                 ],
                 "nestedTables": [
                     {
+                        "name": "gst",
                         "dataKey": "gst",
                         "columns": [
                             {
@@ -662,26 +665,31 @@
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "Amount",
                                 "label": "Amount",
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "SGST",
                                 "label": "SGST",
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "CGST",
                                 "label": "CGST",
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "IGST",
                                 "label": "IGST",
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "UGST",
                                 "label": "UTGST",
                                 "visible": true
@@ -1080,16 +1088,18 @@
                         "position": "in"
                     },
                     {
+                        "type":"number",
                         "name": "ClaimAmount",
                         "label": "Claimed",
                         "visible": true,
-                        "position": "in-out"
+                        "position": "in-out",
+                        "decimalPrecision": "3"
                     },
                     {
+                        "type":"number",
                         "name": "ApprovedAmount",
                         "label": "Approved Amount",
                         "visible": true,
-                        "type": "number",
                         "isEditableInApproval": true,
                         "isEditableInFinanceApproval": true,
                         "controlType": "input",
@@ -1102,12 +1112,14 @@
                         "position": "in"
                     },
                     {
+                        "type": "number",
                         "name": "ConversionRate",
                         "label": "Conversion",
                         "visible": true,
                         "position": "in"
                     },
                     {
+                        "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
                         "label": "Approved(INR)",
                         "visible": true,
@@ -1294,26 +1306,31 @@
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "Amount",
                                 "label": "Amount",
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "SGST",
                                 "label": "SGST",
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "CGST",
                                 "label": "CGST",
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "IGST",
                                 "label": "IGST",
                                 "visible": true
                             },
                             {
+                                "type": "number",
                                 "name": "UGST",
                                 "label": "UTGST",
                                 "visible": true

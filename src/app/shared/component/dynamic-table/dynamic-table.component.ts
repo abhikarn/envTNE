@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GlobalConfigService } from '../../service/global-config.service';
 
 @Component({
   selector: 'app-dynamic-table',
@@ -21,9 +22,13 @@ export class DynamicTableComponent implements OnInit {
   tableOutFields: { name: string; label: string }[] = [];
 
 
-  constructor(private domSanitizer: DomSanitizer) { }
+  constructor(
+    private domSanitizer: DomSanitizer,
+    private configService: GlobalConfigService
+  ) { }
 
   ngOnInit() {
+    this.setDecimalPrecision();
     if (this.categoryConfig?.columns?.length > 0) {
       this.tableColumns = this.categoryConfig.columns
         .filter((col: any) => col.visible && col.position === 'in')
@@ -39,6 +44,36 @@ export class DynamicTableComponent implements OnInit {
     }
   }
 
+  setDecimalPrecision() {
+    if (this.categoryConfig?.columns?.length > 0) {
+      this.categoryConfig.columns.forEach((column: any) => {
+        if (column.type === 'number') {
+          this.tableData.forEach((row: any) => {
+            if (row[column.name] !== undefined) {
+              row[column.name] = parseFloat(row[column.name]).toFixed(column.decimalPrecision || this.configService.getDecimalPrecision());
+            }
+          });
+        }
+      });
+    }
+    if (this.categoryConfig?.nestedTables?.length > 0) {
+      this.categoryConfig.nestedTables.forEach((nestedTable: any) => {
+        nestedTable.columns.forEach((column: any) => {
+          if (column.type === 'number') {
+            this.tableData.forEach((row: any) => {
+              if (row[nestedTable.name]?.length > 0) {
+                row[nestedTable.name].forEach((nestedRow: any) => {
+                  if (nestedRow[column.name] !== undefined) {
+                    nestedRow[column.name] = parseFloat(nestedRow[column.name]).toFixed(column.decimalPrecision || this.configService.getDecimalPrecision());
+                  }
+                });
+              }
+            });
+          }
+        });
+      });
+    }
+  }
 
   get displayedColumns(): string[] {
     return this.tableColumns.map(col => col.name);
