@@ -78,19 +78,21 @@ export class SelectInputComponent {
         );
       }
       else {
-        this.apiSubscription = apiService[this.controlConfig.apiMethod || '']().subscribe(
-          (data: any) => {
-            const labelKey = this.controlConfig.labelKey || 'label';
-            const valueKey = this.controlConfig.valueKey || 'value';
-            this.controlConfig.options = data.ResponseValue.map((item: any) => ({
-              label: item[labelKey],
-              value: item[valueKey]
-            }));
-          },
-          (error: any) => {
-            console.error('API Error:', error);
-          }
-        );
+        if (!this.controlConfig.payloadKey) {
+          this.apiSubscription = apiService[this.controlConfig.apiMethod || '']().subscribe(
+            (data: any) => {
+              const labelKey = this.controlConfig.labelKey || 'label';
+              const valueKey = this.controlConfig.valueKey || 'value';
+              this.controlConfig.options = data.ResponseValue.map((item: any) => ({
+                label: item[labelKey],
+                value: item[valueKey]
+              }));
+            },
+            (error: any) => {
+              console.error('API Error:', error);
+            }
+          );
+        }
       }
     } else {
       console.warn(`Invalid API service or method: ${this.controlConfig.apiService}.${this.controlConfig.apiMethod}`);
