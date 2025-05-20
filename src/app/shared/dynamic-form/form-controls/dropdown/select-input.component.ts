@@ -52,6 +52,7 @@ export class SelectInputComponent {
   }
 
   private loadOptions() {
+    
     if ((!this.controlConfig.apiService && !this.controlConfig.apiMethod)) return;
 
     const apiService = this.serviceRegistry.getService(this.controlConfig.apiService || '');

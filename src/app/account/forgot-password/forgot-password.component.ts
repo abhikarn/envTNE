@@ -72,6 +72,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
+    
     this.submitted = true;
     this.errorMessage = '';
 
@@ -131,6 +132,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   createForm() {
+    
     const tabIndex = "login";
     const tabLabel = this.loginFormControl.name;
     if (tabLabel == 'LoginForm') {

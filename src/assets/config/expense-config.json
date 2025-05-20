@@ -1065,7 +1065,7 @@
                         "name": "ClaimDate",
                         "label": "Date",
                         "visible": true,
-                        "position": "in"
+                        "position": "in-out"
                     },
                     {
                         "name": "Origin",
@@ -1083,13 +1083,15 @@
                         "name": "ClaimAmount",
                         "label": "Claimed",
                         "visible": true,
-                        "position": "in"
+                        "position": "in-out"
                     },
                     {
                         "name": "ApprovedAmount",
                         "label": "Approved Amount",
                         "visible": true,
                         "type": "number",
+                        "isEditableInApproval": true,
+                        "isEditableInFinanceApproval": true,
                         "controlType": "input",
                         "position": "in"
                     },

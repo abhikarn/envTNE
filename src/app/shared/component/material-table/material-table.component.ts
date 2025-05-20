@@ -27,6 +27,7 @@ import { ConfirmDialogService } from '../../service/confirm-dialog.service';
   encapsulation: ViewEncapsulation.None,
   providers: [DatePipe]
 })
+
 export class MaterialTableComponent implements OnChanges {
   @Input() categoryName: string = '';
   @Input() data: any[] = [];
@@ -48,6 +49,7 @@ export class MaterialTableComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
+    debugger;
     // Update processedData when input changes
     if (this.data?.length > 0) {
       this.processedData = this.data.map((row, index) => ({
@@ -69,12 +71,40 @@ export class MaterialTableComponent implements OnChanges {
     this.selectAll = this.processedData.every(r => r.selected);
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.selectionChanged.emit({
+        name: this.categoryName,
+        data: this.processedData
+      });
+    });
+  }
+
+  getSelectedData() {
+    return {
+      name: this.categoryName,
+      data: this.processedData
+    };
+  }
+
+  // get visibleTabelColumns() {
+  //   return (this.columnConfig || []).filter((c: any) => c.visible && !!c.name && c.position == 'in');
+  // }
+
+  // get visibleOtherColumns() {
+  //   return (this.columnConfig || []).filter((c: any) => c.visible && !!c.name && c.position == 'out');
+  // }
+
   get visibleTabelColumns() {
-    return (this.columnConfig || []).filter((c: any) => c.visible && !!c.name && c.position == 'in');
+    return (this.columnConfig || []).filter(
+      (c: any) => c.visible && !!c.name && (c.position === 'in' || c.position === 'in-out')
+    );
   }
 
   get visibleOtherColumns() {
-    return (this.columnConfig || []).filter((c: any) => c.visible && !!c.name && c.position == 'out');
+    return (this.columnConfig || []).filter(
+      (c: any) => c.visible && !!c.name && (c.position === 'out' || c.position === 'in-out')
+    );
   }
 
   get columnKeys() {
@@ -185,4 +215,7 @@ export class MaterialTableComponent implements OnChanges {
     }
   }
 
+  isRemarkInvalid(row: any): boolean {
+    return (this.mode === 'approval' || this.mode === 'finance-approval') && !row.selected && (!row.remarks || row.remarks.trim() === '');
+  }
 }
