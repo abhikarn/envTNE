@@ -12,6 +12,7 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
 import { SnackbarService } from '../../../service/snackbar.service';
 import { MatIconModule } from '@angular/material/icon';
+import { GlobalConfigService } from '../../../service/global-config.service';
 
 @Component({
   selector: 'lib-text-input',
@@ -19,7 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [CommonModule, ReactiveFormsModule,
     MatFormFieldModule, MatInputModule,
     MatAutocompleteModule, MatOptionModule,
-    FunctionWrapperPipe,MatIconModule],
+    FunctionWrapperPipe, MatIconModule],
   templateUrl: './text-input.component.html'
 })
 export class TextInputComponent implements OnInit {
@@ -32,7 +33,8 @@ export class TextInputComponent implements OnInit {
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private configService: GlobalConfigService
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
@@ -83,19 +85,23 @@ export class TextInputComponent implements OnInit {
   }
 
   onBlur() {
+    let value = this.control.value;
+
+    // Handle empty or null input: set to 0 with precision
+    if (value === null || value === undefined || value === '') {
+      this.control.setValue(this.getFormattedValue(0), { emitEvent: false });
+      return;
+    }
+
     if (this.controlConfig.autoFormat) {
-      let value = this.control.value;
-      if (value == 0) {
-        this.control.setValue(this.controlConfig.autoFormat.setValue, { emitEvent: false });
-        return;
-      }
-      if (value && value !== '' && !value.includes('.')) {
-        this.control.setValue(`${value}${this.controlConfig.autoFormat.decimal}`, { emitEvent: false });
+      const numericValue = parseFloat(value);
+      if (!isNaN(numericValue)) {
+        const formatted = this.getFormattedValue(numericValue);
+        this.control.setValue(formatted, { emitEvent: false });
       }
     }
-    if (this.controlConfig.defaultValue) {
-      this.control.setValue(`${this.controlConfig.defaultValue}${this.controlConfig.autoFormat.decimal}`, { emitEvent: false });
-    }
+
+    // Handle dependent cases if any
     if (this.controlConfig.dependentCases?.length > 0) {
       this.controlConfig.dependentCases.forEach((dependentCase: any) => {
         if (dependentCase.event === "onBlur") {
@@ -103,6 +109,14 @@ export class TextInputComponent implements OnInit {
         }
       });
     }
+  }
+
+  private getFormattedValue(value: number | string): string {
+    const precision = this.controlConfig.autoFormat?.decimalPrecision
+      ?? this.configService.getDecimalPrecision();
+
+    const numeric = parseFloat(value as string);
+    return isNaN(numeric) ? value.toString() : numeric.toFixed(precision);
   }
 
   handleDependentCase(dependentCase: any) {

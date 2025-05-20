@@ -70,7 +70,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    debugger;
     this.submitted = true;
     this.errorMessage = '';
 
@@ -130,7 +129,6 @@ export class LoginComponent implements OnInit {
   }
 
   createForm() {
-    debugger;
     const tabIndex = "login";
     const tabLabel = this.loginFormControl.name;
     if (tabLabel == 'LoginForm') {

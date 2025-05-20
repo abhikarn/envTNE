@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
 import { SnackbarService } from '../../../service/snackbar.service';
 import { CustomDateAdapter } from '../../../../tokens/custom-date-adapter';
+import { GlobalConfigService } from '../../../service/global-config.service';
 
 @Component({
   selector: 'lib-date-input',
@@ -35,10 +36,11 @@ export class DateInputComponent {
   constructor(
     private serviceRegistry: ServiceRegistryService,
     private snackbarService: SnackbarService,
-    private dateAdapter: DateAdapter<any> // Inject DateAdapter
+    private dateAdapter: DateAdapter<any>, // Inject DateAdapter
+    private configService: GlobalConfigService
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
-     
+
   }
 
   ngOnInit() {
@@ -117,13 +119,16 @@ export class DateInputComponent {
               for (const [outputControl, responsePath] of Object.entries(dependentCase.outputControl) as [string, string][]) {
                 const value = this.extractValueFromPath(response, responsePath);
                 if (value !== undefined) {
-                  if (dependentCase.autoFormat?.decimal) {
-                    this.form.get(outputControl)?.setValue(`${value}${dependentCase.autoFormat.decimal}`, { emitEvent: false });
-                  } else {
-                    this.form.get(outputControl)?.setValue(value, { emitEvent: false });
-                  }
+                  const precision = dependentCase.autoFormat?.decimalPrecision
+                    ?? this.configService.getDecimalPrecision();
+
+                  const numericValue = parseFloat(value);
+                  const formatted = isNaN(numericValue) ? value : numericValue.toFixed(precision);
+
+                  this.form.get(outputControl)?.setValue(formatted, { emitEvent: false });
                 }
               }
+
             }
           },
           (error: any) => {

@@ -75,7 +75,6 @@ export class SummaryComponent {
   }
 
   calculatCategoryWiseExpense() {
-    debugger
     const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
     let CATEGORY_NAME = '';
 
