@@ -464,7 +464,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
                   this.addDataToDynamicTable();
                   setTimeout(() => {
                     this.clear();
-                  }, 300);
+                  }, 500);
                 }
               });
           } else {
@@ -474,7 +474,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             this.addDataToDynamicTable();
             setTimeout(() => {
               this.clear();
-            }, 300);
+            }, 500);
           }
         });
     }

@@ -59,6 +59,7 @@ export class FileUploadComponent {
       });
       this.control.setValue(this.selectedFiles);
     }
+    input.value = '';
   }
 
   uploadFile(payload: any) {
