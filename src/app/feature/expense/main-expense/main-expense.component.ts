@@ -207,7 +207,7 @@ export class MainExpenseComponent {
       this.expenseRequestForm.addControl(this.expenseConfig.request.name, control);
       this.formControls = [];
     }
-    if(this.expenseConfig?.travelDetails) {
+    if (this.expenseConfig?.travelDetails) {
       this.travelDetails = this.expenseConfig?.travelDetails;
     }
   }
@@ -400,18 +400,18 @@ export class MainExpenseComponent {
           this.travelRequestPreview = { ...preview, UserMasterId: this.userMasterId };
 
           this.travelDetails?.data?.forEach((config: any) => {
-              const prop = config.name;
-              if (this.travelRequestPreview && this.travelRequestPreview.hasOwnProperty(prop)) {
-                config.value = this.travelRequestPreview[prop];
-              }
-              if (this.travelRequestPreview?.TravelRequestMetaData) {
-                this.travelRequestPreview.TravelRequestMetaData.forEach((meta: any) => {
-                  if ( meta && meta.FieldName === prop) {
-                    config.value = meta.IntegerValueReference;
-                  }
-                });
-              }
-            });
+            const prop = config.name;
+            if (this.travelRequestPreview && this.travelRequestPreview.hasOwnProperty(prop)) {
+              config.value = this.travelRequestPreview[prop];
+            }
+            if (this.travelRequestPreview?.TravelRequestMetaData) {
+              this.travelRequestPreview.TravelRequestMetaData.forEach((meta: any) => {
+                if (meta && meta.FieldName === prop) {
+                  config.value = meta.IntegerValueReference;
+                }
+              });
+            }
+          });
           this.travelDetails?.data?.sort((a: any, b: any) => a.order - b.order);
 
           const meta = this.travelRequestPreview.TravelRequestMetaData || [];
@@ -564,8 +564,13 @@ export class MainExpenseComponent {
   // Handle submit, draft, or navigation actions after validating forms.
   onAction(type: string) {
     if (type == "cancel") {
-      this.router.navigate(['../expense/expense/landing']);
-      return;
+      if (this.editMode) {
+        this.router.navigate(['../expense/expense/dashboard']);
+        return;
+      } else {
+        this.router.navigate(['../expense/expense/landing']);
+        return;
+      }
     }
 
     if (type === 'submit' || type === 'draft') {
