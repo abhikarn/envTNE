@@ -256,13 +256,13 @@ export class MainExpenseComponent {
         next: (response) => {
           if (response) {
             this.expenseRequestPreviewData = response;
-            this.travelDetails?.data?.forEach((config: any) => {
-              const prop = config.name;
-              if (this.expenseRequestPreviewData && this.expenseRequestPreviewData.hasOwnProperty(prop)) {
-                config.value = this.expenseRequestPreviewData[prop];
-              }
-            });
-            this.travelDetails?.data?.sort((a: any, b: any) => a.order - b.order);
+            // this.travelDetails?.data?.forEach((config: any) => {
+            //   const prop = config.name;
+            //   if (this.expenseRequestPreviewData && this.expenseRequestPreviewData.hasOwnProperty(prop)) {
+            //     config.value = this.expenseRequestPreviewData[prop];
+            //   }
+            // });
+            // this.travelDetails?.data?.sort((a: any, b: any) => a.order - b.order);
             this.populateExistingExpenseData(response);
           }
         }
@@ -398,6 +398,21 @@ export class MainExpenseComponent {
         next: (response) => {
           const preview = response.ResponseValue;
           this.travelRequestPreview = { ...preview, UserMasterId: this.userMasterId };
+
+          this.travelDetails?.data?.forEach((config: any) => {
+              const prop = config.name;
+              if (this.travelRequestPreview && this.travelRequestPreview.hasOwnProperty(prop)) {
+                config.value = this.travelRequestPreview[prop];
+              }
+              if (this.travelRequestPreview?.TravelRequestMetaData) {
+                this.travelRequestPreview.TravelRequestMetaData.forEach((meta: any) => {
+                  if ( meta && meta.FieldName === prop) {
+                    config.value = meta.IntegerValueReference;
+                  }
+                });
+              }
+            });
+          this.travelDetails?.data?.sort((a: any, b: any) => a.order - b.order);
 
           const meta = this.travelRequestPreview.TravelRequestMetaData || [];
           this.costcenterId = meta.find((d: any) => d.TravelRequestMetaId === 4)?.IntegerValue;
