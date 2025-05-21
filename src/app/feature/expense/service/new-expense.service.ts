@@ -7,6 +7,7 @@ import { environment } from '../../../../environment';
 })
 export class NewExpenseService {
   basePath = `${environment.newApiUrl}`
+  assetPath = `${environment.assetsPath}`
   newbasePath = `${environment.apiUrl}`
 
   constructor(
@@ -16,7 +17,7 @@ export class NewExpenseService {
   expenseRequestCreatePost(request: any) {
     return this.httpClient.post<any>(`${this.basePath}Expense/ExpensesRequestCreate`, request);
   }
-  
+
   getExpenseRequest(request: any) {
     return this.httpClient.post<any>(`${this.basePath}Expense/ExpensesRequestGet`, request);
   }
@@ -34,7 +35,7 @@ export class NewExpenseService {
   }
 
   EmployeeAuth(request: any) {
-    
+
     return this.httpClient.post<any>(`${this.basePath}Account/EmployeeAuth`, request);
   }
 
@@ -43,6 +44,6 @@ export class NewExpenseService {
   }
 
   getExpenseConfig() {
-    return this.httpClient.get<any>('/assets/config/expense-config.json');
+    return this.httpClient.get<any>(`${this.assetPath}/assets/config/expense-config.json`);
   }
 }

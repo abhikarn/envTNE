@@ -26,6 +26,7 @@ import { UtilsService } from '../../../shared/service/utils.service';
 import { DateAdapter } from '@angular/material/core';
 import { CustomDateAdapter } from '../../../tokens/custom-date-adapter';
 import { ApplicationMessageService } from '../../../shared/service/application-message.service';
+import { environment } from '../../../../environment';
 
 interface DataEntry {
   name: number;
@@ -54,6 +55,7 @@ interface DataEntry {
 })
 
 export class MainExpenseComponent {
+   assetPath = `${environment.assetsPath}`
   @ViewChild(SummaryComponent) summaryComponent: any;
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
@@ -175,7 +177,7 @@ export class MainExpenseComponent {
       boMealsList: this.dataService.dataGetMealType(),
       localTravelTypeList: this.dataService.dataGetLocalTravelType(),
       localTravelModeList: this.dataService.dataGetLocalTravelMode(),
-      expenseConfig: this.http.get<any>('/assets/config/expense-config.json')
+      expenseConfig: this.http.get<any>(`${this.assetPath}/assets/config/expense-config.json`)
     })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -566,7 +568,7 @@ export class MainExpenseComponent {
 
   // Handle submit, draft, or navigation actions after validating forms.
   onAction(type: string) {
-    debugger;
+    
     if (type == "cancel") {
       this.router.navigate(['../expense/expense/landing']);
       return;
@@ -594,7 +596,7 @@ export class MainExpenseComponent {
 
   // Prepare and submit the main expense request after confirmation.
   createExpenseRequest() {
-    debugger;
+    
     if (!this.travelRequestId || !this.expenseRequestData?.dynamicExpenseDetailModels) {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return;
