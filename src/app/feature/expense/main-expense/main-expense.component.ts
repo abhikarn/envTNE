@@ -23,7 +23,6 @@ import { FormControlFactory } from '../../../shared/dynamic-form/form-control.fa
 import { ServiceRegistryService } from '../../../shared/service/service-registry.service';
 import { SummaryComponent } from '../../../shared/component/summary/summary.component';
 import { UtilsService } from '../../../shared/service/utils.service';
-import { DateAdapter } from '@angular/material/core';
 
 interface DataEntry {
   name: number;
@@ -107,8 +106,7 @@ export class MainExpenseComponent {
     private route: ActivatedRoute,
     private serviceRegistry: ServiceRegistryService,
     private router: Router,
-    private utilsService: UtilsService,
-    private dateAdapter: DateAdapter<any> // Inject DateAdapter
+    private utilsService: UtilsService
   ) {
   }
 
