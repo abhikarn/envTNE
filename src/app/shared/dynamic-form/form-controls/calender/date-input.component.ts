@@ -9,7 +9,6 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 import { Subscription } from 'rxjs';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
 import { SnackbarService } from '../../../service/snackbar.service';
-import { CustomDateAdapter } from '../../../../tokens/custom-date-adapter';
 import { GlobalConfigService } from '../../../service/global-config.service';
 
 @Component({

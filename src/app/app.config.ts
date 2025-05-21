@@ -41,8 +41,13 @@ export const appConfig: ApplicationConfig = {
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     {
       provide: MAT_DATE_FORMATS,
-      useFactory: () => inject(DateFormatService).formats
+      useFactory: () => {
+        const format = inject(DateFormatService).formats;
+        console.log('[MAT_DATE_FORMATS] resolved:', format);
+        return format;
+      }
     }
+
   ]
 };
 

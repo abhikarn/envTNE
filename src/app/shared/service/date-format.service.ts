@@ -8,6 +8,7 @@ export class DateFormatService {
 
   get formats(): MatDateFormats {
     const format = this.cfg.dateFormat || 'dd-MMM-yyyy';
+     console.log('[DateFormatService] using format:', format); // Debug
     return {
       parse: { dateInput: format },
       display: {
