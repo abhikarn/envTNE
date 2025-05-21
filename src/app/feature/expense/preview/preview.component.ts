@@ -214,7 +214,9 @@ export class PreviewComponent {
           }
         })
       });
-      this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName).setValue(this.expenseRequestPreviewData?.remarks);
+      if(this.mode == 'preview') {
+         this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName).setValue(this.expenseRequestPreviewData?.remarks);
+      }
       setTimeout(() => {
         this.calculatTotalExpenseAmountPreview();
         this.calculatCategoryWiseExpensePreview();

@@ -24,10 +24,6 @@ import { ServiceRegistryService } from '../../../shared/service/service-registry
 import { SummaryComponent } from '../../../shared/component/summary/summary.component';
 import { UtilsService } from '../../../shared/service/utils.service';
 
-interface DataEntry {
-  name: number;
-  data: any;
-}
 
 @Component({
   selector: 'app-main-expense',

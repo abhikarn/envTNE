@@ -1080,8 +1080,7 @@
                         "name": "ClaimAmount",
                         "label": "Claimed",
                         "visible": true,
-                        "position": "in-out",
-                        "decimalPrecision": "3"
+                        "position": "in-out"
                     },
                     {
                         "type":"number",
