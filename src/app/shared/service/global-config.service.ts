@@ -24,6 +24,10 @@ export class GlobalConfigService {
     return this.config.decimalPrecision || 2;
   }
 
+  get dateFormat(): string {
+    return this.config?.dateFormat || 'dd-MMM-yyyy';
+  }
+
   getConfig(): any {
     return this.config;
   }

@@ -9,20 +9,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { loaderInterceptor } from './interceptors/loader.interceptor';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
-import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
 import { GlobalConfigService } from './shared/service/global-config.service';
-
-export const CUSTOM_DATE_FORMATS = {
-  parse: {
-    dateInput: 'MM/dd/yyyy',
-  },
-  display: {
-    dateInput: 'MM/dd/yyyy',
-    monthYearLabel: 'MMM yyyy',
-    dateA11yLabel: 'MM/dd/yyyy',
-    monthYearA11yLabel: 'MMMM yyyy'
-  },
-};
+import { DateFormatService } from './shared/service/date-format.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -43,16 +32,18 @@ export const appConfig: ApplicationConfig = {
         },
       })
     ),
-
-    // Global date configuration
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
-    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
-
-    // Use the recommended modern initializer
     provideAppInitializer(() => {
       const configService = inject(GlobalConfigService);
       console.log('[App Init] Loading global-config.json...');
       return configService.loadConfig();
-    })
+    }),
+    // Global date configuration
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    {
+      provide: MAT_DATE_FORMATS,
+      useFactory: () => inject(DateFormatService).formats
+    }
   ]
 };
+
+

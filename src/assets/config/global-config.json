@@ -1,3 +1,4 @@
 {
-  "decimalPrecision": 2
+  "decimalPrecision": 2,
+  "dateFormat": "dd-MMM-yyyy"
 }

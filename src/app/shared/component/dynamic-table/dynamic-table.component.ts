@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -24,7 +24,8 @@ export class DynamicTableComponent implements OnInit {
 
   constructor(
     private domSanitizer: DomSanitizer,
-    private configService: GlobalConfigService
+    private configService: GlobalConfigService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit() {
@@ -91,13 +92,14 @@ export class DynamicTableComponent implements OnInit {
     if (value === null || value === undefined) return '-';
     if (typeof value === 'object' && 'label' in value) return value.label;
     if (this.isDate(value)) {
-      return new Date(value).toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric'
-      });
+      const format = this.configService.dateFormat || 'dd-MMM-yyyy';
+      return this.formatDateUsingFormat(value, format);
     }
     return value;
+  }
+
+  formatDateUsingFormat(value: string | Date, format: string): string {
+    return this.datePipe.transform(value, format) || value.toString();
   }
 
   edit(row: any, index: any) {
