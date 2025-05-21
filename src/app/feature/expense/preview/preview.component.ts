@@ -511,7 +511,7 @@ export class PreviewComponent {
   }
 
   onAction(buttonData: any) {
-    debugger;
+    
     const allSelectedData = this.materialTableComponents.map(table => table.getSelectedData());
 
     const invalidItemFound = allSelectedData.some((data: any) => {
@@ -539,7 +539,7 @@ export class PreviewComponent {
       return;
     }
     if (this.mode == 'approval') {
-      debugger;  
+        
       const approvalPayload = {
         ExpenseRequestId: this.expenseRequestPreviewData?.expenseRequestId || 0,
         Remarks: this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.value,

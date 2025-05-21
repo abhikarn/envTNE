@@ -26,8 +26,7 @@ export class LandingComponent implements OnInit {
     this.loadExpenseConfig();
   }
 
-  loadExpenseConfig(): void {
-    
+  loadExpenseConfig(): void {    
     this.http.get<any[]>('assets/config/expense-type-config.json')
       .subscribe({
         next: (data) => this.expenses = data,
