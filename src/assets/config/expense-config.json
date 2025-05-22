@@ -170,6 +170,11 @@
                             {
                                 "type": "required",
                                 "message": "Origin is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "originDestinationMismatchValidator",
+                                "message": "From & To cannot be the same"
                             }
                         ],
                         "disable": false,
@@ -194,6 +199,11 @@
                             {
                                 "type": "required",
                                 "message": "Destination is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "originDestinationMismatchValidator",
+                                "message": "From & To cannot be the same"
                             }
                         ],
                         "disable": false,
@@ -1076,14 +1086,14 @@
                         "position": "in"
                     },
                     {
-                        "type":"number",
+                        "type": "number",
                         "name": "ClaimAmount",
                         "label": "Claimed",
                         "visible": true,
                         "position": "in-out"
                     },
                     {
-                        "type":"number",
+                        "type": "number",
                         "name": "ApprovedAmount",
                         "label": "Approved Amount",
                         "visible": true,
