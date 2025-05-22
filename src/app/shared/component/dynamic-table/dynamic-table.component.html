@@ -67,9 +67,6 @@
                         <a class="me-2" title="Download" (click)="downloadFile(nestedRow)">
                           <i class="fa-solid fa-download text-success"></i>
                         </a>
-                        <a title="Delete">
-                          <i class="fa-solid fa-trash text-danger"></i>
-                        </a>
                         } @else {
                         {{ formatValue(col.name, nestedRow[col.name]) }}
                         }
