@@ -460,6 +460,18 @@ export class MainExpenseComponent {
     this.summaryComponent.calculatCategoryWiseExpense();
   }
 
+  updateCategoryData(updated: { name: string, data: any[] }) {
+    const categoryBlock = this.expenseRequestData?.dynamicExpenseDetailModels?.find((x: any) => x.name === updated.name);
+    if (categoryBlock) {
+      categoryBlock.data = updated.data;
+    }
+
+    const tab = this.categories.find((c: any) => c.name === updated.name);
+    if (tab) tab.count = updated.data.length;
+
+    this.summaryComponent.calculatTotalExpenseAmount();
+    this.summaryComponent.calculatCategoryWiseExpense();
+  }
 
   // Populate autoComplete options by input value (ID or search text) and update matching control.
   getTextData(inputData: any) {

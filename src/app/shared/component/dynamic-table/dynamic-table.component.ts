@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GlobalConfigService } from '../../service/global-config.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ConfirmDialogService } from '../../service/confirm-dialog.service';
 
 @Component({
   selector: 'app-dynamic-table',
@@ -16,6 +17,7 @@ export class DynamicTableComponent implements OnInit {
   @Input() tableData: any[] = [];
   @Input() categoryConfig: any;
   @Output() editRow = new EventEmitter<any>();
+  @Output() deleteRow = new EventEmitter<number>();
 
   tableColumns: { name: string; label: string }[] = [];
   nestedTables: any[] = [];
@@ -26,7 +28,8 @@ export class DynamicTableComponent implements OnInit {
   constructor(
     private domSanitizer: DomSanitizer,
     private configService: GlobalConfigService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private confirmDialogService: ConfirmDialogService
   ) { }
 
   ngOnInit() {
@@ -131,4 +134,18 @@ export class DynamicTableComponent implements OnInit {
     link.download = file?.FileName || 'downloaded-file';
     link.click();
   }
+
+  confirmDelete(index: number): void {
+    this.confirmDialogService.confirm({
+      title: 'Delete Row',
+      message: 'Are you sure you want to delete this row?',
+      confirmText: 'Yes',
+      cancelText: 'No'
+    }).subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.deleteRow.emit(index);
+      }
+    });
+  }
+
 }

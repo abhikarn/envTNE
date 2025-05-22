@@ -76,7 +76,8 @@
     </div>
   </div>
   @if (tableData.length > 0) {
-  <app-dynamic-table [tableData]="tableData" [categoryConfig]="category" (editRow)="onEditRow($event)"></app-dynamic-table>
+  <app-dynamic-table [tableData]="tableData" [categoryConfig]="category" (editRow)="onEditRow($event)"
+    (deleteRow)="onDeleteRow($event)"></app-dynamic-table>
   }
 
 </form>
