@@ -741,12 +741,12 @@
                                                                                 <ng-container *ngIf="column.key === 'action'; else defaultColumn">
                                                                                   <div class="TBL-actions">
                                                                                     <ul class="action-icons">
-                                                                                      <li *ngIf="element.ClaimStatusId==26">
+                                                                                      <li *ngIf="element.IsEdit">
                                                                                         <a [routerLink]="['/expense/expense/edit-expense',element.TransactionId]" class="btn-icon-action btn-icon-view">
                                                                                           <span data-bs-toggle="tooltip" class="fa fa-pencil" aria-label="Edit" matTooltip="Edit" ></span>
                                                                                         </a>
                                                                                       </li>
-                                                                                      <li>
+                                                                                      <li *ngIf="element.IsPreview">
                                                                                         <a [routerLink]="['/expense/expense/preview',element.TransactionId]" class="btn-icon-action btn-icon-view">
                                                                                           <span data-bs-toggle="tooltip" class="fa-eye fa-regular" aria-label="View" matTooltip="View" ></span>
                                                                                         </a>
