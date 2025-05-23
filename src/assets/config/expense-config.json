@@ -170,6 +170,11 @@
                             {
                                 "type": "required",
                                 "message": "Origin is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "originDestinationMismatchValidator",
+                                "message": "From & To cannot be the same"
                             }
                         ],
                         "disable": false,
@@ -194,6 +199,11 @@
                             {
                                 "type": "required",
                                 "message": "Destination is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "originDestinationMismatchValidator",
+                                "message": "From & To cannot be the same"
                             }
                         ],
                         "disable": false,
@@ -515,6 +525,13 @@
                     },
                     {
                         "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
                         "name": "ClaimAmountInBaseCurrency",
                         "isExcluded": true,
                         "value": 0,
@@ -545,7 +562,8 @@
                         "TravelDate": "ReferenceDate"
                     },
                     "outputControl": {
-                        "IsViolation": "ResponseValue.IsPolicyViolation"
+                        "IsViolation": "ResponseValue.IsPolicyViolation",
+                        "Violation": "ResponseValue.Message"
                     },
                     "confirmPopup": {
                         "title": "Tickets Expense",
@@ -1080,8 +1098,7 @@
                         "name": "ClaimAmount",
                         "label": "Claimed",
                         "visible": true,
-                        "position": "in-out",
-                        "decimalPrecision": "3"
+                        "position": "in-out"
                     },
                     {
                         "type": "number",

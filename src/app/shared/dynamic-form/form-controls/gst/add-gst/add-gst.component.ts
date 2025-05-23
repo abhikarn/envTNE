@@ -122,6 +122,10 @@ export class AddGstComponent {
   }
 
   addGstRow(): void {
+    if (this.gstDetailsForm.invalid) {
+      this.gstDetailsForm.markAllAsTouched();
+      return;
+    }
     if (this.validateGSTWithClaimed()) {
       // this.gstDetails.IsBillRaisedInCompanyGST = this.companyGSTForm.value.IsBillRaisedInCompanyGST;
       this.gstDetails.push(this.gstDetailsForm.value);

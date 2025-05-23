@@ -46,6 +46,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() existingData: any;
   @Output() emitFormData = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();
+  @Output() updateData = new EventEmitter<any>();
   form: FormGroup = new FormGroup({});
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
   tableData: any = [];
@@ -557,6 +558,15 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
   }
 
+  onDeleteRow(index: number) {
+    this.tableData.splice(index, 1);
+    this.existingData.splice(index, 1);
+    this.tableData = [...this.tableData];
+    this.existingData = [...this.existingData];
 
+    this.category.count = this.tableData.length; // To update tab badge
+
+    this.updateData.emit({ name: this.category.name, data: this.tableData }); // Emit to parent if needed
+  }
 
 }

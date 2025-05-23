@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, inject, provideAppInitializer } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 
@@ -9,21 +9,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { loaderInterceptor } from './interceptors/loader.interceptor';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
-import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
-import { CustomDateAdapter } from './tokens/custom-date-adapter';
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
 import { GlobalConfigService } from './shared/service/global-config.service';
-
-export const CUSTOM_DATE_FORMATS = {
-  parse: {
-    dateInput: 'MM/dd/yyyy',
-  },
-  display: {
-    dateInput: 'MM/dd/yyyy',        // What the user sees in the input
-    monthYearLabel: 'MMM yyyy',     // Label in month/year picker
-    dateA11yLabel: 'MM/dd/yyyy',    // Accessibility label
-    monthYearA11yLabel: 'MMMM yyyy' // Accessibility for month/year
-  },
-};
+import { DateFormatService } from './shared/service/date-format.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -44,19 +32,23 @@ export const appConfig: ApplicationConfig = {
         },
       })
     ),
-
-    // { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
-    // { provide: DateAdapter, useClass: CustomDateAdapter },
-    // { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
-
-     // ✅ Global date configuration
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, // Ensures dd/MM/yyyy calendar
-    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+    provideAppInitializer(() => {
+      const configService = inject(GlobalConfigService);
+      console.log('[App Init] Loading global-config.json...');
+      return configService.loadConfig();
+    }),
+    // Global date configuration
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     {
-      provide: 'APP_INITIALIZER',
-      useFactory: (configService: GlobalConfigService) => () => configService.loadConfig(),
-      deps: [GlobalConfigService],
-      multi: true
+      provide: MAT_DATE_FORMATS,
+      useFactory: () => {
+        const format = inject(DateFormatService).formats;
+        console.log('[MAT_DATE_FORMATS] resolved:', format);
+        return format;
+      }
     }
-  ],
+
+  ]
 };
+
+

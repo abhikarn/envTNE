@@ -246,4 +246,8 @@ export class MaterialTableComponent implements OnChanges {
   isRemarkInvalid(row: any): boolean {
     return (this.mode === 'approval' || this.mode === 'finance-approval') && !row.selected && (!row.remarks || row.remarks.trim() === '');
   }
+
+  get hasSelectableRows(): boolean {
+    return this.processedData?.some(r => r.claimStatusId !== 5) ?? false;
+  }
 }

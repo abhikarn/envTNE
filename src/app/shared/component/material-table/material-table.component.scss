@@ -24,6 +24,10 @@ app-material-table {
     border: none;
   }
 
+  .disabled-row {
+    background-color: #f0f0f0 !important; // Light grey
+  }
+
   .expanded-container {
     padding: 8px 12px !important;
     background: #f9f9f9;
@@ -112,8 +116,9 @@ app-material-table {
   }
 
   .remarks-error textarea {
-  border: 1px solid red !important;
-  background-color: #ffe6e6; /* Optional: light red background */
-}
-  
+    border: 1px solid red !important;
+    background-color: #ffe6e6;
+    /* Optional: light red background */
+  }
+
 }

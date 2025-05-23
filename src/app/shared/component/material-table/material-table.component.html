@@ -4,10 +4,10 @@
     @if (mode === 'approval' || mode === 'finance-approval') {
     <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
-            <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" />
+            <input *ngIf="hasSelectableRows" type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" />
         </th>
         <td mat-cell *matCellDef="let row">
-            <input type="checkbox" [(ngModel)]="row.selected" (change)="onRowSelectionChange(row)" />
+            <input *ngIf="row.ClaimStatusId !== 5" type="checkbox" [(ngModel)]="row.selected" (change)="onRowSelectionChange(row)" />
         </td>
     </ng-container>
     }
@@ -79,7 +79,13 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
     <!-- Data Row -->
-    <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="{ 'violation-row': row?.IsViolation }"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="{
+          'violation-row': row?.IsViolation,
+          'disabled-row': row?.ClaimStatusId == 5
+        }">
+        <pre>{{row |json}}</pre>
+    </tr>
+
 
     <!-- Approval Mode: Remarks Row -->
     @if (mode === 'approval' || mode === 'finance-approval') {
@@ -139,7 +145,8 @@
     <!-- Remarks Full Width Row -->
     <ng-container matColumnDef="remarksRow">
         <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
-            <div class="remarks-container" [ngClass]="{ 'remarks-error': isRemarkInvalid(row) }">
+            <div *ngIf="row.ClaimStatusId !== 5" class="remarks-container"
+                [ngClass]="{ 'remarks-error': isRemarkInvalid(row) }">
                 <label class="remarks-label">Remarks</label>
                 <textarea [(ngModel)]="row.remarks" class="form-control" rows="2"></textarea>
             </div>

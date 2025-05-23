@@ -93,8 +93,8 @@
                     </div>
                     <div class="form-hold mt-1">
                         <div class="form-listing">
-                            <a href="javascript:void()" type="submit" class="btn btn-primary w-100"
-                                (click)="onSubmit()">{{config.buttons.loginButton}}</a>
+                            <button type="submit" class="btn btn-primary w-100"
+                                (click)="onSubmit()">{{config.buttons.loginButton}}</button>
                         </div>
                         <div *ngIf="errorMessage" class="text-danger mt-1">{{ errorMessage }}</div>
                     </div>

@@ -23,15 +23,9 @@ import { FormControlFactory } from '../../../shared/dynamic-form/form-control.fa
 import { ServiceRegistryService } from '../../../shared/service/service-registry.service';
 import { SummaryComponent } from '../../../shared/component/summary/summary.component';
 import { UtilsService } from '../../../shared/service/utils.service';
-import { DateAdapter } from '@angular/material/core';
-import { CustomDateAdapter } from '../../../tokens/custom-date-adapter';
 import { ApplicationMessageService } from '../../../shared/service/application-message.service';
 import { environment } from '../../../../environment';
 
-interface DataEntry {
-  name: number;
-  data: any;
-}
 
 @Component({
   selector: 'app-main-expense',
@@ -113,16 +107,8 @@ export class MainExpenseComponent {
     private serviceRegistry: ServiceRegistryService,
     private router: Router,
     private utilsService: UtilsService,
-    private dateAdapter: DateAdapter<any>, // Inject DateAdapter,
     private applicationMessageService: ApplicationMessageService
   ) {
-    console.log('Using DateAdapter:', this.dateAdapter.constructor.name); // Log the adapter type
-    if (this.dateAdapter instanceof CustomDateAdapter) {
-      console.log('CustomDateAdapter is being used.');
-      alert('CustomDateAdapter is being used in MainExpenseComponent.');
-    } else {
-      console.warn('CustomDateAdapter is NOT being used.');
-    }
   }
 
   @HostListener('document:click', ['$event'])
@@ -405,18 +391,18 @@ export class MainExpenseComponent {
           this.travelRequestPreview = { ...preview, UserMasterId: this.userMasterId };
 
           this.travelDetails?.data?.forEach((config: any) => {
-              const prop = config.name;
-              if (this.travelRequestPreview && this.travelRequestPreview.hasOwnProperty(prop)) {
-                config.value = this.travelRequestPreview[prop];
-              }
-              if (this.travelRequestPreview?.TravelRequestMetaData) {
-                this.travelRequestPreview.TravelRequestMetaData.forEach((meta: any) => {
-                  if ( meta && meta.FieldName === prop) {
-                    config.value = meta.IntegerValueReference;
-                  }
-                });
-              }
-            });
+            const prop = config.name;
+            if (this.travelRequestPreview && this.travelRequestPreview.hasOwnProperty(prop)) {
+              config.value = this.travelRequestPreview[prop];
+            }
+            if (this.travelRequestPreview?.TravelRequestMetaData) {
+              this.travelRequestPreview.TravelRequestMetaData.forEach((meta: any) => {
+                if (meta && meta.FieldName === prop) {
+                  config.value = meta.IntegerValueReference;
+                }
+              });
+            }
+          });
           this.travelDetails?.data?.sort((a: any, b: any) => a.order - b.order);
 
           const meta = this.travelRequestPreview.TravelRequestMetaData || [];
@@ -479,6 +465,18 @@ export class MainExpenseComponent {
     this.summaryComponent.calculatCategoryWiseExpense();
   }
 
+  updateCategoryData(updated: { name: string, data: any[] }) {
+    const categoryBlock = this.expenseRequestData?.dynamicExpenseDetailModels?.find((x: any) => x.name === updated.name);
+    if (categoryBlock) {
+      categoryBlock.data = updated.data;
+    }
+
+    const tab = this.categories.find((c: any) => c.name === updated.name);
+    if (tab) tab.count = updated.data.length;
+
+    this.summaryComponent.calculatTotalExpenseAmount();
+    this.summaryComponent.calculatCategoryWiseExpense();
+  }
 
   // Populate autoComplete options by input value (ID or search text) and update matching control.
   getTextData(inputData: any) {
@@ -570,8 +568,13 @@ export class MainExpenseComponent {
   onAction(type: string) {
     
     if (type == "cancel") {
-      this.router.navigate(['../expense/expense/landing']);
-      return;
+      if (this.editMode) {
+        this.router.navigate(['../expense/expense/dashboard']);
+        return;
+      } else {
+        this.router.navigate(['../expense/expense/landing']);
+        return;
+      }
     }
 
     // if (type === 'submit' || type === 'draft') {
@@ -626,6 +629,7 @@ export class MainExpenseComponent {
       ActionBy: this.userMasterId,
       dynamicExpenseDetailModels: this.utilsService.simplifyObject(this.expenseRequestData?.dynamicExpenseDetailModels)
     };
+    console.log(this.mainExpenseData);
 
 
     this.confirmDialogService

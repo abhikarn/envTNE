@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatNativeDateModule, DateAdapter } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { IFormControl } from '../../form-control.interface';
@@ -9,7 +9,6 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 import { Subscription } from 'rxjs';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
 import { SnackbarService } from '../../../service/snackbar.service';
-import { CustomDateAdapter } from '../../../../tokens/custom-date-adapter';
 import { GlobalConfigService } from '../../../service/global-config.service';
 
 @Component({
@@ -36,7 +35,6 @@ export class DateInputComponent {
   constructor(
     private serviceRegistry: ServiceRegistryService,
     private snackbarService: SnackbarService,
-    private dateAdapter: DateAdapter<any>, // Inject DateAdapter
     private configService: GlobalConfigService
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
@@ -50,8 +48,8 @@ export class DateInputComponent {
 
     this.control.valueChanges.subscribe(value => {
       if (value instanceof Date) {
-        // Remove ISO conversion to preserve formatted date
-        this.control.setValue(value, { emitEvent: false });
+        const isoDate = value.toISOString(); // Convert to ISO 8601 format
+        this.control.setValue(isoDate, { emitEvent: false }); // Prevent infinite loop
       }
     });
   }

@@ -93,7 +93,7 @@ export class PreviewComponent {
   openDetailsDialog(id: number): void {
 
     let requestBody = {
-      expenseRequestId: this.expenseRequestId
+      transactionId: this.transactionId
     }
     this.newExpenseService.getExpenseRequestDetailPreview(requestBody).pipe(take(1)).subscribe({
       next: (response: any) => {
@@ -214,7 +214,9 @@ export class PreviewComponent {
           }
         })
       });
-      this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName).setValue(this.expenseRequestPreviewData?.remarks);
+      if(this.mode == 'preview') {
+         this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName).setValue(this.expenseRequestPreviewData?.remarks);
+      }
       setTimeout(() => {
         this.calculatTotalExpenseAmountPreview();
         this.calculatCategoryWiseExpensePreview();

@@ -20,8 +20,10 @@
               <i class="fas fa-edit" (click)="edit(row, i+1)"></i>
               <i class="fas fa-chevron-down" (click)="toggleRow(i)" [class.rotate]="expandedRowIndex === i"></i>
               @if (row?.IsViolation) {
-              <i class="fas fa-exclamation-triangle text-danger"></i>
+               <i class="fas fa-exclamation-triangle text-danger"
+                    [matTooltip]="row?.Violation" matTooltipPosition="above"></i>
               }
+              <i class="fas fa-trash text-danger ms-2" title="Delete" (click)="confirmDelete(i)"></i>
               } @else {
               {{ formatValue(col.name, row[col.name]) }}
               }
@@ -65,9 +67,6 @@
                         </a>
                         <a class="me-2" title="Download" (click)="downloadFile(nestedRow)">
                           <i class="fa-solid fa-download text-success"></i>
-                        </a>
-                        <a title="Delete">
-                          <i class="fa-solid fa-trash text-danger"></i>
                         </a>
                         } @else {
                         {{ formatValue(col.name, nestedRow[col.name]) }}
