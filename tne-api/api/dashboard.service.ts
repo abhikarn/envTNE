@@ -9,13 +9,12 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional } from '@angular/core';
-import {
-    HttpClient, HttpHeaders, HttpParams,
-    HttpResponse, HttpEvent, HttpParameterCodec, HttpContext
-} from '@angular/common/http';
-import { CustomHttpParameterCodec } from '../encoder';
-import { Observable } from 'rxjs';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent, HttpParameterCodec, HttpContext 
+        }       from '@angular/common/http';
+import { CustomHttpParameterCodec }                          from '../encoder';
+import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
 import { DataSubmit } from '../model/dataSubmit';
@@ -31,18 +30,18 @@ import { TravelRequestApprovalsDashboardParam } from '../model/travelRequestAppr
 import { TravelRequestDashboardParam } from '../model/travelRequestDashboardParam';
 
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
-import { Configuration } from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { Configuration }                                     from '../configuration';
 import { BaseService } from '../api.base.service';
 
 
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class DashboardService extends BaseService {
 
-    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string | string[], @Optional() configuration?: Configuration) {
+    constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string|string[], @Optional() configuration?: Configuration) {
         super(basePath, configuration);
     }
 
@@ -51,10 +50,10 @@ export class DashboardService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public dashboardGetDashboardEmployeeLanding(mobileAppDashboardDataParam: MobileAppDashboardDataParam, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<DataSubmit>;
-    public dashboardGetDashboardEmployeeLanding(mobileAppDashboardDataParam: MobileAppDashboardDataParam, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<HttpResponse<DataSubmit>>;
-    public dashboardGetDashboardEmployeeLanding(mobileAppDashboardDataParam: MobileAppDashboardDataParam, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<HttpEvent<DataSubmit>>;
-    public dashboardGetDashboardEmployeeLanding(mobileAppDashboardDataParam: MobileAppDashboardDataParam, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<any> {
+    public dashboardGetDashboardEmployeeLanding(mobileAppDashboardDataParam: MobileAppDashboardDataParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<DataSubmit>;
+    public dashboardGetDashboardEmployeeLanding(mobileAppDashboardDataParam: MobileAppDashboardDataParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
+    public dashboardGetDashboardEmployeeLanding(mobileAppDashboardDataParam: MobileAppDashboardDataParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
+    public dashboardGetDashboardEmployeeLanding(mobileAppDashboardDataParam: MobileAppDashboardDataParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (mobileAppDashboardDataParam === null || mobileAppDashboardDataParam === undefined) {
             throw new Error('Required parameter mobileAppDashboardDataParam was null or undefined when calling dashboardGetDashboardEmployeeLanding.');
         }
@@ -120,10 +119,10 @@ export class DashboardService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public dashboardGetExpenseRequestApprovalDashboard(expenseRequestApprovalsDashboardParam: ExpenseRequestApprovalsDashboardParam, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<DataSubmit>;
-    public dashboardGetExpenseRequestApprovalDashboard(expenseRequestApprovalsDashboardParam: ExpenseRequestApprovalsDashboardParam, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<HttpResponse<DataSubmit>>;
-    public dashboardGetExpenseRequestApprovalDashboard(expenseRequestApprovalsDashboardParam: ExpenseRequestApprovalsDashboardParam, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<HttpEvent<DataSubmit>>;
-    public dashboardGetExpenseRequestApprovalDashboard(expenseRequestApprovalsDashboardParam: ExpenseRequestApprovalsDashboardParam, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<any> {
+    public dashboardGetExpenseRequestApprovalDashboard(expenseRequestApprovalsDashboardParam: ExpenseRequestApprovalsDashboardParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<DataSubmit>;
+    public dashboardGetExpenseRequestApprovalDashboard(expenseRequestApprovalsDashboardParam: ExpenseRequestApprovalsDashboardParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
+    public dashboardGetExpenseRequestApprovalDashboard(expenseRequestApprovalsDashboardParam: ExpenseRequestApprovalsDashboardParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
+    public dashboardGetExpenseRequestApprovalDashboard(expenseRequestApprovalsDashboardParam: ExpenseRequestApprovalsDashboardParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (expenseRequestApprovalsDashboardParam === null || expenseRequestApprovalsDashboardParam === undefined) {
             throw new Error('Required parameter expenseRequestApprovalsDashboardParam was null or undefined when calling dashboardGetExpenseRequestApprovalDashboard.');
         }
@@ -189,14 +188,14 @@ export class DashboardService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public dashboardGetExpenseRequestDashboard(expenseRequestDashboardParam: ExpenseRequestDashboardParam, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<DataSubmit>;
-    public dashboardGetExpenseRequestDashboard(expenseRequestDashboardParam: ExpenseRequestDashboardParam, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<HttpResponse<DataSubmit>>;
-    public dashboardGetExpenseRequestDashboard(expenseRequestDashboardParam: ExpenseRequestDashboardParam, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<HttpEvent<DataSubmit>>;
-    public dashboardGetExpenseRequestDashboard(expenseRequestDashboardParam: ExpenseRequestDashboardParam, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<any> {
+    public dashboardGetExpenseRequestDashboard(expenseRequestDashboardParam: ExpenseRequestDashboardParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<DataSubmit>;
+    public dashboardGetExpenseRequestDashboard(expenseRequestDashboardParam: ExpenseRequestDashboardParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
+    public dashboardGetExpenseRequestDashboard(expenseRequestDashboardParam: ExpenseRequestDashboardParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
+    public dashboardGetExpenseRequestDashboard(expenseRequestDashboardParam: ExpenseRequestDashboardParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (expenseRequestDashboardParam === null || expenseRequestDashboardParam === undefined) {
             throw new Error('Required parameter expenseRequestDashboardParam was null or undefined when calling dashboardGetExpenseRequestDashboard.');
         }
-        debugger;
+
         let localVarHeaders = this.defaultHeaders;
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
@@ -258,10 +257,10 @@ export class DashboardService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public dashboardGetTravelRequestApprovalsDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<DataSubmit>;
-    public dashboardGetTravelRequestApprovalsDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<HttpResponse<DataSubmit>>;
-    public dashboardGetTravelRequestApprovalsDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<HttpEvent<DataSubmit>>;
-    public dashboardGetTravelRequestApprovalsDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<any> {
+    public dashboardGetTravelRequestApprovalsDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<DataSubmit>;
+    public dashboardGetTravelRequestApprovalsDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
+    public dashboardGetTravelRequestApprovalsDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
+    public dashboardGetTravelRequestApprovalsDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (travelRequestApprovalsDashboardParam === null || travelRequestApprovalsDashboardParam === undefined) {
             throw new Error('Required parameter travelRequestApprovalsDashboardParam was null or undefined when calling dashboardGetTravelRequestApprovalsDashboard.');
         }
@@ -327,10 +326,10 @@ export class DashboardService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public dashboardGetTravelRequestBudgetSegregationDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<DataSubmit>;
-    public dashboardGetTravelRequestBudgetSegregationDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<HttpResponse<DataSubmit>>;
-    public dashboardGetTravelRequestBudgetSegregationDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<HttpEvent<DataSubmit>>;
-    public dashboardGetTravelRequestBudgetSegregationDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<any> {
+    public dashboardGetTravelRequestBudgetSegregationDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<DataSubmit>;
+    public dashboardGetTravelRequestBudgetSegregationDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
+    public dashboardGetTravelRequestBudgetSegregationDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
+    public dashboardGetTravelRequestBudgetSegregationDashboard(travelRequestApprovalsDashboardParam: TravelRequestApprovalsDashboardParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (travelRequestApprovalsDashboardParam === null || travelRequestApprovalsDashboardParam === undefined) {
             throw new Error('Required parameter travelRequestApprovalsDashboardParam was null or undefined when calling dashboardGetTravelRequestBudgetSegregationDashboard.');
         }
@@ -396,10 +395,10 @@ export class DashboardService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public dashboardGetTravelRequestDashboard(travelRequestDashboardParam: TravelRequestDashboardParam, observe?: 'body', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<DataSubmit>;
-    public dashboardGetTravelRequestDashboard(travelRequestDashboardParam: TravelRequestDashboardParam, observe?: 'response', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<HttpResponse<DataSubmit>>;
-    public dashboardGetTravelRequestDashboard(travelRequestDashboardParam: TravelRequestDashboardParam, observe?: 'events', reportProgress?: boolean, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<HttpEvent<DataSubmit>>;
-    public dashboardGetTravelRequestDashboard(travelRequestDashboardParam: TravelRequestDashboardParam, observe: any = 'body', reportProgress: boolean = false, options?: { httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean }): Observable<any> {
+    public dashboardGetTravelRequestDashboard(travelRequestDashboardParam: TravelRequestDashboardParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<DataSubmit>;
+    public dashboardGetTravelRequestDashboard(travelRequestDashboardParam: TravelRequestDashboardParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
+    public dashboardGetTravelRequestDashboard(travelRequestDashboardParam: TravelRequestDashboardParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
+    public dashboardGetTravelRequestDashboard(travelRequestDashboardParam: TravelRequestDashboardParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (travelRequestDashboardParam === null || travelRequestDashboardParam === undefined) {
             throw new Error('Required parameter travelRequestDashboardParam was null or undefined when calling dashboardGetTravelRequestDashboard.');
         }
