@@ -206,21 +206,45 @@ export class MaterialTableComponent implements OnChanges {
     }
   }
 
-  enforceLimit(event: Event, row: any, key: string): void {
+  enforceLimit(event: Event, row: any, key: string, maxLength: number = 10, decimalPrecision: number = 2): void {
     const input = event.target as HTMLInputElement;
-    let value = parseInt(input.value || '0', 10);
+    let inputValue = (input.value || '').toString();
 
-    if (isNaN(value)) {
-      value = 0;
+    // Remove all non-numeric and non-decimal characters, allow only one decimal point
+    inputValue = inputValue.replace(/[^0-9.]/g, '');
+
+    // Prevent more than one decimal point
+    const parts = inputValue.split('.');
+    if (parts.length > 2) {
+      inputValue = parts[0] + '.' + parts.slice(1).join('');
     }
 
-    // Clamp the value
-    if (value < 0) value = 0;
-    if (value > 9999999999) value = 9999999999;
+    // Limit integer and decimal part lengths
+    const [integerPart, decimalPart] = inputValue.split('.');
+    let formattedValue = integerPart ? integerPart.slice(0, maxLength) : '';
+    if (decimalPart !== undefined) {
+      formattedValue += '.' + decimalPart.slice(0, decimalPrecision);
+    }
 
-    // Update both view and model
-    input.value = value.toString();
-    row[key] = value;
+    // Update both view and model (do not format to fixed here, only on blur)
+    input.value = formattedValue;
+    row[key] = formattedValue;
+  }
+
+  onAmountBlur(event: Event, row: any, key: string, decimalPrecision: number = 2): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+
+    // Format value to required decimal precision on blur
+    const numericValue = parseFloat(value);
+    if (!isNaN(numericValue)) {
+      const formatted = numericValue.toFixed(decimalPrecision);
+      input.value = formatted;
+      row[key] = formatted;
+    } else {
+      input.value = '';
+      row[key] = '';
+    }
   }
 
   validateApprovedAmount(row: any): void {
