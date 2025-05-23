@@ -72,7 +72,7 @@
                         {
                             "type": "required",
                             "message": "Password is required"
-                        } 
+                        }
                     ]
                 }
             ]

@@ -133,6 +133,7 @@ export class PreviewComponent {
   }
 
   getExpenseRequestPreviewDetails() {
+    
     let requestBody = {
       transactionId: this.transactionId
     }

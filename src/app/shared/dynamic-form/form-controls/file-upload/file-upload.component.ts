@@ -1,4 +1,3 @@
-
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
@@ -6,6 +5,7 @@ import { DocumentService } from '../../../../../../tne-api';
 import { take } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SnackbarService } from '../../../service/snackbar.service';
+import { environment } from '../../../../../environment';
 
 @Component({
   selector: 'lib-file-upload',
@@ -34,6 +34,7 @@ export class FileUploadComponent {
   }
 
   onFileSelected(event: Event) {
+    
     const input = event.target as HTMLInputElement;
     const maxSizeBytes = (this.controlConfig.maxSizeMB ?? 20) * 1024 * 1024;
     if (input.files && input.files.length > 0) {
@@ -92,18 +93,25 @@ export class FileUploadComponent {
   previewFile(file: any) {
     const extension = file.FileName.split('.').pop()?.toLowerCase();
     const baseName = file.FileName.replace(/\.[^/.]+$/, '');
-    const fileUrl = `https://localhost:44364/Document/${baseName}-${file.Guid}.${extension}`;
+    const fileUrl = `${environment.documentBaseUrl}/${baseName}-${file.Guid}.${extension}`;
     if (fileUrl) {
       window.open(fileUrl, '_blank');
     }
   }
 
   downloadFile(file: any) {
-    const url = this.domSanitizer.bypassSecurityTrustResourceUrl(file?.fileUrl || file?.Location);
-    const link = document.createElement('a');
-    link.href = url.toString();
-    link.download = file?.FileName || 'downloaded-file';
-    link.click();
+    
+    const extension = file.FileName.split('.').pop()?.toLowerCase();
+    const baseName = file.FileName.replace(/\.[^/.]+$/, '');
+    const fileUrl = `${environment.documentBaseUrl}/${baseName}-${file.Guid}.${extension}`;
+    // if (extension === 'pdf') {
+      window.open(fileUrl, '_blank');
+    // } else {
+    //   const link = document.createElement('a');
+    //   link.href = fileUrl;
+    //   link.download = file.FileName || 'downloaded-file';
+    //   link.click();
+    // }
   }
 
   getErrorMessage(): string {

@@ -64,7 +64,7 @@ export const ELEMENT_DATA: any[] = [];
 })
 
 export class ApprovalDashboardComponent implements OnInit {
-
+  expenseDashboardConfig: any;
   expenseDashboardParam: ExpenseRequestDashboardParam = {}
   expenseRequesData: any[] = []
   statusWiseExpenseDataCount: { approved: number; pending: number; rejected: number } = {
@@ -73,17 +73,7 @@ export class ApprovalDashboardComponent implements OnInit {
     rejected: 0,
   };
 
-  displayedColumns: ColumnConfig[] = [
-    { key: 'slNo', label: 'Sl.No', sortable: false },
-    { key: 'Requester', label: 'Requester', sortable: true },
-    { key: 'RequestNumber', label: 'Request Number', sortable: true },
-    { key: 'RequestDate', label: 'Request Date', sortable: true },
-    { key: 'ExpenseClaimTypeDescription', label: 'Expense Type', sortable: true },
-    { key: 'ApprovedAmount', label: 'Amount', sortable: true },
-    { key: 'PolicyViolationCount', label: 'Policy Violation', sortable: true },
-    { key: 'ClaimStatus', label: 'Status', sortable: true },
-    { key: 'action', label: 'Action', sortable: false }
-  ];
+  displayedColumns: ColumnConfig[] =  [];
 
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -104,7 +94,8 @@ export class ApprovalDashboardComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.dataSource.data=[];
+    this.dataSource.data = [];
+    this.loadDisplayedColumns();
     this.getMyExpenseRequestDashBoard();
   }
 
@@ -128,6 +119,20 @@ export class ApprovalDashboardComponent implements OnInit {
       this.dataSource.data = requestData.ResponseValue as any[];
       console.log(this.dataSource.data);
     })
+  }
+
+loadDisplayedColumns(): void {     
+    this.http.get(`assets/config/expense-config.json`).subscribe((config: any) => {
+      this.expenseDashboardConfig = config;
+      const tableDetail = config.dashboard?.expenseStatement.tableDetail || [];
+      this.displayedColumns = tableDetail.map((col: any) => ({
+        key: col.key,
+        label: col.label,
+        sortable: col.sortable,
+      }));
+      this.columnKeys = this.displayedColumns.map(col => col.key);
+      this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');
+    });
   }
 
   ngAfterViewInit(): void {

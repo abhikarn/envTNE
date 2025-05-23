@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../../../core/core.module';
 import { NewExpenseService } from '../../feature/expense/service/new-expense.service';
-import * as loginConfig from '../../../assets/config/login-config.json';
+// import * as loginConfig from '../../../assets/config/login-config.json';
 import { IFormControl } from '../../shared/dynamic-form/form-control.interface';
 import { FormControlFactory } from '../../shared/dynamic-form/form-control.factory';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -19,6 +19,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { AccountService, ForgotPasswordParam } from '../../../../tne-api';
 import { SnackbarService } from '../../shared/service/snackbar.service';
+import { environment } from '../../../environment';
 
 @Component({
   selector: 'app-forgot-password',
@@ -39,16 +40,20 @@ import { SnackbarService } from '../../shared/service/snackbar.service';
   styleUrl: './forgot-password.component.scss'
 })
 export class ForgotPasswordComponent implements OnInit {
+  assetPath = `${environment.assetsPath}`
   loginForm!: FormGroup;
   footerText: string = "Copyright © 2024-2025. All rights reserved.";
   submitted = false;
   sessionId: string = '';
   isAuthenticated: boolean = false;
   errorMessage = '';
-  config: any = loginConfig.ForgotPasswordForm;
+  // config: any = loginConfig.ForgotPasswordForm;
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
   form: FormGroup = new FormGroup({});
-  loginFormControl: any = this.config.loginForm;
+  // loginFormControl: any = this.config.loginForm;
+  loginConfig: any;
+  config: any;
+  loginFormControl: any;
 
   constructor(
     private fb: FormBuilder,
@@ -61,13 +66,33 @@ export class ForgotPasswordComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.renderer.setStyle(
-      document.documentElement,
-      '--login-page-bg',
-      this.config.styles.loginPageBackgroundColor
-    );
+    // this.renderer.setStyle(
+    //   document.documentElement,
+    //   '--login-page-bg',
+    //   this.config.styles.loginPageBackgroundColor
+    // );
 
-    this.createForm();
+    // this.createForm();
+
+    this.http.get<any>(`${this.assetPath}/assets/config/login-config.json`).subscribe({
+      next: (configData) => {
+        this.loginConfig = configData;
+        this.config = configData.ForgotPasswordForm;
+        this.loginFormControl = configData.ForgotPasswordForm.loginForm;
+
+        this.renderer.setStyle(
+          document.documentElement,
+          '--login-page-bg',
+          this.config.styles?.loginPageBackgroundColor || '#ffffff'
+        );
+
+        this.createForm();
+      },
+      error: (err) => {
+        console.error('Failed to load login config:', err);
+        this.errorMessage = 'Unable to load configuration. Please contact support.';
+      },
+    });
   }
 
   onSubmit(): void {
