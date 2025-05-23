@@ -148,7 +148,7 @@
             <div *ngIf="row.ClaimStatusId !== 5" class="remarks-container"
                 [ngClass]="{ 'remarks-error': isRemarkInvalid(row) }">
                 <label class="remarks-label">Remarks</label>
-                <textarea [(ngModel)]="row.remarks" class="form-control" rows="2"></textarea>
+                <textarea [(ngModel)]="row.remarks" class="form-control" rows="2" maxlength="500"></textarea>
             </div>
         </td>
     </ng-container>
