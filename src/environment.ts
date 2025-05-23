@@ -12,5 +12,5 @@ export const environment = {
 //     apiUrl: 'https://enaviya.co.in/spendmantraMobApi/api/', // Exising API URL
 //     newApiUrl:'https://enaviya.co.in/SpendMantraapi/api/', // New API URL
 //     assetsPath:'https://enaviya.co.in/SpendManraAngular' // New API URL
-//     documentBaseUrl: 'https://enaviya.co.in/SpendManraAngular/Document' // Document base URL
+//     documentBaseUrl: 'https://enaviya.co.in/spendmantra/Document' // Document base URL
 // };
