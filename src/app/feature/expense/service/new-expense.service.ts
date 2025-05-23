@@ -46,4 +46,8 @@ export class NewExpenseService {
   getExpenseConfig() {
     return this.httpClient.get<any>(`${this.assetPath}/assets/config/expense-config.json`);
   }
+
+  getloginConfig() {
+    return this.httpClient.get<any>(`${this.assetPath}/assets/config/login-config.json`);
+  }
 }

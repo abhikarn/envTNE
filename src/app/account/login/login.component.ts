@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../../../core/core.module';
 import { NewExpenseService } from '../../feature/expense/service/new-expense.service';
-import * as loginConfig from '../../../assets/config/login-config.json';
+// import * as loginConfig from '../../../assets/config/login-config.json';
 import { IFormControl } from '../../shared/dynamic-form/form-control.interface';
 import { FormControlFactory } from '../../shared/dynamic-form/form-control.factory';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -15,6 +15,7 @@ import { TextAreaInputComponent } from '../../shared/dynamic-form/form-controls/
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { environment } from '../../../environment';
 
 @Component({
   selector: 'app-login',
@@ -35,16 +36,18 @@ import { MatInputModule } from '@angular/material/input';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  assetPath = `${environment.assetsPath}`
   loginForm!: FormGroup;
   footerText: string = "Copyright © 2024-2025. All rights reserved.";
   submitted = false;
   sessionId: string = '';
   isAuthenticated: boolean = false;
   errorMessage = '';
-  config: any = loginConfig.LoginForm;
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
   form: FormGroup = new FormGroup({});
-  loginFormControl: any = this.config.loginForm;
+  loginConfig: any;
+  config: any;
+  loginFormControl: any;
 
   constructor(
     private fb: FormBuilder,
@@ -55,29 +58,42 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.renderer.setStyle(
-      document.documentElement,
-      '--login-page-bg',
-      this.config.styles.loginPageBackgroundColor
-    );
+    // this.loginConfig=this.http.get<any>(`${this.assetPath}/assets/config/login-config.json`);
+    // this.config = this.loginConfig.loginForm;
+    // this.loginFormControl = this.loginConfig.loginForm;
+    // this.renderer.setStyle(
+    //   document.documentElement,
+    //   '--login-page-bg',
+    //   this.config.styles.loginPageBackgroundColor
+    // ); 
+    // this.createForm();
+    this.http.get<any>(`${this.assetPath}/assets/config/login-config.json`).subscribe({
+      next: (configData) => {
+        this.loginConfig = configData;
+        this.config = configData.LoginForm;
+        this.loginFormControl = configData.LoginForm.loginForm;
 
-    // this.loginForm = this.fb.group({
-    //   employeeCode: ['', Validators.required],
-    //   password: ['', Validators.required],
-    // });
+        this.renderer.setStyle(
+          document.documentElement,
+          '--login-page-bg',
+          this.config.styles?.loginPageBackgroundColor || '#ffffff'
+        );
 
-    this.createForm();
+        this.createForm();
+      },
+      error: (err) => {
+        console.error('Failed to load login config:', err);
+        this.errorMessage = 'Unable to load configuration. Please contact support.';
+      },
+    });
   }
 
   onSubmit(): void {
-    
     this.submitted = true;
     this.errorMessage = '';
-
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
-      
     }
 
     this.getIPAddress().then((ipAddress) => {

@@ -88,7 +88,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                        "order": 1
                     },
                     {
                         "type": "select",
@@ -113,7 +114,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                        "order": 2
                     },
                     {
                         "type": "date",
@@ -149,7 +151,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                         "order": 3
                     },
                     {
                         "type": "text",
@@ -173,7 +176,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -197,7 +201,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                        "order": 5
                     },
                     {
                         "type": "select",
@@ -220,7 +225,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                        "order": 6
                     },
                     {
                         "type": "select",
@@ -250,7 +256,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -298,7 +305,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -328,7 +336,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": true
+                        "readonly": true,
+                        "order": 9
                     },
                     {
                         "type": "gst",
@@ -343,13 +352,15 @@
                                 "name": "ExpenseRequestGstTypeId",
                                 "type": "number",
                                 "value": 0,
-                                "showInUI": false
+                                "showInUI": false,
+                                "order": 1
                             },
                             {
                                 "name": "ExpenseRequestDetailId",
                                 "type": "number",
                                 "value": 0,
-                                "showInUI": false
+                                "showInUI": false,
+                                "order": 2
                             },
                             {
                                 "name": "GstIn",
@@ -366,7 +377,8 @@
                                         "name": "validateGST",
                                         "message": "Invalid GST number"
                                     }
-                                ]
+                                ],
+                                "order": 3
                             },
                             {
                                 "name": "InvoiceNumber",
@@ -378,7 +390,8 @@
                                         "type": "required",
                                         "message": "Required"
                                     }
-                                ]
+                                ],
+                                "order": 4
                             },
                             {
                                 "name": "Amount",
@@ -404,7 +417,8 @@
                                         "type": "min",
                                         "value": 0
                                     }
-                                ]
+                                ],
+                                "order": 5
                             },
                             {
                                 "name": "SGST",
@@ -419,7 +433,8 @@
                                         "min": 0,
                                         "max": 10
                                     }
-                                }
+                                },
+                                "order": 6
                             },
                             {
                                 "name": "CGST",
@@ -434,7 +449,8 @@
                                         "min": 0,
                                         "max": 10
                                     }
-                                }
+                                },
+                                "order": 7
                             },
                             {
                                 "name": "IGST",
@@ -449,7 +465,8 @@
                                         "min": 0,
                                         "max": 10
                                     }
-                                }
+                                },
+                                "order": 8
                             },
                             {
                                 "name": "UGST",
@@ -464,14 +481,15 @@
                                         "min": 0,
                                         "max": 10
                                     }
-                                }
+                                },
+                                "order": 9
                             }
                         ],
                         "notifications": {
                             "GSTAmount": "The GST amount should not be greater than the claimed amount.",
                             "validGSTAmount": "Please enter a valid GST amount.",
                             "claimedAmount": "Please enter a claimed amount."
-                        }
+                        } 
                     },
                     {
                         "type": "textarea",
@@ -482,7 +500,8 @@
                         "value": "",
                         "required": false,
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                         "order": 10
                     },
                     {
                         "type": "file",
@@ -504,14 +523,16 @@
                                 91
                             ]
                         },
-                        "disable": false
+                        "disable": false,
+                        "order": 11
                     },
                     {
                         "type": "hidden",
                         "name": "IsViolation",
                         "isExcluded": true,
                         "value": false,
-                        "showInUI": false
+                        "showInUI": false,
+                        "order": 12
                     },
                     {
                         "type": "hidden",
@@ -532,7 +553,8 @@
                                 "ClaimAmount",
                                 "ConversionRate"
                             ]
-                        }
+                        },
+                        "order": 13
                     }
                 ],
                 "submitPolicyValidationApi": {
@@ -569,44 +591,51 @@
                         "name": "__slNo",
                         "label": "Sl. No",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 1
                     },
                     {
                         "name": "TravelMode",
                         "label": "Travel Mode",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 2
                     },
                     {
                         "name": "AvailedClass",
                         "label": "AvailedClass",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 3
                     },
                     {
                         "type": "date",
                         "name": "TravelDate",
                         "label": "Travel Date",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 4
                     },
                     {
                         "name": "Origin",
                         "label": "Origin",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 5
                     },
                     {
                         "name": "Destination",
                         "label": "Destination",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 6
                     },
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 7
                     },
                     {
                         "type": "number",
@@ -614,32 +643,37 @@
                         "label": "Amount",
                         "visible": true,
                         "position": "in",
-                        "decimalPrecision": "2"
+                        "decimalPrecision": "2",
+                        "order": 8
                     },
                     {
                         "name": "Currency",
                         "label": "Currency",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 9
                     },
                     {
                         "name": "__actions",
                         "label": "Actions",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 10
                     },
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
                         "label": "ClaimAmountInBaseCurrency",
                         "visible": true,
-                        "position": "out"
+                        "position": "out",
+                        "order": 11
                     },
                     {
                         "name": "Remarks",
                         "label": "Remarks",
                         "visible": true,
-                        "position": "out"
+                        "position": "out",
+                        "order": 12
                     }
                 ],
                 "nestedTables": [
@@ -650,47 +684,55 @@
                             {
                                 "name": "__slNo",
                                 "label": "Sl. No",
-                                "visible": true
+                                "visible": true,
+                                "order": 1
                             },
                             {
                                 "name": "GstIn",
                                 "label": "GSTIN",
-                                "visible": true
+                                "visible": true,
+                                "order": 2
                             },
                             {
                                 "name": "InvoiceNumber",
                                 "label": "Invoice Number",
-                                "visible": true
+                                "visible": true,
+                                "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "Amount",
                                 "label": "Amount",
-                                "visible": true
+                                "visible": true,
+                                "order": 4
                             },
                             {
                                 "type": "number",
                                 "name": "SGST",
                                 "label": "SGST",
-                                "visible": true
+                                "visible": true,
+                                "order": 5
                             },
                             {
                                 "type": "number",
                                 "name": "CGST",
                                 "label": "CGST",
-                                "visible": true
+                                "visible": true,
+                                "order": 6
                             },
                             {
                                 "type": "number",
                                 "name": "IGST",
                                 "label": "IGST",
-                                "visible": true
+                                "visible": true,
+                                "order": 7
                             },
                             {
                                 "type": "number",
                                 "name": "UGST",
                                 "label": "UTGST",
-                                "visible": true
+                                "visible": true,
+                                "order": 8
                             }
                         ]
                     },
@@ -700,17 +742,20 @@
                             {
                                 "name": "__slNo",
                                 "label": "Sl. No",
-                                "visible": true
+                                "visible": true,
+                                "order": 1
                             },
                             {
                                 "name": "FileName",
                                 "label": "File Name",
-                                "visible": true
+                                "visible": true,
+                                "order": 2
                             },
                             {
                                 "name": "__actions",
                                 "label": "Action",
-                                "visible": true
+                                "visible": true,
+                                "order": 3
                             }
                         ]
                     }
@@ -730,19 +775,23 @@
                     "columns": [
                         {
                             "name": "actionTakenBy",
-                            "label": "Approver Name"
+                            "label": "Approver Name",
+                            "order": 1
                         },
                         {
                             "name": "actionTakenOnString",
-                            "label": "Action Date"
+                            "label": "Action Date",
+                            "order": 2
                         },
                         {
                             "name": "actionStatus",
-                            "label": "Status"
+                            "label": "Status",
+                            "order": 3
                         },
                         {
                             "name": "remarks",
-                            "label": "Remarks"
+                            "label": "Remarks",
+                            "order": 4
                         }
                     ]
                 }
@@ -780,7 +829,8 @@
                                 "type": "required",
                                 "message": "Currency is required"
                             }
-                        ]
+                        ],
+                        "order": 1
                     },
                     {
                         "type": "text",
@@ -805,7 +855,8 @@
                                 "type": "required",
                                 "message": "Amount is required"
                             }
-                        ]
+                        ],
+                        "order": 2
                     },
                     {
                         "type": "textarea",
@@ -813,7 +864,8 @@
                         "name": "AdjustmentRemarks",
                         "isExcluded": false,
                         "label": "Adjustment Remarks",
-                        "value": ""
+                        "value": "",
+                        "order": 3
                     }
                 ]
             }
@@ -1712,7 +1764,7 @@
                 "Success": "Expense Request Approved"
             }
         ]
-    },   
+    },
     "dashboard": {
         "name": "My dashboard",
         "link": "/expense/expense/my",
@@ -1815,52 +1867,62 @@
                 {
                     "key": "slNo",
                     "label": "Sl.No",
-                    "sortable": false
+                    "sortable": false,
+                    "order": 1
                 },
                 {
                     "key": "Requester",
                     "label": "Requester",
-                    "sortable": true
+                    "sortable": true,
+                    "order": 2
                 },
                 {
                     "key": "RequestNumber",
                     "label": "Request Number",
-                    "sortable": true
+                    "sortable": true,
+                    "order": 3
                 },
                 {
                     "key": "RequestDate",
                     "label": "Request Date",
-                    "sortable": true
+                    "sortable": true,
+                    "order": 4
                 },
                 {
                     "key": "ExpenseClaimTypeDescription",
                     "label": "Expense Type",
-                    "sortable": true
+                    "sortable": true,
+                    "order": 5
                 },
                 {
                     "key": "TravelRequestNumber",
                     "label": "Linked Request",
-                    "sortable": true
+                    "sortable": true,
+                    "order": 6
                 },
                 {
                     "key": "ApprovedAmount",
                     "label": "Amount",
-                    "sortable": true
+                    "sortable": true,
+                    "order": 7
                 },
                 {
                     "key": "PolicyViolationCount",
                     "label": "Policy Violation",
-                    "sortable": true
+                    "sortable": true,
+                    "order": 8
                 },
                 {
                     "key": "ClaimStatus",
                     "label": "Status",
-                    "sortable": true
+                    "sortable": true,
+                    "order": 9
                 },
                 {
                     "key": "action",
                     "label": "Action",
-                    "sortable": false
+                    "sortable": false,
+                    "order": 10
                 }
             ]
         },

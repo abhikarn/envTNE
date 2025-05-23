@@ -96,20 +96,43 @@ export class DashboardComponent implements OnInit {
     this.getMyExpenseRequestDashBoard();
   }
 
-  loadDisplayedColumns(): void {
-     
-    this.http.get(`assets/config/expense-config.json`).subscribe((config: any) => {
-      this.expenseDashboardConfig = config;
-      const tableDetail = config.dashboard?.expenseStatement.tableDetail || [];
-      this.displayedColumns = tableDetail.map((col: any) => ({
+  // loadDisplayedColumns(): void {     
+  //   this.http.get(`assets/config/expense-config.json`).subscribe((config: any) => {
+  //     this.expenseDashboardConfig = config;
+  //     const tableDetail = config.dashboard?.expenseStatement.tableDetail || [];
+  //     this.displayedColumns = tableDetail.map((col: any) => ({
+  //       key: col.key,
+  //       label: col.label,
+  //       sortable: col.sortable,
+  //       order: col.order        
+  //     }));
+  //     this.columnKeys = this.displayedColumns.map(col => col.key);
+  //     this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');
+  //   });
+  // }
+
+  loadDisplayedColumns(): void {     
+  this.http.get(`assets/config/expense-config.json`).subscribe((config: any) => {
+    this.expenseDashboardConfig = config;
+    const tableDetail = config.dashboard?.expenseStatement.tableDetail || [];
+
+    this.displayedColumns = tableDetail.map((col: any) => {
+      // Normalize 'are order' to 'order' if present
+      // const orderValue = col['order'] ?? col['are order'] ?? null;
+
+      return {
         key: col.key,
         label: col.label,
         sortable: col.sortable,
-      }));
-      this.columnKeys = this.displayedColumns.map(col => col.key);
-      this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');
-    });
-  }
+        order: col.order? col.order : 0
+      };
+    }) .sort((a:any, b:any) => a.order - b.order); // 👈 sort columns by order
+
+    this.columnKeys = this.displayedColumns.map(col => col.key);
+    this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');
+  });
+}
+
 
   columnKeys: string[] = [];
   filterColumnKeys: string[] = [];
