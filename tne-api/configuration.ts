@@ -45,7 +45,8 @@ export class Configuration {
      *  @deprecated Since 5.0. Use credentials instead
      */
     accessToken?: string | (() => string);
-    basePath?: string;
+    basePath?: string="https://localhost:44301/";
+    // basePath?: string="https://enaviya.co.in/spendmantraMobApi/";
     withCredentials?: boolean;
     /**
      * Takes care of encoding query- and form-parameters.
@@ -71,7 +72,8 @@ export class Configuration {
         this.username = configurationParameters.username;
         this.password = configurationParameters.password;
         this.accessToken = configurationParameters.accessToken;
-        this.basePath = configurationParameters.basePath;
+        this.basePath = configurationParameters.basePath || 'https://localhost:44301/';
+        // this.basePath = configurationParameters.basePath || 'https://enaviya.co.in/spendmantraMobApi/';
         this.withCredentials = configurationParameters.withCredentials;
         this.encoder = configurationParameters.encoder;
         if (configurationParameters.encodeParam) {

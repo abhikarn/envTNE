@@ -72,12 +72,7 @@
                         {
                             "type": "required",
                             "message": "Password is required"
-                        },
-                        {
-                            "type": "pattern",
-                            "message": "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character, and be between 7 to 20 characters long.",
-                            "value": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{7,20}$"
-                        } 
+                        }
                     ]
                 }
             ]

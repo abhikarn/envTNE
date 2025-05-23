@@ -195,7 +195,7 @@ export class DashboardService extends BaseService {
         if (expenseRequestDashboardParam === null || expenseRequestDashboardParam === undefined) {
             throw new Error('Required parameter expenseRequestDashboardParam was null or undefined when calling dashboardGetExpenseRequestDashboard.');
         }
-
+        
         let localVarHeaders = this.defaultHeaders;
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
