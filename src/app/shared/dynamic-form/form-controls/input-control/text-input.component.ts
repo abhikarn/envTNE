@@ -46,8 +46,6 @@ export class TextInputComponent implements OnInit {
 
     if (this.controlConfig.autoComplete) {
       this.control.valueChanges.subscribe(inputValue => {
-        console.log(this.form);
-        console.log(inputValue);
         this.validateSameOriginAndDestination();
         if (typeof inputValue !== "object") {
           // Trigger only when inputValue is a string of exactly 2 characters
@@ -84,6 +82,31 @@ export class TextInputComponent implements OnInit {
         inputValue = inputValue.substring(0, this.controlConfig.autoFormat.range.max);
       }
       this.control.setValue(inputValue, { emitEvent: false });
+    }
+  }
+
+  onCityAutoCompleteBlur() {
+    let value = this.control.value;
+
+    if (
+      (this.controlConfig.name === 'Origin' || this.controlConfig.name === 'Destination') &&
+      this.controlConfig.autoComplete &&
+      Array.isArray(this.controlConfig.options)
+    ) {
+      const isValid =
+        typeof value === 'object' &&
+        value !== null &&
+        this.controlConfig.options.some(
+          (option: any) => option.value === value.value
+        );
+      setTimeout(() => {
+        // Only show error if user typed something (not empty/null/undefined)
+        if (!isValid && value && value !== '') {
+          this.control.setValue(null, { emitEvent: false });
+          this.snackbarService.error(`Please select a valid city from the list for ${this.controlConfig.label}.`);
+          return;
+        }
+      }, 500);
     }
   }
 
