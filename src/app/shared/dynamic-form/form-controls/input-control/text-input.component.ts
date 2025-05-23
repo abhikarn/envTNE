@@ -100,7 +100,7 @@ export class TextInputComponent implements OnInit {
     }
   }
 
-  onCityAutoCompleteBlur() {
+  onCityAutoCompleteInput() {
     let value = this.control.value;
 
     if (
