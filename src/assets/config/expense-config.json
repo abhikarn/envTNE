@@ -1722,5 +1722,207 @@
                 "Success": "Expense Request Approved"
             }
         ]
+    },   
+    "dashboard": {
+        "name": "My dashboard",
+        "link": "/expense/expense/my",
+        "statusWiseTravelRequest": {
+            "name": "Travel Request",
+            "statusWise": [
+                {
+                    "key": "approved",
+                    "label": "Approved",
+                    "count": 0,
+                    "class": "bg-success-status",
+                    "statusIds": [
+                        23
+                    ]
+                },
+                {
+                    "key": "pending",
+                    "label": "Pending",
+                    "count": 0,
+                    "class": "bg-pending-status",
+                    "statusIds": [
+                        27,
+                        31
+                    ]
+                },
+                {
+                    "key": "rejected",
+                    "label": "Rejected",
+                    "count": 0,
+                    "class": "bg-rejected-status",
+                    "statusIds": [
+                        30
+                    ]
+                }
+            ]
+        },
+        "statusWiseExpenseRequest": {
+            "name": "Expense Claim",
+            "statusWise": [
+                {
+                    "key": "approved",
+                    "label": "Approved",
+                    "count": 0,
+                    "class": "bg-success-status",
+                    "statusIds": [
+                        23
+                    ],
+                    "displayStatus": true
+                },
+                {
+                    "key": "pending",
+                    "label": "Pending",
+                    "count": 0,
+                    "class": "bg-pending-status",
+                    "statusIds": [
+                        27,
+                        31
+                    ],
+                    "displayStatus": true
+                },
+                {
+                    "key": "rejected",
+                    "label": "Rejected",
+                    "count": 0,
+                    "class": "bg-rejected-status",
+                    "statusIds": [
+                        30
+                    ],
+                    "displayStatus": true
+                },
+                {
+                    "key": "seekClarification",
+                    "label": "Seek Clarification",
+                    "count": 0,
+                    "class": "bg-rejected-status",
+                    "statusIds": [
+                        31
+                    ],
+                    "displayStatus": false
+                }
+            ]
+        },
+        "quickActivities": [
+            {
+                "label": "Raise Expense Claim",
+                "type": "link",
+                "url": "/expense/expense/landing",
+                "class": "btn btn-primary w-100"
+            },
+            {
+                "label": "Travel Request",
+                "type": "link",
+                "url": "/expense/raise-expense-claim",
+                "class": "btn btn-primary w-100"
+            }
+        ],
+        "expenseStatement": {
+            "name": "Expense Statement",
+            "tableDetail": [
+                {
+                    "key": "slNo",
+                    "label": "Sl.No",
+                    "sortable": false
+                },
+                {
+                    "key": "Requester",
+                    "label": "Requester",
+                    "sortable": true
+                },
+                {
+                    "key": "RequestNumber",
+                    "label": "Request Number",
+                    "sortable": true
+                },
+                {
+                    "key": "RequestDate",
+                    "label": "Request Date",
+                    "sortable": true
+                },
+                {
+                    "key": "ExpenseClaimTypeDescription",
+                    "label": "Expense Type",
+                    "sortable": true
+                },
+                {
+                    "key": "TravelRequestNumber",
+                    "label": "Linked Request",
+                    "sortable": true
+                },
+                {
+                    "key": "ApprovedAmount",
+                    "label": "Amount",
+                    "sortable": true
+                },
+                {
+                    "key": "PolicyViolationCount",
+                    "label": "Policy Violation",
+                    "sortable": true
+                },
+                {
+                    "key": "ClaimStatus",
+                    "label": "Status",
+                    "sortable": true
+                },
+                {
+                    "key": "action",
+                    "label": "Action",
+                    "sortable": false
+                }
+            ]
+        },
+        "travelStatement": {
+            "name": "Travel Statement",
+            "tableDetail": [
+                {
+                    "key": "slNo",
+                    "label": "Sl.No",
+                    "sortable": false
+                },
+                {
+                    "key": "Requester",
+                    "label": "Requester",
+                    "sortable": true
+                },
+                {
+                    "key": "RequestNumber",
+                    "label": "Request Number",
+                    "sortable": true
+                },
+                {
+                    "key": "RequestDate",
+                    "label": "Request Date",
+                    "sortable": true
+                },
+                {
+                    "key": "TravelRequestTypeDescription",
+                    "label": "Travel Type",
+                    "sortable": true
+                },
+                {
+                    "key": "ApprovedAmount",
+                    "label": "Amount",
+                    "sortable": true
+                },
+                {
+                    "key": "PolicyViolationCount",
+                    "label": "Policy Violation",
+                    "sortable": true
+                },
+                {
+                    "key": "ClaimStatus",
+                    "label": "Status",
+                    "sortable": true
+                },
+                {
+                    "key": "",
+                    "label": "",
+                    "sortable": false
+                }
+            ]
+        }
     }
 }

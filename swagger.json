@@ -126,6 +126,45 @@
         }
       }
     },
+    "/api/Account/ForgotPassword": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "operationId": "Account_ForgotPassword",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "forgotPasswordParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ForgotPasswordParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Account/ForgotPasswordCode": {
       "post": {
         "tags": [
@@ -1771,6 +1810,84 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/OrganizationStructureGetParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Data/GetTransactionId": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "operationId": "Data_GetTransactionId",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "transactionIdModel",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransactionIdModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Data/GetApplicationMessage": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "operationId": "Data_GetApplicationMessage",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "applicationMessageByFlagParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ApplicationMessageByFlagParam"
             }
           }
         ],
@@ -4585,6 +4702,25 @@
         "CommunicationSeenCount": {
           "format": "int32",
           "type": "integer"
+        }
+      }
+    },
+    "TransactionIdModel": {
+      "type": "object",
+      "properties": {
+        "TransactionId": {
+          "type": "string"
+        },
+        "Flag": {
+          "type": "string"
+        }
+      }
+    },
+    "ApplicationMessageByFlagParam": {
+      "type": "object",
+      "properties": {
+        "Flag": {
+          "type": "string"
         }
       }
     },

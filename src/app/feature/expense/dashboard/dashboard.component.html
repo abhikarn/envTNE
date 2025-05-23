@@ -6,7 +6,7 @@
         <div class="tabs-page-hold">
             <div id="page-wrapper-tabs" class="custom-wrapper-general mt-3 mb-3 w-100">
                 <ul class="nav nav-tabs common-tab" id="myTab" role="tablist">
-                    <li><a id="menu-dashboard-my" [routerLink]="['/expense/expense/my']" class="active">My Dashboard</a></li>
+                    <li><a id="menu-dashboard-my" [routerLink]="this.expenseDashboardConfig?.dashboard?.link" class="active">{{this.expenseDashboardConfig?.dashboard?.name}}</a></li>
                     <li><a id="menu-dashboard-action" [routerLink]="['/expense/expense/approval']">Approver Dashboard</a></li>
                 </ul>
             </div>
@@ -53,20 +53,14 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="common-block mb-3">
-                                    <h6 class="common-title fw-bold mb-3">Expense Claim </h6>
+                                    <h6 class="common-title fw-bold mb-3">{{this.expenseDashboardConfig?.dashboard?.statusWiseExpenseRequest.name}} </h6>                                     
                                     <ul class="ps-0 list-unstyled req-count">
-                                        <li>
-                                            <div class="req-status bg-success-status"> {{ statusWiseExpenseDataCount.approved }} </div>
-                                            <label>Approved</label>
-                                        </li>
-                                        <li>
-                                            <div class="req-status  bg-pending-status"> {{ statusWiseExpenseDataCount.pending }} </div>
-                                            <label>Pending</label>
-                                        </li>
-                                        <li>
-                                            <div class="req-status  bg-rejected-status"> {{ statusWiseExpenseDataCount.rejected }} </div>
-                                            <label>Rejected</label>
-                                        </li>
+                                      <li *ngFor="let item of statusWiseExpenseDataCount">
+                                        <div class="req-status" [ngClass]="item.class">
+                                            {{ item.count }}
+                                        </div>
+                                        <label>{{ item.label }}</label>
+                                      </li>
                                     </ul>
                                 </div>
                             </div>
@@ -89,8 +83,9 @@
                         </div>
                         <ul class="quick-menu-links list-unstyled  ps-0">
                             <li>
-                                <a [routerLink]="['/expense/expense/landing']">
-                                    <div class="d-flex align-items-center   ">
+                                <a *ngIf="expenseDashboardConfig?.dashboard?.quickActivities?.[0]?.url"
+   [routerLink]="expenseDashboardConfig?.dashboard?.quickActivities?.[0]?.url"> 
+                                    <div class="d-flex align-items-center">
                                         <div class="quick-link-icon">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -144,7 +139,7 @@
                                 <li class="nav-item"><a class="nav-link active requesttab" data-bs-toggle="tab"
                                         id="requestTravel" href="#travel-req111">Travel Request - 315 </a> </li>
                                 <li class="nav-item"><a class="nav-link requesttab" data-bs-toggle="tab"
-                                        id="requestExpense" href="#expwnse-rew222">Expense Statement - {{this.expenseRequesData.length}}</a> </li>
+                                        id="requestExpense" href="#expwnse-rew222">{{expenseDashboardConfig.dashboard?.expenseStatement.name}} - {{this.expenseRequesData.length}}</a> </li>
                             </ul>
                             <div class="tab-content">
                                 <div id="travel-req111" class="tab-pane pt-0 active">
@@ -714,9 +709,20 @@
                                                                     
                                                                     <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.key">                                                                      
                                                                         <!-- Header Cell -->
-                                                                        <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.sortable ? column.key : ''">
+
+                                                                        <!-- <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.sortable ? column.key : ''">
                                                                           {{ column.label }}
+                                                                        </th> -->
+                                                                        <ng-container *ngIf="column.sortable; else noSortHeader">
+                                                                         <th mat-header-cell *matHeaderCellDef mat-sort-header="{{ column.key }}"> 
+                                                                            {{ column.label }} 
                                                                         </th>
+                                                                        </ng-container>
+                                                                        <ng-template #noSortHeader>
+                                                                          <th mat-header-cell *matHeaderCellDef>
+                                                                            {{ column.label }}
+                                                                          </th>
+                                                                        </ng-template>
                                                                       
                                                                         <!-- Data Cell -->
                                                                         <td mat-cell *matCellDef="let element; let i = index">

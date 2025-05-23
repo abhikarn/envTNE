@@ -23,6 +23,8 @@ import { FormControlFactory } from '../../../shared/dynamic-form/form-control.fa
 import { ServiceRegistryService } from '../../../shared/service/service-registry.service';
 import { SummaryComponent } from '../../../shared/component/summary/summary.component';
 import { UtilsService } from '../../../shared/service/utils.service';
+import { ApplicationMessageService } from '../../../shared/service/application-message.service';
+import { environment } from '../../../../environment';
 
 
 @Component({
@@ -47,6 +49,7 @@ import { UtilsService } from '../../../shared/service/utils.service';
 })
 
 export class MainExpenseComponent {
+   assetPath = `${environment.assetsPath}`
   @ViewChild(SummaryComponent) summaryComponent: any;
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
@@ -87,6 +90,7 @@ export class MainExpenseComponent {
   expenseRequestPreviewData: any;
   travelDetails: any;
   transactionId: any;
+  expenseConfirmMessage: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -102,7 +106,8 @@ export class MainExpenseComponent {
     private route: ActivatedRoute,
     private serviceRegistry: ServiceRegistryService,
     private router: Router,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private applicationMessageService: ApplicationMessageService
   ) {
   }
 
@@ -158,7 +163,7 @@ export class MainExpenseComponent {
       boMealsList: this.dataService.dataGetMealType(),
       localTravelTypeList: this.dataService.dataGetLocalTravelType(),
       localTravelModeList: this.dataService.dataGetLocalTravelMode(),
-      expenseConfig: this.http.get<any>('/assets/config/expense-config.json')
+      expenseConfig: this.http.get<any>(`${this.assetPath}/assets/config/expense-config.json`)
     })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -561,6 +566,7 @@ export class MainExpenseComponent {
 
   // Handle submit, draft, or navigation actions after validating forms.
   onAction(type: string) {
+    
     if (type == "cancel") {
       if (this.editMode) {
         this.router.navigate(['../expense/expense/dashboard']);
@@ -571,9 +577,21 @@ export class MainExpenseComponent {
       }
     }
 
+    // if (type === 'submit' || type === 'draft') {
+    //   this.mainExpenseData.IsDraft = type === 'draft';
+    //   this.expenseConfirmMessage= this.applicationMessageService.getApplicationMessage({Flag: 'ExpenseSubmitConfirm'})
+    //   this.createExpenseRequest();
+    // } else {
+    //   this.router.navigate(['expense/expense/landing']);
+    // }
     if (type === 'submit' || type === 'draft') {
       this.mainExpenseData.IsDraft = type === 'draft';
-      this.createExpenseRequest();
+
+      this.applicationMessageService.getApplicationMessage({ Flag: 'ExpenseSubmitConfirm' })
+        .subscribe((data: any) => {
+          this.expenseConfirmMessage = data?.ResponseValue?.Message;
+          this.createExpenseRequest();
+        });
     } else {
       this.router.navigate(['expense/expense/landing']);
     }
@@ -581,6 +599,7 @@ export class MainExpenseComponent {
 
   // Prepare and submit the main expense request after confirmation.
   createExpenseRequest() {
+    
     if (!this.travelRequestId || !this.expenseRequestData?.dynamicExpenseDetailModels) {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return;
@@ -612,10 +631,11 @@ export class MainExpenseComponent {
     };
     console.log(this.mainExpenseData);
 
+
     this.confirmDialogService
       .confirm({
         title: 'Create Expense Request',
-        message: 'Are you sure you want to create Expense request?',
+        message: this.expenseConfirmMessage,
         confirmText: 'Create',
         cancelText: 'Cancel'
       })
@@ -679,7 +699,6 @@ export class MainExpenseComponent {
         });
     });
   }
-
 }
 
 

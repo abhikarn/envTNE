@@ -472,16 +472,16 @@ export class PreviewComponent {
       details?.data?.forEach((expense: any) => {
         // if (expense?.selected) {
         if (expense.gst?.length > 0) {
-          expense.gst.forEach((gst: any) => {
+          expense.gst.forEach((gst: any) => { 
             this.expenseRequestGstType.push(gst);
           })
         }
         let statusId = expense?.statusId || 0;
         if (this.mode == 'approval') {
-          statusId = expense?.selected ? 4 : 5
+          statusId = expense?.selected ? 6 : 5
         }
         if (this.mode == 'finance-approval') {
-          statusId = expense?.selected ? 6 : 4
+          statusId = expense?.selected ? 6 : 5
         }
 
         this.expenseRequestApprovalDetailType.push({
@@ -513,6 +513,7 @@ export class PreviewComponent {
   }
 
   onAction(buttonData: any) {
+    
     const allSelectedData = this.materialTableComponents.map(table => table.getSelectedData());
 
     const invalidItemFound = allSelectedData.some((data: any) => {
@@ -540,6 +541,7 @@ export class PreviewComponent {
       return;
     }
     if (this.mode == 'approval') {
+        
       const approvalPayload = {
         ExpenseRequestId: this.expenseRequestPreviewData?.expenseRequestId || 0,
         Remarks: this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.value,
@@ -600,27 +602,27 @@ export class PreviewComponent {
         ...this.dynamicAdjustmentFormpayload
       }
       console.log(financePayload)
-      // this.confirmDialogService
-      //   .confirm({
-      //     title: '',
-      //     message: buttonData.confirmPopup.message,
-      //     confirmText: buttonData.confirmPopup.confirmText,
-      //     cancelText: buttonData.confirmPopup.cancelText
-      //   })
-      //   .subscribe((confirmed) => {
-      //     if (confirmed) {
-      //       this.financeService.financeExpenseRequestFinanceApproval(financePayload).pipe(take(1)).subscribe({
-      //         next: (res: any) => {
-      //           this.snackbarService.success(buttonData.Success);
-      //           this.router.navigate(['/expense/expense/dashboard']);
-      //         },
-      //         error: (err) => {
-      //           console.error(err);
-      //           this.snackbarService.error('Something went wrong with the API.');
-      //         }
-      //       });
-      //     }
-      //   });
+      this.confirmDialogService
+        .confirm({
+          title: '',
+          message: buttonData.confirmPopup.message,
+          confirmText: buttonData.confirmPopup.confirmText,
+          cancelText: buttonData.confirmPopup.cancelText
+        })
+        .subscribe((confirmed) => {
+          if (confirmed) {
+            this.financeService.financeExpenseRequestFinanceApproval(financePayload).pipe(take(1)).subscribe({
+              next: (res: any) => {
+                this.snackbarService.success(buttonData.Success);
+                this.router.navigate(['/expense/expense/dashboard']);
+              },
+              error: (err) => {
+                console.error(err);
+                this.snackbarService.error('Something went wrong with the API.');
+              }
+            });
+          }
+        });
     }
   }
 

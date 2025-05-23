@@ -79,7 +79,6 @@ export class AddGstComponent {
   }
 
   validateGSTWithClaimed() {
-    
     let isValidGst = false;
     let gstAmount = 0;
     const gstNum = parseFloat(this.gstDetailsForm.get('Amount')?.value || "0");
