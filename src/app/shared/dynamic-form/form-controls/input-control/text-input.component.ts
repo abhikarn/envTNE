@@ -49,14 +49,16 @@ export class TextInputComponent implements OnInit {
         console.log(this.form);
         console.log(inputValue);
         this.validateSameOriginAndDestination();
-        
         if (typeof inputValue !== "object") {
-          let input = {
-            inputValue: inputValue,
-            control: this.control
+          // Trigger only when inputValue is a string of exactly 2 characters
+          if (typeof inputValue === 'string' && inputValue.length === 2) {
+            let input = {
+              inputValue: inputValue,
+              control: this.control
+            }
+            this.emitInputValue.emit(input);
+            this.displayValue = inputValue;
           }
-          this.emitInputValue.emit(input);
-          this.displayValue = inputValue;
         }
 
         if (typeof inputValue == "object") {
