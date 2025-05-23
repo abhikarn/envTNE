@@ -40,16 +40,16 @@ export class TextInputComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    console.log(this.controlConfig);
     if (this.controlConfig.disable) {
       this.control.disable();
     }
 
     if (this.controlConfig.autoComplete) {
       this.control.valueChanges.subscribe(inputValue => {
+        console.log(this.form);
         console.log(inputValue);
-
+        this.validateSameOriginAndDestination();
+        
         if (typeof inputValue !== "object") {
           let input = {
             inputValue: inputValue,
@@ -206,4 +206,18 @@ export class TextInputComponent implements OnInit {
   displayFn(option: any): string {
     return option ? option.label : '';
   }
+
+  validateSameOriginAndDestination(): { [key: string]: boolean } | null {
+    const origin = this.form.get('Origin')?.value;
+    const destination = this.form.get('Destination')?.value;
+    if (origin?.value && destination?.value && origin?.value === destination?.value) {
+      this.snackbarService.error('Travel within the same city is not permitted for ticket claims');
+      // reset both fields
+      this.form.get('Origin')?.setValue(null);
+      this.form.get('Destination')?.setValue(null);
+    }
+    return null;
+  }
+
+
 }
