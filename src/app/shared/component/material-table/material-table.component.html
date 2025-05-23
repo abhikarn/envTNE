@@ -40,7 +40,7 @@
             @if (col.controlType === 'input' && mode === 'finance-approval') {
             <input [type]="col.type" class="form-control" [(ngModel)]="row[col.name]" [readonly]="!col.isEditableInFinanceApproval" [disabled]="!row.selected"
                 (keydown)="preventInvalidKeys($event)" (ngModelChange)="onApprovedAmountChange(row)"
-                (blur)="validateApprovedAmount(row)" min="0" max="9999999999"
+                (blur)="onAmountBlur($event, row, col.name, col.decimalPrecision || 2); validateApprovedAmount(row)" min="0" max="9999999999"
                 (input)="enforceLimit($event, row, col.name)" />
             } @else {
             @if (col.type == 'date') {
@@ -50,7 +50,7 @@
 
             <input [type]="col.type" class="form-control" [(ngModel)]="row[col.name]" [readonly]="!col.isEditableInApproval" [disabled]="!row.selected"
                 (keydown)="preventInvalidKeys($event)" (ngModelChange)="onApprovedAmountChange(row)"
-                (blur)="validateApprovedAmount(row)" min="0" max="9999999999"
+                (blur)="onAmountBlur($event, row, col.name, col.decimalPrecision || 2); validateApprovedAmount(row)" min="0" max="9999999999"
                 (input)="enforceLimit($event, row, col.name)" />
             }@else{
             {{ row[col.name] }}
