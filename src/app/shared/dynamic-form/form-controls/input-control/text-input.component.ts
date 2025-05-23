@@ -40,23 +40,25 @@ export class TextInputComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    console.log(this.controlConfig);
     if (this.controlConfig.disable) {
       this.control.disable();
     }
 
     if (this.controlConfig.autoComplete) {
       this.control.valueChanges.subscribe(inputValue => {
+        console.log(this.form);
         console.log(inputValue);
-
+        this.validateSameOriginAndDestination();
         if (typeof inputValue !== "object") {
-          let input = {
-            inputValue: inputValue,
-            control: this.control
+          // Trigger only when inputValue is a string of exactly 2 characters
+          if (typeof inputValue === 'string' && inputValue.length === 2) {
+            let input = {
+              inputValue: inputValue,
+              control: this.control
+            }
+            this.emitInputValue.emit(input);
+            this.displayValue = inputValue;
           }
-          this.emitInputValue.emit(input);
-          this.displayValue = inputValue;
         }
 
         if (typeof inputValue == "object") {
@@ -206,4 +208,18 @@ export class TextInputComponent implements OnInit {
   displayFn(option: any): string {
     return option ? option.label : '';
   }
+
+  validateSameOriginAndDestination(): { [key: string]: boolean } | null {
+    const origin = this.form.get('Origin')?.value;
+    const destination = this.form.get('Destination')?.value;
+    if (origin?.value && destination?.value && origin?.value === destination?.value) {
+      this.snackbarService.error('Travel within the same city is not permitted for ticket claims');
+      // reset both fields
+      this.form.get('Origin')?.setValue(null);
+      this.form.get('Destination')?.setValue(null);
+    }
+    return null;
+  }
+
+
 }

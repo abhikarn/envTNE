@@ -77,16 +77,4 @@ export class CustomValidators {
       return hasNumber ? null : { numeric: { message } };
     };
   }
-
-  static originDestinationMismatchValidator(message?: string): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const origin = control.get('origin')?.value;
-      const destination = control.get('destination')?.value;
-
-      if (origin && destination && origin === destination) {
-        return { originDestinationMismatch: message || 'Origin and Destination cannot be the same' };
-      }
-      return null;
-    };
-  }
 }
