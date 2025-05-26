@@ -10,6 +10,8 @@ import { Subscription } from 'rxjs';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
 import { SnackbarService } from '../../../service/snackbar.service';
 import { GlobalConfigService } from '../../../service/global-config.service';
+import { ViewChild } from '@angular/core';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
   selector: 'lib-date-input',
@@ -23,6 +25,7 @@ import { GlobalConfigService } from '../../../service/global-config.service';
   ],
   templateUrl: './date-input.component.html'
 })
+
 export class DateInputComponent {
   @Input() control: FormControl = new FormControl(null);
   @Input() controlConfig: IFormControl = { name: '' };
@@ -31,6 +34,7 @@ export class DateInputComponent {
   @Input() form: any;
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   @Output() emitSpecificCase = new EventEmitter<any>();
+  @ViewChild(MatDatepicker) datepicker!: MatDatepicker<Date>;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -78,6 +82,10 @@ export class DateInputComponent {
           this.emitSpecificCase.emit(dependentCase);
         }
       });
+    }
+    // close using viewChild
+    if (this.datepicker) { 
+      this.datepicker.close();
     }
   }
 

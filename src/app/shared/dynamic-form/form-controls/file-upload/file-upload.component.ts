@@ -120,7 +120,7 @@ export class FileUploadComponent {
     const errors = this.control.errors;
 
     if (errors['required']) {
-      return this.controlConfig?.validations?.find((v: any) => v.type === 'required')?.message || 'This field is required';
+      return this.controlConfig?.validations?.find((v: any) => v.type === 'required')?.message || `${this.controlConfig.label} is required`;
     }
 
     if (errors['maxSize']) {

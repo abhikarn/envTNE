@@ -30,10 +30,17 @@ export class TextAreaInputComponent {
       this.control.disable();
     }
   }
-  
-  getErrorMessage(status: boolean): string {
-    if (!this.controlConfig?.validations) return '';
 
+  getErrorMessage(status: boolean): string {
+    
+    if (this.control) {
+      const errors = this.control.errors;
+      if (errors && errors['required']) {
+        return this.controlConfig?.validations?.find((v: any) => v.type === 'required')?.message || `${this.controlConfig.label} is required`;
+      }
+    }
+
+    if (!this.controlConfig?.validations) return '';
     for (const validation of this.controlConfig.validations) {
       if (this.control.hasError(validation.type)) {
         return validation.message;
