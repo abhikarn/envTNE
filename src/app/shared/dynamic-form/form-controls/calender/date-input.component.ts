@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { IFormControl } from '../../form-control.interface';
@@ -10,8 +10,21 @@ import { Subscription } from 'rxjs';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
 import { SnackbarService } from '../../../service/snackbar.service';
 import { GlobalConfigService } from '../../../service/global-config.service';
-import { ViewChild } from '@angular/core';
-import { MatDatepicker } from '@angular/material/datepicker';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import * as _moment from 'moment';
+
+// Custom date formats for display
+export const CUSTOM_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD-MMM-YYYY',
+  },
+  display: {
+    dateInput: 'DD-MMM-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'DD-MMM-YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'lib-date-input',
@@ -23,7 +36,12 @@ import { MatDatepicker } from '@angular/material/datepicker';
     MatInputModule,
     FunctionWrapperPipe
   ],
-  templateUrl: './date-input.component.html'
+  templateUrl: './date-input.component.html',
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_FORMATS, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: false } }
+  ]
 })
 
 export class DateInputComponent {
@@ -34,7 +52,6 @@ export class DateInputComponent {
   @Input() form: any;
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   @Output() emitSpecificCase = new EventEmitter<any>();
-  @ViewChild(MatDatepicker) datepicker!: MatDatepicker<Date>;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -51,9 +68,12 @@ export class DateInputComponent {
     }
 
     this.control.valueChanges.subscribe(value => {
-      if (value instanceof Date) {
-        const isoDate = value.toISOString(); // Convert to ISO 8601 format
-        this.control.setValue(isoDate, { emitEvent: false }); // Prevent infinite loop
+      if (_moment.isMoment(value)) {
+        // Use local date format to avoid timezone shift
+        const localDate = value.format('YYYY-MM-DD');
+        if (this.control.value !== localDate) {
+          this.control.setValue(localDate, { emitEvent: false }); // Prevent infinite loop
+        }
       }
     });
   }
@@ -82,10 +102,6 @@ export class DateInputComponent {
           this.emitSpecificCase.emit(dependentCase);
         }
       });
-    }
-    // close using viewChild
-    if (this.datepicker) { 
-      this.datepicker.close();
     }
   }
 
