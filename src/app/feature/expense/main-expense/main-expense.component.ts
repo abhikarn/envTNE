@@ -246,6 +246,7 @@ export class MainExpenseComponent {
       .subscribe({
         next: (response) => {
           if (response) {
+            this.expenseRequestId = response.expenseRequestId;
             this.expenseRequestPreviewData = response;
             // this.travelDetails?.data?.forEach((config: any) => {
             //   const prop = config.name;

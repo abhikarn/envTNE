@@ -11,7 +11,7 @@ import { ServiceRegistryService } from '../../../service/service-registry.servic
 import { SnackbarService } from '../../../service/snackbar.service';
 import { GlobalConfigService } from '../../../service/global-config.service';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
-import * as _moment from 'moment';
+import _moment from 'moment';
 
 // Custom date formats for display
 export const CUSTOM_DATE_FORMATS = {
@@ -68,12 +68,33 @@ export class DateInputComponent {
     }
 
     this.control.valueChanges.subscribe(value => {
-      if (_moment.isMoment(value)) {
-        // Use local date format to avoid timezone shift
-        const localDate = value.format('YYYY-MM-DD');
-        if (this.control.value !== localDate) {
-          this.control.setValue(localDate, { emitEvent: false }); // Prevent infinite loop
+      // If value is already an ISO string, do nothing
+      if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
+        return;
+      }
+      // If value is a Date object, treat as local and convert to UTC midnight
+      if (value instanceof Date) {
+        const isoDate = _moment.utc({
+          year: value.getFullYear(),
+          month: value.getMonth(),
+          day: value.getDate()
+        }).toISOString();
+        if (this.control.value !== isoDate) {
+          this.control.setValue(isoDate, { emitEvent: false });
         }
+        return;
+      }
+      // If value is a moment object, treat as local and convert to UTC midnight
+      if (_moment.isMoment(value)) {
+        const isoDate = _moment.utc({
+          year: value.year(),
+          month: value.month(),
+          day: value.date()
+        }).toISOString();
+        if (this.control.value !== isoDate) {
+          this.control.setValue(isoDate, { emitEvent: false });
+        }
+        return;
       }
     });
   }

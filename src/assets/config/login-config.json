@@ -89,7 +89,7 @@
             "loginWithMicrosoft": "Login with Microsoft"
         },
         "links": {
-            "forgotPasswordLink": "http://localhost:4200/account/forgot-password",
+            "forgotPasswordLink": "https://enaviya.co.in/SpendManraAngular/account/forgot-password",
             "resetPasswordLink": "/reset-password",
             "changePasswordLink": "/change-password",
             "loginLink": "/login"

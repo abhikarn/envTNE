@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
-
   simplifyObject(obj: any): any {
     if (Array.isArray(obj)) {
       return obj.map(item => this.simplifyObject(item));

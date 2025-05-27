@@ -57,8 +57,8 @@ export class MaterialTableComponent implements OnChanges {
         ...row,
         slNo: index + 1,
         selected: true,
-        originalApproved: row.ClaimAmount || 0,
-        ApprovedAmount: row.ClaimAmount || 0,
+        originalApproved: row.ApprovedAmount || 0,
+        ApprovedAmount: row.ApprovedAmount || 0,
         remarks: row.remarks || ''
       }));
 
