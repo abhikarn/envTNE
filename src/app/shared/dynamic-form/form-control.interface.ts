@@ -42,4 +42,5 @@ export interface IFormControl {
   icon?: string;
   calculate?: any;
   policyViolationCheck?: any;
+  maxLength?: number;
 }

@@ -507,7 +507,8 @@
                         "order": 10,
                         "requiredIf": {
                             "IsViolation": true
-                        }
+                        },
+                        "maxLength": 500
                     },
                     {
                         "type": "file",
@@ -871,7 +872,8 @@
                         "isExcluded": false,
                         "label": "Adjustment Remarks",
                         "value": "",
-                        "order": 3
+                        "order": 3,
+                        "maxLength": 500
                     }
                 ]
             }
