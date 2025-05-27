@@ -11,7 +11,7 @@ export class FormControlFactory {
       
       switch (validationConfig.type) {        
         case 'required':
-          config.validations['required'] = validationConfig.message || 'This field is required';
+          config.validations['required'] = validationConfig.message || `${config.label} is required`;
           validatorFn = Validators.required;
           break;
         case 'minLength':

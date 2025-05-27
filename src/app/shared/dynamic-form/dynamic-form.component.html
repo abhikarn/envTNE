@@ -15,7 +15,7 @@
   @case ('select') {
   <div class="col-md-4">
     <lib-select-input [controlConfig]="control.formConfig" [control]="control.control"
-      (valueChange)="onDropdownValueChange($event)">
+      (valueChange)="onFieldValueChange(control.formConfig);onDropdownValueChange($event)">
     </lib-select-input>
   </div>
   }
@@ -30,7 +30,7 @@
   @case ('date') {
   <div class="col-md-4">
     <lib-date-input [controlConfig]="control.formConfig" [control]="control.control" [form]="form"
-      (valueChange)="handleEvent('dateChange', $event)" [minDate]="minSelectableDate" [maxDate]="maxSelectableDate"
+      (valueChange)="onFieldValueChange(control.formConfig);handleEvent('dateChange', $event)" [minDate]="minSelectableDate" [maxDate]="maxSelectableDate"
       (emitSpecificCase)="getSpecificCase($event)">
     </lib-date-input>
   </div>
