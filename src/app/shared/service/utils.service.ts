@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
-
   simplifyObject(obj: any): any {
     if (Array.isArray(obj)) {
       return obj.map(item => this.simplifyObject(item));
@@ -13,7 +13,13 @@ export class UtilsService {
       for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
           const value = obj[key];
-          if (value && typeof value === 'object' && 'value' in value && 'label' in value) {
+          // Check if value is a Date object or a valid date string
+          if (
+            (value instanceof Date && !isNaN(value.getTime())) ||
+            (typeof value === 'string' && moment(value, moment.ISO_8601, true).isValid())
+          ) {
+            newObj[key] = new Date(value).toISOString();
+          } else if (value && typeof value === 'object' && 'value' in value && 'label' in value) {
             newObj[key] = value.value;
           } else {
             newObj[key] = this.simplifyObject(value);

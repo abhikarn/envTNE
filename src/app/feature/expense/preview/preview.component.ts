@@ -471,28 +471,30 @@ export class PreviewComponent {
 
     dynamicExpenseDetailModels?.forEach((details: any) => {
       details?.data?.forEach((expense: any) => {
-        // if (expense?.selected) {
-        if (expense.gst?.length > 0) {
-          expense.gst.forEach((gst: any) => { 
-            this.expenseRequestGstType.push(gst);
-          })
-        }
-        let statusId = expense?.statusId || 0;
-        if (this.mode == 'approval') {
-          statusId = expense?.selected ? 6 : 5
-        }
-        if (this.mode == 'finance-approval') {
-          statusId = expense?.selected ? 6 : 5
-        }
+        if (expense?.ClaimStatusId !== 5) {
+          // if (expense?.selected) {
+          if (expense.gst?.length > 0) {
+            expense.gst.forEach((gst: any) => {
+              this.expenseRequestGstType.push(gst);
+            })
+          }
+          let statusId = expense?.statusId || 0;
+          if (this.mode == 'approval') {
+            statusId = expense?.selected ? 6 : 5
+          }
+          if (this.mode == 'finance-approval') {
+            statusId = expense?.selected ? 6 : 5
+          }
 
-        this.expenseRequestApprovalDetailType.push({
-          ExpenseRequestDetailId: expense?.ExpenseRequestDetailId || 0,
-          ApprovedAmount: expense?.ApprovedAmount || 0,
-          ApproverId: Number(localStorage.getItem('userMasterId')),
-          ApproverRemarks: expense?.remarks || "",
-          ActionStatusId: statusId
-        });
-        // }
+          this.expenseRequestApprovalDetailType.push({
+            ExpenseRequestDetailId: expense?.ExpenseRequestDetailId || 0,
+            ApprovedAmount: expense?.ApprovedAmount || 0,
+            ApproverId: Number(localStorage.getItem('userMasterId')),
+            ApproverRemarks: expense?.remarks || "",
+            ActionStatusId: statusId
+          });
+          // }
+        }
       });
     })
     dynamicExpenseDetailModels = [];
