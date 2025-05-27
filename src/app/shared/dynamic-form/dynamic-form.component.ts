@@ -522,10 +522,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
 
         if (this.form.value.IsViolation) {
-          this.updateConditionalValidators();
           confirmPopupData.cancelButton = false;
           this.confirmDialogService.confirm(confirmPopupData).subscribe();
         }
+        this.updateConditionalValidators();
       });
   }
 
