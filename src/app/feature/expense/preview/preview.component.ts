@@ -539,6 +539,17 @@ export class PreviewComponent {
       }
     });
 
+    if (buttonData?.type == 'approve') {
+      this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.setValidators(null);
+      this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.updateValueAndValidity();
+    } else {
+      this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.setValidators([
+        Validators.required,
+        Validators.maxLength(this.expenseRequestPreviewConfig.justification.maxLength || 500)
+      ]);
+      this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.updateValueAndValidity();
+    }
+    
     if (this.justificationForm.invalid) {
       this.justificationForm.markAllAsTouched();
       return;
