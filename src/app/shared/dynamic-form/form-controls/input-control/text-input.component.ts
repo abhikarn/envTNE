@@ -101,28 +101,31 @@ export class TextInputComponent implements OnInit {
   }
 
   onCityAutoCompleteInput() {
-    let value = this.control.value;
+    setTimeout(() => {
+      let value = this.control.value;
 
-    if (
-      (this.controlConfig.name === 'Origin' || this.controlConfig.name === 'Destination') &&
-      this.controlConfig.autoComplete &&
-      Array.isArray(this.controlConfig.options)
-    ) {
-      const isValid =
-        typeof value === 'object' &&
-        value !== null &&
-        this.controlConfig.options.some(
-          (option: any) => option.value === value.value
-        );
-      setTimeout(() => {
-        // Only show error if user typed something (not empty/null/undefined)
-        if (!isValid && value && value !== '') {
-          this.control.setValue(null, { emitEvent: false });
-          this.snackbarService.error(`Please select a valid city from the list for ${this.controlConfig.label}.`);
-          return;
-        }
-      }, 500);
-    }
+      if (
+        (this.controlConfig.name === 'Origin' || this.controlConfig.name === 'Destination') &&
+        this.controlConfig.autoComplete &&
+        Array.isArray(this.controlConfig.options)
+      ) {
+        const isValid =
+          typeof value === 'object' &&
+          value !== null &&
+          this.controlConfig.options.some(
+            (option: any) => option.value === value.value
+          );
+        setTimeout(() => {
+          // Only show error if user typed something (not empty/null/undefined)
+          if (!isValid && value && value !== '') {
+            this.control.setValue(null, { emitEvent: false });
+            this.snackbarService.error(`Please select a valid city from the list for ${this.controlConfig.label}.`);
+            return;
+          }
+        }, 200);
+      }
+    }, 200);
+
   }
 
   onBlur() {
