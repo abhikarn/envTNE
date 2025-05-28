@@ -160,7 +160,7 @@ export class MaterialTableComponent implements OnChanges {
     if (!attachments || attachments.length === 0) return;
 
     this.dialog.open(AttachmentModalComponent, {
-      width: '500px',
+      width: '1000px',
       data: { attachments },
       panelClass: 'custom-modal-panel'
     });
