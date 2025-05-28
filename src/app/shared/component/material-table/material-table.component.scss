@@ -25,7 +25,14 @@ app-material-table {
   }
 
   .disabled-row {
-    background-color: grey !important; // Light grey
+    background-color: #e0e0e0 !important;
+  }
+
+  .disabled-row input.form-control,
+  .disabled-row input[disabled] {
+    background-color: #e0e0e0 !important;
+    cursor: not-allowed;
+    color: #888;
   }
 
   .expanded-container {
