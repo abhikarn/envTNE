@@ -481,6 +481,61 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
   }
 
+  validateFieldPolicyViolation(control: IFormControl) {
+    let confirmPopupData: any = {};
+    if (!control.policyViolationCheck) return;
+
+    const service = this.serviceRegistry.getService(this.category.submitPolicyValidationApi.apiService);
+    const apiMethod = this.category.submitPolicyValidationApi.apiMethod;
+    let requestBody: any = this.category.submitPolicyValidationApi.requestBody;
+
+    Object.entries(this.category.submitPolicyValidationApi.inputControls).forEach(([controlName, requestKey]) => {
+      if (typeof requestKey === 'string') { // Ensure requestKey is a string
+        const controlValue = this.form.get(controlName)?.value;
+        requestBody[requestKey] = controlValue; // Extract Id if it's an object
+      }
+    });
+
+    const output = this.mapOtherControls(this.moduleData, this.category.submitPolicyValidationApi.otherControls);
+
+    service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
+      (response: any) => {
+        if (typeof this.category.submitPolicyValidationApi.outputControl === 'object') {
+          // Multiple fields case
+          for (const [outputControl, responsePath] of Object.entries(this.category.submitPolicyValidationApi.outputControl) as [string, string][]) {
+            const value = this.extractValueFromPath(response, responsePath);
+            if (value !== undefined) {
+              this.form.get(outputControl)?.setValue(value, { emitEvent: false });
+            }
+          }
+        }
+        if (typeof this.category.submitPolicyValidationApi.confirmPopup === 'object') {
+          // Multiple fields case
+          for (const [confirmPopup, responsePath] of Object.entries(this.category.submitPolicyValidationApi.confirmPopup) as [string, string][]) {
+            const value = this.extractValueFromPath(response, responsePath);
+            if (value !== undefined) {
+              confirmPopupData[confirmPopup] = value;
+            } else {
+              confirmPopupData[confirmPopup] = responsePath;
+            }
+          }
+        }
+
+        if (this.form.value.IsViolation) {
+          confirmPopupData.cancelButton = false;
+          this.confirmDialogService.confirm(confirmPopupData).subscribe();
+        }
+        this.updateConditionalValidators();
+      });
+  }
+
+  onFieldValueChange(control: IFormControl) {
+    if (control.policyViolationCheck) {
+      this.validateFieldPolicyViolation(control);
+    }
+    // ...existing logic for value change...
+  }
+
   mapOtherControls(data: any, otherControls: Record<string, string>): Record<string, any> {
     const mappedResult: Record<string, any> = {};
 
@@ -500,28 +555,31 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   updateConditionalValidators() {
-    const attachmentControl = this.form.get('attachment');
-    const config = this.formConfig.find(c => c.name === 'attachment');
+    this.formConfig.forEach(config => {
+      if (config.requiredIf) {
+        const control = this.form.get(config.name);
+        let isRequired = false;
 
-    if (config?.requiredIf) {
-      let isRequired = false;
+        Object.entries(config.requiredIf).forEach(([field, expectedValues]) => {
+          const value = this.form.get(field)?.value;
+          const actualValue = typeof value === 'object' ? value?.value : value;
+          if (Array.isArray(expectedValues) && expectedValues.includes(actualValue)) {
+            isRequired = true;
+          }
+          // Support for boolean requiredIf (e.g., { IsViolation: true })
+          if (!Array.isArray(expectedValues) && actualValue === expectedValues) {
+            isRequired = true;
+          }
+        });
 
-      Object.entries(config.requiredIf).forEach(([field, expectedValues]) => {
-        const value = this.form.get(field)?.value;
-        const actualValue = typeof value === 'object' ? value?.value : value;
-        if (Array.isArray(expectedValues) && expectedValues.includes(actualValue)) {
-          isRequired = true;
+        if (isRequired) {
+          control?.setValidators([Validators.required]);
+        } else {
+          control?.clearValidators();
         }
-      });
-
-      if (isRequired) {
-        attachmentControl?.setValidators([Validators.required]);
-      } else {
-        attachmentControl?.clearValidators();
+        control?.updateValueAndValidity();
       }
-
-      attachmentControl?.updateValueAndValidity();
-    }
+    });
   }
 
   setCalculatedFields() {

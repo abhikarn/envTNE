@@ -41,4 +41,6 @@ export interface IFormControl {
   passwordSattings?: any;
   icon?: string;
   calculate?: any;
+  policyViolationCheck?: any;
+  maxLength?: number;
 }

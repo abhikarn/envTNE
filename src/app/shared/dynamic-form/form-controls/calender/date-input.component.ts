@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { IFormControl } from '../../form-control.interface';
@@ -10,6 +10,21 @@ import { Subscription } from 'rxjs';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
 import { SnackbarService } from '../../../service/snackbar.service';
 import { GlobalConfigService } from '../../../service/global-config.service';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import _moment from 'moment';
+
+// Custom date formats for display
+export const CUSTOM_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD-MMM-YYYY',
+  },
+  display: {
+    dateInput: 'DD-MMM-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'DD-MMM-YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'lib-date-input',
@@ -21,8 +36,14 @@ import { GlobalConfigService } from '../../../service/global-config.service';
     MatInputModule,
     FunctionWrapperPipe
   ],
-  templateUrl: './date-input.component.html'
+  templateUrl: './date-input.component.html',
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_FORMATS, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: false } }
+  ]
 })
+
 export class DateInputComponent {
   @Input() control: FormControl = new FormControl(null);
   @Input() controlConfig: IFormControl = { name: '' };
@@ -47,9 +68,33 @@ export class DateInputComponent {
     }
 
     this.control.valueChanges.subscribe(value => {
+      // If value is already an ISO string, do nothing
+      if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
+        return;
+      }
+      // If value is a Date object, treat as local and convert to UTC midnight
       if (value instanceof Date) {
-        const isoDate = value.toISOString(); // Convert to ISO 8601 format
-        this.control.setValue(isoDate, { emitEvent: false }); // Prevent infinite loop
+        const isoDate = _moment.utc({
+          year: value.getFullYear(),
+          month: value.getMonth(),
+          day: value.getDate()
+        }).toISOString();
+        if (this.control.value !== isoDate) {
+          this.control.setValue(isoDate, { emitEvent: false });
+        }
+        return;
+      }
+      // If value is a moment object, treat as local and convert to UTC midnight
+      if (_moment.isMoment(value)) {
+        const isoDate = _moment.utc({
+          year: value.year(),
+          month: value.month(),
+          day: value.date()
+        }).toISOString();
+        if (this.control.value !== isoDate) {
+          this.control.setValue(isoDate, { emitEvent: false });
+        }
+        return;
       }
     });
   }

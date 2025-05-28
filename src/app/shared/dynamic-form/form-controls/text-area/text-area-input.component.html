@@ -6,7 +6,7 @@
         <span class="required-star">*</span>
         }
       </mat-label>
-      <textarea matInput [formControl]="control" rows="4"></textarea>
+      <textarea matInput [formControl]="control" rows="4" maxlength="500"></textarea>
       @if (control.invalid && control.touched) {
         <mat-error>
           {{  getErrorMessage | fnWrap : control.invalid && control.touched }}

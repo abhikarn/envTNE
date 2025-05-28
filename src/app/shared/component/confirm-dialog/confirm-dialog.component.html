@@ -3,10 +3,10 @@
 }
 <mat-dialog-content>{{ data.message }}</mat-dialog-content>
 <mat-dialog-actions align="end">
-  @if (data.cancelText) {
+  @if (data.cancelText && data.cancelButton) {
   <button mat-button (click)="onCancel()">{{ data.cancelText || 'Cancel' }}</button>
   }
-  @if (data.confirmText) {
+  @if (data.confirmText && data.confirmButton) {
   <button mat-button [color]="data.confirmText === 'Delete' ? 'warn' : 'primary'" (click)="onConfirm()">
     {{ data.confirmText || 'Confirm' }}
   </button>

@@ -89,7 +89,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 1
+                        "order": 1,
+                        "policyViolationCheck": true
                     },
                     {
                         "type": "select",
@@ -115,7 +116,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2
+                        "order": 2,
+                        "policyViolationCheck": true
                     },
                     {
                         "type": "date",
@@ -152,7 +154,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                         "order": 3
+                        "order": 3,
+                        "policyViolationCheck": true
                     },
                     {
                         "type": "text",
@@ -489,7 +492,7 @@
                             "GSTAmount": "The GST amount should not be greater than the claimed amount.",
                             "validGSTAmount": "Please enter a valid GST amount.",
                             "claimedAmount": "Please enter a claimed amount."
-                        } 
+                        }
                     },
                     {
                         "type": "textarea",
@@ -501,7 +504,11 @@
                         "required": false,
                         "disable": false,
                         "readonly": false,
-                         "order": 10
+                        "order": 10,
+                        "requiredIf": {
+                            "IsViolation": true
+                        },
+                        "maxLength": 500
                     },
                     {
                         "type": "file",
@@ -865,7 +872,8 @@
                         "isExcluded": false,
                         "label": "Adjustment Remarks",
                         "value": "",
-                        "order": 3
+                        "order": 3,
+                        "maxLength": 500
                     }
                 ]
             }

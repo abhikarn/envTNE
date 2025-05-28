@@ -471,28 +471,30 @@ export class PreviewComponent {
 
     dynamicExpenseDetailModels?.forEach((details: any) => {
       details?.data?.forEach((expense: any) => {
-        // if (expense?.selected) {
-        if (expense.gst?.length > 0) {
-          expense.gst.forEach((gst: any) => { 
-            this.expenseRequestGstType.push(gst);
-          })
-        }
-        let statusId = expense?.statusId || 0;
-        if (this.mode == 'approval') {
-          statusId = expense?.selected ? 6 : 5
-        }
-        if (this.mode == 'finance-approval') {
-          statusId = expense?.selected ? 6 : 5
-        }
+        if (expense?.ClaimStatusId !== 5) {
+          // if (expense?.selected) {
+          if (expense.gst?.length > 0) {
+            expense.gst.forEach((gst: any) => {
+              this.expenseRequestGstType.push(gst);
+            })
+          }
+          let statusId = expense?.statusId || 0;
+          if (this.mode == 'approval') {
+            statusId = expense?.selected ? 6 : 5
+          }
+          if (this.mode == 'finance-approval') {
+            statusId = expense?.selected ? 6 : 5
+          }
 
-        this.expenseRequestApprovalDetailType.push({
-          ExpenseRequestDetailId: expense?.ExpenseRequestDetailId || 0,
-          ApprovedAmount: expense?.ApprovedAmount || 0,
-          ApproverId: Number(localStorage.getItem('userMasterId')),
-          ApproverRemarks: expense?.remarks || "",
-          ActionStatusId: statusId
-        });
-        // }
+          this.expenseRequestApprovalDetailType.push({
+            ExpenseRequestDetailId: expense?.ExpenseRequestDetailId || 0,
+            ApprovedAmount: expense?.ApprovedAmount || 0,
+            ApproverId: Number(localStorage.getItem('userMasterId')),
+            ApproverRemarks: expense?.remarks || "",
+            ActionStatusId: statusId
+          });
+          // }
+        }
       });
     })
     dynamicExpenseDetailModels = [];
@@ -537,6 +539,17 @@ export class PreviewComponent {
       }
     });
 
+    if (buttonData?.type == 'approve') {
+      this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.setValidators(null);
+      this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.updateValueAndValidity();
+    } else {
+      this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.setValidators([
+        Validators.required,
+        Validators.maxLength(this.expenseRequestPreviewConfig.justification.maxLength || 500)
+      ]);
+      this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.updateValueAndValidity();
+    }
+    
     if (this.justificationForm.invalid) {
       this.justificationForm.markAllAsTouched();
       return;

@@ -46,8 +46,6 @@ export class TextInputComponent implements OnInit {
 
     if (this.controlConfig.autoComplete) {
       this.control.valueChanges.subscribe(inputValue => {
-        console.log(this.form);
-        console.log(inputValue);
         this.validateSameOriginAndDestination();
         if (typeof inputValue !== "object") {
           // Trigger only when inputValue is a string of exactly 2 characters
@@ -77,14 +75,57 @@ export class TextInputComponent implements OnInit {
   onInput(event: any) {
     if (this.controlConfig.autoFormat) {
       let inputValue = (event.target.value).toString();
-      this.controlConfig.autoFormat.patterns?.forEach((pattern: any) => {
-        inputValue = inputValue.replace(new RegExp(pattern), '');
-      })
-      if (inputValue.length > this.controlConfig.autoFormat.range.max) {
-        inputValue = inputValue.substring(0, this.controlConfig.autoFormat.range.max);
+
+      // Remove all non-numeric and non-decimal characters, allow only one decimal point
+      inputValue = inputValue.replace(/[^0-9.]/g, '');
+
+      // Prevent more than one decimal point
+      const parts = inputValue.split('.');
+      if (parts.length > 2) {
+        inputValue = parts[0] + '.' + parts.slice(1).join('');
       }
-      this.control.setValue(inputValue, { emitEvent: false });
+
+      // Limit integer and decimal part lengths
+      const [integerPart, decimalPart] = inputValue.split('.');
+      let maxLength = this.controlConfig.autoFormat.range?.max ?? 10;
+      let decimalPrecision = Number(this.controlConfig.autoFormat.decimalPrecision ?? 2);
+
+      let formattedValue = integerPart ? integerPart.slice(0, maxLength) : '';
+      if (decimalPart !== undefined) {
+        formattedValue += '.' + decimalPart.slice(0, decimalPrecision);
+      }
+
+      // Set value without formatting to .00 etc. (formatting will be done onBlur)
+      this.control.setValue(formattedValue, { emitEvent: false });
     }
+  }
+
+  onCityAutoCompleteInput() {
+    setTimeout(() => {
+      let value = this.control.value;
+
+      if (
+        (this.controlConfig.name === 'Origin' || this.controlConfig.name === 'Destination') &&
+        this.controlConfig.autoComplete &&
+        Array.isArray(this.controlConfig.options)
+      ) {
+        const isValid =
+          typeof value === 'object' &&
+          value !== null &&
+          this.controlConfig.options.some(
+            (option: any) => option.value === value.value
+          );
+        setTimeout(() => {
+          // Only show error if user typed something (not empty/null/undefined)
+          if (!isValid && value && value !== '') {
+            this.control.setValue(null, { emitEvent: false });
+            this.snackbarService.error(`Please select a valid city from the list for ${this.controlConfig.label}.`);
+            return;
+          }
+        }, 200);
+      }
+    }, 200);
+
   }
 
   onBlur() {
@@ -96,7 +137,9 @@ export class TextInputComponent implements OnInit {
       return;
     }
 
+    // Format value to required decimal precision on blur
     if (this.controlConfig.autoFormat) {
+      // Only format if value is a valid number
       const numericValue = parseFloat(value);
       if (!isNaN(numericValue)) {
         const formatted = this.getFormattedValue(numericValue);
