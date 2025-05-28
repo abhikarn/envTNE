@@ -34,7 +34,6 @@ export class FileUploadComponent {
   }
 
   onFileSelected(event: Event) {
-    
     const input = event.target as HTMLInputElement;
     const maxSizeBytes = (this.controlConfig.maxSizeMB ?? 20) * 1024 * 1024;
     if (input.files && input.files.length > 0) {
@@ -43,10 +42,13 @@ export class FileUploadComponent {
         const reader = new FileReader();
         reader.onload = () => {
           const base64 = (reader.result as string).split(',')[1];
+          const lastDotIndex = file.name.lastIndexOf('.');
+          const fileName = lastDotIndex !== -1 ? file.name.substring(0, lastDotIndex) : file.name;
+          const fileExtension = lastDotIndex !== -1 ? file.name.substring(lastDotIndex) : '';
           const payload = {
             ImageString: base64,
-            FileName: file.name.split('.').shift(),
-            FileExtension: '.' + file.name.split('.').pop()
+            FileName: fileName,
+            FileExtension: fileExtension
           };
           if (file.size > maxSizeBytes) {
             this.snackbarService.error(`File "${file.name}" exceeds the ${this.controlConfig.maxSizeMB} MB limit.`);
@@ -67,19 +69,29 @@ export class FileUploadComponent {
     if (payload) {
       this.documentService.documentDocumentWebUpload(payload).pipe(take(1)).subscribe({
         next: (res: any) => {
-          console.log('Files uploaded successfully', res);
-          let filterResponse: any = {};
-          filterResponse.ReferenceType = this.controlConfig.referenceType;
-          filterResponse.ReferenceId = res.ResponseValue.ReferenceId;
-          filterResponse.DocumentId = res.ResponseValue.DocumentId;
-          filterResponse.FileName = res.ResponseValue.FileName;
-          filterResponse.Location = res.ResponseValue.Location;
-          filterResponse.Guid = res.ResponseValue.Guid;
+          if (
+            res &&
+            res.ResponseValue &&
+            res.ResponseValue.DocumentId &&
+            res.ResponseValue.FileName &&
+            res.ResponseValue.Guid
+          ) {
+            let filterResponse: any = {};
+            filterResponse.ReferenceType = this.controlConfig.referenceType;
+            filterResponse.ReferenceId = res.ResponseValue.ReferenceId;
+            filterResponse.DocumentId = res.ResponseValue.DocumentId;
+            filterResponse.FileName = res.ResponseValue.FileName;
+            filterResponse.Location = res.ResponseValue.Location;
+            filterResponse.Guid = res.ResponseValue.Guid;
 
-          this.selectedFiles.push(filterResponse);
-          this.control.setValue(this.selectedFiles);
+            this.selectedFiles.push(filterResponse);
+            this.control.setValue(this.selectedFiles);
+          } else {
+            this.snackbarService.error('File upload failed or response is invalid.');
+          }
         },
         error: (err: any) => {
+          this.snackbarService.error('File upload failed.');
           console.log(err)
         }
       })
