@@ -161,4 +161,8 @@ export class ForgotPasswordComponent implements OnInit {
       this.form = new FormGroup({});
     }
   }
+
+  goToLogin() {
+    this.router.navigate(['/account']);
+  }
 }
