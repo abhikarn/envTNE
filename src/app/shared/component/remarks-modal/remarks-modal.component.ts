@@ -2,13 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { DecimalFormatPipe } from '../../pipes/decimal-format.pipe';
 
 @Component({
   selector: 'app-remarks-modal',
   imports: [
     CommonModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    DecimalFormatPipe
   ],
   templateUrl: './remarks-modal.component.html',
   styleUrl: './remarks-modal.component.scss'
