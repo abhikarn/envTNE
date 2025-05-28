@@ -49,7 +49,7 @@ export class TextInputComponent implements OnInit {
         this.validateSameOriginAndDestination();
         if (typeof inputValue !== "object") {
           // Trigger only when inputValue is a string of exactly 2 characters
-          if (typeof inputValue === 'string' && inputValue.length === 2) {
+          if (typeof inputValue === 'string' && inputValue.length >= 2) {
             let input = {
               inputValue: inputValue,
               control: this.control
