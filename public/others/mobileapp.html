@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camera, Gallery & Document Upload</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+   
+     
+    input[type="file"] {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Upload File</h2>
+  <p>Select an image via camera/gallery, or choose any document:</p>
+
+  <input type="file" id="cameraInput" accept="image/*" capture="environment">
+  <label for="cameraInput" class="button-label">Take Photo</label>
+
+  <input type="file" id="galleryInput" accept="image/*">
+  <label for="galleryInput" class="button-label">Image from Gallery</label>
+
+  <input type="file" id="documentInput"> <label for="documentInput" class="button-label">Choose Document</label>
+
+ 
+
+  <script>
+    const cameraInput = document.getElementById('cameraInput');
+    const galleryInput = document.getElementById('galleryInput');
+    const documentInput = document.getElementById('documentInput');
+    const preview = document.getElementById('preview');
+
+    // --- Helper Function to Format File Size ---
+    function formatFileSize(bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    // --- Function to handle IMAGE file selection and display preview ---
+    const handleImageSelect = (event) => {
+      preview.innerHTML = ''; // Clear previous preview/info first
+
+      if (!event.target.files || event.target.files.length === 0) {
+          preview.innerHTML = '<p>No file selected.</p>';
+          return;
+      }
+
+      const file = event.target.files[0];
+
+      if (file && file.type.startsWith('image/')) {
+        const img = document.createElement('img');
+        const reader = new FileReader(); // Using FileReader to handle potential load issues
+
+        reader.onload = function(e) {
+            img.src = e.target.result;
+            preview.appendChild(img);
+            console.log(`Image loaded: ${file.name}, size: ${formatFileSize(file.size)}`);
+        }
+        reader.onerror = function(e) {
+            console.error("FileReader error:", e);
+            preview.innerHTML = '<p>Error reading image file.</p>';
+        }
+        reader.readAsDataURL(file); // Read file as Data URL
+
+      } else if (file) {
+          console.log("Selected file is not an image:", file.type);
+          preview.innerHTML = `<p>Selected file is not an image (${file.name}). Please use 'Choose Document' for non-image files.</p>`;
+      } else {
+          preview.innerHTML = '<p>Could not access selected file.</p>';
+      }
+
+      event.target.value = null; // Reset input
+    };
+
+    // --- Function to handle ANY document selection and display info ---
+    const handleDocumentSelect = (event) => {
+        preview.innerHTML = ''; // Clear previous preview/info first
+
+        if (!event.target.files || event.target.files.length === 0) {
+          preview.innerHTML = '<p>No file selected.</p>';
+          return;
+        }
+
+        const file = event.target.files[0];
+
+        if (file) {
+            console.log(`Document selected: ${file.name}, Type: ${file.type || 'N/A'}, Size: ${formatFileSize(file.size)}`);
+            // Display file information instead of a preview
+            const info = document.createElement('div');
+            info.innerHTML = `
+                <p><strong>Selected File:</strong> ${file.name}</p>
+                <p><strong>Type:</strong> ${file.type || 'Unknown/Binary'}</p>
+                <p><strong>Size:</strong> ${formatFileSize(file.size)}</p>
+            `;
+            preview.appendChild(info);
+        } else {
+             preview.innerHTML = '<p>Could not access selected file.</p>';
+        }
+
+        event.target.value = null; // Reset input
+    };
+
+
+    // Add event listeners to the appropriate inputs
+    cameraInput.addEventListener('change', handleImageSelect);
+    galleryInput.addEventListener('change', handleImageSelect);
+    documentInput.addEventListener('change', handleDocumentSelect);
+
+  </script>
+
+</body>
+</html>

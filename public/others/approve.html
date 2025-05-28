@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title> Enaviya | Travel and Expense</title>
+      <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+      <link rel="stylesheet" href="css/common-style.css">
+      <link rel="stylesheet" href="css/themify-icons.css">
+      <link rel="stylesheet" href="css/owl.carousel.css">
+      <link rel="stylesheet" href="css/bootstrap.css">
+      <link href="css/responsive.css" rel="stylesheet"/>
+      <!-- bootstrap js -->
+      <script src="js/jquery.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.bundle.js"></script> 
+      <!-- Google fonts -->
+      <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+      <!-- Fontawesome -->
+      <link rel="stylesheet" href="css/font-awesome.css">
+      <!-- Multi Select css and JS -->
+      <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+      <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
+      <link rel="stylesheet" href="css/jquery-ui.css">
+      <!-- owl carousel css -->
+      <script src="js/owl.carousel.js"></script> 
+      <script src="js/owl.owl.carousel.min.js"></script>
+      <script src="js/jquery-ui.js"></script>
+   </head>
+   <body class="sidebar-mini sidebar-collapse">
+      <div class="wrapper">
+         <div class="app-container">
+            <header class="header-fixed nav-bar-head">
+               <div class="logo-account-hold">
+                  <div class="left-app-logo">
+                     <img src="images/application-logo.png" alt="enaviya" title="enaviya | Travel and Expense" class="logo-main">
+                  </div>
+                  <div class="right-app-account">
+                     <div class="notify-hold user-hold">
+                        <div class="help-hold me-2">
+                           <a href="">
+                              <button type="button" class="btn  px-0 " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="User Manual">
+                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" width="22px" height="22px">
+                                    <path d="M12 17H12.01M12 14C12.8906 12.0938 15 12.2344 15 10C15 8.5 14 7 12 7C10.4521 7 9.50325 7.89844 9.15332 9M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#031842"></path>
+                                 </svg>
+                              </button>
+                           </a>
+                        </div>
+                        <ul class="header-notify-hold">
+                           <li class="notification-hold">
+                              <svg width="20" height="20" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M8.03571 0.0820312C6.63011 0.0820312 5.28208 0.640403 4.28817 1.63431C3.29426 2.62822 2.73589 3.97625 2.73589 5.38184C2.73589 8.01673 2.17212 9.66477 1.6435 10.6339C1.37833 11.1201 1.1186 11.4417 0.934986 11.6355C0.843013 11.7326 0.76971 11.7981 0.723806 11.8363C0.700846 11.8554 0.68472 11.8678 0.676521 11.8739L0.67102 11.8779C0.445925 12.0316 0.346166 12.3138 0.425304 12.5752C0.505115 12.8388 0.748069 13.0191 1.02349 13.0191H15.0479C15.3233 13.0191 15.5663 12.8388 15.6461 12.5752C15.7252 12.3138 15.6255 12.0316 15.4004 11.8779L15.3995 11.8773L15.3975 11.876L15.3961 11.8751L15.3954 11.8746L15.3938 11.8731C15.3942 11.8734 15.3945 11.8736 15.3949 11.8739L15.3996 11.8774L15.1307 11.6295C14.9475 11.4351 14.6903 11.115 14.4279 10.6339C13.8993 9.66477 13.3355 8.01673 13.3355 5.38184C13.3355 3.97625 12.7771 2.62822 11.7832 1.63431C10.7893 0.640403 9.4413 0.0820312 8.03571 0.0820312ZM12.5518 9.25212L15.1307 11.6295C15.1326 11.6315 15.1345 11.6335 15.1364 11.6355C15.1371 11.6362 15.1378 11.637 15.1385 11.6377L12.5521 9.25319C12.552 9.25283 12.5519 9.25248 12.5518 9.25212ZM5.20823 2.48247L4.28817 1.63431L5.20819 2.48251C5.19608 2.49432 5.18403 2.50622 5.17206 2.51819C4.41257 3.27768 3.98589 4.30777 3.98589 5.38184C3.98589 8.20091 3.38096 10.059 2.74087 11.2325C2.63247 11.4312 2.52345 11.6096 2.41674 11.7691H13.6547C13.548 11.6096 13.4389 11.4312 13.3305 11.2325C13.0478 10.7142 12.772 10.0624 12.5521 9.25319L5.20819 2.48251C5.2082 2.4825 5.20822 2.48248 5.20823 2.48247ZM5.20823 2.48247L12.5518 9.25212C12.274 8.22936 12.0855 6.95529 12.0855 5.38184C12.0855 4.30777 11.6588 3.27768 10.8994 2.51819C10.1399 1.75871 9.10978 1.33203 8.03571 1.33203C6.97859 1.33203 5.96408 1.74534 5.20823 2.48247ZM15.1385 11.6377L15.3938 11.8731C15.3853 11.8667 15.3696 11.8546 15.3476 11.8363C15.302 11.7983 15.2295 11.7336 15.1385 11.6377ZM7.22812 15.1981C7.05492 14.8995 6.67247 14.7979 6.37389 14.9711C6.07531 15.1443 5.97367 15.5267 6.14688 15.8253C6.3388 16.1562 6.61427 16.4308 6.94571 16.6217C7.27714 16.8126 7.65292 16.9131 8.0354 16.9131C8.41789 16.9131 8.79366 16.8126 9.1251 16.6217C9.45654 16.4308 9.73201 16.1562 9.92393 15.8253C10.0971 15.5267 9.99549 15.1443 9.69692 14.9711C9.39834 14.7979 9.01588 14.8995 8.84268 15.1981C8.76064 15.3395 8.64289 15.4569 8.50121 15.5385C8.35953 15.6201 8.1989 15.6631 8.0354 15.6631C7.8719 15.6631 7.71127 15.6201 7.5696 15.5385C7.42792 15.4569 7.31016 15.3395 7.22812 15.1981Z" fill="#031842"></path>
+                              </svg>
+                              <div class="dropdown notify-wrapper">
+                                 <span class="notify-count" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"><small>3</small></span>
+                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <h4 class="notify-head11">Notifications</h4>
+                                    <a data-bs-toggle="tooltip" class="notify-close web-notification-clear-all"><span class="ti-close"></span>Clear All</a>
+                                    <div class="notification-inner-wrapper">
+                                       <div class="notification-item">
+                                          <a class="dropdown-item priority-h web-notification-redirect" data-id="d39eecab-7300-4399-b0d5-64ee79169a8c" href="">
+                                             <span class="fa-ico"><i class="fa fa-bullhorn" aria-hidden="true"></i></span>
+                                             <div class="notify-details-rt">
+                                                <div class="nd-title-head">
+                                                   <h5>Expense Request #ER/2024/07/00519 Created</h5>
+                                                </div>
+                                                <label class="date-sml">30-Jul-2024 11:39</label>
+                                             </div>
+                                          </a>
+                                          <a class="notify-close web-notification-close" data-id="d39eecab-7300-4399-b0d5-64ee79169a8c"><span data-bs-toggle="tooltip" class="ti-close" aria-label="Clear"></span></a>
+                                       </div>
+                                       <div class="notification-item">
+                                          <a class="dropdown-item priority-h web-notification-redirect" data-id="257dee63-e047-45cd-8fdc-84247ae2dc2f" href="">
+                                             <span class="fa-ico"><i class="fa fa-bullhorn" aria-hidden="true"></i></span>
+                                             <div class="notify-details-rt">
+                                                <div class="nd-title-head">
+                                                   <h5>Expense Request #ER/2024/07/00520 Created</h5>
+                                                </div>
+                                                <label class="date-sml">30-Jul-2024 11:57</label>
+                                             </div>
+                                          </a>
+                                          <a class="notify-close web-notification-close" data-id="257dee63-e047-45cd-8fdc-84247ae2dc2f"><span data-bs-toggle="tooltip" class="ti-close" aria-label="Clear"></span></a>
+                                       </div>
+                                       <div class="notification-item">
+                                          <a class="dropdown-item priority-h web-notification-redirect" data-id="20cd873e-041e-4270-99a7-4dca47e773e0" href="">
+                                             <span class="fa-ico"><i class="fa fa-bullhorn" aria-hidden="true"></i></span>
+                                             <div class="notify-details-rt">
+                                                <div class="nd-title-head">
+                                                   <h5>Expense Request #ER/2024/07/00521 Created</h5>
+                                                </div>
+                                                <label class="date-sml">30-Jul-2024 12:04</label>
+                                             </div>
+                                          </a>
+                                          <a class="notify-close web-notification-close" data-id="20cd873e-041e-4270-99a7-4dca47e773e0"><span data-bs-toggle="tooltip" class="ti-close" aria-label="Clear"></span></a>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </li>
+                        </ul>
+                        <div class="user-sec">
+                           <div class="account-right">
+                              <ul id="menu-log">
+                                 <li>
+                                    <input id="check01" type="checkbox" name="menu">
+                                    <label for="check01"><span class="uname-dp">PR</span><span class="lname-align tblack">Priya  </span></label>
+                                    <ul class="submenu">
+                                       <li>
+                                          <div class="submenu-dp bg-primary">Priya  </div>
+                                       </li>
+                                       <li>
+                                          <a href=" "><span><i class="fa fa-user" aria-hidden="true"></i></span>My Profile</a>
+                                       </li>
+                                       <li>
+                                          <a href=" "><span><i class="fa fa-check-circle" aria-hidden="true"></i></span>My Policy</a>
+                                       </li>
+                                       <li>
+                                          <a href=" ">
+                                          <span>
+                                          <i class="fa fa-envelope fa--ma-align11" aria-hidden="true"></i>
+                                          </span>Verify Email<span class="not-verified rt-abs-align"><i class="fa-solid fa-circle-xmark  text-danger"></i></span>
+                                          </a>
+                                       </li>
+                                       <li>
+                                          <a href=" ">
+                                          <span>
+                                          <i class="fa fa-mobile" aria-hidden="true"></i>
+                                          </span>Verify Mobile<span class="not-verified rt-abs-align"><i class="fa-solid fa-circle-xmark  text-danger"></i></span>
+                                          </a>
+                                       </li>
+                                       <li>
+                                          <a href=" "><span><i class="fa fa-user-plus" aria-hidden="true"></i></span>Delegation</a>
+                                       </li>
+                                       <li>
+                                          <a href=" "><span><i class="fa fa-sign-out" aria-hidden="true"></i></span>Logout</a>
+                                       </li>
+                                    </ul>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- right-app-account -->
+               </div>
+            </header>
+            <main class="body-wrapper">
+               <aside class="main-sidebar bg-dark">
+                  <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button"><i class="fa-solid fa-angles-right"></i></a>
+                  <section class="sidebar" style="height: auto;">
+                     <ul class="sidebar-menu tree" data-widget="tree">
+                        <li id="menu-dashboard">
+                           <a href="dashboard.html">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M9.98313 1.71875L10.3899 1.24421C10.1558 1.0436 9.81044 1.0436 9.57638 1.24421L9.98313 1.71875ZM2.20312 8.38732L1.79638 7.91279L1.57812 8.09986V8.38732H2.20312ZM7.76027 17.2788V17.9038C8.10545 17.9038 8.38527 17.6239 8.38527 17.2788H7.76027ZM12.206 17.2788H11.581C11.581 17.6239 11.8608 17.9038 12.206 17.9038V17.2788ZM17.7631 8.38732H18.3881V8.09986L18.1699 7.91279L17.7631 8.38732ZM3.31455 17.9038H7.76027V16.6538H3.31455V17.9038ZM18.1699 7.91279L10.3899 1.24421L9.57638 2.19329L17.3564 8.86186L18.1699 7.91279ZM9.57638 1.24421L1.79638 7.91279L2.60987 8.86186L10.3899 2.19329L9.57638 1.24421ZM8.38527 17.2788V13.9445H7.13527V17.2788H8.38527ZM11.581 13.9445V17.2788H12.831V13.9445H11.581ZM12.206 17.9038H16.6517V16.6538H12.206V17.9038ZM18.3881 16.1673V8.38732H17.1381V16.1673H18.3881ZM1.57812 8.38732V16.1673H2.82812V8.38732H1.57812ZM9.98313 12.3466C10.8656 12.3466 11.581 13.062 11.581 13.9445H12.831C12.831 12.3716 11.556 11.0966 9.98313 11.0966V12.3466ZM9.98313 11.0966C8.4103 11.0966 7.13527 12.3716 7.13527 13.9445H8.38527C8.38527 13.062 9.10065 12.3466 9.98313 12.3466V11.0966ZM16.6517 17.9038C17.6107 17.9038 18.3881 17.1263 18.3881 16.1673H17.1381C17.1381 16.436 16.9203 16.6538 16.6517 16.6538V17.9038ZM3.31455 16.6538C3.04591 16.6538 2.82812 16.436 2.82812 16.1673H1.57812C1.57812 17.1263 2.35555 17.9038 3.31455 17.9038V16.6538Z" fill="white"></path>
+                              </svg>
+                              <span>Dashboard</span>
+                           </a>
+                        </li>
+                        <li id="menu-travel">
+                           <a href=" ">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M13.8333 15L12.3333 8.16667L15.25 5.25C16.5 4 16.9167 2.33333 16.5 1.5C15.6667 1.08333 14 1.5 12.75 2.75L9.83333 5.66667L3 4.16667C2.58333 4.08333 2.25 4.25 2.08333 4.58333L1.83333 5C1.66667 5.41667 1.75 5.83333 2.08333 6.08333L6.5 9L4.83333 11.5H2.33333L1.5 12.3333L4 14L5.66667 16.5L6.5 15.6667V13.1667L9 11.5L11.9167 15.9167C12.1667 16.25 12.5833 16.3333 13 16.1667L13.4167 16C13.75 15.75 13.9167 15.4167 13.8333 15Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </svg>
+                              <span>Travel</span>
+                           </a>
+                        </li>
+                        <li id="menu-travel-backdated">
+                           <a href="">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M4.42052 17.9137C3.99955 17.9137 3.64323 17.7679 3.35156 17.4762C3.0599 17.1846 2.91406 16.8283 2.91406 16.4073V5.25354C2.91406 4.83257 3.0599 4.47625 3.35156 4.18458C3.64323 3.89292 3.99955 3.74708 4.42052 3.74708H5.57427V1.98438H6.85635V3.74708H13.1705V1.98438H14.4205V3.74708H15.5743C15.9952 3.74708 16.3516 3.89292 16.6432 4.18458C16.9349 4.47625 17.0807 4.83257 17.0807 5.25354V16.4073C17.0807 16.8283 16.9349 17.1846 16.6432 17.4762C16.3516 17.7679 15.9952 17.9137 15.5743 17.9137H4.42052ZM4.42052 16.6637H15.5743C15.6384 16.6637 15.6972 16.637 15.7505 16.5835C15.804 16.5302 15.8307 16.4715 15.8307 16.4073V8.58687H4.16406V16.4073C4.16406 16.4715 4.1908 16.5302 4.24427 16.5835C4.2976 16.637 4.35635 16.6637 4.42052 16.6637ZM4.16406 7.33687H15.8307V5.25354C15.8307 5.18937 15.804 5.13062 15.7505 5.07729C15.6972 5.02382 15.6384 4.99708 15.5743 4.99708H4.42052C4.35635 4.99708 4.2976 5.02382 4.24427 5.07729C4.1908 5.13062 4.16406 5.18937 4.16406 5.25354V7.33687ZM9.9974 11.7279C9.79337 11.7279 9.61948 11.656 9.47573 11.5123C9.33212 11.3687 9.26031 11.1948 9.26031 10.9906C9.26031 10.7866 9.33212 10.6127 9.47573 10.469C9.61948 10.3253 9.79337 10.2535 9.9974 10.2535C10.2014 10.2535 10.3753 10.3253 10.5191 10.469C10.6627 10.6127 10.7345 10.7866 10.7345 10.9906C10.7345 11.1948 10.6627 11.3687 10.5191 11.5123C10.3753 11.656 10.2014 11.7279 9.9974 11.7279ZM6.66406 11.7279C6.46003 11.7279 6.28615 11.656 6.1424 11.5123C5.99878 11.3687 5.92698 11.1948 5.92698 10.9906C5.92698 10.7866 5.99878 10.6127 6.1424 10.469C6.28615 10.3253 6.46003 10.2535 6.66406 10.2535C6.86809 10.2535 7.04198 10.3253 7.18573 10.469C7.32934 10.6127 7.40115 10.7866 7.40115 10.9906C7.40115 11.1948 7.32934 11.3687 7.18573 11.5123C7.04198 11.656 6.86809 11.7279 6.66406 11.7279ZM13.3307 11.7279C13.1267 11.7279 12.9528 11.656 12.8091 11.5123C12.6655 11.3687 12.5936 11.1948 12.5936 10.9906C12.5936 10.7866 12.6655 10.6127 12.8091 10.469C12.9528 10.3253 13.1267 10.2535 13.3307 10.2535C13.5348 10.2535 13.7086 10.3253 13.8524 10.469C13.996 10.6127 14.0678 10.7866 14.0678 10.9906C14.0678 11.1948 13.996 11.3687 13.8524 11.5123C13.7086 11.656 13.5348 11.7279 13.3307 11.7279ZM9.9974 14.9971C9.79337 14.9971 9.61948 14.9252 9.47573 14.7815C9.33212 14.6378 9.26031 14.464 9.26031 14.26C9.26031 14.0558 9.33212 13.8819 9.47573 13.7383C9.61948 13.5946 9.79337 13.5227 9.9974 13.5227C10.2014 13.5227 10.3753 13.5946 10.5191 13.7383C10.6627 13.8819 10.7345 14.0558 10.7345 14.26C10.7345 14.464 10.6627 14.6378 10.5191 14.7815C10.3753 14.9252 10.2014 14.9971 9.9974 14.9971ZM6.66406 14.9971C6.46003 14.9971 6.28615 14.9252 6.1424 14.7815C5.99878 14.6378 5.92698 14.464 5.92698 14.26C5.92698 14.0558 5.99878 13.8819 6.1424 13.7383C6.28615 13.5946 6.46003 13.5227 6.66406 13.5227C6.86809 13.5227 7.04198 13.5946 7.18573 13.7383C7.32934 13.8819 7.40115 14.0558 7.40115 14.26C7.40115 14.464 7.32934 14.6378 7.18573 14.7815C7.04198 14.9252 6.86809 14.9971 6.66406 14.9971ZM13.3307 14.9971C13.1267 14.9971 12.9528 14.9252 12.8091 14.7815C12.6655 14.6378 12.5936 14.464 12.5936 14.26C12.5936 14.0558 12.6655 13.8819 12.8091 13.7383C12.9528 13.5946 13.1267 13.5227 13.3307 13.5227C13.5348 13.5227 13.7086 13.5946 13.8524 13.7383C13.996 13.8819 14.0678 14.0558 14.0678 14.26C14.0678 14.464 13.996 14.6378 13.8524 14.7815C13.7086 14.9252 13.5348 14.9971 13.3307 14.9971Z" fill="white"></path>
+                              </svg>
+                              <span>Backdated Travel</span>
+                           </a>
+                        </li>
+                        <li id="menu-expense" class="active">
+                           <a href="expense.html">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M10.0026 10.418C9.22906 10.418 8.48719 10.7253 7.94021 11.2722C7.39323 11.8192 7.08594 12.5611 7.08594 13.3346C7.08594 14.1082 7.39323 14.8501 7.94021 15.397C8.48719 15.944 9.22906 16.2513 10.0026 16.2513C10.7762 16.2513 11.518 15.944 12.065 15.397C12.612 14.8501 12.9193 14.1082 12.9193 13.3346C12.9193 12.5611 12.612 11.8192 12.065 11.2722C11.518 10.7253 10.7762 10.418 10.0026 10.418ZM8.7526 13.3346C8.7526 13.0031 8.8843 12.6852 9.11872 12.4508C9.35314 12.2163 9.67108 12.0846 10.0026 12.0846C10.3341 12.0846 10.6521 12.2163 10.8865 12.4508C11.1209 12.6852 11.2526 13.0031 11.2526 13.3346C11.2526 13.6662 11.1209 13.9841 10.8865 14.2185C10.6521 14.4529 10.3341 14.5846 10.0026 14.5846C9.67108 14.5846 9.35314 14.4529 9.11872 14.2185C8.8843 13.9841 8.7526 13.6662 8.7526 13.3346Z" fill="white"></path>
+                                 <path d="M14.605 4.26495L11.9558 0.550781L2.215 8.33245L1.675 8.32661V8.33495H1.25V18.3349H18.75V8.33495H17.9483L16.3533 3.66912L14.605 4.26495ZM16.1875 8.33495H7.83083L14.055 6.21328L15.3233 5.80745L16.1875 8.33495ZM12.9583 4.82662L6.53333 7.01662L11.6217 2.95161L12.9583 4.82662ZM2.91667 15.1424V11.5258C3.26848 11.4016 3.58804 11.2003 3.85192 10.9365C4.1158 10.6728 4.31731 10.3534 4.44167 10.0016H15.5583C15.6826 10.3535 15.884 10.6731 16.1479 10.937C16.4118 11.2009 16.7314 11.4024 17.0833 11.5266V15.1433C16.7314 15.2675 16.4118 15.469 16.1479 15.7329C15.884 15.9968 15.6826 16.3164 15.5583 16.6683H4.44333C4.31849 16.3163 4.11664 15.9967 3.85252 15.7328C3.5884 15.4688 3.26867 15.2671 2.91667 15.1424Z" fill="white"></path>
+                              </svg>
+                              <span>Expense</span>
+                           </a>
+                        </li>
+                        <li id="menu-history">
+                           <a href=" ">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M10.3281 17.9154C8.28563 17.9154 6.51326 17.2415 5.01104 15.8937C3.50882 14.5459 2.65618 12.8587 2.45312 10.832H3.72396C3.92701 12.5126 4.65778 13.9049 5.91625 15.0091C7.17486 16.1133 8.64549 16.6654 10.3281 16.6654C12.1892 16.6654 13.7656 16.0195 15.0573 14.7279C16.349 13.4362 16.9948 11.8598 16.9948 9.9987C16.9948 8.13759 16.349 6.5612 15.0573 5.26953C13.7656 3.97786 12.1892 3.33203 10.3281 3.33203C9.07493 3.33203 7.92188 3.65391 6.86896 4.29766C5.81604 4.94127 5.00438 5.82398 4.43396 6.94578H6.89854V8.19578H2.62625C3.045 6.40092 3.97153 4.93328 5.40583 3.79286C6.84014 2.65231 8.4809 2.08203 10.3281 2.08203C11.4233 2.08203 12.4524 2.28981 13.4156 2.70536C14.3788 3.12092 15.2167 3.68488 15.9292 4.39724C16.6417 5.1096 17.2057 5.94731 17.6213 6.91037C18.0369 7.87342 18.2448 8.90238 18.2448 9.99724C18.2448 11.0922 18.0369 12.1215 17.6213 13.0849C17.2057 14.0484 16.6417 14.8865 15.9292 15.5991C15.2167 16.3118 14.3788 16.876 13.4156 17.2918C12.4524 17.7075 11.4233 17.9154 10.3281 17.9154ZM12.5973 13.1462L9.70313 10.2508V6.13661H10.9531V9.74557L13.4675 12.2679L12.5973 13.1462Z" fill="white"></path>
+                              </svg>
+                              <span>History</span>
+                           </a>
+                        </li>
+                        <li id="menu-insights">
+                           <a href=" ">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M7.07692 8.46154H13.2308M7.07692 11.5385H13.2308M15.641 18H4.66667C4.29848 18 4 17.7015 4 17.3333V2.66667C4 2.29848 4.29848 2 4.66667 2H11.7239C11.9007 2 12.0702 2.07024 12.1953 2.19526L16.1124 6.11243C16.2375 6.23745 16.3077 6.40702 16.3077 6.58383V17.3333C16.3077 17.7015 16.0092 18 15.641 18Z" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </svg>
+                              <span>Reports</span>
+                           </a>
+                        </li>
+                        <li id="menu-travelagent">
+                           <a href=" ">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M14 19.2857L15.8 21L20 17M16.5 14.4018C16.2052 14.2315 15.8784 14.1098 15.5303 14.0472C15.4548 14.0337 15.3748 14.024 15.2842 14.0171C15.059 14 14.9464 13.9915 14.7961 14.0027C14.6399 14.0143 14.5527 14.0297 14.4019 14.0723C14.2569 14.1132 13.9957 14.2315 13.4732 14.4682C12.7191 14.8098 11.8817 15 11 15C10.1183 15 9.28093 14.8098 8.52682 14.4682C8.00429 14.2315 7.74302 14.1131 7.59797 14.0722C7.4472 14.0297 7.35983 14.0143 7.20361 14.0026C7.05331 13.9914 6.94079 14 6.71575 14.0172C6.6237 14.0242 6.5425 14.0341 6.46558 14.048C5.23442 14.2709 4.27087 15.2344 4.04798 16.4656C4 16.7306 4 17.0485 4 17.6841V19.4C4 19.9601 4 20.2401 4.10899 20.454C4.20487 20.6422 4.35785 20.7951 4.54601 20.891C4.75992 21 5.03995 21 5.6 21H10.5M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </svg>
+                              <span>Travel Arrangers</span>
+                           </a>
+                        </li>
+                        <li id="menu-travelagent-histroy">
+                           <a href=" ">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M10.3281 17.9154C8.28563 17.9154 6.51326 17.2415 5.01104 15.8937C3.50882 14.5459 2.65618 12.8587 2.45312 10.832H3.72396C3.92701 12.5126 4.65778 13.9049 5.91625 15.0091C7.17486 16.1133 8.64549 16.6654 10.3281 16.6654C12.1892 16.6654 13.7656 16.0195 15.0573 14.7279C16.349 13.4362 16.9948 11.8598 16.9948 9.9987C16.9948 8.13759 16.349 6.5612 15.0573 5.26953C13.7656 3.97786 12.1892 3.33203 10.3281 3.33203C9.07493 3.33203 7.92188 3.65391 6.86896 4.29766C5.81604 4.94127 5.00438 5.82398 4.43396 6.94578H6.89854V8.19578H2.62625C3.045 6.40092 3.97153 4.93328 5.40583 3.79286C6.84014 2.65231 8.4809 2.08203 10.3281 2.08203C11.4233 2.08203 12.4524 2.28981 13.4156 2.70536C14.3788 3.12092 15.2167 3.68488 15.9292 4.39724C16.6417 5.1096 17.2057 5.94731 17.6213 6.91037C18.0369 7.87342 18.2448 8.90238 18.2448 9.99724C18.2448 11.0922 18.0369 12.1215 17.6213 13.0849C17.2057 14.0484 16.6417 14.8865 15.9292 15.5991C15.2167 16.3118 14.3788 16.876 13.4156 17.2918C12.4524 17.7075 11.4233 17.9154 10.3281 17.9154ZM12.5973 13.1462L9.70313 10.2508V6.13661H10.9531V9.74557L13.4675 12.2679L12.5973 13.1462Z" fill="white"></path>
+                              </svg>
+                              <span>Travel Arrangers History</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </section>
+               </aside>
+               <div class="content-wrapper right-main-containr">
+                  <div class="main-data-hold">
+                     <div class="page-title">
+                        <h2 class="page-header">Approve</h2>
+                     </div>
+                     <div class="app-main-wrapper">
+                        <div class="inn-main-hold">
+                           <div class="flex-wrapper-top">
+                              <div class="all-data-wrapper">
+                                 <div class="global-container-hold">
+                                    <div class="left-container-wider scroll-left-align mar-tmd3">
+                                       <div class="preview-child-section mb-3">
+                                          <div class="preview-head-view">
+                                             <div class="preview-head-child d-flex align-items-start justify-content-between">
+                                                <span class="phv-icon me-2"><i class="fa-solid fa-file-signature"></i></span>
+                                                <div>
+                                                   <label class="name-label-head">Request No :</label> <br>
+                                                   <span class="name-label-det">TR/2022/2/110</span>
+                                                </div>
+                                             </div>
+                                             <div class="preview-head-child d-flex align-items-start justify-content-between">
+                                                <span class="phv-icon me-2"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                                <div>
+                                                   <label class="name-label-head">Requester Name :</label><br>
+                                                   <span class="name-label-det"><a href="#" class="phv-link" data-bs-toggle="modal" data-bs-target="#req-all-details">Ramesh Gupta</a></span>
+                                                </div>
+                                             </div>
+                                             <div class="preview-head-child d-flex align-items-start justify-content-between">
+                                                <span class="phv-icon me-2"><i class="fa-solid fa-user-gear"></i></span>
+                                                <div>
+                                                   <label class="name-label-head">Pending:</label><br>
+                                                   <span class="name-label-det">EMPLOYEE5 | SDS00288</span>
+                                                </div>
+                                             </div>
+                                             <div class="preview-head-child d-flex align-items-start justify-content-between">
+                                                <span class="phv-icon me-2"><i class="fa-solid fa-pencil"></i></span>
+                                                <div>
+                                                   <label class="name-label-head">Status:</label><br>
+                                                   <span class="status-blue status-common">
+                                                   PENDING FOR APPROVAL
+                                                   </span>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="common-block  mb-3">
+                                          <div class="d-flex align-items-center justify-content-between">
+                                             <h6 class="common-title fw-bold mb-3">Request Details </h6>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-6">
+                                                <div class="trl-preview-wrapper">
+                                                   <div class="trl-readview-item">
+                                                      <div class="trl-req-head">
+                                                         <label>Base Location</label>
+                                                      </div>
+                                                      <div class="trl-req-detail">
+                                                         <span >LOC-78</span>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="trl-preview-wrapper">
+                                                   <div class="trl-readview-item">
+                                                      <div class="trl-req-head">
+                                                         <label>Linked Request </label>
+                                                      </div>
+                                                      <div class="trl-req-detail">
+                                                         <p data-bs-toggle="modal" data-bs-target="#travel-previewreadonly"  >TR/2022/2/71</p>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="trl-preview-wrapper">
+                                                   <div class="trl-readview-item">
+                                                      <div class="trl-req-head">
+                                                         <label>Designation   </label>
+                                                      </div>
+                                                      <div class="trl-req-detail"> 
+                                                         <span >Management Trainee </span>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="col-md-6">
+                                                <div class="trl-preview-wrapper">
+                                                   <div class="trl-readview-item">
+                                                      <div class="trl-req-head">
+                                                         <label>Billable Cost Centre</label>
+                                                      </div>
+                                                      <div class="trl-req-detail">
+                                                         <span >COO - Office [ 16050 ]</span>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="trl-preview-wrapper">
+                                                   <div class="trl-readview-item">
+                                                      <div class="trl-req-head">
+                                                         <label>Department </label>
+                                                      </div>
+                                                      <div class="trl-req-detail">
+                                                         <span >DEPT-3617
+                                                         </span>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="trl-preview-wrapper">
+                                                   <div class="trl-readview-item">
+                                                      <div class="trl-req-head">
+                                                         <label>Grade </label>
+                                                      </div>
+                                                      <div class="trl-req-detail">
+                                                         <span > M6
+                                                         </span>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="row-wrapper common-block px-3 py-3">
+                                          <div class="accordion accordion-flush preview-standard-view" id="accordionFlushExample">
+                                             <!-- accordion-item -->
+                                             <div class="accordion-item">
+                                                <h2 class="accordion-header" id="preview-accordion-one">
+                                                   <button class="accordion-button  " type="button" data-bs-toggle="collapse" data-bs-target="#preview-accordion-collapse-one" aria-expanded="false" aria-controls="preview-accordion-collapse-one">
+                                                   Accommodation
+                                                   </button>
+                                                </h2>
+                                                <div id="preview-accordion-collapse-one" class="accordion-collapse collapse show" aria-labelledby="preview-accordion-one" data-bs-parent="#accordionFlushExample">
+                                                   <div class="accordion-body">
+                                                      <div class="table-responsive">
+                                                         <table id="tblLodgingExpenses" class="table bor-light  responsive color-table d-table table-cust tbl-sml">
+                                                            <thead>
+                                                               <tr>
+                                                                  <th class="thd-w5"><span>Sl.No</span></th>
+                                                                  <th class="thd-w10"><span>Type</span></th>
+                                                                  <th class="thd-w10"><span>Check-in Date</span></th>
+                                                                  <th class="thd-w10"><span>Check-out Date</span></th>
+                                                                  <th class="thd-w10"><span>City</span></th>
+                                                                  <th class="thd-w15"><span>Hotel Name / <br>Guest House Name</span></th>
+                                                                  <th class="thd-w15"><span>Bill Date</span></th>
+                                                                  <th class="thd-w10"><span>Bill Number</span></th>
+                                                                  <th class="thd-w10"><span>Claimed Amount</span></th>
+                                                                  <th class="thd-w10"><span>Action</span></th>
+                                                               </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                               <tr data-def="true" data-istravel="true" class="parent tbl-le-snNo" id="le-row-1">
+                                                                  <td data-label="Sl.No" data-id="0" data-istravel="true" data-claimamountinbasecurrency="0" data-paymenttype="Amount Paid By Company" data-amount="0" data-isvio="false">1</td>
+                                                                  <td data-label="Type" class="tbl-le-AccType" title="53">Hotel</td>
+                                                                  <td data-label="Check-in Date"  class="tbl-le-checkInDate">25-Mar-2024</td>
+                                                                  <td data-label="Check-Out Date" class="tbl-le-checkOutDate">26-Mar-2024</td>
+                                                                  <td data-label="City" class="tbl-le-city" data-title="40">Mumbai [ BOM ]</td>
+                                                                  <td  data-label="Hotel/Guest House" class="tbl-le-hotelName" data-txtlehotelid="0">Guest House </td>
+                                                                  <td data-label="Bill Date" class="tbl-le-billDate">25-Mar-2024</td>
+                                                                  <td  data-label="Bill Number" class="tbl-le-billNumber">#569856</td>
+                                                                  <td  data-label="Claimed Amount" class="tbl-le-claimAmount" data-edid="1">0</td>
+                                                                  <td data-label="Action" data-ecurr="0" data-istravel="true" data-crate="1.00" data-cbrate="0" data-erate="1.00" data-vio="false" data-viomsg="">
+                                                                     <div class="icons-new">
+                                                                        <span class="btn btn-showhide"><i class="fa fa-chevron-down"></i></span>
+                                                                     </div>
+                                                                  </td>
+                                                               </tr>
+                                                               <tr class="child-le-row-1 child-le-row">
+                                                                  <td colspan="10">
+                                                                     <div class="tr-showblock">
+                                                                        <div class="row">
+                                                                           <div class="col-md-12">
+                                                                              <div class="row">
+                                                                                 <div class="col-md-6">
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>City Grade </label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-cityGrade" data-country="India [ IND ]" data-countryid="104" data-countrygrade="Rest of the World" data-countrygradeid="45" data-title="7">Tier 1</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Bill Number</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-billNumber">#89658965</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Payment Type</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-paymentType" title="93">Amount Paid By Company</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Tax Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-taxAmount">0</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="col-md-6">
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Entitlement Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-entitlementAmount" title="0">0 </p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Currency</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-currency" title="1">Indian Rupee : INR</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Differential Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-differamount" title=""></p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Justification</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-justification">Donec vehicula tortor a mauris lacinia scelerisque. Fusce semper magna ac metus laoreet facilisis.</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="row mt-2 mb-2">
+                                                                                    <div class="col-md-12 d-none">
+                                                                                       <table class="table table-bordered d-table table-cust tbl-sml tbl-le-innerGstTable">
+                                                                                          <thead>
+                                                                                             <tr>
+                                                                                                <th class="thd-w20"><span class="ml-2">Vendor GST Number</span></th>
+                                                                                                <th class="thd-w15"><span class="ml-2">Invoice Number</span></th>
+                                                                                                <th class="thd-w15"><span class="ml-2">GST Value</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">SGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">CGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">IGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">UTGST</span></th>
+                                                                                             </tr>
+                                                                                          </thead>
+                                                                                          <tbody></tbody>
+                                                                                       </table>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="row">
+                                                                                    <div class="col-md-12 d-none">
+                                                                                       <table class="table table-modal-sml tbl-tdlft0 no-sorting tbl-le-inner-document">
+                                                                                          <thead>
+                                                                                             <tr>
+                                                                                                <th class="thd-w90"><span>File Name</span></th>
+                                                                                                <th class="thd-w10"><span>Action</span></th>
+                                                                                             </tr>
+                                                                                          </thead>
+                                                                                          <tbody></tbody>
+                                                                                       </table>
+                                                                                    </div>
+                                                                                 </div>
+                                                                              </div>
+                                                                           </div>
+                                                                        </div>
+                                                                     </div>
+                                                                  </td>
+                                                               </tr>
+                                                               <tr data-def="true" data-istravel="true" class="parent tbl-le-snNo" id="le-row-2">
+                                                                  <td data-label="Sl.No" data-id="0" data-istravel="true" data-claimamountinbasecurrency="0" data-paymenttype="Amount Paid By Company" data-amount="0" data-isvio="false">2</td>
+                                                                  <td data-label="Type" class="tbl-le-AccType" title="53">Hotel</td>
+                                                                  <td data-label="Check-in Date"  class="tbl-le-checkInDate">25-Mar-2024</td>
+                                                                  <td data-label="Check-Out Date" class="tbl-le-checkOutDate">26-Mar-2024</td>
+                                                                  <td data-label="City" class="tbl-le-city" data-title="40">Mumbai [ BOM ]</td>
+                                                                  <td  data-label="Hotel/Guest House" class="tbl-le-hotelName" data-txtlehotelid="0">Guest House </td>
+                                                                  <td data-label="Bill Date" class="tbl-le-billDate">25-Mar-2024</td>
+                                                                  <td  data-label="Bill Number" class="tbl-le-billNumber">#569856</td>
+                                                                  <td  data-label="Claimed Amount" class="tbl-le-claimAmount" data-edid="1">0</td>
+                                                                  <td data-label="Action" data-ecurr="0" data-istravel="true" data-crate="1.00" data-cbrate="0" data-erate="1.00" data-vio="false" data-viomsg="">
+                                                                     <div class="icons-new">
+                                                                        <span class="btn btn-showhide"><i class="fa fa-chevron-down"></i></span>
+                                                                     </div>
+                                                                  </td>
+                                                               </tr>
+                                                               <tr class="child-le-row-2 child-le-row">
+                                                                  <td colspan="10">
+                                                                     <div class="tr-showblock">
+                                                                        <div class="row">
+                                                                           <div class="col-md-12">
+                                                                              <div class="row">
+                                                                                 <div class="col-md-6">
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>City Grade </label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-cityGrade" data-country="India [ IND ]" data-countryid="104" data-countrygrade="Rest of the World" data-countrygradeid="45" data-title="7">Tier 1</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Bill Number</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-billNumber">#89658965</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Payment Type</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-paymentType" title="93">Amount Paid By Company</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Tax Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-taxAmount">0</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="col-md-6">
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Entitlement Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-entitlementAmount" title="0">0 </p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Currency</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-currency" title="1">Indian Rupee : INR</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Differential Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-differamount" title=""></p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Justification</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-justification">Donec vehicula tortor a mauris lacinia scelerisque. Fusce semper magna ac metus laoreet facilisis.</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="row mt-2 mb-2">
+                                                                                    <div class="col-md-12 d-none">
+                                                                                       <table class="table table-bordered d-table table-cust tbl-sml tbl-le-innerGstTable">
+                                                                                          <thead>
+                                                                                             <tr>
+                                                                                                <th class="thd-w20"><span class="ml-2">Vendor GST Number</span></th>
+                                                                                                <th class="thd-w15"><span class="ml-2">Invoice Number</span></th>
+                                                                                                <th class="thd-w15"><span class="ml-2">GST Value</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">SGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">CGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">IGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">UTGST</span></th>
+                                                                                             </tr>
+                                                                                          </thead>
+                                                                                          <tbody></tbody>
+                                                                                       </table>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="row">
+                                                                                    <div class="col-md-12 d-none">
+                                                                                       <table class="table table-modal-sml tbl-tdlft0 no-sorting tbl-le-inner-document">
+                                                                                          <thead>
+                                                                                             <tr>
+                                                                                                <th class="thd-w90"><span>File Name</span></th>
+                                                                                                <th class="thd-w10"><span>Action</span></th>
+                                                                                             </tr>
+                                                                                          </thead>
+                                                                                          <tbody></tbody>
+                                                                                       </table>
+                                                                                    </div>
+                                                                                 </div>
+                                                                              </div>
+                                                                           </div>
+                                                                        </div>
+                                                                     </div>
+                                                                  </td>
+                                                               </tr>
+                                                            </tbody>
+                                                         </table>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <!-- accordion-item -->
+                                             <div class="accordion-item">
+                                                <h2 class="accordion-header" id="preview-accordion-two">
+                                                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#preview-accordion-collapse-two" aria-expanded="true" aria-controls="preview-accordion-collapse-two">
+                                                   Local Conveyance
+                                                   </button>
+                                                </h2>
+                                                <div id="preview-accordion-collapse-two" class="accordion-collapse collapse" aria-labelledby="preview-accordion-two" data-bs-parent="#accordionFlushExample">
+                                                   <div class="accordion-body">
+                                                      <div class="table-responsive">
+                                                         <table id="tblLodgingExpenses" class="table bor-light  responsive color-table d-table table-cust tbl-sml">
+                                                            <thead>
+                                                               <tr>
+                                                                  <th class="thd-w5"><span>Sl.No</span></th>
+                                                                  <th class="thd-w15"><span>Claim Date</span></th>
+                                                                  <th class="thd-w10"><span>Local Travel Type </span></th>
+                                                                  <th class="thd-w10"><span>Local Travel Mode </span></th>
+                                                                  <th class="thd-w10"><span>Orgin Point Name</span></th>
+                                                                  <th class="thd-w15"><span>Destination Point Name    </span></th>
+                                                                  <th class="thd-w10"><span>Payment Type Number</span></th>
+                                                                  <th class="thd-w10"><span>  Amount</span></th>
+                                                                  <th class="thd-w10"><span>Action</span></th>
+                                                               </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                               <tr data-def="true" data-istravel="true" class="parent tbl-le-snNo" id="le-row-1">
+                                                                  <td data-label="Sl.No" data-id="0" data-istravel="true" data-claimamountinbasecurrency="0" data-paymenttype="Amount Paid By Company" data-amount="0" data-isvio="false">1</td>
+                                                                  <td data-label="Type" class="tbl-le-AccType" title="53">25-Mar-2024</td>
+                                                                  <td data-label="Check-in Date"  class="tbl-le-checkInDate">Bus</td>
+                                                                  <td data-label="Check-Out Date" class="tbl-le-checkOutDate">Bus</td>
+                                                                  <td data-label="City" class="tbl-le-city" data-title="40">Mumbai [ BOM ]</td>
+                                                                  <td  data-label="Hotel/Guest House" class="tbl-le-hotelName" data-txtlehotelid="0">Mumbai [ BOM ] </td>
+                                                                  <td  data-label="Bill Number" class="tbl-le-billNumber">#569856</td>
+                                                                  <td  data-label="Claimed Amount" class="tbl-le-claimAmount" data-edid="1">25,236</td>
+                                                                  <td data-label="Action" data-ecurr="0" data-istravel="true" data-crate="1.00" data-cbrate="0" data-erate="1.00" data-vio="false" data-viomsg="">
+                                                                     <div class="icons-new">
+                                                                        <span class="btn btn-showhide"><i class="fa fa-chevron-down"></i></span>
+                                                                     </div>
+                                                                  </td>
+                                                               </tr>
+                                                               <tr class="child-le-row-1 child-le-row">
+                                                                  <td colspan="10">
+                                                                     <div class="tr-showblock">
+                                                                        <div class="row">
+                                                                           <div class="col-md-12">
+                                                                              <div class="row">
+                                                                                 <div class="col-md-6">
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>City Grade </label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-cityGrade" data-country="India [ IND ]" data-countryid="104" data-countrygrade="Rest of the World" data-countrygradeid="45" data-title="7">Tier 1</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Bill Number</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-billNumber">#89658965</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Payment Type</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-paymentType" title="93">Amount Paid By Company</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Tax Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-taxAmount">0</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="col-md-6">
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Entitlement Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-entitlementAmount" title="0">0 </p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Currency</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-currency" title="1">Indian Rupee : INR</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Differential Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-differamount" title=""></p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Justification</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-justification">Donec vehicula tortor a mauris lacinia scelerisque. Fusce semper magna ac metus laoreet facilisis.</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="row mt-2 mb-2">
+                                                                                    <div class="col-md-12 d-none">
+                                                                                       <table class="table table-bordered d-table table-cust tbl-sml tbl-le-innerGstTable">
+                                                                                          <thead>
+                                                                                             <tr>
+                                                                                                <th class="thd-w20"><span class="ml-2">Vendor GST Number</span></th>
+                                                                                                <th class="thd-w15"><span class="ml-2">Invoice Number</span></th>
+                                                                                                <th class="thd-w15"><span class="ml-2">GST Value</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">SGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">CGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">IGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">UTGST</span></th>
+                                                                                             </tr>
+                                                                                          </thead>
+                                                                                          <tbody></tbody>
+                                                                                       </table>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="row">
+                                                                                    <div class="col-md-12 d-none">
+                                                                                       <table class="table table-modal-sml tbl-tdlft0 no-sorting tbl-le-inner-document">
+                                                                                          <thead>
+                                                                                             <tr>
+                                                                                                <th class="thd-w90"><span>File Name</span></th>
+                                                                                                <th class="thd-w10"><span>Action</span></th>
+                                                                                             </tr>
+                                                                                          </thead>
+                                                                                          <tbody></tbody>
+                                                                                       </table>
+                                                                                    </div>
+                                                                                 </div>
+                                                                              </div>
+                                                                           </div>
+                                                                        </div>
+                                                                     </div>
+                                                                  </td>
+                                                               </tr>
+                                                               <tr data-def="true" data-istravel="true" class="parent tbl-le-snNo" id="le-row-2">
+                                                                  <td data-label="Sl.No" data-id="0" data-istravel="true" data-claimamountinbasecurrency="0" data-paymenttype="Amount Paid By Company" data-amount="0" data-isvio="false">2</td>
+                                                                  <td data-label="Type" class="tbl-le-AccType" title="53">25-Mar-2024</td>
+                                                                  <td data-label="Check-in Date"  class="tbl-le-checkInDate">Bus</td>
+                                                                  <td data-label="Check-Out Date" class="tbl-le-checkOutDate">Bus</td>
+                                                                  <td data-label="City" class="tbl-le-city" data-title="40">Mumbai [ BOM ]</td>
+                                                                  <td  data-label="Hotel/Guest House" class="tbl-le-hotelName" data-txtlehotelid="0">Mumbai [ BOM ] </td>
+                                                                  <td  data-label="Bill Number" class="tbl-le-billNumber">#569856</td>
+                                                                  <td  data-label="Claimed Amount" class="tbl-le-claimAmount" data-edid="1">25,236</td>
+                                                                  <td data-label="Action" data-ecurr="0" data-istravel="true" data-crate="1.00" data-cbrate="0" data-erate="1.00" data-vio="false" data-viomsg="">
+                                                                     <div class="icons-new">
+                                                                        <span class="btn btn-showhide"><i class="fa fa-chevron-down"></i></span>
+                                                                     </div>
+                                                                  </td>
+                                                               </tr>
+                                                               <tr class="child-le-row-2 child-le-row">
+                                                                  <td colspan="10">
+                                                                     <div class="tr-showblock">
+                                                                        <div class="row">
+                                                                           <div class="col-md-12">
+                                                                              <div class="row">
+                                                                                 <div class="col-md-6">
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>City Grade </label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-cityGrade" data-country="India [ IND ]" data-countryid="104" data-countrygrade="Rest of the World" data-countrygradeid="45" data-title="7">Tier 1</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Bill Number</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-billNumber">#89658965</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Payment Type</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-paymentType" title="93">Amount Paid By Company</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Tax Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-taxAmount">0</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="col-md-6">
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Entitlement Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-entitlementAmount" title="0">0 </p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Currency</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-currency" title="1">Indian Rupee : INR</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Differential Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-differamount" title=""></p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Justification</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-justification">Donec vehicula tortor a mauris lacinia scelerisque. Fusce semper magna ac metus laoreet facilisis.</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="row mt-2 mb-2">
+                                                                                    <div class="col-md-12 d-none">
+                                                                                       <table class="table table-bordered d-table table-cust tbl-sml tbl-le-innerGstTable">
+                                                                                          <thead>
+                                                                                             <tr>
+                                                                                                <th class="thd-w20"><span class="ml-2">Vendor GST Number</span></th>
+                                                                                                <th class="thd-w15"><span class="ml-2">Invoice Number</span></th>
+                                                                                                <th class="thd-w15"><span class="ml-2">GST Value</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">SGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">CGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">IGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">UTGST</span></th>
+                                                                                             </tr>
+                                                                                          </thead>
+                                                                                          <tbody></tbody>
+                                                                                       </table>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="row">
+                                                                                    <div class="col-md-12 d-none">
+                                                                                       <table class="table table-modal-sml tbl-tdlft0 no-sorting tbl-le-inner-document">
+                                                                                          <thead>
+                                                                                             <tr>
+                                                                                                <th class="thd-w90"><span>File Name</span></th>
+                                                                                                <th class="thd-w10"><span>Action</span></th>
+                                                                                             </tr>
+                                                                                          </thead>
+                                                                                          <tbody></tbody>
+                                                                                       </table>
+                                                                                    </div>
+                                                                                 </div>
+                                                                              </div>
+                                                                           </div>
+                                                                        </div>
+                                                                     </div>
+                                                                  </td>
+                                                               </tr>
+                                                            </tbody>
+                                                         </table>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <!-- accordion-item -->
+                                             <div class="accordion-item mb-0">
+                                                <h2 class="accordion-header" id="preview-accordion-three">
+                                                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#preview-accordion-collapse-three" aria-expanded="true" aria-controls="preview-accordion-collapse-three">
+                                                   Ticket Expense
+                                                   </button>
+                                                </h2>
+                                                <div id="preview-accordion-collapse-three" class="accordion-collapse collapse" aria-labelledby="preview-accordion-three" data-bs-parent="#accordionFlushExample">
+                                                   <div class="accordion-body">
+                                                      <div class="table-responsive">
+                                                         <table id="tblLodgingExpenses" class="table bor-light  responsive color-table d-table table-cust tbl-sml">
+                                                            <thead>
+                                                               <tr>
+                                                                  <th class="thd-w5"><span>Sl.No</span></th>
+                                                                  <th class="thd-w15"><span>Claim Date</span></th>
+                                                                  <th class="thd-w10"><span>Local Travel Type </span></th>
+                                                                  <th class="thd-w10"><span>Local Travel Mode </span></th>
+                                                                  <th class="thd-w10"><span>Orgin Point Name</span></th>
+                                                                  <th class="thd-w15"><span>Destination Point Name    </span></th>
+                                                                  <th class="thd-w10"><span>Payment Type Number</span></th>
+                                                                  <th class="thd-w10"><span>  Amount</span></th>
+                                                                  <th class="thd-w10"><span>Action</span></th>
+                                                               </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                               <tr data-def="true" data-istravel="true" class="parent tbl-le-snNo" id="le-row-1">
+                                                                  <td data-label="Sl.No" data-id="0" data-istravel="true" data-claimamountinbasecurrency="0" data-paymenttype="Amount Paid By Company" data-amount="0" data-isvio="false">1</td>
+                                                                  <td data-label="Type" class="tbl-le-AccType" title="53">25-Mar-2024</td>
+                                                                  <td data-label="Check-in Date"  class="tbl-le-checkInDate">Bus</td>
+                                                                  <td data-label="Check-Out Date" class="tbl-le-checkOutDate">Bus</td>
+                                                                  <td data-label="City" class="tbl-le-city" data-title="40">Mumbai [ BOM ]</td>
+                                                                  <td  data-label="Hotel/Guest House" class="tbl-le-hotelName" data-txtlehotelid="0">Mumbai [ BOM ] </td>
+                                                                  <td  data-label="Bill Number" class="tbl-le-billNumber">#569856</td>
+                                                                  <td  data-label="Claimed Amount" class="tbl-le-claimAmount" data-edid="1">25,236</td>
+                                                                  <td data-label="Action" data-ecurr="0" data-istravel="true" data-crate="1.00" data-cbrate="0" data-erate="1.00" data-vio="false" data-viomsg="">
+                                                                     <div class="icons-new">
+                                                                        <span class="btn btn-showhide"><i class="fa fa-chevron-down"></i></span>
+                                                                     </div>
+                                                                  </td>
+                                                               </tr>
+                                                               <tr class="child-le-row-1 child-le-row">
+                                                                  <td colspan="10">
+                                                                     <div class="tr-showblock">
+                                                                        <div class="row">
+                                                                           <div class="col-md-12">
+                                                                              <div class="row">
+                                                                                 <div class="col-md-6">
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>City Grade </label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-cityGrade" data-country="India [ IND ]" data-countryid="104" data-countrygrade="Rest of the World" data-countrygradeid="45" data-title="7">Tier 1</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Bill Number</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-billNumber">#89658965</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Payment Type</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-paymentType" title="93">Amount Paid By Company</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Tax Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-taxAmount">0</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="col-md-6">
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Entitlement Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-entitlementAmount" title="0">0 </p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Currency</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-currency" title="1">Indian Rupee : INR</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Differential Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-differamount" title=""></p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Justification</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-justification">Donec vehicula tortor a mauris lacinia scelerisque. Fusce semper magna ac metus laoreet facilisis.</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="row mt-2 mb-2">
+                                                                                    <div class="col-md-12 d-none">
+                                                                                       <table class="table table-bordered d-table table-cust tbl-sml tbl-le-innerGstTable">
+                                                                                          <thead>
+                                                                                             <tr>
+                                                                                                <th class="thd-w20"><span class="ml-2">Vendor GST Number</span></th>
+                                                                                                <th class="thd-w15"><span class="ml-2">Invoice Number</span></th>
+                                                                                                <th class="thd-w15"><span class="ml-2">GST Value</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">SGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">CGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">IGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">UTGST</span></th>
+                                                                                             </tr>
+                                                                                          </thead>
+                                                                                          <tbody></tbody>
+                                                                                       </table>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="row">
+                                                                                    <div class="col-md-12 d-none">
+                                                                                       <table class="table table-modal-sml tbl-tdlft0 no-sorting tbl-le-inner-document">
+                                                                                          <thead>
+                                                                                             <tr>
+                                                                                                <th class="thd-w90"><span>File Name</span></th>
+                                                                                                <th class="thd-w10"><span>Action</span></th>
+                                                                                             </tr>
+                                                                                          </thead>
+                                                                                          <tbody></tbody>
+                                                                                       </table>
+                                                                                    </div>
+                                                                                 </div>
+                                                                              </div>
+                                                                           </div>
+                                                                        </div>
+                                                                     </div>
+                                                                  </td>
+                                                               </tr>
+                                                               <tr data-def="true" data-istravel="true" class="parent tbl-le-snNo" id="le-row-2">
+                                                                  <td data-label="Sl.No" data-id="0" data-istravel="true" data-claimamountinbasecurrency="0" data-paymenttype="Amount Paid By Company" data-amount="0" data-isvio="false">2</td>
+                                                                  <td data-label="Type" class="tbl-le-AccType" title="53">25-Mar-2024</td>
+                                                                  <td data-label="Check-in Date"  class="tbl-le-checkInDate">Bus</td>
+                                                                  <td data-label="Check-Out Date" class="tbl-le-checkOutDate">Bus</td>
+                                                                  <td data-label="City" class="tbl-le-city" data-title="40">Mumbai [ BOM ]</td>
+                                                                  <td  data-label="Hotel/Guest House" class="tbl-le-hotelName" data-txtlehotelid="0">Mumbai [ BOM ] </td>
+                                                                  <td  data-label="Bill Number" class="tbl-le-billNumber">#569856</td>
+                                                                  <td  data-label="Claimed Amount" class="tbl-le-claimAmount" data-edid="1">25,236</td>
+                                                                  <td data-label="Action" data-ecurr="0" data-istravel="true" data-crate="1.00" data-cbrate="0" data-erate="1.00" data-vio="false" data-viomsg="">
+                                                                     <div class="icons-new">
+                                                                        <span class="btn btn-showhide"><i class="fa fa-chevron-down"></i></span>
+                                                                     </div>
+                                                                  </td>
+                                                               </tr>
+                                                               <tr class="child-le-row-2 child-le-row">
+                                                                  <td colspan="10">
+                                                                     <div class="tr-showblock">
+                                                                        <div class="row">
+                                                                           <div class="col-md-12">
+                                                                              <div class="row">
+                                                                                 <div class="col-md-6">
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>City Grade </label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-cityGrade" data-country="India [ IND ]" data-countryid="104" data-countrygrade="Rest of the World" data-countrygradeid="45" data-title="7">Tier 1</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Bill Number</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-billNumber">#89658965</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Payment Type</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-paymentType" title="93">Amount Paid By Company</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Tax Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-taxAmount">0</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="col-md-6">
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Entitlement Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-entitlementAmount" title="0">0 </p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Currency</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-currency" title="1">Indian Rupee : INR</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Differential Amount</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-differamount" title=""></p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                    <div class="trl-preview-wrapper">
+                                                                                       <div class="trl-readview-item">
+                                                                                          <div class="trl-req-head"><label>Justification</label></div>
+                                                                                          <div class="trl-req-detail">
+                                                                                             <p class="tbl-le-justification">Donec vehicula tortor a mauris lacinia scelerisque. Fusce semper magna ac metus laoreet facilisis.</p>
+                                                                                          </div>
+                                                                                       </div>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="row mt-2 mb-2">
+                                                                                    <div class="col-md-12 d-none">
+                                                                                       <table class="table table-bordered d-table table-cust tbl-sml tbl-le-innerGstTable">
+                                                                                          <thead>
+                                                                                             <tr>
+                                                                                                <th class="thd-w20"><span class="ml-2">Vendor GST Number</span></th>
+                                                                                                <th class="thd-w15"><span class="ml-2">Invoice Number</span></th>
+                                                                                                <th class="thd-w15"><span class="ml-2">GST Value</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">SGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">CGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">IGST</span></th>
+                                                                                                <th class="thd-w10"><span class="ml-2">UTGST</span></th>
+                                                                                             </tr>
+                                                                                          </thead>
+                                                                                          <tbody></tbody>
+                                                                                       </table>
+                                                                                    </div>
+                                                                                 </div>
+                                                                                 <div class="row">
+                                                                                    <div class="col-md-12 d-none">
+                                                                                       <table class="table table-modal-sml tbl-tdlft0 no-sorting tbl-le-inner-document">
+                                                                                          <thead>
+                                                                                             <tr>
+                                                                                                <th class="thd-w90"><span>File Name</span></th>
+                                                                                                <th class="thd-w10"><span>Action</span></th>
+                                                                                             </tr>
+                                                                                          </thead>
+                                                                                          <tbody></tbody>
+                                                                                       </table>
+                                                                                    </div>
+                                                                                 </div>
+                                                                              </div>
+                                                                           </div>
+                                                                        </div>
+                                                                     </div>
+                                                                  </td>
+                                                               </tr>
+                                                            </tbody>
+                                                         </table>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="row-wrapper common-block px-3  py-0 pb-1 ">
+                                          <div class="col-md-12">
+                                             <div class="form-group chm-formgroup new-form-grp ">
+                                                <label>Remarks <span class="red-star-sml"></span></label>
+                                                <textarea type="text" maxlength="2000" class="form-control chm-formtextarea" id="txtLtcRemarks" placeholder="" value=""></textarea>
+                                                <span class="validate-error-message ltc" id="validate-error-message-txtLtcRemarks" style="display: none">Required</span>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="row mt-2">
+                                          <div class="col-md-12">
+                                             <ul class="nav nav-tabs common-tab" id="myTab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                   <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-policyV" type="button" role="tab" aria-controls="home" aria-selected="true">Policy Violations</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                   <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#approval-D" type="button" role="tab" aria-controls="profile" aria-selected="false">Approval details</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                   <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#logdetails-D" type="button" role="tab" aria-controls="profile" aria-selected="false">Log Details</button>
+                                                </li>
+                                             </ul>
+                                             <div class="tab-content common-tab-content" id="myTabContent">
+                                                <div class="tab-pane fade show active" id="home-policyV" role="tabpanel" aria-labelledby="home-tab">
+                                                   <ul class="policy-vio-list">
+                                                      <li><span class="fa-pv"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et</li>
+                                                      <li><span class="fa-pv"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>consectetur adipiscing elit, sed do eiusmod tempor Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet, incididunt ut labore et</li>
+                                                      <li><span class="fa-pv"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>consectetur adipiscing elit, sed do eiusmod tempor Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet, incididunt ut labore et</li>
+                                                   </ul>
+                                                </div>
+                                                <div class="tab-pane fade" id="approval-D" role="tabpanel" aria-labelledby="profile-tab">
+                                                </div>
+                                                <div class="tab-pane fade" id="logdetails-D" role="tabpanel" aria-labelledby="profile-tab">
+                                                   <div class="row mt-2">
+                                                      <div class="col-md-12">
+                                                         <div class="time-frame-wrapper">
+                                                            <div class="time-log-axis">
+                                                               <div class="tfl-child">
+                                                                  <ul>
+                                                                     <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>22-10-2022</li>
+                                                                     <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Approved</li>
+                                                                     <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Smitha</li>
+                                                                     <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu</li>
+                                                                  </ul>
+                                                               </div>
+                                                               <div class="tfl-child">
+                                                                  <ul>
+                                                                     <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>20-10-2022</li>
+                                                                     <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Expense request approved</li>
+                                                                     <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Ashish GH</li>
+                                                                     <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu</li>
+                                                                  </ul>
+                                                               </div>
+                                                               <div class="tfl-child">
+                                                                  <ul>
+                                                                     <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>17-10-2022</li>
+                                                                     <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Expense request approved</li>
+                                                                     <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Rajesh Murthy</li>
+                                                                     <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu</li>
+                                                                  </ul>
+                                                               </div>
+                                                               <div class="tfl-child">
+                                                                  <ul>
+                                                                     <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>16-10-2022</li>
+                                                                     <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Approved Reuest</li>
+                                                                     <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Raghava</li>
+                                                                     <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu</li>
+                                                                  </ul>
+                                                               </div>
+                                                               <div class="tfl-child">
+                                                                  <ul>
+                                                                     <li><span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>15-10-2022</li>
+                                                                     <li><span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>Approved</li>
+                                                                     <li><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Smitha</li>
+                                                                     <li><span><i class="fa fa-commenting" aria-hidden="true"></i></span>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu</li>
+                                                                  </ul>
+                                                               </div>
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <!-- left-container-wider -->
+                                    <div class="right-container-nrw rt-aside-fixed">
+                                       <div class="row-wrapper common-block px-3 py-3">
+                                          <div class="accordion accordion-flush preview-standard-view" id="accordionFlushExample">
+                                             <!-- accordion-item -->
+                                             <div class="accordion-item">
+                                                <h2 class="accordion-header" id="flush-headingOneOne">
+                                                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneOne" aria-expanded="false" aria-controls="flush-collapseOneOne">
+                                                   Expense Summary
+                                                   </button>
+                                                </h2>
+                                                <div id="flush-collapseOneOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOneOne" data-bs-parent="#accordionFlushExample">
+                                                   <div class="accordion-body">
+                                                      <ul class="summary-list">
+                                                         <li>Total Expense <span>6000.00</span></li>
+                                                         <li>Less Advance<span>20000.00</span></li>
+                                                         <li>Amount Paid by Company <span>0.00</span></li>
+                                                         <li>Corporate Credit Card <span>0.00</span></li>
+                                                         <li>Cash <span>0.00</span></li>
+                                                         <li>Amount Payable / Receivable <span>26000.00</span></li>
+                                                      </ul>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <!-- accordion-item -->
+                                             <div class="accordion-item">
+                                                <h2 class="accordion-header" id="flush-headingTwo">
+                                                   <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="true" aria-controls="flush-collapseTwo">
+                                                   Category wise Expense 
+                                                   </button>
+                                                </h2>
+                                                <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                                   <div class="accordion-body">
+                                                      <ul class="summary-list">
+                                                         <li>Local Conveyance <span>600.00</span></li>
+                                                         <li>Food Allowance <span>800.00</span></li>
+                                                         <li>Accommodation <span>5000.00</span></li>
+                                                         <li>Boarding Allowance <span>750.00</span></li>
+                                                         <li>Others <span>0.00</span></li>
+                                                         <li>Total<span>7210.00</span></li>
+                                                      </ul>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <!-- accordion-item -->
+                                          </div>
+                                          <div class="row mt-3">
+                                             <div class="col-md-12">
+                                                <div class="form-group chm-formgroup mb-2">
+                                                   <label>Justification</label>
+                                                   <textarea maxlength="2000" id="expenseRemark" type="text" class="form-control chm-formtextarea max-tr-md mar-align-0" rows="3" placeholder="" value=""></textarea>
+                                                   <span class="validate-error-message" id="validate-error-message-expenseRemark" style="display: none">Required</span>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="main-btn-hold d-flex flex-column mt-2" style="align-items:end;">
+                                             <div class="d-flex align-items-center w-100 mb-2">
+                                                <a href=" " class="btn btn-outline-secondary me-2 px-2 w-50">Seek Clarification</a>
+                                                <button type="button" id="expenseSaveAsDraft" data-draftvalue="false" class="btn btn-outline-primary w-50">Reject</button>
+                                             </div>
+                                             <button type="button" id="expenseSubmit" class="btn btn-primary w-100">Approve</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <!-- all-data-wrapper -->
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <footer class="tne-app-footer">
+                     <div class="footer-custom">
+                        <p>Copyright &copy; 2024-2025. All rights reserved.</p>
+                        <p><span class="mr-2">Powered by</span> <img src="images/enaviya-power.png" class="enaviya-power" /></p>
+                     </div>
+                  </footer>
+               </div>
+               <!-- right-main-containr -->	
+            </main>
+         </div>
+      </div>
+      <script>
+         $(function() {
+           $(".datepicker").datepicker();
+         });
+      </script>
+      <script>
+         $( document ).ready(function() {
+         	$('ul.nav.nav-tabs li a').click(function() {
+         		$('ul.nav.nav-tabs li.active').removeClass('active');
+         		$(this).closest('li').addClass('active');
+         	});
+         });
+      </script>
+      <script>
+         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+         	return new bootstrap.Tooltip(tooltipTriggerEl)
+         })
+      </script>		
+      <script>			
+         $(document).ready(function() {
+         	$('#employeemaster').dataTable( {
+         		"aLengthMenu": [[10, 15, -1], [10, 15, "All"]],
+         		"pageLength": 10
+         	} );
+         } );
+      </script>
+      <!-- Left Menu Script starts here -->
+      <script>
+         $(document).ready(function() {     
+         	$('.main-sidebar111').click(function(){  
+         		$('.sidebar-mini').addClass('sidemenu-collapse'); 
+         	});
+         });
+      </script>
+      <script>
+         $(document).ready(function() {     
+         	$('.sidebar-toggle').click( function() {
+         		$(".sidebar-mini").toggleClass("sidebar-collapse");
+         	} );
+         });
+      </script>
+      <!-- Left Menu Script ends here -->
+      <script>
+         $(document).ready(function() {
+         	var bigimage = $("#expenseEntry");
+         	var thumbs = $("#expenseHead");
+         	//var totalslides = 10;
+         	var syncedSecondary = true;
+         	
+         	bigimage
+         	.owlCarousel({
+         		items: 1,
+         		slideSpeed: 4000,
+         		nav: true,
+         		autoplay: false,
+         		dots: false,
+         		loop: true,
+         		touchDrag:false,
+         		mouseDrag:false,
+         		responsiveRefreshRate: 200,
+         autoHeight: true,  
+         		navText: [
+         		'<i class="fa fa-arrow-left" aria-hidden="true"></i>',
+         		'<i class="fa fa-arrow-right" aria-hidden="true"></i>'
+         		]
+         	})
+         	.on("changed.owl.carousel", syncPosition);
+         	
+         	thumbs
+         	.on("initialized.owl.carousel", function() {
+         		thumbs
+         		.find(".owl-item")
+         		.eq(0)
+         		.addClass("current");
+         	})
+         	.owlCarousel({
+         		items: 5,
+         		dots: true,
+         		nav: true,
+         		navText: [
+         		'<i class="fa fa-arrow-left" aria-hidden="true"></i>',
+         		'<i class="fa fa-arrow-right" aria-hidden="true"></i>'
+         		],
+         		smartSpeed: 200,
+         		slideSpeed: 500,
+         		slideBy: 4,
+         		responsiveRefreshRate: 100
+         	})
+         	.on("changed.owl.carousel", syncPosition2);
+         	
+         	function syncPosition(el) {
+         		//if loop is set to false, then you have to uncomment the next line
+         		//var current = el.item.index;
+         		
+         		//to disable loop, comment this block
+         		var count = el.item.count - 1;
+         		var current = Math.round(el.item.index - el.item.count / 2 - 0.5);
+         		
+         		if (current < 0) {
+         			current = count;
+         		}
+         		if (current > count) {
+         			current = 0;
+         		}
+         		//to this
+         		thumbs
+         		.find(".owl-item")
+         		.removeClass("current")
+         		.eq(current)
+         		.addClass("current");
+         		var onscreen = thumbs.find(".owl-item.active").length - 1;
+         		var start = thumbs
+         		.find(".owl-item.active")
+         		.first()
+         		.index();
+         		var end = thumbs
+         		.find(".owl-item.active")
+         		.last()
+         		.index();
+         		
+         		if (current > end) {
+         			thumbs.data("owl.carousel").to(current, 100, true);
+         		}
+         		if (current < start) {
+         			thumbs.data("owl.carousel").to(current - onscreen, 100, true);
+         		}
+         	}
+         	
+         	function syncPosition2(el) {
+         		if (syncedSecondary) {
+         			var number = el.item.index;
+         			bigimage.data("owl.carousel").to(number, 100, true);
+         		}
+         	}
+         	
+         	thumbs.on("click", ".owl-item", function(e) {
+         		e.preventDefault();
+         		var number = $(this).index();
+         		bigimage.data("owl.carousel").to(number, 300, true);
+         	});
+         });
+         
+      </script>
+      <script>			
+         $(document).ready(function() {
+         	$('#expenseCLM').dataTable( {
+         		"aLengthMenu": [[3, 5, -1], [3,5,10, "All"]],
+         		"pageLength": 3
+         	} );
+         } );
+      </script>
+      <script>
+         $(document).on('change', '.file-input', function() {
+         	var filesCount = $(this)[0].files.length;
+         	var textbox = $(this).prev();
+         	if (filesCount === 1) {
+         		var fileName = $(this).val().split('\\').pop();
+         		textbox.text(fileName);
+         		} else {
+         		textbox.text(filesCount + ' files selected');
+         	}
+         });
+      </script>
+      <script type="text/javascript">
+         $(".multi-select").multiselect({
+         	// Bootstrap 5 compatibility
+         	templates: {
+         		button: '<button type="button" class="multiselect dropdown-toggle btn btn-primary" data-bs-toggle="dropdown" aria-expanded="false"><span class="multiselect-selected-text"></span></button>',
+         	},
+         });
+      </script>
+      <script>
+         $(function() {
+         	$('tr.parent td span.btn')
+         	.on("click", function(){
+         		var idOfParent = $(this).parents('tr').attr('id');
+         		$('tr.child-'+idOfParent).toggle('slow');
+         	});
+         	$('tr[class^=child-]').hide().children('td');
+         });
+      </script>
+      <script>
+         $(document).ready(function () {
+         	resetshowhide();
+         });
+         function resetshowhide() {
+         	$('.btn-showhide').unbind('click');
+         	$('.btn-showhide').click(function () {
+         		//$(this).next('tr').slideToggle('500');
+         		var idOfParent = $(this).parents("tr").attr("id");
+         		$("tr.child-" + idOfParent).toggle();
+         		$(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
+         		ResetSpace();
+         	});
+         }
+         function ResetSpace() {
+         	////var parent = $('#expenseEntry .owl-stage-outer.owl-height'),
+         	////    child = parent.children('#expenseEntry .owl-item.active'); if (child.height() > parent.height('')) {
+         	////        parent.height(child.height());
+         	////    }
+         	$("#expenseEntry .owl-height").height($("#expenseEntry .owl-item.active").height());
+         }
+      </script>
+   </body>
+</html>
+<!-- creditcard-claim-modal -->
+<div class="modal fade" id="dateextension" tabindex="-1" aria-labelledby="dateextension" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered appTE-modal modal-tne-lg80">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Date Extension</h5>
+            <button type="button" class="close modal-close bfiv-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="row">
+               <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="form-group chm-formgroup new-form-grp">
+                     <label>Travel From Date <span class="red-star-sml">*</span></label>
+                     <input class="form-control chm-forminput hasDatepicker" type="text" id="datepicker">
+                     <span class="date-picket-icon align-top-t10"><img src="images/date-icon.png"></span>
+                  </div>
+               </div>
+               <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="form-group chm-formgroup new-form-grp">
+                     <label>Travel To Date <span class="red-star-sml">*</span></label>
+                     <input class="form-control chm-forminput hasDatepicker" type="text" id="datepicker">
+                     <span class="date-picket-icon align-top-t10"><img src="images/date-icon.png"></span>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="form-group chm-formgroup new-form-grp ">
+                     <label>Justification <span class="red-star-sml"></span></label>
+                     <textarea type="text" maxlength="2000" class="form-control chm-formtextarea" id="txtLtcRemarks" placeholder="" value=""></textarea>
+                     <span class="validate-error-message ltc" id="validate-error-message-txtLtcRemarks" style="display: none">Required</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="modal-footer">
+            <div class="row">
+               <div class="col-md-12">
+                  <button type="button" id="addemp1" class="btn  btn-outline-secondary    ">Clear</button>
+                  <button type="button" id="addemp1" class="btn btn-dark me-1">Claim</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- Add Receipt -->
+<div class="modal fade" id="add-receip-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered appTE-modal modal-tne-lg80 w-50 travel-preview-hold">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Receipt</h5>
+            <button type="button" class="close modal-close bfiv-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="modal-content-wrapper">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="file-drop-area">
+                        <span class="choose-file-button">Choose files</span>
+                        <span class="file-message">or drag and drop files here</span>
+                        <input class="file-input" type="file" multiple>
+                     </div>
+                  </div>
+                  <div class="col-md-12">
+                     <div class="row mar-t20">
+                        <div class="col-md-6">
+                           <div class="form-group chm-formgroup new-form-grp">
+                              <label>Expense Category</label>
+                              <select name="Customer group" class="form-control chm-formselect">
+                                 <option value="">Select</option>
+                                 <option value="">Accommodation</option>
+                                 <option value="">Food Allowance</option>
+                                 <option value="">Local Conveyance</option>
+                                 <option value="">Business Expenditure</option>
+                                 <option value="">Others</option>
+                              </select>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-12 mar-t20">
+                     <div class="table-responsive">
+                        <table id="expenseCLM" class="table table-modal-sml no-sorting">
+                           <thead>
+                              <tr>
+                                 <th class="thd-w10"><span>Sl.No</span></th>
+                                 <th class="thd-w25"><span>Category</span></th>
+                                 <th class="thd-w55"><span>File Name</span></th>
+                                 <th class="thd-w10"><span>Action</span></th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td>1</td>
+                                 <td>Accommodation</td>
+                                 <td>bill20082022.jpg</td>
+                                 <td>
+                                    <div class="TBL-actions">
+                                       <ul class="action-icons">
+                                          <li><a href="#" class="btn-icon-action btn-icon-view"><span data-toggle="tooltip" title="Download" class="ti-download action-temify" data-bs-original-title="View" aria-label="View" aria-describedby="tooltip110818"></span></a></li>
+                                          <li><a href="#" class="btn-icon-action btn-icon-view"><span data-toggle="tooltip" title="Remove" class="ti-trash action-temify" data-bs-original-title="View" aria-label="View" aria-describedby="tooltip110818"></span></a></li>
+                                       </ul>
+                                    </div>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="modal-footer pr-0">
+            <div class="row">
+               <div class="col-md-12 pr-0">
+                  <button type="button" class="btn btn-primary button-te-primary float-right ml-2">Submit</button>
+                  <!-- <button type="button" class="btn btn-primary button-te-primary float-right ml-2">Save as Draft</button> -->
+                  <button type="button" class="btn btn-secondary button-te-secondary float-right ml-2">Cancel</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- Upload Excel -->
+<div class="modal fade" id="uploadExcel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered appTE-modal modal-tne-lg80 w-50 travel-preview-hold">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Receipt</h5>
+            <button type="button" class="close modal-close bfiv-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="modal-content-wrapper">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="file-drop-area">
+                        <span class="choose-file-button">Choose files</span>
+                        <span class="file-message">or drag and drop files here</span>
+                        <input class="file-input" type="file" multiple>
+                     </div>
+                  </div>
+                  <div class="col-md-12">
+                     <div class="row mar-t20">
+                        <div class="col-md-6">
+                           <div class="form-group chm-formgroup new-form-grp">
+                              <label>Expense Category</label>
+                              <select name="Customer group" class="form-control chm-formselect">
+                                 <option value="">Select</option>
+                                 <option value="">Accommodation</option>
+                                 <option value="">Food Allowance</option>
+                                 <option value="">Local Conveyance</option>
+                                 <option value="">Business Expenditure</option>
+                                 <option value="">Others</option>
+                              </select>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-12 mar-t20">
+                     <div class="table-responsive">
+                        <table id="expenseCLM" class="table table-modal-sml no-sorting">
+                           <thead>
+                              <tr>
+                                 <th class="thd-w10"><span>Sl.No</span></th>
+                                 <th class="thd-w25"><span>Category</span></th>
+                                 <th class="thd-w55"><span>File Name</span></th>
+                                 <th class="thd-w10"><span>Action</span></th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td>1</td>
+                                 <td>Accommodation</td>
+                                 <td>bill20082022.jpg</td>
+                                 <td>
+                                    <div class="TBL-actions">
+                                       <ul class="action-icons">
+                                          <li><a href="#" class="btn-icon-action btn-icon-view"><span data-toggle="tooltip" title="Download" class="ti-download action-temify" data-bs-original-title="View" aria-label="View" aria-describedby="tooltip110818"></span></a></li>
+                                          <li><a href="#" class="btn-icon-action btn-icon-view"><span data-toggle="tooltip" title="Remove" class="ti-trash action-temify" data-bs-original-title="View" aria-label="View" aria-describedby="tooltip110818"></span></a></li>
+                                       </ul>
+                                    </div>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="modal-footer pr-0">
+            <div class="row">
+               <div class="col-md-12 pr-0">
+                  <button type="button" class="btn btn-primary button-te-primary float-right ml-2">Submit</button>
+                  <!-- <button type="button" class="btn btn-primary button-te-primary float-right ml-2">Save as Draft</button> -->
+                  <button type="button" class="btn btn-secondary button-te-secondary float-right ml-2">Cancel</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
