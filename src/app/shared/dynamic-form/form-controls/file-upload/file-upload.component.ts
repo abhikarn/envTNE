@@ -66,15 +66,13 @@ export class FileUploadComponent {
   }
 
   uploadFile(payload: any) {
+    debugger
     if (payload) {
       this.documentService.documentDocumentWebUpload(payload).pipe(take(1)).subscribe({
         next: (res: any) => {
           if (
             res &&
-            res.ResponseValue &&
-            res.ResponseValue.DocumentId &&
-            res.ResponseValue.FileName &&
-            res.ResponseValue.Guid
+            res.ResponseValue
           ) {
             let filterResponse: any = {};
             filterResponse.ReferenceType = this.controlConfig.referenceType;
