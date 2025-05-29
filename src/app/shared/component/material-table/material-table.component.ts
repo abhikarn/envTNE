@@ -230,6 +230,13 @@ export class MaterialTableComponent implements OnChanges {
     // Update both view and model (do not format to fixed here, only on blur)
     input.value = formattedValue;
     row[key] = formattedValue;
+    
+    // Real-time calculation for ClaimAmountInBaseCurrency
+    if (key === 'ApprovedAmount') {
+      const approvedAmount = parseFloat(formattedValue) || 0;
+      const conversionRate = parseFloat(row['ConversionRate']) || 0;
+      row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(decimalPrecision);
+    }
   }
 
   onAmountBlur(event: Event, row: any, key: string, decimalPrecision: number = 2): void {
@@ -242,6 +249,13 @@ export class MaterialTableComponent implements OnChanges {
       const formatted = numericValue.toFixed(decimalPrecision);
       input.value = formatted;
       row[key] = formatted;
+
+      // Recalculate ClaimAmountInBaseCurrency if ApprovedAmount is changed
+      if (key === 'ApprovedAmount') {
+        const approvedAmount = parseFloat(formatted) || 0;
+        const conversionRate = parseFloat(row['ConversionRate']) || 0;
+        row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(decimalPrecision);
+      }
 
       // If value is 0.00, prompt for rejection confirmation
       if (parseFloat(formatted) === 0) {
@@ -264,12 +278,28 @@ export class MaterialTableComponent implements OnChanges {
               const prev = parseFloat(row.originalApproved || '0').toFixed(decimalPrecision);
               row[key] = prev;
               input.value = prev;
+
+              // Restore ClaimAmountInBaseCurrency as well
+              if (key === 'ApprovedAmount') {
+                const approvedAmount = parseFloat(prev) || 0;
+                const conversionRate = parseFloat(row['ConversionRate']) || 0;
+                row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(decimalPrecision);
+              }
             }
           });
       }
     } else {
       input.value = '';
       row[key] = '';
+      // Also clear ClaimAmountInBaseCurrency if ApprovedAmount is cleared
+      if (key === 'ApprovedAmount') {
+        row['ClaimAmountInBaseCurrency'] = '';
+        // Unselect the row and require remarks if ApprovedAmount is removed
+        row.selected = false;
+        if (!row.remarks || row.remarks.trim() === '') {
+          row.remarks = '';
+        }
+      }
     }
   }
 
@@ -283,13 +313,22 @@ export class MaterialTableComponent implements OnChanges {
           title: 'Approved amount',
           message: 'Approved amount should not be greater than claimed amount!',
           confirmText: 'Ok',
-          cancelText: ''
+          cancelButton: false
         })
         .subscribe((confirmed) => {
           if (confirmed) {
             row.ApprovedAmount = 0;
           }
+          // Realtime calculation after validation
+          const approvedAmount = parseFloat(row.ApprovedAmount) || 0;
+          const conversionRate = parseFloat(row['ConversionRate']) || 0;
+          row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(2);
         });
+    } else {
+      // Always recalculate even if not greater
+      const approvedAmount = parseFloat(row.ApprovedAmount) || 0;
+      const conversionRate = parseFloat(row['ConversionRate']) || 0;
+      row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(2);
     }
   }
 
