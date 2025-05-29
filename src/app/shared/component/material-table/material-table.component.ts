@@ -51,14 +51,15 @@ export class MaterialTableComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
+    const decimalPrecision = this.configService.getDecimalPrecision ? this.configService.getDecimalPrecision() : 2;
     // Update processedData when input changes
     if (this.data?.length > 0) {
       this.processedData = this.data.map((row, index) => ({
         ...row,
         slNo: index + 1,
         selected: true,
-        originalApproved: row.ApprovedAmount || 0,
-        ApprovedAmount: row.ApprovedAmount || 0,
+        originalApproved: parseFloat(row.ApprovedAmount || '0').toFixed(decimalPrecision),
+        ApprovedAmount: parseFloat(row.ApprovedAmount || '0').toFixed(decimalPrecision),
         remarks: row.remarks || ''
       }));
 
@@ -183,8 +184,8 @@ export class MaterialTableComponent implements OnChanges {
   }
 
   onRowSelectionChange(row: any) {
-    console.log(row)
-    row.ApprovedAmount = row.selected ? row.originalApproved : 0;
+    const decimalPrecision = this.configService.getDecimalPrecision ? this.configService.getDecimalPrecision() : 2;
+    row.ApprovedAmount = row.selected ? (parseFloat(row.originalApproved || '0').toFixed(decimalPrecision)) : 0;
     this.selectAll = this.processedData.every(r => r.selected);
     this.selectionChanged.emit({
       name: this.categoryName,
@@ -241,6 +242,31 @@ export class MaterialTableComponent implements OnChanges {
       const formatted = numericValue.toFixed(decimalPrecision);
       input.value = formatted;
       row[key] = formatted;
+
+      // If value is 0.00, prompt for rejection confirmation
+      if (parseFloat(formatted) === 0) {
+        this.confirmDialogService
+          .confirm({
+            title: 'Reject Line Item',
+            message: 'This line item will be treated as rejected. Are you sure you want to reject?',
+            confirmText: 'Yes',
+            cancelText: 'No'
+          })
+          .subscribe((confirmed) => {
+            if (confirmed) {
+              // Unselect the row and require remarks
+              row.selected = false;
+              if (!row.remarks || row.remarks.trim() === '') {
+                row.remarks = '';
+              }
+            } else {
+              // Restore previous value if cancelled, with decimal format
+              const prev = parseFloat(row.originalApproved || '0').toFixed(decimalPrecision);
+              row[key] = prev;
+              input.value = prev;
+            }
+          });
+      }
     } else {
       input.value = '';
       row[key] = '';

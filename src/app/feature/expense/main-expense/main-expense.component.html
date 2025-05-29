@@ -197,10 +197,11 @@
                   </a>
                   }
                   @if (expenseConfig.actions[1]) {
-                  <button type="button" [ngClass]="expenseConfig.actions[1].class"
-                    (click)="onAction(expenseConfig.actions[1].type)">
+                  @if(expenseRequestPreviewData?.claimStatusId == 26 || !editMode) {
+                  <button type="button" [ngClass]="expenseConfig.actions[1].class" (click)="onAction(expenseConfig.actions[1].type)">
                     {{ expenseConfig.actions[1].label }}
                   </button>
+                  }
                   }
                 </div>
                 @if (expenseConfig.actions[2]) {
