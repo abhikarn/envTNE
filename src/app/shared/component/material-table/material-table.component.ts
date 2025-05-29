@@ -241,6 +241,25 @@ export class MaterialTableComponent implements OnChanges {
       const formatted = numericValue.toFixed(decimalPrecision);
       input.value = formatted;
       row[key] = formatted;
+
+      // If value is 0.00, prompt for rejection confirmation
+      if (parseFloat(formatted) === 0) {
+        this.confirmDialogService
+          .confirm({
+            title: 'Reject Line Item',
+            message: 'This line item will be treated as rejected. Are you sure you want to reject?',
+            confirmText: 'Yes',
+            cancelText: 'No'
+          })
+          .subscribe((confirmed) => {
+            if (!confirmed) {
+              // Restore previous value if cancelled, with decimal format
+              const prev = parseFloat(row.originalApproved || '0').toFixed(decimalPrecision);
+              row[key] = prev;
+              input.value = prev;
+            }
+          });
+      }
     } else {
       input.value = '';
       row[key] = '';
