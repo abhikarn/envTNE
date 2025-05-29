@@ -183,8 +183,8 @@ export class MaterialTableComponent implements OnChanges {
   }
 
   onRowSelectionChange(row: any) {
-    console.log(row)
-    row.ApprovedAmount = row.selected ? row.originalApproved : 0;
+    const decimalPrecision = this.configService.getDecimalPrecision ? this.configService.getDecimalPrecision() : 2;
+    row.ApprovedAmount = row.selected ? (parseFloat(row.originalApproved || '0').toFixed(decimalPrecision)) : 0;
     this.selectAll = this.processedData.every(r => r.selected);
     this.selectionChanged.emit({
       name: this.categoryName,
@@ -252,7 +252,13 @@ export class MaterialTableComponent implements OnChanges {
             cancelText: 'No'
           })
           .subscribe((confirmed) => {
-            if (!confirmed) {
+            if (confirmed) {
+              // Unselect the row and require remarks
+              row.selected = false;
+              if (!row.remarks || row.remarks.trim() === '') {
+                row.remarks = '';
+              }
+            } else {
               // Restore previous value if cancelled, with decimal format
               const prev = parseFloat(row.originalApproved || '0').toFixed(decimalPrecision);
               row[key] = prev;
