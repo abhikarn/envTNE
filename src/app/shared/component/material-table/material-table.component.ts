@@ -51,14 +51,15 @@ export class MaterialTableComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
+    const decimalPrecision = this.configService.getDecimalPrecision ? this.configService.getDecimalPrecision() : 2;
     // Update processedData when input changes
     if (this.data?.length > 0) {
       this.processedData = this.data.map((row, index) => ({
         ...row,
         slNo: index + 1,
         selected: true,
-        originalApproved: row.ApprovedAmount || 0,
-        ApprovedAmount: row.ApprovedAmount || 0,
+        originalApproved: parseFloat(row.ApprovedAmount || '0').toFixed(decimalPrecision),
+        ApprovedAmount: parseFloat(row.ApprovedAmount || '0').toFixed(decimalPrecision),
         remarks: row.remarks || ''
       }));
 

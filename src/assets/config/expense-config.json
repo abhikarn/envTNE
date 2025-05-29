@@ -1151,7 +1151,7 @@
                         "position": "in-out"
                     },
                     {
-                        "type": "number",
+                        "type": "numeric",
                         "name": "ApprovedAmount",
                         "label": "Approved Amount",
                         "visible": true,
