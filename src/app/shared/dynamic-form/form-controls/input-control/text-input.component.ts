@@ -49,7 +49,7 @@ export class TextInputComponent implements OnInit {
         this.validateSameOriginAndDestination();
         if (typeof inputValue !== "object") {
           // Trigger only when inputValue is a string of exactly 2 characters
-          if (typeof inputValue === 'string' && inputValue.length === 2) {
+          if (typeof inputValue === 'string' && inputValue.length >= 2) {
             let input = {
               inputValue: inputValue,
               control: this.control
@@ -75,9 +75,11 @@ export class TextInputComponent implements OnInit {
   onInput(event: any) {
     if (this.controlConfig.autoFormat) {
       let inputValue = (event.target.value).toString();
-
-      // Remove all non-numeric and non-decimal characters, allow only one decimal point
-      inputValue = inputValue.replace(/[^0-9.]/g, '');
+      // Correctly apply the pattern as a RegExp
+      const pattern = this.controlConfig.autoFormat?.patterns[0];
+      if (pattern) {
+        inputValue = inputValue.replace(new RegExp(pattern, 'g'), '');
+      }
 
       // Prevent more than one decimal point
       const parts = inputValue.split('.');

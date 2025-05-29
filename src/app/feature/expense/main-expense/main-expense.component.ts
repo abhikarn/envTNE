@@ -128,6 +128,7 @@ export class MainExpenseComponent {
   getTravelRequestList() {
     const service = this.serviceRegistry.getService(this.expenseConfig.request.apiService);
     const apiMethod = this.expenseConfig.request.apiMethod;
+    this.expenseConfig.request.requestBody.userMasterId = this.userMasterId;
     const payload = this.expenseConfig.request.requestBody;
     if (service && typeof service[apiMethod] === 'function') {
       service[apiMethod](payload).subscribe((data: any) => {

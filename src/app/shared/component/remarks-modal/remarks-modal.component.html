@@ -22,7 +22,7 @@
                 <td>{{ approval?.approver }}</td>
                 <td>{{ approval?.approvalDateTimeString }}</td>
                 <td>{{ approval?.actionStatus }}</td>
-                <td>{{ approval?.approvedAmount }}</td>
+                <td>{{ approval?.approvedAmount | decimalFormat }}</td>
                 <td>{{ approval?.approverRemarks }}</td>
             </tr>
         </tbody>
