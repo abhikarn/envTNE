@@ -67,14 +67,13 @@
 
   }
 
-  <div class="col-md-12">
-    <div class="common-block-white mb-3">
-      <div class=" d-flex cladd-btn justify-content-end mb-3">
-        <a class="  btn btn-outline-secondary clear  w-10" (click)="clear()">Clear</a>
-        <a class="btn btn-dark w-10" id="btnAddLtcData" (click)="onSubmit()">{{ editIndex ? "Update" : "Add" }} </a>
-      </div>
+  <div class="col-md-12 mt-2 mb-3">
+    <div class=" d-flex align-items-center   justify-content-end ">
+      <button type="button" class="  btn btn-outline-secondary clear me-2  " id="cleartable" (click)="clear()">Clear</button>
+      <button type="button" class="btn btn-primary " id="addUpdateBtn" (click)="onSubmit()">{{ editIndex ? "Update" : "Add" }}</button>
     </div>
   </div>
+  
   @if (tableData.length > 0) {
   <app-dynamic-table [tableData]="tableData" [categoryConfig]="category" (editRow)="onEditRow($event)"
     (deleteRow)="onDeleteRow($event)"></app-dynamic-table>

@@ -60,7 +60,7 @@
         "dateExtension": {
             "label": "Date Extension",
             "visible": true,
-            "class": "btn btn-secondary btn-sm"
+            "class": "btn btn-outline-secondary mb-0"
         },
         "category": [
             {
