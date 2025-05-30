@@ -33,9 +33,10 @@
               }
 
             </div>
+            <!-- Travel Details -->
             <div class="common-block  mb-3">
-              <div class="d-flex align-items-center justify-content-between">
-                <h6 class="common-title fw-bold mb-3">{{ travelDetails?.label || 'Travel Details'}}</h6>
+              <div class="d-flex align-items-center mb-3 justify-content-between">
+                <h6 class="common-title fw-bold mb-0">{{ travelDetails?.label || 'Travel Details'}} </h6>
                 @if (expenseConfig?.dateExtension?.visible) {
                 <div class="date-extension">
                   <button type="button" [class]="expenseConfig.dateExtension.class" [disabled]="!travelRequestId"
@@ -45,24 +46,24 @@
                 </div>
                 }
               </div>
-
-              <div class="row">
-                @for (item of travelDetails?.data; track item; let i = $index) {
-                <div class="col-md-6">
-                  <div class="trl-preview-wrapper">
-                    <div class="trl-readview-item">
-                      <div class="trl-req-head">
-                        <label>{{ item.label }}</label>
-                      </div>
-                      <div class="trl-req-detail">
-                        <span>{{ item.value }}</span>
+              <div class="common-block-mobile">
+                <div class="row">
+                  @for (item of travelDetails?.data; track item; let i = $index) {
+                  <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                    <div class="trl-preview-wrapper">
+                      <div class="trl-readview-item">
+                        <div class="trl-req-head">
+                          <label>{{ item.label }}</label>
+                        </div>
+                        <div class="trl-req-detail">
+                          <span [id]="item.name">{{ item.value }}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  }
                 </div>
-                }
               </div>
-
             </div>
             <!-- expense category -->
             <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
@@ -198,7 +199,8 @@
                   }
                   @if (expenseConfig.actions[1]) {
                   @if(expenseRequestPreviewData?.claimStatusId == 26 || !editMode) {
-                  <button type="button" [ngClass]="expenseConfig.actions[1].class" (click)="onAction(expenseConfig.actions[1].type)">
+                  <button type="button" [ngClass]="expenseConfig.actions[1].class"
+                    (click)="onAction(expenseConfig.actions[1].type)">
                     {{ expenseConfig.actions[1].label }}
                   </button>
                   }

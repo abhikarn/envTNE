@@ -34,37 +34,41 @@
                      <div class="d-flex align-items-center justify-content-between">
                         <h6 class="common-title fw-bold mb-3">Request Details </h6>
                      </div>
-                     <div class="row">
-                        <div class="col-md-4" *ngFor="let item of requestDetails">
-                           <div class="trl-preview-wrapper">
-                              <div class="trl-readview-item">
-                                 <div class="trl-req-head">
-                                    <label>{{ item.label }}</label>
-                                 </div>
-                                 <div class="trl-req-detail">
-                                    @if (!item.isLink) {
-                                    @if (item?.controlType === 'autocomplete' && mode == 'finance-approval') {
-                                    <mat-form-field appearance="outline" class="form-field-class">
-                                       <input matInput [formControl]="billableControl" [matAutocomplete]="auto">
-                                       <mat-autocomplete #auto="matAutocomplete"
-                                          (optionSelected)="onOptionSelected($event, item)">
-                                          <mat-option *ngFor="let option of filteredOptions"
-                                             [value]="option[item.displayKey]">
-                                             {{ option[item.displayKey] }}
-                                          </mat-option>
-                                       </mat-autocomplete>
-                                    </mat-form-field>
+                     <div class="common-block-mobile">
+                        <div class="row">
+                           @for (item of requestDetails; track $index) {
+                           <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                              <div class="trl-preview-wrapper">
+                                 <div class="trl-readview-item">
+                                    <div class="trl-req-head">
+                                       <label>{{ item.label }}</label>
+                                    </div>
+                                    <div class="trl-req-detail">
+                                       @if (!item.isLink) {
+                                       @if (item?.controlType === 'autocomplete' && mode == 'finance-approval') {
+                                       <mat-form-field appearance="outline" class="form-field-class">
+                                          <input matInput [formControl]="billableControl" [matAutocomplete]="auto">
+                                          <mat-autocomplete #auto="matAutocomplete"
+                                             (optionSelected)="onOptionSelected($event, item)">
+                                             <mat-option *ngFor="let option of filteredOptions"
+                                                [value]="option[item.displayKey]">
+                                                {{ option[item.displayKey] }}
+                                             </mat-option>
+                                          </mat-autocomplete>
+                                       </mat-form-field>
 
-                                    } @else {
-                                    <span>{{ item.value || '-' }}</span>
-                                    }
-                                    }
-                                    <a *ngIf="item.isLink" href="javascript:void(0)">
-                                       {{ item.value || '-' }}
-                                    </a>
+                                       } @else {
+                                       <span>{{ item.value || '-' }}</span>
+                                       }
+                                       }
+                                       <a *ngIf="item.isLink" href="javascript:void(0)">
+                                          {{ item.value || '-' }}
+                                       </a>
+                                    </div>
                                  </div>
                               </div>
                            </div>
+                           }
                         </div>
                      </div>
                   </div>
@@ -73,7 +77,8 @@
                         @if(loadData) {
                         @for (category of expenseRequestPreviewConfig?.dynamicExpenseDetailModels; track category) {
                         @if (category?.data?.length > 0) {
-                        <app-expansion-panel [title]="category.label" [expanded]="category.expanded" [amount]="category.amount">
+                        <app-expansion-panel [title]="category.label" [expanded]="category.expanded"
+                           [amount]="category.amount">
                            @if(category.columns) {
                            <app-material-table [categoryName]="category.name" [categoryGST]="category?.gst"
                               [mode]="mode" [data]="category.data" [columnConfig]="category.columns"
