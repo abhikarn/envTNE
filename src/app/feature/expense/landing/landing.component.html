@@ -1,16 +1,16 @@
 <div class="app-main-wrapper">
-    <div class="two-roles-wrapper">
-       <div class="tabs-page-hold">
-          <div class="row mt-3 gx-2">
+   <div class="two-roles-wrapper">
+      <div class="tabs-page-hold">
+         <div class="row mt-3 gx-2">
             <div class="col-md-2" *ngFor="let expense of expenses">
-              <mat-card class="expense-block" [ngClass]="expense.colorClass"   (click)="navigateTo(expense.link)">
-                <img width="59px" height="40px" [src]="expense.img" [alt]="expense.alt"  >
-                <mat-card-content>
-                  <span>{{ expense.title }}</span>
-                </mat-card-content>
-              </mat-card>
+               <mat-card class="expense-block" [ngClass]="expense.colorClass" (click)="navigateTo(expense.link)">
+                  <img width="59px" height="40px" [src]="expense.img" [alt]="expense.alt">
+                  <mat-card-content>
+                     <span>{{ expense.title }}</span>
+                  </mat-card-content>
+               </mat-card>
             </div>
-          </div>
-       </div>
-    </div>
- </div>
+         </div>
+      </div>
+   </div>
+</div>
