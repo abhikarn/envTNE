@@ -1,8 +1,8 @@
 import { Component, DestroyRef, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
-import { CityAutocompleteParam, DataService, ExpenseRequestModel, ExpenseService, TravelService } from '../../../../../tne-api';
-import { forkJoin, map, Observable, of, startWith, switchMap, take } from 'rxjs';
+import { CityAutocompleteParam, DataService, ExpenseRequestModel, ExpenseService, FinanceService, TravelService } from '../../../../../tne-api';
+import { debounceTime, forkJoin, map, Observable, of, startWith, switchMap, take } from 'rxjs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
@@ -91,6 +91,8 @@ export class MainExpenseComponent {
   travelDetails: any;
   transactionId: any;
   expenseConfirmMessage: any;
+  billableControl = new FormControl('', Validators.required);
+  filteredOptions: any = [];
 
   constructor(
     private expenseService: ExpenseService,
@@ -107,7 +109,8 @@ export class MainExpenseComponent {
     private serviceRegistry: ServiceRegistryService,
     private router: Router,
     private utilsService: UtilsService,
-    private applicationMessageService: ApplicationMessageService
+    private applicationMessageService: ApplicationMessageService,
+    private financeService: FinanceService
   ) {
   }
 
@@ -145,6 +148,26 @@ export class MainExpenseComponent {
   ngOnInit() {
     this.initializeBasicFields();
     this.loadInitialData();
+    this.initBillanleControl();
+  }
+
+  initBillanleControl() {
+    this.billableControl.valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap(searchText =>
+          this.dataService.dataGetCostCentreAutocomplete({ SearchText: searchText || '' })
+        )
+      )
+      .subscribe({
+        next: (res) => {
+          this.filteredOptions = res?.ResponseValue || [];
+        },
+        error: (err) => {
+          console.error('Failed to fetch cost centres', err);
+          this.filteredOptions = [];
+        }
+      });
   }
 
   // Set up basic fields like userMasterId, expenseRequestId, and editMode flag.
@@ -607,6 +630,11 @@ export class MainExpenseComponent {
       return;
     }
 
+    if (this.billableControl.invalid) {
+      this.billableControl.markAsTouched();
+      return;
+    }
+
     if (this.expenseRequestForm.invalid) {
       this.expenseRequestForm.markAllAsTouched();
       return;
@@ -700,6 +728,35 @@ export class MainExpenseComponent {
           }
         });
     });
+  }
+
+  onOptionSelected(event: any, item: any) {
+    const selectedDisplay = event.option.value;
+    const selected = this.filteredOptions.find((opt: any) => opt[item.displayKey] === selectedDisplay);
+
+    if (selected) {
+      item.value = selected[item.displayKey];
+      this.updateBillableCostCentre(selected[item.valueKey]);
+    }
+  }
+
+  updateBillableCostCentre(billableCostcentreId: number) {
+    const payload = {
+      UserMasterId: Number(localStorage.getItem('userMasterId')),
+      ExpenseRequestId: this.expenseRequestId,
+      BillableCostCentreId: billableCostcentreId,
+      ActionBy: Number(localStorage.getItem('userMasterId'))
+    };
+
+    this.financeService.financeExpenseBillableCostCentreUpdate(payload).subscribe({
+      next: (res: any) => {
+        if (res?.ResponseValue?.Result == "FAILED") {
+          this.snackbarService.error(res?.ResponseValue?.Message);
+        } else {
+          this.snackbarService.success(res?.ResponseValue?.Message);
+        }
+      }
+    })
   }
 }
 

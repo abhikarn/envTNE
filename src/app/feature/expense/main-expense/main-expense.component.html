@@ -55,7 +55,24 @@
                         <label>{{ item.label }}</label>
                       </div>
                       <div class="trl-req-detail">
-                        <span>{{ item.value }}</span>
+                        @if (!item.isLink) {
+                        @if (item?.controlType === 'autocomplete') {
+                        <mat-form-field appearance="outline" class="form-field-class">
+                          <input matInput [formControl]="billableControl" [matAutocomplete]="auto">
+                          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event, item)">
+                            <mat-option *ngFor="let option of filteredOptions" [value]="option[item.displayKey]">
+                              {{ option[item.displayKey] }}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+
+                        } @else {
+                        <span>{{ item.value || '-' }}</span>
+                        }
+                        }
+                        <a *ngIf="item.isLink" href="javascript:void(0)">
+                          {{ item.value || '-' }}
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -164,7 +181,7 @@
               </div>
             </div>
           </div>
-          
+
           <!-- left-container-wider -->
           <div class="right-container-nrw rt-aside-fixed">
             <div class="row-wrapper common-block px-3 py-3">
@@ -199,7 +216,8 @@
                   }
                   @if (expenseConfig.actions[1]) {
                   @if(expenseRequestPreviewData?.claimStatusId == 26 || !editMode) {
-                  <button type="button" [ngClass]="expenseConfig.actions[1].class" (click)="onAction(expenseConfig.actions[1].type)">
+                  <button type="button" [ngClass]="expenseConfig.actions[1].class"
+                    (click)="onAction(expenseConfig.actions[1].type)">
                     {{ expenseConfig.actions[1].label }}
                   </button>
                   }

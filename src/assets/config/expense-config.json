@@ -54,6 +54,17 @@
                     "label": "LeaveSummary",
                     "value": null,
                     "order": 6
+                },
+                {
+                    "label": "Billable Cost Centre",
+                    "name": "billableCostcentre",
+                    "isLink": false,
+                    "value": "NA",
+                    "order": 7,
+                    "controlType": "autocomplete",
+                    "apiUrl": "/api/Data/CostCentreAutocomplete",
+                    "displayKey": "Display",
+                    "valueKey": "CostCentreId"
                 }
             ]
         },
@@ -563,7 +574,7 @@
                             ]
                         },
                         "disable": false,
-                        "oCRRequired":true,
+                        "oCRRequired": true,
                         "order": 11
                     },
                     {
