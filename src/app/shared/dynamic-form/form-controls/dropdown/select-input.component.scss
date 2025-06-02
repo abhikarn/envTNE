@@ -14,6 +14,9 @@
 	text-align: left !important;
 	position: relative !important;
 	display: inline !important;
+}.mat-mdc-form-field {
+ 
+	margin-bottom: 5px;
 }
 .mat-mdc-form-field-infix {
 	min-height: var(--mat-form-field-container-height, 56px);

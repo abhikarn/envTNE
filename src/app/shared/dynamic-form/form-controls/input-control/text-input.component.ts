@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
@@ -21,7 +21,9 @@ import { GlobalConfigService } from '../../../service/global-config.service';
     MatFormFieldModule, MatInputModule,
     MatAutocompleteModule, MatOptionModule,
     FunctionWrapperPipe, MatIconModule],
-  templateUrl: './text-input.component.html'
+  templateUrl: './text-input.component.html',
+  styleUrls: ['./text-input.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TextInputComponent implements OnInit {
   @Input() control: FormControl = new FormControl('');
