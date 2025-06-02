@@ -1,0 +1,22 @@
+.mat-mdc-radio-button .mdc-radio__outer-circle {
+	 
+	width: 16px!important;
+	height: 16px!important;
+	 
+}.mat-mdc-radio-button .mdc-radio__native-control:enabled:not(:checked) + .mdc-radio__background > .mdc-radio__outer-circle {
+	border-color: #bfbfbf!important;
+}
+
+.mat-mdc-radio-button .mdc-radio__background {
+ 
+	width: 16px!important;
+	height: 16px!important;
+}
+.mat-mdc-radio-button .mdc-radio__background::before {
+ 
+	content: inherit!important;
+    display: none;
+ 
+}.mat-mdc-radio-button .mdc-radio {
+	padding: 0px !important;
+}
