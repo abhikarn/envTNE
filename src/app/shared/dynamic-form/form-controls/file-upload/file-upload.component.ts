@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 import { DocumentService } from '../../../../../../tne-api';
@@ -12,7 +12,9 @@ import { environment } from '../../../../../environment';
   imports: [
     FunctionWrapperPipe
   ],
-  templateUrl: './file-upload.component.html'
+  templateUrl: './file-upload.component.html',
+  styleUrls: ['./file-upload.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FileUploadComponent {
   @Input() controlConfig: any;

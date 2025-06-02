@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, Input, ViewEncapsulation } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../form-control.interface';
 import { CommonModule } from '@angular/common';
@@ -18,6 +18,8 @@ import { FormControlFactory } from '../../form-control.factory';
     FunctionWrapperPipe
   ],
   templateUrl: './radio-input.component.html',
+  styleUrls: ['./radio-input.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
