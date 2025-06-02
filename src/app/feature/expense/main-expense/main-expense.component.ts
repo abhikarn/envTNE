@@ -91,8 +91,8 @@ export class MainExpenseComponent {
   travelDetails: any;
   transactionId: any;
   expenseConfirmMessage: any;
-  billableControl = new FormControl('', Validators.required);
   filteredOptions: any = [];
+  billableControl: FormControl = new FormControl('');
 
   constructor(
     private expenseService: ExpenseService,
@@ -109,8 +109,7 @@ export class MainExpenseComponent {
     private serviceRegistry: ServiceRegistryService,
     private router: Router,
     private utilsService: UtilsService,
-    private applicationMessageService: ApplicationMessageService,
-    private financeService: FinanceService
+    private applicationMessageService: ApplicationMessageService
   ) {
   }
 
@@ -148,10 +147,11 @@ export class MainExpenseComponent {
   ngOnInit() {
     this.initializeBasicFields();
     this.loadInitialData();
-    this.initBillanleControl();
   }
 
   initBillanleControl() {
+    this.billableControl.setValidators([Validators.required]);
+    this.billableControl.updateValueAndValidity();
     this.billableControl.valueChanges
       .pipe(
         debounceTime(300),
@@ -178,6 +178,7 @@ export class MainExpenseComponent {
       this.editMode = true;
     }
     this.expenseRequestData = [];
+    this.billableControl.setValue(null);
   }
 
   // Load master data (baggage types, meals, travel modes) and expense config file.
@@ -224,6 +225,11 @@ export class MainExpenseComponent {
     }
     if (this.expenseConfig?.travelDetails) {
       this.travelDetails = this.expenseConfig?.travelDetails;
+      this.travelDetails.data?.forEach((config: any) => {
+        if(config.controlType === 'autocomplete' && config.isEnabled) {
+          this.initBillanleControl();
+        }
+      })
     }
   }
 
@@ -741,22 +747,7 @@ export class MainExpenseComponent {
   }
 
   updateBillableCostCentre(billableCostcentreId: number) {
-    const payload = {
-      UserMasterId: Number(localStorage.getItem('userMasterId')),
-      ExpenseRequestId: this.expenseRequestId,
-      BillableCostCentreId: billableCostcentreId,
-      ActionBy: Number(localStorage.getItem('userMasterId'))
-    };
-
-    this.financeService.financeExpenseBillableCostCentreUpdate(payload).subscribe({
-      next: (res: any) => {
-        if (res?.ResponseValue?.Result == "FAILED") {
-          this.snackbarService.error(res?.ResponseValue?.Message);
-        } else {
-          this.snackbarService.success(res?.ResponseValue?.Message);
-        }
-      }
-    })
+    this.mainExpenseData.BillableCostCentreId = billableCostcentreId;
   }
 }
 

@@ -26,36 +26,42 @@
             "label": "Travel Details",
             "data": [
                 {
+                    "isEnabled": true,
                     "name": "TravelDateFromString",
                     "label": "Travel From Date",
                     "value": null,
                     "order": 1
                 },
                 {
+                    "isEnabled": true,
                     "name": "TravelDateToString",
                     "label": "Travel To Date",
                     "value": null,
                     "order": 2
                 },
                 {
+                    "isEnabled": true,
                     "name": "Purpose of Travel",
                     "label": "Purpose of Travel",
                     "value": null,
                     "order": 3
                 },
                 {
+                    "isEnabled": true,
                     "name": "DefaultCostcenter",
                     "label": "Cost center",
                     "value": null,
                     "order": 5
                 },
                 {
+                    "isEnabled": true,
                     "name": "UserLeaveSummary",
                     "label": "LeaveSummary",
                     "value": null,
                     "order": 6
                 },
                 {
+                    "isEnabled": false,
                     "label": "Billable Cost Centre",
                     "name": "billableCostcentre",
                     "isLink": false,
