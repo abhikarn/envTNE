@@ -36,13 +36,22 @@
 }
 
 .mat-mdc-form-field-textarea-control {
- 
 	border: 1px solid #EBEBF0 !important;
 	margin-top: 5px !important;
 	font-size: 0.9rem;
 	letter-spacing: 0.2px;
 	border-radius: 6px;
 	padding: 6px;
-	background: rgba(256, 256, 256, 1);
+	background: rgb(255, 255, 255);
 	resize: none !important;
+	min-height: 59px !important;
+	height: 60px !important;
+}
+
+.mat-mdc-icon-button .mat-mdc-button-persistent-ripple::before {
+	background-color: transparent!important;
+}.mat-mdc-icon-button {
+ 
+	padding: 0;
+	 
 }
