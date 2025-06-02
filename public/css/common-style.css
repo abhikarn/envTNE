@@ -2005,7 +2005,7 @@ ul.header-notify-hold {
 
 .form-group.chm-formgroup {
 	position: relative;
-	margin-bottom: 15px;
+	margin-bottom: 0px;
 }
     .form-group.chm-formgroup label {
         font-size: 10px;
