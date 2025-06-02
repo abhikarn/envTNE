@@ -1,0 +1,56 @@
+.dialog-header {
+  background-color: #0077b6;
+  color: #fff;
+  padding: 16px;
+  font-size: 18px;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.details-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.left-column, .right-column {
+  flex: 1 1 45%;
+}
+
+mat-list-item {
+  padding: 4px 0;
+  font-size: 14px;
+}
+
+.gst-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #f8fafd;
+  border: 1px solid #0077b6;
+}
+.gst-table th, .gst-table td {
+  border: 1px solid #b0c4de;
+  padding: 6px 10px;
+  text-align: left;
+}
+.gst-table th {
+  background: #0077b6;
+  color: #fff;
+  font-weight: 600;
+}
+.gst-table tr:nth-child(even) {
+  background: #eaf4fb;
+}
+.gst-table tr:hover {
+  background: #d0e7fa;
+}
+
+mat-dialog-actions {
+  padding: 8px 16px;
+}

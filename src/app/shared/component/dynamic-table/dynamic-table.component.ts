@@ -106,7 +106,7 @@ export class DynamicTableComponent implements OnInit {
     return this.datePipe.transform(value, format) || value.toString();
   }
 
-  edit(row: any, index: any) {
+  edit(row: any, index: any) {    
     let rowData = {
       row: row,
       index: index

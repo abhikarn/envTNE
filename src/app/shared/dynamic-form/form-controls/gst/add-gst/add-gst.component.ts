@@ -122,6 +122,7 @@ export class AddGstComponent {
   }
 
   addGstRow(): void {
+
     if (this.gstDetailsForm.invalid) {
       this.gstDetailsForm.markAllAsTouched();
       return;
@@ -194,4 +195,11 @@ export class AddGstComponent {
     }
   }
 
+  setGstDetails(gstDetails: any) {
+    debugger;
+    this.gstDetails = [];
+    this.gstDetails.push(gstDetails);
+    this.control.setValue(this.gstDetails);
+    // this.initGstDetailsForm();
+  }
 }

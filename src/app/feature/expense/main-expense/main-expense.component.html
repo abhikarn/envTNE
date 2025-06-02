@@ -62,8 +62,8 @@
                 </div>
                 }
               </div>
-
             </div>
+
             <!-- expense category -->
             <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
               <mat-tab-group fitInkBarToContent (selectedTabChange)="onTabChange($event)">
@@ -94,6 +94,7 @@
               </mat-tab-group>
 
             </div>
+
             <!-- Other Details -->
             <div class="row mt-2">
               <div class="col-md-12">
@@ -163,12 +164,12 @@
               </div>
             </div>
           </div>
+          
           <!-- left-container-wider -->
           <div class="right-container-nrw rt-aside-fixed">
             <div class="row-wrapper common-block px-3 py-3">
               <!-- Summary -->
               <app-summary [summaries]="expenseSummary" [expenseRequestData]="expenseRequestData"></app-summary>
-
               @if (expenseConfig?.justification) {
               <div [formGroup]="justificationForm" class="row mt-3">
                 <div class="col-md-12">
@@ -212,10 +213,8 @@
                 }
               </div>
               }
-
             </div>
           </div>
-
         </div>
       </div>
       <!-- all-data-wrapper -->

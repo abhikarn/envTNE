@@ -53,7 +53,8 @@
   }
   <!-- Handling 'file' type controls -->
   @case ('file') {
-  <lib-file-upload [controlConfig]="control.formConfig" [control]="control.control" [selectedFiles]="selectedFiles">
+  <lib-file-upload [controlConfig]="control.formConfig" [form]="form" [formConfig]="formConfig" [control]="control.control" [selectedFiles]="selectedFiles"
+    (ocrCompleted)="onOcrCompleted($event)">
   </lib-file-upload>
   }
   <!-- Optional: Default case if control type doesn't match -->
@@ -64,7 +65,6 @@
   }
   }
   }
-
   }
 
   <div class="col-md-12">
@@ -79,10 +79,4 @@
   <app-dynamic-table [tableData]="tableData" [categoryConfig]="category" (editRow)="onEditRow($event)"
     (deleteRow)="onDeleteRow($event)"></app-dynamic-table>
   }
-
 </form>
-
-
-
-
-<!-- <p>Form Value: {{ form.value | json }}</p> -->

@@ -66,6 +66,25 @@
             {
                 "name": "Travel Ticket",
                 "label": "Tickets Expense",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "select",
@@ -370,6 +389,7 @@
                                 "type": "text",
                                 "showInUI": true,
                                 "required": true,
+                                "value": null,
                                 "validations": [
                                     {
                                         "type": "required",
@@ -388,6 +408,7 @@
                                 "type": "text",
                                 "showInUI": true,
                                 "required": true,
+                                "value": null,
                                 "validations": [
                                     {
                                         "type": "required",
@@ -400,6 +421,7 @@
                                 "name": "Amount",
                                 "type": "text",
                                 "showInUI": true,
+                                "value": null,
                                 "autoFormat": {
                                     "patterns": [
                                         "[^0-9.]",
@@ -427,6 +449,7 @@
                                 "name": "SGST",
                                 "type": "text",
                                 "showInUI": true,
+                                "value": null,
                                 "autoFormat": {
                                     "patterns": [
                                         "[^0-9.]",
@@ -443,6 +466,7 @@
                                 "name": "CGST",
                                 "type": "text",
                                 "showInUI": true,
+                                "value": null,
                                 "autoFormat": {
                                     "patterns": [
                                         "[^0-9.]",
@@ -459,6 +483,7 @@
                                 "name": "IGST",
                                 "type": "text",
                                 "showInUI": true,
+                                "value": null,
                                 "autoFormat": {
                                     "patterns": [
                                         "[^0-9.]",
@@ -475,6 +500,7 @@
                                 "name": "UGST",
                                 "type": "text",
                                 "showInUI": true,
+                                "value": null,
                                 "autoFormat": {
                                     "patterns": [
                                         "[^0-9.]",
@@ -531,6 +557,7 @@
                             ]
                         },
                         "disable": false,
+                        "oCRRequired":true,
                         "order": 11
                     },
                     {
