@@ -174,6 +174,17 @@ debugger;
           dialogRef.afterClosed().subscribe((confirmed: boolean) => {
             if (confirmed) {
               this.form.patchValue(this.ocrResult.Data);
+              this.formConfig.forEach((control: any) => {
+                // Check if the control is in the OCR result
+                if (this.ocrResult.Data && this.ocrResult.Data.hasOwnProperty(control.name)) {
+                  // set number controls to number type with global decimal precision
+                  if (control.dataType === 'numeric' && this.ocrResult.Data[control.name] !== null) {
+                    const precision = control.autoFormat?.decimalPrecision || 2; // Default to 2 decimal places if not specified
+                    this.form.get(control.name)?.setValue(parseFloat(this.ocrResult.Data[control.name]).toFixed(precision));
+                  }
+                }
+              });
+
               // Set readonly on all controls that were patched by OCR
               if (this.ocrResult.Data && typeof this.ocrResult.Data === 'object') {
                 debugger;
