@@ -1,0 +1,49 @@
+<h2 mat-dialog-title class="dialog-header">OCR Result</h2>
+<mat-dialog-content class="dialog-content">
+    <div class="details-container">
+        <div class="left-column">
+            <mat-list>
+                <mat-list-item *ngFor="let key of dataKeys" [hidden]="key === 'gst'">
+                    <strong>{{ key }}:</strong> {{ data[key] }}
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <div class="right-column" *ngIf="data.gst">
+            <h4>GST Details</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>GstIn</th>
+                        <th>VendorName</th>
+                        <th>InvoiceNumber</th>
+                        <th>Amount</th>
+                        <th>Basic</th>
+                        <th>CGST</th>
+                        <th>SGST</th>
+                        <th>IGST</th>
+                        <th>UGST</th>
+                        <th>CESS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ data.gst.GstIn }}</td>
+                        <td>{{ data.gst.VendorName }}</td>
+                        <td>{{ data.gst.InvoiceNumber }}</td>
+                        <td>{{ data.gst.Amount }}</td>
+                        <td>{{ data.gst.Basic }}</td>
+                        <td>{{ data.gst.CGST }}</td>
+                        <td>{{ data.gst.SGST }}</td>
+                        <td>{{ data.gst.IGST }}</td>
+                        <td>{{ data.gst.UGST }}</td>
+                        <td>{{ data.gst.CESS }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onConfirm()">Apply</button>
+</mat-dialog-actions>

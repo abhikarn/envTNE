@@ -43,6 +43,10 @@ export class NewExpenseService {
     return this.httpClient.post<any>(`${this.basePath}Account/GetUserData`, request);
   }
 
+  OCRValidateCheck(request: any) {
+    return this.httpClient.post<any>(`${this.basePath}Expense/OCRValidateCheck`, request);
+  }
+
   getExpenseConfig() {
     return this.httpClient.get<any>(`${this.assetPath}/assets/config/expense-config.json`);
   }

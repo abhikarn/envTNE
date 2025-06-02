@@ -43,4 +43,5 @@ export interface IFormControl {
   calculate?: any;
   policyViolationCheck?: any;
   maxLength?: number;
+  oCRRequired?: boolean;
 }
