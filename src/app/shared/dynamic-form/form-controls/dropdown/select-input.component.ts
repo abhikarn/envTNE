@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../form-control.interface';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,7 +20,9 @@ import { MatIconModule } from '@angular/material/icon';
     FunctionWrapperPipe,
     MatIconModule
   ],
-  templateUrl: './select-input.component.html'
+  templateUrl: './select-input.component.html',
+  styleUrls: ['./select-input.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SelectInputComponent {
   @Input() control: FormControl = new FormControl('');
