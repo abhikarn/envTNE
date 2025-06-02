@@ -85,7 +85,14 @@ export class DynamicTableComponent implements OnInit {
   }
 
   isDate(value: any): boolean {
-    return value instanceof Date || (!isNaN(Date.parse(value)) && typeof value === 'string');
+    // Only treat as date if value is a Date object or a valid ISO date string (not starting with #)
+    if (value instanceof Date) return true;
+    if (typeof value === 'string' && value.trim() !== '' && !value.startsWith('#')) {
+      // Check for valid ISO date string (YYYY-MM-DD or similar)
+      const isoDateRegex = /^\d{4}-\d{2}-\d{2}/;
+      return isoDateRegex.test(value) && !isNaN(Date.parse(value));
+    }
+    return false;
   }
 
   isObject(value: any): boolean {
@@ -95,7 +102,11 @@ export class DynamicTableComponent implements OnInit {
   formatValue(columnName: string, value: any): string {
     if (value === null || value === undefined) return '-';
     if (typeof value === 'object' && 'label' in value) return value.label;
-    if (this.isDate(value)) {
+
+    // Only treat as date if column type is 'date' or 'datetime'
+    const column = this.categoryConfig?.columns?.find((col: any) => col.name === columnName);
+    const isDateType = column && (column.type === 'date' || column.type === 'datetime');
+    if (isDateType && this.isDate(value)) {
       const format = this.configService.dateFormat || 'dd-MMM-yyyy';
       return this.formatDateUsingFormat(value, format);
     }
