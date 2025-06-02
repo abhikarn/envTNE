@@ -1,14 +1,26 @@
 <div class="col-md-12">
-  <div class="common-block-white mb-3">
-    <label class="form-label">{{ controlConfig.label }}
+     
+           <h6 class="common-title fw-bold mb-3">  {{ controlConfig.label }}
       @if (controlConfig.required) {
       <span class="required-star">*</span>
       }
-    </label>
+
+  </h6>
+
+ 
+
+
     <div class="upload-container excel-TBL-hold">
-      <label for="{{ controlConfig.name }}" class="custom-upload">Click to Choose File</label>
+       <div class="upload-ico">
+                                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                               <path d="M8.00078 0.800198L11.9008 4.4002M8.00078 0.800198L4.40078 4.4002M8.00078 0.800198L8.00078 12.2002M15.2008 7.4002L15.2008 13.2002C15.2008 14.3048 14.3053 15.2002 13.2008 15.2002L2.80078 15.2002C1.69621 15.2002 0.800781 14.3048 0.800781 13.2002L0.800781 7.4002" stroke="#2A5EE3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            </svg>
+                                                         </div>
+                                                         
+      <label for="{{ controlConfig.name }}" class="custom-upload w-100">Click to Choose File</label>
       <input type="file" [id]="controlConfig.name" [multiple]="controlConfig.multiple" (change)="onFileSelected($event)"
         [accept]="controlConfig.accept" [disabled]="controlConfig.disable">
+          <small> (PDF, .xlsx, .docx, (max upload 5MB))  </small>
     </div>
 
     <!-- Table to Display Selected Files -->
@@ -53,5 +65,5 @@
       {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
     </div>
     }
-  </div>
+ 
 </div>
