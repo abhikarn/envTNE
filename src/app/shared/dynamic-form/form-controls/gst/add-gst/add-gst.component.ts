@@ -196,8 +196,6 @@ export class AddGstComponent {
   }
 
   setGstDetails(gstDetails: any) {
-    console.log(gstDetails);
-    console.log(this.fields);
     this.fields.forEach((field: any) => {
       if (field?.dataType == 'numeric' && gstDetails.hasOwnProperty(field.name)) {
         if (gstDetails[field.name] === null || gstDetails[field.name] === undefined) {
