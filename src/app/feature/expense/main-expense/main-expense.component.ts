@@ -25,6 +25,7 @@ import { SummaryComponent } from '../../../shared/component/summary/summary.comp
 import { UtilsService } from '../../../shared/service/utils.service';
 import { ApplicationMessageService } from '../../../shared/service/application-message.service';
 import { environment } from '../../../../environment';
+import { BottomSheetService } from '../../../shared/service/bottom-sheet.service';
 
 
 @Component({
@@ -49,7 +50,7 @@ import { environment } from '../../../../environment';
 })
 
 export class MainExpenseComponent {
-   assetPath = `${environment.assetsPath}`
+  assetPath = `${environment.assetsPath}`
   @ViewChild(SummaryComponent) summaryComponent: any;
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
   travelRequests: any;
@@ -107,7 +108,8 @@ export class MainExpenseComponent {
     private serviceRegistry: ServiceRegistryService,
     private router: Router,
     private utilsService: UtilsService,
-    private applicationMessageService: ApplicationMessageService
+    private applicationMessageService: ApplicationMessageService,
+    private bottomSheetService: BottomSheetService
   ) {
   }
 
@@ -568,7 +570,7 @@ export class MainExpenseComponent {
 
   // Handle submit, draft, or navigation actions after validating forms.
   onAction(type: string) {
-    
+
     if (type == "cancel") {
       if (this.editMode) {
         this.router.navigate(['../expense/expense/dashboard']);
@@ -601,7 +603,7 @@ export class MainExpenseComponent {
 
   // Prepare and submit the main expense request after confirmation.
   createExpenseRequest() {
-    
+
     if (!this.travelRequestId || !this.expenseRequestData?.dynamicExpenseDetailModels) {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return;
@@ -662,44 +664,55 @@ export class MainExpenseComponent {
   }
 
 
-  // Open travel date extension modal and handle update confirmation.
   openModal() {
-    const dialogRef = this.dialog.open(DateExtensionComponent, {
-      maxWidth: '1000px',
-      data: {
-        TravelDateFrom: this.travelRequestPreview?.TravelDateFromExtended,
-        TravelDateTo: this.travelRequestPreview?.TravelDateToExtended,
-        remarks: this.travelRequestPreview?.TravelRequestDateExtensionRemarks
-      }
-    });
+    const data = {
+      TravelDateFrom: this.travelRequestPreview?.TravelDateFromExtended,
+      TravelDateTo: this.travelRequestPreview?.TravelDateToExtended,
+      remarks: this.travelRequestPreview?.TravelRequestDateExtensionRemarks
+    };
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (!result) return;
+    if (window.innerWidth <= 768) { // Use bottom sheet for mobile
+      this.bottomSheetService.openBottomSheet(DateExtensionComponent, data).subscribe(result => {
+        this.handleResult(result);
+      });
+    } else { // Use dialog for larger screens
+      const dialogRef = this.dialog.open(DateExtensionComponent, {
+        maxWidth: '1000px',
+        data
+      });
 
-      result.TravelRequestId = this.travelRequestId;
+      dialogRef.afterClosed().subscribe(result => {
+        this.handleResult(result);
+      });
+    }
+  }
 
-      this.confirmDialogService
-        .confirm({
-          title: 'Date Extension',
-          message: 'Are you sure you want to change the travel date? This action will affect the per diem claim!',
-          confirmText: 'Yes Update',
-          cancelText: 'No'
-        })
-        .subscribe((confirmed) => {
-          if (confirmed) {
-            this.travelService.travelTravelRequestDateExtension(result)
-              .pipe(take(1))
-              .subscribe({
-                next: () => {
-                  this.getTravelRequestPreview();
-                  this.snackbarService.success('Record Updated Successfully.');
-                }
-              });
-          } else {
-            this.snackbarService.success('Failed To Update Record');
-          }
-        });
-    });
+  private handleResult(result: any) {
+    if (!result) return;
+
+    result.TravelRequestId = this.travelRequestId;
+
+    this.confirmDialogService
+      .confirm({
+        title: 'Date Extension',
+        message: 'Are you sure you want to change the travel date? This action will affect the per diem claim!',
+        confirmText: 'Yes Update',
+        cancelText: 'No'
+      })
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this.travelService.travelTravelRequestDateExtension(result)
+            .pipe(take(1))
+            .subscribe({
+              next: () => {
+                this.getTravelRequestPreview();
+                this.snackbarService.success('Record Updated Successfully.');
+              }
+            });
+        } else {
+          this.snackbarService.success('Failed To Update Record');
+        }
+      });
   }
 }
 
