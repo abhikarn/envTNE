@@ -147,6 +147,7 @@
                         "value": "",
                         "dependentCases": [
                             {
+                                "isGeneral": true,
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
