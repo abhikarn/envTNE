@@ -421,6 +421,7 @@
                             {
                                 "name": "Amount",
                                 "type": "text",
+                                "dataType": "numeric",
                                 "showInUI": true,
                                 "value": null,
                                 "autoFormat": {
@@ -449,6 +450,7 @@
                             {
                                 "name": "SGST",
                                 "type": "text",
+                                "dataType": "numeric",
                                 "showInUI": true,
                                 "value": null,
                                 "autoFormat": {
@@ -466,6 +468,7 @@
                             {
                                 "name": "CGST",
                                 "type": "text",
+                                "dataType": "numeric",
                                 "showInUI": true,
                                 "value": null,
                                 "autoFormat": {
@@ -483,6 +486,7 @@
                             {
                                 "name": "IGST",
                                 "type": "text",
+                                "dataType": "numeric",
                                 "showInUI": true,
                                 "value": null,
                                 "autoFormat": {
@@ -500,6 +504,7 @@
                             {
                                 "name": "UGST",
                                 "type": "text",
+                                "dataType": "numeric",
                                 "showInUI": true,
                                 "value": null,
                                 "autoFormat": {

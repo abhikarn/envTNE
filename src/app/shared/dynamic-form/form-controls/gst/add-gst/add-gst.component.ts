@@ -196,7 +196,17 @@ export class AddGstComponent {
   }
 
   setGstDetails(gstDetails: any) {
-    debugger;
+    console.log(gstDetails);
+    console.log(this.fields);
+    this.fields.forEach((field: any) => {
+      if (field?.dataType == 'numeric' && gstDetails.hasOwnProperty(field.name)) {
+        if (gstDetails[field.name] === null || gstDetails[field.name] === undefined) {
+          gstDetails[field.name] = 0;
+        }
+        const precision = field.autoFormat?.decimalPrecision || this.globalConfig.getDecimalPrecision();
+        gstDetails[field.name] = parseFloat(gstDetails[field.name]).toFixed(precision);
+      }
+    });
     this.gstDetails = [];
     this.gstDetails.push(gstDetails);
     this.control.setValue(this.gstDetails);
