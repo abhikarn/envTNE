@@ -15,6 +15,7 @@ import { ConfirmDialogService } from '../../../service/confirm-dialog.service';
 })
 export class OcrResultDialogComponent {
   dataKeys: string[];
+  ammoutData: any;
   gstKeys: string[] = [];
 
   constructor(
@@ -22,11 +23,12 @@ export class OcrResultDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private confirmDialogService: ConfirmDialogService
   ) {
-    this.dataKeys = Object.keys(data || {}).filter(k => k !== 'gst' && k !== 'AmountValidation');
+    this.dataKeys = Object.keys(data || {}).filter(k => k !== 'gst' && k !== 'AmountValidation' && k !== 'HasRestrictedLineItems');
+    this.ammoutData = data?.AmountValidation; // <-- Fix: assign the actual object
 
     if (data?.gst) {
       this.gstKeys = Object.keys(data.gst);
-    //   this.dataKeys.push('gst');
+      //   this.dataKeys.push('gst');
     }
   }
 
