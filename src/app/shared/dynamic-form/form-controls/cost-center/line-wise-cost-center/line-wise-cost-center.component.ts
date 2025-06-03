@@ -172,7 +172,9 @@ export class LineWiseCostCenterComponent {
   }
 
   removeCostCenterRow(index: number) {
-
+    if (this.control && this.costCenterDetails.length > 0) {
+      this.costCenterDetails.splice(index, 1);
+    }
   }
 
   getValidationMessage(errors: any, fieldName: string): string {
