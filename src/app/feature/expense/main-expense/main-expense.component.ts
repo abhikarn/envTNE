@@ -26,6 +26,7 @@ import { UtilsService } from '../../../shared/service/utils.service';
 import { ApplicationMessageService } from '../../../shared/service/application-message.service';
 import { environment } from '../../../../environment';
 import { BottomSheetService } from '../../../shared/service/bottom-sheet.service';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 
 
 @Component({
@@ -42,7 +43,8 @@ import { BottomSheetService } from '../../../shared/service/bottom-sheet.service
     MatAutocompleteModule,
     DynamicFormComponent,
     MatDialogModule,
-    SummaryComponent
+    SummaryComponent,
+    MatSelectModule
   ],
   templateUrl: './main-expense.component.html',
   styleUrl: './main-expense.component.scss',
@@ -424,9 +426,8 @@ export class MainExpenseComponent {
 
 
   // Update travelRequestId based on user selection and fetch travel request preview.
-  onSelectTravelExpenseRequest(event: Event) {
-    const target = event?.target as HTMLSelectElement;
-    this.travelRequestId = Number(target?.value) || 0;
+  onSelectTravelExpenseRequest(event: MatSelectChange) {
+    this.travelRequestId = Number(event?.value) || 0;
 
     if (this.travelRequestId) {
       this.initializeBasicFields();
