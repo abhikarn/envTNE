@@ -19,10 +19,11 @@
             <div class="common-block mb-3">
               @if (!editMode) {
               <h6 class="common-title fw-bold mb-3">Select Request  </h6>
+              <div class="common-block-mobile">
               <div class="row">
                 <div class="col-md-4">
                   @if (expenseConfig?.request) {
-                  <div class="form-group chm-formgroup new-form-grp">
+                  <div class="form-group chm-formgroup new-form-grp mb-0 no-hintspace">
                     <label>{{this.expenseConfig.request.label}} </label>
                     <mat-form-field appearance="fill" class="w-100">
                       <mat-select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest"
@@ -39,6 +40,7 @@
                   </div>
                   }
                 </div>
+              </div>
               </div>
               } @else {
               <div class="row">
@@ -82,17 +84,35 @@
             </div>
             <!-- expense category -->
             <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
-              <mat-tab-group fitInkBarToContent (selectedTabChange)="onTabChange($event)">
+              <mat-tab-group class="expense-tab-sec" fitInkBarToContent (selectedTabChange)="onTabChange($event)">
                 @for (category of categories; track category) {
                 <mat-tab>
+
+                  
                   <ng-template mat-tab-label>
-                    <span [matBadge]="category.count" matBadgeOverlap="false">{{category.label}}</span>
+                    <span [matBadge]="category.count" matBadgeOverlap="false">
+                      <div id="expenseHead" >
+                         <div class="menu-item"  > 
+                       <div class="expense-list-head">
+                                                       
+                                                     
+                      <h6> {{category.label}}  <span>2</span> </h6>
+                     
+                     </div>
+                      </div>
+                      </div>
+                    </span>
                   </ng-template>
+              
+
+ 
+                  
                   <ng-template matTabContent>
                     <div class="expense-item-hold">
                       <div class="other-sectionaa hidehtgnm" style="display: block;">
                         <div class="common-block mb-3">
                           <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
+                           <div class="common-block-mobile">
                           <app-dynamic-form [moduleData]="travelRequestPreview"
                             [existingData]="existingExpenseRequestData" [category]="category"
                             [formConfig]="category.formControls" [eventHandler]="this"
@@ -101,6 +121,7 @@
                             [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
                             [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
                           </app-dynamic-form>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -180,6 +201,8 @@
             </div>
           </div>
           <!-- left-container-wider -->
+
+
           <div class="right-container-nrw rt-aside-fixed">
             <div class="row-wrapper common-block px-3 py-3">
               <!-- Summary -->
@@ -204,14 +227,17 @@
               </div>
               }
 
+
+
+
+            
+
+
+
               @if (expenseConfig?.actions) {
-              <div class="main-btn-hold d-flex flex-column mt-2" style="align-items:end;">
-                <div class="d-flex align-items-center w-100 mb-2">
-                  @if (expenseConfig.actions[0]) {
-                  <a [ngClass]="expenseConfig.actions[0].class" (click)="onAction(expenseConfig.actions[0].type);">
-                    {{ expenseConfig.actions[0].label }}
-                  </a>
-                  }
+            <div class="bottom-buttons d-lg-flex d-md-flex  pe-lg-3  pe-md-3  justify-content-lg-end  justify-content-md-end   align-items-center    ">
+              <div class="d-flex align-items-center me-lg-2 combine-btn ">
+           
                   @if (expenseConfig.actions[1]) {
                   @if(expenseRequestPreviewData?.claimStatusId == 26 || !editMode) {
                   <button type="button" [ngClass]="expenseConfig.actions[1].class"
@@ -219,6 +245,11 @@
                     {{ expenseConfig.actions[1].label }}
                   </button>
                   }
+                  }
+                         @if (expenseConfig.actions[0]) {
+                  <button type="button"  [ngClass]="expenseConfig.actions[0].class" (click)="onAction(expenseConfig.actions[0].type);">
+                    {{ expenseConfig.actions[0].label }}
+                  </button>
                   }
                 </div>
                 @if (expenseConfig.actions[2]) {

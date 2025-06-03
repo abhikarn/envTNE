@@ -2438,17 +2438,17 @@
             {
                 "label": "Cancel",
                 "type": "cancel",
-                "class": "btn btn-outline-secondary w-50 mr-10"
+                "class": "btn btn-outline-secondary  "
             },
             {
                 "label": "Save as Draft",
                 "type": "draft",
-                "class": "btn btn-outline-primary w-50"
+                "class": "btn btn-outline-secondary  me-2  "
             },
             {
                 "label": "Submit",
                 "type": "submit",
-                "class": "btn btn-primary w-100"
+                "class": "btn btn-light"
             }
         ],
         "notifications": {

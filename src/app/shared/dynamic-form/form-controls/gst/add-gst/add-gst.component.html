@@ -4,7 +4,7 @@
             <div class="gst-hold-body" id="showDiv">
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="tblTeGST" class="table   color-table d-table table-cust tbl-sml">
+                        <table id="tblTeGST" class="table mt-2 mb-2   remove-th-mobile    grey-table table-cust tbl-sml">
                             <thead>
                                 <tr>
                                     @for (field of fields; track $index) {
@@ -25,7 +25,7 @@
                                     <td>
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
                                             <input [type]="field.type" [formControlName]="field.name"
-                                                [placeholder]="field.name" (blur)="onBlur(field)"
+                                                 (blur)="onBlur(field)"
                                                 (input)="onInput($event, field)"
                                                 class="form-control chm-forminput teGst gsttxt" />
                                             <span class="validate-error-message teGst"
@@ -39,11 +39,15 @@
                                     </td>
                                     }
                                     }
+
+     
                                     <td>
-                                        <a type="button" id="btnAddGstTe" class="btn btn-light btn-sm rounded-circle "
+                                        <button type="button" id="btnAddGstTe" class="bg-transparent border-0 px-0 my-2 " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add" 
                                             (click)="addGstRow()">
-                                            <span class="ti-plus ti-rotate"></span>
-                                        </a>
+                                              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.75033 0.889893C7.75033 0.475679 7.41454 0.139893 7.00033 0.139893C6.58612 0.139893 6.25033 0.475679 6.25033 0.889893V6.29075H0.849609C0.435396 6.29075 0.0996094 6.62654 0.0996094 7.04075C0.0996094 7.45496 0.435396 7.79075 0.849609 7.79075H6.25033V13.1916C6.25033 13.6058 6.58612 13.9416 7.00033 13.9416C7.41454 13.9416 7.75033 13.6058 7.75033 13.1916V7.79075H13.1513C13.5655 7.79075 13.9013 7.45496 13.9013 7.04075C13.9013 6.62654 13.5655 6.29075 13.1513 6.29075H7.75033V0.889893Z" fill="black"/>
+                  </svg>
+                                        </button>
                                     </td>
                                 </tr>
 
