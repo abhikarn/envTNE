@@ -357,19 +357,19 @@ span.auto-label {
     justify-content: flex-start;
     align-items: flex-start;
     }
-    footer.tne-app-footer {
-        flex: 0;
-        background: #dadada;
-        width: 100%;
-        height: 28px;
-        display: flex;
-        min-height: 28px;
-        flex-flow: row;
-        /* border-top: 1px solid rgba(0, 0, 0, 0.2); */
-        position: relative;
-        padding: 5px 0;
-        margin-top: 5px;
-    }
+ footer.tne-app-footer {
+	flex: 0;
+	background: #fff;
+	width: 100%;
+	height: 28px;
+	display: flex;
+	min-height: 28px;
+	flex-flow: row;
+	border-top: 1px solid rgba(187, 187, 187, 0.2);
+	position: relative;
+	padding: 5px 0;
+	margin-top: 5px;z-index: -1;
+}
     footer.tne-app-footer .footer-custom {
     display: flex;
     flex-flow: row;
@@ -1057,16 +1057,16 @@ ul.header-notify-hold {
         padding-top: 0;
     }
     /* ================ Main Container style ==================== */
-    .page-title {
-        padding: 0 15px;
-        position: fixed;
-        width: 96%;
-        height: 45px;
-        z-index: 1;
-        background-color: #fff;
-        box-shadow: 0px 11px 11px -7px rgba(0, 0, 0, 0.04);
-        top: 38px;
-    }
+ .page-title {
+	padding: 0 15px;
+	position: fixed;
+	width: 96%;
+	height: 45px;
+	z-index: 9;
+	background-color: #fff;
+	box-shadow: 0px 11px 11px -7px rgba(0, 0, 0, 0.04);
+	top: 38px;
+}
         h2.page-header {
             /* color: #111111; */
             font-size: 18px;
@@ -4786,22 +4786,23 @@ button.dropbtn {
     .badge-high {
     margin-bottom: 12px;
     }
-    #expenseHead .menu-item {
-        background: #FFFFFF;
-        height: 26px;
-        line-height: 18px;
-        padding: 0;
-        margin: 0px 10px 0 0;
-        border-radius: 0px;
-        text-align: center;
-        cursor: poRoboto;
-        border: 1px solid #e4e4eb;
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 19%;    cursor: pointer;
-    }.expense-list-head {
+  #expenseHead .menu-item {
+	background: #FFFFFF;
+	height: 26px;
+	line-height: 18px;
+	padding: 0 0px;
+	margin: 0px 10px 0 0;
+	/* border-radius: 0px; */
+	text-align: center;
+	/* cursor: poRoboto; */
+	border: 1px solid #e4e4eb;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	/* width: 19%; */
+	cursor: pointer;
+}.expense-list-head {
         width: 100%;
     }#expenseHead .more-dropdown .menu-item {
         width: auto;
@@ -4814,7 +4815,7 @@ button.dropbtn {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-left: 5px;
+        padding-left: 10px;
         width: 100%;
     } div#expenseHead {
         display: flex;
@@ -4907,7 +4908,7 @@ button.dropbtn {
     position: relative;
     }  #expenseHead .menu-item .expense-list-head h6 span {
         width: 29px;
-        /* margin-left: 18px; */
+        margin-left: 18px; 
         border-top-right-radius: 0;
         font-weight: 700;
         color: #2A5EE3;
@@ -12865,10 +12866,10 @@ button.dropbtn {
     display: block;
   }
 
-  .self-select .selected {
+.self-select .selected {
 	position: fixed;
 	right: 24px;
-	z-index: 998;
+	z-index: 997;
 	width: 157px !important;
 	top: 43px;
 }
@@ -12951,4 +12952,6 @@ width: 157px;
 	content: "\f107";
 }.load-more-expense {
 	display: none;
+}.cdk-overlay-dark-backdrop {
+	background: rgba(0, 0, 0, 0.75);
 }

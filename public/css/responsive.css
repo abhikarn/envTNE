@@ -301,14 +301,14 @@
     .common-block {background-color: transparent;padding: 0;border-radius: 0;}
     .common-block-mobile { background-color: #F7F7FA;padding: 13px 10px 13px;border-radius: 8px;}
     .logo-account-hold {border-bottom: 1px solid #e8e9ee;padding: 5px 15px;}
-    .left-container-wider.scroll-left-align.mar-tmd3 {
+    /* .left-container-wider.scroll-left-align.mar-tmd3 {
         padding-bottom: 150px !important;
-    }
+    } */
     .header-fixed.nav-bar-head {
         
         height: 48px;
     }
-    #expenseHead .menu-item {width: 22%;}
+ 
     .common-block-right { height: auto;}
     .bottom-buttons { position: relative; z-index: 1;background-color: transparent;bottom: 0;left: 0; width: 100%;right: 0; padding: 10px 0 0; box-shadow: none;transition: inherit;}
     .bottom-buttons .combine-btn button { width: 50%;margin-bottom: 5px;}
@@ -462,7 +462,7 @@
         
         border-radius: 0;
     }.trl-preview-wrapper .trl-readview-item .trl-req-head label {
-        font-size: 11px;
+         
         color: #8C8CAC;
         font-weight: 700;
         letter-spacing: 0px;
@@ -787,7 +787,7 @@ ul.quick-menu-links li {
       }
 
      
-    #expenseHead .menu-item { width: 29%;}
+    /* #expenseHead .menu-item { width: 29%;} */
 
  ul#menu-log .uname-dp {
  

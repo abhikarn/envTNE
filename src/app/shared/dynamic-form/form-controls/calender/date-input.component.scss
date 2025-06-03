@@ -31,4 +31,46 @@
 } .mat-calendar-body-selected {
 	background-color: #031842!important;
  
+}.mat-datepicker-toggle {
+ 
+	display: none;
+}.date-picker-icon {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	height: 19px;
+}.mat-mdc-dialog-surface {
+ 
+	border-radius: 10px!important;
+	 
+}.mdc-button {
+	min-width: inherit !important;
+	padding: 0 !important;
+}.mat-mdc-dialog-actions {
+	padding: 0px 19px !important;
+}
+.mat-mdc-raised-button:not(:disabled) {
+	color: #ffffff !important;
+	background-color: #212529 !important;
+	border-radius: 5px !important;
+	height: auto !important;
+	padding: 7px 21px !important;
+	box-shadow: none;
+}
+.mat-mdc-raised-button[disabled], .mat-mdc-raised-button.mat-mdc-button-disabled {
+	color: #ffffff !important;
+	background-color: #7d879e !important;
+	border-radius: 5px;
+	height: auto !important;
+	padding: 7px 21px !important;
+	opacity: 1 !important;box-shadow: none !important;
+}.mdc-button {
+ 
+	min-width: inherit!important;
+ 
+}.mat-mdc-dialog-container {
+	width: 500px!important;
+ 
 }

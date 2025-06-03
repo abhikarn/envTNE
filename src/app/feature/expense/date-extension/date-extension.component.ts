@@ -1,4 +1,4 @@
-import { Component, Inject, Optional } from '@angular/core';
+import { Component, Inject, Optional, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,7 +21,8 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bott
     MatInputModule
   ],
   templateUrl: './date-extension.component.html',
-  styleUrl: './date-extension.component.scss'
+  styleUrl: './date-extension.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class DateExtensionComponent {
   travelForm: FormGroup;
