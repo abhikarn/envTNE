@@ -46,7 +46,7 @@ export class FileUploadComponent {
   }
 
   onFileSelected(event: Event) {
-debugger;
+    debugger;
     const input = event.target as HTMLInputElement;
     const maxSizeBytes = (this.controlConfig.maxSizeMB ?? 20) * 1024 * 1024;
     if (input.files && input.files.length > 0) {
@@ -161,6 +161,10 @@ debugger;
         next: (res: any) => {
           debugger;
           this.ocrResult = res;
+          if (this.ocrResult.StatusCode == 400) {
+            this.snackbarService.error('OCR processing failed: ' + this.ocrResult.ErrorMessage);
+            return;
+          }
           // Set Currency to 1 if it is "INR"
           if (this.ocrResult?.Data?.Currency === "INR") {
             this.ocrResult.Data.Currency = 1;
@@ -168,7 +172,7 @@ debugger;
           localStorage.setItem('ocrResult', JSON.stringify(this.ocrResult.Data));
           // Show OCR result in a Material dialog
           const dialogRef = this.dialog.open(OcrResultDialogComponent, {
-            width: '700px',
+            width: '1000px',
             data: this.ocrResult.Data
           });
           dialogRef.afterClosed().subscribe((confirmed: boolean) => {
