@@ -12,15 +12,18 @@
                   @if (expenseConfig?.request) {
                   <div class="form-group chm-formgroup new-form-grp">
                     <label>{{this.expenseConfig.request.label}} </label>
-                    <select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest"
-                      name="ExpenseRequest" class="form-control chm-formselect"
-                      (change)="onSelectTravelExpenseRequest($event)">
-                      <option value="">{{expenseConfig.request.placeholder}}</option>
-                      @for (req of travelRequests; track req) {
-                      <option [value]="req.value">
-                        {{req.label}} </option>
-                      }
-                    </select>
+                    <mat-form-field appearance="fill" class="w-100">
+                      <mat-select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest"
+                        name="ExpenseRequest" class="chm-formselect"
+                        (selectionChange)="onSelectTravelExpenseRequest($event)">
+                        <mat-option value="">{{expenseConfig.request.placeholder}}</mat-option>
+                        @for (req of travelRequests; track req) {
+                          <mat-option [value]="req.value">
+                            {{req.label}}
+                          </mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
                   </div>
                   }
                 </div>
