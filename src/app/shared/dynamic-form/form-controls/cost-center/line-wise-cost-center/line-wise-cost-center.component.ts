@@ -123,6 +123,12 @@ export class LineWiseCostCenterComponent {
       return;
     }
 
+    // do not allow 0 value in AmmoutInActual & AmmoutInPercentage
+    if (this.costCenterDetailsForm.get('AmmoutInActual')?.value <= 0 && this.costCenterDetailsForm.get('AmmoutInPercentage')?.value <= 0) {
+      this.snackbarService.error('Amount in Actual or Percentage must be greater than 0');
+      return;
+    }
+
     // user can not select duplicate cost center
     const costCentreId = this.costCenterDetailsForm.get('CostCentreId')?.value;
     if (this.costCenterDetails.some((detail: any) => detail.CostCentreId === costCentreId)) {
@@ -193,6 +199,16 @@ export class LineWiseCostCenterComponent {
   }
 
   onInput(event: any, field: any) {
+    
+    if (field?.autoFormat?.range) {
+      const inputValue = event.target.value.toString();
+      if (inputValue.length > field.autoFormat.range.max) {
+        this.snackbarService.error(`Maximum length is ${field.autoFormat.range.max} characters`);
+        this.costCenterDetailsForm.get(field.name)?.setValue(inputValue.substring(0, field.autoFormat.range.max), { emitEvent: false });
+        return;
+      }
+    }
+
     let amount: any
     if (this.controlConfig?.getControl) {
       amount = parseFloat(this.form.get(`${this.controlConfig.getControl}`)?.value || "0");
