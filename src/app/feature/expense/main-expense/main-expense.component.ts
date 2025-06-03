@@ -1,4 +1,4 @@
-import { Component, DestroyRef, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
+import { Component, DestroyRef, ElementRef, HostListener, inject, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { CityAutocompleteParam, DataService, ExpenseRequestModel, ExpenseService, TravelService } from '../../../../../tne-api';
@@ -46,6 +46,7 @@ import { BottomSheetService } from '../../../shared/service/bottom-sheet.service
   ],
   templateUrl: './main-expense.component.html',
   styleUrl: './main-expense.component.scss',
+  encapsulation: ViewEncapsulation.None,
   providers: [DatePipe]
 })
 
