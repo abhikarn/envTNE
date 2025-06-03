@@ -201,13 +201,11 @@
             </div>
           </div>
           <!-- left-container-wider -->
-
-
-          <div class="right-container-nrw rt-aside-fixed">
+          <!-- Bottom Sheet Template -->
+          <ng-template #expenseSummarySheet>
             <div class="row-wrapper common-block px-3 py-3">
               <!-- Summary -->
               <app-summary [summaries]="expenseSummary" [expenseRequestData]="expenseRequestData"></app-summary>
-
               @if (expenseConfig?.justification) {
               <div [formGroup]="justificationForm" class="row mt-3">
                 <div class="col-md-12">
@@ -226,18 +224,10 @@
                 </div>
               </div>
               }
-
-
-
-
-            
-
-
-
               @if (expenseConfig?.actions) {
-            <div class="bottom-buttons d-lg-flex d-md-flex  pe-lg-3  pe-md-3  justify-content-lg-end  justify-content-md-end   align-items-center    ">
-              <div class="d-flex align-items-center me-lg-2 combine-btn ">
-           
+              <div
+                class="bottom-buttons d-lg-flex d-md-flex  pe-lg-3  pe-md-3  justify-content-lg-end  justify-content-md-end   align-items-center    ">
+                <div class="d-flex align-items-center me-lg-2 combine-btn ">
                   @if (expenseConfig.actions[1]) {
                   @if(expenseRequestPreviewData?.claimStatusId == 26 || !editMode) {
                   <button type="button" [ngClass]="expenseConfig.actions[1].class"
@@ -246,8 +236,9 @@
                   </button>
                   }
                   }
-                         @if (expenseConfig.actions[0]) {
-                  <button type="button"  [ngClass]="expenseConfig.actions[0].class" (click)="onAction(expenseConfig.actions[0].type);">
+                  @if (expenseConfig.actions[0]) {
+                  <button type="button" [ngClass]="expenseConfig.actions[0].class"
+                    (click)="onAction(expenseConfig.actions[0].type);">
                     {{ expenseConfig.actions[0].label }}
                   </button>
                   }
@@ -260,11 +251,27 @@
                 }
               </div>
               }
-
+            </div>
+          </ng-template>
+          <div class="expense-drawer-bottom d-block d-md-none d-lg-none">
+            <div class="expense-drawer">
+              <div class="exp-det">
+                <h6 class="text-dark">Expense Bill Details</h6>
+                <label>Total:</label> <span>0.00</span>
+              </div>
+              <div class="exp-view">
+                <button id="viewDetailsBtn" (click)="openExpenseSummarySheet(expenseSummarySheet)"> View Details <i
+                    class="fa fa-angle-up"></i></button>
+              </div>
             </div>
           </div>
-
-        </div>
+          
+          <!-- Sidebar: Only show on desktop/tablet -->
+          <div class="right-container-nrw rt-aside-fixed d-none d-md-block d-lg-block">
+            <ng-container *ngTemplateOutlet="expenseSummarySheet"></ng-container>
+          </div>
+          
+          </div>
       </div>
       <!-- all-data-wrapper -->
     </div>

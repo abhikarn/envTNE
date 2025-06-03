@@ -1,4 +1,4 @@
-import { Component, DestroyRef, ElementRef, HostListener, inject, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, ElementRef, HostListener, inject, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { CityAutocompleteParam, DataService, ExpenseRequestModel, ExpenseService, TravelService } from '../../../../../tne-api';
@@ -27,6 +27,7 @@ import { ApplicationMessageService } from '../../../shared/service/application-m
 import { environment } from '../../../../environment';
 import { BottomSheetService } from '../../../shared/service/bottom-sheet.service';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 
 @Component({
@@ -112,7 +113,8 @@ export class MainExpenseComponent {
     private router: Router,
     private utilsService: UtilsService,
     private applicationMessageService: ApplicationMessageService,
-    private bottomSheetService: BottomSheetService
+    private bottomSheetService: BottomSheetService,
+    private bottomSheet: MatBottomSheet
   ) {
   }
 
@@ -574,6 +576,9 @@ export class MainExpenseComponent {
   onAction(type: string) {
 
     if (type == "cancel") {
+      if (window.innerWidth <= 768) {
+        this.bottomSheet.dismiss();
+      }
       if (this.editMode) {
         this.router.navigate(['../expense/expense/dashboard']);
         return;
@@ -715,6 +720,18 @@ export class MainExpenseComponent {
           this.snackbarService.success('Failed To Update Record');
         }
       });
+  }
+
+  /**
+   * Opens the expense summary sidebar in a bottom sheet on mobile devices.
+   * @param templateRef Reference to the ng-template containing the sidebar content.
+   */
+  openExpenseSummarySheet(templateRef: TemplateRef<any>) {
+    if (window.innerWidth <= 768) {
+      this.bottomSheet.open(templateRef, {
+        panelClass: 'expense-bottom-sheet'
+      });
+    }
   }
 }
 
