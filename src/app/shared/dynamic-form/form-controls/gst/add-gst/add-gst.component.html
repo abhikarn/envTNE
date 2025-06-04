@@ -26,7 +26,7 @@
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
                                             <input [type]="field.type" [formControlName]="field.name"
                                                  (blur)="onBlur(field)"
-                                                (input)="onInput($event, field)"
+                                                (input)="onInput($event, field)" placeholder="{{field.placeholder}}"
                                                 class="form-control chm-forminput teGst gsttxt" />
                                             <span class="validate-error-message teGst"
                                                 *ngIf="gstDetailsForm.get(field.name)?.errors && gstDetailsForm.get(field.name)?.touched">
