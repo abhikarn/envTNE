@@ -235,7 +235,17 @@
           <!-- left-container-wider -->
           <!-- Bottom Sheet Template -->
           <ng-template #expenseSummarySheet>
-            <div class="row-wrapper common-block px-3 py-3">
+            <div class="row-wrapper common-block">
+                <div class="expense-drawer">
+                  <div class="exp-det">
+                    <h6 class="text-dark">Expense Bill Details</h6>
+                    <label>Total:</label> <span>{{ summaryComponent?.totalExpense || 0 | number:'1.2-2' }}</span>
+                  </div>
+                  <div class="exp-view">
+                    <button id="viewDetailsBtn" (click)="closeExpenseSummarySheet()"> Close Details <i
+                        class="fa fa-angle-down"></i></button>
+                  </div>
+                </div>
               <!-- Summary -->
               <app-summary [summaries]="expenseSummary" [expenseRequestData]="expenseRequestData"></app-summary>
               @if (expenseConfig?.justification) {
@@ -289,7 +299,7 @@
             <div class="expense-drawer">
               <div class="exp-det">
                 <h6 class="text-dark">Expense Bill Details</h6>
-                <label>Total:</label> <span>0.00</span>
+                <label>Total:</label> <span>{{ summaryComponent?.totalExpense || 0 | number:'1.2-2' }}</span>
               </div>
               <div class="exp-view">
                 <button id="viewDetailsBtn" (click)="openExpenseSummarySheet(expenseSummarySheet)"> View Details <i

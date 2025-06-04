@@ -10,6 +10,7 @@ export class SummaryComponent {
 
   @Input() summaries: any;
   @Input() expenseRequestData: any;
+  totalExpense: number = 0;
 
 
   toggleAccordion(activeId: string): void {
@@ -60,7 +61,10 @@ export class SummaryComponent {
 
     // Set totalExpense and amountPayable
     summary.items?.forEach((item: any) => {
-      if (item.name === 'totalExpense') item.value = totalExpense.toFixed(2);
+      if (item.name === 'totalExpense'){
+        item.value = totalExpense.toFixed(2);
+        this.totalExpense = totalExpense;
+      } 
       if (item.name === 'amountPayable') item.value = amountPayable.toFixed(2);
     });
   }

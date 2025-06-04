@@ -758,6 +758,11 @@ export class MainExpenseComponent {
     return found ? found.label : '';
   }
 
+  // For mobile: close the expense summary sheet
+  closeExpenseSummarySheet() {
+    this.bottomSheet.dismiss();
+  }
+
   // For *ngFor trackBy
   trackByReq(index: number, req: any) {
     return req.value;
