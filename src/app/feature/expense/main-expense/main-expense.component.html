@@ -25,18 +25,31 @@
                   @if (expenseConfig?.request) {
                   <div class="form-group chm-formgroup new-form-grp mb-0 no-hintspace">
                     <label>{{this.expenseConfig.request.label}} </label>
-                    <mat-form-field appearance="fill" class="w-100">
-                      <mat-select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest"
-                        name="ExpenseRequest" class="chm-formselect"
-                        (selectionChange)="onSelectTravelExpenseRequest($event)">
-                        <mat-option value="">{{expenseConfig.request.placeholder}}</mat-option>
-                        @for (req of travelRequests; track req) {
-                          <mat-option [value]="req.value">
-                            {{req.label}}
-                          </mat-option>
-                        }
-                      </mat-select>
-                    </mat-form-field>
+                    <!-- Desktop/Tablet: Regular mat-select in mat-form-field -->
+                    <ng-container *ngIf="!isMobile; else mobileSelect">
+                      <mat-form-field appearance="fill" class="w-100">
+                        <mat-select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest"
+                          name="ExpenseRequest" class="chm-formselect"
+                          (selectionChange)="onSelectTravelExpenseRequest($event)">
+                          <mat-option value="">{{expenseConfig.request.placeholder}}</mat-option>
+                          @for (req of travelRequests; track req) {
+                            <mat-option [value]="req.value">
+                              {{req.label}}
+                            </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </ng-container>
+                    <!-- Mobile: Open bottom sheet, input is outside mat-form-field -->
+                    <ng-template #mobileSelect>
+                      <div>
+                        <input class="form-control chm-formselect"
+                          [value]="getSelectedRequestLabel()"
+                          readonly
+                          (click)="openRequestBottomSheet(requestBottomSheet)" 
+                          placeholder="{{expenseConfig.request.placeholder}}" />
+                      </div>
+                    </ng-template>
                   </div>
                   }
                 </div>
@@ -299,3 +312,11 @@
 
 
 <!-- <pre>{{mainExpenseData | json}}</pre> -->
+<ng-template #requestBottomSheet>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let req of travelRequests; trackBy: trackByReq"
+      (click)="selectRequestFromSheet(req)">
+      {{req.label}}
+    </li>
+  </ul>
+</ng-template>

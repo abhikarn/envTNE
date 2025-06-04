@@ -57,6 +57,7 @@ export class MainExpenseComponent {
   assetPath = `${environment.assetsPath}`
   @ViewChild(SummaryComponent) summaryComponent: any;
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
+  @ViewChild('requestBottomSheet') requestBottomSheet!: TemplateRef<any>;
   travelRequests: any;
   travelRequestPreview: any;
   travelClassList: any;
@@ -96,6 +97,7 @@ export class MainExpenseComponent {
   travelDetails: any;
   transactionId: any;
   expenseConfirmMessage: any;
+  isMobile = false;
 
   constructor(
     private expenseService: ExpenseService,
@@ -116,6 +118,7 @@ export class MainExpenseComponent {
     private bottomSheetService: BottomSheetService,
     private bottomSheet: MatBottomSheet
   ) {
+    this.isMobile = window.innerWidth <= 768;
   }
 
   @HostListener('document:click', ['$event'])
@@ -732,6 +735,32 @@ export class MainExpenseComponent {
         panelClass: 'expense-bottom-sheet'
       });
     }
+  }
+
+  // For mobile: open bottom sheet for travel request selection
+  openRequestBottomSheet(templateRef: TemplateRef<any>) {
+    this.bottomSheet.open(templateRef, {
+      panelClass: 'expense-bottom-sheet'
+    });
+  }
+
+  // For mobile: select a travel request from bottom sheet
+  selectRequestFromSheet(req: any) {
+    this.expenseRequestForm.get(this.expenseConfig.request.name)?.setValue(req.value);
+    this.onSelectTravelExpenseRequest({ value: req.value } as any);
+    this.bottomSheet.dismiss();
+  }
+
+  // For mobile: get label of selected travel request
+  getSelectedRequestLabel(): string {
+    const value = this.expenseRequestForm.get(this.expenseConfig.request.name)?.value;
+    const found = this.travelRequests?.find((r: any) => r.value === value);
+    return found ? found.label : '';
+  }
+
+  // For *ngFor trackBy
+  trackByReq(index: number, req: any) {
+    return req.value;
   }
 }
 
