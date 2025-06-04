@@ -43,10 +43,29 @@
               </div>
               </div>
               } @else {
+
+
+
               <div class="row">
-                <span><span class="common-title fw-bold mb-3">Request</span> &nbsp;&nbsp;
-                  {{expenseRequestData?.travelRequestNumber}}</span>
+
+                <div class="col-md-3 col-sm-6 col-lg-2 col-6">
+                                                   <div class="trl-preview-wrapper mb-md-0">
+                                                      <div class="trl-readview-item pb-0">
+                                                         <div class="trl-req-head">
+                                                            <label>Request Number  </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span> {{expenseRequestData?.travelRequestNumber}}</span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+
+                
               </div>
+
+
               }
 
             </div>
@@ -90,18 +109,18 @@
 
                   
                   <ng-template mat-tab-label>
-                    <span [matBadge]="category.count" matBadgeOverlap="false">
+                    
                       <div id="expenseHead" >
                          <div class="menu-item"  > 
                        <div class="expense-list-head">
                                                        
                                                      
-                      <h6> {{category.label}}  <span>2</span> </h6>
+                      <h6> {{category.label}}  <span> {{category.count}} </span> </h6>
                      
                      </div>
                       </div>
                       </div>
-                    </span>
+                    
                   </ng-template>
               
 
