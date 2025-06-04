@@ -18,69 +18,99 @@
               @if (col.name === '__slNo') {
               {{ i + 1 }}
               } @else if (col.name === '__actions') {
-              <i class="fas fa-edit" (click)="edit(row, i+1)"></i>
-              <i class="fas fa-chevron-down" (click)="toggleRow(i)" [class.rotate]="expandedRowIndex === i"></i>
+              <button class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Edit"
+                type="submit" (click)="edit(row, i+1)">
+                <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M12.6589 3.20592C12.762 3.10284 12.9018 3.04492 13.0476 3.04492C13.1934 3.04492 13.3332 3.10284 13.4363 3.20592C13.5394 3.30901 13.5973 3.44883 13.5973 3.59462C13.5973 3.7404 13.5394 3.88022 13.4363 3.98331L8.29802 9.12158L7.26151 9.38071L7.52064 8.34419L12.6589 3.20592ZM13.0476 1.79492C12.5703 1.79492 12.1125 1.98453 11.775 2.32204L6.51435 7.58272C6.43425 7.66282 6.37742 7.76318 6.34995 7.87308L5.79619 10.0881C5.74295 10.3011 5.80535 10.5264 5.96059 10.6816C6.11583 10.8369 6.34113 10.8993 6.55412 10.846L8.76914 10.2923C8.87903 10.2648 8.9794 10.208 9.0595 10.1279L14.3202 4.86719C14.6577 4.52968 14.8473 4.07192 14.8473 3.59462C14.8473 3.11731 14.6577 2.65955 14.3202 2.32204C13.9827 1.98453 13.5249 1.79492 13.0476 1.79492ZM4.18759 2.96962C3.7281 2.96962 3.28743 3.15215 2.96252 3.47706C2.63761 3.80197 2.45508 4.24264 2.45508 4.70213V12.4547C2.45508 12.9142 2.63761 13.3549 2.96252 13.6798C3.28743 14.0047 3.7281 14.1872 4.18759 14.1872H11.9402C12.3997 14.1872 12.8403 14.0047 13.1652 13.6798C13.4902 13.3549 13.6727 12.9142 13.6727 12.4547V8.57843C13.6727 8.23325 13.3929 7.95343 13.0477 7.95343C12.7025 7.95343 12.4227 8.23325 12.4227 8.57843V12.4547C12.4227 12.5827 12.3719 12.7054 12.2814 12.7959C12.1909 12.8864 12.0681 12.9372 11.9402 12.9372H4.18759C4.05962 12.9372 3.93689 12.8864 3.8464 12.7959C3.75591 12.7054 3.70508 12.5827 3.70508 12.4547V4.70213C3.70508 4.57416 3.75591 4.45143 3.8464 4.36095C3.93689 4.27046 4.05962 4.21962 4.18759 4.21962H8.06388C8.40906 4.21962 8.68888 3.9398 8.68888 3.59462C8.68888 3.24944 8.40906 2.96962 8.06388 2.96962H4.18759Z"
+                    fill="#031842" />
+                </svg>
+              </button>
               @if (row?.IsViolation) {
-               <i class="fas fa-exclamation-triangle text-danger"
-                    [matTooltip]="row?.Violation" matTooltipPosition="above"></i>
+              <i class="fas fa-exclamation-triangle text-danger" [matTooltip]="row?.Violation"
+                matTooltipPosition="above"></i>
               }
-              <i class="fas fa-trash text-danger ms-2" title="Delete" (click)="confirmDelete(i)"></i>
+              <button data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Remove" type="submit"
+                (click)="confirmDelete(i)">
+                <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M6.66567 2.16596C6.79851 2.03312 6.97867 1.9585 7.16654 1.9585H9.8332C10.0211 1.9585 10.2012 2.03312 10.3341 2.16596C10.4669 2.2988 10.5415 2.47897 10.5415 2.66683V3.37515H6.4582V2.66683C6.4582 2.47897 6.53283 2.2988 6.66567 2.16596ZM5.2082 3.37515V2.66683C5.2082 2.14745 5.41453 1.64934 5.78179 1.28208C6.14904 0.91482 6.64715 0.708496 7.16654 0.708496H9.8332C10.3526 0.708496 10.8507 0.91482 11.218 1.28208C11.5852 1.64934 11.7915 2.14745 11.7915 2.66683V3.37515H14.5C14.8452 3.37515 15.125 3.65497 15.125 4.00015C15.125 4.34532 14.8452 4.62515 14.5 4.62515H13.7915V13.3335C13.7915 13.8529 13.5852 14.351 13.218 14.7182C12.8507 15.0855 12.3526 15.2918 11.8332 15.2918H5.16654C4.64715 15.2918 4.14904 15.0855 3.78179 14.7182C3.41453 14.351 3.2082 13.8529 3.2082 13.3335V4.62515H2.5C2.15482 4.62515 1.875 4.34532 1.875 4.00015C1.875 3.65497 2.15482 3.37515 2.5 3.37515H3.83333H5.2082ZM5.8332 4.62516H11.1665H12.5415V13.3335C12.5415 13.5214 12.4669 13.7015 12.3341 13.8344C12.2012 13.9672 12.0211 14.0418 11.8332 14.0418H5.16654C4.97867 14.0418 4.79851 13.9672 4.66567 13.8344C4.53283 13.7015 4.4582 13.5214 4.4582 13.3335V4.62516H5.8332ZM7.1668 6.7085C7.51197 6.7085 7.7918 6.98832 7.7918 7.3335V11.3335C7.7918 11.6787 7.51197 11.9585 7.1668 11.9585C6.82162 11.9585 6.5418 11.6787 6.5418 11.3335V7.3335C6.5418 6.98832 6.82162 6.7085 7.1668 6.7085ZM10.4582 7.3335C10.4582 6.98832 10.1784 6.7085 9.8332 6.7085C9.48803 6.7085 9.2082 6.98832 9.2082 7.3335V11.3335C9.2082 11.6787 9.48803 11.9585 9.8332 11.9585C10.1784 11.9585 10.4582 11.6787 10.4582 11.3335V7.3335Z"
+                    fill="#E53535" />
+                </svg>
+              </button>
+              <i class="fas fa-chevron-down" (click)="toggleRow(i)" [class.rotate]="expandedRowIndex === i"></i>
               } @else {
               {{ formatValue(col.name, row[col.name]) }}
               }
             </td>
             }
-
           </tr>
 
           @if (expandedRowIndex === i) {
           <tr>
             <td [attr.colspan]="tableColumns.length + 2">
-              <div class="expanded-content" [ngClass]="{ 'violation-bg': row?.IsViolation }">
-                @for (outField of tableOutFields; track outField.name) {
-                <p>
-                  <strong>{{ outField.label }}:</strong>
-                  {{ formatValue(outField.name, row[outField.name]) }}
-                </p>
-                }
-
-                @for (nestedTable of nestedTables; track nestedTable.dataKey) {
-                @if (row[nestedTable.dataKey]?.length > 0) {
-                <h6 class="mt-2">{{ nestedTable.dataKey | titlecase }} Details</h6>
-                <table class="gst-table">
-                  <thead>
-                    <tr>
-                      @for (col of nestedTable.columns; track col.name) {
-                      <th>{{ col.label }}</th>
+              <div class="tr-showblock" [ngClass]="{ 'violation-bg': row?.IsViolation }">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row">
+                      @for (outField of tableOutFields; track outField.name) {
+                      <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                        <div class="trl-preview-wrapper">
+                          <div class="trl-readview-item">
+                            <div class="trl-req-head" data-bs-toggle="tooltip" data-bs-placement="top"
+                              title="{{ outField.label }}"><label class="tooltip-text full-text"> {{ outField.label
+                                }}</label></div>
+                            <div class="trl-req-detail">
+                              <p class="tbl-le-cityGrade">{{ formatValue(outField.name, row[outField.name]) }}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       }
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @for (nestedRow of row[nestedTable.dataKey]; track nestedRow; let nestedRowIndex = $index) {
-                    <tr>
-                      @for (col of nestedTable.columns; track col.name) {
-                      <td>
-                        @if (col.name === '__slNo') {
-                        {{ nestedRowIndex + 1 }}
-                        } @else if (col.name === '__actions') {
-                        <a class="me-2" title="Preview" (click)="previewFile(nestedRow)">
-                          <i class="fa-solid fa-eye text-primary"></i>
-                        </a>
-                        <a class="me-2" title="Download" (click)="downloadFile(nestedRow)">
-                          <i class="fa-solid fa-download text-success"></i>
-                        </a>
-                        } @else {
-                        {{ formatValue(col.name, nestedRow[col.name]) }}
-                        }
-                      </td>
-                      }
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="row">
+                      @for (nestedTable of nestedTables; track nestedTable.dataKey) {
+                      @if (row[nestedTable.dataKey]?.length > 0) {
+                      <h6 class="mt-2">{{ nestedTable.dataKey | titlecase }} Details</h6>
+                      <table class="gst-table">
+                        <thead>
+                          <tr>
+                            @for (col of nestedTable.columns; track col.name) {
+                            <th>{{ col.label }}</th>
+                            }
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @for (nestedRow of row[nestedTable.dataKey]; track nestedRow; let nestedRowIndex = $index) {
+                          <tr>
+                            @for (col of nestedTable.columns; track col.name) {
+                            <td>
+                              @if (col.name === '__slNo') {
+                              {{ nestedRowIndex + 1 }}
+                              } @else if (col.name === '__actions') {
+                              <a class="me-2" title="Preview" (click)="previewFile(nestedRow)">
+                                <i class="fa-solid fa-eye text-primary"></i>
+                              </a>
+                              <a class="me-2" title="Download" (click)="downloadFile(nestedRow)">
+                                <i class="fa-solid fa-download text-success"></i>
+                              </a>
+                              } @else {
+                              {{ formatValue(col.name, nestedRow[col.name]) }}
+                              }
+                            </td>
+                            }
 
-                    </tr>
-                    }
-                  </tbody>
-                </table>
-                }
-                }
+                          </tr>
+                          }
+                        </tbody>
+                      </table>
+                      }
+                      }
+                    </div>
+                  </div>
+                </div>
               </div>
             </td>
           </tr>
