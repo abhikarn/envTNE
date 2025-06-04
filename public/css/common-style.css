@@ -878,7 +878,7 @@ ul.header-notify-hold {
     border-radius: 8px;
     }
     .color-table tr th {
-        background-color: #031842;
+        background-color: #031842!important;
         color: #fff;
         font-weight: 500;
         font-size: 11px;
@@ -1005,7 +1005,7 @@ ul.header-notify-hold {
     transform: inherit !important;
     }
     .common-tab {
-    background-color: #f7f7fa;
+    /* background-color: #f7f7fa; */
     border-radius: 10px;
     border: none;
     }
@@ -6673,7 +6673,7 @@ button.dropbtn {
         font-size: 13px;
         font-weight: 600;
         }
-        .time-frame-wrapper {
+        /* .time-frame-wrapper {
         width: 100%;
         max-width: 100%;
         margin: 10px auto 0 auto;
@@ -6761,7 +6761,7 @@ button.dropbtn {
         font-weight: 600;
         display: inline-flex;
         margin-right: 2px;
-        }
+        } */
         .sidebar-mini.sidebar-collapse .sidebar-toggle .fa {
         transform: rotate(0deg);
         transition: 0.3s ease all;

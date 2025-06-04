@@ -16,7 +16,7 @@
 
 	.common-tab .mat-mdc-tab-header {
 		background-color: #f7f7fa;
-		border-radius: 10px;
+		border-radius: 10px;margin-bottom: 12px;
 	}
 
 	.common-tab .mat-mdc-tab-label-container {
@@ -56,11 +56,18 @@
 		border-radius: 10px;
 	}
 
-	.mat-mdc-tab-body.mat-mdc-tab-body-active {
+	.common-tab  .mat-mdc-tab-body-wrapper {
+ 
+	background-color: #f7f7fa;
+	border-radius: 5px;
+}
 
-		z-index: inherit;
 
-	}
+  .mat-mdc-tab-body.mat-mdc-tab-body-active {
+	z-index: inherit;
+	flex-grow: inherit;
+	flex-basis: inherit;
+}
 
 	.no-hintspace .mat-mdc-form-field-bottom-align::before {
 		content: inherit;
@@ -113,6 +120,23 @@
 
 		border: none;
 	}
+
+.mat-mdc-form-field-textarea-control {
+	border: 1px solid #EBEBF0 !important;
+	margin-top: 5px !important;
+	font-size: 0.9rem;
+	letter-spacing: 0.2px;
+	border-radius: 6px;
+	padding: 6px;
+	background: rgb(255, 255, 255);
+	resize: none !important;
+	min-height: 59px !important;
+	height: 60px !important;
+}
+
+ 
+
+
 
 	@media (max-width: 1199px) {
 

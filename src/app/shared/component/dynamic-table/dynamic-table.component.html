@@ -2,11 +2,12 @@
   <h6 class="common-title fw-bold mb-3">{{ categoryConfig?.label}} List</h6>
   <div class="exp-clm-DTBL">
     <div class="table-responsive">
-      <table class="table color-table d-table table-cust tbl-sml no-sorting td-firstdata-center vioColor">
+        <table  class="table bor-light  mobile-card-view-normaltable responsive color-table d-table table-cust tbl-sml">
+
         <thead>
           <tr>
             @for (col of tableColumns; track col.name) {
-            <th>{{ col.label }}</th>
+            <th class="">{{ col.label }}</th>
             }
           </tr>
         </thead>

@@ -2,13 +2,25 @@
   <div class="page-title justify-content-between d-flex align-items-center">
     <h2 class="page-header">Expense</h2>
   </div>
-  <mat-form-field appearance="fill" class="custom-select self-select form-group mb-0 min-w-self chm-formgroup">
+ <div class="custom-select self-select form-group mb-0 min-w-self  chm-formgroup ">
+                           <div class="selected  form-control chm-formselect">Self </div>
+                           <div class="options">
+                              <div class="text-center  d-block d-lg-none d-md-none d-sm-block">  <span class="select-mobile-line"></span></div>
+                              <option  class="option"  value="182">XXXXX</option>
+                              <option  class="option"  value="183">YYYYY</option>
+                           </div>
+                        </div>  
+
+                        <!-- <div class="self-select">
+  <mat-form-field appearance="fill" class="custom-select  selected form-group mb-0 min-w-self chm-formgroup">
     <mat-label>Self</mat-label>
     <mat-select>
       <mat-option value="182">XXXXX</mat-option>
       <mat-option value="183">YYYYY</mat-option>
     </mat-select>
-  </mat-form-field>
+  </mat-form-field> 
+  </div> -->
+
 </div>
 <div [formGroup]="expenseRequestForm" class="app-main-wrapper">
   <div class="inn-main-hold">
@@ -218,6 +230,12 @@
                 </mat-tab-group>
               </div>
             </div>
+
+
+
+ 
+
+
           </div>
           <!-- left-container-wider -->
 
