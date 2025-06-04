@@ -66,6 +66,25 @@
             {
                 "name": "Travel Ticket",
                 "label": "Tickets Expense",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "select",
@@ -128,6 +147,7 @@
                         "value": "",
                         "dependentCases": [
                             {
+                                "isGeneral": true,
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
@@ -372,6 +392,7 @@
                                 "type": "text",
                                 "showInUI": true,
                                 "required": true,
+                                "value": null,
                                 "validations": [
                                     {
                                         "type": "required",
@@ -392,6 +413,7 @@
                                 "type": "text",
                                 "showInUI": true,
                                 "required": true,
+                                "value": null,
                                 "validations": [
                                     {
                                         "type": "required",
@@ -405,7 +427,9 @@
                                 "label": "Amount",
                                 "placeholder": "AMOUNT",
                                 "type": "text",
+                                "dataType": "numeric",
                                 "showInUI": true,
+                                "value": null,
                                 "autoFormat": {
                                     "patterns": [
                                         "[^0-9.]",
@@ -434,7 +458,9 @@
                                 "label": "SGST",
                                 "placeholder": "SGST",
                                 "type": "text",
+                                "dataType": "numeric",
                                 "showInUI": true,
+                                "value": null,
                                 "autoFormat": {
                                     "patterns": [
                                         "[^0-9.]",
@@ -452,7 +478,9 @@
                                 "label": "CGST",
                                 "placeholder": "CGST",
                                 "type": "text",
+                                "dataType": "numeric",
                                 "showInUI": true,
+                                "value": null,
                                 "autoFormat": {
                                     "patterns": [
                                         "[^0-9.]",
@@ -470,7 +498,9 @@
                                 "label": "IGST",
                                 "placeholder": "IGST",
                                 "type": "text",
+                                "dataType": "numeric",
                                 "showInUI": true,
+                                "value": null,
                                 "autoFormat": {
                                     "patterns": [
                                         "[^0-9.]",
@@ -488,7 +518,9 @@
                                 "label": "UGST",
                                 "placeholder": "UGST",
                                 "type": "text",
+                                "dataType": "numeric",
                                 "showInUI": true,
+                                "value": null,
                                 "autoFormat": {
                                     "patterns": [
                                         "[^0-9.]",
@@ -545,6 +577,7 @@
                             ]
                         },
                         "disable": false,
+                        "oCRRequired":true,
                         "order": 11
                     },
                     {

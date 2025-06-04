@@ -16,7 +16,6 @@ import { ServiceRegistryService } from '../service/service-registry.service';
 import { ConfirmDialogService } from '../service/confirm-dialog.service';
 import { GlobalConfigService } from '../service/global-config.service';
 
-
 @Component({
   selector: 'app-dynamic-form',
   standalone: true,
@@ -35,6 +34,7 @@ import { GlobalConfigService } from '../service/global-config.service';
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
 })
+
 export class DynamicFormComponent implements OnInit, OnChanges {
   @ViewChild(GstComponent) gstComponentRef!: GstComponent;
   @Input() moduleData: any;
@@ -195,6 +195,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+
     this.formControls = []; // Reset to avoid duplication
     this.form = new FormGroup({});
     this.formConfig.forEach(config => {
@@ -252,7 +253,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.updateConditionalValidators();
   }
 
-
   /**
    * Handles dynamic event execution
    * @param eventType - Event type (e.g., change, input)
@@ -270,14 +270,59 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
+    debugger;
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-
+    // Only check duplicate if OCRRequired is true for this category
+    if (this.category.OCRRequired) {
+      const isDuplicate = await this.checkOCRDuplicate();
+      if (isDuplicate) {
+        alert('Duplicate OCR entry detected. Please check your Bill Number, Date, Amount, or Vendor Name.');
+        return;
+      }
+    }
     this.validatePolicyViolation();
+  }
 
+  /**
+   * Calls the OCR duplicate check API and returns true if duplicate found, false otherwise.
+   * Uses duplicateCheckFields from category config.
+   */
+  async checkOCRDuplicate(): Promise<boolean> {
+    debugger;
+    // Use duplicateCheckFields from category config
+    const duplicateFields = this.category.duplicateCheckFields || [];
+    const payload: any = {};
+
+    // Collect required fields for duplicate check
+    for (const field of duplicateFields) {
+      const value = this.form.get(field.name)?.value;
+      if (field.isRequired) {
+        // If any required field is missing, skip duplicate check
+       payload[field.name] = value;
+      }      
+    }
+
+    // Find the service and method for OCR duplicate check
+    const ocrService = this.serviceRegistry.getService('NewExpenseService');
+    if (!ocrService || typeof ocrService['OCRValidateCheck'] !== 'function') {
+      // Service or method not found, skip check
+      return false;
+    }
+
+    try {
+      const response = await ocrService['OCRValidateCheck'](payload).toPromise();
+      // Assuming API returns { responseValue: "Exist" } for duplicate
+      if (response && response.responseValue === "Exist") {
+        return true;
+      }
+      return false;
+    } catch (err) {
+      return false;
+    }
   }
 
   setAutoCompleteFields() {
@@ -331,6 +376,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   addDataToDynamicTable() {
+    debugger;
     let tableData = this.form;
     // Preparing Data for Dynamic table
     this.formControls.forEach(control => {
@@ -358,6 +404,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onEditRow(rowData: any) {
+
     if (rowData.row?.gst?.length > 0) {
       this.gstComponentRef.setCompanyGSTFlag(true);
       this.gstComponentRef.gstData = rowData.row?.gst;
@@ -627,4 +674,17 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.updateData.emit({ name: this.category.name, data: this.tableData }); // Emit to parent if needed
   }
 
+  onOcrCompleted(ocrData: any) {
+
+    // Set IsBillRaisedInCompanyGST to true
+    if (this.gstComponentRef && this.gstComponentRef.companyGSTForm) {
+      if (ocrData.IsGSTApplicable) {
+        this.gstComponentRef.companyGSTForm.get('IsBillRaisedInCompanyGST')?.setValue(true);
+      }
+    }
+    // Set gstDetails in AddGstComponent via GstComponent
+    if (this.gstComponentRef && ocrData?.gst) {
+      this.gstComponentRef.setGstDetailsFromOcr(ocrData.gst);
+    }
+  }
 }

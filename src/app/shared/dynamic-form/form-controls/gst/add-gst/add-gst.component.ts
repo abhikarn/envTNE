@@ -122,6 +122,7 @@ export class AddGstComponent {
   }
 
   addGstRow(): void {
+
     if (this.gstDetailsForm.invalid) {
       this.gstDetailsForm.markAllAsTouched();
       return;
@@ -194,4 +195,19 @@ export class AddGstComponent {
     }
   }
 
+  setGstDetails(gstDetails: any) {
+    this.fields.forEach((field: any) => {
+      if (field?.dataType == 'numeric' && gstDetails.hasOwnProperty(field.name)) {
+        if (gstDetails[field.name] === null || gstDetails[field.name] === undefined) {
+          gstDetails[field.name] = 0;
+        }
+        const precision = field.autoFormat?.decimalPrecision || this.globalConfig.getDecimalPrecision();
+        gstDetails[field.name] = parseFloat(gstDetails[field.name]).toFixed(precision);
+      }
+    });
+    this.gstDetails = [];
+    this.gstDetails.push(gstDetails);
+    this.control.setValue(this.gstDetails);
+    // this.initGstDetailsForm();
+  }
 }
