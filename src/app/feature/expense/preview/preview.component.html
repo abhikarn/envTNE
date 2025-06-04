@@ -7,26 +7,33 @@
          <div class="all-data-wrapper">
             <div class="global-container-hold">
                <div class="left-container-wider scroll-left-align mar-tmd3">
-                  <div class="preview-child-section mb-3">
-                     <div class="preview-head-view">
-                        <div *ngFor="let item of requestHeaderDetails"
-                           class="preview-head-child d-flex align-items-start justify-content-between">
-                           <span class="phv-icon me-2"><i class="fa-solid" [ngClass]="item.iconClass"></i></span>
-                           <div>
-                              <label class="name-label-head">{{ item.label }}:</label><br>
-                              <ng-container *ngIf="item.isLink; else normalText">
-                                 <span class="name-label-det">
-                                    <a href="#" class="phv-link" (click)="openDetailsDialog(4)" data-bs-toggle="modal"
-                                       data-bs-target="#req-all-details">{{ item.value }}</a>
-                                 </span>
-                              </ng-container>
-                              <ng-template #normalText>
-                                 <span class="name-label-det"
-                                    [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''">
-                                    {{ item.value }}
-                                 </span>
-                              </ng-template>
+                  <div class="common-block  mb-3">
+                     <div class="common-block-mobile">
+                        <div class="row">
+                           @for (item of requestHeaderDetails; track $index) {
+                           <div class="col-md-3 col-sm-6 col-lg-2 col-6">
+                              <div class="trl-preview-wrapper mb-md-0">
+                                 <div class="trl-readview-item pb-0">
+                                    <div class="trl-req-head">
+                                       <label>{{ item.label }} </label>
+                                    </div>
+                                    <div class="trl-req-detail">
+                                       <ng-container *ngIf="item.isLink; else normalText">
+                                          <span>
+                                             <a href="#" class="phv-link" (click)="openDetailsDialog(4)" data-bs-toggle="modal"
+                                                data-bs-target="#req-all-details">{{ item.value }}</a>
+                                          </span>
+                                       </ng-container>
+                                       <ng-template #normalText>
+                                          <span [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''">
+                                             {{ item.value }}
+                                          </span>
+                                       </ng-template>
+                                    </div>
+                                 </div>
+                              </div>
                            </div>
+                           }
                         </div>
                      </div>
                   </div>
