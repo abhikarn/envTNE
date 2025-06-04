@@ -98,6 +98,7 @@ export class MainExpenseComponent {
   transactionId: any;
   expenseConfirmMessage: any;
   isMobile = false;
+  selectedExtraCategory: any = null;
 
   constructor(
     private expenseService: ExpenseService,
@@ -761,6 +762,14 @@ export class MainExpenseComponent {
   // For mobile: close the expense summary sheet
   closeExpenseSummarySheet() {
     this.bottomSheet.dismiss();
+  }
+
+  // For extra category selection
+  onExtraCategorySelect(category: any) {
+    this.selectedExtraCategory = category;
+    // Optionally, update existingExpenseRequestData if needed for the dynamic form
+    this.existingExpenseRequestData = this.responseData?.dynamicExpenseDetailModels
+      ?.find((t: any) => t.name === category?.name)?.data || [];
   }
 
   // For *ngFor trackBy

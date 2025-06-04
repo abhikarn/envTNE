@@ -116,52 +116,122 @@
             </div>
             <!-- expense category -->
             <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
-              <mat-tab-group class="expense-tab-sec" fitInkBarToContent (selectedTabChange)="onTabChange($event)">
-                @for (category of categories; track category) {
-                <mat-tab>
-
-                  
-                  <ng-template mat-tab-label>
-                    
-                      <div id="expenseHead" >
-                         <div class="menu-item"  > 
-                       <div class="expense-list-head">
-                                                       
-                                                     
-                      <h6> {{category.label}}  <span> {{category.count}} </span> </h6>
-                     
-                     </div>
-                      </div>
-                      </div>
-                    
-                  </ng-template>
-              
-
- 
-                  
-                  <ng-template matTabContent>
-                    <div class="expense-item-hold">
-                      <div class="other-sectionaa hidehtgnm" style="display: block;">
-                        <div class="common-block mb-3">
-                          <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
-                           <div class="common-block-mobile">
-                          <app-dynamic-form [moduleData]="travelRequestPreview"
-                            [existingData]="existingExpenseRequestData" [category]="category"
-                            [formConfig]="category.formControls" [eventHandler]="this"
-                            (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
-                            (updateData)="updateCategoryData($event)"
-                            [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
-                            [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
-                          </app-dynamic-form>
+              <!-- Desktop/Tablet: Show tab grouping logic -->
+              <ng-container *ngIf="!isMobile; else mobileTabs">
+                <mat-tab-group class="expense-tab-sec" fitInkBarToContent (selectedTabChange)="onTabChange($event)">
+                  <!-- Show first 5 categories as tabs -->
+                  @for (category of categories.slice(0, 5); track category) {
+                  <mat-tab>
+                    <ng-template mat-tab-label>
+                      <div id="expenseHead">
+                        <div class="menu-item">
+                          <div class="expense-list-head">
+                            <h6> {{category.label}}  <span> {{category.count}} </span> </h6>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </ng-template>
-                </mat-tab>
-                }
-              </mat-tab-group>
-
+                    </ng-template>
+                    <ng-template matTabContent>
+                      <div class="expense-item-hold">
+                        <div class="other-sectionaa hidehtgnm" style="display: block;">
+                          <div class="common-block mb-3">
+                            <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
+                             <div class="common-block-mobile">
+                            <app-dynamic-form [moduleData]="travelRequestPreview"
+                              [existingData]="existingExpenseRequestData" [category]="category"
+                              [formConfig]="category.formControls" [eventHandler]="this"
+                              (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
+                              (updateData)="updateCategoryData($event)"
+                              [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
+                              [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
+                            </app-dynamic-form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </mat-tab>
+                  }
+                  <!-- If more than 5 categories, show the rest in a mat-select as a single tab -->
+                  @if (categories.length > 5) {
+                  <mat-tab>
+                    <ng-template mat-tab-label>
+                      <mat-form-field appearance="fill">
+                        <mat-select placeholder="More"
+                          [value]="selectedExtraCategory"
+                          (selectionChange)="onExtraCategorySelect($event.value)">
+                          <mat-option *ngFor="let cat of categories.slice(5)" [value]="cat">
+                            {{cat.label}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </ng-template>
+                    <ng-template matTabContent>
+                      <!-- Show the selected extra category's content -->
+                      <ng-container *ngIf="selectedExtraCategory">
+                        <div class="expense-item-hold">
+                          <div class="other-sectionaa hidehtgnm" style="display: block;">
+                            <div class="common-block mb-3">
+                              <h6 class="common-title fw-bold mb-3">{{selectedExtraCategory.label}}</h6>
+                              <div class="common-block-mobile">
+                                <app-dynamic-form [moduleData]="travelRequestPreview"
+                                  [existingData]="existingExpenseRequestData"
+                                  [category]="selectedExtraCategory"
+                                  [formConfig]="selectedExtraCategory.formControls"
+                                  [eventHandler]="this"
+                                  (emitFormData)="getFormData($event)"
+                                  (emitTextData)="getTextData($event)"
+                                  (updateData)="updateCategoryData($event)"
+                                  [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
+                                  [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
+                                </app-dynamic-form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </ng-template>
+                  </mat-tab>
+                  }
+                </mat-tab-group>
+              </ng-container>
+              <!-- Mobile: Show all categories as tabs as before -->
+              <ng-template #mobileTabs>
+                <mat-tab-group class="expense-tab-sec" fitInkBarToContent (selectedTabChange)="onTabChange($event)">
+                  @for (category of categories; track category) {
+                  <mat-tab>
+                    <ng-template mat-tab-label>
+                      <div id="expenseHead">
+                        <div class="menu-item">
+                          <div class="expense-list-head">
+                            <h6> {{category.label}}  <span> {{category.count}} </span> </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                    <ng-template matTabContent>
+                      <div class="expense-item-hold">
+                        <div class="other-sectionaa hidehtgnm" style="display: block;">
+                          <div class="common-block mb-3">
+                            <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
+                             <div class="common-block-mobile">
+                            <app-dynamic-form [moduleData]="travelRequestPreview"
+                              [existingData]="existingExpenseRequestData" [category]="category"
+                              [formConfig]="category.formControls" [eventHandler]="this"
+                              (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
+                              (updateData)="updateCategoryData($event)"
+                              [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
+                              [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
+                            </app-dynamic-form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </mat-tab>
+                  }
+                </mat-tab-group>
+              </ng-template>
             </div>
             <!-- Other Details -->
             <div class="row ">
