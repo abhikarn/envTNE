@@ -16,7 +16,8 @@
 
 	.common-tab .mat-mdc-tab-header {
 		background-color: #f7f7fa;
-		border-radius: 10px;margin-bottom: 12px;
+		border-radius: 10px;
+		margin-bottom: 12px;
 	}
 
 	.common-tab .mat-mdc-tab-label-container {
@@ -56,18 +57,18 @@
 		border-radius: 10px;
 	}
 
-	.common-tab  .mat-mdc-tab-body-wrapper {
- 
-	background-color: #f7f7fa;
-	border-radius: 5px;
-}
+	.common-tab .mat-mdc-tab-body-wrapper {
+
+		background-color: #f7f7fa;
+		border-radius: 5px;
+	}
 
 
-  .mat-mdc-tab-body.mat-mdc-tab-body-active {
-	z-index: inherit;
-	flex-grow: inherit;
-	flex-basis: inherit;
-}
+	.mat-mdc-tab-body.mat-mdc-tab-body-active {
+		z-index: inherit;
+		flex-grow: inherit;
+		flex-basis: inherit;
+	}
 
 	.no-hintspace .mat-mdc-form-field-bottom-align::before {
 		content: inherit;
@@ -121,23 +122,44 @@
 		border: none;
 	}
 
-.mat-mdc-form-field-textarea-control {
-	border: 1px solid #EBEBF0 !important;
-	margin-top: 5px !important;
-	font-size: 0.9rem;
-	letter-spacing: 0.2px;
-	border-radius: 6px;
-	padding: 6px;
-	background: rgb(255, 255, 255);
-	resize: none !important;
-	min-height: 59px !important;
-	height: 60px !important;
-}
+	.mat-mdc-form-field-textarea-control {
+		border: 1px solid #EBEBF0 !important;
+		margin-top: 5px !important;
+		font-size: 0.9rem;
+		letter-spacing: 0.2px;
+		border-radius: 6px;
+		padding: 6px;
+		background: rgb(255, 255, 255);
+		resize: none !important;
+		min-height: 59px !important;
+		height: 60px !important;
+	}
+
+	.more-item {
+		border: 1px solid #e4e4eb;
+		border-radius: 5px;
+		padding: 0px 4px;
+		font-size: 11px !important;
+		width: 200px;
+	}
+
+	.more-item .mat-mdc-select {
+		font-size: 11px !important;
+	}
+
+	#expenseCategories .mat-mdc-tab-header .mat-mdc-form-field-subscript-wrapper.mat-mdc-form-field-bottom-align {
+		display: none;
+	}
+
+
+	.more-item .mdc-line-ripple::before,
+	.more-item .mdc-line-ripple::after {
+
+		content: inherit;
+		display: none;
+	}
 
  
-
-
-
 	@media (max-width: 1199px) {
 
 		#expenseCategories .mat-mdc-tab-header {
@@ -169,11 +191,11 @@
 	}
 
 	@media (max-width: 575px) {
-  #expenseCategories .mat-mdc-tab-header {
-	width: 340px !important;
-	overflow-x: scroll;
-}
+		#expenseCategories .mat-mdc-tab-header {
+			width: 340px !important;
+			overflow-x: scroll;
+		}
 
-}
+	}
 
 }

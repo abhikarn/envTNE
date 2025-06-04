@@ -75,7 +75,9 @@
 }
 
 @media (max-width: 767px) {
-
+.left-container-wider.scroll-left-align.mar-tmd3 {
+	padding-bottom: 80px !important;
+}
 .parent.tbl-le-snNo {
 	margin-bottom: 0;
 	border-bottom-left-radius: 0;
@@ -150,13 +152,15 @@
 	position: relative;
 	top: -2px;
 } 
-    .expense-drawer-bottom {
-        position: fixed;
-        bottom: -440px;
-        left: 0;
-        right: 0;
-        padding-bottom: 0;height: 565px;
-    }.expense-drawer-bottom.open {
+.expense-drawer-bottom {
+	position: fixed;
+	bottom: -440px;
+	left: 0;
+	right: 0;
+	padding-bottom: 0;
+	height: 565px;
+	z-index: 9;
+}.expense-drawer-bottom.open {
 	bottom: 0;
 	z-index: 99999;
 }
@@ -170,6 +174,7 @@
 	justify-content: space-between;
 	display: none;
 	box-shadow: 0px -11px 13px -6px rgba(24, 31, 68, 0.16);
+	margin-bottom: 10px;
 }.exp-det h6 {
 	font-weight: bold;
 	font-size: 12px;
@@ -310,7 +315,7 @@
     }
  
     .common-block-right { height: auto;}
-    .bottom-buttons { position: relative; z-index: 1;background-color: transparent;bottom: 0;left: 0; width: 100%;right: 0; padding: 10px 0 0; box-shadow: none;transition: inherit;}
+    .bottom-buttons { position: relative; z-index: 1;background-color: transparent;bottom: 0;left: 0; width: 100%;right: 0; padding: 10px ; box-shadow: none;transition: inherit;}
     .bottom-buttons .combine-btn button { width: 50%;margin-bottom: 5px;}
     .bottom-buttons .btn-light { width: 100%; }
     .app-main-wrapper {position: relative;}

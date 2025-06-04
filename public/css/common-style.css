@@ -2003,6 +2003,8 @@ ul.header-notify-hold {
 
 /* Input forms */
 
+
+
 .form-group.chm-formgroup {
 	position: relative;
 	margin-bottom: 0px;
@@ -2058,7 +2060,8 @@ ul.header-notify-hold {
     }
 
 /* =============== Modal style =========== */
- 
+
+	
 .details-view-section {
     display: block;
     width: 100%;
@@ -9588,10 +9591,11 @@ button.dropbtn {
         margin-right: 15px;
         top: 102px;
         }.right-container-nrw .common-block {
-            height: 100vh;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-        }
+	height: 100vh;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	padding: 13px 13px 13px;
+}
         body.sidebar-mini.sidebar-collapse .left-container-wider {
         min-width: 75% !important;
         width: 75% !important;

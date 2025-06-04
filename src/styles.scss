@@ -66,3 +66,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-bottom-sheet-container {
   padding: 0 !important;
 }
+
+.mat-bottom-sheet-container {
+	padding: 0 !important;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+}
+.mat-bottom-sheet-container .accordion {
+	padding: 0 10px;
+}.mat-bottom-sheet-container .form-group.chm-formgroup {
+	padding: 0 10px;
+}
+.bottom-sheet-select .list-group-item {
+	border-bottom: 1px solid #eeeeee;
+}.bottom-sheet-select .list-group-item:hover {
+	background-color: #f0f0f0;
+	cursor: pointer;
+}
