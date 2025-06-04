@@ -367,6 +367,8 @@
                             },
                             {
                                 "name": "GstIn",
+                                "label": "GSTIN",
+                                "placeholder": "GSTIN",
                                 "type": "text",
                                 "showInUI": true,
                                 "required": true,
@@ -385,6 +387,8 @@
                             },
                             {
                                 "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "placeholder": "Invoice Number",
                                 "type": "text",
                                 "showInUI": true,
                                 "required": true,
@@ -398,6 +402,8 @@
                             },
                             {
                                 "name": "Amount",
+                                "label": "Amount",
+                                "placeholder": "AMOUNT",
                                 "type": "text",
                                 "showInUI": true,
                                 "autoFormat": {
@@ -425,6 +431,8 @@
                             },
                             {
                                 "name": "SGST",
+                                "label": "SGST",
+                                "placeholder": "SGST",
                                 "type": "text",
                                 "showInUI": true,
                                 "autoFormat": {
@@ -441,6 +449,8 @@
                             },
                             {
                                 "name": "CGST",
+                                "label": "CGST",
+                                "placeholder": "CGST",
                                 "type": "text",
                                 "showInUI": true,
                                 "autoFormat": {
@@ -457,6 +467,8 @@
                             },
                             {
                                 "name": "IGST",
+                                "label": "IGST",
+                                "placeholder": "IGST",
                                 "type": "text",
                                 "showInUI": true,
                                 "autoFormat": {
@@ -473,6 +485,8 @@
                             },
                             {
                                 "name": "UGST",
+                                "label": "UGST",
+                                "placeholder": "UGST",
                                 "type": "text",
                                 "showInUI": true,
                                 "autoFormat": {

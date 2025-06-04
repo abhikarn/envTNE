@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, TemplateRef, Inject, Optional, AfterViewInit, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../form-control.interface';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,11 +8,14 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 import { Subscription } from 'rxjs';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'lib-select-input',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatSelectModule,
@@ -24,24 +27,37 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./select-input.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SelectInputComponent {
+export class SelectInputComponent implements AfterViewInit {
   @Input() control: FormControl = new FormControl('');
   @Input() controlConfig: IFormControl = { name: '' };
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   disable: boolean = false;
   apiSubscription?: Subscription;
+  isMobile = false;
+  @Input() bottomSheet?: MatBottomSheet;
+
+  @ViewChild('requestBottomSheet', { static: true }) requestBottomSheetTpl!: TemplateRef<any>;
 
   trackByFn(index: number, item: any): string | number {
-    return item?.Key ?? index;
+    return item?.Key ?? item?.value ?? index;
   }
 
   constructor(
-    private serviceRegistry: ServiceRegistryService
+    private serviceRegistry: ServiceRegistryService,
+    @Optional() private _bottomSheet?: MatBottomSheet
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
 
+  ngAfterViewInit() {
+    // Assign bottomSheet if not provided via @Input
+    if (!this.bottomSheet && this._bottomSheet) {
+      this.bottomSheet = this._bottomSheet;
+    }
+  }
+
   ngOnInit() {
+    this.isMobile = window.innerWidth <= 768;
     this.loadOptions();
     if (this.controlConfig.defaultValue) {
       this.control.setValue(this.controlConfig.defaultValue.Id);
@@ -124,4 +140,40 @@ export class SelectInputComponent {
     }
   }
 
+  // Only open bottom sheet on mobile, and prevent mat-select from opening
+  onMatSelectClick(event: Event) {
+    if (this.isMobile) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.openRequestBottomSheet();
+      // Prevent mat-select from opening
+      return false;
+    }
+    // For desktop, allow default behavior
+    return true;
+  }
+
+  openRequestBottomSheet() {
+    // Use the ViewChild template if @Input is not provided
+    const tpl = this.requestBottomSheetTpl;
+    if (this.bottomSheet && tpl) {
+      this.bottomSheet.open(tpl, {
+        panelClass: 'expense-bottom-sheet'
+      });
+    }
+  }
+
+  selectRequestFromSheet(option: any) {
+    this.control.setValue(option.value);
+    this.onSelectionChange({ value: option.value });
+    if (this.bottomSheet) {
+      this.bottomSheet.dismiss();
+    }
+  }
+
+  getSelectedRequestLabel(): string {
+    const value = this.control.value;
+    const found = this.controlConfig.options?.find((r: any) => r.value === value);
+    return found ? found.label : '';
+  }
 }

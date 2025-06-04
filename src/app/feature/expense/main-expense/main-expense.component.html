@@ -37,18 +37,31 @@
                   @if (expenseConfig?.request) {
                   <div class="form-group chm-formgroup new-form-grp mb-0 no-hintspace">
                     <label>{{this.expenseConfig.request.label}} </label>
-                    <mat-form-field appearance="fill" class="w-100">
-                      <mat-select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest"
-                        name="ExpenseRequest" class="chm-formselect"
-                        (selectionChange)="onSelectTravelExpenseRequest($event)">
-                        <mat-option value="">{{expenseConfig.request.placeholder}}</mat-option>
-                        @for (req of travelRequests; track req) {
-                          <mat-option [value]="req.value">
-                            {{req.label}}
-                          </mat-option>
-                        }
-                      </mat-select>
-                    </mat-form-field>
+                    <!-- Desktop/Tablet: Regular mat-select in mat-form-field -->
+                    <ng-container *ngIf="!isMobile; else mobileSelect">
+                      <mat-form-field appearance="fill" class="w-100">
+                        <mat-select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest"
+                          name="ExpenseRequest" class="chm-formselect"
+                          (selectionChange)="onSelectTravelExpenseRequest($event)">
+                          <mat-option value="">{{expenseConfig.request.placeholder}}</mat-option>
+                          @for (req of travelRequests; track req) {
+                            <mat-option [value]="req.value">
+                              {{req.label}}
+                            </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </ng-container>
+                    <!-- Mobile: Open bottom sheet, input is outside mat-form-field -->
+                    <ng-template #mobileSelect>
+                      <div>
+                        <input class="form-control chm-formselect"
+                          [value]="getSelectedRequestLabel()"
+                          readonly
+                          (click)="openRequestBottomSheet(requestBottomSheet)" 
+                          placeholder="{{expenseConfig.request.placeholder}}" />
+                      </div>
+                    </ng-template>
                   </div>
                   }
                 </div>
@@ -115,52 +128,122 @@
             </div>
             <!-- expense category -->
             <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
-              <mat-tab-group class="expense-tab-sec" fitInkBarToContent (selectedTabChange)="onTabChange($event)">
-                @for (category of categories; track category) {
-                <mat-tab>
-
-                  
-                  <ng-template mat-tab-label>
-                    
-                      <div id="expenseHead" >
-                         <div class="menu-item"  > 
-                       <div class="expense-list-head">
-                                                       
-                                                     
-                      <h6> {{category.label}}  <span> {{category.count}} </span> </h6>
-                     
-                     </div>
-                      </div>
-                      </div>
-                    
-                  </ng-template>
-              
-
- 
-                  
-                  <ng-template matTabContent>
-                    <div class="expense-item-hold">
-                      <div class="other-sectionaa hidehtgnm" style="display: block;">
-                        <div class="common-block mb-3">
-                          <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
-                           <div class="common-block-mobile">
-                          <app-dynamic-form [moduleData]="travelRequestPreview"
-                            [existingData]="existingExpenseRequestData" [category]="category"
-                            [formConfig]="category.formControls" [eventHandler]="this"
-                            (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
-                            (updateData)="updateCategoryData($event)"
-                            [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
-                            [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
-                          </app-dynamic-form>
+              <!-- Desktop/Tablet: Show tab grouping logic -->
+              <ng-container *ngIf="!isMobile; else mobileTabs">
+                <mat-tab-group class="expense-tab-sec" fitInkBarToContent (selectedTabChange)="onTabChange($event)">
+                  <!-- Show first 5 categories as tabs -->
+                  @for (category of categories.slice(0, 5); track category) {
+                  <mat-tab>
+                    <ng-template mat-tab-label>
+                      <div id="expenseHead">
+                        <div class="menu-item">
+                          <div class="expense-list-head">
+                            <h6> {{category.label}}  <span> {{category.count}} </span> </h6>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </ng-template>
-                </mat-tab>
-                }
-              </mat-tab-group>
-
+                    </ng-template>
+                    <ng-template matTabContent>
+                      <div class="expense-item-hold">
+                        <div class="other-sectionaa hidehtgnm" style="display: block;">
+                          <div class="common-block mb-3">
+                            <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
+                             <div class="common-block-mobile">
+                            <app-dynamic-form [moduleData]="travelRequestPreview"
+                              [existingData]="existingExpenseRequestData" [category]="category"
+                              [formConfig]="category.formControls" [eventHandler]="this"
+                              (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
+                              (updateData)="updateCategoryData($event)"
+                              [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
+                              [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
+                            </app-dynamic-form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </mat-tab>
+                  }
+                  <!-- If more than 5 categories, show the rest in a mat-select as a single tab -->
+                  @if (categories.length > 5) {
+                  <mat-tab>
+                    <ng-template mat-tab-label>
+                      <mat-form-field appearance="fill">
+                        <mat-select placeholder="More"
+                          [value]="selectedExtraCategory"
+                          (selectionChange)="onExtraCategorySelect($event.value)">
+                          <mat-option *ngFor="let cat of categories.slice(5)" [value]="cat">
+                            {{cat.label}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </ng-template>
+                    <ng-template matTabContent>
+                      <!-- Show the selected extra category's content -->
+                      <ng-container *ngIf="selectedExtraCategory">
+                        <div class="expense-item-hold">
+                          <div class="other-sectionaa hidehtgnm" style="display: block;">
+                            <div class="common-block mb-3">
+                              <h6 class="common-title fw-bold mb-3">{{selectedExtraCategory.label}}</h6>
+                              <div class="common-block-mobile">
+                                <app-dynamic-form [moduleData]="travelRequestPreview"
+                                  [existingData]="existingExpenseRequestData"
+                                  [category]="selectedExtraCategory"
+                                  [formConfig]="selectedExtraCategory.formControls"
+                                  [eventHandler]="this"
+                                  (emitFormData)="getFormData($event)"
+                                  (emitTextData)="getTextData($event)"
+                                  (updateData)="updateCategoryData($event)"
+                                  [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
+                                  [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
+                                </app-dynamic-form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </ng-template>
+                  </mat-tab>
+                  }
+                </mat-tab-group>
+              </ng-container>
+              <!-- Mobile: Show all categories as tabs as before -->
+              <ng-template #mobileTabs>
+                <mat-tab-group class="expense-tab-sec" fitInkBarToContent (selectedTabChange)="onTabChange($event)">
+                  @for (category of categories; track category) {
+                  <mat-tab>
+                    <ng-template mat-tab-label>
+                      <div id="expenseHead">
+                        <div class="menu-item">
+                          <div class="expense-list-head">
+                            <h6> {{category.label}}  <span> {{category.count}} </span> </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                    <ng-template matTabContent>
+                      <div class="expense-item-hold">
+                        <div class="other-sectionaa hidehtgnm" style="display: block;">
+                          <div class="common-block mb-3">
+                            <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
+                             <div class="common-block-mobile">
+                            <app-dynamic-form [moduleData]="travelRequestPreview"
+                              [existingData]="existingExpenseRequestData" [category]="category"
+                              [formConfig]="category.formControls" [eventHandler]="this"
+                              (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
+                              (updateData)="updateCategoryData($event)"
+                              [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
+                              [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
+                            </app-dynamic-form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </mat-tab>
+                  }
+                </mat-tab-group>
+              </ng-template>
             </div>
             <!-- Other Details -->
             <div class="row ">
@@ -238,13 +321,21 @@
 
           </div>
           <!-- left-container-wider -->
-
-
-          <div class="right-container-nrw rt-aside-fixed">
-            <div class="row-wrapper common-block px-3 py-3">
+          <!-- Bottom Sheet Template -->
+          <ng-template #expenseSummarySheet>
+            <div class="row-wrapper common-block">
+                <div class="expense-drawer">
+                  <div class="exp-det">
+                    <h6 class="text-dark">Expense Bill Details</h6>
+                    <label>Total:</label> <span>{{ summaryComponent?.totalExpense || 0 | number:'1.2-2' }}</span>
+                  </div>
+                  <div class="exp-view">
+                    <button id="viewDetailsBtn" (click)="closeExpenseSummarySheet()"> Close Details <i
+                        class="fa fa-angle-down"></i></button>
+                  </div>
+                </div>
               <!-- Summary -->
               <app-summary [summaries]="expenseSummary" [expenseRequestData]="expenseRequestData"></app-summary>
-
               @if (expenseConfig?.justification) {
               <div [formGroup]="justificationForm" class="row mt-3">
                 <div class="col-md-12">
@@ -263,18 +354,10 @@
                 </div>
               </div>
               }
-
-
-
-
-            
-
-
-
               @if (expenseConfig?.actions) {
-            <div class="bottom-buttons d-lg-flex d-md-flex  pe-lg-3  pe-md-3  justify-content-lg-end  justify-content-md-end   align-items-center    ">
-              <div class="d-flex align-items-center me-lg-2 combine-btn ">
-           
+              <div
+                class="bottom-buttons d-lg-flex d-md-flex  pe-lg-3  pe-md-3  justify-content-lg-end  justify-content-md-end   align-items-center    ">
+                <div class="d-flex align-items-center me-lg-2 combine-btn ">
                   @if (expenseConfig.actions[1]) {
                   @if(expenseRequestPreviewData?.claimStatusId == 26 || !editMode) {
                   <button type="button" [ngClass]="expenseConfig.actions[1].class"
@@ -283,8 +366,9 @@
                   </button>
                   }
                   }
-                         @if (expenseConfig.actions[0]) {
-                  <button type="button"  [ngClass]="expenseConfig.actions[0].class" (click)="onAction(expenseConfig.actions[0].type);">
+                  @if (expenseConfig.actions[0]) {
+                  <button type="button" [ngClass]="expenseConfig.actions[0].class"
+                    (click)="onAction(expenseConfig.actions[0].type);">
                     {{ expenseConfig.actions[0].label }}
                   </button>
                   }
@@ -297,11 +381,27 @@
                 }
               </div>
               }
-
+            </div>
+          </ng-template>
+          <div class="expense-drawer-bottom d-block d-md-none d-lg-none">
+            <div class="expense-drawer">
+              <div class="exp-det">
+                <h6 class="text-dark">Expense Bill Details</h6>
+                <label>Total:</label> <span>{{ summaryComponent?.totalExpense || 0 | number:'1.2-2' }}</span>
+              </div>
+              <div class="exp-view">
+                <button id="viewDetailsBtn" (click)="openExpenseSummarySheet(expenseSummarySheet)"> View Details <i
+                    class="fa fa-angle-up"></i></button>
+              </div>
             </div>
           </div>
-
-        </div>
+          
+          <!-- Sidebar: Only show on desktop/tablet -->
+          <div class="right-container-nrw rt-aside-fixed d-none d-md-block d-lg-block">
+            <ng-container *ngTemplateOutlet="expenseSummarySheet"></ng-container>
+          </div>
+          
+          </div>
       </div>
       <!-- all-data-wrapper -->
     </div>
@@ -310,3 +410,11 @@
 
 
 <!-- <pre>{{mainExpenseData | json}}</pre> -->
+<ng-template #requestBottomSheet>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let req of travelRequests; trackBy: trackByReq"
+      (click)="selectRequestFromSheet(req)">
+      {{req.label}}
+    </li>
+  </ul>
+</ng-template>
