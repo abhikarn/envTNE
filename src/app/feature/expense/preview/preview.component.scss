@@ -54,7 +54,7 @@ app-preview {
 	}
 	.common-tab  .mat-mdc-tab-body-wrapper {
  
-	background-color: #f7f7fa;
+	// background-color: #f7f7fa;
 	border-radius: 5px;
 }
 
@@ -86,4 +86,15 @@ app-preview {
 }.mat-expansion-panel-body {
 	padding: 0 10px 15px 15px;
 }
+}.mat-mdc-row {
+	height: auto !important;
+	 
+}.mat-expansion-indicator svg {
+	width: 41px!important;
+	height: 24px!important;
+ 
+	fill: #2A5EE3!important;
+	 
+}.accordion app-expansion-panel:last-child .mat-expansion-panel {
+	margin-bottom: 0 !important;
 }

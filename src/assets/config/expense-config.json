@@ -2288,20 +2288,22 @@
                 "table": {
                     "columns": [
                         {
-                            "name": "actionTakenBy",
-                            "label": "Approver Name",
-                            "order": 1
-                        },
-                        {
                             "name": "actionTakenOnString",
                             "label": "Action Date",
-                            "order": 2
+                            "order": 1
                         },
                         {
                             "name": "actionStatus",
                             "label": "Status",
+                            "order": 2
+                        },
+                        {
+                            "name": "actionTakenBy",
+                            "label": "Approver Name",
                             "order": 3
                         },
+                   
+                     
                         {
                             "name": "remarks",
                             "label": "Remarks",

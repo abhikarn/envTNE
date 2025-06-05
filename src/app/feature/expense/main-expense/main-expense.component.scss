@@ -158,7 +158,10 @@
 		content: inherit;
 		display: none;
 	}
-
+.mat-mdc-tab-body {
+	 
+	width: 100%;
+}
  
 	@media (max-width: 1199px) {
 
@@ -171,7 +174,7 @@
 	@media (max-width: 991px) {
 
 		#expenseCategories .mat-mdc-tab-header {
-			width: 912px !important;
+				width: 716px !important
 		}
 
 
@@ -179,11 +182,10 @@
 
 	@media (max-width: 767px) {
 
-		#expenseCategories .mat-mdc-tab-header {
-			width: 736px !important;
-			overflow-x: scroll;
-		}
-
+app-main-expense #expenseCategories .mat-mdc-tab-header {
+	width: 716px !important;
+	overflow-x: scroll;
+}
 		#expenseCategories .mat-mdc-tab-label-container {
 			overflow-x: scroll !important;
 			padding-bottom: 10px;

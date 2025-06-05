@@ -15,7 +15,7 @@
           @for (row of tableData; track row; let i = $index) {
           <tr [ngClass]="{ 'violation-border': row?.IsViolation }">
             @for (col of tableColumns; track col.name) {
-            <td style="background-color: #ffffff;">
+            <td [attr.data-label]="col.label" >
                 
               @if (col.name === '__slNo') {
               {{ i + 1 }}
@@ -57,7 +57,7 @@
 
           @if (expandedRowIndex === i) {
           <tr>
-            <td style="background-color: #ffffff;" class="p-0" [attr.colspan]="tableColumns.length + 2">
+            <td   class="p-0" [attr.colspan]="tableColumns.length + 2">
               <div class="tr-showblock" [ngClass]="{ 'violation-bg': row?.IsViolation }">
                 <div class="row">
                   <div class="col-md-12">

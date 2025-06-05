@@ -279,29 +279,42 @@
                     <ng-template mat-tab-label>
                       <span>{{detail.label}}</span>
                     </ng-template>
-                    <div class="row mt-2">
-                      <div class="col-md-12">
-                        <div class="time-frame-wrapper">
-                          <div class="time-log-axis">
-                            @for (log of expenseRequestData?.expenseRequestLog; track $index) {
-                            <div class="tfl-child">
-                              <ul>
-                                <li><span><i class="fa fa-calendar-check-o"
-                                      aria-hidden="true"></i></span>{{log?.actionDatetimeString}}
-                                </li>
-                                <li><span><i class="fa fa-check-square-o"
-                                      aria-hidden="true"></i></span>{{log?.actionStatus}}</li>
-                                <li><span><i class="fa fa-user-circle-o"
-                                      aria-hidden="true"></i></span>{{log?.actionByName}}</li>
-                                <li><span><i class="fa fa-commenting"
-                                      aria-hidden="true"></i></span>{{log?.actionRemarks}}</li>
-                              </ul>
-                            </div>
-                            }
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+
+                    <table class="  table mt-2   color-table mobile-card-view-table   ">
+                      <thead>
+                        <tr>
+                          <th class="thd-w20"><span>Date </span></th>
+                          <th class="thd-w15"><span>Status </span></th>
+                          <th class="thd-w25"><span>Action By </span></th>
+                          <th class="thd-w40"><span>Remarks</span></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+
+
+                        @for (log of expenseRequestData?.expenseRequestLog; track $index) {
+                        <tr>
+                          <td data-label="Date"><span>{{log?.actionDatetimeString}}</span></td>
+                          <td data-label="Status"><span class="status-blue status-common">
+                              {{log?.actionStatus}}
+                            </span>
+                          </td>
+                          <td data-label="Action By"> <span class="space-wrap"> {{log?.actionByName}} </span> </td>
+                          <td data-label="Remarks">
+                            <span> {{log?.actionRemarks}}</span>
+                          </td>
+                        </tr>
+                        }
+
+
+                      </tbody>
+                    </table>
+
+
+
+
+
                     }
                     }
                   </mat-tab>

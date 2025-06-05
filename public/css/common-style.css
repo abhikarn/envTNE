@@ -12961,4 +12961,6 @@ width: 157px;
 	display: none;
 }.cdk-overlay-dark-backdrop {
 	background: rgba(0, 0, 0, 0.75);
+}.space-wrap {
+	white-space: normal;
 }

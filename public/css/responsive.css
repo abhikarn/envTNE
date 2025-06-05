@@ -668,6 +668,10 @@
         font-weight: 700;
         text-transform: uppercase;
     }
+    .mobile-card-view-normaltable td:last-child::before {
+	content: inherit;
+	display: none;
+}
 .mobile-card-view-normaltable td:first-child {
 	display: none;
 }
@@ -727,9 +731,10 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 5px;
     }
-      .mobile-card-view-normaltable td:last-child {
-        grid-column: span 2;
-       }
+  .mobile-card-view-normaltable td:last-child {
+	grid-column: span 2;
+	border-top: 1px solid #e6e6e6 !important;
+}
 
 .line-tab .nav-link {
 	padding: 8px!important;
