@@ -2,16 +2,16 @@
   <div class="page-title justify-content-between d-flex align-items-center">
     <h2 class="page-header">Expense</h2>
   </div>
- <div class="custom-select self-select form-group mb-0 min-w-self  chm-formgroup ">
-                           <div class="selected  form-control chm-formselect">Self </div>
-                           <div class="options">
-                              <div class="text-center  d-block d-lg-none d-md-none d-sm-block">  <span class="select-mobile-line"></span></div>
-                              <option  class="option"  value="182">XXXXX</option>
-                              <option  class="option"  value="183">YYYYY</option>
-                           </div>
-                        </div>  
+  <div class="custom-select self-select form-group mb-0 min-w-self  chm-formgroup ">
+    <div class="selected  form-control chm-formselect">Self </div>
+    <div class="options">
+      <div class="text-center  d-block d-lg-none d-md-none d-sm-block"> <span class="select-mobile-line"></span></div>
+      <option class="option" value="182">XXXXX</option>
+      <option class="option" value="183">YYYYY</option>
+    </div>
+  </div>
 
-                        <!-- <div class="self-select">
+  <!-- <div class="self-select">
   <mat-form-field appearance="fill" class="custom-select  selected form-group mb-0 min-w-self chm-formgroup">
     <mat-label>Self</mat-label>
     <mat-select>
@@ -30,66 +30,64 @@
           <div class="left-container-wider scroll-left-align mar-tmd3">
             <div class="common-block mb-3">
               @if (!editMode) {
-              <h6 class="common-title fw-bold mb-3">Select Request  </h6>
+              <h6 class="common-title fw-bold mb-3">Select Request </h6>
               <div class="common-block-mobile">
-              <div class="row">
-                <div class="col-md-4">
-                  @if (expenseConfig?.request) {
-                  <div class="form-group chm-formgroup new-form-grp mb-0 no-hintspace">
-                    <label>{{this.expenseConfig.request.label}} </label>
-                    <!-- Desktop/Tablet: Regular mat-select in mat-form-field -->
-                    <ng-container *ngIf="!isMobile; else mobileSelect">
-                      <mat-form-field appearance="fill" class="w-100">
-                        <mat-select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest"
-                          name="ExpenseRequest" class="chm-formselect"
-                          (selectionChange)="onSelectTravelExpenseRequest($event)">
-                          <mat-option value="">{{expenseConfig.request.placeholder}}</mat-option>
-                          @for (req of travelRequests; track req) {
+                <div class="row">
+                  <div class="col-md-4">
+                    @if (expenseConfig?.request) {
+                    <div class="form-group chm-formgroup new-form-grp mb-0 no-hintspace">
+                      <label>{{this.expenseConfig.request.label}} </label>
+                      <!-- Desktop/Tablet: Regular mat-select in mat-form-field -->
+                      <ng-container *ngIf="!isMobile; else mobileSelect">
+                        <mat-form-field appearance="fill" class="w-100">
+                          <mat-select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest"
+                            name="ExpenseRequest" class="chm-formselect"
+                            (selectionChange)="onSelectTravelExpenseRequest($event)">
+                            <mat-option value="">{{expenseConfig.request.placeholder}}</mat-option>
+                            @for (req of travelRequests; track req) {
                             <mat-option [value]="req.value">
                               {{req.label}}
                             </mat-option>
-                          }
-                        </mat-select>
-                      </mat-form-field>
-                    </ng-container>
-                    <!-- Mobile: Open bottom sheet, input is outside mat-form-field -->
-                    <ng-template #mobileSelect>
-                      <div>
-                        <input class="form-control chm-formselect"
-                          [value]="getSelectedRequestLabel()"
-                          readonly
-                          (click)="openRequestBottomSheet(requestBottomSheet)" 
-                          placeholder="{{expenseConfig.request.placeholder}}" />
-                      </div>
-                    </ng-template>
+                            }
+                          </mat-select>
+                        </mat-form-field>
+                      </ng-container>
+                      <!-- Mobile: Open bottom sheet, input is outside mat-form-field -->
+                      <ng-template #mobileSelect>
+                        <div>
+                          <input class="form-control chm-formselect" [value]="getSelectedRequestLabel()" readonly
+                            (click)="openRequestBottomSheet(requestBottomSheet)"
+                            placeholder="{{expenseConfig.request.placeholder}}" />
+                        </div>
+                      </ng-template>
+                    </div>
+                    }
                   </div>
-                  }
                 </div>
-              </div>
               </div>
               } @else {
 
 
+              <div class="common-block-mobile">
+                <div class="row">
 
-              <div class="row">
-
-                <div class="col-md-3 col-sm-6 col-lg-2 col-6">
-                                                   <div class="trl-preview-wrapper mb-md-0">
-                                                      <div class="trl-readview-item pb-0">
-                                                         <div class="trl-req-head">
-                                                            <label>Request Number  </label>
-                                                         </div>
-                                                         <div class="trl-req-detail">
-                                                            <span> {{expenseRequestData?.travelRequestNumber}}</span>
-                                                         </div>
-                                                      </div>
-                                                   </div>
-                                                </div>
+                  <div class="col-md-3 col-sm-6 col-lg-2 col-6">
+                    <div class="trl-preview-wrapper mb-md-0">
+                      <div class="trl-readview-item pb-0">
+                        <div class="trl-req-head">
+                          <label>Request Number </label>
+                        </div>
+                        <div class="trl-req-detail">
+                          <span> {{expenseRequestData?.travelRequestNumber}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
 
-                
+
+                </div>
               </div>
-
 
               }
 
@@ -139,7 +137,7 @@
                       <div id="expenseHead">
                         <div class="menu-item">
                           <div class="expense-list-head">
-                            <h6> {{category.label}}  <span> {{category.count}} </span> </h6>
+                            <h6> {{category.label}} <span> {{category.count}} </span> </h6>
                           </div>
                         </div>
                       </div>
@@ -149,15 +147,15 @@
                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                           <div class="common-block mb-3">
                             <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
-                             <div class="common-block-mobile">
-                            <app-dynamic-form [moduleData]="travelRequestPreview"
-                              [existingData]="existingExpenseRequestData" [category]="category"
-                              [formConfig]="category.formControls" [eventHandler]="this"
-                              (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
-                              (updateData)="updateCategoryData($event)"
-                              [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
-                              [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
-                            </app-dynamic-form>
+                            <div class="common-block-mobile">
+                              <app-dynamic-form [moduleData]="travelRequestPreview"
+                                [existingData]="existingExpenseRequestData" [category]="category"
+                                [formConfig]="category.formControls" [eventHandler]="this"
+                                (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
+                                (updateData)="updateCategoryData($event)"
+                                [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
+                                [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
+                              </app-dynamic-form>
                             </div>
                           </div>
                         </div>
@@ -170,8 +168,7 @@
                   <mat-tab>
                     <ng-template mat-tab-label>
                       <mat-form-field class="more-item" appearance="fill">
-                        <mat-select placeholder="More" 
-                          [value]="selectedExtraCategory"
+                        <mat-select placeholder="More" [value]="selectedExtraCategory"
                           (selectionChange)="onExtraCategorySelect($event.value)">
                           <mat-option *ngFor="let cat of categories.slice(5)" [value]="cat">
                             {{cat.label}}
@@ -188,12 +185,9 @@
                               <h6 class="common-title fw-bold mb-3">{{selectedExtraCategory.label}}</h6>
                               <div class="common-block-mobile">
                                 <app-dynamic-form [moduleData]="travelRequestPreview"
-                                  [existingData]="existingExpenseRequestData"
-                                  [category]="selectedExtraCategory"
-                                  [formConfig]="selectedExtraCategory.formControls"
-                                  [eventHandler]="this"
-                                  (emitFormData)="getFormData($event)"
-                                  (emitTextData)="getTextData($event)"
+                                  [existingData]="existingExpenseRequestData" [category]="selectedExtraCategory"
+                                  [formConfig]="selectedExtraCategory.formControls" [eventHandler]="this"
+                                  (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
                                   (updateData)="updateCategoryData($event)"
                                   [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
                                   [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
@@ -217,7 +211,7 @@
                       <div id="expenseHead">
                         <div class="menu-item">
                           <div class="expense-list-head">
-                            <h6> {{category.label}}  <span> {{category.count}} </span> </h6>
+                            <h6> {{category.label}} <span> {{category.count}} </span> </h6>
                           </div>
                         </div>
                       </div>
@@ -227,15 +221,15 @@
                         <div class="other-sectionaa hidehtgnm" style="display: block;">
                           <div class="common-block mb-3">
                             <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
-                             <div class="common-block-mobile">
-                            <app-dynamic-form [moduleData]="travelRequestPreview"
-                              [existingData]="existingExpenseRequestData" [category]="category"
-                              [formConfig]="category.formControls" [eventHandler]="this"
-                              (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
-                              (updateData)="updateCategoryData($event)"
-                              [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
-                              [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
-                            </app-dynamic-form>
+                            <div class="common-block-mobile">
+                              <app-dynamic-form [moduleData]="travelRequestPreview"
+                                [existingData]="existingExpenseRequestData" [category]="category"
+                                [formConfig]="category.formControls" [eventHandler]="this"
+                                (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
+                                (updateData)="updateCategoryData($event)"
+                                [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
+                                [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
+                              </app-dynamic-form>
                             </div>
                           </div>
                         </div>
@@ -252,7 +246,7 @@
               <div class="col-md-12">
                 <mat-tab-group class="common-tab" fitInkBarToContent>
                   @for (detail of expenseConfig?.otherDetails; track detail) {
-                  <mat-tab >
+                  <mat-tab>
                     @switch (detail.name) {
                     @case ("PolicyViolations") {
                     <ng-template mat-tab-label>
@@ -318,25 +312,25 @@
 
 
 
- 
+
 
 
           </div>
-          
+
           <!-- left-container-wider -->
           <!-- Bottom Sheet Template -->
           <ng-template #expenseSummarySheet>
             <div class="row-wrapper common-block">
-                <div class="expense-drawer">
-                  <div class="exp-det">
-                    <h6 class="text-dark">Expense Bill Details</h6>
-                    <label>Total:</label> <span>{{ summaryComponent?.totalExpense || 0 | number:'1.2-2' }}</span>
-                  </div>
-                  <div class="exp-view">
-                    <button id="viewDetailsBtn" (click)="closeExpenseSummarySheet()"> Close Details <i
-                        class="fa fa-angle-down"></i></button>
-                  </div>
+              <div class="expense-drawer">
+                <div class="exp-det">
+                  <h6 class="text-dark">Expense Bill Details</h6>
+                  <label>Total:</label> <span>{{ summaryComponent?.totalExpense || 0 | number:'1.2-2' }}</span>
                 </div>
+                <div class="exp-view">
+                  <button id="viewDetailsBtn" (click)="closeExpenseSummarySheet()"> Close Details <i
+                      class="fa fa-angle-down"></i></button>
+                </div>
+              </div>
               <!-- Summary -->
               <app-summary [summaries]="expenseSummary" [expenseRequestData]="expenseRequestData"></app-summary>
               @if (expenseConfig?.justification) {
@@ -398,13 +392,13 @@
               </div>
             </div>
           </div>
-          
+
           <!-- Sidebar: Only show on desktop/tablet -->
           <div class="right-container-nrw rt-aside-fixed d-none d-md-block d-lg-block">
             <ng-container *ngTemplateOutlet="expenseSummarySheet"></ng-container>
           </div>
-          
-          </div>
+
+        </div>
       </div>
       <!-- all-data-wrapper -->
     </div>
@@ -414,10 +408,12 @@
 
 <!-- <pre>{{mainExpenseData | json}}</pre> -->
 <ng-template #requestBottomSheet>
-  <ul class="list-group">
-    <li class="list-group-item" *ngFor="let req of travelRequests; trackBy: trackByReq"
-      (click)="selectRequestFromSheet(req)">
-      {{req.label}}
-    </li>
-  </ul>
+  <div class="bottom-sheet-select">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let req of travelRequests; trackBy: trackByReq"
+        (click)="selectRequestFromSheet(req)">
+        {{req.label}}
+      </li>
+    </ul>
+  </div>
 </ng-template>

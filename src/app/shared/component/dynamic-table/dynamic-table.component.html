@@ -15,10 +15,13 @@
           @for (row of tableData; track row; let i = $index) {
           <tr [ngClass]="{ 'violation-border': row?.IsViolation }">
             @for (col of tableColumns; track col.name) {
-            <td>
+            <td style="background-color: #ffffff;">
+                
               @if (col.name === '__slNo') {
               {{ i + 1 }}
               } @else if (col.name === '__actions') {
+                <div class="icons-new"> 
+                 <span>
               <button class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Edit"
                 type="submit" (click)="edit(row, i+1)">
                 <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,11 +30,13 @@
                     fill="#031842" />
                 </svg>
               </button>
+              </span>
               @if (row?.IsViolation) {
               <i class="fas fa-exclamation-triangle text-danger" [matTooltip]="row?.Violation"
                 matTooltipPosition="above"></i>
               }
-              <button data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Remove" type="submit"
+                <span>
+              <button class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Remove" type="submit"
                 (click)="confirmDelete(i)">
                 <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd"
@@ -39,17 +44,20 @@
                     fill="#E53535" />
                 </svg>
               </button>
-              <i class="fas fa-chevron-down" (click)="toggleRow(i)" [class.rotate]="expandedRowIndex === i"></i>
+              </span>
+           <span data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="More Info"  class="btn btn-showhide p-0"><i  (click)="toggleRow(i)" [class.rotate]="expandedRowIndex === i" class="fa fa-chevron-down"></i></span>
+  </div>
               } @else {
               {{ formatValue(col.name, row[col.name]) }}
               }
+             
             </td>
             }
           </tr>
 
           @if (expandedRowIndex === i) {
           <tr>
-            <td [attr.colspan]="tableColumns.length + 2">
+            <td style="background-color: #ffffff;" class="p-0" [attr.colspan]="tableColumns.length + 2">
               <div class="tr-showblock" [ngClass]="{ 'violation-bg': row?.IsViolation }">
                 <div class="row">
                   <div class="col-md-12">
@@ -71,11 +79,11 @@
                     </div>
                   </div>
                   <div class="col-md-12">
-                    <div class="row">
+                    
                       @for (nestedTable of nestedTables; track nestedTable.dataKey) {
                       @if (row[nestedTable.dataKey]?.length > 0) {
                       <h6 class="mt-2">{{ nestedTable.dataKey | titlecase }} Details</h6>
-                      <table class="gst-table">
+                      <table class="gst-table table mt-2 mb-2 remove-th-mobile grey-table table-cust tbl-sml w-100">
                         <thead>
                           <tr>
                             @for (col of nestedTable.columns; track col.name) {
@@ -109,7 +117,7 @@
                       </table>
                       }
                       }
-                    </div>
+                      
                   </div>
                 </div>
               </div>

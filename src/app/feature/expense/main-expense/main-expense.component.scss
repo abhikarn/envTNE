@@ -9,7 +9,7 @@
 	}
 
 	#expenseCategories .mat-mdc-tab-header {
-		width: 954px !important;
+	 
 		margin-bottom: 10px;
 
 	}
@@ -163,7 +163,7 @@
 	@media (max-width: 1199px) {
 
 		#expenseCategories .mat-mdc-tab-header {
-			width: 799px !important;
+			 
 
 		}
 	}
@@ -188,6 +188,7 @@
 			overflow-x: scroll !important;
 			padding-bottom: 10px;
 		}
+
 	}
 
 	@media (max-width: 575px) {

@@ -15,7 +15,7 @@
     <!-- Preview Mode: Serial Number Column -->
     <ng-container *ngIf="mode === 'preview'" matColumnDef="slNo">
         <th mat-header-cell *matHeaderCellDef>{{ slNoLabel }}</th>
-        <td mat-cell *matCellDef="let row">{{ row.slNo }}</td>
+        <td    mat-cell *matCellDef="let row">{{ row.slNo }}</td>
     </ng-container>
 
     <!-- Common Action Icons -->
@@ -36,7 +36,7 @@
     <!-- Dynamic Columns -->
     <ng-container *ngFor="let col of visibleTabelColumns" [matColumnDef]="col.name">
         <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
-        <td mat-cell *matCellDef="let row">
+        <td     mat-cell *matCellDef="let row">
             @if (col.controlType === 'input' && mode === 'finance-approval') {
             <input [type]="col.type" class="form-control" [(ngModel)]="row[col.name]" [readonly]="!col.isEditableInFinanceApproval" [disabled]="!row.selected || row.ClaimStatusId == 5"
                 (keydown)="preventInvalidKeys($event)" (ngModelChange)="onApprovedAmountChange(row)"

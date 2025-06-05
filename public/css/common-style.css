@@ -886,7 +886,7 @@ ul.header-notify-hold {
         padding: 7px 10px !important;
     }
     .color-table tr td {
-        padding: 7px 10px;
+        padding: 7px 5px;
         text-align: left;
         font-size: 11px;
     }
@@ -896,10 +896,11 @@ ul.header-notify-hold {
     .color-table tr th:last-child {
     border-top-right-radius: 8px;
     }
-    .color-table tbody tr td {
-        background-color: #F7F7FA;
-        border-bottom: 1px solid #eee;
-    }
+   .color-table tbody tr td {
+	background-color: #F7F7FA;
+	border-bottom: 1px solid #eee;
+	white-space: nowrap;
+}
     .color-table {
     border-color: transparent;
     }
@@ -909,14 +910,14 @@ ul.header-notify-hold {
     .color-table tbody tr:last-child td:last-child {
     border-bottom-right-radius: 8px;
     }
-    .grey-table tr th {
-        background-color: #8F90A6;
-        color: #fff;
-        font-weight: 500;
-        font-size: 11px;
-        white-space: nowrap;
-        padding: 6px 10px !important;
-    }
+.grey-table tr th {
+	background-color: #8F90A6 !important;
+	color: #fff;
+	font-weight: 500;
+	font-size: 11px;
+	white-space: nowrap;
+	padding: 6px 10px !important;
+}
     .grey-table tr td {
     padding: 4px 10px;
     text-align: left;
@@ -12267,6 +12268,7 @@ button.dropbtn {
             height: 100px;
             overflow: hidden;
             position: relative;
+            cursor: pointer;
         }
         .expense-block-ico {
             display: flex;
@@ -12327,15 +12329,16 @@ button.dropbtn {
         .expense-color9:hover{
             background: #836BEC;
         }
-        .expense-block span {
-            display: inline-block;
-            width: 100%;
-            color: #ffffff;
-            font-weight: 600;
-            margin-bottom: 10px;
-            line-height: 18px;
-            font-size: 15px;
-        }
+    .expense-block span {
+	display: inline-block;
+	width: 100%;
+	color: #ffffff;
+	font-weight: 600;
+	margin-bottom: 10px;
+	line-height: 18px;
+	font-size: 15px;
+	min-height: 33px;
+}
  
         .communication-count {
             position: absolute;
