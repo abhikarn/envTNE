@@ -1005,11 +1005,11 @@ ul.header-notify-hold {
     #expenseHead.owl-carousel .owl-stage-outer .owl-stage {
     transform: inherit !important;
     }
-    .common-tab {
-    /* background-color: #f7f7fa; */
-    border-radius: 10px;
-    border: none;
-    }
+  .common-tab {
+	background-color: #f7f7fa !important;
+	border-radius: 10px;
+	border: none;
+}
     #myTabContent.tab-content .tab-pane {
     background: rgba(0, 0, 0, 0.03);
     padding: 4px 8px;
@@ -12909,21 +12909,22 @@ width: 157px;
 }.line-tab .nav-item {
 	position: relative;
 }.custom-search {
-	background-color: #F2F2F5;
-	border: none;
-	height: 30px;
-	padding-left: 39px;
-	border-radius: 10px;
-	font-size: 12px;
-	min-width: 326px;
+	background-color: #F2F2F5 !important;
+	border: none !important;
+	height: 30px !important;
+	padding-left: 39px !important;
+	border-radius: 10px !important;
+	font-size: 12px !important;
+	min-width: 326px !important;
 }.custom-search:focus {
 	outline: none;
-}.datatable-right {
+} .datatable-right {
 	right: 0;
 	position: absolute;
-	top: -3px;
+	top: -60px;
 	display: flex;
 	justify-content: end;
+	margin-bottom: 50p;
 }.datatable-search svg {
 	position: absolute;
 	top: 0;

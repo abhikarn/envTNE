@@ -1,849 +1,1191 @@
 <div class="position-relative">
-  <div class="page-title justify-content-between d-flex align-items-center">
-    <h2 class="page-header">Dashboard</h2>
-  </div>
-  <div class="custom-select self-select form-group mb-0 min-w-self  chm-formgroup ">
-    <div class="selected  form-control chm-formselect">Self </div>
-    <div class="options">
-      <div class="text-center  d-block d-lg-none d-md-none d-sm-block"> <span class="select-mobile-line"></span></div>
-      <option class="option" value="182">XXXXX</option>
-      <option class="option" value="183">YYYYY</option>
+    <div class="page-title justify-content-between d-flex align-items-center">
+        <h2 class="page-header">Dashboard</h2>
     </div>
-  </div>
-
-  <!-- <div class="self-select">
-  <mat-form-field appearance="fill" class="custom-select  selected form-group mb-0 min-w-self chm-formgroup">
-    <mat-label>Self</mat-label>
-    <mat-select>
-      <mat-option value="182">XXXXX</mat-option>
-      <mat-option value="183">YYYYY</mat-option>
-    </mat-select>
-  </mat-form-field> 
-  </div> -->
-
+    <div class="custom-select self-select form-group mb-0 min-w-self  chm-formgroup ">
+        <div class="selected  form-control chm-formselect">Self </div>
+        <div class="options">
+            <div class="text-center  d-block d-lg-none d-md-none d-sm-block"> <span class="select-mobile-line"></span>
+            </div>
+            <option class="option" value="182">XXXXX</option>
+            <option class="option" value="183">YYYYY</option>
+        </div>
+    </div>
 </div>
+
 <div class="app-main-wrapper">
     <div class="two-roles-wrapper">
         <div class="tabs-page-hold">
-            <div id="page-wrapper-tabs" class="custom-wrapper-general mt-3 mb-3 w-100">
-                <ul class="nav nav-tabs common-tab" id="myTab" role="tablist">
-                    <li><a id="menu-dashboard-my" [routerLink]="this.expenseDashboardConfig?.dashboard?.link" class="active">{{this.expenseDashboardConfig?.dashboard?.name}}</a></li>
-                    <li><a id="menu-dashboard-action" [routerLink]="['/expense/expense/approval']">Approver Dashboard</a></li>
-                </ul>
-            </div>
-            <div class=" pt-1">
-                <div class="row">
-                    <div class="col-md-7">
-                        <div class="title-unique">
-                            <h6 class="mb-3 fw-bold  fs-6">
-                                <div class="title-icon me-2">
-                                    <svg width="25" height="25" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <rect width="20" height="20" rx="10" fill="#1621A1"></rect>
-                                        <path
-                                            d="M7.81533 14.2105H12.1847V12.6316C12.1847 12.0324 11.9724 11.5199 11.5477 11.0941C11.1231 10.6683 10.6072 10.4554 10 10.4554C9.3928 10.4554 8.87689 10.6683 8.45227 11.0941C8.02764 11.5199 7.81533 12.0324 7.81533 12.6316V14.2105ZM10 9.54461C10.6072 9.54461 11.1231 9.33171 11.5477 8.90592C11.9724 8.48013 12.1847 7.96763 12.1847 7.36842V5.78947H7.81533V7.36842C7.81533 7.96763 8.02764 8.48013 8.45227 8.90592C8.87689 9.33171 9.3928 9.54461 10 9.54461ZM6 15V14.2105H7.01547V12.6316C7.01547 12.0391 7.17973 11.4998 7.50827 11.0137C7.8368 10.5275 8.27218 10.1896 8.8144 10C8.27218 9.80702 7.8368 9.46829 7.50827 8.98382C7.17973 8.49934 7.01547 7.96088 7.01547 7.36842V5.78947H6V5H14V5.78947H12.9845V7.36842C12.9845 7.96088 12.8203 8.49934 12.4917 8.98382C12.1632 9.46829 11.7278 9.80702 11.1856 10C11.7278 10.1896 12.1632 10.5275 12.4917 11.0137C12.8203 11.4998 12.9845 12.0391 12.9845 12.6316V14.2105H14V15H6Z"
-                                            fill="white"></path>
-                                    </svg>
-                                </div>
-                                Status on Request
-                            </h6>
-                        </div>
-                        <div class="wdg-ul row" id="ulRequestTypeCountList">
-                            <div class="col-md-6">
-                                <div class="common-block mb-3">
-                                    <h6 class="common-title fw-bold mb-3">Travel Request </h6>
-                                    <ul class="ps-0 list-unstyled req-count">
-                                        <li>
-                                            <div class="req-status bg-success-status"> 0 </div>
-                                            <label>Approved</label>
-                                        </li>
-                                        <li>
-                                            <div class="req-status  bg-pending-status">
-                                                0
-                                            </div>
-                                            <label>Pending</label>
-                                        </li>
-                                        <li>
-                                            <div class="req-status  bg-rejected-status">
-                                                0
-                                            </div>
-                                            <label>Rejected</label>
-                                        </li>
-                                    </ul>
-                                </div>
+
+
+            <ul class="nav nav-tabs common-tab mb-4" style="width: auto;display: inline-flex;" id="myTab"
+                role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a id="menu-dashboard-my" class="nav-link active"
+                        [routerLink]="this.expenseDashboardConfig?.dashboard?.link">{{this.expenseDashboardConfig?.dashboard?.name}}</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a id="menu-dashboard-action" class="nav-link" [routerLink]="['/expense/expense/approval']">Approver
+                        Dashboard</a>
+                </li>
+            </ul>
+
+
+
+
+            <div class="row mb-lg-3 mb-md-3 mb-sm-2">
+                <div class="col-md-7">
+                    <div class="title-unique">
+                        <h6 class="mb-3 fw-bold  fs-6">
+                            <div class="title-icon me-2">
+                                <svg width="25" height="25" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="20" height="20" rx="10" fill="#031842" />
+                                    <path
+                                        d="M7.81533 14.2105H12.1847V12.6316C12.1847 12.0324 11.9724 11.5199 11.5477 11.0941C11.1231 10.6683 10.6072 10.4554 10 10.4554C9.3928 10.4554 8.87689 10.6683 8.45227 11.0941C8.02764 11.5199 7.81533 12.0324 7.81533 12.6316V14.2105ZM10 9.54461C10.6072 9.54461 11.1231 9.33171 11.5477 8.90592C11.9724 8.48013 12.1847 7.96763 12.1847 7.36842V5.78947H7.81533V7.36842C7.81533 7.96763 8.02764 8.48013 8.45227 8.90592C8.87689 9.33171 9.3928 9.54461 10 9.54461ZM6 15V14.2105H7.01547V12.6316C7.01547 12.0391 7.17973 11.4998 7.50827 11.0137C7.8368 10.5275 8.27218 10.1896 8.8144 10C8.27218 9.80702 7.8368 9.46829 7.50827 8.98382C7.17973 8.49934 7.01547 7.96088 7.01547 7.36842V5.78947H6V5H14V5.78947H12.9845V7.36842C12.9845 7.96088 12.8203 8.49934 12.4917 8.98382C12.1632 9.46829 11.7278 9.80702 11.1856 10C11.7278 10.1896 12.1632 10.5275 12.4917 11.0137C12.8203 11.4998 12.9845 12.0391 12.9845 12.6316V14.2105H14V15H6Z"
+                                        fill="white" />
+                                </svg>
                             </div>
-                            <div class="col-md-6">
-                                <div class="common-block mb-3">
-                                    <h6 class="common-title fw-bold mb-3">{{this.expenseDashboardConfig?.dashboard?.statusWiseExpenseRequest.name}} </h6>                                     
-                                    <ul class="ps-0 list-unstyled req-count">
-                                      <li *ngFor="let item of statusWiseExpenseDataCount">
+                            Status on Request
+                        </h6>
+                    </div>
+                    <div class="row  mb-sm-3 mb-md-0 ">
+                        <div class="col-md-6">
+                            <div class="common-block common-block-nothide mb-3">
+                                <h6 class="common-title fw-bold mb-3">Travel Request </h6>
+                                <ul class="ps-0 list-unstyled req-count mb-0">
+                                    <li>
+                                        <div class="req-status bg-success-status"> 0 </div>
+                                        <label>Approved</label>
+                                    </li>
+                                    <li>
+                                        <div class="req-status  bg-pending-status">
+                                            0
+                                        </div>
+                                        <label>Pending</label>
+                                    </li>
+                                    <li>
+                                        <div class="req-status  bg-rejected-status">
+                                            0
+                                        </div>
+                                        <label>Rejected</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="common-block common-block-nothide mb-3">
+                                <h6 class="common-title fw-bold mb-3">
+                                    {{this.expenseDashboardConfig?.dashboard?.statusWiseExpenseRequest.name}} </h6>
+                                <ul class="ps-0 list-unstyled req-count mb-0">
+                                    <li *ngFor="let item of statusWiseExpenseDataCount">
                                         <div class="req-status" [ngClass]="item.class">
                                             {{ item.count }}
                                         </div>
                                         <label>{{ item.label }}</label>
-                                      </li>
-                                    </ul>
-                                </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="title-unique">
-                            <h6 class="mb-3 fw-bold  fs-6">
-                                <div class="title-icon me-2">
-                                    <svg width="25" height="25" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <rect width="20" height="20" rx="10" fill="#1621A1"></rect>
-                                        <path
-                                            d="M7.27702 15.5475L9.62158 11.3128L5.03906 10.7575L11.8203 4.45312H12.729L10.3563 8.69352L14.9557 9.24317L8.17448 15.5475H7.27702ZM9.72367 12.8711L12.9915 9.89038L8.96767 9.41131L10.2735 7.12742L7.00329 10.1136L11.0125 10.6004L9.72367 12.8711Z"
-                                            fill="white"></path>
-                                    </svg>
-                                </div>
-                                Quick Activities
-                            </h6>
-                        </div>
-                        <ul class="quick-menu-links list-unstyled  ps-0">
-                            <li>
-                                <a *ngIf="expenseDashboardConfig?.dashboard?.quickActivities?.[0]?.url"
-   [routerLink]="expenseDashboardConfig?.dashboard?.quickActivities?.[0]?.url"> 
-                                    <div class="d-flex align-items-center">
-                                        <div class="quick-link-icon">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M12 12.5C11.0717 12.5 10.1815 12.8687 9.52513 13.5251C8.86875 14.1815 8.5 15.0717 8.5 16C8.5 16.9283 8.86875 17.8185 9.52513 18.4749C10.1815 19.1313 11.0717 19.5 12 19.5C12.9283 19.5 13.8185 19.1313 14.4749 18.4749C15.1313 17.8185 15.5 16.9283 15.5 16C15.5 15.0717 15.1313 14.1815 14.4749 13.5251C13.8185 12.8687 12.9283 12.5 12 12.5ZM10.5 16C10.5 15.6022 10.658 15.2206 10.9393 14.9393C11.2206 14.658 11.6022 14.5 12 14.5C12.3978 14.5 12.7794 14.658 13.0607 14.9393C13.342 15.2206 13.5 15.6022 13.5 16C13.5 16.3978 13.342 16.7794 13.0607 17.0607C12.7794 17.342 12.3978 17.5 12 17.5C11.6022 17.5 11.2206 17.342 10.9393 17.0607C10.658 16.7794 10.5 16.3978 10.5 16Z"
-                                                    fill="#1621A1"></path>
-                                                <path
-                                                    d="M17.526 5.11716L14.347 0.660156L2.658 9.99816L2.01 9.99116V10.0012H1.5V22.0012H22.5V10.0012H21.538L19.624 4.40216L17.526 5.11716ZM19.425 10.0012H9.397L16.866 7.45516L18.388 6.96816L19.425 10.0012ZM15.55 5.79116L7.84 8.41916L13.946 3.54116L15.55 5.79116ZM3.5 18.1702V13.8302C3.92218 13.6812 4.30565 13.4396 4.62231 13.1231C4.93896 12.8066 5.18077 12.4233 5.33 12.0012H18.67C18.8191 12.4234 19.0609 12.807 19.3775 13.1236C19.6942 13.4403 20.0777 13.6821 20.5 13.8312V18.1712C20.0777 18.3203 19.6942 18.562 19.3775 18.8787C19.0609 19.1953 18.8191 19.5789 18.67 20.0012H5.332C5.18218 19.5788 4.93996 19.1953 4.62302 18.8785C4.30607 18.5618 3.9224 18.3197 3.5 18.1702Z"
-                                                    fill="#1621A1"></path>
-                                            </svg>
-                                        </div>
-                                        <span>Raise Expense Claim</span>
-                                    </div>
-                                    <svg width="11" height="8" viewBox="0 0 11 8" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M6.44178 1.46953C6.25881 1.28495 6.26011 0.986994 6.44469 0.804024C6.62927 0.621054 6.92723 0.622359 7.1102 0.806939L9.96714 3.68901C10.1501 3.87359 10.1488 4.17155 9.96422 4.35452L6.84198 7.44953C6.6574 7.63251 6.35944 7.6312 6.17647 7.44662C5.9935 7.26204 5.99481 6.96408 6.17939 6.78111L8.49478 4.48592L0.663662 4.45162C0.403766 4.45048 0.194001 4.23887 0.195138 3.97898C0.196277 3.71908 0.407887 3.50931 0.667784 3.51045L8.4989 3.54475L6.44178 1.46953Z"
-                                            fill="#2A5EE3"></path>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/Travel/RaiseRequest">
-                                    <div class="d-flex align-items-center   ">
-                                        <div class="quick-link-icon">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M17.8 19.2L16 11L19.5 7.5C21 6 21.5 4 21 3C20 2.5 18 3 16.5 4.5L13 8L4.8 6.2C4.3 6.1 3.9 6.3 3.7 6.7L3.4 7.2C3.2 7.7 3.3 8.2 3.7 8.5L9 12L7 15H4L3 16L6 18L8 21L9 20V17L12 15L15.5 20.3C15.8 20.7 16.3 20.8 16.8 20.6L17.3 20.4C17.7 20.1 17.9 19.7 17.8 19.2Z"
-                                                    stroke="#1621A1" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round"></path>
-                                            </svg>
-                                        </div>
-                                        <span>Travel Request</span>
-                                    </div>
-                                    <svg width="11" height="8" viewBox="0 0 11 8" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M6.44178 1.46953C6.25881 1.28495 6.26011 0.986994 6.44469 0.804024C6.62927 0.621054 6.92723 0.622359 7.1102 0.806939L9.96714 3.68901C10.1501 3.87359 10.1488 4.17155 9.96422 4.35452L6.84198 7.44953C6.6574 7.63251 6.35944 7.6312 6.17647 7.44662C5.9935 7.26204 5.99481 6.96408 6.17939 6.78111L8.49478 4.48592L0.663662 4.45162C0.403766 4.45048 0.194001 4.23887 0.195138 3.97898C0.196277 3.71908 0.407887 3.50931 0.667784 3.51045L8.4989 3.54475L6.44178 1.46953Z"
-                                            fill="#2A5EE3"></path>
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
-                <div class="section-wrapper">
-                    <div class="section-content">
-                        <div id="recent-req-tabs" class="custom-wrapper-general">
-                            <ul class="nav nav-tabs req-notify-hold  mb-2">
-                                <li class="nav-item"><a class="nav-link active requesttab" data-bs-toggle="tab"
-                                        id="requestTravel" href="#travel-req111">Travel Request - 315 </a> </li>
-                                <li class="nav-item"><a class="nav-link requesttab" data-bs-toggle="tab"
-                                        id="requestExpense" href="#expwnse-rew222">{{expenseDashboardConfig?.dashboard?.expenseStatement.name}} - {{this.expenseRequesData.length}}</a> </li>
+                <div class="col-md-5">
+                    <div class="title-unique">
+                        <h6 class="mb-3 fw-bold  fs-6">
+                            <div class="title-icon me-2">
+                                <svg width="25" height="25" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="20" height="20" rx="10" fill="#031842"></rect>
+                                    <path
+                                        d="M7.27702 15.5475L9.62158 11.3128L5.03906 10.7575L11.8203 4.45312H12.729L10.3563 8.69352L14.9557 9.24317L8.17448 15.5475H7.27702ZM9.72367 12.8711L12.9915 9.89038L8.96767 9.41131L10.2735 7.12742L7.00329 10.1136L11.0125 10.6004L9.72367 12.8711Z"
+                                        fill="white"></path>
+                                </svg>
+                            </div>
+                            Quick Activities
+                        </h6>
+                    </div>
+
+                    <ul class="quick-menu-links list-unstyled  ps-0">
+                        <li>
+                            <a *ngIf="expenseDashboardConfig?.dashboard?.quickActivities?.[0]?.url"
+                                [routerLink]="expenseDashboardConfig?.dashboard?.quickActivities?.[0]?.url">
+                                <div class="d-flex align-items-center">
+                                    <div class="quick-link-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M12 12.5C11.0717 12.5 10.1815 12.8687 9.52513 13.5251C8.86875 14.1815 8.5 15.0717 8.5 16C8.5 16.9283 8.86875 17.8185 9.52513 18.4749C10.1815 19.1313 11.0717 19.5 12 19.5C12.9283 19.5 13.8185 19.1313 14.4749 18.4749C15.1313 17.8185 15.5 16.9283 15.5 16C15.5 15.0717 15.1313 14.1815 14.4749 13.5251C13.8185 12.8687 12.9283 12.5 12 12.5ZM10.5 16C10.5 15.6022 10.658 15.2206 10.9393 14.9393C11.2206 14.658 11.6022 14.5 12 14.5C12.3978 14.5 12.7794 14.658 13.0607 14.9393C13.342 15.2206 13.5 15.6022 13.5 16C13.5 16.3978 13.342 16.7794 13.0607 17.0607C12.7794 17.342 12.3978 17.5 12 17.5C11.6022 17.5 11.2206 17.342 10.9393 17.0607C10.658 16.7794 10.5 16.3978 10.5 16Z"
+                                                fill="#031842"></path>
+                                            <path
+                                                d="M17.526 5.11716L14.347 0.660156L2.658 9.99816L2.01 9.99116V10.0012H1.5V22.0012H22.5V10.0012H21.538L19.624 4.40216L17.526 5.11716ZM19.425 10.0012H9.397L16.866 7.45516L18.388 6.96816L19.425 10.0012ZM15.55 5.79116L7.84 8.41916L13.946 3.54116L15.55 5.79116ZM3.5 18.1702V13.8302C3.92218 13.6812 4.30565 13.4396 4.62231 13.1231C4.93896 12.8066 5.18077 12.4233 5.33 12.0012H18.67C18.8191 12.4234 19.0609 12.807 19.3775 13.1236C19.6942 13.4403 20.0777 13.6821 20.5 13.8312V18.1712C20.0777 18.3203 19.6942 18.562 19.3775 18.8787C19.0609 19.1953 18.8191 19.5789 18.67 20.0012H5.332C5.18218 19.5788 4.93996 19.1953 4.62302 18.8785C4.30607 18.5618 3.9224 18.3197 3.5 18.1702Z"
+                                                fill="#031842"></path>
+                                        </svg>
+                                    </div>
+                                    <span>Raise Expense Claim</span>
+                                </div>
+                                <svg width="11" height="8" viewBox="0 0 11 8" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M6.44178 1.46953C6.25881 1.28495 6.26011 0.986994 6.44469 0.804024C6.62927 0.621054 6.92723 0.622359 7.1102 0.806939L9.96714 3.68901C10.1501 3.87359 10.1488 4.17155 9.96422 4.35452L6.84198 7.44953C6.6574 7.63251 6.35944 7.6312 6.17647 7.44662C5.9935 7.26204 5.99481 6.96408 6.17939 6.78111L8.49478 4.48592L0.663662 4.45162C0.403766 4.45048 0.194001 4.23887 0.195138 3.97898C0.196277 3.71908 0.407887 3.50931 0.667784 3.51045L8.4989 3.54475L6.44178 1.46953Z"
+                                        fill="#031842"></path>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Travel/RaiseRequest">
+                                <div class="d-flex align-items-center   ">
+                                    <div class="quick-link-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M17.8 19.2L16 11L19.5 7.5C21 6 21.5 4 21 3C20 2.5 18 3 16.5 4.5L13 8L4.8 6.2C4.3 6.1 3.9 6.3 3.7 6.7L3.4 7.2C3.2 7.7 3.3 8.2 3.7 8.5L9 12L7 15H4L3 16L6 18L8 21L9 20V17L12 15L15.5 20.3C15.8 20.7 16.3 20.8 16.8 20.6L17.3 20.4C17.7 20.1 17.9 19.7 17.8 19.2Z"
+                                                stroke="#1621A1" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round"></path>
+                                        </svg>
+                                    </div>
+                                    <span>Travel Request</span>
+                                </div>
+                                <svg width="11" height="8" viewBox="0 0 11 8" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M6.44178 1.46953C6.25881 1.28495 6.26011 0.986994 6.44469 0.804024C6.62927 0.621054 6.92723 0.622359 7.1102 0.806939L9.96714 3.68901C10.1501 3.87359 10.1488 4.17155 9.96422 4.35452L6.84198 7.44953C6.6574 7.63251 6.35944 7.6312 6.17647 7.44662C5.9935 7.26204 5.99481 6.96408 6.17939 6.78111L8.49478 4.48592L0.663662 4.45162C0.403766 4.45048 0.194001 4.23887 0.195138 3.97898C0.196277 3.71908 0.407887 3.50931 0.667784 3.51045L8.4989 3.54475L6.44178 1.46953Z"
+                                        fill="#2A5EE3"></path>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-12 ">
+                    <div id="recent-req-tabs" class="custom-wrapper-general">
+
+                        <div class="position-relative">
+
+                            <ul class="nav nav-tabs line-tab mb-lg-4 mb-md-4 mb-sm-3 mb-3" id="linetab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active requesttab" id="travel-req-tab" data-bs-toggle="tab"
+                                        data-bs-target="#travel-req" type="button" role="tab" aria-controls="travel-req"
+                                        aria-selected="true">Travel Request - 42 </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link requesttab" id="expense-state-tab" data-bs-toggle="tab"
+                                        data-bs-target="#expense-state" type="button" role="tab"
+                                        aria-controls="expense-state" aria-selected="false">
+                                        {{expenseDashboardConfig?.dashboard?.expenseStatement.name}}
+                                        - {{this.expenseRequesData.length}} </button>
+                                </li>
                             </ul>
-                            <div class="tab-content">
-                                <div id="travel-req111" class="tab-pane pt-0 active">
+
+
+
+                        </div>
+
+                        <div class="tab-content common-tab-content" id="linetabcontent">
+                            <div id="travel-req" role="tabpanel" aria-labelledby="travel-req-tab"
+                                class="tab-pane fade show active pt-0  position-relative">
+
+                                <div class="table-responsive">
+
                                     <div class="row">
-                                        <div class="col-md-12 master-addr-set search-align-rt">
-                                            <div class="table-responsive">
-                                                <div id="tblMyTravelRequest_wrapper"
-                                                    class="dataTables_wrapper dt-bootstrap4 no-footer">
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <div class="dt-buttons"><button
-                                                                    class="dt-button buttons-excel buttons-html5"
-                                                                    tabindex="0" aria-controls="tblMyTravelRequest"
-                                                                    type="button"><span>Excel</span></button> </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div id="tblMyTravelRequest_filter"
-                                                                class="dataTables_filter"><label>Search:<input
-                                                                        type="search"
-                                                                        class="form-control form-control-sm"
-                                                                        placeholder=""
-                                                                        aria-controls="tblMyTravelRequest"></label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <table
-                                                                class="table table-travelreq table-cust-modeA filterColumnTableVer2 recent-exp-req table table-bordered table-striped table-cust-new d-table dataTable no-footer"
-                                                                id="tblMyTravelRequest" role="grid">
-                                                                <thead>
-                                                                    <tr role="row">
-                                                                        <th class="db-tr-rep sorting_asc" rowspan="1"
-                                                                            colspan="1" aria-label="Sl.No."
-                                                                            style="width: 33.575px;"><span>Sl.No.</span>
-                                                                        </th>
-                                                                        <th class="db-tr-rep sorting" tabindex="0"
-                                                                            aria-controls="tblMyTravelRequest"
-                                                                            rowspan="1" colspan="1"
-                                                                            aria-label="Requester: activate to sort column ascending"
-                                                                            style="width: 219.738px;">
-                                                                            <span>Requester</span>
-                                                                        </th>
-                                                                        <th class="db-tr-rep sorting" tabindex="0"
-                                                                            aria-controls="tblMyTravelRequest"
-                                                                            rowspan="1" colspan="1"
-                                                                            aria-label="Request Number: activate to sort column ascending"
-                                                                            style="width: 148.75px;"><span>Request
-                                                                                Number</span>
-                                                                        </th>
-                                                                        <th class="db-tr-rep sorting" tabindex="0"
-                                                                            aria-controls="tblMyTravelRequest"
-                                                                            rowspan="1" colspan="1"
-                                                                            aria-label="Request Type: activate to sort column ascending"
-                                                                            style="width: 130.375px;"><span>Request
-                                                                                Type</span>
-                                                                        </th>
-                                                                        <th class="db-tr-rep sorting" tabindex="0"
-                                                                            aria-controls="tblMyTravelRequest"
-                                                                            rowspan="1" colspan="1"
-                                                                            aria-label="Date of Travel: activate to sort column ascending"
-                                                                            style="width: 140.113px;"><span>Date of
-                                                                                Travel</span>
-                                                                        </th>
-                                                                        <th class="db-tr-rep sorting" tabindex="0"
-                                                                            aria-controls="tblMyTravelRequest"
-                                                                            rowspan="1" colspan="1"
-                                                                            aria-label="Service For: activate to sort column ascending"
-                                                                            style="width: 166.663px;"><span>Service
-                                                                                For</span>
-                                                                        </th>
-                                                                        <th class="db-tr-rep sorting" tabindex="0"
-                                                                            aria-controls="tblMyTravelRequest"
-                                                                            rowspan="1" colspan="1"
-                                                                            aria-label="Request For: activate to sort column ascending"
-                                                                            style="width: 103px;"><span>Request
-                                                                                For</span>
-                                                                        </th>
-                                                                        <th class="db-tr-rep sorting" tabindex="0"
-                                                                            aria-controls="tblMyTravelRequest"
-                                                                            rowspan="1" colspan="1"
-                                                                            aria-label="Policy Violation: activate to sort column ascending"
-                                                                            style="width: 129.075px;"><span>Policy
-                                                                                Violation</span>
-                                                                        </th>
-                                                                        <th class="db-tr-rep sorting" tabindex="0"
-                                                                            aria-controls="tblMyTravelRequest"
-                                                                            rowspan="1" colspan="1"
-                                                                            aria-label="Status: activate to sort column ascending"
-                                                                            style="width: 114.675px;">
-                                                                            <span>Status</span>
-                                                                        </th>
-                                                                        <th class="db-tr-rep sorting" tabindex="0"
-                                                                            aria-controls="tblMyTravelRequest"
-                                                                            rowspan="1" colspan="1"
-                                                                            aria-label="Action: activate to sort column ascending"
-                                                                            style="width: 62.0375px;">
-                                                                            <span>Action</span>
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr class="odd">
-                                                                        <td align="center" class="sorting_1">1</td>
-                                                                        <td>Priya Sathiyajith | 100948</td>
-                                                                        <td>TR/2024/02/0000022</td>
-                                                                        <td>Domestic</td>
-                                                                        <td>29-Feb-2024 18:26 <br> 02-Mar-2024 23:59
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="tbl-ww1">
-                                                                                Ticket | Accommodation | Cab
-                                                                            </span>
-                                                                        </td>
-                                                                        <td class="text-center">Self</td>
-                                                                        <td class="text-center">
-                                                                            <span class="btn-edit-custom11 text-red"
-                                                                                data-bs-toggle="tooltip" title=""
-                                                                                data-bs-original-title="Policy Violation"
-                                                                                aria-label="Policy Violation">
-                                                                                <span class="font-20">
-                                                                                    <svg width="20" height="20"
-                                                                                        viewBox="0 0 20 20" fill="none"
-                                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                                        <circle cx="10" cy="10" r="10"
-                                                                                            fill="#E63535"></circle>
-                                                                                        <path fill-rule="evenodd"
-                                                                                            clip-rule="evenodd"
-                                                                                            d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
-                                                                                            fill="white"></path>
-                                                                                    </svg>
-                                                                                </span>
-                                                                            </span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="status-green status-common">
-                                                                                COMPLETED
-                                                                            </span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="TBL-actions">
-                                                                                <ul class="action-icons">
-                                                                                    <li><a href="#"
-                                                                                            class="btn-icon-action btn-icon-view"><span
-                                                                                                data-bs-toggle="tooltip"
-                                                                                                title=""
-                                                                                                class="fa-eye   fa-regular"
-                                                                                                data-bs-original-title="View"
-                                                                                                aria-label="View"></span></a>
-                                                                                    </li>
-                                                                                    <li><a href="#"
-                                                                                            class="btn-icon-action btn-icon-view"><span
-                                                                                                data-bs-toggle="tooltip"
-                                                                                                title=""
-                                                                                                class="fa-regular fa-file-pdf"
-                                                                                                data-bs-original-title="PDF"
-                                                                                                aria-label="PDF"></span></a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a href="#"
-                                                                                            class="btn-icon-action btn-icon-view p-relative"
-                                                                                            requestid="22"
-                                                                                            requesttype="Travel"
-                                                                                            id="communicationThread">
-                                                                                            <span data-toggle="tooltip"
-                                                                                                title="Communication"
-                                                                                                class="fa-comment-dots fa-regular"></span>
-                                                                                            <div
-                                                                                                class="communication-count">
-                                                                                                <span
-                                                                                                    id="CommCountTravel22">0</span>
-                                                                                            </div>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                </ul>
+                                        <div class="col-sm-6">
+                                            <div class="dt-buttons"><button
+                                                    class="dt-button buttons-excel buttons-html5" tabindex="0"
+                                                    aria-controls="tblMyTravelRequest"
+                                                    type="button"><span>Excel</span></button> </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div id="tblMyTravelRequest_filter" class="dataTables_filter">
+                                                <label>Search:<input type="search" class="form-control form-control-sm"
+                                                        placeholder="" aria-controls="tblMyTravelRequest"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table
+                                                class=" table table-travelreq mobile-card-view-datatable table-cust-modeA filterColumnTableVer2 recent-exp-req table table-bordered table-striped table-cust-new d-table no-footer dataTable"
+                                                id="tblMyTravelRequest" role="grid">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="db-tr-rep"><span>Sl.No.</span></th>
+                                                        <th class="db-tr-rep"><span>Requester</span></th>
+                                                        <th class="db-tr-rep"><span>Request Number</span></th>
+                                                        <th class="db-tr-rep"><span>Request Type</span></th>
+                                                        <th class="db-tr-rep"><span>Date of Travel</span></th>
+                                                        <th class="db-tr-rep"><span>Service For</span></th>
+                                                        <th class="db-tr-rep"><span>Request For</span></th>
+                                                        <th class="db-tr-rep"><span>Policy Violation</span></th>
+                                                        <th class="db-tr-rep"><span>Status</span></th>
+                                                        <th class="db-tr-rep"><span>Action</span></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td data-label="Sl.No." align="center">1</td>
+                                                        <td data-label="Requester">Priya Sathiyajith | 100948</td>
+                                                        <td data-label="Request Number">TR/2024/02/0000022</td>
+                                                        <td data-label="Request Type ">Domestic</td>
+                                                        <td data-label="Date of Travel">
+                                                            <ul class="list-unstyled">
+                                                                <li> 29-Feb-2024 <span class="opacity-50"> 18:26 </span>
+                                                                </li>
+                                                                <li> 02-Mar-2024 <span class="opacity-50"> 23:59 </span>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                        <td data-label="Service For">
+                                                            <span class="tbl-ww1">
+                                                                Ticket | Accommodation | Cab
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Request For">Self</td>
+                                                        <td data-label="Policy Violation">
+                                                            <span class="pol-vio text-red" data-bs-toggle="tooltip"
+                                                                title="Policy Violation"
+                                                                data-bs-original-title="Policy Violation"
+                                                                aria-label="Policy Violation">
+                                                                <span class="font-20">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="10" cy="10" r="10" fill="#E63535" />
+                                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                            d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
+                                                                            fill="white" />
+                                                                    </svg>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Status">
+                                                            <span class="status-green status-common"
+                                                                data-bs-toggle="tooltip" title="Completed"
+                                                                data-bs-original-title="Completed"
+                                                                aria-label="Completed">
+                                                                COMPLETED
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="TBL-actions">
+                                                                <ul class="action-icons">
+                                                                    <li><a href="claim-expense-preview.html"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="View"
+                                                                                class="fa-eye   fa-regular"></span></a>
+                                                                    </li>
+                                                                    <li><a href="#"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="PDF"
+                                                                                class="fa-regular fa-file-pdf"></span></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                                            RequestId="22" RequestType="Travel"
+                                                                            id="communicationThread">
+                                                                            <span data-toggle="tooltip"
+                                                                                title="Communication"
+                                                                                class="fa-comment-dots fa-regular"></span>
+                                                                            <div class="communication-count"><span
+                                                                                    id="CommCountTravel22">0</span>
                                                                             </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr class="even">
-                                                                        <td align="center" class="sorting_1">2</td>
-                                                                        <td>Priya Sathiyajith | 100948</td>
-                                                                        <td>TR/2024/03/0000024</td>
-                                                                        <td>Domestic</td>
-                                                                        <td>01-Mar-2024 13:59 <br> 04-Mar-2024 06:00
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="tbl-ww1">
-                                                                                Accommodation
-                                                                            </span>
-                                                                        </td>
-                                                                        <td class="text-center">Self</td>
-                                                                        <td class="text-center">
-                                                                            <span class="btn-edit-custom11 text-green"
-                                                                                data-bs-toggle="tooltip" title=""
-                                                                                data-bs-original-title="No Policy Violation"
-                                                                                aria-label="No Policy Violation">
-                                                                                <span class="font-20">
-                                                                                    <svg width="20" height="20"
-                                                                                        viewBox="0 0 20 20" fill="none"
-                                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                                        <circle cx="10" cy="10" r="10"
-                                                                                            fill="#05A660"></circle>
-                                                                                        <path
-                                                                                            d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
-                                                                                            stroke="#F7F7FC"
-                                                                                            stroke-width="2"
-                                                                                            stroke-linecap="round"
-                                                                                            stroke-linejoin="round">
-                                                                                        </path>
-                                                                                    </svg>
-                                                                                </span>
-                                                                            </span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="status-green status-common">
-                                                                                COMPLETED
-                                                                            </span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="TBL-actions">
-                                                                                <ul class="action-icons">
-                                                                                    <li><a href="#"
-                                                                                            class="btn-icon-action btn-icon-view"><span
-                                                                                                data-bs-toggle="tooltip"
-                                                                                                title=""
-                                                                                                class="fa-eye   fa-regular"
-                                                                                                data-bs-original-title="View"
-                                                                                                aria-label="View"></span></a>
-                                                                                    </li>
-                                                                                    <li><a href="#"
-                                                                                            class="btn-icon-action btn-icon-view"><span
-                                                                                                data-bs-toggle="tooltip"
-                                                                                                title=""
-                                                                                                class="fa-regular fa-file-pdf"
-                                                                                                data-bs-original-title="PDF"
-                                                                                                aria-label="PDF"></span></a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a href="#"
-                                                                                            class="btn-icon-action btn-icon-view p-relative"
-                                                                                            requestid="24"
-                                                                                            requesttype="Travel"
-                                                                                            id="communicationThread">
-                                                                                            <span data-toggle="tooltip"
-                                                                                                title="Communication"
-                                                                                                class="fa-comment-dots fa-regular"></span>
-                                                                                            <div
-                                                                                                class="communication-count">
-                                                                                                <span
-                                                                                                    id="CommCountTravel24">0</span>
-                                                                                            </div>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr class="odd">
-                                                                        <td align="center" class="sorting_1">3</td>
-                                                                        <td>Priya Sathiyajith | 100948</td>
-                                                                        <td>TR/2024/03/0000025</td>
-                                                                        <td>Domestic</td>
-                                                                        <td>01-Mar-2024 16:26 <br> 04-Mar-2024 12:30
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="tbl-ww1">
-                                                                                Ticket | Accommodation
-                                                                            </span>
-                                                                        </td>
-                                                                        <td class="text-center">Self</td>
-                                                                        <td class="text-center">
-                                                                            <span class="btn-edit-custom11 text-red"
-                                                                                data-bs-toggle="tooltip" title=""
-                                                                                data-bs-original-title="Policy Violation"
-                                                                                aria-label="Policy Violation">
-                                                                                <span class="font-20">
-                                                                                    <svg width="20" height="20"
-                                                                                        viewBox="0 0 20 20" fill="none"
-                                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                                        <circle cx="10" cy="10" r="10"
-                                                                                            fill="#E63535"></circle>
-                                                                                        <path fill-rule="evenodd"
-                                                                                            clip-rule="evenodd"
-                                                                                            d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
-                                                                                            fill="white"></path>
-                                                                                    </svg>
-                                                                                </span>
-                                                                            </span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="status-blue status-common">
-                                                                                PENDING FOR OPTION
-                                                                            </span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="TBL-actions">
-                                                                                <ul class="action-icons">
-                                                                                    <li><a href="#"
-                                                                                            class="btn-icon-action btn-icon-view"><span
-                                                                                                data-bs-toggle="tooltip"
-                                                                                                title=""
-                                                                                                class="fa-eye   fa-regular"
-                                                                                                data-bs-original-title="View"
-                                                                                                aria-label="View"></span></a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a href="#"
-                                                                                            class="btn-icon-action btn-icon-view p-relative"
-                                                                                            requestid="25"
-                                                                                            requesttype="Travel"
-                                                                                            id="communicationThread">
-                                                                                            <span data-toggle="tooltip"
-                                                                                                title="Communication"
-                                                                                                class="fa-comment-dots fa-regular"></span>
-                                                                                            <div
-                                                                                                class="communication-count">
-                                                                                                <span
-                                                                                                    id="CommCountTravel25">0</span>
-                                                                                            </div>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr class="even">
-                                                                        <td align="center" class="sorting_1">4</td>
-                                                                        <td>Priya Sathiyajith | 100948</td>
-                                                                        <td>TR/2024/03/0000026</td>
-                                                                        <td>Domestic</td>
-                                                                        <td>01-Mar-2024 19:38 <br> 04-Mar-2024 23:59
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="tbl-ww1">
-                                                                                Ticket | Accommodation | Cab
-                                                                            </span>
-                                                                        </td>
-                                                                        <td class="text-center">Self</td>
-                                                                        <td class="text-center">
-                                                                            <span class="btn-edit-custom11 text-red"
-                                                                                data-bs-toggle="tooltip" title=""
-                                                                                data-bs-original-title="Policy Violation"
-                                                                                aria-label="Policy Violation">
-                                                                                <span class="font-20">
-                                                                                    <svg width="20" height="20"
-                                                                                        viewBox="0 0 20 20" fill="none"
-                                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                                        <circle cx="10" cy="10" r="10"
-                                                                                            fill="#E63535"></circle>
-                                                                                        <path fill-rule="evenodd"
-                                                                                            clip-rule="evenodd"
-                                                                                            d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
-                                                                                            fill="white"></path>
-                                                                                    </svg>
-                                                                                </span>
-                                                                            </span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="status-green status-common">
-                                                                                COMPLETED
-                                                                            </span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="TBL-actions">
-                                                                                <ul class="action-icons">
-                                                                                    <li><a href="#"
-                                                                                            class="btn-icon-action btn-icon-view"><span
-                                                                                                data-bs-toggle="tooltip"
-                                                                                                title=""
-                                                                                                class="fa-eye   fa-regular"
-                                                                                                data-bs-original-title="View"
-                                                                                                aria-label="View"></span></a>
-                                                                                    </li>
-                                                                                    <li><a href="#"
-                                                                                            class="btn-icon-action btn-icon-view"><span
-                                                                                                data-bs-toggle="tooltip"
-                                                                                                title=""
-                                                                                                class="fa-regular fa-file-pdf"
-                                                                                                data-bs-original-title="PDF"
-                                                                                                aria-label="PDF"></span></a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a href="#"
-                                                                                            class="btn-icon-action btn-icon-view p-relative"
-                                                                                            requestid="26"
-                                                                                            requesttype="Travel"
-                                                                                            id="communicationThread">
-                                                                                            <span data-toggle="tooltip"
-                                                                                                title="Communication"
-                                                                                                class="fa-comment-dots fa-regular"></span>
-                                                                                            <div
-                                                                                                class="communication-count">
-                                                                                                <span
-                                                                                                    id="CommCountTravel26">0</span>
-                                                                                            </div>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr class="odd">
-                                                                        <td align="center" class="sorting_1">5</td>
-                                                                        <td>Priya Sathiyajith | 100948</td>
-                                                                        <td>TR/2024/03/0000027</td>
-                                                                        <td>Domestic</td>
-                                                                        <td>02-Mar-2024 15:26 <br> 04-Mar-2024 23:59
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="tbl-ww1">
-                                                                                Ticket | Accommodation | Cab | Advance
-                                                                            </span>
-                                                                        </td>
-                                                                        <td class="text-center">Group</td>
-                                                                        <td class="text-center">
-                                                                            <span class="btn-edit-custom11 text-green"
-                                                                                data-bs-toggle="tooltip" title=""
-                                                                                data-bs-original-title="No Policy Violation"
-                                                                                aria-label="No Policy Violation">
-                                                                                <span class="font-20">
-                                                                                    <svg width="20" height="20"
-                                                                                        viewBox="0 0 20 20" fill="none"
-                                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                                        <circle cx="10" cy="10" r="10"
-                                                                                            fill="#05A660"></circle>
-                                                                                        <path
-                                                                                            d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
-                                                                                            stroke="#F7F7FC"
-                                                                                            stroke-width="2"
-                                                                                            stroke-linecap="round"
-                                                                                            stroke-linejoin="round">
-                                                                                        </path>
-                                                                                    </svg>
-                                                                                </span>
-                                                                            </span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="status-blue status-common">
-                                                                                PENDING FOR OPTION
-                                                                            </span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="TBL-actions">
-                                                                                <ul class="action-icons">
-                                                                                    <li><a href="#"
-                                                                                            class="btn-icon-action btn-icon-cancel"><span
-                                                                                                data-bs-toggle="tooltip"
-                                                                                                title=""
-                                                                                                class="fa-solid fa-xmark"
-                                                                                                aria-label="Cancel Request"
-                                                                                                data-bs-original-title="Cancel Request"></span></a>
-                                                                                    </li>
-                                                                                    <li><a href="#"
-                                                                                            class="btn-icon-action btn-icon-view"><span
-                                                                                                data-bs-toggle="tooltip"
-                                                                                                title=""
-                                                                                                class="fa-eye   fa-regular"
-                                                                                                data-bs-original-title="View"
-                                                                                                aria-label="View"></span></a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a href="#"
-                                                                                            class="btn-icon-action btn-icon-view p-relative"
-                                                                                            requestid="27"
-                                                                                            requesttype="Travel"
-                                                                                            id="communicationThread">
-                                                                                            <span data-toggle="tooltip"
-                                                                                                title="Communication"
-                                                                                                class="fa-comment-dots fa-regular"></span>
-                                                                                            <div
-                                                                                                class="communication-count">
-                                                                                                <span
-                                                                                                    id="CommCountTravel27">0</span>
-                                                                                            </div>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <div class="dataTables_length"
-                                                                id="tblMyTravelRequest_length">
-                                                                <label>
-                                                                    Show
-                                                                    <select name="tblMyTravelRequest_length"
-                                                                        aria-controls="tblMyTravelRequest"
-                                                                        class="custom-select custom-select-sm form-control form-control-sm">
-                                                                        <option value="5">5</option>
-                                                                        <option value="10">10</option>
-                                                                        <option value="15">15</option>
-                                                                        <option value="-1">All</option>
-                                                                    </select>
-                                                                    entries
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="dataTables_paginate paging_simple_numbers"
-                                                                id="tblMyTravelRequest_paginate">
-                                                                <ul class="pagination">
-                                                                    <li class="paginate_button page-item previous disabled"
-                                                                        id="tblMyTravelRequest_previous"><a href="#"
-                                                                            aria-controls="tblMyTravelRequest"
-                                                                            data-dt-idx="0" tabindex="0"
-                                                                            class="page-link">Previous</a></li>
-                                                                    <li class="paginate_button page-item active"><a
-                                                                            href="#" aria-controls="tblMyTravelRequest"
-                                                                            data-dt-idx="1" tabindex="0"
-                                                                            class="page-link">1</a></li>
-                                                                    <li class="paginate_button page-item "><a href="#"
-                                                                            aria-controls="tblMyTravelRequest"
-                                                                            data-dt-idx="2" tabindex="0"
-                                                                            class="page-link">2</a></li>
-                                                                    <li class="paginate_button page-item next"
-                                                                        id="tblMyTravelRequest_next"><a href="#"
-                                                                            aria-controls="tblMyTravelRequest"
-                                                                            data-dt-idx="3" tabindex="0"
-                                                                            class="page-link">Next</a></li>
+                                                                        </a>
+                                                                    </li>
                                                                 </ul>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-label="Sl.No." align="center">2</td>
+                                                        <td data-label="Requester">Priya Sathiyajith | 100948</td>
+                                                        <td data-label="Request Number">TR/2024/03/0000024</td>
+                                                        <td data-label="Request Type ">Domestic</td>
+                                                        <td data-label="Date of Travel">
+                                                            <ul class="list-unstyled">
+                                                                <li> 29-Feb-2024 <span class="opacity-50"> 18:26 </span>
+                                                                </li>
+                                                                <li> 02-Mar-2024 <span class="opacity-50"> 23:59 </span>
+                                                                </li>
+                                                            </ul>
+
+                                                        </td>
+                                                        <td data-label="Service For">
+                                                            <span class="tbl-ww1">
+                                                                Accommodation
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Request For">Self</td>
+                                                        <td data-label="Policy Violation">
+
+                                                            <span class="pol-vio text-green" data-bs-toggle="tooltip"
+                                                                title="No Policy Violation"
+                                                                data-bs-original-title="No Policy Violation"
+                                                                aria-label="No Policy Violation">
+                                                                <span class="font-20">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="10" cy="10" r="10" fill="#05A660" />
+                                                                        <path d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
+                                                                            stroke="#F7F7FC" stroke-width="2"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round" />
+                                                                    </svg>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Status">
+                                                            <span class="status-red status-common"
+                                                                data-bs-toggle="tooltip" title="Rejected"
+                                                                data-bs-original-title="Rejected" aria-label="Rejected">
+                                                                REJECTED
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="TBL-actions">
+                                                                <ul class="action-icons">
+                                                                    <li><a href="claim-expense-preview.html"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="View"
+                                                                                class="fa-eye   fa-regular"></span></a>
+                                                                    </li>
+                                                                    <li><a href="#"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="PDF"
+                                                                                class="fa-regular fa-file-pdf"></span></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                                            RequestId="24" RequestType="Travel"
+                                                                            id="communicationThread">
+                                                                            <span data-toggle="tooltip"
+                                                                                title="Communication"
+                                                                                class="fa-comment-dots fa-regular"></span>
+                                                                            <div class="communication-count"><span
+                                                                                    id="CommCountTravel24">0</span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-label="Sl.No." align="center">3</td>
+                                                        <td data-label="Requester">Priya Sathiyajith | 100948</td>
+                                                        <td data-label="Request Number">TR/2024/03/0000025</td>
+                                                        <td data-label="Request Type ">Domestic</td>
+                                                        <td data-label="Date of Travel">
+
+                                                            <ul class="list-unstyled">
+                                                                <li> 29-Feb-2024 <span class="opacity-50"> 18:26 </span>
+                                                                </li>
+                                                                <li> 02-Mar-2024 <span class="opacity-50"> 23:59 </span>
+                                                                </li>
+                                                            </ul>
+
+                                                        </td>
+                                                        <td data-label="Service For">
+                                                            <span class="tbl-ww1">
+                                                                Ticket | Accommodation
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Request For">Self</td>
+                                                        <td data-label="Policy Violation">
+                                                            <span class="pol-vio text-red" data-bs-toggle="tooltip"
+                                                                title="Policy Violation"
+                                                                data-bs-original-title="Policy Violation"
+                                                                aria-label="Policy Violation">
+                                                                <span class="font-20">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="10" cy="10" r="10" fill="#E63535" />
+                                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                            d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
+                                                                            fill="white" />
+                                                                    </svg>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Status">
+                                                            <span class="status-grey status-common"
+                                                                data-bs-toggle="tooltip" title="Pending for Approvals"
+                                                                data-bs-original-title="Pending for Approvals"
+                                                                aria-label="Pending for Approvals">
+                                                                PENDING FOR APPROVALS
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="TBL-actions">
+                                                                <ul class="action-icons">
+                                                                    <li><a href="claim-expense-preview.html"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="View"
+                                                                                class="fa-eye   fa-regular"></span></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                                            RequestId="25" RequestType="Travel"
+                                                                            id="communicationThread">
+                                                                            <span data-toggle="tooltip"
+                                                                                title="Communication"
+                                                                                class="fa-comment-dots fa-regular"></span>
+                                                                            <div class="communication-count"><span
+                                                                                    id="CommCountTravel25">0</span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-label="Sl.No." align="center">4</td>
+                                                        <td data-label="Requester">Priya Sathiyajith | 100948</td>
+                                                        <td data-label="Request Number">TR/2024/03/0000026</td>
+                                                        <td data-label="Request Type ">Domestic</td>
+                                                        <td data-label="Date of Travel">
+
+                                                            <ul class="list-unstyled">
+                                                                <li> 29-Feb-2024 <span class="opacity-50"> 18:26 </span>
+                                                                </li>
+                                                                <li> 02-Mar-2024 <span class="opacity-50"> 23:59 </span>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                        <td data-label="Service For">
+                                                            <span class="tbl-ww1">
+                                                                Ticket | Accommodation | Cab
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Request For">Self</td>
+                                                        <td data-label="Policy Violation">
+                                                            <span class="pol-vio text-red" data-bs-toggle="tooltip"
+                                                                title="Policy Violation"
+                                                                data-bs-original-title="Policy Violation"
+                                                                aria-label="Policy Violation">
+                                                                <span class="font-20">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="10" cy="10" r="10" fill="#E63535" />
+                                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                            d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
+                                                                            fill="white" />
+                                                                    </svg>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Status">
+                                                            <span class="status-green status-common"
+                                                                data-bs-toggle="tooltip" title="Budget Verification"
+                                                                data-bs-original-title="Budget Verification"
+                                                                aria-label="Budget Verification">
+                                                                BUDEGET VERIFICATION
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="TBL-actions">
+                                                                <ul class="action-icons">
+                                                                    <li><a href="claim-expense-preview.html"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="View"
+                                                                                class="fa-eye   fa-regular"></span></a>
+                                                                    </li>
+                                                                    <li><a href="#"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="PDF"
+                                                                                class="fa-regular fa-file-pdf"></span></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                                            RequestId="26" RequestType="Travel"
+                                                                            id="communicationThread">
+                                                                            <span data-toggle="tooltip"
+                                                                                title="Communication"
+                                                                                class="fa-comment-dots fa-regular"></span>
+                                                                            <div class="communication-count"><span
+                                                                                    id="CommCountTravel26">0</span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-label="Sl.No." align="center">5</td>
+                                                        <td data-label="Requester">Priya Sathiyajith | 100948</td>
+                                                        <td data-label="Request Number">TR/2024/03/0000027</td>
+                                                        <td data-label="Request Type ">Domestic</td>
+                                                        <td data-label="Date of Travel">
+
+                                                            <ul class="list-unstyled">
+                                                                <li> 29-Feb-2024 <span class="opacity-50"> 18:26 </span>
+                                                                </li>
+                                                                <li> 02-Mar-2024 <span class="opacity-50"> 23:59 </span>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                        <td data-label="Service For">
+                                                            <span class="tbl-ww1">
+                                                                Ticket | Accommodation | Cab | Advance
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Request For">Group</td>
+                                                        <td data-label="Policy Violation">
+                                                            <span class="pol-vio text-green" data-bs-toggle="tooltip"
+                                                                title="No Policy Violation"
+                                                                data-bs-original-title="No Policy Violation"
+                                                                aria-label="No Policy Violation">
+                                                                <span class="font-20">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="10" cy="10" r="10" fill="#05A660" />
+                                                                        <path d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
+                                                                            stroke="#F7F7FC" stroke-width="2"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round" />
+                                                                    </svg>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Status">
+                                                            <span class="status-orange status-common"
+                                                                data-bs-toggle="tooltip" title="Seek Clarification"
+                                                                data-bs-original-title="Seek Clarification"
+                                                                aria-label="Seek Clarification ">
+                                                                SEEK CLARIFICATION
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="TBL-actions">
+                                                                <ul class="action-icons">
+                                                                    <li><a href="claim-expense-preview.html"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="View"
+                                                                                class="fa-eye   fa-regular"></span></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                                            RequestId="27" RequestType="Travel"
+                                                                            id="communicationThread">
+                                                                            <span data-toggle="tooltip"
+                                                                                title="Communication"
+                                                                                class="fa-comment-dots fa-regular"></span>
+                                                                            <div class="communication-count"><span
+                                                                                    id="CommCountTravel27">0</span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li><a href="#"
+                                                                            class="btn-icon-action btn-icon-cancel"><span
+                                                                                data-bs-toggle="tooltip"
+                                                                                title="Cancel Request"
+                                                                                class="fa-solid fa-xmark"
+                                                                                aria-label="Cancel Request"></span></a>
+                                                                    </li>
+
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-label="Sl.No." align="center">6</td>
+                                                        <td data-label="Requester">Priya Sathiyajith | 100948</td>
+                                                        <td data-label="Request Number">TR/2024/03/0000028</td>
+                                                        <td data-label="Request Type ">International</td>
+                                                        <td data-label="Date of Travel">
+
+                                                            <ul class="list-unstyled">
+                                                                <li> 29-Feb-2024 <span class="opacity-50"> 18:26 </span>
+                                                                </li>
+                                                                <li> 02-Mar-2024 <span class="opacity-50"> 23:59 </span>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                        <td data-label="Service For">
+                                                            <span class="tbl-ww1">
+                                                                Ticket | Accommodation | Cab
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Request For">Self</td>
+                                                        <td data-label="Policy Violation">
+                                                            <span class="pol-vio text-red" data-bs-toggle="tooltip"
+                                                                title="Policy Violation"
+                                                                data-bs-original-title="Policy Violation"
+                                                                aria-label="Policy Violation">
+                                                                <span class="font-20">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="10" cy="10" r="10" fill="#E63535" />
+                                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                            d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
+                                                                            fill="white" />
+                                                                    </svg>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Status">
+                                                            <span class="status-green status-common"
+                                                                data-bs-toggle="tooltip"
+                                                                title="Approved Booking Pending"
+                                                                data-bs-original-title="Approved Booking Pending"
+                                                                aria-label="Approved Booking Pending">
+                                                                Approved-Booking Pending
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="TBL-actions">
+                                                                <ul class="action-icons">
+                                                                    <li><a href="claim-expense-preview.html"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="View"
+                                                                                class="fa-eye   fa-regular"></span></a>
+                                                                    </li>
+                                                                    <li><a href="#"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="PDF"
+                                                                                class="fa-regular fa-file-pdf"></span></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                                            RequestId="28" RequestType="Travel"
+                                                                            id="communicationThread">
+                                                                            <span data-toggle="tooltip"
+                                                                                title="Communication"
+                                                                                class="fa-comment-dots fa-regular"></span>
+                                                                            <div class="communication-count"><span
+                                                                                    id="CommCountTravel28">0</span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-label="Sl.No." align="center">7</td>
+                                                        <td data-label="Requester">Priya Sathiyajith | 100948</td>
+                                                        <td data-label="Request Number">TR/2024/03/0000031</td>
+                                                        <td data-label="Request Type ">Domestic</td>
+                                                        <td data-label="Date of Travel">
+                                                            <ul class="list-unstyled">
+                                                                <li> 29-Feb-2024 <span class="opacity-50"> 18:26 </span>
+                                                                </li>
+                                                                <li> 02-Mar-2024 <span class="opacity-50"> 23:59 </span>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                        <td data-label="Service For">
+                                                            <span class="tbl-ww1">
+                                                                Accommodation
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Request For">Self</td>
+                                                        <td data-label="Policy Violation">
+                                                            <span class="pol-vio text-green" data-bs-toggle="tooltip"
+                                                                title="No Policy Violation"
+                                                                data-bs-original-title="No Policy Violation"
+                                                                aria-label="No Policy Violation">
+                                                                <span class="font-20">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="10" cy="10" r="10" fill="#05A660" />
+                                                                        <path d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
+                                                                            stroke="#F7F7FC" stroke-width="2"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round" />
+                                                                    </svg>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Status">
+                                                            <span class="status-grey status-common"
+                                                                data-bs-toggle="tooltip" title="Pending for Option"
+                                                                data-bs-original-title="Pending for Option"
+                                                                aria-label="Pending for Option">
+                                                                PENDING FOR OPTION
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="TBL-actions">
+                                                                <ul class="action-icons">
+                                                                    <li><a href="claim-expense-preview.html"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="View"
+                                                                                class="fa-eye   fa-regular"></span></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                                            RequestId="31" RequestType="Travel"
+                                                                            id="communicationThread">
+                                                                            <span data-toggle="tooltip"
+                                                                                title="Communication"
+                                                                                class="fa-comment-dots fa-regular"></span>
+                                                                            <div class="communication-count"><span
+                                                                                    id="CommCountTravel31">2</span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-label="Sl.No." align="center">8</td>
+                                                        <td data-label="Requester">Priya Sathiyajith | 100948</td>
+                                                        <td data-label="Request Number">TR/2024/03/0000032</td>
+                                                        <td data-label="Request Type ">Domestic</td>
+                                                        <td data-label="Date of Travel">
+
+                                                            <ul class="list-unstyled">
+                                                                <li> 29-Feb-2024 <span class="opacity-50"> 18:26 </span>
+                                                                </li>
+                                                                <li> 02-Mar-2024 <span class="opacity-50"> 23:59 </span>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                        <td data-label="Service For">
+                                                            <span class="tbl-ww1">
+                                                                Accommodation
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Request For">Self</td>
+                                                        <td data-label="Policy Violation">
+                                                            <span class="pol-vio text-green" data-bs-toggle="tooltip"
+                                                                title="No Policy Violation"
+                                                                data-bs-original-title="No Policy Violation"
+                                                                aria-label="No Policy Violation">
+                                                                <span class="font-20">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="10" cy="10" r="10" fill="#05A660" />
+                                                                        <path d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
+                                                                            stroke="#F7F7FC" stroke-width="2"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round" />
+                                                                    </svg>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Status">
+                                                            <span class="status-blue status-common">
+                                                                PENDING FOR OPTION
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="TBL-actions">
+                                                                <ul class="action-icons">
+                                                                    <li><a href="claim-expense-preview.html"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="View"
+                                                                                class="fa-eye   fa-regular"></span></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                                            RequestId="32" RequestType="Travel"
+                                                                            id="communicationThread">
+                                                                            <span data-toggle="tooltip"
+                                                                                title="Communication"
+                                                                                class="fa-comment-dots fa-regular"></span>
+                                                                            <div class="communication-count"><span
+                                                                                    id="CommCountTravel32">0</span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-label="Sl.No." align="center">9</td>
+                                                        <td data-label="Requester">Priya Sathiyajith | 100948</td>
+                                                        <td data-label="Request Number">TR/2024/03/0000035</td>
+                                                        <td data-label="Request Type ">International</td>
+                                                        <td data-label="Date of Travel">
+
+                                                            <ul class="list-unstyled">
+                                                                <li> 29-Feb-2024 <span class="opacity-50"> 18:26 </span>
+                                                                </li>
+                                                                <li> 02-Mar-2024 <span class="opacity-50"> 23:59 </span>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                        <td data-label="Service For">
+                                                            <span class="tbl-ww1">
+                                                                Ticket | Accommodation | Cab | Advance
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Request For">Self</td>
+                                                        <td data-label="Policy Violation">
+                                                            <span class="pol-vio text-red" data-bs-toggle="tooltip"
+                                                                title="Policy Violation"
+                                                                data-bs-original-title="Policy Violation"
+                                                                aria-label="Policy Violation">
+                                                                <span class="font-20">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="10" cy="10" r="10" fill="#E63535" />
+                                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                            d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
+                                                                            fill="white" />
+                                                                    </svg>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Status">
+                                                            <span class="status-green status-common">
+                                                                COMPLETED
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="TBL-actions">
+                                                                <ul class="action-icons">
+                                                                    <li><a href="claim-expense-preview.html"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="View"
+                                                                                class="fa-eye   fa-regular"></span></a>
+                                                                    </li>
+                                                                    <li><a href="#"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="PDF"
+                                                                                class="fa-regular fa-file-pdf"></span></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                                            RequestId="35" RequestType="Travel"
+                                                                            id="communicationThread">
+                                                                            <span data-toggle="tooltip"
+                                                                                title="Communication"
+                                                                                class="fa-comment-dots fa-regular"></span>
+                                                                            <div class="communication-count"><span
+                                                                                    id="CommCountTravel35">1</span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-label="Sl.No." align="center">10</td>
+                                                        <td data-label="Requester">Priya Sathiyajith | 100948</td>
+                                                        <td data-label="Request Number">TR/2024/03/0000033</td>
+                                                        <td data-label="Request Type ">Domestic</td>
+                                                        <td data-label="Date of Travel">
+                                                            <ul class="list-unstyled">
+                                                                <li> 29-Feb-2024 <span class="opacity-50"> 18:26 </span>
+                                                                </li>
+                                                                <li> 02-Mar-2024 <span class="opacity-50"> 23:59 </span>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                        <td data-label="Service For">
+                                                            <span class="tbl-ww1">
+                                                                Ticket | Accommodation | Cab
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Request For">Self</td>
+                                                        <td data-label="Policy Violation">
+                                                            <span class="pol-vio text-green" data-bs-toggle="tooltip"
+                                                                title="No Policy Violation"
+                                                                data-bs-original-title="No Policy Violation"
+                                                                aria-label="No Policy Violation">
+                                                                <span class="font-20">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="10" cy="10" r="10" fill="#05A660" />
+                                                                        <path d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
+                                                                            stroke="#F7F7FC" stroke-width="2"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round" />
+                                                                    </svg>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Status">
+                                                            <span class="status-green status-common">
+                                                                COMPLETED
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="TBL-actions">
+                                                                <ul class="action-icons">
+                                                                    <li><a href="claim-expense-preview.html"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="View"
+                                                                                class="fa-eye   fa-regular"></span></a>
+                                                                    </li>
+                                                                    <li><a href="#"
+                                                                            class="btn-icon-action btn-icon-view"><span
+                                                                                data-bs-toggle="tooltip" title="PDF"
+                                                                                class="fa-regular fa-file-pdf"></span></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                                            RequestId="33" RequestType="Travel"
+                                                                            id="communicationThread">
+                                                                            <span data-toggle="tooltip"
+                                                                                title="Communication"
+                                                                                class="fa-comment-dots fa-regular"></span>
+                                                                            <div class="communication-count"><span
+                                                                                    id="CommCountTravel33">1</span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="dataTables_length" id="tblMyTravelRequest_length">
+                                                <label>
+                                                    Show
+                                                    <select name="tblMyTravelRequest_length"
+                                                        aria-controls="tblMyTravelRequest"
+                                                        class="custom-select custom-select-sm form-control form-control-sm">
+                                                        <option value="5">5</option>
+                                                        <option value="10">10</option>
+                                                        <option value="15">15</option>
+                                                        <option value="-1">All</option>
+                                                    </select>
+                                                    entries
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="dataTables_paginate paging_simple_numbers"
+                                                id="tblMyTravelRequest_paginate">
+                                                <ul class="pagination">
+                                                    <li class="paginate_button page-item previous disabled"
+                                                        id="tblMyTravelRequest_previous"><a href="#"
+                                                            aria-controls="tblMyTravelRequest" data-dt-idx="0"
+                                                            tabindex="0" class="page-link">Previous</a></li>
+                                                    <li class="paginate_button page-item active"><a href="#"
+                                                            aria-controls="tblMyTravelRequest" data-dt-idx="1"
+                                                            tabindex="0" class="page-link">1</a></li>
+                                                    <li class="paginate_button page-item "><a href="#"
+                                                            aria-controls="tblMyTravelRequest" data-dt-idx="2"
+                                                            tabindex="0" class="page-link">2</a></li>
+                                                    <li class="paginate_button page-item next"
+                                                        id="tblMyTravelRequest_next"><a href="#"
+                                                            aria-controls="tblMyTravelRequest" data-dt-idx="3"
+                                                            tabindex="0" class="page-link">Next</a></li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- row -->
-                                </div>
-                                <div id="expwnse-rew222" class="tab-pane pt-0 fade">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="table-responsive">
-                                                <div id="tblMyExpenseRequest_wrapper"
-                                                    class="dataTables_wrapper dt-bootstrap4 no-footer">
-                                                    <div class="row">
-                                                        <div class="col-sm-9">
-                                                            <div class="dt-buttons">
-                                                                <button
-                                                                    class="dt-button buttons-excel buttons-html5"
-                                                                    tabindex="0" aria-controls="tblMyExpenseRequest"
-                                                                    type="button" (click)="exportExcel()"><span>Excel</span></button> </div>
-                                                        </div>
-                                                        <div class="col-sm-3"> 
-                                                            <div id="tblMyExpenseRequest_filter"
-                                                                class="dataTables_filter">
-                                                                <label>                                                                  
-                                                                    <mat-form-field appearance="outline" class="form-group chm-formgroup new-form-grp">
-                                                                        <input class="form-control chm-forminput" matInput
-                                                                            (keyup)="applyGlobalFilter($event)"
-                                                                            placeholder="Search" />
-                                                                    </mat-form-field>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <div class="mat-table-container">
-                                                                <table mat-table [dataSource]="dataSource" matSort class="table my-3 table-travelreq table-cust-modeA filterColumnTableVer2 recent-exp-req table table-bordered table-striped table-cust-new d-table dataTable no-footer">
-                                                                    <!-- Column Definitions for Data and Header -->
-                                                                    
-                                                                    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.key">                                                                      
-                                                                        <!-- Header Cell -->
 
-                                                                        <!-- <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.sortable ? column.key : ''">
+                                </div>
+
+
+                            </div>
+                            <div id="expense-state" role="tabpanel" aria-labelledby="expense-state-tab"
+                                class="tab-pane fade pt-0 position-relative">
+
+                                <div class="datatable-right">
+                                    <div class="dt-buttons">
+                                        <button
+                                            class="btn btn-outline-secondary me-2 py-1 fw-normal  px-3 btn-sm export-btn"
+                                            tabindex="0" aria-controls="tblMyExpenseRequest" type="button"
+                                            (click)="exportExcel()">
+                                            <svg class="me-2" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M7.9999 11.2L4.53323 7.99998M7.9999 11.2L11.1999 7.99998M7.9999 11.2L7.9999 1.06665M14.3999 7.46665L14.3999 14.4L1.5999 14.4L1.5999 7.46665"
+                                                    stroke="#031842" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                            Download Excel
+                                        </button>
+                                    </div>
+
+                                    <div id="tblMyExpenseRequest_filter" class="dataTables_filter position-relative">
+
+                                        <mat-form-field class="datatable-search position-relative" appearance="outline">
+                                            <input class="custom-search" matInput (keyup)="applyGlobalFilter($event)"
+                                                placeholder="Search" />
+                                            <svg width="21" height="21" viewBox="0 0 21 21" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M1.70312 9.17466C1.70312 5.11 4.99818 1.81494 9.06284 1.81494C13.1275 1.81494 16.4226 5.11 16.4226 9.17466C16.4226 13.2393 13.1275 16.5344 9.06284 16.5344C4.99818 16.5344 1.70312 13.2393 1.70312 9.17466ZM9.06284 0.564941C4.30783 0.564941 0.453125 4.41964 0.453125 9.17466C0.453125 13.9297 4.30783 17.7844 9.06284 17.7844C11.311 17.7844 13.3579 16.9227 14.8913 15.5116C14.8578 15.7051 14.9157 15.9114 15.0652 16.0609L19.1526 20.1483C19.3967 20.3924 19.7924 20.3924 20.0365 20.1483C20.2805 19.9042 20.2805 19.5085 20.0365 19.2644L15.9491 15.177C15.7996 15.0275 15.5933 14.9696 15.3998 15.0032C16.8109 13.4698 17.6726 11.4228 17.6726 9.17466C17.6726 4.41964 13.8179 0.564941 9.06284 0.564941Z"
+                                                    fill="#8F90A6" />
+                                            </svg>
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="table-responsive">
+  <div class="mat-table-container">
+                                        <table id="tblexpenseRequest" mat-table [dataSource]="dataSource" matSort
+                                            class=" table table-travelreq mobile-card-view-datatable table-cust-modeA filterColumnTableVer2 recent-exp-req table table-bordered table-striped table-cust-new d-table no-footer dataTable">
+                                            <!-- Column Definitions for Data and Header -->
+
+                                            <ng-container *ngFor="let column of displayedColumns"
+                                                [matColumnDef]="column.key">
+                                                <!-- Header Cell -->
+
+                                                <!-- <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.sortable ? column.key : ''">
                                                                           {{ column.label }}
                                                                         </th> -->
-                                                                        <ng-container *ngIf="column.sortable; else noSortHeader">
-                                                                         <th mat-header-cell *matHeaderCellDef mat-sort-header="{{ column.key }}"> 
-                                                                            {{ column.label }} 
-                                                                        </th>
-                                                                        </ng-container>
-                                                                        <ng-template #noSortHeader>
-                                                                          <th mat-header-cell *matHeaderCellDef>
-                                                                            {{ column.label }}
-                                                                          </th>
-                                                                        </ng-template>
-                                                                      
-                                                                        <!-- Data Cell -->
-                                                                        <td mat-cell *matCellDef="let element; let i = index">
-                                                                          <ng-container *ngIf="column.key === 'slNo'; else columnContent">
-                                                                            {{ i + 1 }}
-                                                                          </ng-container>
-                                                                      
-                                                                          <ng-template #columnContent>
-                                                                            <ng-container *ngIf="column.key === 'PolicyViolationCount'; else requestDateColumn">
-                                                                              <mat-icon [ngClass]="element[column.key] > 0 ? 'violation-icon-red' : 'violation-icon-green'"
-                                                                                [matTooltip]="element[column.key] > 0 ? 'Policy Violation' : 'No Policy Violation'">
-                                                                                {{ element[column.key] > 0 ? 'cancel' : 'check_circle' }}
-                                                                              </mat-icon>
-                                                                            </ng-container>
-                                                                      
-                                                                            <ng-template #requestDateColumn>
-                                                                              <ng-container *ngIf="column.key === 'RequestDate'; else actionColumn">
-                                                                                {{ element[column.key] | date: 'dd-MMM-yyyy' }}
-                                                                              </ng-container>
-                                                                      
-                                                                              <ng-template #actionColumn>
-                                                                                <ng-container *ngIf="column.key === 'action'; else defaultColumn">
-                                                                                  <div class="TBL-actions">
-                                                                                    <ul class="action-icons">
-                                                                                      <li *ngIf="element.IsEdit">
-                                                                                        <a [routerLink]="['/expense/expense/edit-expense',element.TransactionId]" class="btn-icon-action btn-icon-view">
-                                                                                          <span data-bs-toggle="tooltip" class="fa fa-pencil" aria-label="Edit" matTooltip="Edit" ></span>
-                                                                                        </a>
-                                                                                      </li>
-                                                                                      <li *ngIf="element.IsPreview">
-                                                                                        <a [routerLink]="['/expense/expense/preview',element.TransactionId]" class="btn-icon-action btn-icon-view">
-                                                                                          <span data-bs-toggle="tooltip" class="fa-eye fa-regular" aria-label="View" matTooltip="View" ></span>
-                                                                                        </a>
-                                                                                      </li>
-                                                                                      <li>
-                                                                                        <a href="#" class="btn-icon-action btn-icon-view">
-                                                                                          <span data-bs-toggle="tooltip" class="fa-regular fa-file-pdf" aria-label="PDF" matTooltip="PDF" ></span>
-                                                                                        </a>
-                                                                                      </li>
-                                                                                      <li>
-                                                                                        <a href="#" class="btn-icon-action btn-icon-view p-relative"
-                                                                                           [attr.requestid]="element.TransactionId"
-                                                                                           [attr.requesttype]="element.ExpenseRequestType"
-                                                                                           id="communicationThread">
-                                                                                          <span data-toggle="tooltip" title="Communication" class="fa-comment-dots fa-regular"></span>
-                                                                                          <div class="communication-count">
-                                                                                            <span [id]="'CommCount' + element.requestType + element.requestId">0</span>
-                                                                                          </div>
-                                                                                        </a>
-                                                                                      </li>
-                                                                                    </ul>
-                                                                                  </div>
-                                                                                </ng-container>
-                                                                      
-                                                                                <ng-template #defaultColumn>
-                                                                                  {{ element[column.key] }}
-                                                                                </ng-template>
-                                                                              </ng-template>
-                                                                            </ng-template>
-                                                                          </ng-template>
-                                                                        </td>
-                                                                      </ng-container>                                                                      
-                                                                  
-                                                                    <!-- Filter Row Column Definitions -->
-                                                                    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.key + '_filter'">
-                                                                      <td mat-header-cell *matHeaderCellDef class="filter-cell">
-                                                                        <mat-form-field appearance="outline">
-                                                                          <input matInput (keyup)="applyFilter($event, column.key)" placeholder="Search" />
-                                                                        </mat-form-field>
-                                                                      </td>
-                                                                    </ng-container>
-                                                                  
-                                                                    <!-- Header Row (Single) -->
-                                                                    <tr mat-header-row *matHeaderRowDef="columnKeys"></tr>
+                                                <ng-container *ngIf="column.sortable; else noSortHeader">
+                                                    <th mat-header-cell *matHeaderCellDef
+                                                        mat-sort-header="{{ column.key }}">
+                                                        {{ column.label }}
+                                                    </th>
+                                                </ng-container>
+                                                <ng-template #noSortHeader>
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        {{ column.label }}
+                                                    </th>
+                                                </ng-template>
 
-                                                                    <!-- Filter Row (As Header Row) -->
-                                                                    <tr mat-header-row *matHeaderRowDef="filterColumnKeys" class="filter-row"></tr>
+                                                <!-- Data Cell -->
+                                                <td   mat-cell *matCellDef="let element; let i = index">
+                                                    <ng-container  *ngIf="column.key === 'slNo'; else columnContent">
+                                                       <span class="text-center d-block"> {{ i + 1 }}</span>
+                                                    </ng-container>
 
-                                                                    <!-- Data Rows -->
-                                                                    <tr mat-row *matRowDef="let row; columns: columnKeys"></tr>
+                                                    <ng-template #columnContent>
+                                                        <ng-container
+                                                            *ngIf="column.key === 'PolicyViolationCount'; else requestDateColumn">
+                                                            <mat-icon   
+                                                                [ngClass]="element[column.key] > 0 ? 'violation-icon-red' : 'violation-icon-green'"
+                                                                [matTooltip]="element[column.key] > 0 ? 'Policy Violation' : 'No Policy Violation'">
+                                                                {{ element[column.key] > 0 ?
+                                                                'cancel' : 'check_circle' }}
+                                                            </mat-icon>
+                                                        </ng-container>
 
-                                                                </table>
-                                                                <mat-paginator [length]="dataSource.data.length"
-                                                                    [pageSize]="5" [pageSizeOptions]="[5, 10, 25]"
-                                                                    showFirstLastButtons>
-                                                                </mat-paginator>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                        <ng-template #requestDateColumn>
+                                                            <ng-container
+                                                                *ngIf="column.key === 'RequestDate'; else actionColumn">
+                                                                {{ element[column.key] | date:
+                                                                'dd-MMM-yyyy' }}
+                                                            </ng-container>
+
+                                                            <ng-template #actionColumn>
+                                                                <ng-container
+                                                                    *ngIf="column.key === 'action'; else defaultColumn">
+                                                                    <div class="TBL-actions">
+                                                                        <ul class="action-icons">
+                                                                            <li *ngIf="element.IsEdit">
+                                                                                <a [routerLink]="['/expense/expense/edit-expense',element.TransactionId]"
+                                                                                    class="btn-icon-action btn-icon-view">
+                                                                                    <span data-bs-toggle="tooltip"
+                                                                                        class="fa fa-pencil"
+                                                                                        aria-label="Edit"
+                                                                                        matTooltip="Edit"></span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li *ngIf="element.IsPreview">
+                                                                                <a [routerLink]="['/expense/expense/preview',element.TransactionId]"
+                                                                                    class="btn-icon-action btn-icon-view">
+                                                                                    <span data-bs-toggle="tooltip"
+                                                                                        class="fa-eye fa-regular"
+                                                                                        aria-label="View"
+                                                                                        matTooltip="View"></span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#"
+                                                                                    class="btn-icon-action btn-icon-view">
+                                                                                    <span data-bs-toggle="tooltip"
+                                                                                        class="fa-regular fa-file-pdf"
+                                                                                        aria-label="PDF"
+                                                                                        matTooltip="PDF"></span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#"
+                                                                                    class="btn-icon-action btn-icon-view p-relative"
+                                                                                    [attr.requestid]="element.TransactionId"
+                                                                                    [attr.requesttype]="element.ExpenseRequestType"
+                                                                                    id="communicationThread">
+                                                                                    <span data-toggle="tooltip"
+                                                                                        title="Communication"
+                                                                                        class="fa-comment-dots fa-regular"></span>
+                                                                                    <div class="communication-count">
+                                                                                        <span
+                                                                                            [id]="'CommCount' + element.requestType + element.requestId">0</span>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </ng-container>
+
+                                                                <ng-template #defaultColumn>
+                                                                    {{ element[column.key] }}
+                                                                </ng-template>
+                                                            </ng-template>
+                                                        </ng-template>
+                                                    </ng-template>
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Filter Row Column Definitions -->
+                                            <ng-container *ngFor="let column of displayedColumns"
+                                                [matColumnDef]="column.key + '_filter'">
+                                                <td mat-header-cell *matHeaderCellDef class="filter-cell">
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput (keyup)="applyFilter($event, column.key)"
+                                                            placeholder="Search" />
+                                                    </mat-form-field>
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Header Row (Single) -->
+                                            <tr mat-header-row *matHeaderRowDef="columnKeys"></tr>
+
+                                            <!-- Filter Row (As Header Row) -->
+                                            <tr mat-header-row *matHeaderRowDef="filterColumnKeys" class="filter-row">
+                                            </tr>
+
+                                            <!-- Data Rows -->
+                                            <tr mat-row *matRowDef="let row; columns: columnKeys">
+                                            </tr>
+
+                                        </table>
+                                        <mat-paginator [length]="dataSource.data.length" [pageSize]="5"
+                                            [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons>
+                                        </mat-paginator>
                                     </div>
-                                    <!-- row -->
+
                                 </div>
+
                             </div>
                         </div>
+
+
+
                     </div>
                 </div>
             </div>
+
+
+
+
+
+
         </div>
     </div>
 </div>
