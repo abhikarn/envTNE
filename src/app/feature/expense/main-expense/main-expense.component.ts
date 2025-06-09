@@ -1,8 +1,8 @@
 import { Component, DestroyRef, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
-import { CityAutocompleteParam, DataService, ExpenseRequestModel, ExpenseService, TravelService } from '../../../../../tne-api';
-import { forkJoin, map, Observable, of, startWith, switchMap, take } from 'rxjs';
+import { CityAutocompleteParam, DataService, ExpenseRequestModel, ExpenseService, FinanceService, TravelService } from '../../../../../tne-api';
+import { debounceTime, forkJoin, map, Observable, of, startWith, switchMap, take } from 'rxjs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
@@ -91,6 +91,8 @@ export class MainExpenseComponent {
   travelDetails: any;
   transactionId: any;
   expenseConfirmMessage: any;
+  filteredOptions: any = [];
+  billableControl: FormControl = new FormControl('');
 
   constructor(
     private expenseService: ExpenseService,
@@ -147,6 +149,27 @@ export class MainExpenseComponent {
     this.loadInitialData();
   }
 
+  initBillanleControl() {
+    this.billableControl.setValidators([Validators.required]);
+    this.billableControl.updateValueAndValidity();
+    this.billableControl.valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap(searchText =>
+          this.dataService.dataGetCostCentreAutocomplete({ SearchText: searchText || '' })
+        )
+      )
+      .subscribe({
+        next: (res) => {
+          this.filteredOptions = res?.ResponseValue || [];
+        },
+        error: (err) => {
+          console.error('Failed to fetch cost centres', err);
+          this.filteredOptions = [];
+        }
+      });
+  }
+
   // Set up basic fields like userMasterId, expenseRequestId, and editMode flag.
   initializeBasicFields() {
     this.userMasterId = Number(localStorage.getItem('userMasterId'));
@@ -155,6 +178,7 @@ export class MainExpenseComponent {
       this.editMode = true;
     }
     this.expenseRequestData = [];
+    this.billableControl.setValue(null);
   }
 
   // Load master data (baggage types, meals, travel modes) and expense config file.
@@ -201,6 +225,11 @@ export class MainExpenseComponent {
     }
     if (this.expenseConfig?.travelDetails) {
       this.travelDetails = this.expenseConfig?.travelDetails;
+      this.travelDetails.data?.forEach((config: any) => {
+        if(config.controlType === 'autocomplete' && config.isEnabled) {
+          this.initBillanleControl();
+        }
+      })
     }
   }
 
@@ -607,6 +636,11 @@ export class MainExpenseComponent {
       return;
     }
 
+    if (this.billableControl.invalid) {
+      this.billableControl.markAsTouched();
+      return;
+    }
+
     if (this.expenseRequestForm.invalid) {
       this.expenseRequestForm.markAllAsTouched();
       return;
@@ -700,6 +734,20 @@ export class MainExpenseComponent {
           }
         });
     });
+  }
+
+  onOptionSelected(event: any, item: any) {
+    const selectedDisplay = event.option.value;
+    const selected = this.filteredOptions.find((opt: any) => opt[item.displayKey] === selectedDisplay);
+
+    if (selected) {
+      item.value = selected[item.displayKey];
+      this.updateBillableCostCentre(selected[item.valueKey]);
+    }
+  }
+
+  updateBillableCostCentre(billableCostcentreId: number) {
+    this.mainExpenseData.BillableCostCentreId = billableCostcentreId;
   }
 }
 

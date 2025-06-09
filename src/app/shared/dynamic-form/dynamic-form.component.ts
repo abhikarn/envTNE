@@ -15,6 +15,7 @@ import { GstComponent } from './form-controls/gst/gst.component';
 import { ServiceRegistryService } from '../service/service-registry.service';
 import { ConfirmDialogService } from '../service/confirm-dialog.service';
 import { GlobalConfigService } from '../service/global-config.service';
+import { LineWiseCostCenterComponent } from './form-controls/cost-center/line-wise-cost-center/line-wise-cost-center.component';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -29,7 +30,8 @@ import { GlobalConfigService } from '../service/global-config.service';
     FileUploadComponent,
     DynamicTableComponent,
     RadioInputComponent,
-    GstComponent
+    GstComponent,
+    LineWiseCostCenterComponent
   ],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
