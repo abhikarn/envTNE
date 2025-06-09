@@ -422,6 +422,7 @@
 <!-- <pre>{{mainExpenseData | json}}</pre> -->
 <ng-template #requestBottomSheet>
   <div class="bottom-sheet-select">
+    <span class="select-mobile-line"></span>
     <ul class="list-group">
       <li class="list-group-item" *ngFor="let req of travelRequests; trackBy: trackByReq"
         (click)="selectRequestFromSheet(req)">

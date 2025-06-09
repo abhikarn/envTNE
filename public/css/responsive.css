@@ -141,6 +141,7 @@
 	right: 0;
 	margin: 0 auto;
 	top: 10px;
+  z-index: 1;
 }
 .pad-bottom-mobile {
 	padding-bottom: 40px;
