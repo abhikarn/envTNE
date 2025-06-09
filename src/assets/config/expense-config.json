@@ -382,7 +382,7 @@
                     {
                         "type": "costcenter",
                         "dataType": "object",
-                        "name": "costCentre",
+                        "name": "costcentreWiseExpense",
                         "isExcluded": false,
                         "label": "Cost Centre",
                         "value": [],
@@ -854,7 +854,7 @@
                 "nestedTables": [
                     {
                         "name": "costCentre",
-                        "dataKey": "costCentre",
+                        "dataKey": "costcentreWiseExpense",
                         "columns": [
                             {
                                 "name": "__slNo",
@@ -1166,6 +1166,13 @@
                         "label": "Total"
                     }
                 ]
+            },
+            {
+                "id": "cost-center-wise-expense",
+                "title": "Costcenter wise Expense",
+                "isOpen": false,
+                "type": "costcenter",
+                "items": []
             }
         ],
         "justification": {

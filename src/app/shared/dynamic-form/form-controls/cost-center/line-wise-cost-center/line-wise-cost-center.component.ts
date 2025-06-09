@@ -25,7 +25,6 @@ export class LineWiseCostCenterComponent {
   @Input() control: any;
   @Input() controlConfig: IFormControl = { name: '' };
   @Input() form: any;
-  @Input() categoryGST: any;
   @Input() amount: any;
   @Input() ExpenseRequestDetailId: any = 0;
   @Input() costCenterData: any = [];
@@ -45,6 +44,7 @@ export class LineWiseCostCenterComponent {
   }
 
   ngOnInit() {
+    console.log(this.costCenterData)
     this.costCenterDetails = this.costCenterData;
     this.initCostCenterDetailsForm();
   }

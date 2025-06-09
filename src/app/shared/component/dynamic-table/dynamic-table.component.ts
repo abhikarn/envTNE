@@ -33,6 +33,7 @@ export class DynamicTableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.tableData)
     this.setDecimalPrecision();
     if (this.categoryConfig?.columns?.length > 0) {
       this.tableColumns = this.categoryConfig.columns

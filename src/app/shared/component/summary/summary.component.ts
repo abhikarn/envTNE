@@ -129,4 +129,12 @@ export class SummaryComponent {
     }
   }
 
+  calculatCostCenterWiseExpense() {
+
+  }
+
+  setCostCenterWiseAmount() {
+    
+  }
+
 }
