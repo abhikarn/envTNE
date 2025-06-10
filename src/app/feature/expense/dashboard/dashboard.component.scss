@@ -191,5 +191,16 @@ td .mat-mdc-form-field-flex .mat-mdc-input-element::-webkit-input-placeholder { 
 	fill:#ffffff;
 }
 
-
+	@media (max-width: 767px) {
+  .dt-buttons {
+	order: 2 !important;
+	text-align: right;
+}
+.dataTables_filter {
+	order: 1!important;
+}
+.mdc-data-table__row {
+	height: auto!important;
+}
+  }
 }
