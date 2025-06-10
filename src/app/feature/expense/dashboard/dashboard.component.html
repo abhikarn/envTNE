@@ -1134,8 +1134,29 @@
                                                                 </ng-container>
 
                                                                 <ng-template #defaultColumn>
-                                                                    {{ element[column.key] }}
-                                                                </ng-template>
+  @if (column.key === 'ClaimStatus') {
+    @if (element['ClaimStatusId'] === 23) {
+      <span class="status-green status-common"
+            data-bs-toggle="tooltip"
+            title="Completed"
+            aria-label="Completed">
+        {{ element[column.key] }}
+      </span>
+    } @else if (element['ClaimStatusId'] === 24) {
+      <span class="status-red status-common"
+            data-bs-toggle="tooltip"
+            title="Rejected"
+            aria-label="Rejected">
+        {{ element[column.key] }}
+      </span>
+    } @else {
+      {{ element[column.key] }}
+    }
+  } @else {
+    {{ element[column.key] }}
+  }
+</ng-template>
+
                                                             </ng-template>
                                                         </ng-template>
                                                     </ng-template>
