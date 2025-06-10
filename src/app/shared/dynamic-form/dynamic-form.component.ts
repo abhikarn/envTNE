@@ -462,6 +462,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.gstComponentRef.setCompanyGSTFlag(false);
     this.gstComponentRef.gstData = [];
     this.selectedFiles = [];
+    this.formControls?.forEach((control: any) => {
+      if (control.formConfig?.defaultValue) {
+        control.control.setValue(control.formConfig.defaultValue?.Id);
+      }
+    })
   }
 
   getInputValue(input: any) {
