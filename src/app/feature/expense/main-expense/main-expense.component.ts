@@ -325,6 +325,7 @@ export class MainExpenseComponent {
     setTimeout(() => {
       this.summaryComponent.calculatTotalExpenseAmount();
       this.summaryComponent.calculatCategoryWiseExpense();
+      this.summaryComponent.calculateCostCenterWiseExpense();
     }, 1000);
 
     this.applyExcludedFields();
@@ -494,6 +495,7 @@ export class MainExpenseComponent {
     }
     this.summaryComponent.calculatTotalExpenseAmount();
     this.summaryComponent.calculatCategoryWiseExpense();
+    this.summaryComponent.calculateCostCenterWiseExpense();
   }
 
   updateCategoryData(updated: { name: string, data: any[] }) {
@@ -507,6 +509,7 @@ export class MainExpenseComponent {
 
     this.summaryComponent.calculatTotalExpenseAmount();
     this.summaryComponent.calculatCategoryWiseExpense();
+    this.summaryComponent.calculateCostCenterWiseExpense();
   }
 
   // Populate autoComplete options by input value (ID or search text) and update matching control.
