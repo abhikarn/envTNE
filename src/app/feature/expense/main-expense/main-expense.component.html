@@ -167,6 +167,15 @@
                   @if (categories.length > 5) {
                   <mat-tab>
                     <ng-template mat-tab-label>
+                      @if (selectedExtraCategory) {
+                      <div id="expenseHead">
+                        <div class="menu-item">
+                          <div class="expense-list-head">
+                            <h6> {{selectedExtraCategory.label}} <span> {{selectedExtraCategory.count}} </span> </h6>
+                          </div>
+                        </div>
+                      </div>
+                      }
                       <mat-form-field class="more-item" appearance="fill">
                         <mat-select placeholder="More" [value]="selectedExtraCategory"
                           (selectionChange)="onExtraCategorySelect($event.value)">
