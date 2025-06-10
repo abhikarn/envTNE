@@ -68,6 +68,8 @@
             <div class="icons-new">
                 <i *ngIf="row?.IsViolation" class="fa fa-exclamation-triangle violation-icon"
                     [matTooltip]="row?.Violation" matTooltipPosition="above"></i>
+                 <i *ngIf="row?.IsOCRRestrictedKeyword" class="fa fa-exclamation-triangle ocr-riestricted-icon text-amber"
+                    [matTooltip]="'This expense item contains a restricted keyword as identified by OCR validation.'" matTooltipPosition="above"></i>
                 <span class="btn btn-showhide" (click)="toggleRow(row)">
                     <i [ngClass]="isExpanded(row) ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
                 </span>
@@ -79,10 +81,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
     <!-- Data Row -->
-    <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="{
-          'violation-row': row?.IsViolation,
-          'disabled-row': row?.ClaimStatusId == 5
-        }">
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="getRowClass(row)">         
         <pre>{{row |json}}</pre>
     </tr>
 

@@ -275,7 +275,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
-    debugger;
+    
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -296,7 +296,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
    * Uses duplicateCheckFields from category config.
    */
   async checkOCRDuplicate(): Promise<boolean> {
-    debugger;
+    
     // Use duplicateCheckFields from category config
     const duplicateFields = this.category.duplicateCheckFields || [];
     const payload: any = {};
@@ -380,7 +380,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   addDataToDynamicTable() {
-    debugger;
+    
     let tableData = this.form;
     // Preparing Data for Dynamic table
     this.formControls.forEach(control => {

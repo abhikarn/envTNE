@@ -11,7 +11,10 @@
         </thead>
         <tbody>
           @for (row of tableData; track row; let i = $index) {
-          <tr [ngClass]="{ 'violation-border': row?.IsViolation }">
+          <tr [ngClass]="{
+  'violation-border': row?.IsViolation,
+  'ocr-restricted-border': !row?.IsViolation && row?.IsOCRRestrictedKeyword
+}">
             @for (col of tableColumns; track col.name) {
             <td>
               @if (col.name === '__slNo') {
@@ -23,19 +26,22 @@
               <i class="fas fa-exclamation-triangle text-danger" [matTooltip]="row?.Violation"
                 matTooltipPosition="above"></i>
               }
+               @if (row?.IsOCRRestrictedKeyword) {
+              <i class="fas fa-exclamation-triangle text-amber" [matTooltip]="'This expense item contains a restricted keyword as identified by OCR validation.'"
+                matTooltipPosition="above"></i>
+              }
               <i class="fas fa-trash text-danger ms-2" title="Delete" (click)="confirmDelete(i)"></i>
               } @else {
               {{ formatValue(col.name, row[col.name]) }}
               }
             </td>
             }
-
           </tr>
 
           @if (expandedRowIndex === i) {
           <tr>
             <td [attr.colspan]="tableColumns.length + 2">
-              <div class="expanded-content" [ngClass]="{ 'violation-bg': row?.IsViolation }">
+              <div class="expanded-content" [ngClass]="{ 'violation-bg': row?.IsViolation || row?.IsOCRRestrictedKeyword }">
                 @for (outField of tableOutFields; track outField.name) {
                 <p>
                   <strong>{{ outField.label }}:</strong>

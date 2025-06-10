@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
   } 
 
   gettoken(url: string) {    
+    
     const token = this.authService.getToken();
     const currentUrl = url;
 
@@ -48,6 +49,10 @@ export class AppComponent implements OnInit {
 
       if (currentTime < expireTime) {
         this.isAuthenticated = true;
+        // Redirect to dashboard if authenticated and on /account
+        if (currentUrl.toLowerCase() === '/account') {
+          this.router.navigate(['/expense/expense/dashboard']);
+        }
       } else {
         this.isAuthenticated = false;
         alert('Session expired. Please log in again.');

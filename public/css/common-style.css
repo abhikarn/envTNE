@@ -13353,6 +13353,14 @@ ul.policy-vio-list {
     padding: 10px;
 }
 
+ul.ocr-vio-list {
+    width: 100%;
+    margin: 10px 0;
+    border: 1px solid #FFBF00 !important;
+    border-radius: 3px;
+    padding: 10px;
+}
+
     ul.policy-vio-list li {
         list-style-type: none;
         padding: 5px 0;

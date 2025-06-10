@@ -339,4 +339,21 @@ export class MaterialTableComponent implements OnChanges {
   get hasSelectableRows(): boolean {
     return this.processedData?.some(r => r.claimStatusId !== 5) ?? false;
   }
+
+  getRowClass(row: any) {
+  const classes: any = {};
+  
+  if (row?.ClaimStatusId === 5) {
+    classes['disabled-row'] = true;
+  }
+  
+  if (row?.IsViolation) {
+    classes['violation-row'] = true;
+  } else if (row?.IsOCRRestrictedKeyword) {
+    classes['ocr-riestricted-row'] = true;
+  }
+  
+  return classes;
+}
+
 }
