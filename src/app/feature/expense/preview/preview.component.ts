@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { Component, QueryList, TemplateRef, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { ExpansionPanelComponent } from '../../../shared/component/expansion-panel/expansion-panel.component';
 import { MaterialTableComponent } from '../../../shared/component/material-table/material-table.component';
 import { RequesterDetailsDialogComponent } from '../../../shared/component/requester-details-dialog/requester-details-dialog.component';
@@ -25,6 +25,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { RemarksModalComponent } from '../../../shared/component/remarks-modal/remarks-modal.component';
 import { CreateDynamicFormComponent } from '../../../shared/dynamic-form/create-dynamic-form/create-dynamic-form.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-preview',
@@ -84,7 +85,8 @@ export class PreviewComponent {
     private confirmDialogService: ConfirmDialogService,
     private snackbarService: SnackbarService,
     private router: Router,
-    private dataService: DataService
+    private dataService: DataService,
+    private bottomSheet: MatBottomSheet
   ) {
 
   }
@@ -685,5 +687,22 @@ export class PreviewComponent {
       data: { remarksData },
       panelClass: 'custom-modal-panel'
     });
+  }
+
+   /**
+     * Opens the expense summary sidebar in a bottom sheet on mobile devices.
+     * @param templateRef Reference to the ng-template containing the sidebar content.
+     */
+    openExpenseSummarySheet(templateRef: TemplateRef<any>) {
+      if (window.innerWidth <= 768) {
+        this.bottomSheet.open(templateRef, {
+          panelClass: 'expense-bottom-sheet'
+        });
+      }
+    }
+
+  // For mobile: close the expense summary sheet
+  closeExpenseSummarySheet() {
+    this.bottomSheet.dismiss();
   }
 }

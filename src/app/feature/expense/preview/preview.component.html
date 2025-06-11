@@ -151,6 +151,15 @@
                                  </li>
                               </ul>
                               }
+                              @if (data?.IsOCRRestrictedKeyword) {
+                              <ul class="ocr-vio-list list-unstyled">
+                                 <li>
+                                    <span class="fa-pv"><i class="fa fa-exclamation-triangle text-amber"
+                                          aria-hidden="true"></i></span>
+                                    Expense item contains a restricted keyword as identified by OCR validation.
+                                 </li>
+                              </ul>
+                              }
                               }
                               }
                               }
@@ -285,12 +294,23 @@
 
                </div>
                <!-- left-container-wider -->
-               <div class="right-container-nrw rt-aside-fixed">
-                  <div class="row-wrapper common-block px-3 py-3">
+               <!-- Bottom Sheet Template -->
+               <ng-template #expenseSummarySheet>
+                  <div class="row-wrapper common-block">
+                     <div class="expense-drawer">
+                        <div class="exp-det">
+                           <h6 class="text-dark">Expense Bill Details</h6>
+                           <label>Total:</label> <span>{{ summaryComponent?.totalExpense || 0 | number:'1.2-2' }}</span>
+                        </div>
+                        <div class="exp-view">
+                           <button id="viewDetailsBtn" (click)="closeExpenseSummarySheet()"> Close Details <i
+                                 class="fa fa-angle-down"></i></button>
+                        </div>
+                     </div>
+               
                      <!-- Summary -->
                      @if (loadData) {
-                     <app-summary [summaries]="expenseSummary"
-                        [expenseRequestData]="expenseRequestPreviewData"></app-summary>
+                     <app-summary [summaries]="expenseSummary" [expenseRequestData]="expenseRequestPreviewData"></app-summary>
                      }
                      <div class="row mt-3">
                         @if (mode == 'preview') {
@@ -303,7 +323,7 @@
                            </div>
                         </div>
                         }
-
+               
                         @if (mode == 'approval' || mode == 'finance-approval') {
                         @if (expenseRequestPreviewConfig?.justification) {
                         <div [formGroup]="justificationForm" class="row mt-3">
@@ -325,42 +345,61 @@
                         }
                         }
                      </div>
-                  </div>
-                  <div class="row mt-3">
-                     <div class="col-md-12">
-                        @if ((mode == "approval" || mode == 'finance-approval') && expenseRequestPreviewConfig?.actions)
-                        {
-                        <div class="main-btn-hold d-flex flex-column mt-2" style="align-items:end;">
-                           <div class="d-flex align-items-center w-100 mb-2">
-                              @if (expenseRequestPreviewConfig.actions[0]) {
-                              <a [ngClass]="expenseRequestPreviewConfig.actions[0].class"
-                                 (click)="onAction(expenseRequestPreviewConfig.actions[0]);">
-                                 {{ expenseRequestPreviewConfig.actions[0].label }}
-                              </a>
-                              }
-                              @if (expenseRequestPreviewConfig.actions[1]) {
-                              <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[1].class"
-                                 (click)="onAction(expenseRequestPreviewConfig.actions[1])">
-                                 {{ expenseRequestPreviewConfig.actions[1].label }}
+               
+                     <div class="row mt-3">
+                        <div class="col-md-12">
+                           @if ((mode == "approval" || mode == 'finance-approval') && expenseRequestPreviewConfig?.actions)
+                           {
+                           <div class="main-btn-hold d-flex flex-column mt-2" style="align-items:end;">
+                              <div class="d-flex align-items-center w-100 mb-2">
+                                 @if (expenseRequestPreviewConfig.actions[0]) {
+                                 <a [ngClass]="expenseRequestPreviewConfig.actions[0].class"
+                                    (click)="onAction(expenseRequestPreviewConfig.actions[0]);">
+                                    {{ expenseRequestPreviewConfig.actions[0].label }}
+                                 </a>
+                                 }
+                                 @if (expenseRequestPreviewConfig.actions[1]) {
+                                 <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[1].class"
+                                    (click)="onAction(expenseRequestPreviewConfig.actions[1])">
+                                    {{ expenseRequestPreviewConfig.actions[1].label }}
+                                 </button>
+                                 }
+                              </div>
+                              @if (expenseRequestPreviewConfig.actions[2]) {
+                              <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[2].class"
+                                 (click)="onAction(expenseRequestPreviewConfig.actions[2])">
+                                 {{ expenseRequestPreviewConfig.actions[2].label }}
                               </button>
                               }
+               
+                              <button type="button" class="btn btn-outline-secondary me-2 w-100" (click)="goBack()">
+                                 Back
+                              </button>
                            </div>
-                           @if (expenseRequestPreviewConfig.actions[2]) {
-                           <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[2].class"
-                              (click)="onAction(expenseRequestPreviewConfig.actions[2])">
-                              {{ expenseRequestPreviewConfig.actions[2].label }}
-                           </button>
                            }
-                        </div>
-                        }
-                        <div class="main-btn-hold d-flex flex-column mt-2 ">
-                           <div class="text-end">
-                              <a class="btn btn-outline-secondary me-2 w-100" (click)="goBack()">Back</a>
-                           </div>
                         </div>
                      </div>
                   </div>
+               </ng-template>
+               
+               <div class="expense-drawer-bottom d-block d-md-none d-lg-none">
+                  <div class="expense-drawer">
+                     <div class="exp-det">
+                        <h6 class="text-dark">Expense Bill Details</h6>
+                        <label>Total:</label> <span>{{ summaryComponent?.totalExpense || 0 | number:'1.2-2' }}</span>
+                     </div>
+                     <div class="exp-view">
+                        <button id="viewDetailsBtn" (click)="openExpenseSummarySheet(expenseSummarySheet)"> View Details <i
+                              class="fa fa-angle-up"></i></button>
+                     </div>
+                  </div>
                </div>
+               
+               <!-- Sidebar: Only show on desktop/tablet -->
+               <div class="right-container-nrw rt-aside-fixed d-none d-md-block d-lg-block">
+                  <ng-container *ngTemplateOutlet="expenseSummarySheet"></ng-container>
+               </div>
+
             </div>
          </div>
          <!-- all-data-wrapper -->
