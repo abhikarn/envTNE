@@ -6,7 +6,7 @@
         </div>
         <div class="right-container">
             <div class="bidder-login">
-                <div class="form-hold mt-0">
+                <div class="form-hold mt-0 mb-3">
                     <div class="logo-inline-flex">
                         <img [src]="config.images.applicationLogo" [alt]="config.titles.loginPageTitle"
                             [title]="config.titles.loginPageTitle" class="logo-main">
@@ -93,20 +93,20 @@
                     </div>
                     <div class="form-hold mt-1">
                         <div class="form-listing">
-                            <button type="submit" class="btn btn-primary w-100"
+                            <button type="submit" class="btn btn-primary w-100 py-2"
                                 (click)="onSubmit()">{{config.buttons.loginButton}}</button>
                         </div>
                         <div *ngIf="errorMessage" class="text-danger mt-1">{{ errorMessage }}</div>
                     </div>
                 </form>
-                <div class="form-hold" *ngIf="config.features.ssoLoginEnabled || config.features.forgotPasswordEnabled">
+                <div class="form-hold my-3" *ngIf="config.features.ssoLoginEnabled || config.features.forgotPasswordEnabled">
                     <p class="p-sm"><strong>OR</strong></p>
                 </div>
-                <div class="form-hold" *ngIf="config.features.ssoLoginEnabled">
+                <div class="form-hold  text-center" *ngIf="config.features.ssoLoginEnabled">
                     <a href="#" class="signin-button icon-with-text"><span><i class="fa fa-address-card-o"
                                 aria-hidden="true"></i></span>{{config.buttons.ssoLogin}}</a>
                 </div>
-                <div class="form-hold" *ngIf="config.features.forgotPasswordEnabled">
+                <div class="form-hold text-center mt-2" *ngIf="config.features.forgotPasswordEnabled">
                     <p><a href="{{config.links.forgotPasswordLink}}" class="bottom-textl1">{{config.buttons.forgotPasswordButton}}</a></p>
                 </div>
             </div>
