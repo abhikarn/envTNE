@@ -51,7 +51,7 @@ export class MaterialTableComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    
+
     const decimalPrecision = this.configService.getDecimalPrecision ? this.configService.getDecimalPrecision() : 2;
     // Update processedData when input changes
     if (this.data?.length > 0) {
@@ -60,7 +60,7 @@ export class MaterialTableComponent implements OnChanges {
         slNo: index + 1,
         selected: true,
         originalApproved: parseFloat(row.ApprovedAmount || '0').toFixed(decimalPrecision),
-        ApprovedAmount: parseFloat(row.ApprovedAmount==0?row.ClaimAmount:row.ApprovedAmount || '0').toFixed(decimalPrecision),
+        ApprovedAmount: parseFloat(row.ApprovedAmount == 0 ? row.ClaimAmount : row.ApprovedAmount || '0').toFixed(decimalPrecision),
         remarks: row.remarks || ''
       }));
 
@@ -231,7 +231,7 @@ export class MaterialTableComponent implements OnChanges {
     // Update both view and model (do not format to fixed here, only on blur)
     input.value = formattedValue;
     row[key] = formattedValue;
-    
+
     // Real-time calculation for ClaimAmountInBaseCurrency
     if (key === 'ApprovedAmount') {
       const approvedAmount = parseFloat(formattedValue) || 0;
@@ -342,19 +342,15 @@ export class MaterialTableComponent implements OnChanges {
   }
 
   getRowClass(row: any) {
-  const classes: any = {};
-  
-  if (row?.ClaimStatusId === 5) {
-    classes['disabled-row'] = true;
+    const classes: any = {};
+    if (row?.ClaimStatusId === 5) {
+      classes['disabled-row'] = true;
+    }
+    if (row?.IsViolation) {
+      classes['violation-row'] = true;
+    } else if (row?.IsOCRRestrictedKeyword) {
+      classes['ocr-riestricted-row'] = true;
+    }
+    return classes;
   }
-  
-  if (row?.IsViolation) {
-    classes['violation-row'] = true;
-  } else if (row?.IsOCRRestrictedKeyword) {
-    classes['ocr-riestricted-row'] = true;
-  }
-  
-  return classes;
-}
-
 }

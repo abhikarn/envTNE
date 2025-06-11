@@ -148,7 +148,7 @@
                               $index) {
                               @for (data of expenseRequest.data; track $index) {
                               @if (data?.IsViolation) {
-                              <ul class="policy-vio-list   mb-0">
+                              <ul class="policy-vio-list mb-0">
                                  <li>
                                     <span class="fa-pv"><i class="fa fa-exclamation-triangle"
                                           aria-hidden="true"></i></span>
@@ -157,7 +157,6 @@
                               </ul>
                               }
                               @if (data?.IsOCRRestrictedKeyword) {
-
                               <ul class="ocr-vio-list list-unstyled mb-0">
                                  <li>
                                     <span class="fa-pv"><i class="fa fa-exclamation-triangle text-amber"
@@ -165,7 +164,6 @@
                                     Expense item contains a restricted keyword as identified by OCR validation.
                                  </li>
                               </ul>
-
                               }
                               }
                               }

@@ -19,7 +19,6 @@
 }">
             @for (col of tableColumns; track col.name) {
             <td [attr.data-label]="col.label">
-
               @if (col.name === '__slNo') {
               {{ i + 1 }}
               } @else if (col.name === '__actions') {
