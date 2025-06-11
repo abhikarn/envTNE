@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IFormControl } from '../../../form-control.interface';
 import { SnackbarService } from '../../../../service/snackbar.service';
@@ -19,7 +19,8 @@ import { DataService } from '../../../../../../../tne-api';
     MatAutocompleteModule
   ],
   templateUrl: './line-wise-cost-center.component.html',
-  styleUrl: './line-wise-cost-center.component.scss'
+  styleUrl: './line-wise-cost-center.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class LineWiseCostCenterComponent {
   @Input() control: any;

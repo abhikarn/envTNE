@@ -216,7 +216,7 @@
         background: transparent !important;
         border-radius: 0;
         margin-bottom: 0;
-        padding: 12px 10px 12px 11px;min-height: 84px;
+        padding: 12px 10px 12px 11px;min-height: 55px;
     }
     .remove-th-mobile thead{
         display: none;  
@@ -643,8 +643,12 @@
        }
      
  .icons-new {
- 
+ padding: 5px 0;
 	justify-content: end;
+}
+.mobile-card-view-normaltable tr.child-le-row > td:last-child {
+	border: none !important;
+ 
 }
       .mobile-card-view-normaltable tr {
         margin-bottom: 15px;

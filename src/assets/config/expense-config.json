@@ -440,7 +440,7 @@
                                 "type": "text",
                                 "dataType": "numeric",
                                 "showInUI": true,
-                                "label": "Amount In Percentage(%)",
+                                "label": "Amount In(%)",
                                 "value": null,
                                 "autoFormat": {
                                     "patterns": [
@@ -3440,7 +3440,7 @@
             {
                 "label": "Seek Clarification",
                 "type": "seekClarification",
-                "class": "btn btn-outline-secondary w-50 mr-10",
+                "class": "btn btn-outline-secondary me-lg-2 ",
                 "confirmPopup": {
                     "message": "Are you sure you want to Seek Clarification the claim?",
                     "confirmText": "Yes, SeekClarification",
@@ -3451,7 +3451,7 @@
             {
                 "label": "Reject",
                 "type": "reject",
-                "class": "btn btn-outline-primary w-50",
+                "class": "btn btn-outline-secondary me-lg-2 ",
                 "confirmPopup": {
                     "message": "Are you sure you want to reject the claim?",
                     "confirmText": "Yes, Reject",
@@ -3462,7 +3462,7 @@
             {
                 "label": "Approve",
                 "type": "approve",
-                "class": "btn btn-primary w-100",
+                "class": "btn btn-dark  me-lg-2 ",
                 "confirmPopup": {
                     "message": "Are you sure you want to approve the claim?",
                     "confirmText": "Yes, Approve",
