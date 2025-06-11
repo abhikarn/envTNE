@@ -157,13 +157,15 @@
                               </ul>
                               }
                               @if (data?.IsOCRRestrictedKeyword) {
-                              <ul class="ocr-vio-list list-unstyled">
+
+                              <ul class="ocr-vio-list list-unstyled mb-0">
                                  <li>
                                     <span class="fa-pv"><i class="fa fa-exclamation-triangle text-amber"
                                           aria-hidden="true"></i></span>
                                     Expense item contains a restricted keyword as identified by OCR validation.
                                  </li>
                               </ul>
+
                               }
                               }
                               }
@@ -352,43 +354,43 @@
                         }
                      </div>
 
-<div
-                     class="bottom-buttons d-lg-flex d-md-flex  pe-lg-3  pe-md-3  justify-content-lg-end  justify-content-md-end   align-items-center ">
+                     <div
+                        class="bottom-buttons d-lg-flex d-md-flex  pe-lg-3  pe-md-3  justify-content-lg-end  justify-content-md-end   align-items-center ">
 
 
 
-                     @if ((mode == "approval" || mode == 'finance-approval') && expenseRequestPreviewConfig?.actions)
-                     {
+                        @if ((mode == "approval" || mode == 'finance-approval') && expenseRequestPreviewConfig?.actions)
+                        {
 
 
-                     @if (expenseRequestPreviewConfig.actions[0]) {
-                     <a [ngClass]="expenseRequestPreviewConfig.actions[0].class"
-                        (click)="onAction(expenseRequestPreviewConfig.actions[0]);">
-                        {{ expenseRequestPreviewConfig.actions[0].label }}
-                     </a>
-                     }
-                     @if (expenseRequestPreviewConfig.actions[1]) {
-                     <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[1].class"
-                        (click)="onAction(expenseRequestPreviewConfig.actions[1])">
-                        {{ expenseRequestPreviewConfig.actions[1].label }}
-                     </button>
-                     }
+                        @if (expenseRequestPreviewConfig.actions[0]) {
+                        <a [ngClass]="expenseRequestPreviewConfig.actions[0].class"
+                           (click)="onAction(expenseRequestPreviewConfig.actions[0]);">
+                           {{ expenseRequestPreviewConfig.actions[0].label }}
+                        </a>
+                        }
+                        @if (expenseRequestPreviewConfig.actions[1]) {
+                        <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[1].class"
+                           (click)="onAction(expenseRequestPreviewConfig.actions[1])">
+                           {{ expenseRequestPreviewConfig.actions[1].label }}
+                        </button>
+                        }
 
-                     @if (expenseRequestPreviewConfig.actions[2]) {
-                     <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[2].class"
-                        (click)="onAction(expenseRequestPreviewConfig.actions[2])">
-                        {{ expenseRequestPreviewConfig.actions[2].label }}
-                     </button>
-                     }
+                        @if (expenseRequestPreviewConfig.actions[2]) {
+                        <button type="button" [ngClass]="expenseRequestPreviewConfig.actions[2].class"
+                           (click)="onAction(expenseRequestPreviewConfig.actions[2])">
+                           {{ expenseRequestPreviewConfig.actions[2].label }}
+                        </button>
+                        }
 
-                     <button type="button" class="btn btn-outline-secondary" (click)="goBack()">
-                        Back
-                     </button>
+                        <button type="button" class="btn btn-outline-secondary" (click)="goBack()">
+                           Back
+                        </button>
 
-                     }
+                        }
 
 
-                  </div>
+                     </div>
                   </div>
                </ng-template>
 
@@ -409,7 +411,7 @@
                <div class="right-container-nrw rt-aside-fixed d-none d-md-block d-lg-block">
                   <ng-container *ngTemplateOutlet="expenseSummarySheet"></ng-container>
 
-                  
+
                </div>
 
             </div>

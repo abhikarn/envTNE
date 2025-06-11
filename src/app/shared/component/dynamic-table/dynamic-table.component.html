@@ -35,13 +35,17 @@
                   </button>
                 </span>
                 @if (row?.IsViolation) {
-                <i class="fas fa-exclamation-triangle text-danger" [matTooltip]="row?.Violation"
+                    <span>
+                <i class="fas fa-exclamation-triangle fs-6 text-danger" [matTooltip]="row?.Violation"
                   matTooltipPosition="above"></i>
+                  </span>
                 }
                 @if (row?.IsOCRRestrictedKeyword) {
-                <i class="fas fa-exclamation-triangle text-amber"
+                 <span>
+                <i class="fas fa-exclamation-triangle fs-6 text-amber"
                   [matTooltip]="'This expense item contains a restricted keyword as identified by OCR validation.'"
                   matTooltipPosition="above"></i>
+                  </span>
                 }
                 <span>
                   <button class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Remove"
@@ -68,7 +72,10 @@
           @if (expandedRowIndex === i) {
           <tr class="child-le-row">
             <td class="p-0" [attr.colspan]="tableColumns.length + 2">
-              <div class="tr-showblock" [ngClass]="{ 'violation-bg': row?.IsViolation || row?.IsOCRRestrictedKeyword }">
+              <div class="tr-showblock" [ngClass]="{
+  'violation-bg': row?.IsViolation,
+  'ocr-restricted-bg': !row?.IsViolation && row?.IsOCRRestrictedKeyword
+}">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="row">

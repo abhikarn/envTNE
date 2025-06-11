@@ -9,10 +9,10 @@
 
 
         <mat-dialog-content class="dialog-content">
-            <div *ngIf="data.IsOCRRestrictedKeyword === true" class="restricted-line-items-msg">
+            <div *ngIf="data.IsOCRRestrictedKeyword === true" class="text-danger">
                 Bill contains some restricted line items. Please review carefully.
             </div>
-            <div *ngIf="ammoutData?.IsValid === false" class="restricted-line-items-msg">
+            <div *ngIf="ammoutData?.IsValid === false" class="text-danger">
                 Bill Amount not matching with the actual bill image. Please review carefully.
             </div>
             <div class="modal-body pb-0">
