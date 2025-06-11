@@ -1,14 +1,16 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { Component, Inject, Optional, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-date-extension',
+  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -19,41 +21,57 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule
   ],
   templateUrl: './date-extension.component.html',
-  styleUrl: './date-extension.component.scss'
+  styleUrl: './date-extension.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class DateExtensionComponent {
   travelForm: FormGroup;
+  data: any;
 
   constructor(
-    public dialogRef: MatDialogRef<DateExtensionComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Optional() private dialogRef: MatDialogRef<DateExtensionComponent>,
+    @Optional() private bottomSheetRef: MatBottomSheetRef<DateExtensionComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) private dialogData: any,
+    @Optional() @Inject(MAT_BOTTOM_SHEET_DATA) private bottomSheetData: any,
     private fb: FormBuilder
   ) {
+    // Use whichever data is available
+    this.data = this.dialogData || this.bottomSheetData;
+
     this.travelForm = this.fb.group({
-      travelFromDate: [this.extractDate(data?.TravelDateFrom), Validators.required],
-      travelFromTime: [this.extractTime(data?.TravelDateFrom), Validators.required],
-      travelToDate: [this.extractDate(data?.TravelDateTo), Validators.required],
-      travelToTime: [this.extractTime(data?.TravelDateTo), Validators.required],
-      remarks: [data?.remarks || '', Validators.required]
+      travelFromDate: [this.extractDate(this.data?.TravelDateFrom), Validators.required],
+      travelFromTime: [this.extractTime(this.data?.TravelDateFrom), Validators.required],
+      travelToDate: [this.extractDate(this.data?.TravelDateTo), Validators.required],
+      travelToTime: [this.extractTime(this.data?.TravelDateTo), Validators.required],
+      remarks: [this.data?.remarks || '', Validators.required]
     });
-  }
-
-  ngOnInit() {
-
   }
 
   onSubmit() {
     if (this.travelForm.valid) {
       const formValue = this.travelForm.value;
-
       const TravelDateFrom = this.mergeDateTime(formValue.travelFromDate, formValue.travelFromTime);
       const TravelDateTo = this.mergeDateTime(formValue.travelToDate, formValue.travelToTime);
 
-      this.dialogRef.close({
+      const result = {
         TravelDateFrom,
         TravelDateTo,
         Remarks: formValue.remarks
-      });
+      };
+
+      this.close(result);
+    }
+  }
+
+  onClose() {
+    this.close();
+  }
+
+  private close(result?: any) {
+    if (this.dialogRef) {
+      this.dialogRef.close(result);
+    } else if (this.bottomSheetRef) {
+      this.bottomSheetRef.dismiss(result);
     }
   }
 
@@ -84,10 +102,5 @@ export class DateExtensionComponent {
     const tzSign = offsetHours >= 0 ? '+' : '-';
 
     return `${mergedDate.getFullYear()}-${this.padZero(mergedDate.getMonth() + 1)}-${this.padZero(mergedDate.getDate())}T${this.padZero(mergedDate.getHours())}:${this.padZero(mergedDate.getMinutes())}:00${tzSign}${this.padZero(Math.abs(offsetHours))}:${this.padZero(Math.abs(offsetMinutes))}`;
-}
-
-  onClose() {
-    this.dialogRef.close();
   }
-
 }

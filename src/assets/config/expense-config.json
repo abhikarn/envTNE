@@ -77,7 +77,7 @@
         "dateExtension": {
             "label": "Date Extension",
             "visible": true,
-            "class": "btn btn-secondary btn-sm"
+            "class": "btn btn-outline-secondary mb-0"
         },
         "category": [
             {
@@ -522,6 +522,8 @@
                             },
                             {
                                 "name": "GstIn",
+                                "label": "GSTIN",
+                                "placeholder": "GSTIN",
                                 "type": "text",
                                 "showInUI": true,
                                 "required": true,
@@ -541,6 +543,8 @@
                             },
                             {
                                 "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "placeholder": "Invoice Number",
                                 "type": "text",
                                 "showInUI": true,
                                 "required": true,
@@ -555,6 +559,8 @@
                             },
                             {
                                 "name": "Amount",
+                                "label": "Amount",
+                                "placeholder": "AMOUNT",
                                 "type": "text",
                                 "dataType": "numeric",
                                 "showInUI": true,
@@ -584,6 +590,8 @@
                             },
                             {
                                 "name": "SGST",
+                                "label": "SGST",
+                                "placeholder": "SGST",
                                 "type": "text",
                                 "dataType": "numeric",
                                 "showInUI": true,
@@ -602,6 +610,8 @@
                             },
                             {
                                 "name": "CGST",
+                                "label": "CGST",
+                                "placeholder": "CGST",
                                 "type": "text",
                                 "dataType": "numeric",
                                 "showInUI": true,
@@ -620,6 +630,8 @@
                             },
                             {
                                 "name": "IGST",
+                                "label": "IGST",
+                                "placeholder": "IGST",
                                 "type": "text",
                                 "dataType": "numeric",
                                 "showInUI": true,
@@ -638,6 +650,8 @@
                             },
                             {
                                 "name": "UGST",
+                                "label": "UGST",
+                                "placeholder": "UGST",
                                 "type": "text",
                                 "dataType": "numeric",
                                 "showInUI": true,
@@ -967,6 +981,1466 @@
                         ]
                     }
                 ]
+            },
+            {
+                "name": "Accommodation",
+                "label": "Accommodation",
+                "formControls": [
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "AccommodationType",
+                        "isExcluded": false,
+                        "label": "Accommodation Type",
+                        "placeholder": "Select Accommodation Type",
+                        "value": 0,
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetStayType",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Accommodation Type is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "CheckInDateTime",
+                        "isExcluded": false,
+                        "label": "Check-in Date Time",
+                        "value": null,
+                        "dependentCases": [
+                            {
+                                "isGeneral": true,
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "Check-inDateTime": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ClaimedConversionRate": "ResponseValue.Value"
+                                },
+                                "autoFormat": {
+                                    "decimal": ".00"
+                                },
+                                "event": "dateChange",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                            },
+                            {
+                                "isGeneral": true,
+                                "key": "CityMasterId",
+                                "inputControls": {
+                                    "City": "CityId",
+                                    "Check-inDateTime": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "CityGrade": "ResponseValue.Grade"
+                                },
+                                "event": "dateChange",
+                                "requestBody": {
+                                    "Type": "53"
+                                },
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetCityGrade"
+                            },
+                            {
+                                "isGeneral": false,
+                                "inputControls": {
+                                    "CityGrade": "CityGradeId",
+                                    "Check-inDateTime": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "CityGrade": "ResponseValue.Grade"
+                                },
+                                "event": "dateChange",
+                                "requestBody": {
+                                    "ClaimTypeId": 53,
+                                    "UserMasterId": 4,
+                                    "ExpenseCategoryId": 3,
+                                    "PolicyReferenceId": 53
+                                },
+                                "apiService": "ExpenseService",
+                                "apiMethod": "expenseGetExpensePolicyEntitlement"
+                            }
+                        ],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Check-in Date Time is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "CheckOutDateTime",
+                        "isExcluded": false,
+                        "label": "Check-out Date Time",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Check-out Date Time is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "int",
+                        "autoComplete": true,
+                        "name": "City",
+                        "isExcluded": true,
+                        "label": "City",
+                        "value": 0,
+                        "option$": [],
+                        "dependentCases": [
+                            {
+                                "key": "CityMasterId",
+                                "inputControls": {
+                                    "City": "CityId",
+                                    "Check-inDateTime": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "CityGrade": "ResponseValue.Grade"
+                                },
+                                "event": "autoComplete",
+                                "requestBody": {
+                                    "Type": "53"
+                                },
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetCityGrade"
+                            }
+                        ],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "City is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "CityGrade",
+                        "readonly": true,
+                        "isExcluded": true,
+                        "label": "City Grade",
+                        "value": "",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "City Grade is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "HotelName",
+                        "isExcluded": false,
+                        "label": "Hotel Name",
+                        "value": "",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Hotel Name is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "BillNumber",
+                        "isExcluded": false,
+                        "label": "Bill Number",
+                        "value": "",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Bill Number is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "BillDate",
+                        "isExcluded": false,
+                        "label": "Bill Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Bill Date is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "PaymentType",
+                        "isExcluded": true,
+                        "label": "Payment Type",
+                        "placeholder": "Select Payment Type",
+                        "value": "",
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetPaymentType",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Payment Type is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "EntitlementCurrency",
+                        "isExcluded": true,
+                        "label": "Entitlement Currency",
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "value": 0,
+                        "options": [],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Currency is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "EntitlementAmount",
+                        "isExcluded": true,
+                        "label": "Entitlement Amount",
+                        "value": 0,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Amount is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "EntitlementConversionRate",
+                        "isExcluded": true,
+                        "label": "Entitlement Conversion Rate",
+                        "value": 0,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Conversion Rate is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "value": 0,
+                        "defaultValue": {
+                            "Id": 1,
+                            "Code": "INR",
+                            "Name": "Indian Rupee",
+                            "Alias": "Indian Rupee",
+                            "IsBaseCurrency": true,
+                            "Display": "Indian Rupee : INR"
+                        },
+                        "options": [],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Currency is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "ClaimedAmount",
+                        "isExcluded": false,
+                        "label": "Claimed Amount",
+                        "value": 0,
+                        "dependentCases": [
+                            {
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "Check-inDateTime": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ClaimedConversionRate": "ResponseValue.Value"
+                                },
+                                "autoFormat": {
+                                    "decimal": ".00"
+                                },
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                            }
+                        ],
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "decimal": ".00",
+                            "setValue": "0.00"
+                        },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claimed Amount is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "ClaimedConversionRate",
+                        "isExcluded": true,
+                        "label": "Claimed Conversion Rate",
+                        "value": 0,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claimed Conversion Rate is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "TaxAmount",
+                        "isExcluded": true,
+                        "label": "Tax Amount",
+                        "value": 0
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "DifferentialAmount(INR)",
+                        "isExcluded": false,
+                        "label": "Differential Amount(INR)",
+                        "value": 0,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Differential Amount is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "textarea",
+                        "dataType": "string",
+                        "name": "Justification",
+                        "isExcluded": false,
+                        "label": "Justification",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "name": "Per Diem",
+                "label": "Per Diem",
+                "formControls": [
+                    {
+                        "type": "date",
+                        "name": "ClaimFromDate",
+                        "isExcluded": true,
+                        "label": "Claim From Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim From Date is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "date",
+                        "name": "ClaimToDate",
+                        "label": "Claim To Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim To Date is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "name": "Constraint",
+                        "label": "Constraint",
+                        "placeholder": "Select Per Diem Type",
+                        "options": [],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Constraint is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "autoComplete": true,
+                        "name": "City",
+                        "isExcluded": true,
+                        "label": "City",
+                        "option$": "filteredCities$",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "City is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "CityGrade",
+                        "readonly": true,
+                        "isExcluded": true,
+                        "label": "City Grade",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "City Grade is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "BillNumber",
+                        "label": "Bill Number"
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "value": null
+                    },
+                    {
+                        "type": "select",
+                        "name": "EntitlementCurrency",
+                        "isExcluded": true,
+                        "label": "Entitlement Currency",
+                        "options": [],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Currency is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "EntitlementAmount",
+                        "isExcluded": true,
+                        "label": "Entitlement Amount",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Amount is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "EntitlementConversionRate",
+                        "isExcluded": true,
+                        "label": "Entitlement Conversion Rate",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Conversion Rate is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "options": [],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Currency is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "ClaimedAmount",
+                        "isExcluded": true,
+                        "label": "Claimed Amount",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claimed Amount is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "ClaimedConversionRate",
+                        "isExcluded": true,
+                        "label": "Claimed Conversion Rate",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claimed Conversion Rate is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "name": "PaymentType",
+                        "isExcluded": true,
+                        "label": "Payment Type",
+                        "placeholder": "Select Payment Type",
+                        "options": [],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Payment Type is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "DifferentialAmount(INR)",
+                        "label": "Differential Amount(INR)",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Differential Amount is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "textarea",
+                        "name": "Justification",
+                        "label": "Justification"
+                    }
+                ]
+            },
+            {
+                "name": "Lump sum",
+                "label": "Lump sum",
+                "formControls": [
+                    {
+                        "type": "select",
+                        "name": "AccommodationType",
+                        "label": "Accommodation Type",
+                        "placeholder": "Select Accommodation Type",
+                        "options": [],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Accommodation Type is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "date",
+                        "name": "Check-inDateTime",
+                        "label": "Check-in Date Time",
+                        "value": null,
+                        "events": {
+                            "dateChange": "onSelectDate"
+                        },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Check-in Date Time is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "date",
+                        "name": "Check-outDateTime",
+                        "label": "Check-out Date Time",
+                        "value": null,
+                        "events": {
+                            "dateChange": "onSelectDate",
+                            "api": [
+                                {
+                                    "service": "ExpenseService",
+                                    "method": "ValidateUserLeaveDateForDuration",
+                                    "payload": {
+                                        "UserMasterId": 0,
+                                        "FromDate": "",
+                                        "ToDate": "",
+                                        "TravelRequestId": 0
+                                    }
+                                }
+                            ]
+                        },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Check-out Date Time Time is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "autoComplete": true,
+                        "name": "City",
+                        "isExcluded": true,
+                        "label": "City",
+                        "option$": "filteredCities$",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "City is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "CityGrade",
+                        "readonly": true,
+                        "isExcluded": true,
+                        "label": "City Grade",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "City Grade is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "name": "PaymentType",
+                        "isExcluded": true,
+                        "label": "Payment Type",
+                        "placeholder": "Select Payment Type",
+                        "options": [],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Payment Type is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "name": "EntitlementCurrency",
+                        "isExcluded": true,
+                        "label": "Entitlement Currency",
+                        "options": [],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Currency is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "EntitlementAmount",
+                        "isExcluded": true,
+                        "label": "Entitlement Amount",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Amount is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "EntitlementConversionRate",
+                        "isExcluded": true,
+                        "label": "Entitlement Conversion Rate",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Conversion Rate is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "options": [],
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Currency is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "ClaimedAmount",
+                        "isExcluded": true,
+                        "label": "Claimed Amount",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claimed Amount is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "ClaimedConversionRate",
+                        "isExcluded": true,
+                        "label": "Claimed Conversion Rate",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claimed Conversion Rate is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "DifferentialAmount(INR)",
+                        "label": "Differential Amount(INR)",
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Differential Amount is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "textarea",
+                        "name": "Justification",
+                        "label": "Justification"
+                    }
+                ]
+            },
+            {
+                "name": "Local Conveyance",
+                "label": "Local Conveyance",
+                "formControls": [
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "isExcluded": true,
+                        "label": "Claim Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim Date is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "name": "LocalTravelType",
+                        "label": "Local Travel Type",
+                        "options": []
+                    },
+                    {
+                        "type": "select",
+                        "name": "LocalTravelMode",
+                        "label": "Local Travel Mode",
+                        "options": []
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "OriginPointName",
+                        "label": "Origin Point Name"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "DestinationPointName",
+                        "label": "Destination Point Name"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "autoComplete": true,
+                        "name": "City",
+                        "isExcluded": true,
+                        "label": "City",
+                        "option$": "filteredCities$"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "CityGrade",
+                        "readonly": true,
+                        "isExcluded": true,
+                        "label": "City Grade"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "Purpose",
+                        "label": "Purpose"
+                    },
+                    {
+                        "type": "select",
+                        "name": "PaymentType",
+                        "isExcluded": true,
+                        "label": "PaymentType",
+                        "options": []
+                    },
+                    {
+                        "type": "select",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "options": []
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "KM",
+                        "label": "KM"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "TotalAmount",
+                        "isExcluded": true,
+                        "label": "Total Amount"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "ClaimConversionRate",
+                        "isExcluded": true,
+                        "label": "Claim Conversion Rate"
+                    },
+                    {
+                        "type": "textarea",
+                        "name": "Justification",
+                        "label": "Justification"
+                    }
+                ]
+            },
+            {
+                "name": "Miscellaneous Expense",
+                "label": "Miscellaneous Expense",
+                "formControls": [
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "isExcluded": true,
+                        "label": "Claim Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim Date is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "name": "OtherType",
+                        "label": "Other Type",
+                        "options": []
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "autoComplete": true,
+                        "name": "City",
+                        "isExcluded": true,
+                        "label": "City",
+                        "option$": "filteredCities$"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "CityGrade",
+                        "readonly": true,
+                        "isExcluded": true,
+                        "label": "City Grade"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "ParticularsofExpense",
+                        "label": "Particulars of Expense"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "BillNumber",
+                        "label": "Bill Number"
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Bill Date Time is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "name": "PaymentType",
+                        "isExcluded": true,
+                        "label": "PaymentType",
+                        "options": []
+                    },
+                    {
+                        "type": "select",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "options": []
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "Amount",
+                        "isExcluded": true,
+                        "label": "Amount"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "ClaimConversionRate",
+                        "isExcluded": true,
+                        "label": "Claim Conversion Rate"
+                    },
+                    {
+                        "type": "textarea",
+                        "name": "Justification",
+                        "label": "Justification"
+                    }
+                ]
+            },
+            {
+                "name": "Visa",
+                "label": "Visa",
+                "formControls": [
+                    {
+                        "type": "date",
+                        "name": "ProcessingDate",
+                        "isExcluded": true,
+                        "label": "Processing Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Processing Date is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "Country",
+                        "label": "Country"
+                    },
+                    {
+                        "type": "select",
+                        "name": "PaymentType",
+                        "isExcluded": true,
+                        "label": "PaymentType",
+                        "options": []
+                    },
+                    {
+                        "type": "select",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "options": []
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "VisaApplicationFee",
+                        "isExcluded": true,
+                        "label": "Visa Application Fee"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "ConversionRate",
+                        "isExcluded": true,
+                        "label": "Conversion Rate"
+                    },
+                    {
+                        "type": "textarea",
+                        "name": "Justification",
+                        "label": "Justification"
+                    }
+                ]
+            },
+            {
+                "name": "Travel Insurance",
+                "label": "Travel Insurance",
+                "formControls": [
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "isExcluded": true,
+                        "label": "Claim Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim Date is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "InsuranceType",
+                        "label": "Insurance Type"
+                    },
+                    {
+                        "type": "select",
+                        "name": "PaymentType",
+                        "isExcluded": true,
+                        "label": "PaymentType",
+                        "options": []
+                    },
+                    {
+                        "type": "select",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "options": []
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "Amount",
+                        "isExcluded": true,
+                        "label": "Amount"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "ConversionRate",
+                        "isExcluded": true,
+                        "label": "Conversion Rate"
+                    },
+                    {
+                        "type": "textarea",
+                        "name": "Justification",
+                        "label": "Justification"
+                    }
+                ]
+            },
+            {
+                "name": "Roaming",
+                "label": "Roaming",
+                "formControls": [
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "isExcluded": true,
+                        "label": "Claim Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim Date is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "ServiceProvider",
+                        "label": "Service Provider"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "Roaming Plan",
+                        "label": "Roaming Plan"
+                    },
+                    {
+                        "type": "date",
+                        "name": "ActivationDate",
+                        "label": "Activation Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Activation Date is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "name": "PaymentType",
+                        "isExcluded": true,
+                        "label": "PaymentType",
+                        "options": []
+                    },
+                    {
+                        "type": "select",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "options": []
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "Amount",
+                        "isExcluded": true,
+                        "label": "Amount"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "ConversionRate",
+                        "isExcluded": true,
+                        "label": "Conversion Rate"
+                    },
+                    {
+                        "type": "textarea",
+                        "name": "Justification",
+                        "label": "Justification"
+                    }
+                ]
+            },
+            {
+                "name": "Transit Allowance",
+                "label": "Transit Allowance",
+                "formControls": [
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "isExcluded": true,
+                        "label": "Claim Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim Date is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "name": "NumberofHours",
+                        "label": "Number of Hours"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "autoComplete": true,
+                        "name": "City",
+                        "isExcluded": true,
+                        "label": "City",
+                        "option$": "filteredCities$"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "Country",
+                        "label": "Country"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "CountryGrade",
+                        "label": "Country Grade"
+                    },
+                    {
+                        "type": "select",
+                        "name": "EntitlementCurrency",
+                        "isExcluded": true,
+                        "label": "Entitlement Currency",
+                        "options": []
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "EntitlementAmount",
+                        "isExcluded": true,
+                        "label": "Entitlement Amount"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "EntitlementConversionRate",
+                        "isExcluded": true,
+                        "label": "Entitlement Conversion Rate"
+                    },
+                    {
+                        "type": "select",
+                        "name": "PaymentType",
+                        "isExcluded": true,
+                        "label": "PaymentType",
+                        "options": []
+                    },
+                    {
+                        "type": "select",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "options": []
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "Amount",
+                        "isExcluded": true,
+                        "label": "Amount"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "ClaimConversionRate",
+                        "isExcluded": true,
+                        "label": "Claim Conversion Rate"
+                    },
+                    {
+                        "type": "textarea",
+                        "name": "Justification",
+                        "label": "Justification"
+                    }
+                ]
+            },
+            {
+                "name": "Baggage and Outfit Allowance",
+                "label": "Baggage and Outfit Allowance",
+                "formControls": [
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "isExcluded": true,
+                        "label": "Claim Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim Date is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "multi-select",
+                        "name": "Constraint",
+                        "label": "Constraint"
+                    },
+                    {
+                        "type": "select",
+                        "name": "EntitlementCurrency",
+                        "isExcluded": true,
+                        "label": "Entitlement Currency",
+                        "options": []
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "EntitlementAmount",
+                        "isExcluded": true,
+                        "label": "Entitlement Amount"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "EntitlementConversionRate",
+                        "isExcluded": true,
+                        "label": "Entitlement Conversion Rate"
+                    },
+                    {
+                        "type": "select",
+                        "name": "PaymentType",
+                        "isExcluded": true,
+                        "label": "PaymentType",
+                        "options": []
+                    },
+                    {
+                        "type": "select",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "options": []
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "Amount",
+                        "isExcluded": true,
+                        "label": "Amount"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "ClaimConversionRate",
+                        "isExcluded": true,
+                        "label": "Claim Conversion Rate"
+                    },
+                    {
+                        "type": "textarea",
+                        "name": "Justification",
+                        "label": "Justification"
+                    }
+                ]
+            },
+            {
+                "name": "Porterage Expenses",
+                "label": "Porterage Expenses",
+                "formControls": [
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "isExcluded": true,
+                        "label": "Claim Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim Date is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "autoComplete": true,
+                        "name": "City",
+                        "isExcluded": true,
+                        "label": "City",
+                        "option$": "filteredCities$"
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "ParticularsOfExpense",
+                        "label": "Particulars Of Expense"
+                    },
+                    {
+                        "type": "select",
+                        "name": "BaggageType",
+                        "label": "Baggage Type",
+                        "options": []
+                    },
+                    {
+                        "type": "select",
+                        "name": "PaymentType",
+                        "isExcluded": true,
+                        "label": "PaymentType",
+                        "options": []
+                    },
+                    {
+                        "type": "select",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "options": []
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "Amount",
+                        "isExcluded": true,
+                        "label": "Amount"
+                    },
+                    {
+                        "type": "textarea",
+                        "name": "Justification",
+                        "label": "Justification"
+                    }
+                ]
+            },
+            {
+                "name": "Advance Return",
+                "label": "Advance Return",
+                "formControls": [
+                    {
+                        "type": "date",
+                        "name": "Date",
+                        "isExcluded": true,
+                        "label": "Date",
+                        "value": null,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Date is required"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "options": []
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "Amount",
+                        "isExcluded": true,
+                        "label": "Amount"
+                    },
+                    {
+                        "type": "textarea",
+                        "name": "Justification",
+                        "label": "Justification"
+                    }
+                ]
             }
         ],
         "otherDetails": [
@@ -981,20 +2455,22 @@
                 "table": {
                     "columns": [
                         {
-                            "name": "actionTakenBy",
-                            "label": "Approver Name",
-                            "order": 1
-                        },
-                        {
                             "name": "actionTakenOnString",
                             "label": "Action Date",
-                            "order": 2
+                            "order": 1
                         },
                         {
                             "name": "actionStatus",
                             "label": "Status",
+                            "order": 2
+                        },
+                        {
+                            "name": "actionTakenBy",
+                            "label": "Approver Name",
                             "order": 3
                         },
+                   
+                     
                         {
                             "name": "remarks",
                             "label": "Remarks",
@@ -1185,17 +2661,17 @@
             {
                 "label": "Cancel",
                 "type": "cancel",
-                "class": "btn btn-outline-secondary w-50 mr-10"
+                "class": "btn btn-outline-secondary  "
             },
             {
                 "label": "Save as Draft",
                 "type": "draft",
-                "class": "btn btn-outline-primary w-50"
+                "class": "btn btn-outline-secondary  me-2  "
             },
             {
                 "label": "Submit",
                 "type": "submit",
-                "class": "btn btn-primary w-100"
+                "class": "btn btn-light"
             }
         ],
         "notifications": {

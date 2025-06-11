@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../form-control.interface';
 
@@ -21,7 +21,9 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
     MatIconModule,
     FunctionWrapperPipe
 ],
-  templateUrl: './multi-select-input.component.html'
+  templateUrl: './multi-select-input.component.html',
+  styleUrls: ['./multi-select-input.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MultiSelectInputComponent {
   @Input() control!: FormControl;

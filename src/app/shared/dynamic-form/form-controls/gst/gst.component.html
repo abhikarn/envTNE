@@ -1,7 +1,7 @@
 <form [formGroup]="companyGSTForm">
     <div class="col-md-8">
-        <div class="radio-group-container">
-            <label>Is bill raised in company GST number?</label>
+        <div class="radio-group-container form-group chm-formgroup  mb-3  ">
+            <label class="d-block mb-3 ">Is bill raised in company GST number?</label>
             <mat-radio-group formControlName="IsBillRaisedInCompanyGST">
                 <mat-radio-button *ngFor="let option of options; trackBy: trackByFn" [value]="option.value">
                     {{ option.label }}

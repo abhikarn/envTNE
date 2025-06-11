@@ -1,8 +1,368 @@
-.disabled {
-    pointer-events: none;
-    opacity: 0.5;
+ app-main-expense {
+	.disabled {
+		pointer-events: none;
+		opacity: 0.5;
+	}
+
+	.mr-10 {
+		margin-right: 10px;
+	}
+
+	#expenseCategories .mat-mdc-tab-header {
+	 
+		margin-bottom: 10px;
+
+	}
+
+	.common-tab .mat-mdc-tab-header {
+		background-color: #f7f7fa;
+		border-radius: 10px;
+		margin-bottom: 12px;
+	}
+
+	.common-tab .mat-mdc-tab-label-container {
+		border: none;
+		z-index: inherit;
+	}
+
+	.common-tab .mat-mdc-tab-list {
+		flex-grow: 0;
+
+	}
+
+	.common-tab .mdc-tab-indicator .mdc-tab-indicator__content {
+
+		border: none;
+	}
+
+	.common-tab .mdc-tab {
+		min-width: inherit;
+		padding: 13px 10px;
+		height: auto !important;
+	}
+
+	.common-tab .mdc-tab--active {
+		background-color: #000000;
+		border-radius: 10px;
+
+	}
+
+
+	.common-tab .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+		color: #ffffff !important;
+	}
+
+	.common-tab .mat-mdc-tab .mdc-tab__ripple::before {
+
+		border-radius: 10px;
+	}
+
+	.common-tab .mat-mdc-tab-body-wrapper {
+
+		background-color: #f7f7fa;
+		border-radius: 5px;
+	}
+
+
+	.mat-mdc-tab-body.mat-mdc-tab-body-active {
+		z-index: inherit;
+		flex-grow: inherit;
+		flex-basis: inherit;
+	}
+
+	.no-hintspace .mat-mdc-form-field-bottom-align::before {
+		content: inherit;
+		display: none;
+	}
+
+	.expense-tab-sec .mdc-tab {
+		min-width: inherit !important;
+		padding: 0 0 !important;
+		height: auto !important;
+	}
+
+
+	.expense-tab-sec .mat-mdc-tab-ripple.mat-mdc-tab-ripple {
+
+		display: none !important;
+	}
+
+	.expense-tab-sec .mdc-tab-indicator {
+
+		display: none !important;
+	}
+
+	.expense-tab-sec .mat-mdc-tab .mdc-tab__ripple::before {
+
+		display: none !important;
+	}
+
+	.expense-tab-sec .mdc-tab--active #expenseHead .menu-item {
+		background: #031842;
+		border: 1px solid #031842;
+	}
+
+	.expense-tab-sec .mdc-tab--active #expenseHead .menu-item h6 span {
+		background-color: #031842 !important;
+		color: #ffffff !important;
+	}
+
+	.expense-tab-sec .mdc-tab--active #expenseHead .menu-item h6 {
+		color: #ffffff;
+	}
+
+	.expense-tab-sec .mat-mdc-tab-header-pagination {
+
+		display: none !important;
+
+	}
+
+	.mat-mdc-tab-label-container {
+
+		border: none;
+	}
+
+	.mat-mdc-form-field-textarea-control {
+		border: 1px solid #EBEBF0 !important;
+		margin-top: 5px !important;
+		font-size: 0.9rem;
+		letter-spacing: 0.2px;
+		border-radius: 6px;
+		padding: 6px;
+		background: rgb(255, 255, 255);
+		resize: none !important;
+		min-height: 59px !important;
+		height: 60px !important;
+	}
+
+	.more-item {
+		border: 1px solid #e4e4eb;
+		border-radius: 5px;
+		padding: 0px 4px;
+		font-size: 11px !important;
+		width: 200px;
+	}
+
+	.more-item .mat-mdc-select {
+		font-size: 11px !important;
+	}
+
+	#expenseCategories .mat-mdc-tab-header .mat-mdc-form-field-subscript-wrapper.mat-mdc-form-field-bottom-align {
+		display: none;
+	}
+
+
+	.more-item .mdc-line-ripple::before,
+	.more-item .mdc-line-ripple::after {
+
+		content: inherit;
+		display: none;
+	}
+.mat-mdc-tab-body {
+	 
+	width: 100%;
 }
 
-.mr-10 {
-    margin-right: 10px;
+
+
+.mdc-text-field {
+		padding: 0 0 !important;
+	}
+
+	.mdc-floating-label {
+		line-height: 1.15rem;
+		text-align: left;
+		white-space: nowrap;
+		cursor: text;
+		font-size: 10px !important;
+		color: #8F90A6 !important;
+		font-weight: 700 !important;
+		padding: 0;
+		margin: 0 0 5px 0;
+		text-transform: uppercase;
+		width: 100%;
+		text-align: left !important;
+		position: relative !important;
+		display: inline !important;
+	}
+
+	.mat-mdc-form-field {
+
+		margin-bottom: 5px;
+	}
+
+	.mat-mdc-form-field-infix {
+		min-height: var(--mat-form-field-container-height, 56px);
+		padding-top: var(--mat-form-field-filled-with-label-container-padding-top, 0) !important;
+		padding-bottom: var(--mat-form-field-filled-with-label-container-padding-bottom, 0px) !important;
+	}
+
+	.mdc-text-field--filled .mdc-floating-label--float-above {
+		transform: translateY(-50%) !important;
+	}
+
+	.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+		border-bottom-color: var(--mdc-filled-text-field-active-indicator-color, #E4E4EB) !important;
+	}
+
+	.mat-form-field-invalid .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+		border-bottom-color: var(--mdc-filled-text-field-active-indicator-color, #E53535) !important;
+	}
+
+	.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+		top: 0 !important;
+	}
+
+	.mat-mdc-form-field-hint-wrapper,
+	.mat-mdc-form-field-error-wrapper {
+
+		padding: 0 0 !important;
+
+	}
+
+	.mat-mdc-form-field-error {
+		color: #E53535 !important;
+		text-align: right;
+	}
+
+	.mat-mdc-select-placeholder {
+		color: #212529 !important;
+		font-size: 0.9rem !important;
+	}
+
+	.mat-mdc-text-field-wrapper:hover .mat-mdc-form-field-focus-overlay {
+		opacity: 0 !important;
+	}
+
+	.mat-form-field-appearance-fill .mat-mdc-select-arrow-wrapper {
+		transform: var(--mat-select-arrow-transform, translateY(0px)) !important;
+	}
+
+	.mat-mdc-form-field-infix {
+		min-height: inherit !important;
+
+	}
+
+	.mat-mdc-form-field .mat-mdc-select.mat-mdc-select-invalid .mat-mdc-select-arrow,
+	.mat-form-field-invalid:not(.mat-form-field-disabled) .mat-mdc-form-field-infix::after {
+		color: #000000 !important;
+	}
+
+	.mat-mdc-select-arrow {
+		display: none;
+	}
+
+	.mat-mdc-select-trigger::after {
+		position: absolute;
+		right: 0px;
+		width: 12px;
+		height: 7px;
+		content: "";
+		background: url('../../../../../public/images/dropdown-arrow.png') no-repeat scroll 0 0;
+	}
+
+	.mat-mdc-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-mdc-text-field-wrapper:focus-visible {
+
+		outline: none !important;
+	}
+
+	.mat-mdc-select-value:focus-visible {
+		outline: none !important;
+	}
+
+	.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+		border-bottom-color: transparent !important;
+	}
+
+	div.mat-mdc-select-panel {
+		position: relative !important;
+		width: 100% !important;
+		background: white !important;
+		border: none;
+		margin-top: 2px;
+		z-index: 99;
+		border-radius: 5px !important;
+		padding: 0 !important;
+		box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+	}
+
+	.mat-mdc-option {
+
+		min-height: inherit !important;
+		padding: 5px 5px !important;
+		border-bottom: 1px solid #eee;
+		font-size: 12px !important;
+
+	}
+
+	.mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+		background-color: #f0f0f0 !important;
+	}
+
+	.mat-mdc-option.mat-mdc-option-active.mdc-list-item {
+		background-color: #f0f0f0 !important;
+	}
+
+	.mat-mdc-select {
+
+		font-size: 0.9rem !important;
+
+	}
+
+
+	div.mat-mdc-autocomplete-panel {
+		position: relative !important;
+		width: 100% !important;
+		background: white !important;
+		border: none;
+		margin-top: 2px;
+		z-index: 99;
+		border-radius: 5px !important;
+		padding: 0 !important;
+		box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+	}
+
+	.mdc-text-field__input {
+
+		font-size: 0.9rem !important;
+	}
+ 
+	@media (max-width: 1199px) {
+
+		#expenseCategories .mat-mdc-tab-header {
+			 
+
+		}
+	}
+
+	@media (max-width: 991px) {
+
+		#expenseCategories .mat-mdc-tab-header {
+				width: 716px !important
+		}
+
+
+	}
+
+	@media (max-width: 767px) {
+
+app-main-expense #expenseCategories .mat-mdc-tab-header {
+	width: 716px !important;
+	overflow-x: scroll;
+}
+		#expenseCategories .mat-mdc-tab-label-container {
+			overflow-x: scroll !important;
+			padding-bottom: 10px;
+		}
+
+	}
+
+	@media (max-width: 575px) {
+		#expenseCategories .mat-mdc-tab-header {
+			width: 340px !important;
+			overflow-x: scroll;
+		}
+
+	}
+
 }
