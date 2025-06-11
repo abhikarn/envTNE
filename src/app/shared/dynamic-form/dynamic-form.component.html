@@ -42,6 +42,10 @@
     </lib-radio-input>
   </div>
   }
+  <!-- Handling 'costcenter' type controls -->
+  @case ('costcenter') {
+  <app-cost-center [controlConfig]="control.formConfig" [control]="control.control" [form]="form"></app-cost-center>
+  }
   <!-- Handling 'gst' type controls -->
   @case ('gst') {
   <app-gst [controlConfig]="control.formConfig" [control]="control.control" [form]="form"></app-gst>

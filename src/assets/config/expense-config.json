@@ -26,34 +26,51 @@
             "label": "Travel Details",
             "data": [
                 {
+                    "isEnabled": true,
                     "name": "TravelDateFromString",
                     "label": "Travel From Date",
                     "value": null,
                     "order": 1
                 },
                 {
+                    "isEnabled": true,
                     "name": "TravelDateToString",
                     "label": "Travel To Date",
                     "value": null,
                     "order": 2
                 },
                 {
+                    "isEnabled": true,
                     "name": "Purpose of Travel",
                     "label": "Purpose of Travel",
                     "value": null,
                     "order": 3
                 },
                 {
+                    "isEnabled": true,
                     "name": "DefaultCostcenter",
                     "label": "Cost center",
                     "value": null,
                     "order": 5
                 },
                 {
+                    "isEnabled": true,
                     "name": "UserLeaveSummary",
                     "label": "LeaveSummary",
                     "value": null,
                     "order": 6
+                },
+                {
+                    "isEnabled": false,
+                    "label": "Billable Cost Centre",
+                    "name": "billableCostcentre",
+                    "isLink": false,
+                    "value": "NA",
+                    "order": 7,
+                    "controlType": "autocomplete",
+                    "apiUrl": "/api/Data/CostCentreAutocomplete",
+                    "displayKey": "Display",
+                    "valueKey": "CostCentreId"
                 }
             ]
         },
@@ -363,6 +380,124 @@
                         "order": 9
                     },
                     {
+                        "type": "costcenter",
+                        "dataType": "object",
+                        "name": "costcentreWiseExpense",
+                        "isExcluded": false,
+                        "label": "Cost Centre",
+                        "value": [],
+                        "getControl": "ClaimAmount",
+                        "fields": [
+                            {
+                                "name": "ExpenseRequestCostCentrewiseAmmoutId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 1
+                            },
+                            {
+                                "name": "ExpenseRequestDetailId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 2
+                            },
+                            {
+                                "type": "text",
+                                "subType": "text",
+                                "dataType": "int",
+                                "autoComplete": true,
+                                "name": "CostCentre",
+                                "isExcluded": false,
+                                "label": "Cost Center",
+                                "value": null,
+                                "options": [],
+                                "labelKey": "Display",
+                                "valueKey": "CostCentreId",
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetCityAutocomplete",
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Cost Center is required"
+                                    }
+                                ],
+                                "disable": false,
+                                "readonly": false,
+                                "order": 3,
+                                "showInUI": true
+                            },
+                            {
+                                "name": "CostCentreId",
+                                "type": "text",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 4
+                            },
+                            {
+                                "name": "AmmoutInPercentage",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "label": "Amount In Percentage(%)",
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 2
+                                    }
+                                },
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    },
+                                    {
+                                        "type": "min",
+                                        "value": 0
+                                    }
+                                ],
+                                "order": 5
+                            },
+                            {
+                                "name": "AmmoutInActual",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "label": "Amount In Actual",
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    }
+                                },
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    },
+                                    {
+                                        "type": "min",
+                                        "value": 0
+                                    }
+                                ],
+                                "order": 6
+                            }
+                        ]
+                    },
+                    {
                         "type": "gst",
                         "dataType": "object",
                         "name": "gst",
@@ -577,7 +712,7 @@
                             ]
                         },
                         "disable": false,
-                        "oCRRequired":true,
+                        "oCRRequired": true,
                         "order": 11
                     },
                     {
@@ -731,6 +866,38 @@
                     }
                 ],
                 "nestedTables": [
+                    {
+                        "name": "costCentre",
+                        "dataKey": "costcentreWiseExpense",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
                     {
                         "name": "gst",
                         "dataKey": "gst",
@@ -2475,6 +2642,13 @@
                         "label": "Total"
                     }
                 ]
+            },
+            {
+                "id": "cost-center-wise-expense",
+                "title": "Costcenter wise Expense",
+                "isOpen": false,
+                "type": "costcenter",
+                "items": []
             }
         ],
         "justification": {

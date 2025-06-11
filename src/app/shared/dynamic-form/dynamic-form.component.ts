@@ -15,6 +15,8 @@ import { GstComponent } from './form-controls/gst/gst.component';
 import { ServiceRegistryService } from '../service/service-registry.service';
 import { ConfirmDialogService } from '../service/confirm-dialog.service';
 import { GlobalConfigService } from '../service/global-config.service';
+import { LineWiseCostCenterComponent } from './form-controls/cost-center/line-wise-cost-center/line-wise-cost-center.component';
+import { CostCenterComponent } from "./form-controls/cost-center/cost-center.component";
 
 @Component({
   selector: 'app-dynamic-form',
@@ -29,13 +31,15 @@ import { GlobalConfigService } from '../service/global-config.service';
     FileUploadComponent,
     DynamicTableComponent,
     RadioInputComponent,
-    GstComponent
-  ],
+    GstComponent,
+    CostCenterComponent
+],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
 })
 
 export class DynamicFormComponent implements OnInit, OnChanges {
+  @ViewChild(CostCenterComponent) costCenterComponentRef!: CostCenterComponent;
   @ViewChild(GstComponent) gstComponentRef!: GstComponent;
   @Input() moduleData: any;
   @Input() category: any;
@@ -404,7 +408,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onEditRow(rowData: any) {
-
+    if (rowData.row?.costcentreWiseExpense?.length > 0) {
+      this.costCenterComponentRef.setMultipleCostCenterFlag(true);
+      this.costCenterComponentRef.costCenterData = rowData.row?.costcentreWiseExpense;
+    }
     if (rowData.row?.gst?.length > 0) {
       this.gstComponentRef.setCompanyGSTFlag(true);
       this.gstComponentRef.gstData = rowData.row?.gst;
@@ -450,9 +457,16 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   clear() {
     this.form.reset();
+    this.costCenterComponentRef.setMultipleCostCenterFlag(false);
+    this.costCenterComponentRef.costCenterData = [];
     this.gstComponentRef.setCompanyGSTFlag(false);
     this.gstComponentRef.gstData = [];
     this.selectedFiles = [];
+    this.formControls?.forEach((control: any) => {
+      if (control.formConfig?.defaultValue) {
+        control.control.setValue(control.formConfig.defaultValue?.Id);
+      }
+    })
   }
 
   getInputValue(input: any) {
