@@ -288,7 +288,15 @@
                       <li>
                         <span class="fa-pv"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
                         {{expenseRequest.name}}: {{detail[expenseRequest.name]}}
-                      </li>
+                      </li>                     
+                    </ul>
+                    }
+                    @if (data?.IsOCRRestrictedKeyword || data?.excludedData?.IsOCRRestrictedKeyword) {
+                    <ul class="ocr-vio-list list-unstyled">
+                      <li>
+                        <span class="fa-pv"><i class="fa fa-exclamation-triangle text-amber" aria-hidden="true"></i></span>
+                        Expense item contains a restricted keyword as identified by OCR validation.
+                      </li>                     
                     </ul>
                     }
                     }

@@ -725,6 +725,22 @@
                     },
                     {
                         "type": "hidden",
+                        "name": "IsOCRRestrictedKeyword",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false,
+                        "order": 12
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "OCRLogId",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false,
+                        "order": 12
+                    },
+                    {
+                        "type": "hidden",
                         "name": "Violation",
                         "isExcluded": true,
                         "value": "",

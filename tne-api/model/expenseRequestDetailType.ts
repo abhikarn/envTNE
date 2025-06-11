@@ -30,6 +30,7 @@ export interface ExpenseRequestDetailType {
     ApprovedAmount?: number;
     ClaimStatusId?: number;
     IsViolation?: boolean;
+    IsOCRRestrictedKeyword?: boolean;
     Violation?: string;
     TransactionId?: string;
     IsTravelRaiseRequest?: boolean;

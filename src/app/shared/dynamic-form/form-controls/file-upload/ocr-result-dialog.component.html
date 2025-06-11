@@ -9,7 +9,7 @@
 
 
         <mat-dialog-content class="dialog-content">
-            <div *ngIf="data.HasRestrictedLineItems === true" class="restricted-line-items-msg">
+            <div *ngIf="data.IsOCRRestrictedKeyword === true" class="restricted-line-items-msg">
                 Bill contains some restricted line items. Please review carefully.
             </div>
             <div *ngIf="ammoutData?.IsValid === false" class="restricted-line-items-msg">
@@ -57,7 +57,7 @@
                                                     <th>Vendor Name</th>
                                                     <th>Invoice Number</th>
                                                     <th>Amount</th>
-                                                    <th>Basic</th>
+                                                    <!-- <th>Basic</th> -->
                                                     <th>CGST</th>
                                                     <th>SGST</th>
                                                     <th>IGST</th>
@@ -71,7 +71,7 @@
                                                     <td>{{ data.gst.VendorName || '-' }}</td>
                                                     <td>{{ data.gst.InvoiceNumber || '-' }}</td>
                                                     <td>{{ data.gst.Amount || '-' }}</td>
-                                                    <td>{{ data.gst.Basic || '-' }}</td>
+                                                    <!-- <td>{{ data.gst.Basic || '-' }}</td> -->
                                                     <td>{{ data.gst.CGST || '-' }}</td>
                                                     <td>{{ data.gst.SGST || '-' }}</td>
                                                     <td>{{ data.gst.IGST || '-' }}</td>
