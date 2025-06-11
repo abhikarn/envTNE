@@ -105,9 +105,11 @@
                 </div>
                 }
               </div>
+              
               <div class="common-block-mobile">
                 <div class="row">
                   @for (item of travelDetails?.data; track item; let i = $index) {
+                  @if (item?.isEnabled) {
                   <div class="col-md-4 col-sm-4 col-lg-4 col-6">
                     <div class="trl-preview-wrapper">
                       <div class="trl-readview-item">
@@ -137,8 +139,9 @@
                     </div>
                   </div>
                   }
+                  }
+                </div>
               </div>
-            </div>
 
             <!-- expense category -->
             <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
