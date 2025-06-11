@@ -133,4 +133,48 @@ export class SummaryComponent {
     }
   }
 
+  calculateCostCenterWiseExpense() {
+    const COST_CENTER_WISE_EXPENSE_ID = "cost-center-wise-expense";
+    const summary = this.summaries?.find((s: any) => s.id === COST_CENTER_WISE_EXPENSE_ID);
+    if (!summary) return;
+
+    // Initialize summary items as empty
+    summary.items = [];
+
+    // First pass: collect unique cost center names
+    const uniqueCostCenters = new Set<string>();
+
+    this.expenseRequestData?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
+      expenseRequest?.data?.forEach((request: any) => {
+        request?.costcentreWiseExpense?.forEach((costCenter: any) => {
+          uniqueCostCenters.add(costCenter.CostCentre);
+        });
+      });
+    });
+
+    // Initialize summary.items with unique cost centers
+    uniqueCostCenters.forEach((costCenterName) => {
+      summary.items.push({
+        label: costCenterName,
+        value: 0.00
+      });
+    });
+
+    // Second pass: sum up AmmoutInActual for each cost center
+    this.expenseRequestData?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
+      expenseRequest?.data?.forEach((request: any) => {
+        request?.costcentreWiseExpense?.forEach((costCenter: any) => {
+          const costCenterName = costCenter.CostCentre;
+          const amount = Number(costCenter?.AmmoutInActual) || 0;
+
+          const item = summary.items.find((item: any) => item.label === costCenterName);
+          if (item) {
+            item.value = (Number(item.value) + amount).toFixed(2);
+          }
+        });
+      });
+    });
+  }
+
+
 }

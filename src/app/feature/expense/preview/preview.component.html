@@ -234,10 +234,32 @@
                                   
                               }
                               @case ("Adjustment") {
-                              @if (mode == 'finance-approval') {
                               <ng-template mat-tab-label>
                                  <span>{{detail.label}}</span>
                               </ng-template>
+                              @if (mode == 'preview' || mode == 'approval') {
+                              @if (expenseRequestPreviewData?.expenseRequestAdjustment?.length > 0) {
+                              <table class="  table mt-2 mb-2  color-table mobile-card-view-table   ">
+                                 <thead>
+                                    <tr>
+                                       <th class="thd-w15"><span>Amount </span></th>
+                                       <th class="thd-w40"><span>Remarks</span></th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr *ngFor="let adjustment of expenseRequestPreviewData?.expenseRequestAdjustment; track $index">
+                                       <td data-label="Amount">
+                                          <span class="amount-text">{{adjustment?.currency}} {{adjustment?.adjustmentAmountInBaseCurrency}}</span>
+                                       </td>
+                                       <td data-label="Remarks">
+                                          {{adjustment?.remarks || '-'}}
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                              }
+                              }
+                              @if (mode == 'finance-approval') {
                               <div class="row mt-2">
                                  <div class="col-md-12">
                                     @if(isCreateAdjustmentform) {

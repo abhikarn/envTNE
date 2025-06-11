@@ -1,0 +1,98 @@
+<form [formGroup]="costCenterDetailsForm">
+    <div class="col-md-12">
+        <div class="gst-wrapper">
+            <div class="gst-hold-body" id="showDiv">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tblTeCostCenter" class="table   color-table d-table table-cust tbl-sml">
+                            <thead>
+                                <tr>
+                                    @for (field of fields; track $index) {
+                                    @if (field.showInUI) {
+                                    <th class="thd-w10">
+                                        <span>{{field.label}}</span>
+                                    </th>
+                                    }
+                                    }
+                                    <th class="thd-w5"><span>Action</span></th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @for (field of fields; track $index) {
+                                    @if (field.showInUI) {
+                                    @if(!field.autoComplete) {
+                                    <td>
+                                        <div class="form-group chm-formgroup new-form-grp mt-0">
+                                            <input [type]="field.type" [formControlName]="field.name"
+                                                [placeholder]="field.label" (blur)="onBlur(field)"
+                                                (input)="onInput($event, field)"
+                                                class="form-control chm-forminput teGst gsttxt" />
+                                            <span class="validate-error-message teGst"
+                                                *ngIf="costCenterDetailsForm.get(field.name)?.errors && costCenterDetailsForm.get(field.name)?.touched">
+                                                {{
+                                                getValidationMessage(costCenterDetailsForm.get(field.name)?.errors,
+                                                field.name)
+                                                }}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    }
+                                    @if(field.autoComplete) {
+                                    <td>
+                                        <div class="form-group chm-formgroup new-form-grp mt-0">
+                                            <input matInput [formControlName]="field.name" [matAutocomplete]="auto"
+                                                class="form-control chm-forminput teGst gsttxt" placeholder="{{field.label}}">
+                                            <mat-autocomplete #auto="matAutocomplete"
+                                                (optionSelected)="onOptionSelected($event, field)">
+                                                <mat-option *ngFor="let option of filteredOptionsMap[field.name]"
+                                                    [value]="option">
+                                                    {{ option.label }}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                            <span class="validate-error-message teGst"
+                                                *ngIf="costCenterDetailsForm.get(field.name)?.errors && costCenterDetailsForm.get(field.name)?.touched">
+                                                {{
+                                                getValidationMessage(costCenterDetailsForm.get(field.name)?.errors,
+                                                field.name)
+                                                }}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    }
+                                    }
+                                    }
+                                    <td>
+                                        <a type="button" id="btnAddGstTe" class="btn btn-light btn-sm rounded-circle "
+                                            (click)="addCostCenterRow()">
+                                            <span class="ti-plus ti-rotate"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                @if (costCenterDetails?.length > 0) {
+                                @for (gst of costCenterDetails; track $index) {
+                                <tr>
+                                    @for (field of fields; track $index) {
+                                    @if (field.showInUI) {
+                                    <td>{{gst[field.name]}}</td>
+                                    }
+                                    }
+                                    <td>
+                                        <a type="button" id="btnAddGstTe" class="btn btn-light btn-sm rounded-circle "
+                                            (click)="removeCostCenterRow($index)">
+                                            <span class="ti-minus ti-rotate"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
