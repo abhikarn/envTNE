@@ -9010,6 +9010,33 @@ button.dropbtn {
         ul.policy-vio-list .fa-pv .fa {
         color: #dd5c5c;
         }
+
+
+
+         ul.ocr-vio-list {
+            width: 100%;
+            padding: 10px;
+        }
+        ul.ocr-vio-list li {
+            list-style-type: none;
+            /* padding: 5px 0; */
+            color: #FFBF00 ;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 16px;
+            margin: 0 0 13px 0;
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 7px;
+            border-radius: 5px;
+        } ul.ocr-vio-list li:last-child{ margin-bottom: 0;}
+        ul.ocr-vio-list .fa-pv .fa {
+        margin-right: 10px;
+        }
+         
+
+
         .visitors-group-hold {
         position: absolute;
         right: 25px;
@@ -12362,12 +12389,14 @@ button.dropbtn {
         }
         .icons-new {
             display: flex;
-            /* align-items: center; */
+             align-items: center; 
         }
-       .icons-new span {
-	width: 33px;
-	border: none;
-}.btn.btn-showhide:checked, .btn.btn-showhide:hover {
+ .icons-new span {
+    width: 28px;
+    border: none;
+    text-align: center;
+}
+        .btn.btn-showhide:checked, .btn.btn-showhide:hover {
             border: none;
         }.btn.btn-showhide i.fa.fa-chevron-down {
             padding-left: 1px;
