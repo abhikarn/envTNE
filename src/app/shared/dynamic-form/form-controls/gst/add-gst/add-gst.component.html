@@ -24,7 +24,7 @@
                                     @if (field.showInUI) {
                                     <td>
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
-                                            <label> {{field.label}} </label>
+                                          <div class="trl-req-head">  <label> {{field.label}} </label></div>
                                             <input [type]="field.type" [formControlName]="field.name"
                                                  (blur)="onBlur(field)"
                                                 (input)="onInput($event, field)"  

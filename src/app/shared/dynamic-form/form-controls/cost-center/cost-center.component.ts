@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { IFormControl } from '../../form-control.interface';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SnackbarService } from '../../../service/snackbar.service';
@@ -15,7 +15,8 @@ import { MatRadioModule } from '@angular/material/radio';
     LineWiseCostCenterComponent
   ],
   templateUrl: './cost-center.component.html',
-  styleUrl: './cost-center.component.scss'
+  styleUrl: './cost-center.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class CostCenterComponent {
   @Input() control: any;
