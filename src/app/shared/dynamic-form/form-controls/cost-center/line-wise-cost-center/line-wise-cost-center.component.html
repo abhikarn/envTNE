@@ -25,7 +25,7 @@
                                     @if(!field.autoComplete) {
                                     <td>
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
-                                              <label> {{field.label}} </label>
+                                            <div class="trl-req-head">     <label> {{field.label}} </label> </div>
                                             <input [type]="field.type" [formControlName]="field.name"
                                                 (blur)="onBlur(field)"
                                                 (input)="onInput($event, field)"
@@ -43,7 +43,7 @@
                                     @if(field.autoComplete) {
                                     <td>
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
-                                             <label> {{field.label}} </label>
+                                            <div class="trl-req-head">    <label> {{field.label}} </label> </div>
                                             <input matInput [formControlName]="field.name" [matAutocomplete]="auto"
                                                 class="form-control chm-forminput teGst gsttxt"  >
                                             <mat-autocomplete #auto="matAutocomplete"
@@ -78,10 +78,13 @@
 
                                 @if (costCenterDetails?.length > 0) {
                                 @for (gst of costCenterDetails; track $index) {
-                                <tr>
+                                <tr  >
                                     @for (field of fields; track $index) {
                                     @if (field.showInUI) {
-                                    <td>{{gst[field.name]}}</td>
+
+                                    <td style="padding: 7px 10px;">
+                                            <div class="trl-req-head">    <label> {{field.label}} </label> </div> 
+                                        {{gst[field.name]}}</td>
                                     }
                                     }
                                     <td>

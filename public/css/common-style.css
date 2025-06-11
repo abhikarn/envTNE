@@ -11569,9 +11569,9 @@ button.dropbtn {
         .expense-item-hold .widget-t-body .form-group.chm-formgroup.new-form-grp {
         margin-bottom: 25px !important;
         }
-        .gst-hold-body .table.table-cust.tbl-sml .form-group.chm-formgroup.new-form-grp {
+        /* .gst-hold-body .table.table-cust.tbl-sml .form-group.chm-formgroup.new-form-grp {
         margin-bottom: 0px !important;
-        }
+        } */
         .inline-acc-list .tr-showblock .listing-row label {
         width: 108px;
         font-weight: 600;
