@@ -1,39 +1,289 @@
-<h2 mat-dialog-title class="dialog-header">Requester Details</h2>
+ 
+
+
+<div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+            Requester Details
+            </h5>
+                 <button mat-icon-button mat-dialog-close>
+        <mat-icon class="text-white">close</mat-icon>
+    </button>
+         </div>
+
+ 
 <mat-dialog-content class="dialog-content">
     <div class="details-container">
-        <div class="left-column">
-            <mat-list>
-                <mat-list-item><strong>Employee Code:</strong> {{data.EmployeeCode}}</mat-list-item>
-                <mat-list-item><strong>Name:</strong> {{data.EmployeeName}}</mat-list-item>
-                <mat-list-item><strong>Email:</strong> {{data.EmployeeEmail}}</mat-list-item>
-                <mat-list-item><strong>Designation:</strong> {{data.Designation}}</mat-list-item>
-                <mat-list-item><strong>Company:</strong> {{data.Company}}</mat-list-item>
-                <mat-list-item><strong>Business Unit:</strong> {{data.PersonnelSubArea}}</mat-list-item>
-                <mat-list-item><strong>Division:</strong> {{data.PersonnelArea}}</mat-list-item>
-                <mat-list-item><strong>Department:</strong> {{data.Department}}</mat-list-item>
-                <mat-list-item><strong>Sub Department:</strong> {{data.Department}}</mat-list-item>
-                <mat-list-item><strong>Grade:</strong> {{data.Grade}}</mat-list-item>
-                <mat-list-item><strong>Gender:</strong> {{data.Gender}}</mat-list-item>
-            </mat-list>
-        </div>
 
-        <div class="right-column">
-            <mat-list>
-                <mat-list-item><strong>L1 Manager:</strong> {{data.ReportingManager}}</mat-list-item>
-                <mat-list-item><strong>HOD:</strong> {{data.HodPersonnel}}</mat-list-item>
-                <mat-list-item><strong>DOB:</strong> {{data.DateOfBirthString}}</mat-list-item>
-                <mat-list-item><strong>DOJ:</strong> {{data.DateOfJoinString}}</mat-list-item>
-                <mat-list-item><strong>Mobile Number:</strong> {{data.MobileNumber}}</mat-list-item>
-                <mat-list-item><strong>Cost Centre:</strong> {{data.CostCentre}}</mat-list-item>
-                <mat-list-item><strong>City:</strong> {{data.City}}</mat-list-item>
-                <mat-list-item><strong>Country:</strong> {{data.Country}}</mat-list-item>
-            </mat-list>
-        </div>
+  <div class="row">
+                                                <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>Employee Code   </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span>{{data.EmployeeCode}}</span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+                                                        <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>Name  </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span> {{data.EmployeeName}} </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+       <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>Email  </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span>  {{data.EmployeeEmail}}  </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+                                                 <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>Designation  </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span> {{data.Designation}}  </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+                                                  <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>Company  </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span>  {{data.Company}} </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+<div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>Business Unit  </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span>  {{data.PersonnelSubArea}} </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+
+                                                <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>Division   </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span> {{data.PersonnelArea}} </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+                                                     <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>Department   </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span> {{data.Department}} </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+
+                                                        <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>Sub Department   </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span> {{data.Department}} </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+
+                                                
+                                                        <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>Grade   </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span>  {{data.Grade}} </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+
+
+                                                      <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>Gender   </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span>   {{data.Gender}} </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+
+                                                <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>L1 Manager   </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span>     {{data.ReportingManager}} </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                            
+                                            
+                                            
+                                              <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>  HOD   </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span>   {{data.HodPersonnel}} </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                            
+                                            
+                                             
+                                              <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>  DOB   </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span>  {{data.DateOfBirthString}}</span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                            
+                                            
+                                             <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>  DOJ   </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span>   {{data.DateOfJoinString}} </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+
+                                                   
+                                             <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>  Mobile Number   </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span>   {{data.MobileNumber}}</span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                            
+                                             <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label>  Cost Centre   </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span>  {{data.CostCentre}} </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+  <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label> City  </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span> {{data.City}} </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+
+                                                  <div class="col-md-4 col-sm-4 col-lg-4 col-6">
+                                                   <div class="trl-preview-wrapper">
+                                                      <div class="trl-readview-item">
+                                                         <div class="trl-req-head">
+                                                            <label> Country  </label>
+                                                         </div>
+                                                         <div class="trl-req-detail">
+                                                            <span>{{data.Country}}</span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+
+                                            </div>
+
+
+       
+
+     
     </div>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-    <button mat-icon-button mat-dialog-close>
-        <mat-icon>close</mat-icon>
-    </button>
-</mat-dialog-actions>
+ 
