@@ -1,4 +1,4 @@
-import { Component, DestroyRef, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
+import { Component, DestroyRef, ElementRef, HostListener, inject, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { CityAutocompleteParam, DataService, ExpenseRequestModel, ExpenseService, FinanceService, TravelService } from '../../../../../tne-api';
@@ -26,6 +26,8 @@ import { UtilsService } from '../../../shared/service/utils.service';
 import { ApplicationMessageService } from '../../../shared/service/application-message.service';
 import { environment } from '../../../../environment';
 import { BottomSheetService } from '../../../shared/service/bottom-sheet.service';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 
 @Component({
@@ -42,10 +44,12 @@ import { BottomSheetService } from '../../../shared/service/bottom-sheet.service
     MatAutocompleteModule,
     DynamicFormComponent,
     MatDialogModule,
-    SummaryComponent
+    SummaryComponent,
+    MatSelectModule
   ],
   templateUrl: './main-expense.component.html',
   styleUrl: './main-expense.component.scss',
+  encapsulation: ViewEncapsulation.None,
   providers: [DatePipe]
 })
 
@@ -53,6 +57,7 @@ export class MainExpenseComponent {
   assetPath = `${environment.assetsPath}`
   @ViewChild(SummaryComponent) summaryComponent: any;
   @ViewChild('datepickerInput', { static: false }) datepickerInput!: ElementRef;
+  @ViewChild('requestBottomSheet') requestBottomSheet!: TemplateRef<any>;
   travelRequests: any;
   travelRequestPreview: any;
   travelClassList: any;
@@ -92,6 +97,8 @@ export class MainExpenseComponent {
   travelDetails: any;
   transactionId: any;
   expenseConfirmMessage: any;
+  isMobile = false;
+  selectedExtraCategory: any = null;
   filteredOptions: any = [];
   billableControl: FormControl = new FormControl('');
 
@@ -111,8 +118,10 @@ export class MainExpenseComponent {
     private router: Router,
     private utilsService: UtilsService,
     private applicationMessageService: ApplicationMessageService,
-    private bottomSheetService: BottomSheetService
+    private bottomSheetService: BottomSheetService,
+    private bottomSheet: MatBottomSheet
   ) {
+    this.isMobile = window.innerWidth <= 768;
   }
 
   @HostListener('document:click', ['$event'])
@@ -453,9 +462,8 @@ export class MainExpenseComponent {
 
 
   // Update travelRequestId based on user selection and fetch travel request preview.
-  onSelectTravelExpenseRequest(event: Event) {
-    const target = event?.target as HTMLSelectElement;
-    this.travelRequestId = Number(target?.value) || 0;
+  onSelectTravelExpenseRequest(event: MatSelectChange) {
+    this.travelRequestId = Number(event?.value) || 0;
 
     if (this.travelRequestId) {
       this.initializeBasicFields();
@@ -604,6 +612,9 @@ export class MainExpenseComponent {
   onAction(type: string) {
 
     if (type == "cancel") {
+      if (window.innerWidth <= 768) {
+        this.bottomSheet.dismiss();
+      }
       if (this.editMode) {
         this.router.navigate(['../expense/expense/dashboard']);
         return;
@@ -752,6 +763,57 @@ export class MainExpenseComponent {
       });
   }
 
+  /**
+   * Opens the expense summary sidebar in a bottom sheet on mobile devices.
+   * @param templateRef Reference to the ng-template containing the sidebar content.
+   */
+  openExpenseSummarySheet(templateRef: TemplateRef<any>) {
+    if (window.innerWidth <= 768) {
+      this.bottomSheet.open(templateRef, {
+        panelClass: 'expense-bottom-sheet'
+      });
+    }
+  }
+
+  // For mobile: open bottom sheet for travel request selection
+  openRequestBottomSheet(templateRef: TemplateRef<any>) {
+    this.bottomSheet.open(templateRef, {
+      panelClass: 'expense-bottom-sheet'
+    });
+  }
+
+  // For mobile: select a travel request from bottom sheet
+  selectRequestFromSheet(req: any) {
+    this.expenseRequestForm.get(this.expenseConfig.request.name)?.setValue(req.value);
+    this.onSelectTravelExpenseRequest({ value: req.value } as any);
+    this.bottomSheet.dismiss();
+  }
+
+  // For mobile: get label of selected travel request
+  getSelectedRequestLabel(): string {
+    const value = this.expenseRequestForm.get(this.expenseConfig.request.name)?.value;
+    const found = this.travelRequests?.find((r: any) => r.value === value);
+    return found ? found.label : '';
+  }
+
+  // For mobile: close the expense summary sheet
+  closeExpenseSummarySheet() {
+    this.bottomSheet.dismiss();
+  }
+
+  // For extra category selection
+  onExtraCategorySelect(category: any) {
+    this.selectedExtraCategory = category;
+    // Optionally, update existingExpenseRequestData if needed for the dynamic form
+    this.existingExpenseRequestData = this.responseData?.dynamicExpenseDetailModels
+      ?.find((t: any) => t.name === category?.name)?.data || [];
+  }
+
+  // For *ngFor trackBy
+  trackByReq(index: number, req: any) {
+    return req.value;
+  }
+  
   onOptionSelected(event: any, item: any) {
     const selectedDisplay = event.option.value;
     const selected = this.filteredOptions.find((opt: any) => opt[item.displayKey] === selectedDisplay);

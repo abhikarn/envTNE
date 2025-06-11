@@ -357,19 +357,19 @@ span.auto-label {
     justify-content: flex-start;
     align-items: flex-start;
     }
-    footer.tne-app-footer {
-        flex: 0;
-        background: #dadada;
-        width: 100%;
-        height: 28px;
-        display: flex;
-        min-height: 28px;
-        flex-flow: row;
-        /* border-top: 1px solid rgba(0, 0, 0, 0.2); */
-        position: relative;
-        padding: 5px 0;
-        margin-top: 5px;
-    }
+ footer.tne-app-footer {
+	flex: 0;
+	background: #fff;
+	width: 100%;
+	height: 28px;
+	display: flex;
+	min-height: 28px;
+	flex-flow: row;
+	border-top: 1px solid rgba(187, 187, 187, 0.2);
+	position: relative;
+	padding: 5px 0;
+	margin-top: 5px;z-index: -1;
+}
     footer.tne-app-footer .footer-custom {
     display: flex;
     flex-flow: row;
@@ -878,7 +878,7 @@ ul.header-notify-hold {
     border-radius: 8px;
     }
     .color-table tr th {
-        background-color: #031842;
+        background-color: #031842!important;
         color: #fff;
         font-weight: 500;
         font-size: 11px;
@@ -886,7 +886,7 @@ ul.header-notify-hold {
         padding: 7px 10px !important;
     }
     .color-table tr td {
-        padding: 7px 10px;
+        padding: 7px 5px;
         text-align: left;
         font-size: 11px;
     }
@@ -896,10 +896,11 @@ ul.header-notify-hold {
     .color-table tr th:last-child {
     border-top-right-radius: 8px;
     }
-    .color-table tbody tr td {
-        background-color: #F7F7FA;
-        border-bottom: 1px solid #eee;
-    }
+   .color-table tbody tr td {
+	background-color: #F7F7FA;
+	border-bottom: 1px solid #eee;
+	white-space: nowrap;
+}
     .color-table {
     border-color: transparent;
     }
@@ -909,14 +910,14 @@ ul.header-notify-hold {
     .color-table tbody tr:last-child td:last-child {
     border-bottom-right-radius: 8px;
     }
-    .grey-table tr th {
-        background-color: #8F90A6;
-        color: #fff;
-        font-weight: 500;
-        font-size: 11px;
-        white-space: nowrap;
-        padding: 6px 10px !important;
-    }
+.grey-table tr th {
+	background-color: #8F90A6 !important;
+	color: #fff;
+	font-weight: 500;
+	font-size: 11px;
+	white-space: nowrap;
+	padding: 6px 10px !important;
+}
     .grey-table tr td {
     padding: 4px 10px;
     text-align: left;
@@ -1004,11 +1005,11 @@ ul.header-notify-hold {
     #expenseHead.owl-carousel .owl-stage-outer .owl-stage {
     transform: inherit !important;
     }
-    .common-tab {
-    background-color: #f7f7fa;
-    border-radius: 10px;
-    border: none;
-    }
+  .common-tab {
+	background-color: #f7f7fa !important;
+	border-radius: 10px;
+	border: none;
+}
     #myTabContent.tab-content .tab-pane {
     background: rgba(0, 0, 0, 0.03);
     padding: 4px 8px;
@@ -1057,16 +1058,16 @@ ul.header-notify-hold {
         padding-top: 0;
     }
     /* ================ Main Container style ==================== */
-    .page-title {
-        padding: 0 15px;
-        position: fixed;
-        width: 96%;
-        height: 45px;
-        z-index: 1;
-        background-color: #fff;
-        box-shadow: 0px 11px 11px -7px rgba(0, 0, 0, 0.04);
-        top: 38px;
-    }
+ .page-title {
+	padding: 0 15px;
+	position: fixed;
+	width: 96%;
+	height: 45px;
+	z-index: 9;
+	background-color: #fff;
+	box-shadow: 0px 11px 11px -7px rgba(0, 0, 0, 0.04);
+	top: 38px;
+}
         h2.page-header {
             /* color: #111111; */
             font-size: 18px;
@@ -2003,6 +2004,8 @@ ul.header-notify-hold {
 
 /* Input forms */
 
+
+
 .form-group.chm-formgroup {
 	position: relative;
 	margin-bottom: 0px;
@@ -2058,7 +2061,8 @@ ul.header-notify-hold {
     }
 
 /* =============== Modal style =========== */
- 
+
+	
 .details-view-section {
     display: block;
     width: 100%;
@@ -4786,22 +4790,23 @@ button.dropbtn {
     .badge-high {
     margin-bottom: 12px;
     }
-    #expenseHead .menu-item {
-        background: #FFFFFF;
-        height: 26px;
-        line-height: 18px;
-        padding: 0;
-        margin: 0px 10px 0 0;
-        border-radius: 0px;
-        text-align: center;
-        cursor: poRoboto;
-        border: 1px solid #e4e4eb;
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 19%;    cursor: pointer;
-    }.expense-list-head {
+  #expenseHead .menu-item {
+	background: #FFFFFF;
+	height: 26px;
+	line-height: 18px;
+	padding: 0 0px;
+	margin: 0px 10px 0 0;
+	/* border-radius: 0px; */
+	text-align: center;
+	/* cursor: poRoboto; */
+	border: 1px solid #e4e4eb;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	/* width: 19%; */
+	cursor: pointer;
+}.expense-list-head {
         width: 100%;
     }#expenseHead .more-dropdown .menu-item {
         width: auto;
@@ -4814,7 +4819,7 @@ button.dropbtn {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-left: 5px;
+        padding-left: 10px;
         width: 100%;
     } div#expenseHead {
         display: flex;
@@ -4907,7 +4912,7 @@ button.dropbtn {
     position: relative;
     }  #expenseHead .menu-item .expense-list-head h6 span {
         width: 29px;
-        /* margin-left: 18px; */
+        margin-left: 18px; 
         border-top-right-radius: 0;
         font-weight: 700;
         color: #2A5EE3;
@@ -6672,7 +6677,7 @@ button.dropbtn {
         font-size: 13px;
         font-weight: 600;
         }
-        .time-frame-wrapper {
+        /* .time-frame-wrapper {
         width: 100%;
         max-width: 100%;
         margin: 10px auto 0 auto;
@@ -6760,7 +6765,7 @@ button.dropbtn {
         font-weight: 600;
         display: inline-flex;
         margin-right: 2px;
-        }
+        } */
         .sidebar-mini.sidebar-collapse .sidebar-toggle .fa {
         transform: rotate(0deg);
         transition: 0.3s ease all;
@@ -9587,10 +9592,11 @@ button.dropbtn {
         margin-right: 15px;
         top: 102px;
         }.right-container-nrw .common-block {
-            height: 100vh;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-        }
+	height: 100vh;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	padding: 13px 13px 13px;
+}
         body.sidebar-mini.sidebar-collapse .left-container-wider {
         min-width: 75% !important;
         width: 75% !important;
@@ -12262,6 +12268,7 @@ button.dropbtn {
             height: 100px;
             overflow: hidden;
             position: relative;
+            cursor: pointer;
         }
         .expense-block-ico {
             display: flex;
@@ -12322,15 +12329,16 @@ button.dropbtn {
         .expense-color9:hover{
             background: #836BEC;
         }
-        .expense-block span {
-            display: inline-block;
-            width: 100%;
-            color: #ffffff;
-            font-weight: 600;
-            margin-bottom: 10px;
-            line-height: 18px;
-            font-size: 15px;
-        }
+    .expense-block span {
+	display: inline-block;
+	width: 100%;
+	color: #ffffff;
+	font-weight: 600;
+	margin-bottom: 10px;
+	line-height: 18px;
+	font-size: 15px;
+	min-height: 33px;
+}
  
         .communication-count {
             position: absolute;
@@ -12865,10 +12873,10 @@ button.dropbtn {
     display: block;
   }
 
-  .self-select .selected {
+.self-select .selected {
 	position: fixed;
 	right: 24px;
-	z-index: 998;
+	z-index: 997;
 	width: 157px !important;
 	top: 43px;
 }
@@ -12901,21 +12909,22 @@ width: 157px;
 }.line-tab .nav-item {
 	position: relative;
 }.custom-search {
-	background-color: #F2F2F5;
-	border: none;
-	height: 30px;
-	padding-left: 39px;
-	border-radius: 10px;
-	font-size: 12px;
-	min-width: 326px;
+	background-color: #F2F2F5 !important;
+	border: none !important;
+	height: 30px !important;
+	padding-left: 39px !important;
+	border-radius: 10px !important;
+	font-size: 12px !important;
+	min-width: 326px !important;
 }.custom-search:focus {
 	outline: none;
-}.datatable-right {
+} .datatable-right {
 	right: 0;
 	position: absolute;
-	top: -3px;
+	top: -60px;
 	display: flex;
 	justify-content: end;
+	margin-bottom: 50p;
 }.datatable-search svg {
 	position: absolute;
 	top: 0;
@@ -12951,4 +12960,8 @@ width: 157px;
 	content: "\f107";
 }.load-more-expense {
 	display: none;
+}.cdk-overlay-dark-backdrop {
+	background: rgba(0, 0, 0, 0.75);
+}.space-wrap {
+	white-space: normal;
 }

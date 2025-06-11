@@ -522,6 +522,8 @@
                             },
                             {
                                 "name": "GstIn",
+                                "label": "GSTIN",
+                                "placeholder": "GSTIN",
                                 "type": "text",
                                 "showInUI": true,
                                 "required": true,
@@ -541,6 +543,8 @@
                             },
                             {
                                 "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "placeholder": "Invoice Number",
                                 "type": "text",
                                 "showInUI": true,
                                 "required": true,
@@ -555,6 +559,8 @@
                             },
                             {
                                 "name": "Amount",
+                                "label": "Amount",
+                                "placeholder": "AMOUNT",
                                 "type": "text",
                                 "dataType": "numeric",
                                 "showInUI": true,
@@ -584,6 +590,8 @@
                             },
                             {
                                 "name": "SGST",
+                                "label": "SGST",
+                                "placeholder": "SGST",
                                 "type": "text",
                                 "dataType": "numeric",
                                 "showInUI": true,
@@ -602,6 +610,8 @@
                             },
                             {
                                 "name": "CGST",
+                                "label": "CGST",
+                                "placeholder": "CGST",
                                 "type": "text",
                                 "dataType": "numeric",
                                 "showInUI": true,
@@ -620,6 +630,8 @@
                             },
                             {
                                 "name": "IGST",
+                                "label": "IGST",
+                                "placeholder": "IGST",
                                 "type": "text",
                                 "dataType": "numeric",
                                 "showInUI": true,
@@ -638,6 +650,8 @@
                             },
                             {
                                 "name": "UGST",
+                                "label": "UGST",
+                                "placeholder": "UGST",
                                 "type": "text",
                                 "dataType": "numeric",
                                 "showInUI": true,
@@ -2441,20 +2455,22 @@
                 "table": {
                     "columns": [
                         {
-                            "name": "actionTakenBy",
-                            "label": "Approver Name",
-                            "order": 1
-                        },
-                        {
                             "name": "actionTakenOnString",
                             "label": "Action Date",
-                            "order": 2
+                            "order": 1
                         },
                         {
                             "name": "actionStatus",
                             "label": "Status",
+                            "order": 2
+                        },
+                        {
+                            "name": "actionTakenBy",
+                            "label": "Approver Name",
                             "order": 3
                         },
+                   
+                     
                         {
                             "name": "remarks",
                             "label": "Remarks",
@@ -2645,17 +2661,17 @@
             {
                 "label": "Cancel",
                 "type": "cancel",
-                "class": "btn btn-outline-secondary w-50 mr-10"
+                "class": "btn btn-outline-secondary  "
             },
             {
                 "label": "Save as Draft",
                 "type": "draft",
-                "class": "btn btn-outline-primary w-50"
+                "class": "btn btn-outline-secondary  me-2  "
             },
             {
                 "label": "Submit",
                 "type": "submit",
-                "class": "btn btn-primary w-100"
+                "class": "btn btn-light"
             }
         ],
         "notifications": {

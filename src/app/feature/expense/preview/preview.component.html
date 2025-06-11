@@ -1,32 +1,54 @@
-<div class="page-title">
-   <h2 class="page-header">{{ pageTitle }}</h2>
+
+<div class="position-relative">
+  <div class="page-title justify-content-between d-flex align-items-center">
+    <h2 class="page-header">Expense Preview</h2>
+  </div>
+  <div class="custom-select self-select form-group mb-0 min-w-self  chm-formgroup ">
+    <div class="selected  form-control chm-formselect">Self </div>
+    <div class="options">
+      <div class="text-center  d-block d-lg-none d-md-none d-sm-block"> <span class="select-mobile-line"></span></div>
+      <option class="option" value="182">XXXXX</option>
+      <option class="option" value="183">YYYYY</option>
+    </div>
+  </div>
+
+  
+
 </div>
+ 
 <div class="app-main-wrapper">
    <div class="inn-main-hold">
       <div class="flex-wrapper-top">
          <div class="all-data-wrapper">
             <div class="global-container-hold">
                <div class="left-container-wider scroll-left-align mar-tmd3">
-                  <div class="preview-child-section mb-3">
-                     <div class="preview-head-view">
-                        <div *ngFor="let item of requestHeaderDetails"
-                           class="preview-head-child d-flex align-items-start justify-content-between">
-                           <span class="phv-icon me-2"><i class="fa-solid" [ngClass]="item.iconClass"></i></span>
-                           <div>
-                              <label class="name-label-head">{{ item.label }}:</label><br>
-                              <ng-container *ngIf="item.isLink; else normalText">
-                                 <span class="name-label-det">
-                                    <a href="#" class="phv-link" (click)="openDetailsDialog(4)" data-bs-toggle="modal"
-                                       data-bs-target="#req-all-details">{{ item.value }}</a>
-                                 </span>
-                              </ng-container>
-                              <ng-template #normalText>
-                                 <span class="name-label-det"
-                                    [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''">
-                                    {{ item.value }}
-                                 </span>
-                              </ng-template>
+                  <div class="common-block  mb-3">
+                     <div class="common-block-mobile">
+                        <div class="row">
+                           @for (item of requestHeaderDetails; track $index) {
+                           <div class="col-md-3 col-sm-6 col-lg-3 col-6">
+                              <div class="trl-preview-wrapper mb-md-0">
+                                 <div class="trl-readview-item pb-0">
+                                    <div class="trl-req-head">
+                                       <label>{{ item.label }} </label>
+                                    </div>
+                                    <div class="trl-req-detail">
+                                       <ng-container *ngIf="item.isLink; else normalText">
+                                          <span>
+                                             <a href="#" class="phv-link" (click)="openDetailsDialog(4)" data-bs-toggle="modal"
+                                                data-bs-target="#req-all-details">{{ item.value }}</a>
+                                          </span>
+                                       </ng-container>
+                                       <ng-template #normalText>
+                                          <span [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''">
+                                             {{ item.value }}
+                                          </span>
+                                       </ng-template>
+                                    </div>
+                                 </div>
+                              </div>
                            </div>
+                           }
                         </div>
                      </div>
                   </div>
@@ -72,8 +94,16 @@
                         </div>
                      </div>
                   </div>
-                  <div class="row-wrapper common-block px-3 py-3">
-                     <div class="accordion accordion-flush preview-standard-view" id="accordionFlushExample">
+
+     
+                                          
+                                             
+
+                  <div class="  common-block mb-3">
+                       <div class="common-block-mobile">
+                                             <div class="row  ">
+                                                <div class="col-md-12">
+                         <div class="accordion accordion-flush preview-standard-view" id="accordionFlushExample-category">
                         @if(loadData) {
                         @for (category of expenseRequestPreviewConfig?.dynamicExpenseDetailModels; track category) {
                         @if (category?.data?.length > 0) {
@@ -93,11 +123,14 @@
                         }
                      </div>
                   </div>
+    </div>    </div>    </div>
+
+
 
                   <!-- Other Details -->
                   <div class="row mt-2">
                      <div class="col-md-12">
-                        <mat-tab-group fitInkBarToContent (selectedTabChange)="onTabChange($event)">
+                        <mat-tab-group class="common-tab"  fitInkBarToContent (selectedTabChange)="onTabChange($event)">
                            @for (detail of otherDetails; track detail) {
                            <mat-tab>
                               @switch (detail.name) {
@@ -110,7 +143,7 @@
                               $index) {
                               @for (data of expenseRequest.data; track $index) {
                               @if (data?.IsViolation) {
-                              <ul class="policy-vio-list">
+                              <ul class="policy-vio-list   mb-0">
                                  <li>
                                     <span class="fa-pv"><i class="fa fa-exclamation-triangle"
                                           aria-hidden="true"></i></span>
@@ -125,12 +158,12 @@
                               <ng-template mat-tab-label>
                                  <span>{{detail.label}}</span>
                               </ng-template>
-                              <div class="table-responsive mt-3">
+                           
                                  <table
-                                    class="table color-table d-table table-cust tbl-sml no-sorting td-firstdata-center vioColor">
+                                    class="table mt-2  color-table mobile-card-view-table">
                                     <thead>
                                        <tr>
-                                          <th>Sl.No</th>
+                                          <!-- <th>Sl.No</th> -->
                                           @for (column of detail?.table.columns; track column) {
                                           <th>{{ column?.label }}</th>
                                           }
@@ -140,44 +173,65 @@
                                        @for (approvalTransaction of
                                        expenseRequestPreviewData?.expenseApprovalTransaction; track $index) {
                                        <tr>
-                                          <td>{{ $index + 1 }}</td> <!-- Serial Number -->
+                                          <!-- <td>{{ $index + 1 }}</td> Serial Number -->
                                           @for (column of detail?.table.columns; track $index) {
-                                          <td>{{ approvalTransaction [column?.name] }}</td>
+                                          <td [attr.data-label]="column?.label"> <span class="space-wrap"> {{ approvalTransaction [column?.name] }} </span></td>
                                           }
                                        </tr>
                                        }
                                     </tbody>
                                  </table>
-                              </div>
+                             
                               }
                               @case ("LogDetails") {
                               <ng-template mat-tab-label>
                                  <span>{{detail.label}}</span>
                               </ng-template>
-                              <div class="row mt-2">
-                                 <div class="col-md-12">
-                                    <div class="time-frame-wrapper">
-                                       <div class="time-log-axis">
+
+                              
+                     
+                          
+
+                                             <table  class="  table mt-2   color-table mobile-card-view-table   ">
+                                                      <thead>
+                                                         <tr>
+                                                            <th class="thd-w20"><span>Date  </span></th>
+                                                            <th class="thd-w15"><span>Status  </span></th>
+                                                            <th class="thd-w25"><span>Action By  </span></th>
+                                                            <th class="thd-w40"><span>Remarks</span></th>
+                                                         </tr>
+                                                      </thead>
+                                                      <tbody>
+                                               
+
+                                   
                                           @for (log of expenseRequestPreviewData?.expenseRequestLog; track $index) {
-                                          <div class="tfl-child">
-                                             <ul>
-                                                <li><span><i class="fa fa-calendar-check-o"
-                                                         aria-hidden="true"></i></span>{{log?.actionDatetimeString}}
-                                                </li>
-                                                <li><span><i class="fa fa-check-square-o"
-                                                         aria-hidden="true"></i></span>{{log?.actionStatus}}</li>
-                                                <li><span><i class="fa fa-user-circle-o"
-                                                         aria-hidden="true"></i></span>{{log?.actionByName}}</li>
-                                                <li><span><i class="fa fa-commenting"
-                                                         aria-hidden="true"></i></span>{{log?.actionRemarks}}
-                                                </li>
-                                             </ul>
-                                          </div>
+
+
+          <tr>
+                                                            <td data-label="Date"> <span> {{log?.actionDatetimeString}} </span> </td>
+                                                            <td data-label="Status"><span class="status-blue status-common">
+                                                               {{log?.actionStatus}}
+                                                               </span> 
+                                                            </td>
+                                                            <td data-label="Action By">  <span class="space-wrap"> {{log?.actionByName}}  </span> </td>
+                                                            <td data-label="Remarks"> <span> 
+                                                              {{log?.actionRemarks}}  </span> 
+                                                            </td>
+                                                   </tr>
+
+ 
+
+                                                
+                                                
+
                                           }
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
+
+                                                
+                                                      </tbody>
+                                                   </table>
+                                        
+                                  
                               }
                               @case ("Adjustment") {
                               <ng-template mat-tab-label>
@@ -222,6 +276,13 @@
                         </mat-tab-group>
                      </div>
                   </div>
+
+
+                     <div class="bottom-buttons  bottom-buttons-back d-flex  pe-lg-3  pe-md-3  justify-content-end    align-items-center     " >
+                                            
+                                                <a   class="btn btn-outline-secondary">Back</a>
+                                             </div>
+
                </div>
                <!-- left-container-wider -->
                <div class="right-container-nrw rt-aside-fixed">

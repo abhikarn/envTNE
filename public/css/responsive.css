@@ -75,7 +75,9 @@
 }
 
 @media (max-width: 767px) {
-
+.left-container-wider.scroll-left-align.mar-tmd3 {
+	padding-bottom: 80px !important;
+}
 .parent.tbl-le-snNo {
 	margin-bottom: 0;
 	border-bottom-left-radius: 0;
@@ -139,9 +141,10 @@
 	right: 0;
 	margin: 0 auto;
 	top: 10px;
+  z-index: 1;
 }
 .pad-bottom-mobile {
-	padding-bottom: 89px;
+	padding-bottom: 40px;
 }
 
 .notify-hold.user-hold {
@@ -150,13 +153,15 @@
 	position: relative;
 	top: -2px;
 } 
-    .expense-drawer-bottom {
-        position: fixed;
-        bottom: -440px;
-        left: 0;
-        right: 0;
-        padding-bottom: 0;height: 565px;
-    }.expense-drawer-bottom.open {
+.expense-drawer-bottom {
+	position: fixed;
+	bottom: -440px;
+	left: 0;
+	right: 0;
+	padding-bottom: 0;
+	height: 565px;
+	z-index: 9;
+}.expense-drawer-bottom.open {
 	bottom: 0;
 	z-index: 99999;
 }
@@ -170,6 +175,7 @@
 	justify-content: space-between;
 	display: none;
 	box-shadow: 0px -11px 13px -6px rgba(24, 31, 68, 0.16);
+	margin-bottom: 10px;
 }.exp-det h6 {
 	font-weight: bold;
 	font-size: 12px;
@@ -210,7 +216,7 @@
         background: transparent !important;
         border-radius: 0;
         margin-bottom: 0;
-        padding: 12px 10px 12px 11px;
+        padding: 12px 10px 12px 11px;min-height: 84px;
     }
     .remove-th-mobile thead{
         display: none;  
@@ -252,12 +258,13 @@
         font-weight: 700;
         text-transform: uppercase;
     }
-    .remove-th-mobile tr td:last-child {
-        width: 100%;
-        text-align: right;
-        /* border: ; */
-        border-top: 1px solid #f2f2f2 !important;
-    }.remove-th-mobile.remove-th-mobilet tr td:last-child {
+  .remove-th-mobile tr td:last-child {
+	width: 100%;
+	text-align: right;
+	 
+	border-top: 1px solid #f2f2f2 !important;
+	min-height: inherit;
+}.remove-th-mobile.remove-th-mobilet tr td:last-child {
 	padding: 10px !important;
 	text-align: left;
 	border: none !important;
@@ -301,16 +308,16 @@
     .common-block {background-color: transparent;padding: 0;border-radius: 0;}
     .common-block-mobile { background-color: #F7F7FA;padding: 13px 10px 13px;border-radius: 8px;}
     .logo-account-hold {border-bottom: 1px solid #e8e9ee;padding: 5px 15px;}
-    .left-container-wider.scroll-left-align.mar-tmd3 {
+    /* .left-container-wider.scroll-left-align.mar-tmd3 {
         padding-bottom: 150px !important;
-    }
+    } */
     .header-fixed.nav-bar-head {
         
         height: 48px;
     }
-    #expenseHead .menu-item {width: 22%;}
+ 
     .common-block-right { height: auto;}
-    .bottom-buttons { position: relative; z-index: 1;background-color: transparent;bottom: 0;left: 0; width: 100%;right: 0; padding: 10px 0 0; box-shadow: none;transition: inherit;}
+    .bottom-buttons { position: relative; z-index: 1;background-color: transparent;bottom: 0;left: 0; width: 100%;right: 0; padding: 10px ; box-shadow: none;transition: inherit;}
     .bottom-buttons .combine-btn button { width: 50%;margin-bottom: 5px;}
     .bottom-buttons .btn-light { width: 100%; }
     .app-main-wrapper {position: relative;}
@@ -462,7 +469,7 @@
         
         border-radius: 0;
     }.trl-preview-wrapper .trl-readview-item .trl-req-head label {
-        font-size: 11px;
+         
         color: #8C8CAC;
         font-weight: 700;
         letter-spacing: 0px;
@@ -662,6 +669,10 @@
         font-weight: 700;
         text-transform: uppercase;
     }
+    .mobile-card-view-normaltable td:last-child::before {
+	content: inherit;
+	display: none;
+}
 .mobile-card-view-normaltable td:first-child {
 	display: none;
 }
@@ -695,9 +706,9 @@
 	display: none!important;
 }
 .custom-search {
-	min-width: inherit;
-	width: 100%;
-	height: 42px;
+	min-width: inherit !important;
+	width: 100% !important;
+	height: 42px !important;
 }.export-btn {
 	height: 30px;
 	min-width: 100px !important;
@@ -721,9 +732,10 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 5px;
     }
-      .mobile-card-view-normaltable td:last-child {
-        grid-column: span 2;
-       }
+  .mobile-card-view-normaltable td:last-child {
+	grid-column: span 2;
+	border-top: 1px solid #e6e6e6 !important;
+}
 
 .line-tab .nav-link {
 	padding: 8px!important;
@@ -780,14 +792,12 @@ ul.quick-menu-links li {
       
     } 
    
-    .truncate-text {
-      
-        max-height: 2.8em; /* for 2 lines */
-        overflow: hidden;
-      }
-
+   .truncate-text {
+	max-height: 2.5em;
+	overflow: hidden;
+}
      
-    #expenseHead .menu-item { width: 29%;}
+    /* #expenseHead .menu-item { width: 29%;} */
 
  ul#menu-log .uname-dp {
  
@@ -811,5 +821,10 @@ ul.quick-menu-links li {
 	max-width: 140px;
 	text-overflow: ellipsis;
 	overflow: hidden;
+}
+.expense-block {
+ 
+	height: auto;
+ 
 }
 }

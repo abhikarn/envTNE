@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-12 ">
      
            <h6 class="common-title fw-bold mb-3">  {{ controlConfig.label }}
       @if (controlConfig.required) {
@@ -17,9 +17,10 @@
                                                             </svg>
                                                          </div>
                                                          
-      <label for="{{ controlConfig.name }}" class="custom-upload w-100">Click to Choose File</label>
+      <label for="{{ controlConfig.name }}" class="custom-upload w-100" (click)="onMobileUploadClick($event)">Click to Choose
+        File</label>
       <input type="file" [id]="controlConfig.name" [multiple]="controlConfig.multiple" (change)="onFileSelected($event)"
-        [accept]="controlConfig.accept" [disabled]="controlConfig.disable">
+        [accept]="controlConfig.accept" [disabled]="controlConfig.disable" class="d-none d-md-block d-lg-block" />
           <small> (PDF, .xlsx, .docx, (max upload 5MB))  </small>
     </div>
 
@@ -66,4 +67,88 @@
     </div>
     }
  
+</div>
+
+<!-- Mobile upload UI as bottom sheet -->
+<ng-template #uploadMobileSheet>
+ 
+      <div class="ticketbill-mobile">
+        <h5 style="border-top-left-radius: 20px;border-top-right-radius:20px;"
+          class="text-dark bg-white mb-0 fs-6 fw-bold pt-4  pb-3 px-3 position-relative">
+          <div class="text-center"> <span class="ticketbill-mobile-line"></span></div>
+          Upload File
+          <button type="button" id="close-upload-mobile" class="btn-close position-absolute top-0 end-0 m-3"
+            aria-label="Close" (click)="closeMobileUploadModal()"></button>
+        </h5>
+        <div class="bg-white hide-scrollbar px-3 py-0 pb-3">
+          <ul class="upload-gallery ps-0 list-unstyled mb-3">
+            <li>
+              <input type="file" id="galleryInput" accept="image/*" (change)="onFileSelected($event)" style="display:none;">
+              <label data-target="galleryInput" class="button-label" (click)="triggerInput('galleryInput')">
+                <div class="upload-gallery-ico">
+                <svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M0 2.10082C0 0.864789 1.11597 0 2.31165 0H17.9373C19.133 0 20.249 0.864786 20.249 2.10082V15.7733C20.249 17.0093 19.133 17.8741 17.9373 17.8741H2.31165C1.11597 17.8741 0 17.0093 0 15.7733V2.10082ZM2.31165 1.25C1.64432 1.25 1.25 1.70671 1.25 2.10082V13.7764L3.71189 10.9042L4.07231 10.4837L4.53311 10.7909L7.64572 12.866L12.6276 7.33053L13.0478 6.86364L13.5126 7.28617L18.999 12.2738V2.10082C18.999 1.70671 18.6046 1.25 17.9373 1.25H2.31165ZM1.25 15.7733V15.6971L4.30054 12.1382L7.40204 14.2058L7.85174 14.5056L8.21329 14.1039L13.1365 8.63362L18.999 13.9631V15.7733C18.999 16.1674 18.6046 16.6241 17.9373 16.6241H2.31165C1.64432 16.6241 1.25 16.1674 1.25 15.7733ZM8.87324 5.37363C8.87324 5.99488 8.36962 6.4985 7.74837 6.4985C7.12712 6.4985 6.6235 5.99488 6.6235 5.37363C6.6235 4.75238 7.12712 4.24876 7.74837 4.24876C8.36962 4.24876 8.87324 4.75238 8.87324 5.37363ZM10.1232 5.37363C10.1232 6.68524 9.05998 7.7485 7.74837 7.7485C6.43677 7.7485 5.3735 6.68524 5.3735 5.37363C5.3735 4.06203 6.43677 2.99876 7.74837 2.99876C9.05998 2.99876 10.1232 4.06203 10.1232 5.37363Z"
+                    fill="white" />
+                </svg>
+              </div>
+              Gallery
+            </label>
+            <input type="file" id="cameraInput" accept="image/*" capture="environment" (change)="onFileSelected($event)" style="display:none;">
+            <label data-target="cameraInput" class="button-label" (click)="triggerInput('cameraInput')">
+              <div class="upload-gallery-ico">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M1.66675 7C1.66675 5.89543 2.56218 5 3.66675 5H4.76305C5.43175 5 6.05622 4.6658 6.42715 4.1094L6.90635 3.3906C7.27728 2.8342 7.90174 2.5 8.57045 2.5H11.4297C12.0984 2.5 12.7229 2.8342 13.0938 3.3906L13.573 4.1094C13.9439 4.6658 14.5684 5 15.2371 5H16.3334C17.438 5 18.3334 5.89543 18.3334 7V15.5C18.3334 16.6046 17.438 17.5 16.3334 17.5H3.66675C2.56218 17.5 1.66675 16.6046 1.66675 15.5V7Z"
+                    stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                  <ellipse cx="10.0001" cy="10.8333" rx="3.33333" ry="3.33333" stroke="white" stroke-width="1.25"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              Camera
+            </label>
+            <input type="file" id="documentInput" accept=".pdf,.doc,.docx" (change)="onFileSelected($event)" style="display:none;">
+            <label data-target="documentInput" class="button-label" (click)="triggerInput('documentInput')">
+              <div class="upload-gallery-ico">
+                <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12.499 1.75H5.49902C5.03489 1.75 4.58978 1.93437 4.26159 2.26256C3.9334 2.59075 3.74902 3.03587 3.74902 3.5V17.5C3.74902 17.9641 3.9334 18.4092 4.26159 18.7374C4.58978 19.0656 5.03489 19.25 5.49902 19.25H15.999C16.4632 19.25 16.9083 19.0656 17.2365 18.7374C17.5647 18.4092 17.749 17.9641 17.749 17.5V7L12.499 1.75Z"
+                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M12.499 1.75V7H17.749" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M14.249 11.375H7.24902" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M14.249 14.875H7.24902" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M8.99902 7.875H8.12402H7.24902" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              Document
+            </label>
+          </li>
+        </ul>
+        <p>You will be asked for access to your camera, gallery & files to continue</p>
+      </div>
+    </div>
+ 
+</ng-template>
+
+<div class="modal fade" id="fileaccess" tabindex="-1" aria-labelledby="fileaccess" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <h5 class="fw-bold">Spend Mantra would like to access your files.</h5>
+            <p>This allows you to upload your document and photos</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer button-half">
+        <button type="button" data-bs-dismiss="modal" class="btn btn-outline-secondary">Don't Allow</button>
+        <button type="button" id="allowButton" class="btn btn-dark me-md-1">Allow</button>
+      </div>
+    </div>
+  </div>
 </div>

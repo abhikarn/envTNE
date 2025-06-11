@@ -24,8 +24,4 @@ export class HeaderComponent implements OnInit {
     this.displayName=this.auth.getUserDisplayName()
   }
   
-  Logout(): void {
-    localStorage.removeItem('userData');
-    this.router.navigate(['/account']); // Adjust route as needed
-  }
 }

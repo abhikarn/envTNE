@@ -1,63 +1,63 @@
 [
     {
         "title": "Travel Expense",
-        "img": "assets/images/expense-travel.png",
+        "img": "assets/images/expense-travel.svg",
         "link": "expense/expense/create-expense",
         "colorClass": "expense-color1",
         "alt": "Travel Expense"
     },
     {
         "title": "Local Travel Conveyance Expense",
-        "img": "assets/images/expense-local.png",
+        "img": "assets/images/expense-local.svg",
         "link": "/claim-expense",
         "colorClass": "expense-color2",
         "alt": "Local Travel Conveyance Expense"
     },
     {
         "title": "Joining Expense",
-        "img": "assets/images/expense-join.png",
+        "img": "assets/images/expense-join.svg",
         "link": "/claim-expense",
         "colorClass": "expense-color3",
         "alt": "Joining Expense"
     },
     {
         "title": "Transfer Expense",
-        "img": "assets/images/expense-transfer.png",
+        "img": "assets/images/expense-transfer.svg",
         "link": "/claim-expense",
         "colorClass": "expense-color4",
         "alt": "Transfer Expense"
     },
     {
         "title": "Mobile Expense",
-        "img": "assets/images/expense-mobile.png",
+        "img": "assets/images/expense-mobile.svg",
         "link": "/claim-expense",
         "colorClass": "expense-color5",
         "alt": "Mobile Expense"
     },
     {
         "title": "Broadband Expenses",
-        "img": "assets/images/expense-datacard.png",
+        "img": "assets/images/expense-datacard.svg",
         "link": "/claim-expense",
         "colorClass": "expense-color6",
         "alt": "Broadband Expenses"
     },
     {
         "title": "Other Expense",
-        "img": "assets/images/expense-other.png",
+        "img": "assets/images/expense-other.svg",
         "link": "/claim-expense",
         "colorClass": "expense-color7",
         "alt": "Other Expense"
     },
     {
         "title": "Training and Certification Expense",
-        "img": "assets/images/expense-certificate.png",
+        "img": "assets/images/expense-certificate.svg",
         "link": "/claim-expense",
         "colorClass": "expense-color8",
         "alt": "Training and Certification Expense"
     },
     {
         "title": "Deputation Expense",
-        "img": "assets/images/expense-deputation.png",
+        "img": "assets/images/expense-deputation.svg",
         "link": "/claim-expense",
         "colorClass": "expense-color9",
         "alt": "Deputation Expense"

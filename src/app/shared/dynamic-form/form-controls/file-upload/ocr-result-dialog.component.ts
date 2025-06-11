@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +11,8 @@ import { ConfirmDialogService } from '../../../service/confirm-dialog.service';
   standalone: true,
   imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule, MatListModule],
   templateUrl: './ocr-result-dialog.component.html',
-  styleUrl: './ocr-result-dialog.component.scss'
+  styleUrl: './ocr-result-dialog.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class OcrResultDialogComponent {
   dataKeys: string[];
@@ -50,5 +51,9 @@ export class OcrResultDialogComponent {
 
   onCancel() {
     this.dialogRef.close(false);
+  }
+
+  onClose() {
+    this.onCancel();
   }
 }
