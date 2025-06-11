@@ -56,13 +56,28 @@
                           <label>{{ item.label }}</label>
                         </div>
                         <div class="trl-req-detail">
-                          <span [id]="item.name">{{ item.value }}</span>
+                          @if (!item.isLink) {
+                          @if (item?.controlType === 'autocomplete' && travelRequestId) {
+                          <mat-form-field appearance="outline" class="form-field-class">
+                            <input matInput [formControl]="billableControl" [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event, item)">
+                              <mat-option *ngFor="let option of filteredOptions" [value]="option[item.displayKey]">
+                                {{ option[item.displayKey] }}
+                              </mat-option>
+                            </mat-autocomplete>
+                          </mat-form-field>
+                          } @else {
+                          <span>{{ item.value || '-' }}</span>
+                          }
+                          }
+                          <a *ngIf="item.isLink" href="javascript:void(0)">
+                            {{ item.value || '-' }}
+                          </a>
                         </div>
                       </div>
                     </div>
                   </div>
                   }
-                </div>
               </div>
             </div>
 
@@ -94,7 +109,6 @@
                 </mat-tab>
                 }
               </mat-tab-group>
-
             </div>
 
             <!-- Other Details -->
@@ -166,7 +180,7 @@
               </div>
             </div>
           </div>
-          
+
           <!-- left-container-wider -->
           <div class="right-container-nrw rt-aside-fixed">
             <div class="row-wrapper common-block px-3 py-3">

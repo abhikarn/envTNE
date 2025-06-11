@@ -129,6 +129,15 @@ export class AddGstComponent {
     }
     if (this.validateGSTWithClaimed()) {
       // this.gstDetails.IsBillRaisedInCompanyGST = this.companyGSTForm.value.IsBillRaisedInCompanyGST;
+      this.fields.forEach((field: any) => {
+        if (field?.dataType == 'numeric' && this.gstDetailsForm.value.hasOwnProperty(field.name)) {
+          if (this.gstDetailsForm.value[field.name] === null || this.gstDetailsForm.value[field.name] === undefined) {
+            this.gstDetailsForm.value[field.name] = 0;
+          }
+          const precision = field.autoFormat?.decimalPrecision || this.globalConfig.getDecimalPrecision();
+          this.gstDetailsForm.value[field.name] = parseFloat(this.gstDetailsForm.value[field.name]).toFixed(precision);
+        }
+      });
       this.gstDetails.push(this.gstDetailsForm.value);
       if (this.control) {
         this.control.setValue(this.gstDetails);

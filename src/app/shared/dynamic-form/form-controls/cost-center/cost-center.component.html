@@ -1,0 +1,15 @@
+<form [formGroup]="costCenterForm">
+    <div class="col-md-8">
+        <div class="radio-group-container">
+            <label>Do you want to devide Expense in Multiple Cost Center?</label>
+            <mat-radio-group formControlName="IsBillRaisedInMultipleCostCenter">
+                <mat-radio-button *ngFor="let option of options; trackBy: trackByFn" [value]="option.value">
+                    {{ option.label }}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+</form>
+@if (costCenterForm.get('IsBillRaisedInMultipleCostCenter')?.value) {
+<app-line-wise-cost-center [control]="control" [controlConfig]="controlConfig" [form]="form" [costCenterData]="costCenterData"></app-line-wise-cost-center>
+}
