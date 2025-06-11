@@ -7,9 +7,9 @@
     }
   </mat-label>
 
-  @if (controlConfig.icon) {
+  <!-- @if (controlConfig.icon) {
     <mat-icon matPrefix>{{ controlConfig.icon }}</mat-icon>
-  }
+  } -->
 
   @if (controlConfig.autoComplete) {
   <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" [value]="displayValue"

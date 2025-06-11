@@ -36,9 +36,10 @@ app-material-table {
   }
 
   .expanded-container {
-    padding: 8px 12px !important;
-    background: #f9f9f9;
-  }
+  padding: 10px !important;
+}
+   
+ 
 
   .sub-table {
     width: 100%;
@@ -135,5 +136,11 @@ app-material-table {
     background-color: #ffe6e6;
     /* Optional: light red background */
   }
+
+  .mat-mdc-header-row {
+ 
+	height: var(--mat-table-header-container-height, 35px)!important;
+ 
+}
 
 }

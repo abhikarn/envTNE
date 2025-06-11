@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit, AfterViewChecked, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { IFormControl } from '../../form-control.interface';
@@ -14,7 +14,9 @@ import { AddGstComponent } from './add-gst/add-gst.component';
     MatRadioModule,
     AddGstComponent
   ],
-  templateUrl: './gst.component.html'
+  templateUrl: './gst.component.html',
+  styleUrls: ['./gst.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class GstComponent implements AfterViewInit, AfterViewChecked {  
   @ViewChild(AddGstComponent) addGstComponentRef!: AddGstComponent;

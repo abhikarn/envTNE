@@ -1,30 +1,44 @@
-<mat-form-field appearance="fill">
-  <mat-label>{{ controlConfig.label }}
-    @if (controlConfig.required) {
+<div class="form-group chm-formgroup">
+  <mat-form-field appearance="fill">
+    <mat-label>{{ controlConfig.label }}
+      @if (controlConfig.required) {
       <span class="required-star">*</span>
-    }
-  </mat-label>
-
-  @if (controlConfig.icon) {
-    <mat-icon matPrefix>{{ controlConfig.icon }}</mat-icon>
-  }
-  
-  <mat-select [formControl]="control" placeholder="{{controlConfig.placeholder || 'Select an option'}}"
-    (selectionChange)="onReadonlySelection($event);onSelectionChange($event)">
-    @if (!!controlConfig.defaultValue) {
-      <mat-option [value]="controlConfig.defaultValue.Id">{{controlConfig.defaultValue.Display}}</mat-option>
-    }
-    @if (!controlConfig.defaultValue) {
-      @for (option of controlConfig.options; track trackByFn($index, option)) {
-        <mat-option [value]="option.value">
-          {{ option.label}}
-        </mat-option>
       }
-    }
-  </mat-select>
-  @if (control.invalid && control.touched) {
+    </mat-label>
+    <!-- @if (controlConfig.icon) {
+    <mat-icon matPrefix>{{ controlConfig.icon }}</mat-icon>
+    } -->
+    <mat-select [formControl]="control" placeholder="{{controlConfig.placeholder || 'Select an option'}}"
+      (mousedown)="onMatSelectClick($event)"
+      [disabled]="isMobile"
+      (selectionChange)="onReadonlySelection($event);onSelectionChange($event)">
+      @if (!!controlConfig.defaultValue) {
+      <mat-option [value]="controlConfig.defaultValue.Id">{{controlConfig.defaultValue.Display}}</mat-option>
+      }
+      @if (!controlConfig.defaultValue) {
+      @for (option of controlConfig.options; track trackByFn($index, option)) {
+      <mat-option [value]="option.value">
+        {{ option.label}}
+      </mat-option>
+      }
+      }
+    </mat-select>
+    @if (control.invalid && control.touched) {
     <mat-error>
       {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
     </mat-error>
-  }
-</mat-form-field>
+    }
+  </mat-form-field>
+</div>
+
+<ng-template #requestBottomSheet>
+  <div class="bottom-sheet-select">
+    <span class="select-mobile-line"></span>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let option of controlConfig.options; trackBy: trackByFn"
+        (click)="selectRequestFromSheet(option)">
+        {{option.label}}
+      </li>
+    </ul>
+  </div>
+</ng-template>

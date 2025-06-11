@@ -1,55 +1,102 @@
-<h2 mat-dialog-title class="dialog-header">OCR Result</h2>
-<mat-dialog-content class="dialog-content">
-    <div *ngIf="data.IsOCRRestrictedKeyword === true" class="restricted-line-items-msg">
-        Bill contains some restricted line items. Please review carefully.
-    </div>
-     <div *ngIf="ammoutData?.IsValid === false" class="restricted-line-items-msg">
-       Bill Amount not matching with the actual bill image. Please review carefully.
-    </div>
-    <div class="details-container">
-        <div class="left-column">
-            <mat-list>
-                <mat-list-item *ngFor="let key of dataKeys" [hidden]="key === 'gst'">                     
-                    <strong>{{ key }}:</strong> {{ data[key] }}                    
-                </mat-list-item>
-            </mat-list>
+<div class="modal-dialog ">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+                Expense Bill Details
+            </h5>
+            <button mat-button (click)="onClose()"> <i class="fa fa-times text-white fs-6"></i></button>
         </div>
-        <div class="right-column" *ngIf="data.gst">
-            <h4>GST Details</h4>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>GstIn</th>
-                        <!-- <th>VendorName</th>
-                        <th>InvoiceNumber</th> -->
-                        <!-- <th>Amount</th> -->
-                        <!-- <th>Basic</th> -->
-                        <th>CGST</th>
-                        <th>SGST</th>
-                        <th>IGST</th>
-                        <th>UGST</th>
-                        <th>CESS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ data.gst.GstIn }}</td>
-                        <!-- <td>{{ data.gst.VendorName }}</td>
-                        <td>{{ data.gst.InvoiceNumber }}</td> -->
-                        <!-- <td>{{ data.gst.Amount }}</td> -->
-                        <!-- <td>{{ data.gst.Basic }}</td> -->
-                        <td>{{ data.gst.CGST }}</td>
-                        <td>{{ data.gst.SGST }}</td>
-                        <td>{{ data.gst.IGST }}</td>
-                        <td>{{ data.gst.UGST }}</td>
-                        <td>{{ data.gst.CESS }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+
+        <mat-dialog-content class="dialog-content">
+            <div *ngIf="data.IsOCRRestrictedKeyword === true" class="restricted-line-items-msg">
+                Bill contains some restricted line items. Please review carefully.
+            </div>
+            <div *ngIf="ammoutData?.IsValid === false" class="restricted-line-items-msg">
+                Bill Amount not matching with the actual bill image. Please review carefully.
+            </div>
+            <div class="modal-body pb-0">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table
+                            class="table mt-2 mb-3 grey-table d-table table-cust tbl-sml no-sorting td-firstdata-center">
+                            <thead>
+                                <tr>
+                                    <th><span>Bill Number</span></th>
+                                    <th><span>Bill Date</span></th>
+                                    <th><span>Vendor Name</span></th>
+                                    <th><span>Sub Amount</span></th>
+                                    <th><span>Claim Amount</span></th>
+                                    <th><span>GST Amount</span></th>
+                                    <th><span>GST Number</span></th>
+                                    <th><span>Service Charges</span></th>
+                                    <th><span>Currency</span></th>
+                                    <th><span>Is Duplicate</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ data?.BillNumber || '-' }}</td>
+                                    <td>{{ data?.BillDate ? (data.BillDate | date:'dd MMM, yyyy') : '-' }}</td>
+                                    <td>{{ data?.VendorName || '-' }}</td>
+                                    <td>{{ data?.SubAmount || '-' }}</td>
+                                    <td>{{ data?.ClaimAmount || '-' }}</td>
+                                    <td>{{ data?.GstAmount || '-' }}</td>
+                                    <td>{{ data?.GstNumber || '-' }}</td>
+                                    <td>{{ data?.ServiceCharges || '-' }}</td>
+                                    <td>{{ data?.Currency || '-' }}</td>
+                                    <td>{{ data?.IsDuplicate ? 'Yes' : 'No' }}</td>
+                                </tr>
+                                <!-- Nested GST Table Row -->
+                                <tr *ngIf="data.gst">
+                                    <td colspan="10" class="p-0">
+                                        <table class="table table-bordered mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>GstIn</th>
+                                                    <th>Vendor Name</th>
+                                                    <th>Invoice Number</th>
+                                                    <th>Amount</th>
+                                                    <!-- <th>Basic</th> -->
+                                                    <th>CGST</th>
+                                                    <th>SGST</th>
+                                                    <th>IGST</th>
+                                                    <th>UGST</th>
+                                                    <th>CESS</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{ data.gst.GstIn || '-' }}</td>
+                                                    <td>{{ data.gst.VendorName || '-' }}</td>
+                                                    <td>{{ data.gst.InvoiceNumber || '-' }}</td>
+                                                    <td>{{ data.gst.Amount || '-' }}</td>
+                                                    <!-- <td>{{ data.gst.Basic || '-' }}</td> -->
+                                                    <td>{{ data.gst.CGST || '-' }}</td>
+                                                    <td>{{ data.gst.SGST || '-' }}</td>
+                                                    <td>{{ data.gst.IGST || '-' }}</td>
+                                                    <td>{{ data.gst.UGST || '-' }}</td>
+                                                    <td>{{ data.gst.CESS || '-' }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close"
+                        class="btn  btn-outline-secondary" (click)="onCancel()">Cancel</button>
+                    <button type="button" class="btn btn-dark me-1 ml-5" (click)="onConfirm()">Apply</button>
+                </div>
+            </div>
+        </mat-dialog-actions>
+
     </div>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button mat-button (click)="onCancel()">Cancel</button>
-    <button mat-raised-button color="primary" (click)="onConfirm()">Apply</button>
-</mat-dialog-actions>
+</div>

@@ -9,7 +9,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { loaderInterceptor } from './interceptors/loader.interceptor';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
-import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDateFormats, provideNativeDateAdapter } from '@angular/material/core';
 import { GlobalConfigService } from './shared/service/global-config.service';
 import { DateFormatService } from './shared/service/date-format.service';
 
@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([loaderInterceptor])),
     provideHttpClient(withInterceptors([AuthInterceptor])),
-
+    provideNativeDateAdapter(),
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {

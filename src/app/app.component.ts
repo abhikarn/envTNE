@@ -12,10 +12,11 @@ import { AuthService } from '../../src/app/shared/service/auth.service'
 import { CoreModule } from '../core/core.module';
 import { filter } from 'rxjs';
 import { LoaderComponent } from './shared/loader/loader.component';
+import { MobileNavComponent } from '../core/components/mobile-nav/mobile-nav.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, LoaderComponent, HeaderComponent, SideMenuComponent, MatTabsModule, TranslateModule, MatSnackBarModule, CommonModule, CoreModule, RouterModule],
+  imports: [RouterOutlet, LoaderComponent, HeaderComponent, SideMenuComponent, MatTabsModule, TranslateModule, MatSnackBarModule, CommonModule, CoreModule, RouterModule, MobileNavComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { IFormControl } from '../../form-control.interface';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FormControlFactory } from '../../form-control.factory';
@@ -15,7 +15,9 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
     MatInputModule,
     FunctionWrapperPipe
   ],
-  templateUrl: './text-area-input.component.html'
+  templateUrl: './text-area-input.component.html',
+  styleUrls: ['./text-area-input.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TextAreaInputComponent {
   @Input() control: FormControl = new FormControl(null);

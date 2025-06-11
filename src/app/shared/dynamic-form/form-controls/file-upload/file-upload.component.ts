@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 import { DocumentService } from '../../../../../../tne-api';
@@ -10,13 +10,19 @@ import { HttpClient } from '@angular/common/http';
 import { ConfirmDialogService } from '../../../service/confirm-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { OcrResultDialogComponent } from './ocr-result-dialog.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { TemplateRef, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'lib-file-upload',
   imports: [
+    CommonModule,
     FunctionWrapperPipe
   ],
-  templateUrl: './file-upload.component.html'
+  templateUrl: './file-upload.component.html',
+  styleUrls: ['./file-upload.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FileUploadComponent {
   @Input() controlConfig: any;
@@ -28,13 +34,18 @@ export class FileUploadComponent {
 
   ocrResult: any;
 
+  showMobileUpload = false;
+
+  @ViewChild('uploadMobileSheet') uploadMobileSheet!: TemplateRef<any>;
+
   constructor(
     private documentService: DocumentService,
     private domSanitizer: DomSanitizer,
     private snackbarService: SnackbarService,
     private http: HttpClient,
     private confirmDialogService: ConfirmDialogService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private bottomSheet?: MatBottomSheet
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
@@ -80,6 +91,7 @@ export class FileUploadComponent {
       this.control.setValue(this.selectedFiles);
     }
     input.value = '';
+    this.closeMobileUploadModal();
   }
 
   uploadFile(payload: any) {
@@ -270,5 +282,49 @@ export class FileUploadComponent {
 
     // Add other error checks if needed
     return 'Invalid input';
+  }
+
+  openMobileUploadSheet() {
+
+  }
+
+  closeMobileUploadModal() {
+    if (this.bottomSheet) {
+      this.bottomSheet.dismiss();
+    }
+  }
+
+  onMobileUploadClick(event: Event) {
+    if (window.innerWidth < 768) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (this.bottomSheet && this.uploadMobileSheet) {
+        this.bottomSheet.open(this.uploadMobileSheet, {
+          panelClass: 'expense-bottom-sheet'
+        });
+      }
+    }
+  }
+
+  triggerInput(inputId: string) {
+    this.confirmDialogService.confirm({
+      title: 'Spend Mantra would like to access your files.',
+      message: 'This allows you to upload your document and photos',
+      confirmText: 'Allow',
+      cancelText: 'Don\'t Allow'
+    }).subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.openFileInput(inputId);
+      } else {
+        this.snackbarService.info('File access denied.');
+      }
+    });
+  }
+
+  private openFileInput(inputId: string): void {
+    const input = document.getElementById(inputId) as HTMLInputElement;
+    if (input) {
+      input.click();
+    }
   }
 }
