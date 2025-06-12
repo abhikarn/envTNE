@@ -86,7 +86,11 @@
                 "OCRRequired": true,
                 "duplicateCheckFields": [
                     {
-                        "name": "BillNumber",
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
                         "isRequired": true
                     },
                     {
@@ -94,7 +98,7 @@
                         "isRequired": true
                     },
                     {
-                        "name": "BillAmount",
+                        "name": "BillNumber",
                         "isRequired": true
                     },
                     {
@@ -217,6 +221,66 @@
                         "readonly": false,
                         "order": 3,
                         "policyViolationCheck": true
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "BillDate",
+                        "isExcluded": false,
+                        "label": "Bill Date",
+                        "value": "",
+                        "dependentCases": [],
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Bill Date is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 3,
+                        "policyViolationCheck": false
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "autoComplete": false,
+                        "name": "BillNumber",
+                        "isExcluded": false,
+                        "label": "Bill Number",
+                        "value": null,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Bill Number is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 4
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "autoComplete": false,
+                        "name": "VendorName",
+                        "isExcluded": false,
+                        "label": "Vendor Name",
+                        "value": null,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Vendor Name is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -869,6 +933,14 @@
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
                         "label": "ClaimAmountInBaseCurrency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 11
+                    },
+                    {
+                        "type": "string",
+                        "name": "BillNumber",
+                        "label": "Bill Number",
                         "visible": true,
                         "position": "out",
                         "order": 11
