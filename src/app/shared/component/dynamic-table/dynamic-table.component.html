@@ -98,7 +98,7 @@
 
                     @for (nestedTable of nestedTables; track nestedTable.dataKey) {
                     @if (row[nestedTable.dataKey]?.length > 0) {
-                    <h6 class="mt-2">{{ nestedTable.dataKey | titlecase }} Details</h6>
+                    <h6 class="mt-2">{{ nestedTable.label | titlecase }} Details</h6>
                     <table class="gst-table table mt-2 mb-2 remove-th-mobile grey-table table-cust tbl-sml w-100">
                       <thead>
                         <tr>

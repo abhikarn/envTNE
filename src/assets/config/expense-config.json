@@ -883,8 +883,9 @@
                 ],
                 "nestedTables": [
                     {
-                        "name": "costCentre",
+                        "name": "costCenter",
                         "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
                         "columns": [
                             {
                                 "name": "__slNo",
@@ -916,6 +917,7 @@
                     },
                     {
                         "name": "gst",
+                        "label": "GST",
                         "dataKey": "gst",
                         "columns": [
                             {
@@ -974,6 +976,8 @@
                         ]
                     },
                     {
+                        "name": "attachment",
+                        "label": "Attachments",
                         "dataKey": "attachment",
                         "columns": [
                             {
@@ -2485,8 +2489,6 @@
                             "label": "Approver Name",
                             "order": 3
                         },
-                   
-                     
                         {
                             "name": "remarks",
                             "label": "Remarks",
@@ -3037,9 +3039,48 @@
                 },
                 "nestedTables": [
                     {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
                         "name": "gst",
                         "dataKey": "gst",
                         "columns": [
+                            {
+                                "name": "slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
                             {
                                 "name": "GstIn",
                                 "label": "GSTIN",
