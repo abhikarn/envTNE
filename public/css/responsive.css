@@ -462,10 +462,14 @@
     }
     .responsive tr {
         margin-bottom: 11px;
-    }table.responsive tr.child-le-row td::before {
+    }
+    
+    /* table.responsive tr.child-le-row td::before {
         content: inherit;
         display: none;
-    }.tr-showblock {
+    }
+     */
+    .tr-showblock {
         
         border-radius: 0;
     }.trl-preview-wrapper .trl-readview-item .trl-req-head label {

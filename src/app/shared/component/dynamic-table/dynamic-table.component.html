@@ -111,7 +111,7 @@
                         @for (nestedRow of row[nestedTable.dataKey]; track nestedRow; let nestedRowIndex = $index) {
                         <tr>
                           @for (col of nestedTable.columns; track col.name) {
-                          <td [attr.data-label]="col?.name" >
+                          <td  [attr.data-label]="col?.name" >
                             @if (col.name === '__slNo') {
                             {{ nestedRowIndex + 1 }}
                             } @else if (col.name === '__actions') {
