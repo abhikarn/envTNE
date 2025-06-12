@@ -1,10 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mobile-profile',
-  imports: [],
+  imports: [
+    CommonModule
+  ],
   templateUrl: './mobile-profile.component.html',
   styleUrl: './mobile-profile.component.scss'
 })
@@ -19,5 +22,9 @@ export class MobileProfileComponent {
     localStorage.removeItem('userData');
     this.bottomSheetRef.dismiss();
     this.router.navigate(['/account']);
+  }
+
+  onClose() {
+    this.bottomSheetRef.dismiss();
   }
 }
