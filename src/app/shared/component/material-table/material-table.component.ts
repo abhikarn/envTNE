@@ -70,6 +70,7 @@ export class MaterialTableComponent implements OnChanges {
   }
 
   ngOnInit() {
+    console.log(this.nestedTables)
     this.setDecimalPrecision();
     this.selectAll = this.processedData.every(r => r.selected);
   }

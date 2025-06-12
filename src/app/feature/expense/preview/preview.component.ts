@@ -26,6 +26,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RemarksModalComponent } from '../../../shared/component/remarks-modal/remarks-modal.component';
 import { CreateDynamicFormComponent } from '../../../shared/dynamic-form/create-dynamic-form/create-dynamic-form.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-preview',
@@ -39,7 +40,8 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,
-    CreateDynamicFormComponent
+    CreateDynamicFormComponent,
+    MatTooltip,
   ],
   templateUrl: './preview.component.html',
   styleUrl: './preview.component.scss',
@@ -223,6 +225,7 @@ export class PreviewComponent {
       setTimeout(() => {
         this.calculatTotalExpenseAmountPreview();
         this.calculatCategoryWiseExpensePreview();
+        this.calculateCostCenterWiseExpense();
       }, 1000);
       this.loadData = true;
     }
@@ -412,6 +415,49 @@ export class PreviewComponent {
       })
     });
     this.setCategoryWiseAmount();
+  }
+
+  calculateCostCenterWiseExpense() {
+    const COST_CENTER_WISE_EXPENSE_ID = "cost-center-wise-expense";
+    const summary = this.expenseSummary?.find((s: any) => s.id === COST_CENTER_WISE_EXPENSE_ID);
+    if (!summary) return;
+
+    // Initialize summary items as empty
+    summary.items = [];
+
+    // First pass: collect unique cost center names
+    const uniqueCostCenters = new Set<string>();
+
+    this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
+      expenseRequest?.data?.forEach((request: any) => {
+        request?.costcentreWiseExpense?.forEach((costCenter: any) => {
+          uniqueCostCenters.add(costCenter.CostCentre);
+        });
+      });
+    });
+
+    // Initialize summary.items with unique cost centers
+    uniqueCostCenters.forEach((costCenterName) => {
+      summary.items.push({
+        label: costCenterName,
+        value: 0.00
+      });
+    });
+
+    // Second pass: sum up AmmoutInActual for each cost center
+    this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
+      expenseRequest?.data?.forEach((request: any) => {
+        request?.costcentreWiseExpense?.forEach((costCenter: any) => {
+          const costCenterName = costCenter.CostCentre;
+          const amount = Number(costCenter?.AmmoutInActual) || 0;
+
+          const item = summary.items.find((item: any) => item.label === costCenterName);
+          if (item) {
+            item.value = (Number(item.value) + amount).toFixed(2);
+          }
+        });
+      });
+    });
   }
 
   getSelection(category: any) {
