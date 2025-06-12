@@ -109,12 +109,20 @@ export class PreviewComponent {
           this.newExpenseService.getRequestorInfo(body).subscribe({
             next: (response) => {
               if (response?.ResponseCode === 200) {
-                this.dialog.open(RequesterDetailsDialogComponent, {
-                  width: '1300px',
-                  maxWidth: '100vw',
-                  panelClass: 'custom-dialog-container',
-                  data: response.ResponseValue
-                });
+                if (window.innerWidth <= 768) {
+                  // Open in bottom sheet for mobile
+                  this.bottomSheet.open(RequesterDetailsDialogComponent, {
+                    data: response.ResponseValue ,
+                    panelClass: 'custom-modal-panel'
+                  });
+                } else {
+                  this.dialog.open(RequesterDetailsDialogComponent, {
+                    width: '1300px',
+                    maxWidth: '100vw',
+                    panelClass: 'custom-dialog-container',
+                    data: response.ResponseValue
+                  });
+                }
               }
             }
           });
