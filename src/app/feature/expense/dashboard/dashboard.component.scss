@@ -190,7 +190,43 @@ td .mat-mdc-form-field-flex .mat-mdc-input-element::-webkit-input-placeholder { 
 .mat-mdc-icon-button:hover .mat-mdc-paginator-icon{
 	fill:#ffffff;
 }
+ .mat-sort-header-arrow svg {
+ 
+	display: none!important;
+}
 
+.mat-sort-header-arrow:after{
+
+  right: 0;
+  background: url(../../../../assets/images/downsort-arrow.svg) 0 0 no-repeat !important;
+  content: " ";
+  width: 11px;
+  height: 14px;
+  position: absolute;opacity: 0.8;
+}
+ .mat-sort-header-arrow::before {
+	right: -6px;
+	background: url("../../../../assets/images/upsort-arrow.svg") 0 0 no-repeat !important;
+	content: " ";
+	width: 11px;
+	height: 14px;
+	position: absolute;opacity: 0.8;
+}
+.mat-sort-header-arrow {
+ 
+	opacity: 1!important;
+	 
+}.mat-sort-header-ascending .mat-sort-header-arrow::after {
+	content: inherit;
+	display: none;
+}
+ .mat-sort-header-descending .mat-sort-header-arrow::before {
+	content: inherit;
+	display: none;
+
+}
+ .mat-sort-header-descending .mat-sort-header-arrow{	transform: rotate(0deg);}
+ 
 	@media (max-width: 767px) {
   .dt-buttons {
 	order: 2 !important;

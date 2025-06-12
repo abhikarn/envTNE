@@ -12769,6 +12769,7 @@ button.dropbtn {
 	display: flex;
 	align-items: center;
 	opacity: 1;
+	cursor: pointer;
 }
 .side-pro-menu li a {
 	display: flex;
