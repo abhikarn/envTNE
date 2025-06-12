@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DateInputComponent } from '../form-controls/calender/date-input.component';
 import { SelectInputComponent } from '../form-controls/dropdown/select-input.component';
@@ -26,7 +26,8 @@ import { FormControlFactory } from '../form-control.factory';
     GstComponent
   ],
   templateUrl: './create-dynamic-form.component.html',
-  styleUrl: './create-dynamic-form.component.scss'
+  styleUrl: './create-dynamic-form.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class CreateDynamicFormComponent {
   @Input() formConfig: IFormControl[] = [];
