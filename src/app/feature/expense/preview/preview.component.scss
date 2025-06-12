@@ -86,7 +86,8 @@ app-preview {
 }.mat-expansion-panel-body {
 	padding: 0 10px 15px 15px;
 }
-}.mat-mdc-row {
+
+.mat-mdc-row {
 	height: auto !important;
 	 
 }.mat-expansion-indicator svg {
@@ -98,3 +99,5 @@ app-preview {
 }.accordion app-expansion-panel:last-child .mat-expansion-panel {
 	margin-bottom: 0 !important;
 }
+}
+

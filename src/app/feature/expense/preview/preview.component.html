@@ -70,8 +70,8 @@
                                     <div class="trl-req-detail">
                                        @if (!item.isLink) {
                                        @if (item?.controlType === 'autocomplete' && mode == 'finance-approval') {
-                                       <mat-form-field appearance="outline" class="form-field-class">
-                                          <input matInput [formControl]="billableControl" [matAutocomplete]="auto">
+                                       <mat-form-field appearance="outline" class="form-field-class custom-auto-complete">
+                                          <input class="form-control chm-forminput " matInput [formControl]="billableControl" [matAutocomplete]="auto">
                                           <mat-autocomplete #auto="matAutocomplete"
                                              (optionSelected)="onOptionSelected($event, item)">
                                              <mat-option *ngFor="let option of filteredOptions"
