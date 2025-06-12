@@ -807,6 +807,13 @@ export class MainExpenseComponent {
     // Optionally, update existingExpenseRequestData if needed for the dynamic form
     this.existingExpenseRequestData = this.responseData?.dynamicExpenseDetailModels
       ?.find((t: any) => t.name === category?.name)?.data || [];
+
+    const index = this.categories.findIndex((c: any) => c.name === category.name);
+    if (index !== -1) {
+      this.categories.splice(index, 1);
+      this.categories.splice(4, 0, category);
+    }
+    this.onTabChange(4); // Switch to the extra category tab
   }
 
   // For *ngFor trackBy
