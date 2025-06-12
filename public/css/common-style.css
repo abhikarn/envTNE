@@ -544,6 +544,9 @@ ul.header-notify-hold {
     align-items: center;
     justify-content: center;
     }
+    .user-hold .btn.btn-link {
+	min-width: inherit;
+}
     li.notification-hold {
         position: relative;
         background: transparent;
@@ -1005,11 +1008,11 @@ ul.header-notify-hold {
     #expenseHead.owl-carousel .owl-stage-outer .owl-stage {
     transform: inherit !important;
     }
-  .common-tab {
+  /* .common-tab {
 	background-color: #f7f7fa !important;
 	border-radius: 10px;
 	border: none;
-}
+} */
     #myTabContent.tab-content .tab-pane {
     background: rgba(0, 0, 0, 0.03);
     padding: 4px 8px;
