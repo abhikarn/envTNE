@@ -105,7 +105,7 @@
                 </div>
                 }
               </div>
-                
+
               <div class="common-block-mobile">
                 <div class="row">
                   @for (item of travelDetails?.data; track item; let i = $index) {
@@ -142,7 +142,7 @@
                   }
                 </div>
               </div>
-</div>
+            </div>
             <!-- expense category -->
             <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
               <!-- Desktop/Tablet: Show tab grouping logic -->
@@ -267,7 +267,6 @@
                 </mat-tab-group>
               </ng-template>
             </div>
-
             <!-- Other Details -->
             <div class="row ">
               <div class="col-md-12">
@@ -279,8 +278,6 @@
                     <ng-template mat-tab-label>
                       <span>{{detail.label}}</span>
                     </ng-template>
-
-
                     @for (expenseRequest of expenseRequestData?.dynamicExpenseDetailModels; track $index) {
                     @for (data of expenseRequest.data; track $index) {
                     @if (data?.IsViolation || data?.excludedData?.IsViolation) {
@@ -288,15 +285,16 @@
                       <li>
                         <span class="fa-pv"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
                         {{expenseRequest.name}}: {{detail[expenseRequest.name]}}
-                      </li>                     
+                      </li>
                     </ul>
                     }
                     @if (data?.IsOCRRestrictedKeyword || data?.excludedData?.IsOCRRestrictedKeyword) {
                     <ul class="ocr-vio-list list-unstyled mb-0">
                       <li>
-                        <span class="fa-pv"><i class="fa fa-exclamation-triangle text-amber" aria-hidden="true"></i></span>
+                        <span class="fa-pv"><i class="fa fa-exclamation-triangle text-amber"
+                            aria-hidden="true"></i></span>
                         Expense item contains a restricted keyword as identified by OCR validation.
-                      </li>                     
+                      </li>
                     </ul>
                     }
                     }
@@ -325,9 +323,6 @@
                         </tr>
                       </thead>
                       <tbody>
-
-
-
                         @for (log of expenseRequestData?.expenseRequestLog; track $index) {
                         <tr>
                           <td data-label="Date"><span>{{log?.actionDatetimeString}}</span></td>
@@ -341,15 +336,8 @@
                           </td>
                         </tr>
                         }
-
-
                       </tbody>
                     </table>
-
-
-
-
-
                     }
                     }
                   </mat-tab>
@@ -357,19 +345,9 @@
                 </mat-tab-group>
               </div>
             </div>
-
-
-
-
-
-
-        
-
-          <!-- left-container-wider -->
-         
-
-        </div>
-         <!-- Bottom Sheet Template -->
+            <!-- left-container-wider -->
+          </div>
+          <!-- Bottom Sheet Template -->
           <ng-template #expenseSummarySheet>
             <div class="row-wrapper common-block">
               <div class="expense-drawer">
@@ -448,22 +426,22 @@
           <div class="right-container-nrw rt-aside-fixed d-none d-md-block d-lg-block">
             <ng-container *ngTemplateOutlet="expenseSummarySheet"></ng-container>
           </div>
+        </div>
+        <!-- all-data-wrapper -->
       </div>
-      <!-- all-data-wrapper -->
     </div>
   </div>
-</div>
 
 
-<!-- <pre>{{mainExpenseData | json}}</pre> -->
-<ng-template #requestBottomSheet>
-  <div class="bottom-sheet-select">
-    <span class="select-mobile-line"></span>
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let req of travelRequests; trackBy: trackByReq"
-        (click)="selectRequestFromSheet(req)">
-        {{req.label}}
-      </li>
-    </ul>
-  </div>
-</ng-template>
+  <!-- <pre>{{mainExpenseData | json}}</pre> -->
+  <ng-template #requestBottomSheet>
+    <div class="bottom-sheet-select">
+      <span class="select-mobile-line"></span>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let req of travelRequests; trackBy: trackByReq"
+          (click)="selectRequestFromSheet(req)">
+          {{req.label}}
+        </li>
+      </ul>
+    </div>
+  </ng-template>

@@ -6,15 +6,15 @@
   </mat-label>
 
   <div class="input-group">
-  <input matInput [matDatepicker]="picker" [formControl]="control" (dateChange)="onDateSelect($event)" [min]="minDate"
-    [max]="maxDate" (focus)="picker.open()" (click)="picker.open()" readonly>
+    <input matInput [matDatepicker]="picker" [formControl]="control" (dateChange)="onDateSelect($event)" [min]="minDate"
+      [max]="maxDate" (focus)="picker.open()" (click)="picker.open()" readonly>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <span class="date-picker-icon align-top-t10">
+      <img src="images/date-icon.svg" alt="Calendar">
+    </span>
+  </div>
 
-  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-<span class="  date-picker-icon align-top-t10">
-                                                                     <img src="images/date-icon.svg" alt="Calendar">
-                                                                     </span>
-                                                                     </div>
   @if (control.invalid && control.touched) {
   <mat-error>
     {{ getErrorMessage | fnWrap : control.invalid && control.touched }}

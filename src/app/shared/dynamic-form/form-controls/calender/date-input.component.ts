@@ -173,7 +173,6 @@ export class DateInputComponent {
                   this.form.get(outputControl)?.setValue(formatted, { emitEvent: false });
                 }
               }
-
             }
           },
           (error: any) => {
@@ -181,7 +180,6 @@ export class DateInputComponent {
           }
         );
       }
-
     } else {
       console.warn(`Invalid API service or method: ${dependentCase.apiService}.${dependentCase.apiMethod}`);
     }
@@ -194,5 +192,4 @@ export class DateInputComponent {
   private extractValueFromPath(obj: any, path: string): any {
     return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
   }
-
 }
