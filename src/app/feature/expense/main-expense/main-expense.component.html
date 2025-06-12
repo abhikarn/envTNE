@@ -105,7 +105,7 @@
                 </div>
                 }
               </div>
-              
+                
               <div class="common-block-mobile">
                 <div class="row">
                   @for (item of travelDetails?.data; track item; let i = $index) {
@@ -142,7 +142,7 @@
                   }
                 </div>
               </div>
-
+</div>
             <!-- expense category -->
             <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
               <!-- Desktop/Tablet: Show tab grouping logic -->
@@ -284,11 +284,19 @@
                     @for (expenseRequest of expenseRequestData?.dynamicExpenseDetailModels; track $index) {
                     @for (data of expenseRequest.data; track $index) {
                     @if (data?.IsViolation || data?.excludedData?.IsViolation) {
-                    <ul class="policy-vio-list">
+                    <ul class="policy-vio-list mb-0">
                       <li>
                         <span class="fa-pv"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
                         {{expenseRequest.name}}: {{detail[expenseRequest.name]}}
-                      </li>
+                      </li>                     
+                    </ul>
+                    }
+                    @if (data?.IsOCRRestrictedKeyword || data?.excludedData?.IsOCRRestrictedKeyword) {
+                    <ul class="ocr-vio-list list-unstyled mb-0">
+                      <li>
+                        <span class="fa-pv"><i class="fa fa-exclamation-triangle text-amber" aria-hidden="true"></i></span>
+                        Expense item contains a restricted keyword as identified by OCR validation.
+                      </li>                     
                     </ul>
                     }
                     }
@@ -355,10 +363,13 @@
 
 
 
-          </div>
+        
 
           <!-- left-container-wider -->
-          <!-- Bottom Sheet Template -->
+         
+
+        </div>
+         <!-- Bottom Sheet Template -->
           <ng-template #expenseSummarySheet>
             <div class="row-wrapper common-block">
               <div class="expense-drawer">
@@ -437,8 +448,6 @@
           <div class="right-container-nrw rt-aside-fixed d-none d-md-block d-lg-block">
             <ng-container *ngTemplateOutlet="expenseSummarySheet"></ng-container>
           </div>
-
-        </div>
       </div>
       <!-- all-data-wrapper -->
     </div>

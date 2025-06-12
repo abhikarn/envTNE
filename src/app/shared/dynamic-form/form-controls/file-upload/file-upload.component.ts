@@ -57,6 +57,7 @@ export class FileUploadComponent {
   }
 
   onFileSelected(event: Event) {
+    
     const input = event.target as HTMLInputElement;
     const maxSizeBytes = (this.controlConfig.maxSizeMB ?? 20) * 1024 * 1024;
     if (input.files && input.files.length > 0) {
@@ -170,16 +171,48 @@ export class FileUploadComponent {
       .pipe(take(1))
       .subscribe({
         next: (res: any) => {
-          debugger;
+          
           this.ocrResult = res;
           if (this.ocrResult.StatusCode == 400) {
             this.snackbarService.error('OCR processing failed: ' + this.ocrResult.ErrorMessage);
             return;
           }
+
           // Set Currency to 1 if it is "INR"
           if (this.ocrResult?.Data?.Currency === "INR") {
             this.ocrResult.Data.Currency = 1;
+          }else if (this.ocrResult?.Data?.Currency === "USD") {
+            this.ocrResult.Data.Currency = 2;
+          } else if (this.ocrResult?.Data?.Currency === "EUR") {
+            this.ocrResult.Data.Currency = 3;
+          } else if (this.ocrResult?.Data?.Currency === "GBP") {
+            this.ocrResult.Data.Currency = 4;
+          } else if (this.ocrResult?.Data?.Currency === "JPY") {
+            this.ocrResult.Data.Currency = 5;
+          } else if (this.ocrResult?.Data?.Currency === "AUD") {
+            this.ocrResult.Data.Currency = 6;
+          } else if (this.ocrResult?.Data?.Currency === "CAD") {
+            this.ocrResult.Data.Currency = 7;
+          } else if (this.ocrResult?.Data?.Currency === "SGD") {
+            this.ocrResult.Data.Currency = 8;
+          } else if (this.ocrResult?.Data?.Currency === "CNY") {
+            this.ocrResult.Data.Currency = 9;
+          } else if (this.ocrResult?.Data?.Currency === "RUB") {
+            this.ocrResult.Data.Currency = 10;
+          } else if (this.ocrResult?.Data?.Currency === "ZAR") {
+            this.ocrResult.Data.Currency = 11;
+          } else if (this.ocrResult?.Data?.Currency === "CHF") {
+            this.ocrResult.Data.Currency = 12;
+          } else if (this.ocrResult?.Data?.Currency === "NZD") {
+            this.ocrResult.Data.Currency = 13;  
+          }else if (this.ocrResult?.Data?.Currency === "AED") {
+            this.ocrResult.Data.Currency = 14;
+          }else if (this.ocrResult?.Data?.Currency === "SAR") {
+            this.ocrResult.Data.Currency = 15;
+          } else {
+             this.ocrResult.Data.Currency = 1;
           }
+
           localStorage.setItem('ocrResult', JSON.stringify(this.ocrResult.Data));
           // Show OCR result in a Material dialog
           const dialogRef = this.dialog.open(OcrResultDialogComponent, {
@@ -188,6 +221,7 @@ export class FileUploadComponent {
           });
           dialogRef.afterClosed().subscribe((confirmed: boolean) => {
             if (confirmed) {
+              
               this.form.patchValue(this.ocrResult.Data);
               this.formConfig.forEach((control: any) => {
                 // Check if the control is in the OCR result
@@ -202,7 +236,7 @@ export class FileUploadComponent {
 
               // Set readonly on all controls that were patched by OCR
               if (this.ocrResult.Data && typeof this.ocrResult.Data === 'object') {
-                debugger;
+                
                 Object.keys(this.ocrResult.Data).forEach(key => {
                   // Find the control config and set readonly
                   if (this.form.controls[key]) {

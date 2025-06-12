@@ -7,4 +7,7 @@ app-confirm-dialog {
         display: flex;
         justify-content: flex-end;
     }
+    .mat-mdc-dialog-container .mat-mdc-dialog-content {
+	padding: var(--mat-dialog-content-padding, 15px 23px);
+}
 }

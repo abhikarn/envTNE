@@ -58,7 +58,7 @@ export const ELEMENT_DATA: any[] = [];
     RouterModule,
     MatTooltipModule
   ],
- templateUrl: './approval-dashboard.component.html',
+  templateUrl: './approval-dashboard.component.html',
   styleUrl: './approval-dashboard.component.scss',
   encapsulation: ViewEncapsulation.None
 })
@@ -73,11 +73,20 @@ export class ApprovalDashboardComponent implements OnInit {
     rejected: 0,
   };
 
-  displayedColumns: ColumnConfig[] =  [];
+  displayedColumns: ColumnConfig[] = [];
 
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSourceMobile = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  isMobile: boolean = false;
+  mobilePageSize: number = 5;
+  mobileCurrentPage: number = 1;
+  mobileDisplayData: any[] = [];
+
+  lastPageSize: number = 5;
+  lastPageIndex: number = 0;
 
   constructor(
     private expenseService: ExpenseService,
@@ -95,8 +104,56 @@ export class ApprovalDashboardComponent implements OnInit {
   }
   ngOnInit(): void {
     this.dataSource.data = [];
+    this.dataSourceMobile.data = [];
     this.loadDisplayedColumns();
     this.getMyExpenseRequestDashBoard();
+    this.checkScreen();
+    window.addEventListener('resize', this.checkScreen.bind(this));
+  }
+
+  ngAfterViewInit(): void {
+    if (!this.isMobile) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      // Restore paginator state if available
+      setTimeout(() => {
+        if (this.paginator) {
+          this.paginator.pageSize = this.lastPageSize;
+          this.paginator.pageIndex = this.lastPageIndex;
+        }
+      });
+      // Listen to paginator changes
+      this.paginator.page.subscribe((event) => {
+        this.lastPageSize = event.pageSize;
+        this.lastPageIndex = event.pageIndex;
+      });
+    }
+  }
+
+
+  ngOnDestroy(): void {
+    window.removeEventListener('resize', this.checkScreen.bind(this));
+  }
+
+  checkScreen() {
+    const wasMobile = this.isMobile;
+    this.isMobile = window.innerWidth <= 768;
+    if (this.isMobile) {
+      // Save paginator state before switching to mobile
+      if (this.paginator) {
+        this.lastPageSize = this.paginator.pageSize;
+        this.lastPageIndex = this.paginator.pageIndex;
+      }
+      this.mobileCurrentPage = 1;
+      this.updateMobileDisplayData();
+    } else if (wasMobile && this.paginator) {
+      // Restore paginator state when switching back to desktop
+      setTimeout(() => {
+        this.paginator.pageSize = this.lastPageSize;
+        this.paginator.pageIndex = this.lastPageIndex;
+        this.paginator._changePageSize(this.lastPageSize);
+      });
+    }
   }
 
   columnKeys: string[] = this.displayedColumns.map(col => col.key);
@@ -108,7 +165,7 @@ export class ApprovalDashboardComponent implements OnInit {
       ActionBy: this.authService.getUserMasterId(),
     }
     this.dashboardService.dashboardGetExpenseRequestApprovalDashboard(payloadData).subscribe(data => {
-      
+
       let requestData = data;
       this.expenseRequesData = requestData.ResponseValue as any[];
       this.statusWiseExpenseDataCount = {
@@ -117,11 +174,27 @@ export class ApprovalDashboardComponent implements OnInit {
         rejected: this.expenseRequesData.filter(x => x.ClaimStatusId == 30).length,
       };
       this.dataSource.data = requestData.ResponseValue as any[];
-      console.log(this.dataSource.data);
+      this.dataSourceMobile.data = requestData.ResponseValue as any[];
+      if (this.isMobile) {
+        this.mobileCurrentPage = 1;
+        this.updateMobileDisplayData();
+      }
     })
   }
 
-loadDisplayedColumns(): void {     
+  updateMobileDisplayData() {
+    const start = 0;
+    const end = this.mobileCurrentPage * this.mobilePageSize;
+    this.mobileDisplayData = this.dataSourceMobile.data.slice(0, end);
+  }
+
+  onLoadMore() {
+    
+    this.mobileCurrentPage++;
+    this.updateMobileDisplayData();
+  }
+
+  loadDisplayedColumns(): void {
     this.http.get(`assets/config/expense-config.json`).subscribe((config: any) => {
       this.expenseDashboardConfig = config;
       const tableDetail = config.dashboard?.expenseStatement.tableDetail || [];
@@ -135,10 +208,10 @@ loadDisplayedColumns(): void {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  // ngAfterViewInit(): void {
+  //   this.dataSource.paginator = this.paginator;
+  //   this.dataSource.sort = this.sort;
+  // }
 
   applyFilter(event: Event, column: string) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
@@ -184,6 +257,3 @@ loadDisplayedColumns(): void {
     FileSaver.saveAs(data, 'ExpenseRequestData.xlsx');
   }
 }
-
-
-

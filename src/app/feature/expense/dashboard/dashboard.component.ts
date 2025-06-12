@@ -73,8 +73,17 @@ export class DashboardComponent implements OnInit {
   displayedColumns: ColumnConfig[] = [];
 
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSourceMobile = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  isMobile: boolean = false;
+  mobilePageSize: number = 5;
+  mobileCurrentPage: number = 1;
+  mobileDisplayData: any[] = [];
+
+  lastPageSize: number = 5;
+  lastPageIndex: number = 0;
 
   constructor(
     private expenseService: ExpenseService,
@@ -92,8 +101,56 @@ export class DashboardComponent implements OnInit {
   }
   ngOnInit(): void {
     this.dataSource.data = [];
+    this.dataSourceMobile.data = [];
+    // this.mobileDisplayData = [];
     this.loadDisplayedColumns();
     this.getMyExpenseRequestDashBoard();
+    this.checkScreen();
+    window.addEventListener('resize', this.checkScreen.bind(this));
+  }
+
+  ngAfterViewInit(): void {
+    if (!this.isMobile) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      // Restore paginator state if available
+      setTimeout(() => {
+        if (this.paginator) {
+          this.paginator.pageSize = this.lastPageSize;
+          this.paginator.pageIndex = this.lastPageIndex;
+        }
+      });
+      // Listen to paginator changes
+      this.paginator.page.subscribe((event) => {
+        this.lastPageSize = event.pageSize;
+        this.lastPageIndex = event.pageIndex;
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('resize', this.checkScreen.bind(this));
+  }
+
+  checkScreen() {
+    const wasMobile = this.isMobile;
+    this.isMobile = window.innerWidth <= 768;
+    if (this.isMobile) {
+      // Save paginator state before switching to mobile
+      if (this.paginator) {
+        this.lastPageSize = this.paginator.pageSize;
+        this.lastPageIndex = this.paginator.pageIndex;
+      }
+      this.mobileCurrentPage = 1;
+      this.updateMobileDisplayData();
+    } else if (wasMobile && this.paginator) {
+      // Restore paginator state when switching back to desktop
+      setTimeout(() => {
+        this.paginator.pageSize = this.lastPageSize;
+        this.paginator.pageIndex = this.lastPageIndex;
+        this.paginator._changePageSize(this.lastPageSize);
+      });
+    }
   }
 
   // loadDisplayedColumns(): void {     
@@ -111,28 +168,27 @@ export class DashboardComponent implements OnInit {
   //   });
   // }
 
-  loadDisplayedColumns(): void {     
-  this.http.get(`assets/config/expense-config.json`).subscribe((config: any) => {
-    this.expenseDashboardConfig = config;
-    const tableDetail = config.dashboard?.expenseStatement.tableDetail || [];
+  loadDisplayedColumns(): void {
+    this.http.get(`assets/config/expense-config.json`).subscribe((config: any) => {
+      this.expenseDashboardConfig = config;
+      const tableDetail = config.dashboard?.expenseStatement.tableDetail || [];
 
-    this.displayedColumns = tableDetail.map((col: any) => {
-      // Normalize 'are order' to 'order' if present
-      // const orderValue = col['order'] ?? col['are order'] ?? null;
+      this.displayedColumns = tableDetail.map((col: any) => {
+        // Normalize 'are order' to 'order' if present
+        // const orderValue = col['order'] ?? col['are order'] ?? null;
 
-      return {
-        key: col.key,
-        label: col.label,
-        sortable: col.sortable,
-        order: col.order? col.order : 0
-      };
-    }) .sort((a:any, b:any) => a.order - b.order); // 👈 sort columns by order
+        return {
+          key: col.key,
+          label: col.label,
+          sortable: col.sortable,
+          order: col.order ? col.order : 0
+        };
+      }).sort((a: any, b: any) => a.order - b.order); // 👈 sort columns by order
 
-    this.columnKeys = this.displayedColumns.map(col => col.key);
-    this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');
-  });
-}
-
+      this.columnKeys = this.displayedColumns.map(col => col.key);
+      this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');
+    });
+  }
 
   columnKeys: string[] = [];
   filterColumnKeys: string[] = [];
@@ -143,23 +199,28 @@ export class DashboardComponent implements OnInit {
       ActionBy: this.authService.getUserMasterId(),
     }
     this.dashboardService.dashboardGetExpenseRequestDashboard(payloadData).subscribe(data => {
-
       let requestData = data;
       this.expenseRequesData = requestData.ResponseValue as any[];
       this.generateStatusWiseCount();
-      // this.statusWiseExpenseDataCount = {
-      //   approved: this.expenseRequesData.filter(x => x.ClaimStatusId == 23).length,
-      //   pending: this.expenseRequesData.filter(x => x.ClaimStatusId == 27 || x.ClaimStatusId === 31).length,
-      //   rejected: this.expenseRequesData.filter(x => x.ClaimStatusId == 30).length,
-      // };
       this.dataSource.data = requestData.ResponseValue as any[];
-      console.log(this.dataSource.data);
+      this.dataSourceMobile.data = requestData.ResponseValue as any[];
+      if (this.isMobile) {
+        this.mobileCurrentPage = 1;
+        this.updateMobileDisplayData();
+      }
     })
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  updateMobileDisplayData() {
+    const start = 0;
+    const end = this.mobileCurrentPage * this.mobilePageSize;
+    this.mobileDisplayData = this.dataSourceMobile.data.slice(0, end);
+  }
+
+  onLoadMore() {
+    
+    this.mobileCurrentPage++;
+    this.updateMobileDisplayData();
   }
 
   applyFilter(event: Event, column: string) {
@@ -196,7 +257,7 @@ export class DashboardComponent implements OnInit {
           rowData[col.label] = row[col.key];
         }
       });
-      return rowData;  
+      return rowData;
     });
 
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);

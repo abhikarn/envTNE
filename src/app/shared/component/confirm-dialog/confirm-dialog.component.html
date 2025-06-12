@@ -3,13 +3,15 @@
 <h2 mat-dialog-title>{{ data.title }}</h2>
 }
 <mat-dialog-content>{{ data.message }}</mat-dialog-content>
-<mat-dialog-actions align="end">
+ 
+<div class="modal-footer button-half">
   @if (data.cancelText && data.cancelButton) {
-  <button mat-button (click)="onCancel()">{{ data.cancelText || 'Cancel' }}</button>
+  <button class="btn btn-outline-secondary me-2" (click)="onCancel()">{{ data.cancelText || 'Cancel' }}</button>
   }
   @if (data.confirmText && data.confirmButton) {
-  <button mat-button [color]="data.confirmText === 'Delete' ? 'warn' : 'primary'" (click)="onConfirm()">
+  <button class="btn btn-dark me-1"   (click)="onConfirm()">
     {{ data.confirmText || 'Confirm' }}
   </button>
   }
-</mat-dialog-actions>
+ 
+  </div>

@@ -28,6 +28,10 @@ app-material-table {
     background-color: #e0e0e0 !important;
   }
 
+  .ocr-riestricted-row {
+    background-color: #f5da89 !important;
+  }
+
   .disabled-row input.form-control,
   .disabled-row input[disabled] {
     background-color: #e0e0e0 !important;
@@ -89,8 +93,16 @@ app-material-table {
     background-color: #ffe5e5 !important;
   }
 
+  .ocr-riestricted-row {
+    background-color: #f5da89 !important;
+  }
+
   .violation-icon {
     color: #d32f2f !important; // red shade
+  }
+
+    .ocr-riestricted-icon {
+    color: #FFBF00 !important; // red shade
   }
 
   .remarks-container {
@@ -135,4 +147,8 @@ app-material-table {
  
 }
 
+::ng-deep .mat-row.ocr-riestricted-row,
+::ng-deep tr.ocr-riestricted-row {
+  background-color: #f5da89 !important;
+}
 }

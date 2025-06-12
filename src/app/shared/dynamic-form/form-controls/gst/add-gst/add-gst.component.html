@@ -24,7 +24,7 @@
                                     @if (field.showInUI) {
                                     <td>
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
-                                            <label> {{field.label}} </label>
+                                          <div class="trl-req-head">  <label> {{field.label}} </label></div>
                                             <input [type]="field.type" [formControlName]="field.name"
                                                  (blur)="onBlur(field)"
                                                 (input)="onInput($event, field)"  
@@ -58,8 +58,8 @@
                                     @for (field of fields; track $index) {
                                     @if (field.showInUI) {
 
-                                    <td>
-                                          <label> {{field.label}} </label>
+                                    <td style="padding: 7px 10px;">
+                                          <div class="trl-req-head">   <label> {{field.label}} </label> </div>
                                         {{gst[field.name]}}</td>
                                     }
                                     }
