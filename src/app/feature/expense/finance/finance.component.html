@@ -125,6 +125,7 @@
                                                                         @if (element['ClaimStatusId'] === 23) {
                                                                         <span class="status-green status-common"
                                                                             data-bs-toggle="tooltip" title="Completed"
+                                                                            matTooltip="Completed"
                                                                             aria-label="Completed">
                                                                             {{ element[column.key] }}
                                                                         </span>
@@ -132,6 +133,7 @@
                                                                         <span class="status-grey   status-common"
                                                                             data-bs-toggle="tooltip"
                                                                             title="Expense Request Draft"
+                                                                            matTooltip="Expense Request Draft"
                                                                             aria-label="Expense Request Draft">
                                                                             {{ element[column.key] }}
                                                                         </span>
@@ -140,6 +142,7 @@
                                                                         <span class="status-grey  status-common"
                                                                             data-bs-toggle="tooltip"
                                                                             title="Pending For Approval"
+                                                                            matTooltip="Pending For Approval"
                                                                             aria-label="Pending For Approval">
                                                                             {{ element[column.key] }}
                                                                         </span>
@@ -147,6 +150,7 @@
                                                                         @else if (element['ClaimStatusId'] === 30) {
                                                                         <span class="status-red status-common"
                                                                             data-bs-toggle="tooltip" title="Rejected"
+                                                                            matTooltip="Rejected"
                                                                             aria-label="Rejected">
                                                                             {{ element[column.key] }}
                                                                         </span>
@@ -155,6 +159,7 @@
                                                                         <span class="status-orange  status-common"
                                                                             data-bs-toggle="tooltip"
                                                                             title="Seek Clarification"
+                                                                            matTooltip="Seek Clarification"
                                                                             aria-label="Seek Clarification">
                                                                             {{ element[column.key] }}
                                                                         </span>
@@ -162,6 +167,7 @@
                                                                         @else if (element['ClaimStatusId'] === 32) {
                                                                         <span class="status-red status-common"
                                                                             data-bs-toggle="tooltip" title="Cancelled"
+                                                                            matTooltip="Cancelled"
                                                                             aria-label="Cancelled">
                                                                             {{ element[column.key] }}
                                                                         </span>
@@ -169,6 +175,7 @@
                                                                         @else if (element['ClaimStatusId'] === 34) {
                                                                         <span class="status-green status-common"
                                                                             data-bs-toggle="tooltip" title="Approved"
+                                                                            matTooltip="Approved"
                                                                             aria-label="Approved">
                                                                             {{ element[column.key] }}
                                                                         </span>
