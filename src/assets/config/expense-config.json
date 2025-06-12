@@ -108,7 +108,7 @@
                         "dataType": "file",
                         "name": "attachment",
                         "isExcluded": false,
-                        "label": "Upload File",
+                        "label": "Upload Your Bill",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
