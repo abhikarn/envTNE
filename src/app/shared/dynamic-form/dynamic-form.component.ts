@@ -282,6 +282,30 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
     // Only check duplicate if OCRRequired is true for this category
     if (this.category.OCRRequired) {
+      // Check for duplicate in tableData before DB check
+      const duplicateFields = this.category.duplicateCheckFields || [];
+      const currentFormValues: any = {};
+      for (const field of duplicateFields) {
+        currentFormValues[field.name] = this.form.get(field.name)?.value;
+      }
+      const isDuplicateInTable = this.tableData.some((row: any, idx: number) => {
+        // If editing, skip the row being edited
+        if (this.editIndex && (idx === this.editIndex - 1)) return false;
+        return duplicateFields.every((field: any) => {
+          const formValue = currentFormValues[field.name];
+          const rowValue = row[field.name];
+          // Compare primitive or object with value property
+          const val1 = typeof formValue === 'object' && formValue !== null ? formValue.value : formValue;
+          const val2 = typeof rowValue === 'object' && rowValue !== null ? rowValue.value : rowValue;
+          return val1 == val2;
+        });
+      });
+      if (isDuplicateInTable) {
+        alert('Duplicate OCR entry detected in the table. Please check your Bill Number, Date, Amount, or Vendor Name.');
+        return;
+      }
+      // ...existing code...
+      console.log(this.tableData);
       const isDuplicate = await this.checkOCRDuplicate();
       if (isDuplicate) {
         alert('Duplicate OCR entry detected. Please check your Bill Number, Date, Amount, or Vendor Name.');
@@ -379,8 +403,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.formData = {};
   }
 
-  addDataToDynamicTable() {
-    
+  addDataToDynamicTable() { 
+       
     let tableData = this.form;
     // Preparing Data for Dynamic table
     this.formControls.forEach(control => {

@@ -28,12 +28,24 @@
   }
   <!-- Handling 'date' type controls -->
   @case ('date') {
+  @if(control.formConfig.name !== "TravelDate") {
   <div class="col-md-4">
     <lib-date-input [controlConfig]="control.formConfig" [control]="control.control" [form]="form"
-      (valueChange)="onFieldValueChange(control.formConfig);handleEvent('dateChange', $event)" [minDate]="minSelectableDate" [maxDate]="maxSelectableDate"
+      (valueChange)="onFieldValueChange(control.formConfig);handleEvent('dateChange', $event)"
       (emitSpecificCase)="getSpecificCase($event)">
     </lib-date-input>
   </div>
+  }
+  @else {
+  <div class="col-md-4">
+    <lib-date-input [controlConfig]="control.formConfig" [control]="control.control" [form]="form"
+      (valueChange)="onFieldValueChange(control.formConfig);handleEvent('dateChange', $event)"
+      [minDate]="minSelectableDate" [maxDate]="maxSelectableDate" (emitSpecificCase)="getSpecificCase($event)">
+    </lib-date-input>
+  </div>
+
+  }
+
   }
   <!-- Handling 'radio' type controls -->
   @case ('radio') {
@@ -57,8 +69,8 @@
   }
   <!-- Handling 'file' type controls -->
   @case ('file') {
-  <lib-file-upload [controlConfig]="control.formConfig" [form]="form" [formConfig]="formConfig" [control]="control.control" [selectedFiles]="selectedFiles"
-    (ocrCompleted)="onOcrCompleted($event)">
+  <lib-file-upload [controlConfig]="control.formConfig" [form]="form" [formConfig]="formConfig"
+    [control]="control.control" [selectedFiles]="selectedFiles" (ocrCompleted)="onOcrCompleted($event)">
   </lib-file-upload>
   }
   <!-- Optional: Default case if control type doesn't match -->
@@ -73,11 +85,13 @@
 
   <div class="col-md-12 mt-0 mb-3">
     <div class=" d-flex align-items-center   justify-content-end ">
-      <button type="button" class="  btn btn-outline-secondary clear me-2  " id="cleartable" (click)="clear()">Clear</button>
-      <button type="button" class="btn btn-primary " id="addUpdateBtn" (click)="onSubmit()">{{ editIndex ? "Update" : "Add" }}</button>
+      <button type="button" class="  btn btn-outline-secondary clear me-2  " id="cleartable"
+        (click)="clear()">Clear</button>
+      <button type="button" class="btn btn-primary " id="addUpdateBtn" (click)="onSubmit()">{{ editIndex ? "Update" :
+        "Add" }}</button>
     </div>
   </div>
-  
+
   @if (tableData.length > 0) {
   <app-dynamic-table [tableData]="tableData" [categoryConfig]="category" (editRow)="onEditRow($event)"
     (deleteRow)="onDeleteRow($event)"></app-dynamic-table>

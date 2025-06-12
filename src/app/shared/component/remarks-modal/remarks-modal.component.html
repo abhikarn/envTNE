@@ -1,10 +1,10 @@
- <div class="modal-dialog modal-xl ">
+<div class="modal-dialog modal-xl ">
       <div class="modal-content" style="background-color: #F7F7FA;">
  <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
              Remarks
             </h5>
-             <mat-icon (click)="dialogRef.close()" aria-hidden="false" aria-label="Example home icon" fontIcon="close">
+             <mat-icon (click)="close()" aria-hidden="false" aria-label="Example home icon" fontIcon="close">
             
     </mat-icon>
  
@@ -28,19 +28,20 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let approval of data.remarksData; index as i">
-                <td>{{ i + 1 }}</td>
-                <td>{{ approval?.approver }}</td>
-                <td>{{ approval?.approvalDateTimeString }}</td>
-                <td>{{ approval?.actionStatus }}</td>
-                <td>{{ approval?.approvedAmount | decimalFormat }}</td>
-                <td>{{ approval?.approverRemarks }}</td>
+            <tr *ngFor="let approval of remarksData; index as i">
+                <td data-label="Sl.No">{{ i + 1 }}</td>
+                <td data-label="Action By">{{ approval?.approver }}</td>
+                <td data-label="Action Date">{{ approval?.approvalDateTimeString }}</td>
+                <td data-table="Action">{{ approval?.actionStatus }}</td>
+                <td data-table="Approved Amount">{{ approval?.approvedAmount | decimalFormat }}</td>
+                <td data-table="Remarks">{{ approval?.approverRemarks }}</td>
             </tr>
         </tbody>
     </table>
+    <div *ngIf="!remarksData || remarksData.length === 0">
+  No remarks available.
 </div>
 </div>
 </div>
 </div></div>
 
- 
