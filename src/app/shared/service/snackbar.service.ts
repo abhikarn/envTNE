@@ -19,8 +19,8 @@ export class SnackbarService {
     console.log(panelClass)
     this.snackBar.open(message, action, {
       duration,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
       panelClass
     });
   }

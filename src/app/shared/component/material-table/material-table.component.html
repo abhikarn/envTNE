@@ -17,7 +17,7 @@
     <!-- Preview Mode: Serial Number Column -->
     <ng-container *ngIf="mode === 'preview'" matColumnDef="slNo">
         <th mat-header-cell *matHeaderCellDef>{{ slNoLabel }}</th>
-        <td mat-cell *matCellDef="let row">{{ row.slNo }}</td>
+        <td class="text-center" mat-cell *matCellDef="let row">{{ row.slNo }}</td>
     </ng-container>
 
     <!-- Common Action Icons -->
@@ -154,10 +154,10 @@
                 @if (mode !== 'finance-approval') {
                 <ng-container *ngFor="let nested of nestedTables">
                     @if (row[nested.dataKey]?.length) {
-                    <table mat-table [dataSource]="row[nested.dataKey]" class="sub-table">
+                    <table mat-table [dataSource]="row[nested.dataKey]" class="sub-table bg-none">
                         <ng-container *ngFor="let col of nested.columns" [matColumnDef]="col.name">
                             <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
-                            <td style="background-color: #fff;" mat-cell *matCellDef="let entry">{{ entry[col.name] }}</td>
+                            <td [attr.data-label]="col?.label" style="background-color: #fff;" mat-cell *matCellDef="let entry">{{ entry[col.name] }}</td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="getNestedColumnKeys(nested.columns)"></tr>
                         <tr mat-row *matRowDef="let entry; columns: getNestedColumnKeys(nested.columns)"></tr>
