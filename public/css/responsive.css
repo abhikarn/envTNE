@@ -604,15 +604,9 @@
 	padding-bottom: 0 !important;
 }
 
-
-
-
 .tr-showblock {
- 
-	padding: 0px;
- 
+	padding: 9px;
 }
-
       .mobile-card-view-normaltable thead {
         display: none;
       }
@@ -642,9 +636,9 @@
 
        }
      
- .icons-new {
- padding: 5px 0;
-	justify-content: end;
+.icons-new {
+	padding: 5px 0;
+	justify-content: end !important;
 }
 .mobile-card-view-normaltable tr.child-le-row > td:last-child {
 	border: none !important;
@@ -683,7 +677,9 @@
  .mobile-card-view-normaltable tr.child-le-row td:first-child {
 	display: block;
 }
-
+.nested-table td {
+	display: block !important;
+}
 
 
     .common-block-nothide {

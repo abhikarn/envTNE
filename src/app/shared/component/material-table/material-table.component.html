@@ -1,5 +1,5 @@
 <table mat-table [dataSource]="processedData" multiTemplateDataRows
-    class="table bor-light  mobile-card-view-normaltable responsive color-table d-table table-cust tbl-sml">
+    class="table bor-light  mobile-card-view-normaltable responsive    color-table d-table table-cust tbl-sml">
 
     <!-- Approval Mode: Checkbox Column -->
     @if (mode === 'approval' || mode === 'finance-approval') {
@@ -82,7 +82,7 @@
     <!-- Dynamic Columns -->
     <ng-container *ngFor="let col of visibleTabelColumns" [matColumnDef]="col.name">
         <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
-        <td mat-cell *matCellDef="let row">
+        <td [attr.data-label]="col?.label" mat-cell *matCellDef="let row">
             @if (col.controlType === 'input' && mode === 'finance-approval') {
             <input [type]="col.type" class="form-control" [(ngModel)]="row[col.name]"
                 [readonly]="!col.isEditableInFinanceApproval" [disabled]="!row.selected || row.ClaimStatusId == 5"
@@ -140,11 +140,11 @@
     }
 
     <!-- Expanded Detail Row -->
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+    <tr   mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row nested-table"></tr>
 
     <!-- Detail Row Template -->
-    <ng-container matColumnDef="expandedDetail">
-        <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
+    <ng-container  matColumnDef="expandedDetail">
+        <td  mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
             <div *ngIf="isExpanded(row)" class="expanded-container">
                 @if (mode === 'finance-approval') {
                 <app-add-gst [categoryGST]="categoryGST" [ExpenseRequestDetailId]="row?.ExpenseRequestDetailId"
