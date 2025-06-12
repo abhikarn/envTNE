@@ -104,6 +104,30 @@
                 ],
                 "formControls": [
                     {
+                        "type": "file",
+                        "dataType": "file",
+                        "name": "attachment",
+                        "isExcluded": false,
+                        "label": "Upload File",
+                        "value": [],
+                        "multiple": true,
+                        "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
+                        "referenceType": 123,
+                        "maxSizeMB": 15,
+                        "required": false,
+                        "requiredIf": {
+                            "TravelMode": [
+                                1
+                            ],
+                            "PaymentMode": [
+                                91
+                            ]
+                        },
+                        "disable": false,
+                        "oCRRequired": true,
+                        "order": 11
+                    },
+                    {
                         "type": "select",
                         "dataType": "int",
                         "name": "TravelMode",
@@ -690,30 +714,6 @@
                             "IsViolation": true
                         },
                         "maxLength": 500
-                    },
-                    {
-                        "type": "file",
-                        "dataType": "file",
-                        "name": "attachment",
-                        "isExcluded": false,
-                        "label": "Upload File",
-                        "value": [],
-                        "multiple": true,
-                        "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
-                        "referenceType": 123,
-                        "maxSizeMB": 15,
-                        "required": false,
-                        "requiredIf": {
-                            "TravelMode": [
-                                1
-                            ],
-                            "PaymentMode": [
-                                91
-                            ]
-                        },
-                        "disable": false,
-                        "oCRRequired": true,
-                        "order": 11
                     },
                     {
                         "type": "hidden",
