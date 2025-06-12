@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { DecimalFormatPipe } from '../../pipes/decimal-format.pipe';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-remarks-modal',
@@ -17,12 +18,35 @@ import { DecimalFormatPipe } from '../../pipes/decimal-format.pipe';
 })
 export class RemarksModalComponent {
 
+  public remarksData: any[] = [];
+
   constructor(
-    public dialogRef: MatDialogRef<RemarksModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { remarksData: any[] }
-  ) { }
+    @Optional() public dialogRef: MatDialogRef<RemarksModalComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: { remarksData: any[] } | null,
+    @Optional() @Inject(MAT_BOTTOM_SHEET_DATA) public bottomSheetData: { remarksData: any[] } | null,
+    @Optional() private bottomSheetRef?: MatBottomSheetRef<RemarksModalComponent>
+  ) {}
 
   ngOnInit() {
-    console.log(this.data.remarksData)
+    if (this.data && this.data.remarksData) {
+      this.remarksData = this.data.remarksData;
+    } else if (this.bottomSheetData && this.bottomSheetData.remarksData) {
+      this.remarksData = this.bottomSheetData.remarksData;
+    } else if ((this.bottomSheetRef as any)?.containerInstance?.bottomSheetConfig?.data?.remarksData) {
+      this.remarksData = (this.bottomSheetRef as any).containerInstance.bottomSheetConfig.data.remarksData;
+    }
+    // Defensive: always ensure remarksData is an array
+    if (!Array.isArray(this.remarksData)) {
+      this.remarksData = [];
+    }
+    console.log(this.remarksData);
+  }
+
+  close() {
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    } else if (this.bottomSheetRef) {
+      this.bottomSheetRef.dismiss();
+    }
   }
 }

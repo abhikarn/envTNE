@@ -724,13 +724,24 @@ export class PreviewComponent {
       }
     });
 
-    if (!remarksData) return;
+    if (!remarksData || remarksData.length === 0) return;
 
-    this.dialog.open(RemarksModalComponent, {
-      width: '1000px',
-      data: { remarksData },
-      panelClass: 'custom-modal-panel'
-    });
+    console.log('Opening remarks modal/bottom sheet with data:', remarksData);
+
+    if (window.innerWidth <= 768) {
+      // Open in bottom sheet for mobile
+      this.bottomSheet.open(RemarksModalComponent, {
+        data: { remarksData },
+        panelClass: 'custom-modal-panel'
+      });
+    } else {
+      // Open as dialog for desktop
+      this.dialog.open(RemarksModalComponent, {
+        width: '1000px',
+        data: { remarksData },
+        panelClass: 'custom-modal-panel'
+      });
+    }
   }
 
    /**
