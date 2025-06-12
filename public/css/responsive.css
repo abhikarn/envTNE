@@ -75,6 +75,9 @@
 }
 
 @media (max-width: 767px) {
+  .bg-none td {
+	background-color: transparent!Important;
+}
 .left-container-wider.scroll-left-align.mar-tmd3 {
 	padding-bottom: 80px !important;
 }

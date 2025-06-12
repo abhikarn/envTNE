@@ -107,6 +107,8 @@ export class DashboardComponent implements OnInit {
     this.getMyExpenseRequestDashBoard();
     this.checkScreen();
     window.addEventListener('resize', this.checkScreen.bind(this));
+
+    this.snackbarService.success('Gopi', 1000000)
   }
 
   ngAfterViewInit(): void {
