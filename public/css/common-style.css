@@ -886,7 +886,7 @@ ul.header-notify-hold {
         padding: 7px 10px !important;
     }
     .color-table tr td {
-        padding: 7px 5px;
+        padding: 7px 0px;
         text-align: left;
         font-size: 11px;
     }
