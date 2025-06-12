@@ -11,9 +11,6 @@
          <option class="option" value="183">YYYYY</option>
       </div>
    </div>
-
-
-
 </div>
 
 <div class="app-main-wrapper">
@@ -42,7 +39,8 @@
                                        </ng-container>
                                        <ng-template #normalText>
                                           <span class="status-noellipsis"
-                                             [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''">
+                                             [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''"
+                                           matTooltip="{{ item.value }}">
                                              {{ item.value }}
                                           </span>
                                        </ng-template>

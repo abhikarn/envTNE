@@ -26,6 +26,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RemarksModalComponent } from '../../../shared/component/remarks-modal/remarks-modal.component';
 import { CreateDynamicFormComponent } from '../../../shared/dynamic-form/create-dynamic-form/create-dynamic-form.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-preview',
@@ -39,7 +40,8 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,
-    CreateDynamicFormComponent
+    CreateDynamicFormComponent,
+    MatTooltip,
   ],
   templateUrl: './preview.component.html',
   styleUrl: './preview.component.scss',
