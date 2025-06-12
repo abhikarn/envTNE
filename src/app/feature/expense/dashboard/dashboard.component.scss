@@ -231,6 +231,11 @@ td .mat-mdc-form-field-flex .mat-mdc-input-element::-webkit-input-placeholder { 
 }
  .mat-sort-header-descending .mat-sort-header-arrow{	transform: rotate(0deg);}
  
+ .mat-mdc-table {
+ 
+	background-color: transparent !important;
+}
+
 	@media (max-width: 767px) {
   .dt-buttons {
 	order: 2 !important;

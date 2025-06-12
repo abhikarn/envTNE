@@ -544,6 +544,9 @@ ul.header-notify-hold {
     align-items: center;
     justify-content: center;
     }
+    .user-hold .btn.btn-link {
+	min-width: inherit;
+}
     li.notification-hold {
         position: relative;
         background: transparent;
