@@ -20,8 +20,11 @@ app-material-table {
   }
 
   tr.detail-row td {
-    padding: 0 !important;
-    border: none;
+  padding: 3px 4px !important;
+  border: none;
+    border-bottom-width: medium;
+    border-bottom-style: none;
+    border-bottom-color: currentcolor;
   }
 
   .disabled-row {
@@ -93,8 +96,8 @@ app-material-table {
     background-color: #ffe5e5 !important;
   }
 
-  .ocr-riestricted-row {
-    background-color: #f5da89 !important;
+  .ocr-riestricted-row td {
+  background-color: #f9f0d5 !important;
   }
 
   .violation-icon {

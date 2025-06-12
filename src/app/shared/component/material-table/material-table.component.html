@@ -114,10 +114,10 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
             <div class="icons-new">
-                <i *ngIf="row?.IsViolation" class="fa fa-exclamation-triangle violation-icon"
-                    [matTooltip]="row?.Violation" matTooltipPosition="above"></i>
-                <i *ngIf="row?.IsOCRRestrictedKeyword" class="fa fa-exclamation-triangle violation-icon text-amber"
-                    [matTooltip]="'Expense item contains a restricted keyword as identified by OCR validation.'" matTooltipPosition="above"></i>
+                <span style="width: 18px;"> <i *ngIf="row?.IsViolation" class="fa fa-exclamation-triangle fs-6 violation-icon"
+                    [matTooltip]="row?.Violation" matTooltipPosition="above"></i></span>
+                <span style="width: 18px;">  <i *ngIf="row?.IsOCRRestrictedKeyword" class="fa fa-exclamation-triangle fs-6  text-amber"
+                    [matTooltip]="'Expense item contains a restricted keyword as identified by OCR validation.'" matTooltipPosition="above"></i></span>
                 <span class="btn btn-showhide" (click)="toggleRow(row)">
                     <i [ngClass]="isExpanded(row) ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
                 </span>
@@ -157,7 +157,7 @@
                     <table mat-table [dataSource]="row[nested.dataKey]" class="sub-table">
                         <ng-container *ngFor="let col of nested.columns" [matColumnDef]="col.name">
                             <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
-                            <td mat-cell *matCellDef="let entry">{{ entry[col.name] }}</td>
+                            <td style="background-color: #fff;" mat-cell *matCellDef="let entry">{{ entry[col.name] }}</td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="getNestedColumnKeys(nested.columns)"></tr>
                         <tr mat-row *matRowDef="let entry; columns: getNestedColumnKeys(nested.columns)"></tr>

@@ -41,7 +41,8 @@
                                           </span>
                                        </ng-container>
                                        <ng-template #normalText>
-                                          <span [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''">
+                                          <span class="status-noellipsis"
+                                             [ngClass]="item.statusClass ? item.statusClass + ' status-common' : ''">
                                              {{ item.value }}
                                           </span>
                                        </ng-template>
