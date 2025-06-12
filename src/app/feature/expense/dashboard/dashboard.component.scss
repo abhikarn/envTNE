@@ -225,6 +225,10 @@ td .mat-mdc-form-field-flex .mat-mdc-input-element::-webkit-input-placeholder { 
 	display: none;
 
 }
+ .mat-sort-header-recently-cleared-descending .mat-sort-header-arrow {
+  animation:inherit!important;
+
+}
  .mat-sort-header-descending .mat-sort-header-arrow{	transform: rotate(0deg);}
  
 	@media (max-width: 767px) {
