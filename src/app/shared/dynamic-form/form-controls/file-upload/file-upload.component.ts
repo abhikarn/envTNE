@@ -57,7 +57,6 @@ export class FileUploadComponent {
   }
 
   onFileSelected(event: Event) {
-    
     const input = event.target as HTMLInputElement;
     const maxSizeBytes = (this.controlConfig.maxSizeMB ?? 20) * 1024 * 1024;
     if (input.files && input.files.length > 0) {
@@ -78,12 +77,14 @@ export class FileUploadComponent {
             this.snackbarService.error(`File "${file.name}" exceeds the ${this.controlConfig.maxSizeMB} MB limit.`);
             return;
           } else {
-            // Only call OCR if OCRRequired is true in controlConfig or its parent category
             if (this.controlConfig.oCRRequired) {
-              this.uploadOcrFile(file || null);
+              // Only call OCR, do not upload file yet
+              this.uploadOcrFile(file || null, payload);
+            } else {
+              // As-is: upload file immediately
+              this.uploadFile(payload);
+              console.log('Prepared File Payload:', payload);
             }
-            this.uploadFile(payload);
-            console.log('Prepared File Payload:', payload);
           }
         };
         reader.readAsDataURL(file);
@@ -155,8 +156,9 @@ export class FileUploadComponent {
   /**
    * Uploads a file to the OCR API and stores the result in ocrResult.
    * @param file The file to upload for OCR processing.
+   * @param payload The file payload for uploadFile (optional, used for deferred upload)
    */
-  uploadOcrFile(file: File) {
+  uploadOcrFile(file: File, payload?: any) {
 
     if (!file) {
       this.snackbarService.error('No file selected for OCR processing.');
@@ -171,7 +173,7 @@ export class FileUploadComponent {
       .pipe(take(1))
       .subscribe({
         next: (res: any) => {
-          
+
           this.ocrResult = res;
           if (this.ocrResult.StatusCode == 400) {
             this.snackbarService.error('OCR processing failed: ' + this.ocrResult.ErrorMessage);
@@ -181,7 +183,7 @@ export class FileUploadComponent {
           // Set Currency to 1 if it is "INR"
           if (this.ocrResult?.Data?.Currency === "INR") {
             this.ocrResult.Data.Currency = 1;
-          }else if (this.ocrResult?.Data?.Currency === "USD") {
+          } else if (this.ocrResult?.Data?.Currency === "USD") {
             this.ocrResult.Data.Currency = 2;
           } else if (this.ocrResult?.Data?.Currency === "EUR") {
             this.ocrResult.Data.Currency = 3;
@@ -204,13 +206,13 @@ export class FileUploadComponent {
           } else if (this.ocrResult?.Data?.Currency === "CHF") {
             this.ocrResult.Data.Currency = 12;
           } else if (this.ocrResult?.Data?.Currency === "NZD") {
-            this.ocrResult.Data.Currency = 13;  
-          }else if (this.ocrResult?.Data?.Currency === "AED") {
+            this.ocrResult.Data.Currency = 13;
+          } else if (this.ocrResult?.Data?.Currency === "AED") {
             this.ocrResult.Data.Currency = 14;
-          }else if (this.ocrResult?.Data?.Currency === "SAR") {
+          } else if (this.ocrResult?.Data?.Currency === "SAR") {
             this.ocrResult.Data.Currency = 15;
           } else {
-             this.ocrResult.Data.Currency = 1;
+            this.ocrResult.Data.Currency = 1;
           }
 
           localStorage.setItem('ocrResult', JSON.stringify(this.ocrResult.Data));
@@ -221,7 +223,6 @@ export class FileUploadComponent {
           });
           dialogRef.afterClosed().subscribe((confirmed: boolean) => {
             if (confirmed) {
-              
               this.form.patchValue(this.ocrResult.Data);
               this.formConfig.forEach((control: any) => {
                 // Check if the control is in the OCR result
@@ -236,19 +237,28 @@ export class FileUploadComponent {
 
               // Set readonly on all controls that were patched by OCR
               if (this.ocrResult.Data && typeof this.ocrResult.Data === 'object') {
-                
                 Object.keys(this.ocrResult.Data).forEach(key => {
                   // Find the control config and set readonly
                   if (this.form.controls[key]) {
                     const controlConfig = this.formConfig?.find?.((c: any) => c.name === key);
                     if (controlConfig) {
                       controlConfig.readonly = true;
+                      // Do NOT disable the control, just set readonly flag
+                      // if (controlConfig.type === 'date') {
+                      //   this.form.get(key)?.disable({ emitEvent: false });
+                      // }
                     }
                   }
                 });
               }
               this.ocrCompleted.emit(this.ocrResult.Data);
               this.snackbarService.success('OCR processing completed.');
+
+              // Only upload file after OCR is applied and user confirms
+              if (payload) {
+                this.uploadFile(payload);
+                console.log('Prepared File Payload:', payload);
+              }
             } else {
               this.snackbarService.info('OCR result not applied.');
             }

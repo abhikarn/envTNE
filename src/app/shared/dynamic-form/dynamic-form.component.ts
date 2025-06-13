@@ -304,17 +304,20 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       });
       if (isDuplicateInTable) {
         this.snackbarService.success('Duplicate OCR entry detected in the expense items. Please check your Bill Number, Date, Amount, or Vendor Name.', 1000000)
-        // alert('Duplicate OCR entry detected in the expense items. Please check your Bill Number, Date, Amount, or Vendor Name.');
         return;
       }
 
-      let isDuplicate = await this.checkOCRDuplicate();
-      if (isDuplicate && this.editIndex === 0) {
-        this.snackbarService.success('Duplicate OCR entry detected. Please check your Bill Number, Date, Amount, or Vendor Name.', 1000000)
-        // alert('Duplicate OCR entry detected. Please check your Bill Number, Date, Amount, or Vendor Name.');
-        return;
+      // Check for duplicate in DB:
+      // - On create (editIndex === 0)
+      // - On edit if OCRLogId is a number (user changed/uploaded bill)
+      let shouldCheckDuplicate = this.editIndex === 0 || (this.editIndex > 0 && typeof this.form.value.OCRLogId === 'number');
+      if (shouldCheckDuplicate) {
+        let isDuplicate = await this.checkOCRDuplicate();
+        if (isDuplicate) {
+          this.snackbarService.success('Duplicate OCR entry detected. Please check your Bill Number, Date, Amount, or Vendor Name.', 1000000)
+          return;
+        }
       }
-
     }
     this.validatePolicyViolation();
   }
