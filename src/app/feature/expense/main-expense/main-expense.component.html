@@ -147,7 +147,7 @@
             <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
               <!-- Desktop/Tablet: Show tab grouping logic -->
               <ng-container *ngIf="!isMobile; else mobileTabs">
-                <mat-tab-group class="expense-tab-sec" fitInkBarToContent (selectedTabChange)="onTabChange($event)">
+                <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="expense-tab-sec" fitInkBarToContent (selectedTabChange)="onTabChangeIfAllowed($event)">
                   <!-- Show first 5 categories as tabs -->
                   @for (category of categories.slice(0, 5); track category) {
                   <mat-tab>

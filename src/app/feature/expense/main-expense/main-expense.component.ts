@@ -101,6 +101,7 @@ export class MainExpenseComponent {
   selectedExtraCategory: any = null;
   filteredOptions: any = [];
   billableControl: FormControl = new FormControl('');
+  selectedTabIndex: number = 0;
 
   constructor(
     private expenseService: ExpenseService,
@@ -397,6 +398,14 @@ export class MainExpenseComponent {
     const tabLabel = this.categories[tabIndex]?.name;
     this.existingExpenseRequestData = this.responseData?.dynamicExpenseDetailModels
       ?.find((t: any) => t.name === tabLabel)?.data || [];
+  }
+
+  onTabChangeIfAllowed(event: any) {
+    if (event.index !== 5) {
+      this.onTabChange(event);
+    } else {
+      this.selectedTabIndex = 4;
+    }
   }
 
   // Set default currency for 'Currency' fields based on travel type.
@@ -814,6 +823,7 @@ export class MainExpenseComponent {
       this.categories.splice(4, 0, category);
     }
     this.onTabChange(4); // Switch to the extra category tab
+    this.selectedTabIndex = 4; // Update selected tab index
   }
 
   // For *ngFor trackBy
