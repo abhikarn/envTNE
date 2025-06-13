@@ -3116,7 +3116,7 @@
                         "label": "Cost Center",
                         "columns": [
                             {
-                                "name": "slNo",
+                                "name": "__slNo",
                                 "label": "Sl. No",
                                 "visible": true,
                                 "order": 1
@@ -3148,7 +3148,7 @@
                         "dataKey": "gst",
                         "columns": [
                             {
-                                "name": "slNo",
+                                "name": "__slNo",
                                 "label": "Sl. No",
                                 "visible": true,
                                 "order": 1

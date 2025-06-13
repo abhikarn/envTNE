@@ -157,10 +157,18 @@
                     <table mat-table [dataSource]="row[nested.dataKey]" class="sub-table">
                         <ng-container *ngFor="let col of nested.columns" [matColumnDef]="col.name">
                             <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
-                            <td style="background-color: #fff;" mat-cell *matCellDef="let entry">{{ entry[col.name] }}</td>
+                            <td style="background-color: #fff;" mat-cell *matCellDef="let entry; let i = index">
+                                <!-- Show serial number for __slNo column -->
+                                <ng-container *ngIf="col.name === '__slNo'; else normalCell">
+                                    {{ i + 1 }}
+                                </ng-container>
+                                <ng-template #normalCell>
+                                    {{ entry[col.name] }}
+                                </ng-template>
+                            </td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="getNestedColumnKeys(nested.columns)"></tr>
-                        <tr mat-row *matRowDef="let entry; columns: getNestedColumnKeys(nested.columns)"></tr>
+                        <tr mat-row *matRowDef="let entry; let i = index; columns: getNestedColumnKeys(nested.columns)"></tr>
                     </table>
                     }
                 </ng-container>
