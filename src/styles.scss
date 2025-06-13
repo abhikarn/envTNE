@@ -33,32 +33,41 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-mdc-form-field-required-marker {
   color: red !important;
 }
-
+ 
 .snackbar-default .mdc-snackbar__surface {
-  background-color: #323232 !important;
+  background-color: #E6F6EF;
   color: #fff !important;
 }
 
 .snackbar-success .mdc-snackbar__surface {
-  background-color: #4caf50 !important;
-  color: #fff !important;
+ background-color: #E6F6EF!important;
 }
-
+.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled).mat-unthemed {
+	color: var(--mat-snack-bar-button-color, #333)!important;
+}
 .snackbar-error .mdc-snackbar__surface {
-  background-color: #f44336 !important;
+  background-color: #fce7e7 !important;
   color: #fff !important;
 }
 
 .snackbar-warning .mdc-snackbar__surface {
-  background-color: #ff9800 !important;
+  background-color: #faeedd !important;
   color: #fff !important;
 }
 
 .snackbar-info .mdc-snackbar__surface {
-  background-color: #2196f3 !important;
+  background-color: #eaf6ff !important;
   color: #fff !important;
+}.mat-mdc-snack-bar-container .mdc-snackbar__label {
+ 
+	color: #000000 !important;
 }
-
+.mat-mdc-snackbar-surface {
+ 
+	box-shadow: 2px 1px 19px -3px rgba(0,0,0,0.22)!important;
+	-webkit-box-shadow: 2px 1px 19px -3px rgba(0,0,0,0.22)!important;
+	-moz-box-shadow: 2px 1px 19px -3px rgba(0,0,0,0.22)!important;
+}
 .required-star {
   color: red;
 }

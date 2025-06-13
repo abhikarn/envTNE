@@ -145,23 +145,28 @@ export class PreviewComponent {
   }
 
   getExpenseRequestPreviewDetails() {
-    
+
     let requestBody = {
       transactionId: this.transactionId
     }
     this.newExpenseService.getExpenseRequestDetailPreview(requestBody).pipe(take(1)).subscribe({
       next: (response: any) => {
+        debugger;
         if (response) {
           this.expenseRequestId = response?.expenseRequestId;
           this.expenseRequestPreviewData = response;
           this.billableControl.setValue(response?.billableCostcentre || 0);
           this.expenseRequestPreviewData?.dynamicExpenseDetailModels?.forEach((details: any) => {
+            debugger;
             details?.data?.forEach((expense: any) => {
               expense.selected = true;
               if (expense?.selected) {
                 if (expense.gst?.length > 0) {
                   expense.gst.forEach((gst: any) => {
-                    this.expenseRequestGstType.push(gst);
+                    this.expenseRequestGstType.push({
+                      ...gst,
+                      ExpenseRequestGstTypeId: gst.ExpenseRequestGstId
+                    });
                   })
                 }
                 this.expenseRequestApprovalDetailType.push({
@@ -227,8 +232,8 @@ export class PreviewComponent {
           }
         })
       });
-      if(this.mode == 'preview') {
-         this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName).setValue(this.expenseRequestPreviewData?.remarks);
+      if (this.mode == 'preview') {
+        this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName).setValue(this.expenseRequestPreviewData?.remarks);
       }
       setTimeout(() => {
         this.calculatTotalExpenseAmountPreview();
@@ -526,12 +531,16 @@ export class PreviewComponent {
     this.calculatCategoryWiseExpensePreview();
 
     dynamicExpenseDetailModels?.forEach((details: any) => {
+      debugger;
       details?.data?.forEach((expense: any) => {
         if (expense?.ClaimStatusId !== 5) {
           // if (expense?.selected) {
           if (expense.gst?.length > 0) {
             expense.gst.forEach((gst: any) => {
-              this.expenseRequestGstType.push(gst);
+              this.expenseRequestGstType.push({
+                ...gst,
+                ExpenseRequestGstTypeId: gst.ExpenseRequestGstId
+              });
             })
           }
           let statusId = expense?.statusId || 0;
@@ -572,7 +581,7 @@ export class PreviewComponent {
   }
 
   onAction(buttonData: any) {
-    
+    debugger;
     const allSelectedData = this.materialTableComponents.map(table => table.getSelectedData());
 
     const invalidItemFound = allSelectedData.some((data: any) => {
@@ -605,13 +614,13 @@ export class PreviewComponent {
       ]);
       this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.updateValueAndValidity();
     }
-    
+
     if (this.justificationForm.invalid) {
       this.justificationForm.markAllAsTouched();
       return;
     }
     if (this.mode == 'approval') {
-        
+
       const approvalPayload = {
         ExpenseRequestId: this.expenseRequestPreviewData?.expenseRequestId || 0,
         Remarks: this.justificationForm.get(this.expenseRequestPreviewConfig.justification.controlName)?.value,
@@ -716,12 +725,12 @@ export class PreviewComponent {
 
   goBack() {
     if (this.mode == 'preview') {
-      this.router.navigate(['/expense/expense/dashboard']);  
-    }  
-    if(this.mode == 'approval') {
+      this.router.navigate(['/expense/expense/dashboard']);
+    }
+    if (this.mode == 'approval') {
       this.router.navigate(['/expense/expense/approval']);
     }
-    if(this.mode == 'finance-approval') {
+    if (this.mode == 'finance-approval') {
       this.router.navigate(['/expense/expense/finance']);
     }
   }
@@ -754,17 +763,17 @@ export class PreviewComponent {
     }
   }
 
-   /**
-     * Opens the expense summary sidebar in a bottom sheet on mobile devices.
-     * @param templateRef Reference to the ng-template containing the sidebar content.
-     */
-    openExpenseSummarySheet(templateRef: TemplateRef<any>) {
-      if (window.innerWidth <= 768) {
-        this.bottomSheet.open(templateRef, {
-          panelClass: 'expense-bottom-sheet'
-        });
-      }
+  /**
+    * Opens the expense summary sidebar in a bottom sheet on mobile devices.
+    * @param templateRef Reference to the ng-template containing the sidebar content.
+    */
+  openExpenseSummarySheet(templateRef: TemplateRef<any>) {
+    if (window.innerWidth <= 768) {
+      this.bottomSheet.open(templateRef, {
+        panelClass: 'expense-bottom-sheet'
+      });
     }
+  }
 
   // For mobile: close the expense summary sheet
   closeExpenseSummarySheet() {

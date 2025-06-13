@@ -33,7 +33,7 @@ import { CostCenterComponent } from "./form-controls/cost-center/cost-center.com
     RadioInputComponent,
     GstComponent,
     CostCenterComponent
-],
+  ],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
 })
@@ -275,7 +275,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
-    
+   debugger;
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -304,10 +304,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         alert('Duplicate OCR entry detected in the table. Please check your Bill Number, Date, Amount, or Vendor Name.');
         return;
       }
-      // ...existing code...
-      console.log(this.tableData);
+
       const isDuplicate = await this.checkOCRDuplicate();
-      if (isDuplicate) {
+      if (isDuplicate && this.editIndex===0) {
         alert('Duplicate OCR entry detected. Please check your Bill Number, Date, Amount, or Vendor Name.');
         return;
       }
@@ -320,7 +319,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
    * Uses duplicateCheckFields from category config.
    */
   async checkOCRDuplicate(): Promise<boolean> {
-    
+
     // Use duplicateCheckFields from category config
     const duplicateFields = this.category.duplicateCheckFields || [];
     const payload: any = {};
@@ -330,8 +329,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       const value = this.form.get(field.name)?.value;
       if (field.isRequired) {
         // If any required field is missing, skip duplicate check
-       payload[field.name] = value;
-      }      
+        payload[field.name] = value;
+      }
     }
 
     // Find the service and method for OCR duplicate check
@@ -403,8 +402,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.formData = {};
   }
 
-  addDataToDynamicTable() { 
-       
+  addDataToDynamicTable() {
+
     let tableData = this.form;
     // Preparing Data for Dynamic table
     this.formControls.forEach(control => {
