@@ -1,40 +1,34 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, Injector, Type, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlFactory } from './form-control.factory';
-import { IFormControl, FormControlDataType } from './form-control.interface';
+import { IFormControl, FormControlType } from './form-control.interface';
 import { DynamicFormService } from './services/dynamic-form.service';
-import { TextInputComponent } from './form-controls/input-control/text-input.component';
-import { SelectInputComponent } from './form-controls/dropdown/select-input.component';
-import { DateInputComponent } from './form-controls/calender/date-input.component';
-import { TextAreaInputComponent } from './form-controls/text-area/text-area-input.component';
-import { MultiSelectInputComponent } from './form-controls/multi-select/multi-select-input.component';
-import { FileUploadComponent } from './form-controls/file-upload/file-upload.component';
 import { DynamicTableComponent } from '../component/dynamic-table/dynamic-table.component';
-import { RadioInputComponent } from './form-controls/radio/radio-input.component';
-import { GstComponent } from './form-controls/gst/gst.component';
 import { ServiceRegistryService } from '../service/service-registry.service';
 import { ConfirmDialogService } from '../service/confirm-dialog.service';
 import { GlobalConfigService } from '../service/global-config.service';
-import { LineWiseCostCenterComponent } from './form-controls/cost-center/line-wise-cost-center/line-wise-cost-center.component';
-import { CostCenterComponent } from "./form-controls/cost-center/cost-center.component";
 import { SnackbarService } from '../service/snackbar.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
+import { DynamicFormControlFactory } from './factories/dynamic-form-control.factory';
+import { CostCenterComponent } from './form-controls/cost-center/cost-center.component';
+import { GstComponent } from './form-controls/gst/gst.component';
+import { TextInputComponent } from './form-controls/input-control/text-input.component';
+import { SelectInputComponent } from './form-controls/dropdown/select-input.component';
+import { MultiSelectInputComponent } from './form-controls/multi-select/multi-select-input.component';
+import { DateInputComponent } from './form-controls/calender/date-input.component';
+import { RadioInputComponent } from './form-controls/radio/radio-input.component';
+import { TextAreaInputComponent } from './form-controls/text-area/text-area-input.component';
+import { FileUploadComponent } from './form-controls/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-dynamic-form',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
-    TextInputComponent,
-    SelectInputComponent,
-    DateInputComponent,
-    TextAreaInputComponent,
-    MultiSelectInputComponent,
-    FileUploadComponent,
-    DynamicTableComponent,
-    RadioInputComponent,
-    GstComponent,
-    CostCenterComponent
+    DynamicTableComponent
   ],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
@@ -42,16 +36,22 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class DynamicFormComponent implements OnInit, OnChanges {
   @ViewChild(CostCenterComponent) costCenterComponentRef!: CostCenterComponent;
   @ViewChild(GstComponent) gstComponentRef!: GstComponent;
-  @Input() moduleData: any;
-  @Input() category: any;
-  @Input() formConfig: IFormControl[] = [];
-  @Input() eventHandler: any;
+  
+  // Required inputs
+  @Input({ required: true }) formConfig!: IFormControl[];
+  @Input({ required: true }) category!: any;
+  
+  // Optional inputs
+  @Input() moduleData?: any;
+  @Input() eventHandler?: any;
   @Input() minSelectableDate?: Date;
   @Input() maxSelectableDate?: Date;
-  @Input() existingData: any;
-  @Input() referenceId: number = 0;
-  @Input() isEdit: boolean = false;
-  @Input() rowData: any;
+  @Input() existingData?: any;
+  @Input() referenceId = 0;
+  @Input() isEdit = false;
+  @Input() rowData?: any;
+
+  // Outputs
   @Output() emitFormData = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();
   @Output() updateData = new EventEmitter<any>();
@@ -66,12 +66,28 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   isValid = true;
   selectedFiles: any = [];
 
+  // Map control types to their component classes
+  controlComponentMap: Record<string, Type<any>> = {
+    text: TextInputComponent,
+    select: SelectInputComponent,
+    'multi-select': MultiSelectInputComponent,
+    date: DateInputComponent,
+    radio: RadioInputComponent,
+    costcenter: CostCenterComponent,
+    gst: GstComponent,
+    textarea: TextAreaInputComponent,
+    file: FileUploadComponent
+  };
+
+  private injector = inject(Injector);
+
   constructor(
     private serviceRegistry: ServiceRegistryService,
     private confirmDialogService: ConfirmDialogService,
     private configService: GlobalConfigService,
     private snackbarService: SnackbarService,
-    private dynamicFormService: DynamicFormService
+    private dynamicFormService: DynamicFormService,
+    private controlFactory: DynamicFormControlFactory
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -108,7 +124,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.form.valueChanges
       .pipe(
         debounceTime(300),
-        distinctUntilChanged()
+        distinctUntilChanged(),
+        takeUntilDestroyed()
       )
       .subscribe(values => {
         this.handleFormValueChanges(values);
@@ -117,7 +134,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     // Subscribe to form status changes
     this.form.statusChanges
       .pipe(
-        distinctUntilChanged()
+        distinctUntilChanged(),
+        takeUntilDestroyed()
       )
       .subscribe(status => {
         this.handleFormStatusChanges(status);
@@ -190,35 +208,23 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         const valueKey = ctrl.valueKey || 'value';
         const payloadKey = ctrl.payloadKey || ctrl.dependsOn;
 
-        const optionCache = new Map<string, any[]>(); // key: payloadValue, value: options
-
-        dataArray.forEach(row => {
-          const payloadValue = ctrl.dependsOn ? row[ctrl.dependsOn] : null;
-          const cacheKey = payloadValue ?? 'default';
-
-          if (optionCache.has(cacheKey)) return;
-
-          const payload: any = {};
-          if (payloadKey && payloadValue != null) {
-            payload[payloadKey] = payloadValue;
-          }
-
-          const loadOptions = service[apiMethod](payload).toPromise().then((response: any) => {
-            const options = response.ResponseValue.map((item: any) => ({
-              label: item[labelKey],
-              value: item[valueKey]
-            }));
-            optionCache.set(cacheKey, options);
+        const loader = service[apiMethod]()
+          .pipe(takeUntilDestroyed())
+          .subscribe({
+            next: (response: any) => {
+              if (response && Array.isArray(response)) {
+                ctrl.options = response.map((item: any) => ({
+                  label: item[labelKey],
+                  value: item[valueKey]
+                }));
+              }
+            },
+            error: (error: Error) => {
+              console.error(`Error loading options for ${ctrl.name}:`, error);
+              this.snackbarService.error(`Failed to load options for ${ctrl.label}`);
+            }
           });
-
-          controlLoaders.push(loadOptions);
-        });
-
-        // Attach cache to control for label mapping later
-        ctrl.optionCache = optionCache;
       });
-
-    await Promise.all(controlLoaders);
   }
 
   private async populateTableData(dataArray: any[]) {
@@ -240,7 +246,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
               const service = this.serviceRegistry.getService(apiService);
               if (service && typeof service[apiMethod] === 'function') {
-                const response = await service[apiMethod](payload).toPromise();
+                const response = await service[apiMethod](payload)
+                  .pipe(takeUntilDestroyed())
+                  .toPromise();
                 const resultOptions = response?.ResponseValue?.map((item: any) => ({
                   label: item[labelKey || 'label'],
                   value: item[valueKey || 'value']
@@ -266,27 +274,29 @@ export class DynamicFormComponent implements OnInit, OnChanges {
                 }
               ];
               const service = this.serviceRegistry.getService(apiService);
-              service[apiMethod](requestBody).subscribe({
-                next: (response: any) => {
-                  if (response) {
-                    response = response?.map((item: any) => ({
-                      CityMasterId: item.id,
-                      City: item.name
-                    }));
-                    if (labelKey && valueKey) {
-                      control.formConfig.options = response.filter((r: any) => r[valueKey] == selected);
-                      control.formConfig.options = control.formConfig.options?.map((item: any) => ({
-                        label: item[labelKey],
-                        value: item[valueKey]
+              service[apiMethod](requestBody)
+                .pipe(takeUntilDestroyed())
+                .subscribe({
+                  next: (response: any) => {
+                    if (response) {
+                      response = response?.map((item: any) => ({
+                        CityMasterId: item.id,
+                        City: item.name
                       }));
-                      const matchedOption = control.formConfig.options?.find(opt => opt.value === selected);
-                      if (matchedOption) {
-                        data[name] = matchedOption;
+                      if (labelKey && valueKey) {
+                        control.formConfig.options = response.filter((r: any) => r[valueKey] == selected);
+                        control.formConfig.options = control.formConfig.options?.map((item: any) => ({
+                          label: item[labelKey],
+                          value: item[valueKey]
+                        }));
+                        const matchedOption = control.formConfig.options?.find(opt => opt.value === selected);
+                        if (matchedOption) {
+                          data[name] = matchedOption;
+                        }
                       }
                     }
                   }
-                }
-              });
+                });
             }
           }
         }
@@ -313,34 +323,29 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onDropdownValueChange({ event, control }: { event: any; control: IFormControl }) {
-    const changedControlName = control.name;
-    const selectedValue = event.value;
-
-    this.formConfig.forEach((ctrlConfig: any) => {
-      if (ctrlConfig.dependsOn === changedControlName) {
-        const service = this.serviceRegistry.getService(ctrlConfig.apiService);
-        const apiMethod = ctrlConfig.apiMethod;
-        const payloadKey = ctrlConfig.payloadKey || `${changedControlName}Id`; // fallback if not defined
-
-        const payload = { [payloadKey]: selectedValue }; // Dynamic payload
-
-        if (service && typeof service[apiMethod] === 'function') {
-          service[apiMethod](payload).subscribe((data: any) => {
-            const labelKey = ctrlConfig.labelKey || 'label';
-            const valueKey = ctrlConfig.valueKey || 'value';
-            ctrlConfig.options = data.ResponseValue.map((item: any) => ({
-              label: item[labelKey],
-              value: item[valueKey]
-            }));
-
-            // Reset dependent control
-            const dependentControl = this.form.get(ctrlConfig.name);
-            dependentControl?.reset();
+    if (control.dependsOn && control.apiService && control.apiMethod) {
+      const service = this.serviceRegistry.getService(control.apiService);
+      if (service && typeof service[control.apiMethod] === 'function') {
+        service[control.apiMethod](event)
+          .pipe(takeUntilDestroyed())
+          .subscribe({
+            next: (response: any) => {
+              if (response && Array.isArray(response)) {
+                const labelKey = control.labelKey || 'label';
+                const valueKey = control.valueKey || 'value';
+                control.options = response.map((item: any) => ({
+                  label: item[labelKey],
+                  value: item[valueKey]
+                }));
+              }
+            },
+            error: (error: Error) => {
+              console.error(`Error loading dependent options for ${control.name}:`, error);
+              this.snackbarService.error(`Failed to load options for ${control.label}`);
+            }
           });
-        }
       }
-    });
-    this.updateConditionalValidators();
+    }
   }
 
   /**
@@ -423,7 +428,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
 
     try {
-      const response = await ocrService['OCRValidateCheck'](payload).toPromise();
+      const response = await ocrService['OCRValidateCheck'](payload)
+        .pipe(takeUntilDestroyed())
+        .toPromise();
       // Assuming API returns { responseValue: "Exist" } for duplicate
       if (response && response.responseValue === "Exist") {
         return true;
@@ -543,14 +550,16 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           const payload = {
             [control.formConfig.payloadKey || 'id']: payloadValue
           };
-          service?.[apiMethod]?.(payload).subscribe((data: any) => {
-            const labelKey = control.formConfig.labelKey || 'label';
-            const valueKey = control.formConfig.valueKey || 'value';
-            control.formConfig.options = data.ResponseValue.map((item: any) => ({
-              label: item[labelKey],
-              value: item[valueKey]
-            }));
-          });
+          service?.[apiMethod]?.(payload)
+            .pipe(takeUntilDestroyed())
+            .subscribe((data: any) => {
+              const labelKey = control.formConfig.labelKey || 'label';
+              const valueKey = control.formConfig.valueKey || 'value';
+              control.formConfig.options = data.ResponseValue.map((item: any) => ({
+                label: item[labelKey],
+                value: item[valueKey]
+              }));
+            });
         }
         // If the value is an object with `.value`, extract it
         this.form.controls[name].setValue(typeof value === 'object' && value !== null ? value.value : value);
@@ -597,7 +606,78 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
       const output = this.mapOtherControls(this.moduleData, this.category.submitPolicyValidationApi.otherControls);
 
-      service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
+      service?.[apiMethod]?.({ ...requestBody, ...output })
+        .pipe(takeUntilDestroyed())
+        .subscribe(
+          (response: any) => {
+            if (typeof this.category.submitPolicyValidationApi.outputControl === 'object') {
+              // Multiple fields case
+              for (const [outputControl, responsePath] of Object.entries(this.category.submitPolicyValidationApi.outputControl) as [string, string][]) {
+                const value = this.extractValueFromPath(response, responsePath);
+                if (value !== undefined) {
+                  this.form.get(outputControl)?.setValue(value, { emitEvent: false });
+                }
+              }
+            }
+            if (typeof this.category.submitPolicyValidationApi.confirmPopup === 'object') {
+              // Multiple fields case
+              for (const [confirmPopup, responsePath] of Object.entries(this.category.submitPolicyValidationApi.confirmPopup) as [string, string][]) {
+                const value = this.extractValueFromPath(response, responsePath);
+                if (value !== undefined) {
+                  confirmPopupData[confirmPopup] = value;
+                } else {
+                  confirmPopupData[confirmPopup] = responsePath;
+                }
+              }
+            }
+
+            if (this.form.value.IsViolation) {
+              this.confirmDialogService
+                .confirm(confirmPopupData)
+                .subscribe((confirmed) => {
+                  if (confirmed) {
+                    this.setCalculatedFields();
+                    this.setAutoCompleteFields();
+                    this.prepareFormJson();
+                    this.addDataToDynamicTable();
+                    setTimeout(() => {
+                      this.clear();
+                    }, 500);
+                  }
+                });
+            } else {
+              this.setCalculatedFields();
+              this.setAutoCompleteFields();
+              this.prepareFormJson();
+              this.addDataToDynamicTable();
+              setTimeout(() => {
+                this.clear();
+              }, 500);
+            }
+          });
+    }
+  }
+
+  validateFieldPolicyViolation(control: IFormControl) {
+    let confirmPopupData: any = {};
+    if (!control.policyViolationCheck) return;
+
+    const service = this.serviceRegistry.getService(this.category.submitPolicyValidationApi.apiService);
+    const apiMethod = this.category.submitPolicyValidationApi.apiMethod;
+    let requestBody: any = this.category.submitPolicyValidationApi.requestBody;
+
+    Object.entries(this.category.submitPolicyValidationApi.inputControls).forEach(([controlName, requestKey]) => {
+      if (typeof requestKey === 'string') { // Ensure requestKey is a string
+        const controlValue = this.form.get(controlName)?.value;
+        requestBody[requestKey] = controlValue; // Extract Id if it's an object
+      }
+    });
+
+    const output = this.mapOtherControls(this.moduleData, this.category.submitPolicyValidationApi.otherControls);
+
+    service?.[apiMethod]?.({ ...requestBody, ...output })
+      .pipe(takeUntilDestroyed())
+      .subscribe(
         (response: any) => {
           if (typeof this.category.submitPolicyValidationApi.outputControl === 'object') {
             // Multiple fields case
@@ -621,78 +701,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           }
 
           if (this.form.value.IsViolation) {
-            this.confirmDialogService
-              .confirm(confirmPopupData)
-              .subscribe((confirmed) => {
-                if (confirmed) {
-                  this.setCalculatedFields();
-                  this.setAutoCompleteFields();
-                  this.prepareFormJson();
-                  this.addDataToDynamicTable();
-                  setTimeout(() => {
-                    this.clear();
-                  }, 500);
-                }
-              });
-          } else {
-            this.setCalculatedFields();
-            this.setAutoCompleteFields();
-            this.prepareFormJson();
-            this.addDataToDynamicTable();
-            setTimeout(() => {
-              this.clear();
-            }, 500);
+            confirmPopupData.cancelButton = false;
+            this.confirmDialogService.confirm(confirmPopupData).subscribe();
           }
+          this.updateConditionalValidators();
         });
-    }
-  }
-
-  validateFieldPolicyViolation(control: IFormControl) {
-    let confirmPopupData: any = {};
-    if (!control.policyViolationCheck) return;
-
-    const service = this.serviceRegistry.getService(this.category.submitPolicyValidationApi.apiService);
-    const apiMethod = this.category.submitPolicyValidationApi.apiMethod;
-    let requestBody: any = this.category.submitPolicyValidationApi.requestBody;
-
-    Object.entries(this.category.submitPolicyValidationApi.inputControls).forEach(([controlName, requestKey]) => {
-      if (typeof requestKey === 'string') { // Ensure requestKey is a string
-        const controlValue = this.form.get(controlName)?.value;
-        requestBody[requestKey] = controlValue; // Extract Id if it's an object
-      }
-    });
-
-    const output = this.mapOtherControls(this.moduleData, this.category.submitPolicyValidationApi.otherControls);
-
-    service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
-      (response: any) => {
-        if (typeof this.category.submitPolicyValidationApi.outputControl === 'object') {
-          // Multiple fields case
-          for (const [outputControl, responsePath] of Object.entries(this.category.submitPolicyValidationApi.outputControl) as [string, string][]) {
-            const value = this.extractValueFromPath(response, responsePath);
-            if (value !== undefined) {
-              this.form.get(outputControl)?.setValue(value, { emitEvent: false });
-            }
-          }
-        }
-        if (typeof this.category.submitPolicyValidationApi.confirmPopup === 'object') {
-          // Multiple fields case
-          for (const [confirmPopup, responsePath] of Object.entries(this.category.submitPolicyValidationApi.confirmPopup) as [string, string][]) {
-            const value = this.extractValueFromPath(response, responsePath);
-            if (value !== undefined) {
-              confirmPopupData[confirmPopup] = value;
-            } else {
-              confirmPopupData[confirmPopup] = responsePath;
-            }
-          }
-        }
-
-        if (this.form.value.IsViolation) {
-          confirmPopupData.cancelButton = false;
-          this.confirmDialogService.confirm(confirmPopupData).subscribe();
-        }
-        this.updateConditionalValidators();
-      });
   }
 
   onFieldValueChange(control: IFormControl) {
@@ -837,5 +850,28 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         return val1 == val2;
       });
     });
+  }
+
+  createInjector(control: any): Injector {
+    return Injector.create({
+      providers: [
+        { provide: 'controlConfig', useValue: control.formConfig },
+        { provide: 'control', useValue: control.control },
+        { provide: 'form', useValue: this.form },
+        { provide: 'selectedFiles', useValue: this.selectedFiles },
+        { provide: 'formConfig', useValue: this.formConfig },
+        { provide: 'minDate', useValue: this.minSelectableDate },
+        { provide: 'maxDate', useValue: this.maxSelectableDate }
+      ],
+      parent: this.injector
+    });
+  }
+
+  hasControlComponent(type: string | undefined): boolean {
+    return type ? this.controlFactory.hasControlComponent(type as FormControlType) : false;
+  }
+
+  getControlComponent(type: string | undefined): Type<any> | null {
+    return type ? this.controlFactory.getControlComponent(type as FormControlType) : null;
   }
 }

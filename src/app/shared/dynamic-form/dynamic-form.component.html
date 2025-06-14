@@ -1,84 +1,16 @@
 <form [formGroup]="form" class="row">
   @for (control of formControls; track control) {
-  @if (control.formConfig.type !== 'hidden' && control.formConfig.showInUI !== false) {
-  <!-- Using ngSwitch to handle different control types -->
-  @switch (control.formConfig.type) {
-  <!-- Handling 'text' type controls -->
-  @case ('text') {
-  <div class="col-md-4">
-    <lib-text-input [controlConfig]="control.formConfig" [control]="control.control"
-      (emitInputValue)="getInputValue($event)" [form]="form">
-    </lib-text-input>
-  </div>
-  }
-  <!-- Handling 'select' type controls -->
-  @case ('select') {
-  <div class="col-md-4">
-    <lib-select-input [controlConfig]="control.formConfig" [control]="control.control"
-      (valueChange)="onFieldValueChange(control.formConfig);onDropdownValueChange($event);onEvent('change', $event)">
-    </lib-select-input>
-  </div>
-  }
-  <!-- Handling 'multi-select' type controls -->
-  @case ('multi-select') {
-  <div class="col-md-4">
-    <lib-multi-select-input [controlConfig]="control.formConfig" [control]="control.control">
-    </lib-multi-select-input>
-  </div>
-  }
-  <!-- Handling 'date' type controls -->
-  @case ('date') {
-  @if(control.formConfig.name !== "TravelDate") {
-  <div class="col-md-4">
-    <lib-date-input [controlConfig]="control.formConfig" [control]="control.control" [form]="form"
-      (valueChange)="onFieldValueChange(control.formConfig);handleEvent('dateChange', $event)"
-      (emitSpecificCase)="getSpecificCase($event)">
-    </lib-date-input>
-  </div>
-  }
-  @else {
-  <div class="col-md-4">
-    <lib-date-input [controlConfig]="control.formConfig" [control]="control.control" [form]="form"
-      (valueChange)="onFieldValueChange(control.formConfig);handleEvent('dateChange', $event)"
-      [minDate]="minSelectableDate" [maxDate]="maxSelectableDate" (emitSpecificCase)="getSpecificCase($event)">
-    </lib-date-input>
-  </div>
-  }
-  }
-  <!-- Handling 'radio' type controls -->
-  @case ('radio') {
-  <div class="col-md-8">
-    <lib-radio-input [controlConfig]="control.formConfig" [control]="control.control">
-    </lib-radio-input>
-  </div>
-  }
-  <!-- Handling 'costcenter' type controls -->
-  @case ('costcenter') {
-  <app-cost-center [controlConfig]="control.formConfig" [control]="control.control" [form]="form"></app-cost-center>
-  }
-  <!-- Handling 'gst' type controls -->
-  @case ('gst') {
-  <app-gst [controlConfig]="control.formConfig" [control]="control.control" [form]="form"></app-gst>
-  }
-  <!-- Handling 'textarea' type controls -->
-  @case ('textarea') {
-  <lib-text-area-input [controlConfig]="control.formConfig" [control]="control.control">
-  </lib-text-area-input>
-  }
-  <!-- Handling 'file' type controls -->
-  @case ('file') {
-  <lib-file-upload [controlConfig]="control.formConfig" [form]="form" [formConfig]="formConfig"
-    [control]="control.control" [selectedFiles]="selectedFiles" (ocrCompleted)="onOcrCompleted($event)">
-  </lib-file-upload>
-  }
-  <!-- Optional: Default case if control type doesn't match -->
-  @default {
-  <div>
-    <p>Unsupported control type: {{ control.formConfig.type }}</p>
-  </div>
-  }
-  }
-  }
+    @if (control.formConfig.type !== 'hidden' && control.formConfig.showInUI !== false) {
+      @if (hasControlComponent(control.formConfig.type)) {
+        <div class="col-md-4">
+          <ng-container *ngComponentOutlet="getControlComponent(control.formConfig.type)!; injector: createInjector(control)"></ng-container>
+        </div>
+      } @else {
+        <div>
+          <p>Unsupported control type: {{ control.formConfig.type }}</p>
+        </div>
+      }
+    }
   }
 
   <div class="col-md-12 mt-0 mb-3">
@@ -92,7 +24,11 @@
   </div>
 
   @if (tableData.length > 0) {
-  <app-dynamic-table [tableData]="tableData" [categoryConfig]="category" (editRow)="onEditRow($event)"
-    (deleteRow)="onDeleteRow($event)"></app-dynamic-table>
+    @defer {
+      <app-dynamic-table [tableData]="tableData" [categoryConfig]="category" (editRow)="onEditRow($event)"
+        (deleteRow)="onDeleteRow($event)"></app-dynamic-table>
+    } @loading {
+      <div class="loading-spinner">Loading table...</div>
+    }
   }
 </form>

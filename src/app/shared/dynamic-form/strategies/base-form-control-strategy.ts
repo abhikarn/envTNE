@@ -1,7 +1,7 @@
 import { FormControl, Validators, ValidatorFn } from '@angular/forms';
 import { IFormControl } from '../form-control.interface';
 import { IFormControlStrategy } from './form-control-strategy.interface';
-import { CustomValidators } from '../custom-validators';
+import { CustomValidators } from './custom-validators/custom-validators';
 import { IValidationConfig } from '../validation-config.interface';
 
 export abstract class BaseFormControlStrategy implements IFormControlStrategy {
