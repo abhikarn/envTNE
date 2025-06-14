@@ -1,14 +1,18 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { IFormControl } from '../../form-control.interface';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { FormControlFactory } from '../../form-control.factory';
-
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
+import { BaseFormControlComponent } from '../base-form-control.component';
+import { ServiceRegistryService } from '../../../service/service-registry.service';
+import { SnackbarService } from '../../../service/snackbar.service';
+import { GlobalConfigService } from '../../../service/global-config.service';
 
 @Component({
   selector: 'lib-text-area-input',
+  standalone: true,
   imports: [
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -19,36 +23,24 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
   styleUrls: ['./text-area-input.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TextAreaInputComponent {
-  @Input() control: FormControl = new FormControl(null);
-  @Input() controlConfig: IFormControl = { name: '' };
+export class TextAreaInputComponent extends BaseFormControlComponent {
+  @Input() override control: FormControl = new FormControl(null);
+  @Input() override controlConfig: IFormControl = { name: '' };
+  @Input() override form: FormGroup = new FormGroup({});
 
-  constructor() {
-    this.getErrorMessage = this.getErrorMessage.bind(this);
+  constructor(
+    protected override serviceRegistry: ServiceRegistryService,
+    protected override snackbarService: SnackbarService,
+    protected override configService: GlobalConfigService
+  ) {
+    super(serviceRegistry, snackbarService, configService);
   }
 
-  ngOnInit() {
-    if (this.controlConfig.disable) {
-      this.control.disable();
-    }
+  override ngOnInit() {
+    super.ngOnInit();
   }
 
-  getErrorMessage(status: boolean): string {
-    
-    if (this.control) {
-      const errors = this.control.errors;
-      if (errors && errors['required']) {
-        return this.controlConfig?.validations?.find((v: any) => v.type === 'required')?.message || `${this.controlConfig.label} is required`;
-      }
-    }
-
-    if (!this.controlConfig?.validations) return '';
-    for (const validation of this.controlConfig.validations) {
-      if (this.control.hasError(validation.type)) {
-        return validation.message;
-      }
-    }
-
-    return 'Invalid selection'; // Default fallback message
+  override getErrorMessage(): string {
+    return super.getErrorMessage();
   }
 }

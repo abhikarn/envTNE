@@ -73,6 +73,8 @@ export interface IFormControl {
 
   // File Upload
   accept?: string;
+  maxSizeMB?: number;
+  referenceType?: string;
 
   // Validation
   validations?: IValidationConfig[];

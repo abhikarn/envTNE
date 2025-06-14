@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, Injector, Type, inject, signal, computed, effect } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Injector, Type, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormControlFactory } from './form-control.factory';
 import { IFormControl, FormControlType } from './form-control.interface';
 import { DynamicFormService } from './services/dynamic-form.service';
 import { DynamicTableComponent } from '../component/dynamic-table/dynamic-table.component';
@@ -8,19 +7,8 @@ import { ServiceRegistryService } from '../service/service-registry.service';
 import { ConfirmDialogService } from '../service/confirm-dialog.service';
 import { GlobalConfigService } from '../service/global-config.service';
 import { SnackbarService } from '../service/snackbar.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { DynamicFormControlFactory } from './factories/dynamic-form-control.factory';
-import { CostCenterComponent } from './form-controls/cost-center/cost-center.component';
-import { GstComponent } from './form-controls/gst/gst.component';
-import { TextInputComponent } from './form-controls/input-control/text-input.component';
-import { SelectInputComponent } from './form-controls/dropdown/select-input.component';
-import { MultiSelectInputComponent } from './form-controls/multi-select/multi-select-input.component';
-import { DateInputComponent } from './form-controls/calender/date-input.component';
-import { RadioInputComponent } from './form-controls/radio/radio-input.component';
-import { TextAreaInputComponent } from './form-controls/text-area/text-area-input.component';
-import { FileUploadComponent } from './form-controls/file-upload/file-upload.component';
 import { DynamicFormBaseComponent } from './dynamic-form-base.component';
 
 @Component({
@@ -35,12 +23,9 @@ import { DynamicFormBaseComponent } from './dynamic-form-base.component';
   styleUrls: ['./dynamic-form.component.scss']
 })
 export class DynamicFormComponent extends DynamicFormBaseComponent {
-  @ViewChild(CostCenterComponent) costCenterComponentRef!: CostCenterComponent;
-  @ViewChild(GstComponent) gstComponentRef!: GstComponent;
-
-  // Only custom outputs or properties unique to this component
   selectedRow: any;
   selectedFiles: any = [];
+  private injector = inject(Injector);
 
   constructor(
     serviceRegistry: ServiceRegistryService,
@@ -53,5 +38,23 @@ export class DynamicFormComponent extends DynamicFormBaseComponent {
     super(serviceRegistry, snackbarService);
   }
 
-  // Only custom methods or overrides below
+  hasControlComponent(type: string | undefined): boolean {
+    return type ? this.controlFactory.hasControlComponent(type as FormControlType) : false;
+  }
+
+  getControlComponent(type: string | undefined): Type<any> | null {
+    return type ? this.controlFactory.getControlComponent(type as FormControlType) : null;
+  }
+
+  createInjector(control: any): Injector {
+    return this.injector;
+  }
+
+  onEditRow(rowData: any): void {
+    // Implementation
+  }
+
+  onDeleteRow(index: number): void {
+    // Implementation
+  }
 }

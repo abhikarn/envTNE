@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation, ViewChild, TemplateRef } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 import { DocumentService } from '../../../../../../tne-api';
 import { take } from 'rxjs';
@@ -11,11 +11,15 @@ import { ConfirmDialogService } from '../../../service/confirm-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { OcrResultDialogComponent } from './ocr-result-dialog.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BaseFormControlComponent } from '../base-form-control.component';
+import { ServiceRegistryService } from '../../../service/service-registry.service';
+import { GlobalConfigService } from '../../../service/global-config.service';
+import { IFormControl } from '../../form-control.interface';
 
 @Component({
   selector: 'lib-file-upload',
+  standalone: true,
   imports: [
     CommonModule,
     FunctionWrapperPipe
@@ -24,36 +28,34 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./file-upload.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class FileUploadComponent {
-  @Input() controlConfig: any;
-  @Input() control!: FormControl;
+export class FileUploadComponent extends BaseFormControlComponent {
+  @Input() override controlConfig: IFormControl = { name: '' };
+  @Input() override control: FormControl = new FormControl([]);
+  @Input() override form: FormGroup = new FormGroup({});
   @Input() selectedFiles: any = [];
-  @Input() form: any
-  @Input() formConfig: any
+  @Input() formConfig: any;
   @Output() ocrCompleted = new EventEmitter<any>();
 
   ocrResult: any;
-
   showMobileUpload = false;
-
   @ViewChild('uploadMobileSheet') uploadMobileSheet!: TemplateRef<any>;
 
   constructor(
+    protected override serviceRegistry: ServiceRegistryService,
+    protected override snackbarService: SnackbarService,
+    protected override configService: GlobalConfigService,
     private documentService: DocumentService,
     private domSanitizer: DomSanitizer,
-    private snackbarService: SnackbarService,
     private http: HttpClient,
     private confirmDialogService: ConfirmDialogService,
     private dialog: MatDialog,
     private bottomSheet?: MatBottomSheet
   ) {
-    this.getErrorMessage = this.getErrorMessage.bind(this);
+    super(serviceRegistry, snackbarService, configService);
   }
 
-  ngOnInit() {
-    if (this.controlConfig.disable) {
-      this.control.disable();
-    }
+  override ngOnInit() {
+    super.ngOnInit();
   }
 
   onFileSelected(event: Event) {
@@ -139,27 +141,13 @@ export class FileUploadComponent {
   }
 
   downloadFile(file: any) {
-
     const extension = file.FileName.split('.').pop()?.toLowerCase();
     const baseName = file.FileName.replace(/\.[^/.]+$/, '');
     const fileUrl = `${environment.documentBaseUrl}/${baseName}-${file.Guid}.${extension}`;
-    // if (extension === 'pdf') {
     window.open(fileUrl, '_blank');
-    // } else {
-    //   const link = document.createElement('a');
-    //   link.href = fileUrl;
-    //   link.download = file.FileName || 'downloaded-file';
-    //   link.click();
-    // }
   }
 
-  /**
-   * Uploads a file to the OCR API and stores the result in ocrResult.
-   * @param file The file to upload for OCR processing.
-   * @param payload The file payload for uploadFile (optional, used for deferred upload)
-   */
   uploadOcrFile(file: File, payload?: any) {
-
     if (!file) {
       this.snackbarService.error('No file selected for OCR processing.');
       return;
@@ -167,13 +155,11 @@ export class FileUploadComponent {
     const formData = new FormData();
     formData.append('File', file);
 
-    // Use environment variable for OCR API base URL
     const ocrApiBaseUrl = environment.ocrApiBaseUrl || 'https://localhost:7173/';
     this.http.post(`${ocrApiBaseUrl}api/Ocr/upload`, formData)
       .pipe(take(1))
       .subscribe({
         next: (res: any) => {
-
           this.ocrResult = res;
           if (this.ocrResult.StatusCode == 400) {
             this.snackbarService.error('OCR processing failed: ' + this.ocrResult.ErrorMessage);
@@ -216,7 +202,6 @@ export class FileUploadComponent {
           }
 
           localStorage.setItem('ocrResult', JSON.stringify(this.ocrResult.Data));
-          // Show OCR result in a Material dialog
           const dialogRef = this.dialog.open(OcrResultDialogComponent, {
             width: '1000px',
             data: this.ocrResult.Data
@@ -225,28 +210,20 @@ export class FileUploadComponent {
             if (confirmed) {
               this.form.patchValue(this.ocrResult.Data);
               this.formConfig.forEach((control: any) => {
-                // Check if the control is in the OCR result
                 if (this.ocrResult.Data && this.ocrResult.Data.hasOwnProperty(control.name)) {
-                  // set number controls to number type with global decimal precision
                   if (control.dataType === 'numeric' && this.ocrResult.Data[control.name] !== null) {
-                    const precision = control.autoFormat?.decimalPrecision || 2; // Default to 2 decimal places if not specified
+                    const precision = control.autoFormat?.decimalPrecision || 2;
                     this.form.get(control.name)?.setValue(parseFloat(this.ocrResult.Data[control.name]).toFixed(precision));
                   }
                 }
               });
 
-              // Set readonly on all controls that were patched by OCR
               if (this.ocrResult.Data && typeof this.ocrResult.Data === 'object') {
                 Object.keys(this.ocrResult.Data).forEach(key => {
-                  // Find the control config and set readonly
                   if (this.form.controls[key]) {
                     const controlConfig = this.formConfig?.find?.((c: any) => c.name === key);
                     if (controlConfig) {
                       controlConfig.readonly = true;
-                      // Do NOT disable the control, just set readonly flag
-                      // if (controlConfig.type === 'date') {
-                      //   this.form.get(key)?.disable({ emitEvent: false });
-                      // }
                     }
                   }
                 });
@@ -269,33 +246,22 @@ export class FileUploadComponent {
           }
           console.log('OCR Result:', this.ocrResult);
         },
-        error: (err: any) => {
+        error: (error) => {
           this.ocrResult = null;
-          this.snackbarService.error('OCR upload failed.');
-          console.error(err);
+          this.snackbarService.error('OCR processing failed.');
+          console.error('OCR Error:', error);
         }
       });
   }
 
-  getErrorMessage(): string {
-    if (!this.control || !this.control.errors) return '';
-
-    const errors = this.control.errors;
-
-    if (errors['required']) {
-      return this.controlConfig?.validations?.find((v: any) => v.type === 'required')?.message || `${this.controlConfig.label} is required`;
-    }
-
-    if (errors['maxSize']) {
-      return `File size should not exceed ${this.controlConfig.maxSizeMB} MB`;
-    }
-
-    // Add other error checks if needed
-    return 'Invalid input';
+  override getErrorMessage(): string {
+    return super.getErrorMessage();
   }
 
   openMobileUploadSheet() {
-
+    if (this.bottomSheet && this.uploadMobileSheet) {
+      this.bottomSheet.open(this.uploadMobileSheet);
+    }
   }
 
   closeMobileUploadModal() {
@@ -305,30 +271,17 @@ export class FileUploadComponent {
   }
 
   onMobileUploadClick(event: Event) {
-    if (window.innerWidth < 768) {
-      event.preventDefault();
-      event.stopPropagation();
-      if (this.bottomSheet && this.uploadMobileSheet) {
-        this.bottomSheet.open(this.uploadMobileSheet, {
-          panelClass: 'expense-bottom-sheet'
-        });
-      }
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.onFileSelected(event);
     }
   }
 
   triggerInput(inputId: string) {
-    this.confirmDialogService.confirm({
-      title: 'Spend Mantra would like to access your files.',
-      message: 'This allows you to upload your document and photos',
-      confirmText: 'Allow',
-      cancelText: 'Don\'t Allow'
-    }).subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        this.openFileInput(inputId);
-      } else {
-        this.snackbarService.info('File access denied.');
-      }
-    });
+    const input = document.getElementById(inputId) as HTMLInputElement;
+    if (input) {
+      input.click();
+    }
   }
 
   private openFileInput(inputId: string): void {
