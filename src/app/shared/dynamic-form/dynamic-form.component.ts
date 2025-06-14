@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlFactory } from './form-control.factory';
 import { IFormControl } from './form-control.interface';
-
+import { DynamicFormService } from './services/dynamic-form.service';
 import { TextInputComponent } from './form-controls/input-control/text-input.component';
 import { SelectInputComponent } from './form-controls/dropdown/select-input.component';
 import { DateInputComponent } from './form-controls/calender/date-input.component';
@@ -38,7 +38,6 @@ import { SnackbarService } from '../service/snackbar.service';
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
 })
-
 export class DynamicFormComponent implements OnInit, OnChanges {
   @ViewChild(CostCenterComponent) costCenterComponentRef!: CostCenterComponent;
   @ViewChild(GstComponent) gstComponentRef!: GstComponent;
@@ -49,16 +48,20 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() minSelectableDate?: Date;
   @Input() maxSelectableDate?: Date;
   @Input() existingData: any;
+  @Input() referenceId: number = 0;
+  @Input() isEdit: boolean = false;
+  @Input() rowData: any;
   @Output() emitFormData = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();
   @Output() updateData = new EventEmitter<any>();
+  @Output() formSubmit = new EventEmitter<any>();
+
   form: FormGroup = new FormGroup({});
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
   tableData: any = [];
   selectedRow: any;
   formData: any = {};
   editIndex = 0;
-  referenceId = 0;
   isValid = true;
   selectedFiles: any = [];
 
@@ -67,6 +70,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     private confirmDialogService: ConfirmDialogService,
     private configService: GlobalConfigService,
     private snackbarService: SnackbarService,
+    private dynamicFormService: DynamicFormService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -75,6 +79,26 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         this.populateTableData(this.existingData);
       });
     }
+  }
+
+  ngOnInit() {
+    this.initializeForm();
+    if (this.isEdit && this.rowData) {
+      this.dynamicFormService.handleEditRow(this.rowData, this.formControls, this.form);
+    }
+  }
+
+  private initializeForm(): void {
+    this.formControls = []; // Reset to avoid duplication
+    this.form = new FormGroup({});
+    this.formConfig.forEach(config => {
+      if (config.dataType === 'numeric') {
+        this.setupAutoFormat(config, this.configService);
+      }
+      const control = FormControlFactory.createControl(config);
+      this.formControls.push({ formConfig: config, control: control });
+      this.form.addControl(config.name, control);
+    });
   }
 
   private async prepareOptions(dataArray: any[]): Promise<void> {
@@ -200,20 +224,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.tableData = updatedDataArray;
   }
 
-  ngOnInit() {
-
-    this.formControls = []; // Reset to avoid duplication
-    this.form = new FormGroup({});
-    this.formConfig.forEach(config => {
-      if (config.dataType === 'numeric') {
-        this.setupAutoFormat(config, this.configService);
-      }
-      const control = FormControlFactory.createControl(config);
-      this.formControls.push({ formConfig: config, control: control });
-      this.form.addControl(config.name, control);
-    });
-  }
-
   setupAutoFormat(config: any, configService: GlobalConfigService): void {
     const globalPrecision = configService.getDecimalPrecision();
     const controlPrecision = parseInt(config?.autoFormat?.decimalPrecision ?? '', 10);
@@ -276,50 +286,39 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
   }
 
-  async onSubmit() {
-    debugger;
+  onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-    // Only check duplicate if OCRRequired is true for this category
+
     if (this.category.OCRRequired) {
-      // Check for duplicate in tableData before DB check
-      const duplicateFields = this.category.duplicateCheckFields || [];
-      const currentFormValues: any = {};
-      for (const field of duplicateFields) {
-        currentFormValues[field.name] = this.form.get(field.name)?.value;
-      }
-      const isDuplicateInTable = this.tableData.some((row: any, idx: number) => {
-        // If editing, skip the row being edited
-        if (this.editIndex && (idx === this.editIndex - 1)) return false;
-        return duplicateFields.every((field: any) => {
-          const formValue = currentFormValues[field.name];
-          const rowValue = row[field.name];
-          // Compare primitive or object with value property
-          const val1 = typeof formValue === 'object' && formValue !== null ? formValue.value : formValue;
-          const val2 = typeof rowValue === 'object' && rowValue !== null ? rowValue.value : rowValue;
-          return val1 == val2;
-        });
-      });
-      if (isDuplicateInTable) {
-        this.snackbarService.success('Duplicate OCR entry detected in the expense items. Please check your Bill Number, Date, Amount, or Vendor Name.', 1000000)
+      this.handleOCRValidation();
+    } else {
+      this.validatePolicyViolation();
+    }
+  }
+
+  private handleOCRValidation() {
+    const duplicateFields = this.category.duplicateCheckFields || [];
+    const currentFormValues: any = {};
+    for (const field of duplicateFields) {
+      currentFormValues[field.name] = this.form.get(field.name)?.value;
+    }
+
+    const isDuplicateInTable = this.checkDuplicateInTable(currentFormValues, duplicateFields);
+    if (isDuplicateInTable) {
+      this.snackbarService.success('Duplicate OCR entry detected in the expense items. Please check your Bill Number, Date, Amount, or Vendor Name.', 1000000);
+      return;
+    }
+
+    this.checkOCRDuplicate().then(isDuplicate => {
+      if (isDuplicate) {
+        this.snackbarService.success('Duplicate OCR entry detected. Please check your Bill Number, Date, Amount, or Vendor Name.', 1000000);
         return;
       }
-
-      // Check for duplicate in DB:
-      // - On create (editIndex === 0)
-      // - On edit if OCRLogId is a number (user changed/uploaded bill)
-      let shouldCheckDuplicate = this.editIndex === 0 || (this.editIndex > 0 && typeof this.form.value.OCRLogId === 'number');
-      if (shouldCheckDuplicate) {
-        let isDuplicate = await this.checkOCRDuplicate();
-        if (isDuplicate) {
-          this.snackbarService.success('Duplicate OCR entry detected. Please check your Bill Number, Date, Amount, or Vendor Name.', 1000000)
-          return;
-        }
-      }
-    }
-    this.validatePolicyViolation();
+      this.validatePolicyViolation();
+    });
   }
 
   /**
@@ -731,5 +730,37 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     if (this.gstComponentRef && ocrData?.gst) {
       this.gstComponentRef.setGstDetailsFromOcr(ocrData.gst);
     }
+  }
+
+  onEvent(eventType: string, data: { event: any; control: any }): void {
+    this.dynamicFormService.handleFormEvent(eventType, data, this.eventHandler);
+  }
+
+  resetForm(): void {
+    this.dynamicFormService.resetForm(this.form, this.formControls);
+    if (this.costCenterComponentRef) {
+      this.costCenterComponentRef.setMultipleCostCenterFlag(false);
+      this.costCenterComponentRef.costCenterData = [];
+    }
+    if (this.gstComponentRef) {
+      this.gstComponentRef.setCompanyGSTFlag(false);
+      this.gstComponentRef.gstData = [];
+    }
+    this.selectedFiles = [];
+  }
+
+  private checkDuplicateInTable(currentFormValues: any, duplicateFields: any[]): boolean {
+    return this.tableData.some((row: any, idx: number) => {
+      // If editing, skip the row being edited
+      if (this.editIndex && (idx === this.editIndex - 1)) return false;
+      return duplicateFields.every((field: any) => {
+        const formValue = currentFormValues[field.name];
+        const rowValue = row[field.name];
+        // Compare primitive or object with value property
+        const val1 = typeof formValue === 'object' && formValue !== null ? formValue.value : formValue;
+        const val2 = typeof rowValue === 'object' && rowValue !== null ? rowValue.value : rowValue;
+        return val1 == val2;
+      });
+    });
   }
 }

@@ -78,7 +78,7 @@ export class TextInputComponent implements OnInit {
     if (this.controlConfig.autoFormat) {
       let inputValue = (event.target.value).toString();
       // Correctly apply the pattern as a RegExp
-      const pattern = this.controlConfig.autoFormat?.patterns[0];
+      const pattern = this.controlConfig.autoFormat?.patterns?.[0];
       if (pattern) {
         inputValue = inputValue.replace(new RegExp(pattern, 'g'), '');
       }
@@ -91,8 +91,8 @@ export class TextInputComponent implements OnInit {
 
       // Limit integer and decimal part lengths
       const [integerPart, decimalPart] = inputValue.split('.');
-      let maxLength = this.controlConfig.autoFormat.range?.max ?? 10;
-      let decimalPrecision = Number(this.controlConfig.autoFormat.decimalPrecision ?? 2);
+      const maxLength = this.controlConfig.autoFormat?.range?.max ?? 10;
+      const decimalPrecision = Number(this.controlConfig.autoFormat?.decimalPrecision ?? 2);
 
       let formattedValue = integerPart ? integerPart.slice(0, maxLength) : '';
       if (decimalPart !== undefined) {

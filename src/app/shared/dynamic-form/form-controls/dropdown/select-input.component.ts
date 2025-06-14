@@ -38,15 +38,15 @@ export class SelectInputComponent implements AfterViewInit {
 
   @ViewChild('requestBottomSheet', { static: true }) requestBottomSheetTpl!: TemplateRef<any>;
 
-  trackByFn(index: number, item: any): string | number {
-    return item?.Key ?? item?.value ?? index;
-  }
-
   constructor(
     private serviceRegistry: ServiceRegistryService,
     @Optional() private _bottomSheet?: MatBottomSheet
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
+  }
+
+  trackByFn(index: number, item: any): string | number {
+    return item?.Key ?? item?.value ?? index;
   }
 
   ngAfterViewInit() {

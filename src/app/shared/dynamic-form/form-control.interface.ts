@@ -11,7 +11,7 @@ export interface IFormControl {
   isExcluded?: boolean;
   placeholder?: string;
   value?: any;
-  value$?:any;
+  value$?: any;
   options?: any[];
   option$?: Observable<any[]>;
   labelKey?: string;
@@ -19,10 +19,17 @@ export interface IFormControl {
   apiService?: string;
   apiMethod?: string;
   events?: any;
-  autoComplete?: boolean,
+  autoComplete?: boolean;
   disable?: boolean;
   defaultValue?: any;
-  autoFormat?: any;
+  autoFormat?: {
+    decimalPrecision?: number;
+    patterns?: string[];
+    range?: {
+      max?: number;
+      min?: number;
+    };
+  };
   dependentCases?: any;
   readonly?: boolean;
   multiple?: boolean; // File Control

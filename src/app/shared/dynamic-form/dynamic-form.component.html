@@ -15,7 +15,7 @@
   @case ('select') {
   <div class="col-md-4">
     <lib-select-input [controlConfig]="control.formConfig" [control]="control.control"
-      (valueChange)="onFieldValueChange(control.formConfig);onDropdownValueChange($event)">
+      (valueChange)="onFieldValueChange(control.formConfig);onDropdownValueChange($event);onEvent('change', $event)">
     </lib-select-input>
   </div>
   }
@@ -43,9 +43,7 @@
       [minDate]="minSelectableDate" [maxDate]="maxSelectableDate" (emitSpecificCase)="getSpecificCase($event)">
     </lib-date-input>
   </div>
-
   }
-
   }
   <!-- Handling 'radio' type controls -->
   @case ('radio') {
@@ -83,14 +81,13 @@
   }
   }
 
-<!-- gopi -->
-
   <div class="col-md-12 mt-0 mb-3">
-    <div class=" d-flex align-items-center   justify-content-end ">
-      <button type="button" class="  btn btn-outline-secondary clear me-2  " id="cleartable"
+    <div class="d-flex align-items-center justify-content-end">
+      <button type="button" class="btn btn-outline-secondary clear me-2" id="cleartable"
         (click)="clear()">Clear</button>
-      <button type="button" class="btn btn-primary " id="addUpdateBtn" (click)="onSubmit()">{{ editIndex ? "Update" :
-        "Add" }}</button>
+      <button type="button" class="btn btn-primary" id="addUpdateBtn" (click)="onSubmit()">
+        {{ editIndex ? "Update" : "Add" }}
+      </button>
     </div>
   </div>
 
