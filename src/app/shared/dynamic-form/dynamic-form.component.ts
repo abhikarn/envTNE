@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlFactory } from './form-control.factory';
-import { IFormControl } from './form-control.interface';
+import { IFormControl, FormControlDataType } from './form-control.interface';
 import { DynamicFormService } from './services/dynamic-form.service';
 import { TextInputComponent } from './form-controls/input-control/text-input.component';
 import { SelectInputComponent } from './form-controls/dropdown/select-input.component';
@@ -18,6 +18,7 @@ import { GlobalConfigService } from '../service/global-config.service';
 import { LineWiseCostCenterComponent } from './form-controls/cost-center/line-wise-cost-center/line-wise-cost-center.component';
 import { CostCenterComponent } from "./form-controls/cost-center/cost-center.component";
 import { SnackbarService } from '../service/snackbar.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -83,6 +84,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.initializeForm();
+    this.setupFormSubscriptions();
     if (this.isEdit && this.rowData) {
       this.dynamicFormService.handleEditRow(this.rowData, this.formControls, this.form);
     }
@@ -92,12 +94,84 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.formControls = []; // Reset to avoid duplication
     this.form = new FormGroup({});
     this.formConfig.forEach(config => {
-      if (config.dataType === 'numeric') {
+      if (config.dataType === 'number') {
         this.setupAutoFormat(config, this.configService);
       }
       const control = FormControlFactory.createControl(config);
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
+    });
+  }
+
+  private setupFormSubscriptions(): void {
+    // Subscribe to form value changes with debounce
+    this.form.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe(values => {
+        this.handleFormValueChanges(values);
+      });
+
+    // Subscribe to form status changes
+    this.form.statusChanges
+      .pipe(
+        distinctUntilChanged()
+      )
+      .subscribe(status => {
+        this.handleFormStatusChanges(status);
+      });
+  }
+
+  private handleFormValueChanges(values: any): void {
+    // Emit text data for real-time updates
+    this.emitTextData.emit(values);
+
+    // Handle dependent field updates
+    this.formControls.forEach(({ formConfig, control }) => {
+      if (formConfig.dependsOn) {
+        this.updateDependentField(formConfig, values);
+      }
+    });
+  }
+
+  private handleFormStatusChanges(status: string): void {
+    this.isValid = status === 'VALID';
+    if (status === 'INVALID') {
+      this.markInvalidFields();
+    }
+  }
+
+  private updateDependentField(formConfig: IFormControl, values: any): void {
+    const dependentValue = this.evaluateDependency(formConfig.dependsOn, values);
+    const control = this.form.get(formConfig.name);
+    if (control) {
+      if (dependentValue) {
+        control.enable();
+      } else {
+        control.disable();
+        control.setValue(null);
+      }
+    }
+  }
+
+  private evaluateDependency(dependency: any, values: any): boolean {
+    if (typeof dependency === 'function') {
+      return dependency(values);
+    }
+    if (typeof dependency === 'string') {
+      return !!values[dependency];
+    }
+    return false;
+  }
+
+  private markInvalidFields(): void {
+    Object.keys(this.form.controls).forEach(key => {
+      const control = this.form.get(key);
+      if (control?.invalid) {
+        control.markAsTouched();
+      }
     });
   }
 
@@ -289,6 +363,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.snackbarService.error('Please fill in all required fields correctly');
       return;
     }
 

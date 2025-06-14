@@ -4,14 +4,20 @@ import { IFormControl } from '../form-control.interface';
 import { FormControlFactory } from '../form-control.factory';
 import { ServiceRegistryService } from '../../../shared/service/service-registry.service';
 import { GlobalConfigService } from '../../../shared/service/global-config.service';
+import { FormStateService } from './form-state.service';
+import { FormEventService } from './form-event.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DynamicFormService {
+  private formControlFactory = new FormControlFactory();
+
   constructor(
     @Inject(ServiceRegistryService) private serviceRegistry: ServiceRegistryService,
-    @Inject(GlobalConfigService) private configService: GlobalConfigService
+    @Inject(GlobalConfigService) private configService: GlobalConfigService,
+    private formStateService: FormStateService,
+    private formEventService: FormEventService
   ) {}
 
   createFormControls(formConfig: IFormControl[]): { formConfig: IFormControl, control: FormControl }[] {
@@ -19,25 +25,19 @@ export class DynamicFormService {
     const form = new FormGroup({});
 
     formConfig.forEach(config => {
-      if (config.dataType === 'numeric') {
+      if (config.dataType === 'number') {
         this.setupAutoFormat(config);
       }
-      const control = FormControlFactory.createControl(config);
+      const control = this.formControlFactory.createControl(config);
       formControls.push({ formConfig: config, control: control });
       form.addControl(config.name, control);
     });
 
-    return formControls;
-  }
+    // Update form state
+    this.formStateService.updateForm(form);
+    this.formStateService.updateFormControls(formControls);
 
-  private setupAutoFormat(config: IFormControl): void {
-    if (config.autoFormat) {
-      const precision = config.autoFormat.decimalPrecision ?? this.configService.getDecimalPrecision();
-      config.autoFormat = {
-        ...config.autoFormat,
-        decimalPrecision: precision
-      };
-    }
+    return formControls;
   }
 
   handleFormEvent(eventType: string, data: { event: any; control: any }, eventHandler: any): void {
@@ -74,6 +74,9 @@ export class DynamicFormService {
       }
     });
 
+    // Update form state
+    this.formStateService.updateFormData(formData);
+
     return formData;
   }
 
@@ -90,6 +93,21 @@ export class DynamicFormService {
 
       this.setFormControlValue(form.controls[name], value);
     });
+
+    // Update form state
+    this.formStateService.updateSelectedRow(rowData);
+  }
+
+  resetForm(form: FormGroup, formControls: { formConfig: IFormControl, control: FormControl }[]): void {
+    form.reset();
+    formControls?.forEach((control: any) => {
+      if (control.formConfig?.defaultValue) {
+        control.control.setValue(control.formConfig.defaultValue?.Id);
+      }
+    });
+
+    // Reset form state
+    this.formStateService.resetState();
   }
 
   private loadDependentOptions(control: any, value: any, rowData: any): void {
@@ -112,20 +130,19 @@ export class DynamicFormService {
     });
   }
 
-  private setFormControlValue(control: AbstractControl, value: any): void {
-    if (typeof value === 'object' && value !== null) {
-      control.setValue(value.value);
-    } else {
-      control.setValue(value);
+  private setupAutoFormat(config: IFormControl): void {
+    if (config.autoFormat) {
+      const precision = config.autoFormat.decimalPrecision ?? this.configService.getDecimalPrecision();
+      config.autoFormat = {
+        ...config.autoFormat,
+        decimalPrecision: precision
+      };
     }
   }
 
-  resetForm(form: FormGroup, formControls: { formConfig: IFormControl, control: FormControl }[]): void {
-    form.reset();
-    formControls?.forEach((control: any) => {
-      if (control.formConfig?.defaultValue) {
-        control.control.setValue(control.formConfig.defaultValue?.Id);
-      }
-    });
+  private setFormControlValue(control: AbstractControl, value: any): void {
+    if (value !== undefined && value !== null) {
+      control.setValue(value);
+    }
   }
 } 

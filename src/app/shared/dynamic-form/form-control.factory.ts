@@ -1,66 +1,76 @@
-import { FormControl, Validators, ValidatorFn } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { IFormControl } from './form-control.interface';
-import { IValidationConfig } from './validation-config.interface';
-import { CustomValidators } from './custom-validators';
+import { BaseFormControlStrategy } from './strategies/base-form-control-strategy';
+import { TextInputStrategy } from './strategies/text-input-strategy';
+import { SelectInputStrategy } from './strategies/select-input-strategy';
+import { DateInputStrategy } from './strategies/date-input-strategy';
+import { PasswordInputStrategy } from './strategies/password-input-strategy';
+import { MultiSelectInputStrategy } from './strategies/multi-select-input-strategy';
+import { GstInputStrategy } from './strategies/gst-input-strategy';
+import { CostCenterStrategy } from './strategies/cost-center-strategy';
+import { LineWiseCostCenterStrategy } from './strategies/line-wise-cost-center-strategy';
 
+export type FormControlType = 'text' | 'select' | 'date' | 'password' | 'multiSelect' | 'gst' | 'costCenter' | 'lineWiseCostCenter';
+
+@Injectable({
+  providedIn: 'root'
+})
 export class FormControlFactory {
-  static createControl(config: any): FormControl {
-    const validationConfigs: IValidationConfig[] = config.validations || [];
-    const validators: ValidatorFn[] = validationConfigs.map((validationConfig: IValidationConfig) => {
-      let validatorFn: ValidatorFn | null = null;
-      
-      switch (validationConfig.type) {        
-        case 'required':
-          config.validations['required'] = validationConfig.message || `${config.label} is required`;
-          validatorFn = Validators.required;
-          break;
-        case 'minLength':
-          if (config.subType === 'text') {
-            validatorFn = Validators.minLength(Number(validationConfig.value));
-          } else {
-            console.warn(`Ignoring minLength for numeric field: ${config.name}`);
-          }
-          break;
-        case 'maxLength':
-          validatorFn = Validators.maxLength(Number(validationConfig.value));
-          break;
-        case 'min':
-          if (config.subType === 'number') {
-            validatorFn = Validators.min(Number(validationConfig.value));
-          }
-          break;
-        case 'max':
-          if (config.subType === 'number') {
-            validatorFn = Validators.max(Number(validationConfig.value));
-          }
-          break;
-        case 'pattern':
-          validatorFn = Validators.pattern(validationConfig.value);
-          break;
-        case 'email':
-          validatorFn = Validators.email;
-          config.validations['email'] = validationConfig.message || 'Invalid email format';
-          break;
-        case 'custom':
-          const validatorKey = validationConfig.name as keyof typeof CustomValidators;
-          if (validatorKey in CustomValidators) {
-            const validatorFunc = CustomValidators[validatorKey];
-            if (typeof validatorFunc === 'function') {
-              config.validations[validatorKey] = validationConfig.message || `Invalid ${config.name}`;
-              validatorFn = validatorFunc(validationConfig.message);
-            }
-          } else {
-            console.warn(`Custom validator not found: ${validationConfig.name}`);
-          }
-          break;
+  private static instance: FormControlFactory;
+  private strategyMap: Map<FormControlType, BaseFormControlStrategy> = new Map();
 
-        default:
-          throw new Error(`Unsupported validation type: ${validationConfig.type}`);
+  constructor() {
+    if (!FormControlFactory.instance) {
+      FormControlFactory.instance = this;
+      this.initializeStrategyMap();
+    }
+    return FormControlFactory.instance;
+  }
+
+  private initializeStrategyMap(): void {
+    this.strategyMap = new Map([
+      ['text', new TextInputStrategy()],
+      ['select', new SelectInputStrategy()],
+      ['date', new DateInputStrategy()],
+      ['password', new PasswordInputStrategy()],
+      ['multiSelect', new MultiSelectInputStrategy()],
+      ['gst', new GstInputStrategy()],
+      ['costCenter', new CostCenterStrategy()],
+      ['lineWiseCostCenter', new LineWiseCostCenterStrategy()]
+    ]);
+  }
+
+  public static getInstance(): FormControlFactory {
+    if (!FormControlFactory.instance) {
+      FormControlFactory.instance = new FormControlFactory();
+    }
+    return FormControlFactory.instance;
+  }
+
+  public static createControl(config: IFormControl): FormControl {
+    return FormControlFactory.getInstance().createControl(config);
+  }
+
+  public createControl(config: IFormControl): FormControl {
+    try {
+      const controlType = (config.type || 'text') as FormControlType;
+      const strategy = this.strategyMap.get(controlType);
+
+      if (!strategy) {
+        console.warn(`No strategy found for control type: ${controlType}, falling back to text input`);
+        return this.strategyMap.get('text')!.createControl(config);
       }
-      return validatorFn;
-    }).filter((v): v is ValidatorFn => !!v); // Remove null values;
 
-    const control = new FormControl(config?.value, validators.length ? Validators.compose(validators) : null);
-    return control;
+      return strategy.createControl(config);
+    } catch (error) {
+      console.error('Error creating form control:', error);
+      // Return a basic text control as fallback
+      return new FormControl(config.value || '');
+    }
+  }
+
+  public registerStrategy(type: FormControlType, strategy: BaseFormControlStrategy): void {
+    this.strategyMap.set(type, strategy);
   }
 }
