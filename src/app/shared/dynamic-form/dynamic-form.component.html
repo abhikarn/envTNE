@@ -17,15 +17,15 @@
     <div class="d-flex align-items-center justify-content-end">
       <button type="button" class="btn btn-outline-secondary clear me-2" id="cleartable"
         (click)="clear()">Clear</button>
-      <button type="button" class="btn btn-primary" id="addUpdateBtn" (click)="onSubmit()">
+      <button type="button" class="btn btn-primary" id="addUpdateBtn" (click)="onSubmit()" [disabled]="!isValid()">
         {{ editIndex ? "Update" : "Add" }}
       </button>
     </div>
   </div>
 
-  @if (tableData.length > 0) {
+  @if (tableData().length > 0) {
     @defer {
-      <app-dynamic-table [tableData]="tableData" [categoryConfig]="category" (editRow)="onEditRow($event)"
+      <app-dynamic-table [tableData]="tableData()" [categoryConfig]="category" (editRow)="onEditRow($event)"
         (deleteRow)="onDeleteRow($event)"></app-dynamic-table>
     } @loading {
       <div class="loading-spinner">Loading table...</div>

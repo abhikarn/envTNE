@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, Injector, Type, inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, Injector, Type, inject, signal, computed } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlFactory } from './form-control.factory';
 import { IFormControl, FormControlType } from './form-control.interface';
@@ -59,12 +59,15 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   form: FormGroup = new FormGroup({});
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
-  tableData: any = [];
   selectedRow: any;
-  formData: any = {};
   editIndex = 0;
-  isValid = true;
   selectedFiles: any = [];
+
+  // Convert existing state to signals
+  formData = signal<any>({});
+  isValid = signal<boolean>(true);
+  tableData = signal<any[]>([]);
+  formValue = signal<any>({});
 
   // Map control types to their component classes
   controlComponentMap: Record<string, Type<any>> = {
@@ -104,6 +107,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     if (this.isEdit && this.rowData) {
       this.dynamicFormService.handleEditRow(this.rowData, this.formControls, this.form);
     }
+    this.formValue.set(this.form.value);
   }
 
   private initializeForm(): void {
@@ -129,6 +133,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       )
       .subscribe(values => {
         this.handleFormValueChanges(values);
+        this.formValue.set(values);
       });
 
     // Subscribe to form status changes
@@ -155,7 +160,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   private handleFormStatusChanges(status: string): void {
-    this.isValid = status === 'VALID';
+    this.isValid.set(status === 'VALID');
     if (status === 'INVALID') {
       this.markInvalidFields();
     }
@@ -305,7 +310,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       })
     );
 
-    this.tableData = updatedDataArray;
+    this.tableData.set(updatedDataArray);
   }
 
   setupAutoFormat(config: any, configService: GlobalConfigService): void {
@@ -461,34 +466,28 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   prepareFormJson() {
     // Preparing form json
-    this.formData.name = this.category.name;
+    const data: { name: string; data: { ReferenceId: number; excludedData: Record<string, any>; [key: string]: any } } = {
+      name: this.category.name,
+      data: { ReferenceId: this.referenceId, excludedData: {} }
+    };
     this.formControls.forEach(control => {
       const type = control.formConfig.type;
       const fieldName = control.formConfig.name;
       let fieldValue = this.form.value[fieldName];
 
       control.formConfig.value = fieldValue;
-      if (!this.formData.data) {
-        this.formData.data = {
-          ReferenceId: 0
-        };
-      } else {
-        this.formData.data.ReferenceId = this.referenceId
-      }
-      if (!this.formData.data?.excludedData) {
-        this.formData.data.excludedData = {};
-      }
       if (control.formConfig.isExcluded) {
-        this.formData.data.excludedData[fieldName] = fieldValue ?? null;
+        data.data.excludedData[fieldName] = fieldValue ?? null;
       } else {
-        this.formData.data[fieldName] = fieldValue ?? null;
+        data.data[fieldName] = fieldValue ?? null;
       }
-    })
+    });
+    this.formData.set(data);
     this.emitFormData.emit({
-      formData: this.formData,
+      formData: this.formData(),
       editIndex: this.editIndex - 1
     });
-    this.formData = {};
+    this.formData.set({});
   }
 
   addDataToDynamicTable() {
@@ -510,10 +509,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     });
 
     if (!this.editIndex) { //Create
-      this.tableData.push(tableData.value);
+      this.tableData.set([...this.tableData(), tableData.value]);
       this.existingData.push(tableData.value);
     } else { // Edit
-      this.tableData[this.editIndex - 1] = tableData.value;
+      this.tableData.set([...this.tableData().slice(0, this.editIndex - 1), tableData.value, ...this.tableData().slice(this.editIndex)]);
       this.existingData[this.editIndex - 1] = tableData.value;
       this.editIndex = 0;
     }
@@ -796,14 +795,13 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onDeleteRow(index: number) {
-    this.tableData.splice(index, 1);
+    this.tableData.set([...this.tableData().slice(0, index), ...this.tableData().slice(index + 1)]);
     this.existingData.splice(index, 1);
-    this.tableData = [...this.tableData];
     this.existingData = [...this.existingData];
 
-    this.category.count = this.tableData.length; // To update tab badge
+    this.category.count = this.tableData().length; // To update tab badge
 
-    this.updateData.emit({ name: this.category.name, data: this.tableData }); // Emit to parent if needed
+    this.updateData.emit({ name: this.category.name, data: this.tableData() }); // Emit to parent if needed
   }
 
   onOcrCompleted(ocrData: any) {
@@ -838,7 +836,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   private checkDuplicateInTable(currentFormValues: any, duplicateFields: any[]): boolean {
-    return this.tableData.some((row: any, idx: number) => {
+    return this.tableData().some((row: any, idx: number) => {
       // If editing, skip the row being edited
       if (this.editIndex && (idx === this.editIndex - 1)) return false;
       return duplicateFields.every((field: any) => {
@@ -873,5 +871,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   getControlComponent(type: string | undefined): Type<any> | null {
     return type ? this.controlFactory.getControlComponent(type as FormControlType) : null;
+  }
+
+  updateTableData(newData: any[]) {
+    this.tableData.set(newData);
   }
 }
