@@ -55,6 +55,8 @@ export interface IFormControl {
   showInUI?: boolean;
   icon?: string;
   maxLength?: number;
+  minLength?: number;
+  pattern?: string;
 
   // API Integration
   apiService?: string;
