@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, Injector, Type, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, Injector, Type, inject, signal, computed, effect } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlFactory } from './form-control.factory';
 import { IFormControl, FormControlType } from './form-control.interface';
@@ -69,6 +69,13 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   tableData = signal<any[]>([]);
   formValue = signal<any>({});
 
+  // Computed signal for form dirty state
+  isFormDirty = computed(() => this.form.dirty);
+
+  // Signal for async options loading
+  isLoadingOptions = signal<boolean>(false);
+  options = signal<any[]>([]);
+
   // Map control types to their component classes
   controlComponentMap: Record<string, Type<any>> = {
     text: TextInputComponent,
@@ -120,6 +127,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       const control = FormControlFactory.createControl(config);
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
+
+      // Load options for controls with apiService and apiMethod
+      if (config.apiService && config.apiMethod) {
+        this.loadOptions(config);
+      }
     });
   }
 
@@ -875,5 +887,34 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   updateTableData(newData: any[]) {
     this.tableData.set(newData);
+  }
+
+  // Example of loading options asynchronously
+  loadOptions(control: IFormControl) {
+    this.isLoadingOptions.set(true);
+    if (!control.apiService || !control.apiMethod) {
+      this.isLoadingOptions.set(false);
+      return;
+    }
+    const service = this.serviceRegistry.getService(control.apiService);
+    if (service && typeof service[control.apiMethod] === 'function') {
+      service[control.apiMethod]()
+        .pipe(takeUntilDestroyed())
+        .subscribe({
+          next: (response: any) => {
+            if (response && Array.isArray(response)) {
+              this.options.set(response);
+            }
+            this.isLoadingOptions.set(false);
+          },
+          error: (error: Error) => {
+            console.error(`Error loading options for ${control.name}:`, error);
+            this.snackbarService.error(`Failed to load options for ${control.label}`);
+            this.isLoadingOptions.set(false);
+          }
+        });
+    } else {
+      this.isLoadingOptions.set(false);
+    }
   }
 }
