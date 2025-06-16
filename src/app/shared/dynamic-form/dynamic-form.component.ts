@@ -17,6 +17,7 @@ import { ConfirmDialogService } from '../service/confirm-dialog.service';
 import { GlobalConfigService } from '../service/global-config.service';
 import { LineWiseCostCenterComponent } from './form-controls/cost-center/line-wise-cost-center/line-wise-cost-center.component';
 import { CostCenterComponent } from "./form-controls/cost-center/cost-center.component";
+import { SnackbarService } from '../service/snackbar.service';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -64,7 +65,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   constructor(
     private serviceRegistry: ServiceRegistryService,
     private confirmDialogService: ConfirmDialogService,
-    private configService: GlobalConfigService
+    private configService: GlobalConfigService,
+    private snackbarService: SnackbarService,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -275,7 +277,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
-   debugger;
+    debugger;
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -301,14 +303,20 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         });
       });
       if (isDuplicateInTable) {
-        alert('Duplicate OCR entry detected in the table. Please check your Bill Number, Date, Amount, or Vendor Name.');
+        this.snackbarService.success('Duplicate OCR entry detected in the expense items. Please check your Bill Number, Date, Amount, or Vendor Name.', 1000000)
         return;
       }
 
-      const isDuplicate = await this.checkOCRDuplicate();
-      if (isDuplicate && this.editIndex===0) {
-        alert('Duplicate OCR entry detected. Please check your Bill Number, Date, Amount, or Vendor Name.');
-        return;
+      // Check for duplicate in DB:
+      // - On create (editIndex === 0)
+      // - On edit if OCRLogId is a number (user changed/uploaded bill)
+      let shouldCheckDuplicate = this.editIndex === 0 || (this.editIndex > 0 && typeof this.form.value.OCRLogId === 'number');
+      if (shouldCheckDuplicate) {
+        let isDuplicate = await this.checkOCRDuplicate();
+        if (isDuplicate) {
+          this.snackbarService.success('Duplicate OCR entry detected. Please check your Bill Number, Date, Amount, or Vendor Name.', 1000000)
+          return;
+        }
       }
     }
     this.validatePolicyViolation();
