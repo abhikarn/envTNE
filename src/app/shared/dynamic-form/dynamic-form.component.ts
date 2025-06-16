@@ -319,6 +319,17 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       }
     }
+    if (this.form.value?.costcentreWiseExpense?.length > 0) {
+      const costCenterData = this.form.value?.costcentreWiseExpense || [];
+      // total sum of Amount in percentage for all items should be equal to 100
+      const totalPercentage = costCenterData.reduce((sum: number, item: any) => {
+        return sum + (parseFloat(item.AmmoutInPercentage) || 0);
+      }, 0);
+      if (totalPercentage !== 100) {
+        this.snackbarService.error('Total percentage of cost centers must equal 100%. Please check your entries.', 5000);
+        return;
+      }
+    }
     this.validatePolicyViolation();
   }
 

@@ -1,6 +1,8 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+// Add import for MatBottomSheet
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { AttachmentModalComponent } from '../attachment-modal/attachment-modal.component';
@@ -10,6 +12,8 @@ import { AddGstComponent } from '../../dynamic-form/form-controls/gst/add-gst/ad
 import { GlobalDatePipe } from '../../pipes/global-date.pipe';
 import { ConfirmDialogService } from '../../service/confirm-dialog.service';
 import { GlobalConfigService } from '../../service/global-config.service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-material-table',
@@ -21,7 +25,9 @@ import { GlobalConfigService } from '../../service/global-config.service';
     MatTooltipModule,
     FormsModule,
     AddGstComponent,
-    GlobalDatePipe
+    GlobalDatePipe,
+    MatDialogModule,
+    MatBottomSheetModule
   ],
   templateUrl: './material-table.component.html',
   styleUrl: './material-table.component.scss',
@@ -46,6 +52,8 @@ export class MaterialTableComponent implements OnChanges {
 
   constructor(
     private dialog: MatDialog,
+    // Inject MatBottomSheet
+    private bottomSheet: MatBottomSheet,
     private confirmDialogService: ConfirmDialogService,
     private configService: GlobalConfigService
   ) { }
@@ -159,14 +167,26 @@ export class MaterialTableComponent implements OnChanges {
     return columns?.map(c => c.name) ?? [];
   }
 
+  // Utility to detect mobile devices
+  private isMobile(): boolean {
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  }
+
   showAttachments(attachments: any[]) {
     if (!attachments || attachments.length === 0) return;
 
-    this.dialog.open(AttachmentModalComponent, {
-      width: '1000px',
-      data: { attachments },
-      panelClass: 'custom-modal-panel'
-    });
+    if (this.isMobile()) {
+      this.bottomSheet.open(AttachmentModalComponent, {
+        data: { attachments },
+        panelClass: 'custom-modal-panel'
+      });
+    } else {
+      this.dialog.open(AttachmentModalComponent, {
+        width: '1000px',
+        data: { attachments },
+        panelClass: 'custom-modal-panel'
+      });
+    }
   }
 
   showRemarks(expenseRequestDetailId: any) {

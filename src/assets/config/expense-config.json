@@ -83,7 +83,7 @@
             {
                 "name": "Travel Ticket",
                 "label": "Tickets Expense",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -128,7 +128,7 @@
                             ]
                         },
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 11
                     },
                     {
@@ -782,22 +782,6 @@
                     {
                         "type": "hidden",
                         "name": "IsViolation",
-                        "isExcluded": true,
-                        "value": false,
-                        "showInUI": false,
-                        "order": 12
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "IsOCRRestrictedKeyword",
-                        "isExcluded": true,
-                        "value": false,
-                        "showInUI": false,
-                        "order": 12
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "OCRLogId",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false,
