@@ -1063,24 +1063,42 @@
                 "label": "Accommodation",
                 "formControls": [
                     {
+                        "type": "file",
+                        "dataType": "file",
+                        "name": "attachment",
+                        "isExcluded": false,
+                        "label": "Upload Your Bill",
+                        "value": [],
+                        "multiple": true,
+                        "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
+                        "referenceType": 123,
+                        "maxSizeMB": 15,
+                        "required": false,
+                        "oCRRequired": false,
+                        "order": 1
+                    },
+                    {
                         "type": "select",
                         "dataType": "int",
                         "name": "AccommodationType",
                         "isExcluded": false,
                         "label": "Accommodation Type",
                         "placeholder": "Select Accommodation Type",
-                        "value": 0,
+                        "value": null,
                         "options": [],
                         "labelKey": "KeyData",
                         "valueKey": "KeyDataId",
                         "apiService": "DataService",
                         "apiMethod": "dataGetStayType",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Accommodation Type is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false
                     },
                     {
                         "type": "date",
@@ -1145,12 +1163,16 @@
                                 "apiMethod": "expenseGetExpensePolicyEntitlement"
                             }
                         ],
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Check-in Date Time is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 2
                     },
                     {
                         "type": "date",
@@ -1159,12 +1181,16 @@
                         "isExcluded": false,
                         "label": "Check-out Date Time",
                         "value": null,
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Check-out Date Time is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 3
                     },
                     {
                         "type": "text",
@@ -1174,8 +1200,12 @@
                         "name": "City",
                         "isExcluded": true,
                         "label": "City",
-                        "value": 0,
-                        "option$": [],
+                        "value": null,
+                        "options": [],
+                        "labelKey": "City",
+                        "valueKey": "CityMasterId",
+                        "apiService": "NewExpenseService",
+                        "apiMethod": "getMasterNameById",
                         "dependentCases": [
                             {
                                 "key": "CityMasterId",
@@ -1194,28 +1224,35 @@
                                 "apiMethod": "dataGetCityGrade"
                             }
                         ],
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "City is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 4
                     },
                     {
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
                         "name": "CityGrade",
-                        "readonly": true,
                         "isExcluded": true,
                         "label": "City Grade",
                         "value": "",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "City Grade is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -1225,12 +1262,16 @@
                         "isExcluded": false,
                         "label": "Hotel Name",
                         "value": "",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Hotel Name is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -1240,12 +1281,8 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Bill Number is required"
-                            }
-                        ]
+                        "required": false,
+                        "order": 7
                     },
                     {
                         "type": "date",
@@ -1254,17 +1291,13 @@
                         "isExcluded": false,
                         "label": "Bill Date",
                         "value": null,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Bill Date is required"
-                            }
-                        ]
+                        "required": false,
+                        "order": 8
                     },
                     {
                         "type": "select",
                         "dataType": "int",
-                        "name": "PaymentType",
+                        "name": "PaymentMode",
                         "isExcluded": true,
                         "label": "Payment Type",
                         "placeholder": "Select Payment Type",
@@ -1274,12 +1307,16 @@
                         "valueKey": "KeyDataId",
                         "apiService": "DataService",
                         "apiMethod": "dataGetPaymentType",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Payment Type is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 9
                     },
                     {
                         "type": "select",
@@ -1289,53 +1326,8 @@
                         "label": "Entitlement Currency",
                         "labelKey": "Name",
                         "valueKey": "Id",
-                        "value": 0,
-                        "options": [],
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Entitlement Currency is required"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "dataType": "numeric",
-                        "name": "EntitlementAmount",
-                        "isExcluded": true,
-                        "label": "Entitlement Amount",
-                        "value": 0,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Entitlement Amount is required"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "dataType": "numeric",
-                        "name": "EntitlementConversionRate",
-                        "isExcluded": true,
-                        "label": "Entitlement Conversion Rate",
-                        "value": 0,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Entitlement Conversion Rate is required"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "select",
-                        "dataType": "int",
-                        "name": "Currency",
-                        "isExcluded": true,
-                        "label": "Currency",
-                        "labelKey": "Name",
-                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetCurrencyView",
                         "value": 0,
                         "defaultValue": {
                             "Id": 1,
@@ -1346,21 +1338,136 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Currency is required"
+                                "message": "Entitlement Currency is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 10
                     },
                     {
                         "type": "text",
                         "subType": "text",
                         "dataType": "numeric",
-                        "name": "ClaimedAmount",
-                        "isExcluded": false,
-                        "label": "Claimed Amount",
+                        "name": "EntitlementAmount",
+                        "isExcluded": true,
+                        "label": "Entitlement Amount",
+                        "value": null,
+                        "dependentCases": [
+                            {
+                                "key": "Id",
+                                "inputControls": {
+                                    "EntitlementCurrency": "CurrencyId",
+                                    "CheckInDateTime": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "EntitlementConversionRate": "ResponseValue.Value"
+                                },
+                                "autoFormat": {
+                                    "decimal": ".00"
+                                },
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                            }
+                        ],
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9.]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "decimalPrecision": "2"
+                        },
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Amount is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 11
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "EntitlementConversionRate",
+                        "isExcluded": true,
+                        "label": "Entitlement Conversion Rate",
+                        "value": "",
+                        "defaultValue": "1",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "setValue": "1"
+                        },
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Conversion Rate is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 12
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetCurrencyView",
                         "value": 0,
+                        "defaultValue": {
+                            "Id": 1,
+                            "Code": "INR",
+                            "Name": "Indian Rupee",
+                            "Alias": "Indian Rupee",
+                            "IsBaseCurrency": true,
+                            "Display": "Indian Rupee : INR"
+                        },
+                        "options": [],
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Currency is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 13
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "ClaimAmount",
+                        "isExcluded": true,
+                        "label": "Claimed Amount",
+                        "value": null,
                         "dependentCases": [
                             {
                                 "key": "Id",
@@ -1382,22 +1489,25 @@
                         ],
                         "autoFormat": {
                             "patterns": [
-                                "[^0-9]",
+                                "[^0-9.]",
                                 "^0+(?=\\d)"
                             ],
                             "range": {
                                 "min": 0,
                                 "max": 10
                             },
-                            "decimal": ".00",
-                            "setValue": "0.00"
+                            "decimalPrecision": "2"
                         },
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -1407,12 +1517,28 @@
                         "isExcluded": true,
                         "label": "Claimed Conversion Rate",
                         "value": 0,
+                        "defaultValue": "1",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "setValue": "1"
+                        },
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 15
                     },
                     {
                         "type": "text",
@@ -1421,7 +1547,11 @@
                         "name": "TaxAmount",
                         "isExcluded": true,
                         "label": "Tax Amount",
-                        "value": 0
+                        "value": 0,
+                        "required": false,
+                        "disable": false,
+                        "readonly": false,
+                        "order": 16
                     },
                     {
                         "type": "text",
@@ -1431,12 +1561,16 @@
                         "isExcluded": false,
                         "label": "Differential Amount(INR)",
                         "value": 0,
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Differential Amount is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 17
                     },
                     {
                         "type": "textarea",
@@ -1444,7 +1578,557 @@
                         "name": "Justification",
                         "isExcluded": false,
                         "label": "Justification",
-                        "value": ""
+                        "value": "",
+                        "required": false,
+                        "order": 18
+                    },
+                    {
+                        "type": "costcenter",
+                        "dataType": "object",
+                        "name": "costcentreWiseExpense",
+                        "isExcluded": false,
+                        "label": "Cost Centre",
+                        "value": [],
+                        "getControl": "ClaimAmount",
+                        "fields": [
+                            {
+                                "name": "ExpenseRequestCostCentrewiseAmmoutId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 1
+                            },
+                            {
+                                "name": "ExpenseRequestDetailId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 2
+                            },
+                            {
+                                "type": "text",
+                                "subType": "text",
+                                "dataType": "int",
+                                "autoComplete": true,
+                                "name": "CostCentre",
+                                "isExcluded": false,
+                                "label": "Cost Center",
+                                "value": null,
+                                "options": [],
+                                "labelKey": "Display",
+                                "valueKey": "CostCentreId",
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetCityAutocomplete",
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Cost Center is required"
+                                    }
+                                ],
+                                "disable": false,
+                                "readonly": false,
+                                "order": 3,
+                                "showInUI": true
+                            },
+                            {
+                                "name": "CostCentreId",
+                                "type": "text",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 4
+                            },
+                            {
+                                "name": "AmmoutInPercentage",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "label": "Amount In(%)",
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 2
+                                    }
+                                },
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    },
+                                    {
+                                        "type": "min",
+                                        "value": 0
+                                    }
+                                ],
+                                "order": 5
+                            },
+                            {
+                                "name": "AmmoutInActual",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "label": "Amount In Actual",
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    }
+                                },
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    },
+                                    {
+                                        "type": "min",
+                                        "value": 0
+                                    }
+                                ],
+                                "order": 6
+                            }
+                        ]
+                    },
+                    {
+                        "type": "gst",
+                        "dataType": "object",
+                        "name": "gst",
+                        "isExcluded": false,
+                        "label": "GST",
+                        "value": [],
+                        "getControl": "ClaimAmount",
+                        "fields": [
+                            {
+                                "name": "ExpenseRequestGstTypeId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 1
+                            },
+                            {
+                                "name": "ExpenseRequestDetailId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 2
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "placeholder": "GSTIN",
+                                "type": "text",
+                                "showInUI": true,
+                                "required": true,
+                                "value": null,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    },
+                                    {
+                                        "type": "custom",
+                                        "name": "validateGST",
+                                        "message": "Invalid GST number"
+                                    }
+                                ],
+                                "order": 3
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "placeholder": "Invoice Number",
+                                "type": "text",
+                                "showInUI": true,
+                                "required": true,
+                                "value": null,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    }
+                                ],
+                                "order": 4
+                            },
+                            {
+                                "name": "Amount",
+                                "label": "Amount",
+                                "placeholder": "AMOUNT",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    }
+                                },
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    },
+                                    {
+                                        "type": "min",
+                                        "value": 0
+                                    }
+                                ],
+                                "order": 5
+                            },
+                            {
+                                "name": "SGST",
+                                "label": "SGST",
+                                "placeholder": "SGST",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    }
+                                },
+                                "order": 6
+                            },
+                            {
+                                "name": "CGST",
+                                "label": "CGST",
+                                "placeholder": "CGST",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    }
+                                },
+                                "order": 7
+                            },
+                            {
+                                "name": "IGST",
+                                "label": "IGST",
+                                "placeholder": "IGST",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    }
+                                },
+                                "order": 8
+                            },
+                            {
+                                "name": "UGST",
+                                "label": "UGST",
+                                "placeholder": "UGST",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    }
+                                },
+                                "order": 9
+                            }
+                        ],
+                        "notifications": {
+                            "GSTAmount": "The GST amount should not be greater than the claimed amount.",
+                            "validGSTAmount": "Please enter a valid GST amount.",
+                            "claimedAmount": "Please enter a claimed amount."
+                        }
+                    }
+                ],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [
+                    {
+                        "name": "__slNo",
+                        "label": "Sl. No",
+                        "visible": true,
+                        "position": "in",
+                        "order": 1
+                    },
+                    {
+                        "name": "AccommodationType",
+                        "label": "Type",
+                        "visible": true,
+                        "position": "in",
+                        "order": 2
+                    },
+                    {
+                        "name": "Check-inDateTime",
+                        "label": "Check-in Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 3
+                    },
+                    {
+                        "type": "date",
+                        "name": "Check-outDateTime",
+                        "label": "Check-out Date Time",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
+                    },
+                    {
+                        "name": "City",
+                        "label": "City",
+                        "visible": true,
+                        "position": "in",
+                        "order": 5
+                    },
+                    {
+                        "name": "HotelName",
+                        "label": "Hotel Name / Guest House Name",
+                        "visible": true,
+                        "position": "in",
+                        "order": 6
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 7
+                    },
+                    {
+                        "type": "string",
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "in-out",
+                        "order": 8
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Claimed Amount",
+                        "visible": true,
+                        "position": "in-out",
+                        "decimalPrecision": "2",
+                        "order": 9
+                    },
+                    {
+                        "name": "__actions",
+                        "label": "Actions",
+                        "visible": true,
+                        "position": "in",
+                        "order": 10
+                    },
+                    {
+                        "name": "CityGrade",
+                        "label": "City Grade",
+                        "visible": true,
+                        "position": "out",
+                        "order": 11
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "ClaimAmountInBaseCurrency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 12
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "label": "Payment Type",
+                        "visible": true,
+                        "position": "out",
+                        "order": 13
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 14
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement Amount",
+                        "visible": true,
+                        "position": "out",
+                        "order": 15
+                    },
+                    {
+                        "label": "Differential Amount",
+                        "name": "DifferentialAmount(INR)",
+                        "type": "number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 16
+                    },
+                    {
+                        "name": "Remarks",
+                        "label": "Justification",
+                        "visible": true,
+                        "position": "out",
+                        "order": 17
+                    }
+                ],
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gst",
+                        "label": "GST",
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true,
+                                "order": 4
+                            },
+                            {
+                                "type": "number",
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true,
+                                "order": 5
+                            },
+                            {
+                                "type": "number",
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true,
+                                "order": 6
+                            },
+                            {
+                                "type": "number",
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true,
+                                "order": 7
+                            },
+                            {
+                                "type": "number",
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true,
+                                "order": 8
+                            }
+                        ]
+                    },
+                    {
+                        "name": "attachment",
+                        "label": "Attachments",
+                        "dataKey": "attachment",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "FileName",
+                                "label": "File Name",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "name": "__actions",
+                                "label": "Action",
+                                "visible": true,
+                                "order": 3
+                            }
+                        ]
                     }
                 ]
             },
