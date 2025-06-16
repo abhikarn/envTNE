@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, Optional } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -20,12 +23,19 @@ export class AttachmentModalComponent {
   pageSize = 5;
   totalPages = 1;
   paginatedAttachments: any[] = [];
+  attachments: any[];
 
   constructor(
     private domSanitizer: DomSanitizer,
-    public dialogRef: MatDialogRef<AttachmentModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { attachments: any[] }
+    @Optional() @Inject(MAT_DIALOG_DATA) public dialogData: any,
+    @Optional() @Inject(MAT_BOTTOM_SHEET_DATA) public bottomSheetData: any,
+    @Optional() private dialogRef: MatDialogRef<AttachmentModalComponent>,
+    @Optional() private bottomSheetRef: MatBottomSheetRef<AttachmentModalComponent>,
   ) {
+    // Use whichever data is available
+    this.attachments = (dialogData && dialogData.attachments) ||
+                       (bottomSheetData && bottomSheetData.attachments) ||
+                       [];
     this.updatePagination();
   }
 
@@ -34,12 +44,12 @@ export class AttachmentModalComponent {
   }
 
   updatePagination() {
-    const total = this.data.attachments?.length || 0;
+    const total = this.attachments?.length || 0;
     this.totalPages = Math.ceil(total / this.pageSize) || 1;
     this.currentPage = Math.min(this.currentPage, this.totalPages);
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
-    this.paginatedAttachments = (this.data.attachments || []).slice(start, end);
+    this.paginatedAttachments = (this.attachments || []).slice(start, end);
   }
 
   changePage(page: number) {
@@ -60,6 +70,14 @@ export class AttachmentModalComponent {
     const url = file?.fileUrl || file?.Location;
     if (url) {
       window.open(url, '_blank');
+    }
+  }
+
+  close() {
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    } else if (this.bottomSheetRef) {
+      this.bottomSheetRef.dismiss();
     }
   }
 }
