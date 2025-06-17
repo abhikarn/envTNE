@@ -328,6 +328,24 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         return;
       }
     }
+
+    if (this.existingData?.length > 0) {
+      const checkInDateTime = this.form.value?.CheckInDateTime;
+      const checkOutDateTime = this.form.value?.CheckOutDateTime;
+
+      if (checkInDateTime && checkOutDateTime) {
+        const isConflict = this.existingData.some((row: any) => {
+          const existingCheckIn = row.CheckInDateTime;
+          const existingCheckOut = row.CheckOutDateTime;
+          return (new Date(checkInDateTime) < new Date(existingCheckOut)) && (new Date(checkOutDateTime) > new Date(existingCheckIn));
+        });
+
+        if (isConflict) {
+          this.snackbarService.error('Check-in and check-out times conflict with existing entries. Please adjust your dates.', 5000);
+          return;
+        }
+      }
+    } 
     this.validatePolicyViolation();
   }
 
