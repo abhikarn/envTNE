@@ -12,17 +12,21 @@ import { SnackbarService } from '../../../service/snackbar.service';
 import { GlobalConfigService } from '../../../service/global-config.service';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import _moment from 'moment';
+import { MatTimepickerModule } from '@angular/material/timepicker';
 
 // Custom date formats for display
 export const CUSTOM_DATE_FORMATS = {
   parse: {
     dateInput: 'DD-MMM-YYYY',
+    timeInput: 'HH:mm',
   },
   display: {
     dateInput: 'DD-MMM-YYYY',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'DD-MMM-YYYY',
     monthYearA11yLabel: 'MMMM YYYY',
+    timeInput: 'HH:mm',
+    timeOptionLabel: 'HH:mm',
   },
 };
 
@@ -34,7 +38,8 @@ export const CUSTOM_DATE_FORMATS = {
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    FunctionWrapperPipe
+    FunctionWrapperPipe,
+    MatTimepickerModule
   ],
   templateUrl: './date-input.component.html',
   styleUrls: ['./date-input.component.scss'],
@@ -54,6 +59,7 @@ export class DateInputComponent {
   @Input() form: any;
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   @Output() emitSpecificCase = new EventEmitter<any>();
+  timeControl: FormControl = new FormControl(null);
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -79,7 +85,7 @@ export class DateInputComponent {
         const isoDate = _moment.utc({
           year: value.getFullYear(),
           month: value.getMonth(),
-          day: value.getDate()
+          day: value.getDate(),
         }).toISOString();
         if (this.control.value !== isoDate) {
           this.control.setValue(isoDate, { emitEvent: false });
@@ -99,6 +105,26 @@ export class DateInputComponent {
         return;
       }
     });
+
+    this.timeControl.valueChanges.subscribe(timeValue => {
+      if (timeValue && this.control.value) {
+        const dateValue = _moment(this.control.value);
+        // time value is coming with today date, so we need to set the time only
+        // Extract hours and minutes from the time value
+        if (typeof timeValue !== 'string') {
+          // If timeValue is a string without ':', assume it's a timestamp
+          timeValue = _moment(timeValue, 'HH:mm').format('HH:mm');
+        }
+        const [hours, minutes] = timeValue.split(':').map(Number);
+        dateValue.set({ hour: hours, minute: minutes, second: 0, millisecond: 0 });
+        this.control.setValue(dateValue, { emitEvent: false });
+      }
+    });
+    // Initialize time control if time is enabled
+    if (this.controlConfig.time) {
+      const currentValue = this.control.value ? _moment(this.control.value) : _moment();
+      this.timeControl.setValue(currentValue.format('HH:mm'), { emitEvent: false });
+    }
   }
 
   getErrorMessage(): string {
@@ -114,6 +140,22 @@ export class DateInputComponent {
   }
 
   onDateSelect(event: MatDatepickerInputEvent<Date>): void {
+    // Ensure newDate is a native Date object
+    let newDate: Date | null = null;
+    if (event.value) {
+      if (_moment.isMoment(event.value)) {
+        newDate = event.value.toDate();
+      } else {
+        newDate = event.value;
+      }
+    }
+    if (newDate && this.controlConfig.time && this.control.value) {
+      const old = _moment(this.control.value);
+      newDate.setHours(old.hour(), old.minute(), old.second(), old.millisecond());
+    }
+    if (newDate) {
+      this.control.setValue(_moment.utc(newDate).toISOString());
+    }
     this.valueChange.emit({ event, control: this.controlConfig });
     if (this.controlConfig.dependentCases?.length > 0) {
       this.controlConfig.dependentCases.forEach((dependentCase: any) => {

@@ -1172,7 +1172,14 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2
+                        "order": 2,
+                        "time": {
+                            "type": "time",
+                            "name": "CheckInTime",
+                            "label": "time",
+                            "value": null,
+                            "required": true
+                        }
                     },
                     {
                         "type": "date",

@@ -21,3 +21,29 @@
   </mat-error>
   }
 </mat-form-field>
+
+@if (controlConfig.time) {
+<mat-form-field appearance="fill">
+  <mat-label>{{ controlConfig.time.label }}
+    @if (controlConfig.time.required) {
+    <span class="required-star">*</span>
+    }
+  </mat-label>
+
+  <div class="input-group">
+    <input matInput [matTimepicker]="timepicker" [formControl]="timeControl"
+      [min]="controlConfig.time.min" [max]="controlConfig.time.max" (click)="timepicker.open()" readonly>
+    <mat-timepicker #timepicker />
+    <mat-timepicker-toggle [for]="timepicker" matSuffix />
+
+  </div>
+
+  @if (control.invalid && control.touched) {
+  <mat-error>
+    {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
+  </mat-error>
+  }
+</mat-form-field>
+}
+
+{{control.value}}
