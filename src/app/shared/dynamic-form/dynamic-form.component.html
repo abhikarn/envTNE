@@ -31,7 +31,7 @@
   <div class="col-md-4">
     <lib-date-input [controlConfig]="control.formConfig" [control]="control.control" [form]="form"
       (valueChange)="onFieldValueChange(control.formConfig);handleEvent('dateChange', $event)"
-      [minDate]="minSelectableDate" [maxDate]="maxSelectableDate" (emitSpecificCase)="getSpecificCase($event)">
+      (emitSpecificCase)="getSpecificCase($event)">
     </lib-date-input>
   </div>
   }

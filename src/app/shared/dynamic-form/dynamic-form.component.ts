@@ -46,8 +46,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() category: any;
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
-  @Input() minSelectableDate?: Date;
-  @Input() maxSelectableDate?: Date;
   @Input() existingData: any;
   @Output() emitFormData = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();

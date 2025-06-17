@@ -220,7 +220,8 @@
                         "disable": false,
                         "readonly": false,
                         "order": 3,
-                        "policyViolationCheck": true
+                        "policyViolationCheck": true,
+                        "apiDateLimit": true
                     },
                     {
                         "type": "date",
@@ -239,8 +240,11 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "order": 3,
-                        "policyViolationCheck": false
+                        "policyViolationCheck": false,
+                        "apiDateLimit": false
                     },
                     {
                         "type": "text",
@@ -1179,7 +1183,8 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 2
+                        "order": 2,
+                        "apiDateLimit": true
                     },
                     {
                         "type": "date",
@@ -1204,7 +1209,8 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 3
+                        "order": 3,
+                        "apiDateLimit": true
                     },
                     {
                         "type": "text",
@@ -1299,6 +1305,8 @@
                         "label": "Bill Date",
                         "value": null,
                         "required": false,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "order": 8
                     },
                     {

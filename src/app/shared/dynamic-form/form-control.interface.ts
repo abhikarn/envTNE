@@ -45,4 +45,7 @@ export interface IFormControl {
   maxLength?: number;
   oCRRequired?: boolean;
   time?: any;
+  minDate?: string | Date;
+  maxDate?: string | Date;
+  apiDateLimit?: boolean;
 }

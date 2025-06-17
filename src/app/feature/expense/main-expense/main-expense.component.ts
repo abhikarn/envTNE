@@ -441,6 +441,19 @@ export class MainExpenseComponent {
         next: (response) => {
           const preview = response.ResponseValue;
           this.travelRequestPreview = { ...preview, UserMasterId: this.userMasterId };
+          
+          this.categories?.forEach((category: any) =>
+            category.formControls?.forEach((control: any) => {
+              if (control.apiDateLimit) {
+                if (!control?.minDate) {
+                  control.minDate = this.travelRequestPreview?.TravelDateFrom;
+                }
+                if (!control?.maxDate) {
+                  control.maxDate = this.travelRequestPreview?.TravelDateTo;
+                }
+              }
+            })
+          );
 
           this.travelDetails?.data?.forEach((config: any) => {
             const prop = config.name;

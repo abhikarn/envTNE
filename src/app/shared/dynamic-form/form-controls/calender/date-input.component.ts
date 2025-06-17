@@ -56,13 +56,13 @@ export const CUSTOM_DATE_FORMATS = {
 export class DateInputComponent {
   @Input() control: FormControl = new FormControl(null);
   @Input() controlConfig: IFormControl = { name: '' };
-  @Input() minDate?: Date;
-  @Input() maxDate?: Date;
   @Input() form: any;
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   @Output() emitSpecificCase = new EventEmitter<any>();
   timeControl: FormControl = new FormControl(null);
   pendingTime: string | null = null;
+  minDate: Date | null = null;
+  maxDate: Date | null = null;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -78,6 +78,15 @@ export class DateInputComponent {
       this.control.disable();
     }
 
+    setTimeout(() => {
+      if (this.controlConfig.apiDateLimit) {
+        this.minDate = this.controlConfig.minDate ? new Date(this.controlConfig.minDate) : null;
+        this.maxDate = this.controlConfig.maxDate ? new Date(this.controlConfig.maxDate) : null;
+      } else {
+        this.setDateLimits();
+      }
+    }, 500);
+
     this.control.valueChanges.subscribe(value => this.handleDateChange(value));
     this.timeControl.valueChanges.subscribe(time => this.handleTimeChange(time));
 
@@ -86,6 +95,25 @@ export class DateInputComponent {
       const initial = this.control.value ? _moment(this.control.value) : _moment();
       this.pendingTime = initial.format('HH:mm');
       this.timeControl.setValue(this.pendingTime, { emitEvent: false });
+    }
+  }
+
+  setDateLimits(): void {
+    console.log(this.controlConfig);
+    const config = this.controlConfig;
+
+    // Handle maxDate
+    if (config.maxDate === 'today') {
+      this.maxDate = new Date();
+    } else if (config.maxDate) {
+      this.maxDate = new Date(config.maxDate);
+    }
+
+    // Handle minDate
+    if (config.minDate === 'today') {
+      this.minDate = new Date();
+    } else if (config.minDate) {
+      this.minDate = new Date(config.minDate);
     }
   }
 
