@@ -1,49 +1,56 @@
-<mat-form-field appearance="fill">
-  <mat-label>{{ controlConfig.label }}
-    @if (controlConfig.required) {
-    <span class="required-star">*</span>
-    }
-  </mat-label>
+<div class="row">
+  <div [ngClass]="controlConfig.time ? 'col-md-8' : 'col-md-12'">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ controlConfig.label }}
+        @if (controlConfig.required) {
+        <span class="required-star">*</span>
+        }
+      </mat-label>
 
-  <div class="input-group">
-    <input matInput [matDatepicker]="picker" [formControl]="control" (dateChange)="onDateSelect($event)" [min]="minDate"
-      [max]="maxDate" (click)="picker.open()" readonly>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-    <span class="date-picker-icon align-top-t10">
-      <img src="images/date-icon.svg" alt="Calendar">
-    </span>
+      <div class="input-group">
+        <input matInput [matDatepicker]="picker" [formControl]="control" (dateChange)="onDateSelect($event)"
+          [min]="minDate" [max]="maxDate" (click)="picker.open()" readonly>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <span class="date-picker-icon align-top-t10">
+          <img src="images/date-icon.svg" alt="Calendar">
+        </span>
+      </div>
+
+      @if (control.invalid && control.touched) {
+      <mat-error>
+        {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
+      </mat-error>
+      }
+    </mat-form-field>
   </div>
 
-  @if (control.invalid && control.touched) {
-  <mat-error>
-    {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
-  </mat-error>
-  }
-</mat-form-field>
+  @if (controlConfig.time) {
+  <div class="col-md-4">
 
-@if (controlConfig.time) {
-<mat-form-field appearance="fill">
-  <mat-label>{{ controlConfig.time.label }}
-    @if (controlConfig.time.required) {
-    <span class="required-star">*</span>
-    }
-  </mat-label>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ controlConfig.time.label }}
+        @if (controlConfig.time.required) {
+        <span class="required-star">*</span>
+        }
+      </mat-label>
 
-  <div class="input-group">
-    <input matInput [matTimepicker]="timepicker" [formControl]="timeControl"
-      [min]="controlConfig.time.min" [max]="controlConfig.time.max" (click)="timepicker.open()" readonly>
-    <mat-timepicker #timepicker />
-    <mat-timepicker-toggle [for]="timepicker" matSuffix />
+      <div class="input-group">
+        <input matInput [matTimepicker]="timepicker" [formControl]="timeControl" [min]="controlConfig.time.min"
+          [max]="controlConfig.time.max" (click)="timepicker.open()">
+        <mat-timepicker #timepicker />
+        <mat-timepicker-toggle [for]="timepicker" matSuffix />
+        <span class="date-picker-icon align-top-t10">
+          <img src="images/time-icon.svg" alt="Calendar">
+        </span>
+      </div>
 
+      @if (control.invalid && control.touched) {
+      <mat-error>
+        {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
+      </mat-error>
+      }
+    </mat-form-field>
   </div>
-
-  @if (control.invalid && control.touched) {
-  <mat-error>
-    {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
-  </mat-error>
   }
-</mat-form-field>
-}
-
-{{control.value}}
+</div>

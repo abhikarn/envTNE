@@ -1105,7 +1105,7 @@
                         "dataType": "datetime",
                         "name": "CheckInDateTime",
                         "isExcluded": false,
-                        "label": "Check-in Date Time",
+                        "label": "Check-in Date",
                         "value": null,
                         "dependentCases": [
                             {
@@ -1172,21 +1172,21 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
                         "time": {
                             "type": "time",
                             "name": "CheckInTime",
                             "label": "time",
                             "value": null,
                             "required": true
-                        }
+                        },
+                        "order": 2
                     },
                     {
                         "type": "date",
                         "dataType": "datetime",
                         "name": "CheckOutDateTime",
                         "isExcluded": false,
-                        "label": "Check-out Date Time",
+                        "label": "Check-out Date",
                         "value": null,
                         "required": true,
                         "validations": [
@@ -1197,6 +1197,13 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "time": {
+                            "type": "time",
+                            "name": "CheckInTime",
+                            "label": "time",
+                            "value": null,
+                            "required": true
+                        },
                         "order": 3
                     },
                     {
@@ -1250,13 +1257,6 @@
                         "isExcluded": true,
                         "label": "City Grade",
                         "value": "",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "City Grade is required"
-                            }
-                        ],
                         "disable": false,
                         "readonly": true,
                         "order": 5

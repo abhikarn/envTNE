@@ -581,6 +581,14 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             }, 500);
           }
         });
+    } else {
+      this.setCalculatedFields();
+      this.setAutoCompleteFields();
+      this.prepareFormJson();
+      this.addDataToDynamicTable();
+      setTimeout(() => {
+        this.clear();
+      }, 500);
     }
   }
 

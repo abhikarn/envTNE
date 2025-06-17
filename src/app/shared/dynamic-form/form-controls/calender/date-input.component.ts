@@ -13,6 +13,7 @@ import { GlobalConfigService } from '../../../service/global-config.service';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import _moment from 'moment';
 import { MatTimepickerModule } from '@angular/material/timepicker';
+import { CommonModule } from '@angular/common';
 
 // Custom date formats for display
 export const CUSTOM_DATE_FORMATS = {
@@ -33,6 +34,7 @@ export const CUSTOM_DATE_FORMATS = {
 @Component({
   selector: 'lib-date-input',
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatDatepickerModule,
@@ -60,6 +62,7 @@ export class DateInputComponent {
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   @Output() emitSpecificCase = new EventEmitter<any>();
   timeControl: FormControl = new FormControl(null);
+  pendingTime: string | null = null;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -75,56 +78,59 @@ export class DateInputComponent {
       this.control.disable();
     }
 
-    this.control.valueChanges.subscribe(value => {
-      // If value is already an ISO string, do nothing
-      if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
-        return;
-      }
-      // If value is a Date object, treat as local and convert to UTC midnight
-      if (value instanceof Date) {
-        const isoDate = _moment.utc({
-          year: value.getFullYear(),
-          month: value.getMonth(),
-          day: value.getDate(),
-        }).toISOString();
-        if (this.control.value !== isoDate) {
-          this.control.setValue(isoDate, { emitEvent: false });
-        }
-        return;
-      }
-      // If value is a moment object, treat as local and convert to UTC midnight
-      if (_moment.isMoment(value)) {
-        const isoDate = _moment.utc({
-          year: value.year(),
-          month: value.month(),
-          day: value.date()
-        }).toISOString();
-        if (this.control.value !== isoDate) {
-          this.control.setValue(isoDate, { emitEvent: false });
-        }
-        return;
-      }
+    this.control.valueChanges.subscribe(value => this.handleDateChange(value));
+    this.timeControl.valueChanges.subscribe(time => this.handleTimeChange(time));
+
+    // Pre-fill time control from existing datetime
+    if (this.controlConfig.time) {
+      const initial = this.control.value ? _moment(this.control.value) : _moment();
+      this.pendingTime = initial.format('HH:mm');
+      this.timeControl.setValue(this.pendingTime, { emitEvent: false });
+    }
+  }
+
+  handleDateChange(value: any): void {
+    if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) return;
+
+    let dateMoment: _moment.Moment | null = null;
+
+    if (value instanceof Date) {
+      dateMoment = _moment(value);
+    } else if (_moment.isMoment(value)) {
+      dateMoment = value;
+    }
+
+    if (dateMoment) {
+      const time = this.pendingTime ?? '00:00';
+      this.setControlValueWithTime(dateMoment, time);
+    }
+  }
+
+  handleTimeChange(timeValue: any): void {
+    if (!timeValue) return;
+
+    this.pendingTime = typeof timeValue === 'string' && timeValue.includes(':')
+      ? timeValue
+      : _moment(timeValue, 'HH:mm').format('HH:mm');
+
+    if (this.control.value) {
+      const dateMoment = _moment(this.control.value);
+      this.setControlValueWithTime(dateMoment, this.pendingTime);
+    }
+  }
+
+  setControlValueWithTime(date: _moment.Moment, timeStr: string): void {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+
+    date.set({
+      hour: hours,
+      minute: minutes,
+      second: 0,
+      millisecond: 0
     });
 
-    this.timeControl.valueChanges.subscribe(timeValue => {
-      if (timeValue && this.control.value) {
-        const dateValue = _moment(this.control.value);
-        // time value is coming with today date, so we need to set the time only
-        // Extract hours and minutes from the time value
-        if (typeof timeValue !== 'string') {
-          // If timeValue is a string without ':', assume it's a timestamp
-          timeValue = _moment(timeValue, 'HH:mm').format('HH:mm');
-        }
-        const [hours, minutes] = timeValue.split(':').map(Number);
-        dateValue.set({ hour: hours, minute: minutes, second: 0, millisecond: 0 });
-        this.control.setValue(dateValue, { emitEvent: false });
-      }
-    });
-    // Initialize time control if time is enabled
-    if (this.controlConfig.time) {
-      const currentValue = this.control.value ? _moment(this.control.value) : _moment();
-      this.timeControl.setValue(currentValue.format('HH:mm'), { emitEvent: false });
-    }
+    const localIso = date.format('YYYY-MM-DDTHH:mm:ss');
+    this.control.setValue(localIso, { emitEvent: false });
   }
 
   getErrorMessage(): string {
