@@ -442,7 +442,18 @@ export class MainExpenseComponent {
           const preview = response.ResponseValue;
           this.travelRequestPreview = { ...preview, UserMasterId: this.userMasterId };
           
-          this.categories?.forEach((category: any) =>
+          // Number of travel days
+          let travelDays = 0;
+          if (this.travelRequestPreview?.TravelDateFrom && this.travelRequestPreview?.TravelDateTo) {
+            const fromDate = new Date(this.travelRequestPreview.TravelDateFrom);
+            const toDate = new Date(this.travelRequestPreview.TravelDateTo);
+            travelDays = Math.ceil((toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24));
+          }
+
+          this.categories?.forEach((category: any) => {
+            if (!category?.travelDays) {
+              category.travelDays = travelDays;
+            }
             category.formControls?.forEach((control: any) => {
               if (control.apiDateLimit) {
                 if (!control?.minDate) {
@@ -453,7 +464,7 @@ export class MainExpenseComponent {
                 }
               }
             })
-          );
+          });
 
           this.travelDetails?.data?.forEach((config: any) => {
             const prop = config.name;

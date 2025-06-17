@@ -329,6 +329,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       }
     }
 
+    if (this.category?.noOfEntryCheck && this.existingData?.length === this.category.travelDays) {
+      this.snackbarService.error(`You can only add ${this.category.travelDays} entries for this category.`, 5000);
+      return;
+    }
+
     if (this.existingData?.length > 0) {
       const checkInDateTime = this.form.value?.CheckInDateTime;
       const checkOutDateTime = this.form.value?.CheckOutDateTime;

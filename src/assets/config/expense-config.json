@@ -1065,6 +1065,7 @@
             {
                 "name": "Accommodation",
                 "label": "Accommodation",
+                "noOfEntryCheck": true,
                 "formControls": [
                     {
                         "type": "file",
