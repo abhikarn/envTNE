@@ -1117,7 +1117,7 @@
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
-                                    "Check-inDateTime": "ReferenceDate"
+                                    "CheckInDateTime": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "ClaimedConversionRate": "ResponseValue.Value"
@@ -1135,7 +1135,7 @@
                                 "key": "CityMasterId",
                                 "inputControls": {
                                     "City": "CityId",
-                                    "Check-inDateTime": "ReferenceDate"
+                                    "CheckInDateTime": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "CityGrade": "ResponseValue.Grade"
@@ -1151,7 +1151,7 @@
                                 "isGeneral": false,
                                 "inputControls": {
                                     "CityGrade": "CityGradeId",
-                                    "Check-inDateTime": "ReferenceDate"
+                                    "CheckInDateTime": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "CityGrade": "ResponseValue.Grade"
@@ -1228,10 +1228,11 @@
                         "apiMethod": "getMasterNameById",
                         "dependentCases": [
                             {
+                                "isGeneral": true,
                                 "key": "CityMasterId",
                                 "inputControls": {
                                     "City": "CityId",
-                                    "Check-inDateTime": "ReferenceDate"
+                                    "CheckInDateTime": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "CityGrade": "ResponseValue.Grade"
@@ -1263,6 +1264,13 @@
                         "isExcluded": true,
                         "label": "City Grade",
                         "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "City Grade is required"
+                            }
+                        ],
                         "disable": false,
                         "readonly": true,
                         "order": 5
@@ -1488,7 +1496,7 @@
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
-                                    "Check-inDateTime": "ReferenceDate"
+                                    "CheckInDateTime": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "ClaimedConversionRate": "ResponseValue.Value"
@@ -1912,15 +1920,16 @@
                         "order": 2
                     },
                     {
-                        "name": "Check-inDateTime",
+                        "type": "datetime",
+                        "name": "CheckInDateTime",
                         "label": "Check-in Date",
                         "visible": true,
                         "position": "in",
                         "order": 3
                     },
                     {
-                        "type": "date",
-                        "name": "Check-outDateTime",
+                        "type": "datetime",
+                        "name": "CheckOutDateTime",
                         "label": "Check-out Date Time",
                         "visible": true,
                         "position": "in",
@@ -2019,7 +2028,7 @@
                         "order": 16
                     },
                     {
-                        "name": "Remarks",
+                        "name": "Justification",
                         "label": "Justification",
                         "visible": true,
                         "position": "out",
@@ -2360,7 +2369,7 @@
                     },
                     {
                         "type": "date",
-                        "name": "Check-inDateTime",
+                        "name": "CheckInDateTime",
                         "label": "Check-in Date Time",
                         "value": null,
                         "events": {
@@ -2375,7 +2384,7 @@
                     },
                     {
                         "type": "date",
-                        "name": "Check-outDateTime",
+                        "name": "CheckOutDateTime",
                         "label": "Check-out Date Time",
                         "value": null,
                         "events": {

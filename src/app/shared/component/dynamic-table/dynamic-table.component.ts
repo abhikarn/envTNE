@@ -106,11 +106,18 @@ export class DynamicTableComponent implements OnInit {
 
     // Only treat as date if column type is 'date' or 'datetime'
     const column = this.categoryConfig?.columns?.find((col: any) => col.name === columnName);
-    const isDateType = column && (column.type === 'date' || column.type === 'datetime');
+    const isDateType = column && (column.type === 'date');
     if (isDateType && this.isDate(value)) {
       const format = this.configService.dateFormat || 'dd-MMM-yyyy';
       return this.formatDateUsingFormat(value, format);
     }
+
+    const isDateTimeType = column && (column.type === 'datetime');
+    if (isDateTimeType && this.isDate(value)) {
+      const format = this.configService.dateTimeFormat || 'dd-MMM-yyyy HH:mm';
+      return this.formatDateUsingFormat(value, format);
+    }
+
     return value;
   }
 
