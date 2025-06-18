@@ -7,7 +7,8 @@
   @case ('text') {
   <div class="col-md-4">
     <lib-text-input [controlConfig]="control.formConfig" [control]="control.control"
-      (emitInputValue)="getInputValue($event)" [form]="form">
+      (emitInputValue)="getInputValue($event)" [form]="form"
+      (valueChange)="onFieldValueChange(control.formConfig)">
     </lib-text-input>
   </div>
   }

@@ -1139,7 +1139,8 @@
                                     "CheckInDateTime": "ReferenceDate"
                                 },
                                 "outputControl": {
-                                    "CityGrade": "ResponseValue.Grade"
+                                    "CityGrade": "ResponseValue.Grade",
+                                    "CityGradeId": "ResponseValue.GradeId"
                                 },
                                 "event": "dateChange",
                                 "requestBody": {
@@ -1155,7 +1156,8 @@
                                     "CheckInDateTime": "ReferenceDate"
                                 },
                                 "outputControl": {
-                                    "CityGrade": "ResponseValue.Grade"
+                                    "CityGrade": "ResponseValue.Grade",
+                                    "CityGradeId": "ResponseValue.GradeId"
                                 },
                                 "event": "dateChange",
                                 "requestBody": {
@@ -1185,7 +1187,8 @@
                             "required": true
                         },
                         "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "policyViolationCheck": true
                     },
                     {
                         "type": "date",
@@ -1236,7 +1239,8 @@
                                     "CheckInDateTime": "ReferenceDate"
                                 },
                                 "outputControl": {
-                                    "CityGrade": "ResponseValue.Grade"
+                                    "CityGrade": "ResponseValue.Grade",
+                                    "CityGradeId": "ResponseValue.GradeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {
@@ -1274,7 +1278,8 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5
+                        "order": 5,
+                        "policyViolationCheck": true
                     },
                     {
                         "type": "text",
@@ -1901,8 +1906,60 @@
                             "validGSTAmount": "Please enter a valid GST amount.",
                             "claimedAmount": "Please enter a claimed amount."
                         }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "CityGradeId",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsBillRequired",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsActual",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTaxIncluded",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
                 ],
+                "submitPolicyValidationApi": {
+                    "apiService": "ExpenseService",
+                    "apiMethod": "expenseGetExpensePolicyEntitlement",
+                    "requestBody": {
+                        "ClaimTypeId": 53,
+                        "ExpenseCategoryId": 3,
+                        "PolicyReferenceId": 53,
+                        "CountryGradeId": 0
+                    },
+                    "otherControls": {
+                        "TravelRequestId": "TravelRequestId",
+                        "UserMasterId": "UserMasterId"
+                    },
+                    "inputControls": {
+                        "CheckInDateTime": "ReferenceDate",
+                        "CityGradeId": "CityGradeId"
+                    },
+                    "outputControl": {
+                        "EntitlementAmount": "ResponseValue.EntitlementAmount",
+                        "IsBillRequired": "ResponseValue.IsBillRequired",
+                        "IsActual": "ResponseValue.IsActual",
+                        "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    }
+                },
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [

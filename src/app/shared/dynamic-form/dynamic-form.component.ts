@@ -657,11 +657,30 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           confirmPopupData.cancelButton = false;
           this.confirmDialogService.confirm(confirmPopupData).subscribe();
         }
+
+        if (this.form.value.IsActual) {
+          const fieldsToRemove = [
+            'EntitlementCurrency',
+            'EntitlementAmount',
+            'EntitlementConversionRate',
+            'DifferentialAmount(INR)'
+          ];
+
+          fieldsToRemove.forEach(field => {
+            this.form.removeControl(field);
+            const control = this.formControls.find(c => c.formConfig.name === field);
+            if (control) {
+              control.formConfig.showInUI = false;
+            }
+          });
+        }
+
         this.updateConditionalValidators();
       });
   }
 
   onFieldValueChange(control: IFormControl) {
+    debugger;
     if (control.policyViolationCheck) {
       this.validateFieldPolicyViolation(control);
     }

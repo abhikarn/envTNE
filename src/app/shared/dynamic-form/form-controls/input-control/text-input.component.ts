@@ -30,6 +30,7 @@ export class TextInputComponent implements OnInit {
   @Input() controlConfig: IFormControl = { name: '' };
   @Input() form: any;
   @Output() emitInputValue = new EventEmitter<any>();
+  @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   displayValue: any;
   passwordVisible: boolean = false;
 
@@ -42,6 +43,13 @@ export class TextInputComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.control.valueChanges.subscribe(inputValue => {
+      this.valueChange.emit({
+        event: inputValue,
+        control: this.controlConfig
+      });
+    });
+
     if (this.controlConfig.disable) {
       this.control.disable();
     }
