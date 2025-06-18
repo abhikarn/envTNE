@@ -48,4 +48,6 @@ export interface IFormControl {
   minDate?: string | Date;
   maxDate?: string | Date;
   apiDateLimit?: boolean;
+  EntitlementAmountCalculation?: boolean;
+  taxCalculation?: any;
 }

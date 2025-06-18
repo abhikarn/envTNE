@@ -210,6 +210,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
     });
+    this.form.reset();
   }
 
   setupAutoFormat(config: any, configService: GlobalConfigService): void {
@@ -685,7 +686,57 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         this.validateFieldPolicyViolation(control);
       }, 500);
     }
-    // ...existing logic for value change...
+    if (control.EntitlementAmountCalculation) {
+      this.calculateEntitlementAmount();
+    }
+    if (control.taxCalculation) {
+      this.calculateDifferentialAmount(control);
+    }
+
+  }
+
+  calculateDifferentialAmount(control: IFormControl) {
+    const config = control.taxCalculation;
+
+    const claimAmount = parseFloat(this.form.get(config.inputControls.ClaimAmount)?.value || 0);
+    const entitlementAmount = parseFloat(this.form.get(config.inputControls.EntitlementAmount)?.value || 0);
+    const taxAmount = parseFloat(this.form.get(control.name)?.value || 0); // control.name is "TaxAmount"
+    const outputControlName = Object.keys(config.outputControl)[0];
+
+    let differentialAmount = 0;
+
+    if (config.IsTaxExclusive) {
+      differentialAmount = entitlementAmount - claimAmount;
+    } else {
+      differentialAmount = entitlementAmount - (claimAmount + taxAmount);
+    }
+
+    if (differentialAmount < 0) {
+      differentialAmount = Math.abs(differentialAmount);
+      this.form.get(outputControlName)?.setValue(differentialAmount);
+      this.form.get('IsViolation')?.setValue(true);
+    } else {
+      const precision = this.configService.getDecimalPrecision();
+      this.form.get(outputControlName)?.setValue((0).toFixed(precision));
+      this.form.get('IsViolation')?.setValue(false);
+    }
+  }
+
+
+  calculateEntitlementAmount() {
+    // Calculate entitlement amount based on the checkin and checkout dates
+    const checkInDate = this.form.get('CheckInDateTime')?.value;
+    const checkOutDate = this.form.get('CheckOutDateTime')?.value;
+    if (checkInDate && checkOutDate) {
+      const checkIn = new Date(checkInDate);
+      const checkOut = new Date(checkOutDate);
+      const timeDiff = Math.abs(checkOut.getTime() - checkIn.getTime());
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Convert to days
+      // calculate entitlement amount using original entitlement amount and number of days
+      const originalEntitlementAmount = this.form.get('OriginalEntitlementAmount')?.value || 0;
+      const entitlementAmount = originalEntitlementAmount * diffDays;
+      this.form.get('EntitlementAmount')?.setValue(entitlementAmount.toFixed(this.configService.getDecimalPrecision()));
+    }
   }
 
   mapOtherControls(data: any, otherControls: Record<string, string>): Record<string, any> {

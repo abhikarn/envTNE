@@ -1188,7 +1188,8 @@
                         },
                         "order": 2,
                         "apiDateLimit": true,
-                        "policyViolationCheck": true
+                        "policyViolationCheck": true,
+                        "EntitlementAmountCalculation": true
                     },
                     {
                         "type": "date",
@@ -1208,13 +1209,14 @@
                         "readonly": false,
                         "time": {
                             "type": "time",
-                            "name": "CheckInTime",
+                            "name": "CheckOutTime",
                             "label": "time",
                             "value": null,
                             "required": true
                         },
                         "order": 3,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "EntitlementAmountCalculation": true
                     },
                     {
                         "type": "text",
@@ -1279,7 +1281,8 @@
                         "disable": false,
                         "readonly": true,
                         "order": 5,
-                        "policyViolationCheck": true
+                        "policyViolationCheck": true,
+                        "EntitlementAmountCalculation": true
                     },
                     {
                         "type": "text",
@@ -1542,7 +1545,17 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14
+                        "order": 14,
+                        "taxCalculation": {
+                            "IsTaxExclusive": true,
+                            "inputControls": {
+                                "ClaimAmount": "ClaimAmount",
+                                "EntitlementAmount": "EntitlementAmount"
+                            },
+                            "outputControl": {
+                                "DifferentialAmount(INR)": "DifferentialAmount(INR)"
+                            }
+                        }
                     },
                     {
                         "type": "text",
@@ -1592,7 +1605,17 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 16
+                        "order": 16,
+                        "taxCalculation": {
+                            "IsTaxExclusive": true,
+                            "inputControls": {
+                                "ClaimAmount": "ClaimAmount",
+                                "EntitlementAmount": "EntitlementAmount"
+                            },
+                            "outputControl": {
+                                "DifferentialAmount(INR)": "DifferentialAmount(INR)"
+                            }
+                        }
                     },
                     {
                         "type": "text",
@@ -1946,6 +1969,20 @@
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "OriginalEntitlementAmount",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsViolation",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
                 ],
                 "submitPolicyValidationApi": {
@@ -1967,6 +2004,7 @@
                     },
                     "outputControl": {
                         "EntitlementAmount": "ResponseValue.EntitlementAmount",
+                        "OriginalEntitlementAmount": "ResponseValue.EntitlementAmount",
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
