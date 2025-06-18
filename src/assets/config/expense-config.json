@@ -1278,8 +1278,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5,
-                        "policyViolationCheck": true
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -1308,7 +1307,13 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
-                        "required": false,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Bill Number is required"
+                            }
+                        ],
                         "order": 7
                     },
                     {
@@ -1345,7 +1350,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 9,
+                        "policyViolationCheck": true
                     },
                     {
                         "type": "select",
@@ -1424,7 +1430,7 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false,
+                        "readonly": true,
                         "order": 11
                     },
                     {
@@ -1577,7 +1583,13 @@
                         "isExcluded": true,
                         "label": "Tax Amount",
                         "value": 0,
-                        "required": false,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Tax Amount is required"
+                            }
+                        ],
                         "disable": false,
                         "readonly": false,
                         "order": 16
