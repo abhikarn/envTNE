@@ -108,7 +108,7 @@ export class TextInputComponent implements OnInit {
       }
 
       // Set value without formatting to .00 etc. (formatting will be done onBlur)
-      this.control.setValue(formattedValue, { emitEvent: false });
+      this.control.setValue(formattedValue);
     }
   }
 
@@ -130,7 +130,7 @@ export class TextInputComponent implements OnInit {
         setTimeout(() => {
           // Only show error if user typed something (not empty/null/undefined)
           if (!isValid && value && value !== '') {
-            this.control.setValue(null, { emitEvent: false });
+            this.control.setValue(null);
             this.snackbarService.error(`Please select a valid city from the list for ${this.controlConfig.label}.`);
             return;
           }
@@ -145,7 +145,7 @@ export class TextInputComponent implements OnInit {
 
     // Handle empty or null input: set to 0 with precision
     if (value === null || value === undefined || value === '') {
-      this.control.setValue(this.getFormattedValue(0), { emitEvent: false });
+      this.control.setValue(this.getFormattedValue(0));
       return;
     }
 
@@ -155,7 +155,7 @@ export class TextInputComponent implements OnInit {
       const numericValue = parseFloat(value);
       if (!isNaN(numericValue)) {
         const formatted = this.getFormattedValue(numericValue);
-        this.control.setValue(formatted, { emitEvent: false });
+        this.control.setValue(formatted);
       }
     }
 
@@ -216,9 +216,9 @@ export class TextInputComponent implements OnInit {
                 const value = this.extractValueFromPath(response, responsePath);
                 if (value !== undefined) {
                   if (dependentCase.autoFormat?.decimal) {
-                    this.form.get(outputControl)?.setValue(`${value}${dependentCase.autoFormat.decimal}`, { emitEvent: false });
+                    this.form.get(outputControl)?.setValue(`${value}${dependentCase.autoFormat.decimal}`);
                   } else {
-                    this.form.get(outputControl)?.setValue(value, { emitEvent: false });
+                    this.form.get(outputControl)?.setValue(value);
                   }
                 }
               }

@@ -562,7 +562,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             for (const [outputControl, responsePath] of Object.entries(this.category.submitPolicyValidationApi.outputControl) as [string, string][]) {
               const value = this.extractValueFromPath(response, responsePath);
               if (value !== undefined) {
-                this.form.get(outputControl)?.setValue(value, { emitEvent: false });
+                this.form.get(outputControl)?.setValue(value);
               }
             }
           }
@@ -637,7 +637,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           for (const [outputControl, responsePath] of Object.entries(this.category.submitPolicyValidationApi.outputControl) as [string, string][]) {
             const value = this.extractValueFromPath(response, responsePath);
             if (value !== undefined) {
-              this.form.get(outputControl)?.setValue(value, { emitEvent: false });
+              this.form.get(outputControl)?.setValue(value);
             }
           }
         }
@@ -680,9 +680,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onFieldValueChange(control: IFormControl) {
-    debugger;
     if (control.policyViolationCheck) {
-      this.validateFieldPolicyViolation(control);
+      setTimeout(() => {
+        this.validateFieldPolicyViolation(control);
+      }, 500);
     }
     // ...existing logic for value change...
   }
@@ -750,7 +751,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       });
 
       const calculatedValue = this.safeEvaluateFormula(formula, values);
-      this.form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(this.configService.getDecimalPrecision()), { emitEvent: false });
+      this.form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(this.configService.getDecimalPrecision()));
     });
   }
 

@@ -1278,7 +1278,8 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5
+                        "order": 5,
+                        "policyViolationCheck": true
                     },
                     {
                         "type": "text",
@@ -1350,8 +1351,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9,
-                        "policyViolationCheck": true
+                        "order": 9
                     },
                     {
                         "type": "select",
