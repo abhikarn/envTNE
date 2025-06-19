@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlFactory } from './form-control.factory';
 import { IFormControl } from './form-control.interface';
@@ -42,6 +42,7 @@ import { SnackbarService } from '../service/snackbar.service';
 export class DynamicFormComponent implements OnInit, OnChanges {
   @ViewChild(CostCenterComponent) costCenterComponentRef!: CostCenterComponent;
   @ViewChild(GstComponent) gstComponentRef!: GstComponent;
+  @ViewChildren(DateInputComponent) dateInputComponentRef!: QueryList<DateInputComponent>;
   @Input() moduleData: any;
   @Input() category: any;
   @Input() formConfig: IFormControl[] = [];
@@ -523,6 +524,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   clear() {
     this.isClearing = true;
     this.form.reset();
+    this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
+      dateInput.timeControl.reset();
+    });
     this.costCenterComponentRef.setMultipleCostCenterFlag(false);
     this.costCenterComponentRef.costCenterData = [];
     this.gstComponentRef.setCompanyGSTFlag(false);
@@ -530,7 +534,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.selectedFiles = [];
     this.formControls?.forEach((control: any) => {
       if (control.formConfig?.defaultValue) {
-        control.control.setValue(control.formConfig.defaultValue?.Id);
+        control.control.setValue(control.formConfig.defaultValue?.Id, { emitEvent: false });
       }
     });
     setTimeout(() => {

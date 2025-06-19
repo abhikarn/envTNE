@@ -44,11 +44,12 @@ export class TextInputComponent implements OnInit {
 
   ngOnInit() {
     this.control.valueChanges.subscribe(inputValue => {
-      this.valueChange.emit({
-        event: inputValue,
-        control: this.controlConfig
-      });
-      if (this.controlConfig.readonly) {
+      if (inputValue) {
+        this.valueChange.emit({
+          event: inputValue,
+          control: this.controlConfig
+        });
+        if (this.controlConfig.readonly) {
           if (this.controlConfig.dependentCases?.length > 0) {
             this.controlConfig.dependentCases.forEach((dependentCase: any) => {
               if (dependentCase.event === "onBlur") {
@@ -57,6 +58,7 @@ export class TextInputComponent implements OnInit {
             });
           }
         }
+      }
     });
 
     if (this.controlConfig.disable) {
@@ -78,7 +80,7 @@ export class TextInputComponent implements OnInit {
           }
         }
 
-        if (typeof inputValue == "object") {
+        if (inputValue !== null && inputValue !== undefined && typeof inputValue === "object") {
           if (this.controlConfig.dependentCases?.length > 0) {
             this.controlConfig.dependentCases.forEach((dependentCase: any) => {
               if (dependentCase.event === "autoComplete") {
