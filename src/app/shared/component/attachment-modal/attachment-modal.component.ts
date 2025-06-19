@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Optional } from '@angular/core';
+import { Component, Inject, Optional, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from '../../../../environment';
 
 @Component({
   selector: 'app-attachment-modal',
@@ -15,7 +16,8 @@ import { DomSanitizer } from '@angular/platform-browser';
     MatIconModule
   ],
   templateUrl: './attachment-modal.component.html',
-  styleUrl: './attachment-modal.component.scss'
+  styleUrl: './attachment-modal.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class AttachmentModalComponent {
 
@@ -34,8 +36,8 @@ export class AttachmentModalComponent {
   ) {
     // Use whichever data is available
     this.attachments = (dialogData && dialogData.attachments) ||
-                       (bottomSheetData && bottomSheetData.attachments) ||
-                       [];
+      (bottomSheetData && bottomSheetData.attachments) ||
+      [];
     this.updatePagination();
   }
 
@@ -58,19 +60,43 @@ export class AttachmentModalComponent {
     this.updatePagination();
   }
 
-  downloadFile(file: any) {
-    const url = this.domSanitizer.bypassSecurityTrustResourceUrl(file?.fileUrl || file?.Location);
-    const link = document.createElement('a');
-    link.href = url.toString();
-    link.download = file?.FileName || 'downloaded-file';
-    link.click();
-  }
+  // downloadFile(file: any) {
+  //   const url = this.domSanitizer.bypassSecurityTrustResourceUrl(file?.fileUrl || file?.Location);
+  //   const link = document.createElement('a');
+  //   link.href = url.toString();
+  //   link.download = file?.FileName || 'downloaded-file';
+  //   link.click();
+  // }
+
+  // previewFile(file: any) {
+  //   const url = file?.fileUrl || file?.Location;
+  //   if (url) {
+  //     window.open(url, '_blank');
+  //   }
+  // }
 
   previewFile(file: any) {
-    const url = file?.fileUrl || file?.Location;
-    if (url) {
-      window.open(url, '_blank');
+    const extension = file.FileName.split('.').pop()?.toLowerCase();
+    const baseName = file.FileName.replace(/\.[^/.]+$/, '');
+    const fileUrl = `${environment.documentBaseUrl}/${baseName}-${file.Guid}.${extension}`;
+    if (fileUrl) {
+      window.open(fileUrl, '_blank');
     }
+  }
+
+  downloadFile(file: any) {
+    
+    const extension = file.FileName.split('.').pop()?.toLowerCase();
+    const baseName = file.FileName.replace(/\.[^/.]+$/, '');
+    const fileUrl = `${environment.documentBaseUrl}/${baseName}-${file.Guid}.${extension}`;
+    // if (extension === 'pdf') {
+    window.open(fileUrl, '_blank');
+    // } else {
+    //   const link = document.createElement('a');
+    //   link.href = fileUrl;
+    //   link.download = file.FileName || 'downloaded-file';
+    //   link.click();
+    // }
   }
 
   close() {

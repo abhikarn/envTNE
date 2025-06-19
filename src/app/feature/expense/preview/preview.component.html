@@ -107,9 +107,14 @@
                                  <app-expansion-panel [title]="category.label" [expanded]="category.expanded"
                                     [amount]="category.amount">
                                     @if(category.columns) {
-                                    <app-material-table [categoryName]="category.name" [categoryGST]="category?.gst"
-                                       [mode]="mode" [data]="category.data" [columnConfig]="category.columns"
-                                       [slNoLabel]="category.slNoLabel" [nestedTables]="category.nestedTables"
+                                    <app-material-table
+                                       [categoryName]="category.name"
+                                       [categoryGST]="category?.gst"
+                                       [mode]="mode"
+                                       [data]="category.data"
+                                       [columnConfig]="category.columns"
+                                       [slNoLabel]="category.slNoLabel"
+                                       [nestedTables]="category.nestedTables"
                                        (selectionChanged)="getSelection($event)"
                                        (emitExpenseRequestDetailId)="showRemarks($event)">
                                     </app-material-table>
@@ -232,8 +237,7 @@
                                     </tr>
                                  </thead>
                                  <tbody>
-                                    <tr
-                                       *ngFor="let adjustment of expenseRequestPreviewData?.expenseRequestAdjustment; track $index">
+                                    <tr *ngFor="let adjustment of expenseRequestPreviewData?.expenseRequestAdjustment; let $index = index">
                                        <td data-label="Amount">
                                           <span class="amount-text">{{adjustment?.currency}}
                                              {{adjustment?.adjustmentAmountInBaseCurrency}}</span>
@@ -247,13 +251,10 @@
                               }
                               }
                               @if (mode == 'finance-approval') {
-                              <div class="row mt-2">
-                                  
+                              <div class="row mt-2">                                  
                                     @if(isCreateAdjustmentform) {
-                                    <app-create-dynamic-form
-                                       [formConfig]="detail.formControls"></app-create-dynamic-form>
-                                    }
-                                  
+                                    <app-create-dynamic-form [formConfig]="detail.formControls" ></app-create-dynamic-form>
+                                    }                                  
                               </div>
                               }
                               }
@@ -271,7 +272,10 @@
                      <div class="expense-drawer">
                         <div class="exp-det">
                            <h6 class="text-dark">Expense Bill Details</h6>
-                           <label>Total:</label> <span>{{ summaryComponent?.totalExpense || 0 | number:'1.2-2' }}</span>
+                           <label>Total:</label>
+                           <span>
+                             {{ $any(summaryComponent)?.totalExpense != null ? ($any(summaryComponent)?.totalExpense | number:'1.2-2') : '0.00' }}
+                           </span>
                         </div>
                         <div class="exp-view">
                            <button id="viewDetailsBtn" (click)="closeExpenseSummarySheet()"> Close Details <i
@@ -280,8 +284,7 @@
                      </div>
                      <!-- Summary -->
                      @if (loadData) {
-                     <app-summary [summaries]="expenseSummary"
-                        [expenseRequestData]="expenseRequestPreviewData"></app-summary>
+                     <app-summary [summaries]="expenseSummary" [expenseRequestData]="expenseRequestPreviewData"></app-summary>
                      }
                      <div class="row mt-3">
                         @if (mode == 'preview') {
@@ -348,7 +351,10 @@
                   <div class="expense-drawer">
                      <div class="exp-det">
                         <h6 class="text-dark">Expense Bill Details</h6>
-                        <label>Total:</label> <span>{{ summaryComponent?.totalExpense || 0 | number:'1.2-2' }}</span>
+                        <label>Total:</label>
+                        <span>
+                          {{ $any(summaryComponent)?.totalExpense != null ? ($any(summaryComponent)?.totalExpense | number:'1.2-2') : '0.00' }}
+                        </span>
                      </div>
                      <div class="exp-view">
                         <button id="viewDetailsBtn" (click)="openExpenseSummarySheet(expenseSummarySheet)"> View Details

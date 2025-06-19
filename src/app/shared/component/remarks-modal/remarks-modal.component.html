@@ -1,43 +1,41 @@
 <div class="modal-dialog modal-xl ">
-      <div class="modal-content" style="background-color: #F7F7FA;">
- <div class="modal-header">
+    <div class="modal-content" style="background-color: #F7F7FA;">
+        <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-             Remarks
+                Remarks
             </h5>
-             <button mat-button (click)="close()"> <i class="fa fa-times text-white fs-6"></i></button>
-         </div>
- 
-
-<div class="modal-body">
-           <div class="row">   
-             <div class="col-md-12"> 
-    <table  class="table mt-0 mb-0  remove-th-mobile remove-th-mobilet     grey-table table-cust tbl-sml attachment-table " > 
- 
-        <thead>
-            <tr>
-                <th>Sl.No</th>
-                <th>Action By</th>
-                <th>Action Date</th>
-                <th>Action</th>
-                <th>Approved Amount</th>
-                <th>Remarks</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let approval of remarksData; index as i">
-                <td data-label="Sl.No">{{ i + 1 }}</td>
-                <td data-label="Action By">{{ approval?.approver }}</td>
-                <td data-label="Action Date">{{ approval?.approvalDateTimeString }}</td>
-                <td data-table="Action">{{ approval?.actionStatus }}</td>
-                <td data-table="Approved Amount">{{ approval?.approvedAmount | decimalFormat }}</td>
-                <td data-table="Remarks">{{ approval?.approverRemarks }}</td>
-            </tr>
-        </tbody>
-    </table>
-    <div *ngIf="!remarksData || remarksData.length === 0">
-  No remarks available.
-</div>
-</div>
-</div>
-</div></div>
-
+            <button class="close-dialouge" type="button" mat-button (click)="close()"> <i class="fa fa-times text-white fs-6"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <table
+                        class="table mt-0 mb-0  remove-th-mobile remove-th-mobilet grey-table table-cust tbl-sml attachment-table ">
+                        <thead>
+                            <tr>
+                                <th>Sl.No</th>
+                                <th>Action By</th>
+                                <th>Action Date</th>
+                                <th>Action</th>
+                                <th>Approved Amount</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let approval of remarksData; index as i">
+                                <td data-label="Sl.No">{{ i + 1 }}</td>
+                                <td data-label="Action By">{{ approval?.approver }}</td>
+                                <td data-label="Action Date">{{ approval?.approvalDateTimeString }}</td>
+                                <td data-table="Action">{{ approval?.actionStatus }}</td>
+                                <td data-table="Approved Amount">{{ approval?.approvedAmount | decimalFormat }}</td>
+                                <td data-table="Remarks">{{ approval?.approverRemarks }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div *ngIf="!remarksData || remarksData.length === 0">
+                        No remarks available.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
