@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlFactory } from './form-control.factory';
 import { IFormControl } from './form-control.interface';
@@ -42,12 +42,11 @@ import { SnackbarService } from '../service/snackbar.service';
 export class DynamicFormComponent implements OnInit, OnChanges {
   @ViewChild(CostCenterComponent) costCenterComponentRef!: CostCenterComponent;
   @ViewChild(GstComponent) gstComponentRef!: GstComponent;
+  @ViewChildren(DateInputComponent) dateInputComponentRef!: QueryList<DateInputComponent>;
   @Input() moduleData: any;
   @Input() category: any;
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
-  @Input() minSelectableDate?: Date;
-  @Input() maxSelectableDate?: Date;
   @Input() existingData: any;
   @Output() emitFormData = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();
@@ -61,6 +60,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   referenceId = 0;
   isValid = true;
   selectedFiles: any = [];
+  isClearing = false;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -212,6 +212,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
     });
+    this.form.reset();
   }
 
   setupAutoFormat(config: any, configService: GlobalConfigService): void {
@@ -331,6 +332,29 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       if (totalPercentage !== 100) {
         this.snackbarService.error('Total percentage of cost centers must equal 100%. Please check your entries.', 5000);
         return;
+      }
+    }
+
+    if (this.category?.noOfEntryCheck && this.existingData?.length === this.category.travelDays) {
+      this.snackbarService.error(`You can only add ${this.category.travelDays} entries for this category.`, 5000);
+      return;
+    }
+
+    if (this.existingData?.length > 0) {
+      const checkInDateTime = this.form.value?.CheckInDateTime;
+      const checkOutDateTime = this.form.value?.CheckOutDateTime;
+
+      if (checkInDateTime && checkOutDateTime) {
+        const isConflict = this.existingData.some((row: any) => {
+          const existingCheckIn = row.CheckInDateTime;
+          const existingCheckOut = row.CheckOutDateTime;
+          return (new Date(checkInDateTime) < new Date(existingCheckOut)) && (new Date(checkOutDateTime) > new Date(existingCheckIn));
+        });
+
+        if (isConflict) {
+          this.snackbarService.error('Check-in and check-out times conflict with existing entries. Please adjust your dates.', 5000);
+          return;
+        }
       }
     }
     this.validatePolicyViolation();
@@ -501,7 +525,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   clear() {
+    this.isClearing = true;
     this.form.reset();
+    this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
+      dateInput.timeControl.reset();
+    });
     this.costCenterComponentRef.setMultipleCostCenterFlag(false);
     this.costCenterComponentRef.costCenterData = [];
     this.gstComponentRef.setCompanyGSTFlag(false);
@@ -509,9 +537,12 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.selectedFiles = [];
     this.formControls?.forEach((control: any) => {
       if (control.formConfig?.defaultValue) {
-        control.control.setValue(control.formConfig.defaultValue?.Id);
+        control.control.setValue(control.formConfig.defaultValue?.Id, { emitEvent: false });
       }
-    })
+    });
+    setTimeout(() => {
+      this.isClearing = false;
+    }, 500);
   }
 
   getInputValue(input: any) {
@@ -545,7 +576,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             for (const [outputControl, responsePath] of Object.entries(this.category.submitPolicyValidationApi.outputControl) as [string, string][]) {
               const value = this.extractValueFromPath(response, responsePath);
               if (value !== undefined) {
-                this.form.get(outputControl)?.setValue(value, { emitEvent: false });
+                this.form.get(outputControl)?.setValue(value);
               }
             }
           }
@@ -613,7 +644,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           for (const [outputControl, responsePath] of Object.entries(this.category.submitPolicyValidationApi.outputControl) as [string, string][]) {
             const value = this.extractValueFromPath(response, responsePath);
             if (value !== undefined) {
-              this.form.get(outputControl)?.setValue(value, { emitEvent: false });
+              this.form.get(outputControl)?.setValue(value);
             }
           }
         }
@@ -633,15 +664,95 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           confirmPopupData.cancelButton = false;
           this.confirmDialogService.confirm(confirmPopupData).subscribe();
         }
+
+        if (this.form.value.IsActual) {
+          const fieldsToRemove = [
+            'EntitlementCurrency',
+            'EntitlementAmount',
+            'EntitlementConversionRate',
+            'DifferentialAmount(INR)'
+          ];
+
+          fieldsToRemove.forEach(field => {
+            this.form.removeControl(field);
+            const control = this.formControls.find(c => c.formConfig.name === field);
+            if (control) {
+              control.formConfig.showInUI = false;
+            }
+          });
+        }
+
         this.updateConditionalValidators();
       });
   }
 
   onFieldValueChange(control: IFormControl) {
+    // Prevent auto-calculation on clear/reset
+    if (this.isClearing) return;
+
+    console.log(control.name)
     if (control.policyViolationCheck) {
-      this.validateFieldPolicyViolation(control);
+      setTimeout(() => {
+        this.validateFieldPolicyViolation(control);
+      }, 500);
     }
-    // ...existing logic for value change...
+    if (control.EntitlementAmountCalculation) {
+      this.calculateEntitlementAmount(control);
+    }
+    if (control.taxCalculation) {
+      this.calculateDifferentialAmount(control);
+    }
+
+  }
+
+  calculateDifferentialAmount(control: IFormControl) {
+    const config = control.taxCalculation;
+
+    const claimAmount = parseFloat(this.form.get(config.inputControls.ClaimAmount)?.value || 0);
+    const entitlementAmount = parseFloat(this.form.get(config.inputControls.EntitlementAmount)?.value || 0);
+    const taxAmount = parseFloat(this.form.get(control.name)?.value || 0); // control.name is "TaxAmount"
+    const outputControlName = Object.keys(config.outputControl)[0];
+
+    let differentialAmount = 0;
+
+    if (config.IsTaxExclusive) {
+      differentialAmount = entitlementAmount - claimAmount;
+    } else {
+      differentialAmount = entitlementAmount - (claimAmount + taxAmount);
+    }
+
+    if (differentialAmount < 0) {
+      differentialAmount = Math.abs(differentialAmount);
+      this.form.get(outputControlName)?.setValue(differentialAmount);
+      this.form.get('IsViolation')?.setValue(true);
+    } else {
+      const precision = this.configService.getDecimalPrecision();
+      this.form.get(outputControlName)?.setValue((0).toFixed(precision));
+      this.form.get('IsViolation')?.setValue(false);
+    }
+  }
+
+
+  calculateEntitlementAmount(control: IFormControl) {
+    const config = control.EntitlementAmountCalculation;
+    if (!config) return;
+
+    const checkInDate = this.form.get(config.inputControls.CheckInDateTime)?.value;
+    const checkOutDate = this.form.get(config.inputControls.CheckOutDateTime)?.value;
+    const originalEntitlementAmount = parseFloat(this.form.get(config.inputControls.OriginalEntitlementAmount)?.value || 0);
+
+    if (checkInDate && checkOutDate && originalEntitlementAmount) {
+      const checkIn = new Date(checkInDate);
+      const checkOut = new Date(checkOutDate);
+
+      const timeDiff = Math.abs(checkOut.getTime() - checkIn.getTime());
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Calculate number of days
+
+      const entitlementAmount = originalEntitlementAmount * diffDays;
+      const outputFieldName = Object.keys(config.outputControl)[0];
+
+      this.form.get(outputFieldName)?.setValue(entitlementAmount.toFixed(this.configService.getDecimalPrecision()));
+    }
   }
 
   mapOtherControls(data: any, otherControls: Record<string, string>): Record<string, any> {
@@ -707,7 +818,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       });
 
       const calculatedValue = this.safeEvaluateFormula(formula, values);
-      this.form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(this.configService.getDecimalPrecision()), { emitEvent: false });
+      this.form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(this.configService.getDecimalPrecision()));
     });
   }
 

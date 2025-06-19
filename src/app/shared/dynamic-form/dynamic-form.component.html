@@ -7,7 +7,8 @@
   @case ('text') {
   <div class="col-md-4">
     <lib-text-input [controlConfig]="control.formConfig" [control]="control.control"
-      (emitInputValue)="getInputValue($event)" [form]="form">
+      (emitInputValue)="getInputValue($event)" [form]="form"
+      (valueChange)="onFieldValueChange(control.formConfig)">
     </lib-text-input>
   </div>
   }
@@ -28,22 +29,12 @@
   }
   <!-- Handling 'date' type controls -->
   @case ('date') {
-  @if(control.formConfig.name !== "TravelDate") {
   <div class="col-md-4">
     <lib-date-input [controlConfig]="control.formConfig" [control]="control.control" [form]="form"
       (valueChange)="onFieldValueChange(control.formConfig);handleEvent('dateChange', $event)"
       (emitSpecificCase)="getSpecificCase($event)">
     </lib-date-input>
   </div>
-  }
-  @else {
-  <div class="col-md-4">
-    <lib-date-input [controlConfig]="control.formConfig" [control]="control.control" [form]="form"
-      (valueChange)="onFieldValueChange(control.formConfig);handleEvent('dateChange', $event)"
-      [minDate]="minSelectableDate" [maxDate]="maxSelectableDate" (emitSpecificCase)="getSpecificCase($event)">
-    </lib-date-input>
-  </div>
-  }
   }
   <!-- Handling 'radio' type controls -->
   @case ('radio') {

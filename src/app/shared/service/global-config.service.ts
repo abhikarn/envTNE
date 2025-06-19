@@ -51,6 +51,10 @@ export class GlobalConfigService {
     return this.config.dateFormat ?? 'dd-MMM-yyyy';
   }
 
+  get dateTimeFormat(): string {
+    return this.config.dateFormat ? `${this.config.dateFormat} HH:mm:ss` : 'dd-MMM-yyyy HH:mm';
+  }
+
   /**
    * Used for Angular Material's MAT_DATE_LOCALE or DateAdapter.setLocale()
    */
