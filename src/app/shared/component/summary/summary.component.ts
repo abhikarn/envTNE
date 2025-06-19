@@ -14,6 +14,7 @@ export class SummaryComponent {
 
 
   toggleAccordion(activeId: string): void {
+     
     this.summaries = this.summaries.map((summary: any) => ({
       ...summary,
       isOpen: summary.id === activeId
@@ -21,6 +22,7 @@ export class SummaryComponent {
   }
 
   calculatTotalExpenseAmount() {
+     
     const EXPENSE_SUMMARY_ID = "expense-summary";
     const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
     const PAYABLE_KEYS = [91, 94];
@@ -43,6 +45,18 @@ export class SummaryComponent {
       });
     });
 
+    // Set adjustments value from expenseRequestAdjustment[0]?.adjustmentAmount if available (array support)
+    let adjustmentAmount = 0;
+    if (Array.isArray(this.expenseRequestData?.expenseRequestAdjustment) && this.expenseRequestData.expenseRequestAdjustment.length > 0) {
+      adjustmentAmount = Number(this.expenseRequestData.expenseRequestAdjustment[0].adjustmentAmount) || 0;
+    } else if (this.expenseRequestData?.expenseRequestAdjustment?.adjustmentAmount) {
+      adjustmentAmount = Number(this.expenseRequestData.expenseRequestAdjustment.adjustmentAmount) || 0;
+    }
+    const adjustmentsItem = summary.items?.find((item: any) => item.name === 'adjustments');
+    if (adjustmentsItem) {
+      adjustmentsItem.value = adjustmentAmount.toFixed(2);
+    }
+
     // Calculate totals
     let totalExpense = 0.00;
     let amountPayable = 0.00;
@@ -55,21 +69,26 @@ export class SummaryComponent {
       if (PAYABLE_KEYS.includes(item.paymentModeId)) {
         amountPayable += value;
       }
+      // Add adjustment amount to totalExpense if this is the adjustments item
+      if (item.name === 'adjustments') {
+        totalExpense += Number(item.value);
+      }
       // Ensure value is in 2 decimal places
       item.value = value.toFixed(2);
     });
 
     // Set totalExpense and amountPayable
     summary.items?.forEach((item: any) => {
-      if (item.name === 'totalExpense'){
+      if (item.name === 'totalExpense') {
         item.value = totalExpense.toFixed(2);
         this.totalExpense = totalExpense;
-      } 
+      }
       if (item.name === 'amountPayable') item.value = amountPayable.toFixed(2);
     });
   }
 
   updateExpenseItem(summary: any, paymentModeId: any, amount: any) {
+     
     const targetItem = summary.items?.find((item: any) => item.paymentModeId === paymentModeId);
     if (targetItem) {
       const currentValue = Number(targetItem.value) || 0;
@@ -79,6 +98,7 @@ export class SummaryComponent {
   }
 
   calculatCategoryWiseExpense() {
+    
     const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
     let CATEGORY_NAME = '';
 
@@ -107,6 +127,7 @@ export class SummaryComponent {
   }
 
   setCategoryWiseAmount() {
+     
     const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
     const categoryWiseExpense = this.summaries?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
     if (!categoryWiseExpense) return;
@@ -123,6 +144,7 @@ export class SummaryComponent {
   }
 
   updateTotalAmount(categoryExpense: any) {
+    
     const total = categoryExpense.items
       .filter((item: any) => item.name !== 'Total')
       .reduce((sum: number, item: any) => sum + parseFloat(item.value || '0'), 0);
@@ -134,6 +156,7 @@ export class SummaryComponent {
   }
 
   calculateCostCenterWiseExpense() {
+     
     const COST_CENTER_WISE_EXPENSE_ID = "cost-center-wise-expense";
     const summary = this.summaries?.find((s: any) => s.id === COST_CENTER_WISE_EXPENSE_ID);
     if (!summary) return;
@@ -175,6 +198,4 @@ export class SummaryComponent {
       });
     });
   }
-
-
 }

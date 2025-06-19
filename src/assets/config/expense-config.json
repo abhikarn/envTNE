@@ -243,6 +243,19 @@
                         "policyViolationCheck": false
                     },
                     {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "ClaimDate",
+                        "isExcluded": true,
+                        "label": "Claim Date",
+                        "value": null,
+                        "disable": false,
+                        "readonly": false,
+                        "order": 3,
+                        "policyViolationCheck": false,
+                        "showInUI": false
+                    },
+                    {
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
@@ -916,7 +929,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 11
@@ -2564,9 +2577,10 @@
                     {
                         "type": "select",
                         "dataType": "int",
-                        "name": "Currency",
+                        "name": "AdjustmentCurrencyId",
                         "isExcluded": true,
                         "label": "Currency",
+                        "propertyName": "currencyId",
                         "labelKey": "Name",
                         "valueKey": "Id",
                         "apiService": "DataService",
@@ -2594,6 +2608,7 @@
                         "subType": "text",
                         "dataType": "numeric",
                         "name": "AdjustmentAmount",
+                        "propertyName":"adjustmentAmount",
                         "isExcluded": true,
                         "label": "Amount",
                         "value": null,
@@ -2621,9 +2636,10 @@
                         "name": "AdjustmentRemarks",
                         "isExcluded": false,
                         "label": "Adjustment Remarks",
+                        "propertyName": "remarks",
                         "value": "",
                         "order": 3,
-                        "maxLength": 500
+                        "maxLength": 5000
                     }
                 ]
             }
@@ -2672,6 +2688,11 @@
                     {
                         "name": "advanceReturn",
                         "label": "Advance Return",
+                        "value": 0.00
+                    },
+                    {
+                        "name": "adjustments",
+                        "label": "Adjustments",
                         "value": 0.00
                     },
                     {

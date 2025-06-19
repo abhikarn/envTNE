@@ -1,12 +1,4 @@
-.modal-header {
-    background: #0f8dc0;
-    color: white;
-    padding: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
+app-attachment-modal{
 .modal-body {
     padding: 16px;
     background: white;
@@ -21,4 +13,10 @@
 .attachment-table td {
     padding: 6px 10px;
     border-bottom: 1px solid #ddd;
+}
+
+.modal-dialog {
+    margin: inherit;
+}
+.close-dialouge{ background: transparent; border: none;;}
 }

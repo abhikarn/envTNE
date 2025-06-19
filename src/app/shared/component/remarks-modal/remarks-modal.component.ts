@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Optional } from '@angular/core';
+import { Component, Inject, Optional, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { DecimalFormatPipe } from '../../pipes/decimal-format.pipe';
@@ -14,7 +14,8 @@ import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bott
     DecimalFormatPipe
   ],
   templateUrl: './remarks-modal.component.html',
-  styleUrl: './remarks-modal.component.scss'
+  styleUrl: './remarks-modal.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class RemarksModalComponent {
 
@@ -28,6 +29,7 @@ export class RemarksModalComponent {
   ) {}
 
   ngOnInit() {
+   
     if (this.data && this.data.remarksData) {
       this.remarksData = this.data.remarksData;
     } else if (this.bottomSheetData && this.bottomSheetData.remarksData) {
