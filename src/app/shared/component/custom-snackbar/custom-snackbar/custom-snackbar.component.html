@@ -1,0 +1,16 @@
+<div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+    <div id="liveToast" class="toast" [ngClass]="toastClass" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <h4>
+                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="8.5" r="8" fill="#05A660" />
+                    <path d="M11 6.5L6.875 11L5 8.95455" stroke="#F7F7FC" stroke-width="1.33333" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                {{ data.type | titlecase }} 
+            </h4>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body"> {{ data.message }} </div>
+    </div>
+</div>
