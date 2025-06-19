@@ -85,7 +85,7 @@ export class DateInputComponent {
       } else {
         this.setDateLimits();
       }
-    }, 500);
+    }, 1000);
 
     this.control.valueChanges.subscribe(value => this.handleDateChange(value));
     this.timeControl.valueChanges.subscribe(time => this.handleTimeChange(time));
