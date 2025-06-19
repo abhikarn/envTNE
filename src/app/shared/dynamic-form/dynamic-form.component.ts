@@ -59,6 +59,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   referenceId = 0;
   isValid = true;
   selectedFiles: any = [];
+  isClearing = false;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -520,6 +521,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   clear() {
+    this.isClearing = true;
     this.form.reset();
     this.costCenterComponentRef.setMultipleCostCenterFlag(false);
     this.costCenterComponentRef.costCenterData = [];
@@ -530,7 +532,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       if (control.formConfig?.defaultValue) {
         control.control.setValue(control.formConfig.defaultValue?.Id);
       }
-    })
+    });
+    setTimeout(() => {
+      this.isClearing = false;
+    }, 500);
   }
 
   getInputValue(input: any) {
@@ -673,6 +678,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onFieldValueChange(control: IFormControl) {
+    // Prevent auto-calculation on clear/reset
+    if (this.isClearing) return;
+
+    console.log(control.name)
     if (control.policyViolationCheck) {
       setTimeout(() => {
         this.validateFieldPolicyViolation(control);
