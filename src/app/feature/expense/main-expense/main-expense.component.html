@@ -66,11 +66,8 @@
                 </div>
               </div>
               } @else {
-
-
               <div class="common-block-mobile">
                 <div class="row">
-
                   <div class="col-md-3 col-sm-6 col-lg-2 col-6">
                     <div class="trl-preview-wrapper mb-md-0">
                       <div class="trl-readview-item pb-0">
@@ -83,14 +80,9 @@
                       </div>
                     </div>
                   </div>
-
-
-
                 </div>
               </div>
-
               }
-
             </div>
             <!-- Travel Details -->
             <div class="common-block  mb-3">
@@ -105,7 +97,6 @@
                 </div>
                 }
               </div>
-
               <div class="common-block-mobile">
                 <div class="row">
                   @for (item of travelDetails?.data; track item; let i = $index) {
@@ -147,7 +138,8 @@
             <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
               <!-- Desktop/Tablet: Show tab grouping logic -->
               <ng-container *ngIf="!isMobile; else mobileTabs">
-                <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="expense-tab-sec" fitInkBarToContent (selectedTabChange)="onTabChangeIfAllowed($event)">
+                <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="expense-tab-sec" fitInkBarToContent
+                  (selectedTabChange)="onTabChangeIfAllowed($event)">
                   <!-- Show first 5 categories as tabs -->
                   @for (category of categories.slice(0, 5); track category) {
                   <mat-tab>
@@ -406,7 +398,6 @@
               </div>
             </div>
           </div>
-
           <!-- Sidebar: Only show on desktop/tablet -->
           <div class="right-container-nrw rt-aside-fixed d-none d-md-block d-lg-block">
             <ng-container *ngTemplateOutlet="expenseSummarySheet"></ng-container>
@@ -416,7 +407,6 @@
       </div>
     </div>
   </div>
-
 
   <!-- <pre>{{mainExpenseData | json}}</pre> -->
   <ng-template #requestBottomSheet>

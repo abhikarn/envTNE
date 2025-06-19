@@ -139,7 +139,7 @@ export class FileUploadComponent {
   }
 
   downloadFile(file: any) {
-
+    
     const extension = file.FileName.split('.').pop()?.toLowerCase();
     const baseName = file.FileName.replace(/\.[^/.]+$/, '');
     const fileUrl = `${environment.documentBaseUrl}/${baseName}-${file.Guid}.${extension}`;

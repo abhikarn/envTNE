@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { GlobalConfigService } from '../../service/global-config.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConfirmDialogService } from '../../service/confirm-dialog.service';
+import { environment } from '../../../../environment';
 
 @Component({
   selector: 'app-dynamic-table',
@@ -125,7 +126,7 @@ export class DynamicTableComponent implements OnInit {
     return this.datePipe.transform(value, format) || value.toString();
   }
 
-  edit(row: any, index: any) {    
+  edit(row: any, index: any) {
     let rowData = {
       row: row,
       index: index
@@ -146,12 +147,27 @@ export class DynamicTableComponent implements OnInit {
     }
   }
 
+  // downloadFile(file: any) {
+  //   const url = this.domSanitizer.bypassSecurityTrustResourceUrl(file?.fileUrl || file?.Location);
+  //   const link = document.createElement('a');
+  //   link.href = url.toString();
+  //   link.download = file?.FileName || 'downloaded-file';
+  //   link.click();
+  // }
+
   downloadFile(file: any) {
-    const url = this.domSanitizer.bypassSecurityTrustResourceUrl(file?.fileUrl || file?.Location);
-    const link = document.createElement('a');
-    link.href = url.toString();
-    link.download = file?.FileName || 'downloaded-file';
-    link.click();
+
+    const extension = file.FileName.split('.').pop()?.toLowerCase();
+    const baseName = file.FileName.replace(/\.[^/.]+$/, '');
+    const fileUrl = `${environment.documentBaseUrl}/${baseName}-${file.Guid}.${extension}`;
+    // if (extension === 'pdf') {
+    window.open(fileUrl, '_blank');
+    // } else {
+    //   const link = document.createElement('a');
+    //   link.href = fileUrl;
+    //   link.download = file.FileName || 'downloaded-file';
+    //   link.click();
+    // }
   }
 
   confirmDelete(index: number): void {
@@ -166,5 +182,4 @@ export class DynamicTableComponent implements OnInit {
       }
     });
   }
-
 }

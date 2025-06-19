@@ -59,28 +59,36 @@ export class MaterialTableComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
-
     const decimalPrecision = this.configService.getDecimalPrecision ? this.configService.getDecimalPrecision() : 2;
     // Update processedData when input changes
     if (this.data?.length > 0) {
       this.processedData = this.data.map((row, index) => ({
         ...row,
         slNo: index + 1,
-        selected: true,
-        originalApproved: parseFloat(row.ApprovedAmount || '0').toFixed(decimalPrecision),
-        ApprovedAmount: parseFloat(row.ApprovedAmount == 0 ? row.ClaimAmount : row.ApprovedAmount || '0').toFixed(decimalPrecision),
+        selected: row.ClaimStatusId == 5 ? false : true,
+        originalApproved: row.ClaimStatusId == 5
+          ? '0'
+          : parseFloat(row.ApprovedAmount == 0 ? row.ClaimAmount : row.ApprovedAmount || '0').toFixed(decimalPrecision),
+        ApprovedAmount: row.ClaimStatusId == 5
+          ? '0'
+          : parseFloat(row.ApprovedAmount == 0 ? row.ClaimAmount : row.ApprovedAmount || '0').toFixed(decimalPrecision),
         remarks: row.remarks || ''
       }));
-
     } else {
       this.processedData = [];
     }
+    // selectAll should be true only if there is at least one selectable row and all selectable rows are selected
+    const selectableRows = this.processedData;
+    this.selectAll = selectableRows.length > 0 && selectableRows.every(r => r.selected);
   }
 
   ngOnInit() {
+    
     console.log(this.nestedTables)
     this.setDecimalPrecision();
-    this.selectAll = this.processedData.every(r => r.selected);
+    // selectAll should be true only if there is at least one selectable row and all selectable rows are selected
+    const selectableRows = this.processedData;
+    this.selectAll = selectableRows.length > 0 && selectableRows.every(r => r.selected); 
   }
 
   setDecimalPrecision() {
@@ -174,7 +182,6 @@ export class MaterialTableComponent implements OnChanges {
 
   showAttachments(attachments: any[]) {
     if (!attachments || attachments.length === 0) return;
-
     if (this.isMobile()) {
       this.bottomSheet.open(AttachmentModalComponent, {
         data: { attachments },
@@ -189,15 +196,16 @@ export class MaterialTableComponent implements OnChanges {
     }
   }
 
-  showRemarks(expenseRequestDetailId: any) {
-    console.log(expenseRequestDetailId)
-    this.emitExpenseRequestDetailId.emit(expenseRequestDetailId);
+  showRemarks(row: any) {
+    this.emitExpenseRequestDetailId.emit(row);
   }
 
   toggleSelectAll() {
     this.processedData.forEach(row => {
-      row.selected = this.selectAll;
-      row.ApprovedAmount = this.selectAll ? row.originalApproved : 0;
+      if (row.ClaimStatusId !== 5) {
+        row.selected = this.selectAll;
+        row.ApprovedAmount = this.selectAll ? row.originalApproved : 0;
+      }
     });
     this.selectionChanged.emit({
       name: this.categoryName,
@@ -206,9 +214,12 @@ export class MaterialTableComponent implements OnChanges {
   }
 
   onRowSelectionChange(row: any) {
+    
     const decimalPrecision = this.configService.getDecimalPrecision ? this.configService.getDecimalPrecision() : 2;
     row.ApprovedAmount = row.selected ? (parseFloat(row.originalApproved || '0').toFixed(decimalPrecision)) : 0;
-    this.selectAll = this.processedData.every(r => r.selected);
+    // selectAll should be true only if there is at least one selectable row and all selectable rows are selected
+    const selectableRows = this.processedData;
+    this.selectAll = selectableRows.length > 0 && selectableRows.every(r => r.selected);
     this.selectionChanged.emit({
       name: this.categoryName,
       data: this.processedData

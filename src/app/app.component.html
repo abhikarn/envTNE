@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <app-loader></app-loader>
+  <app-loader></app-loader>
   <div class="app-container">
     <app-header *ngIf="isAuthenticated"></app-header>
     <main [ngClass]="isAuthenticated ? 'body-wrapper' : 'login-body-wrapper'">
@@ -7,9 +7,6 @@
       <app-mobile-nav *ngIf="isAuthenticated"></app-mobile-nav>
       <router-outlet></router-outlet>
     </main>
-
-
     <!-- muttappa -->
-
   </div>
 </div>

@@ -278,9 +278,12 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
-    debugger;
+    
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      if(this.form.controls['attachment'] && this.form.controls['attachment'].errors?.['required']) {
+        this.snackbarService.error('Upload Your Bill is required.', 5000);
+      }      
       return;
     }
     // Only check duplicate if OCRRequired is true for this category
@@ -550,6 +553,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   validatePolicyViolation() {
+    
     let confirmPopupData: any = {};
     if (this.category.submitPolicyValidationApi) {
       const service = this.serviceRegistry.getService(this.category.submitPolicyValidationApi.apiService);
@@ -616,6 +620,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   validateFieldPolicyViolation(control: IFormControl) {
+   
     let confirmPopupData: any = {};
     if (!control.policyViolationCheck) return;
 
