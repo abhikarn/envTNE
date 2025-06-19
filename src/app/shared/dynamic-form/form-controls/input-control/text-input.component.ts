@@ -48,6 +48,15 @@ export class TextInputComponent implements OnInit {
         event: inputValue,
         control: this.controlConfig
       });
+      if (this.controlConfig.readonly) {
+          if (this.controlConfig.dependentCases?.length > 0) {
+            this.controlConfig.dependentCases.forEach((dependentCase: any) => {
+              if (dependentCase.event === "onBlur") {
+                this.handleDependentCase(dependentCase);
+              }
+            });
+          }
+        }
     });
 
     if (this.controlConfig.disable) {

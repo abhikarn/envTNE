@@ -351,7 +351,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           return;
         }
       }
-    } 
+    }
     this.validatePolicyViolation();
   }
 
@@ -603,14 +603,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             }, 500);
           }
         });
-    } else {
-      this.setCalculatedFields();
-      this.setAutoCompleteFields();
-      this.prepareFormJson();
-      this.addDataToDynamicTable();
-      setTimeout(() => {
-        this.clear();
-      }, 500);
     }
   }
 
@@ -687,7 +679,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       }, 500);
     }
     if (control.EntitlementAmountCalculation) {
-      this.calculateEntitlementAmount();
+      this.calculateEntitlementAmount(control);
     }
     if (control.taxCalculation) {
       this.calculateDifferentialAmount(control);
@@ -723,19 +715,25 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
 
-  calculateEntitlementAmount() {
-    // Calculate entitlement amount based on the checkin and checkout dates
-    const checkInDate = this.form.get('CheckInDateTime')?.value;
-    const checkOutDate = this.form.get('CheckOutDateTime')?.value;
-    if (checkInDate && checkOutDate) {
+  calculateEntitlementAmount(control: IFormControl) {
+    const config = control.EntitlementAmountCalculation;
+    if (!config) return;
+
+    const checkInDate = this.form.get(config.inputControls.CheckInDateTime)?.value;
+    const checkOutDate = this.form.get(config.inputControls.CheckOutDateTime)?.value;
+    const originalEntitlementAmount = parseFloat(this.form.get(config.inputControls.OriginalEntitlementAmount)?.value || 0);
+
+    if (checkInDate && checkOutDate && originalEntitlementAmount) {
       const checkIn = new Date(checkInDate);
       const checkOut = new Date(checkOutDate);
+
       const timeDiff = Math.abs(checkOut.getTime() - checkIn.getTime());
-      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Convert to days
-      // calculate entitlement amount using original entitlement amount and number of days
-      const originalEntitlementAmount = this.form.get('OriginalEntitlementAmount')?.value || 0;
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Calculate number of days
+
       const entitlementAmount = originalEntitlementAmount * diffDays;
-      this.form.get('EntitlementAmount')?.setValue(entitlementAmount.toFixed(this.configService.getDecimalPrecision()));
+      const outputFieldName = Object.keys(config.outputControl)[0];
+
+      this.form.get(outputFieldName)?.setValue(entitlementAmount.toFixed(this.configService.getDecimalPrecision()));
     }
   }
 

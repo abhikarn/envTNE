@@ -1121,7 +1121,7 @@
                                     "CheckInDateTime": "ReferenceDate"
                                 },
                                 "outputControl": {
-                                    "ClaimedConversionRate": "ResponseValue.Value"
+                                    "ConversionRate": "ResponseValue.Value"
                                 },
                                 "autoFormat": {
                                     "decimal": ".00"
@@ -1139,8 +1139,8 @@
                                     "CheckInDateTime": "ReferenceDate"
                                 },
                                 "outputControl": {
-                                    "CityGrade": "ResponseValue.Grade",
-                                    "CityGradeId": "ResponseValue.GradeId"
+                                    "CityGrade": "ResponseValue.GradeId",
+                                    "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "event": "dateChange",
                                 "requestBody": {
@@ -1148,26 +1148,6 @@
                                 },
                                 "apiService": "DataService",
                                 "apiMethod": "dataGetCityGrade"
-                            },
-                            {
-                                "isGeneral": false,
-                                "inputControls": {
-                                    "CityGrade": "CityGradeId",
-                                    "CheckInDateTime": "ReferenceDate"
-                                },
-                                "outputControl": {
-                                    "CityGrade": "ResponseValue.Grade",
-                                    "CityGradeId": "ResponseValue.GradeId"
-                                },
-                                "event": "dateChange",
-                                "requestBody": {
-                                    "ClaimTypeId": 53,
-                                    "UserMasterId": 4,
-                                    "ExpenseCategoryId": 3,
-                                    "PolicyReferenceId": 53
-                                },
-                                "apiService": "ExpenseService",
-                                "apiMethod": "expenseGetExpensePolicyEntitlement"
                             }
                         ],
                         "required": true,
@@ -1189,7 +1169,16 @@
                         "order": 2,
                         "apiDateLimit": true,
                         "policyViolationCheck": true,
-                        "EntitlementAmountCalculation": true
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "CheckInDateTime": "CheckInDateTime",
+                                "CheckOutDateTime": "CheckOutDateTime",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        }
                     },
                     {
                         "type": "date",
@@ -1216,7 +1205,16 @@
                         },
                         "order": 3,
                         "apiDateLimit": true,
-                        "EntitlementAmountCalculation": true
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "CheckInDateTime": "CheckInDateTime",
+                                "CheckOutDateTime": "CheckOutDateTime",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        }
                     },
                     {
                         "type": "text",
@@ -1241,8 +1239,8 @@
                                     "CheckInDateTime": "ReferenceDate"
                                 },
                                 "outputControl": {
-                                    "CityGrade": "ResponseValue.Grade",
-                                    "CityGradeId": "ResponseValue.GradeId"
+                                    "CityGrade": "ResponseValue.GradeId",
+                                    "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {
@@ -1267,7 +1265,7 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
-                        "name": "CityGrade",
+                        "name": "CityGradeId",
                         "isExcluded": true,
                         "label": "City Grade",
                         "value": "",
@@ -1281,8 +1279,7 @@
                         "disable": false,
                         "readonly": true,
                         "order": 5,
-                        "policyViolationCheck": true,
-                        "EntitlementAmountCalculation": true
+                        "policyViolationCheck": true
                     },
                     {
                         "type": "text",
@@ -1514,7 +1511,7 @@
                                     "CheckInDateTime": "ReferenceDate"
                                 },
                                 "outputControl": {
-                                    "ClaimedConversionRate": "ResponseValue.Value"
+                                    "ConversionRate": "ResponseValue.Value"
                                 },
                                 "autoFormat": {
                                     "decimal": ".00"
@@ -1561,7 +1558,7 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "numeric",
-                        "name": "ClaimedConversionRate",
+                        "name": "ConversionRate",
                         "isExcluded": true,
                         "label": "Claimed Conversion Rate",
                         "value": 0,
@@ -1596,6 +1593,17 @@
                         "isExcluded": true,
                         "label": "Tax Amount",
                         "value": 0,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9.]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "decimalPrecision": "2"
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -1944,7 +1952,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "CityGradeId",
+                        "name": "CityGrade",
                         "isExcluded": true,
                         "value": 0,
                         "showInUI": false
@@ -1983,6 +1991,34 @@
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false,
+                        "calculate": {
+                            "formula": "ClaimAmount * ConversionRate",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "ConversionRate"
+                            ]
+                        }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false,
+                        "calculate": {
+                            "formula": "EntitlementAmount * EntitlementConversionRate",
+                            "dependsOn": [
+                                "EntitlementAmount",
+                                "EntitlementConversionRate"
+                            ]
+                        }
                     }
                 ],
                 "submitPolicyValidationApi": {
@@ -2000,7 +2036,7 @@
                     },
                     "inputControls": {
                         "CheckInDateTime": "ReferenceDate",
-                        "CityGradeId": "CityGradeId"
+                        "CityGrade": "CityGradeId"
                     },
                     "outputControl": {
                         "EntitlementAmount": "ResponseValue.EntitlementAmount",
@@ -2008,6 +2044,12 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    },
+                    "confirmPopup": {
+                        "title": "Accommodation Expense",
+                        "message": "Policy Vioation",
+                        "confirmText": "Ok",
+                        "cancelText": "Cancel"
                     }
                 },
                 "expanded": true,
@@ -2090,8 +2132,29 @@
                         "order": 10
                     },
                     {
-                        "name": "CityGrade",
+                        "name": "CountryGrade",
+                        "label": "Country Grade",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "CityGradeId",
                         "label": "City Grade",
+                        "visible": true,
+                        "position": "out",
+                        "order": 11
+                    },
+                    {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 12
+                    },
+                    {
+                        "name": "ClaimAmount",
+                        "label": "Claim Amount",
                         "visible": true,
                         "position": "out",
                         "order": 11
@@ -2141,6 +2204,14 @@
                         "visible": true,
                         "position": "out",
                         "order": 17
+                    },
+                    {
+                        "name": "TaxAmount",
+                        "label": "Tax Amount",
+                        "type": "number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 18
                     }
                 ],
                 "nestedTables": [
@@ -2324,7 +2395,7 @@
                     {
                         "type": "text",
                         "subType": "text",
-                        "name": "CityGrade",
+                        "name": "CityGradeId",
                         "readonly": true,
                         "isExcluded": true,
                         "label": "City Grade",
@@ -2415,7 +2486,7 @@
                     {
                         "type": "text",
                         "subType": "number",
-                        "name": "ClaimedConversionRate",
+                        "name": "ConversionRate",
                         "isExcluded": true,
                         "label": "Claimed Conversion Rate",
                         "validations": [
@@ -2535,7 +2606,7 @@
                     {
                         "type": "text",
                         "subType": "text",
-                        "name": "CityGrade",
+                        "name": "CityGradeId",
                         "readonly": true,
                         "isExcluded": true,
                         "label": "City Grade",
@@ -2628,7 +2699,7 @@
                     {
                         "type": "text",
                         "subType": "number",
-                        "name": "ClaimedConversionRate",
+                        "name": "ConversionRate",
                         "isExcluded": true,
                         "label": "Claimed Conversion Rate",
                         "validations": [
@@ -3339,7 +3410,8 @@
             {
                 "name": "PolicyViolations",
                 "label": "Policy Violations",
-                "Travel Ticket": "You Are Not Eligible To Travel in the selected Mode and Class."
+                "Travel Ticket": "You Are Not Eligible To Travel in the selected Mode and Class.",
+                "Accommodation": "Claimed amount is greater than entitled amount."
             },
             {
                 "name": "Approvaldetails",
