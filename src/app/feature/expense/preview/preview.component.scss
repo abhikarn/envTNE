@@ -24,12 +24,14 @@ app-preview {
 	overflow: hidden;
 }
 
-  .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:first-child,  .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:last-child {
+  .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:first-child {
 	background: rgba(0, 0, 0, 0.01);
 	margin-top: 10px;
 	border-radius: 10px;
 }
-
+  .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body {
+	background: transparent !important;
+}
 .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:last-child {padding: 10px;}
 .mat-mdc-table td input.form-control {
 	border-bottom: 1px solid #BABAC4;
@@ -116,5 +118,22 @@ flex-grow: 0;
 }.accordion app-expansion-panel:last-child .mat-expansion-panel {
 	margin-bottom: 0 !important;
 }
+
+@media (max-width: 767px) {
+
+.common-tab .mdc-tab {
+		min-width: inherit;
+		padding: 13px 3px;
+		height: auto !important;
+	}
+ .nested-padding tr {
+	padding: 3px;
+	background-color: #fff;
+}
+.nested-table {
+	padding: 0 !important;
+}
+}
+
 }
 

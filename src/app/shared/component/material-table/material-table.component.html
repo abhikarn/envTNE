@@ -20,7 +20,7 @@
     <!-- Common Action Icons -->
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let row">
+        <td mat-cell *matCellDef="let row" style="padding: 7px 0;">
             <div class="icons-new">
                 <span style="width: 22px;">
                     <div [matTooltip]="'GL Code: ' + row?.GLCode" matTooltipPosition="above"
@@ -119,12 +119,12 @@
     <!-- Expand Button Column -->
     <ng-container matColumnDef="expand">
         <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let row">
+        <td mat-cell *matCellDef="let row" style="padding: 7px 0;">
             <div class="icons-new">
-                <span style="width: 18px;"> <i *ngIf="row?.IsViolation"
+                <span *ngIf="row?.IsViolation"> <i 
                         class="fa fa-exclamation-triangle fs-6 violation-icon" [matTooltip]="row?.Violation"
                         matTooltipPosition="above"></i></span>
-                <span style="width: 18px;"> <i *ngIf="row?.IsOCRRestrictedKeyword"
+                <span *ngIf="row?.IsOCRRestrictedKeyword"> <i 
                         class="fa fa-exclamation-triangle fs-6  text-amber"
                         [matTooltip]="'Expense item contains a restricted keyword as identified by OCR validation.'"
                         matTooltipPosition="above"></i></span>
@@ -150,35 +150,7 @@
     <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
             <div *ngIf="isExpanded(row)" class="expanded-container">
-                @if (mode === 'finance-approval') {
-                <app-add-gst [categoryGST]="categoryGST" [ExpenseRequestDetailId]="row?.ExpenseRequestDetailId"
-                    [gstData]="row?.gst" [amount]="row?.ApprovedAmount"></app-add-gst>
-                }
-                @if (mode !== 'finance-approval') {
-                <ng-container *ngFor="let nested of nestedTables">
-                    @if (row[nested.dataKey]?.length) {
-                    <table mat-table [dataSource]="row[nested.dataKey]" class="sub-table bg-none">
-                        <ng-container *ngFor="let col of nested.columns" [matColumnDef]="col.name">
-                            <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
-                            <td [attr.data-label]="col?.label" style="background-color: #fff;" mat-cell
-                                *matCellDef="let entry; let i = index">
-                                <!-- Show serial number for __slNo column -->
-                                <ng-container *ngIf="col.name === '__slNo'; else normalCell">
-                                    {{ i + 1 }}
-                                </ng-container>
-                                <ng-template #normalCell>
-                                    {{ entry[col.name] }}
-                                </ng-template>
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="getNestedColumnKeys(nested.columns)"></tr>
-                        <tr mat-row *matRowDef="let entry; let i = index; columns: getNestedColumnKeys(nested.columns)">
-                        </tr>
-                    </table>
-                    }
-                </ng-container>
-                }
-                <div class="row">
+                  <div class="row">
                     <ng-container *ngFor="let col of visibleOtherColumns">
                         <div class="col-md-4 col-sm-4 col-lg-4 col-6">
                             <div class="trl-preview-wrapper">
@@ -199,6 +171,36 @@
                         </div>
                     </ng-container>
                 </div>
+
+                @if (mode === 'finance-approval') {
+                <app-add-gst [categoryGST]="categoryGST" [ExpenseRequestDetailId]="row?.ExpenseRequestDetailId"
+                    [gstData]="row?.gst" [amount]="row?.ApprovedAmount"></app-add-gst>
+                }
+                @if (mode !== 'finance-approval') {
+                <ng-container *ngFor="let nested of nestedTables">
+                    @if (row[nested.dataKey]?.length) {
+                    <table mat-table [dataSource]="row[nested.dataKey]" class="sub-table mb-3  nested-padding  grey-table  bg-none">
+                        <ng-container *ngFor="let col of nested.columns" [matColumnDef]="col.name">
+                            <th mat-header-cell *matHeaderCellDef>{{ col.label }}</th>
+                            <td [attr.data-label]="col?.label" style="background-color: #fff;" mat-cell
+                                *matCellDef="let entry; let i = index">
+                                <!-- Show serial number for __slNo column -->
+                                <ng-container *ngIf="col.name === '__slNo'; else normalCell">
+                                    {{ i + 1 }}
+                                </ng-container>
+                                <ng-template #normalCell>
+                                    {{ entry[col.name] }}
+                                </ng-template>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="getNestedColumnKeys(nested.columns)"></tr>
+                        <tr mat-row *matRowDef="let entry; let i = index; columns: getNestedColumnKeys(nested.columns)">
+                        </tr>
+                    </table>
+                    }
+                </ng-container>
+                }
+              
             </div>
         </td>
     </ng-container>
