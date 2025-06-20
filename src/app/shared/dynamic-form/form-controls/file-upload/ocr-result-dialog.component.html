@@ -44,7 +44,7 @@
                                     <td>{{ data?.GstAmount || '-' }}</td>
                                     <td>{{ data?.GstNumber || '-' }}</td>
                                     <td>{{ data?.ServiceCharges || '-' }}</td>
-                                    <td>{{ data?.Currency || '-' }}</td>
+                                    <td>{{ data?.Currency ? getCurrencyName(data.Currency) : '-' }}</td>
                                     <td>{{ data?.IsDuplicate ? 'Yes' : 'No' }}</td>
                                 </tr>
                                 <!-- Nested GST Table Row -->

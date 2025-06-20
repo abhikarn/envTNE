@@ -184,7 +184,7 @@ export class DashboardComponent implements OnInit {
           sortable: col.sortable,
           order: col.order ? col.order : 0
         };
-      }).sort((a: any, b: any) => a.order - b.order); // 👈 sort columns by order
+      }).sort((a: any, b: any) => a.order - b.order);  
 
       this.columnKeys = this.displayedColumns.map(col => col.key);
       this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');
