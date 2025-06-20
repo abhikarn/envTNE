@@ -1,18 +1,31 @@
-// src/app/interceptors/loader.interceptor.ts
-
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { LoaderService } from '../shared/service/loader/loader.service';
 
+// Add URLs that should show loader
+const LOADER_URLS = [
+  '/api/expense',
+  '/api/claims',
+  '/api/reports',
+  // Add more URLs as needed
+];
+
 export const loaderInterceptor: HttpInterceptorFn = (request, next) => {
   const loaderService = inject(LoaderService);
   
-  loaderService.show();
+  // Check if the request URL should show loader
+  const shouldShowLoader = LOADER_URLS.some(url => request.url.includes(url));
+  
+  // if (shouldShowLoader) {
+    loaderService.show();
+  // }
 
   return next(request).pipe(
     finalize(() => {
-      loaderService.hide();
+      // if (shouldShowLoader) {
+        loaderService.hide();
+      // }
     })
   );
 };

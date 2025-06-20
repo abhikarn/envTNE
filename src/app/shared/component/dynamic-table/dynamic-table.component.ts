@@ -138,10 +138,19 @@ export class DynamicTableComponent implements OnInit {
     this.expandedRowIndex = this.expandedRowIndex === index ? null : index;
   }
 
+  // previewFile(file: any) {
+  //   const extension = file.FileName?.split('.').pop()?.toLowerCase();
+  //   const baseName = file.FileName?.replace(/\.[^/.]+$/, '');
+  //   const fileUrl = `https://localhost:44364/Document/${baseName}-${file.Guid}.${extension}`;
+  //   if (fileUrl) {
+  //     window.open(fileUrl, '_blank');
+  //   }
+  // }
+
   previewFile(file: any) {
-    const extension = file.FileName?.split('.').pop()?.toLowerCase();
-    const baseName = file.FileName?.replace(/\.[^/.]+$/, '');
-    const fileUrl = `https://localhost:44364/Document/${baseName}-${file.Guid}.${extension}`;
+    const extension = file.FileName.split('.').pop()?.toLowerCase();
+    const baseName = file.FileName.replace(/\.[^/.]+$/, '');
+    const fileUrl = `${environment.documentBaseUrl}/${baseName}-${file.Guid}.${extension}`;
     if (fileUrl) {
       window.open(fileUrl, '_blank');
     }
