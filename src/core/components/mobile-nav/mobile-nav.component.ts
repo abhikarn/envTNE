@@ -7,8 +7,7 @@ import { RouterModule } from '@angular/router';
   selector: 'app-mobile-nav',
   imports: [
     RouterModule, 
-    ReactiveFormsModule,
-    MatSidenavModule
+    ReactiveFormsModule
   ],
   templateUrl: './mobile-nav.component.html',
   styleUrl: './mobile-nav.component.scss'
