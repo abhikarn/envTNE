@@ -1563,7 +1563,7 @@
                                 "EntitlementAmount": "EntitlementAmount"
                             },
                             "outputControl": {
-                                "DifferentialAmount(INR)": "DifferentialAmount(INR)"
+                                "DifferentialAmount": "DifferentialAmount"
                             }
                         }
                     },
@@ -1634,7 +1634,7 @@
                                 "EntitlementAmount": "EntitlementAmount"
                             },
                             "outputControl": {
-                                "DifferentialAmount(INR)": "DifferentialAmount(INR)"
+                                "DifferentialAmount": "DifferentialAmount"
                             }
                         }
                     },
@@ -1642,7 +1642,7 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "numeric",
-                        "name": "DifferentialAmount(INR)",
+                        "name": "DifferentialAmount",
                         "isExcluded": false,
                         "label": "Differential Amount(INR)",
                         "value": 0,
@@ -2205,7 +2205,7 @@
                     },
                     {
                         "label": "Differential Amount",
-                        "name": "DifferentialAmount(INR)",
+                        "name": "DifferentialAmount",
                         "type": "number",
                         "visible": true,
                         "position": "out",
@@ -2526,7 +2526,7 @@
                     {
                         "type": "text",
                         "subType": "number",
-                        "name": "DifferentialAmount(INR)",
+                        "name": "DifferentialAmount",
                         "label": "Differential Amount(INR)",
                         "validations": [
                             {
@@ -2725,7 +2725,7 @@
                     {
                         "type": "text",
                         "subType": "number",
-                        "name": "DifferentialAmount(INR)",
+                        "name": "DifferentialAmount",
                         "label": "Differential Amount(INR)",
                         "validations": [
                             {
