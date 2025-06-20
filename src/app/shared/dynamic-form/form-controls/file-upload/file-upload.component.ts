@@ -150,18 +150,29 @@ export class FileUploadComponent {
   }
 
   downloadFile(file: any) {
-    
+    debugger;
     const extension = file.FileName.split('.').pop()?.toLowerCase();
     const baseName = file.FileName.replace(/\.[^/.]+$/, '');
     const fileUrl = `${environment.documentBaseUrl}/${baseName}-${file.Guid}.${extension}`;
-    // if (extension === 'pdf') {
-    window.open(fileUrl, '_blank');
-    // } else {
-    //   const link = document.createElement('a');
-    //   link.href = fileUrl;
-    //   link.download = file.FileName || 'downloaded-file';
-    //   link.click();
-    // }
+    
+    // Create fetch request to get file as blob
+    fetch(fileUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        // Create blob URL and trigger download
+        const blobUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = file.FileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(blobUrl);
+      })
+      .catch(error => {
+        this.snackbarService.error('Error downloading file');
+        console.error('Download error:', error);
+      });
   }
 
   /**

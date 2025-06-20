@@ -145,9 +145,9 @@ export class TextInputComponent implements OnInit {
             this.snackbarService.error(`Please select a valid city from the list for ${this.controlConfig.label}.`);
             return;
           }
-        }, 200);
+        }, 500);
       }
-    }, 200);
+    }, 500);
 
   }
 
