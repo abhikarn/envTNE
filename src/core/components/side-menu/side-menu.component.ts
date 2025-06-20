@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../app/shared/service/auth.service';
@@ -10,14 +10,27 @@ import { AuthService } from '../../../app/shared/service/auth.service';
   styleUrl: './side-menu.component.scss'
 })
 export class SideMenuComponent {
-  displayCode:string=''
-  displayName:string=''
+  displayCode: string = '';
+  displayName: string = '';
   profileMenuVisible = false;
 
   constructor(
     private router: Router,
     private auth: AuthService
   ) { }
+
+  @HostListener('document:click', ['$event'])
+  onOutsideClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+
+    const clickedInsideMenu = target.closest('#profileMenu');
+    const clickedToggleButton = target.closest('#profileToggle');
+
+    if (!clickedInsideMenu && !clickedToggleButton) {
+      this.profileMenuVisible = false;
+    }
+  }
+
 
   toggleProfileMenu(): void {
     this.profileMenuVisible = !this.profileMenuVisible;
@@ -29,8 +42,8 @@ export class SideMenuComponent {
   }
 
   ngOnInit(): void {
-    this.displayCode=this.auth.getUserDisplayCode()
-    this.displayName=this.auth.getUserDisplayName()
+    this.displayCode = this.auth.getUserDisplayCode();
+    this.displayName = this.auth.getUserDisplayName();
   }
 
 }
