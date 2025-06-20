@@ -162,9 +162,7 @@
                                 [existingData]="existingExpenseRequestData" [category]="category"
                                 [formConfig]="category.formControls" [eventHandler]="this"
                                 (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
-                                (updateData)="updateCategoryData($event)"
-                                [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
-                                [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
+                                (updateData)="updateCategoryData($event)">
                               </app-dynamic-form>
                             </div>
                           </div>
@@ -198,9 +196,7 @@
                                   [existingData]="existingExpenseRequestData" [category]="selectedExtraCategory"
                                   [formConfig]="selectedExtraCategory.formControls" [eventHandler]="this"
                                   (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
-                                  (updateData)="updateCategoryData($event)"
-                                  [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
-                                  [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
+                                  (updateData)="updateCategoryData($event)">
                                 </app-dynamic-form>
                               </div>
                             </div>
@@ -236,9 +232,7 @@
                                 [existingData]="existingExpenseRequestData" [category]="category"
                                 [formConfig]="category.formControls" [eventHandler]="this"
                                 (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
-                                (updateData)="updateCategoryData($event)"
-                                [minSelectableDate]="travelRequestPreview?.TravelDateFrom"
-                                [maxSelectableDate]="travelRequestPreview?.TravelDateTo">
+                                (updateData)="updateCategoryData($event)">
                               </app-dynamic-form>
                             </div>
                           </div>
@@ -253,7 +247,7 @@
             <!-- Other Details -->
             <div class="row ">
               <div class="col-md-12">
-                <mat-tab-group class="common-tab" fitInkBarToContent>
+                <mat-tab-group class="common-tab policy-tab" fitInkBarToContent>
                   @for (detail of expenseConfig?.otherDetails; track detail) {
                   <mat-tab>
                     @switch (detail.name) {
@@ -392,7 +386,7 @@
               }
             </div>
           </ng-template>
-          <div class="expense-drawer-bottom d-block d-md-none d-lg-none">
+          <div class="expense-drawer-bottom  d-block d-md-none d-lg-none">
             <div class="expense-drawer">
               <div class="exp-det">
                 <h6 class="text-dark">Expense Bill Details</h6>

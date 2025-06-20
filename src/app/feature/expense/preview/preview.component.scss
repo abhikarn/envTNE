@@ -20,11 +20,26 @@ app-preview {
         
     }
 
+	.policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body .mat-mdc-tab-body-content {
+	overflow: hidden;
+}
 
-	.common-tab .mat-mdc-tab-header {
-		background-color: #f7f7fa;
-		border-radius: 10px;margin-bottom: 12px;
-	}
+  .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:first-child,  .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:last-child {
+	background: rgba(0, 0, 0, 0.01);
+	margin-top: 10px;
+	border-radius: 10px;
+}
+
+.policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:last-child {padding: 10px;}
+.mat-mdc-table td input.form-control {
+	border-bottom: 1px solid #BABAC4;
+}
+
+	// .common-tab .mat-mdc-tab-header {
+	// 	background-color: #f7f7fa;
+	// 	border-radius: 10px;margin-bottom: 12px;
+	// }
+	
 
 	.common-tab .mat-mdc-tab-label-container {
 		border: none;
@@ -32,7 +47,9 @@ app-preview {
 	}
 
 	.common-tab .mat-mdc-tab-list {
-		flex-grow: 0;
+flex-grow: 0;
+  background-color: #f7f7fa;
+  border-radius: 10px;
 
 	}
 

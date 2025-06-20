@@ -44,4 +44,10 @@ export interface IFormControl {
   policyViolationCheck?: any;
   maxLength?: number;
   oCRRequired?: boolean;
+  time?: any;
+  minDate?: string | Date;
+  maxDate?: string | Date;
+  apiDateLimit?: boolean;
+  EntitlementAmountCalculation?: any;
+  taxCalculation?: any;
 }

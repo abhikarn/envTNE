@@ -131,7 +131,7 @@
                   <!-- Other Details -->
                   <div class="row mt-2">
                      <div class="col-md-12">
-                        <mat-tab-group class="common-tab" fitInkBarToContent (selectedTabChange)="onTabChange($event)">
+                        <mat-tab-group class="common-tab policy-tab" fitInkBarToContent (selectedTabChange)="onTabChange($event)">
                            @for (detail of otherDetails; track detail) {
                            <mat-tab>
                               @switch (detail.name) {
@@ -251,11 +251,11 @@
                               }
                               }
                               @if (mode == 'finance-approval') {
-                              <div class="row mt-2">                                  
+                                                    
                                     @if(isCreateAdjustmentform) {
                                     <app-create-dynamic-form [formConfig]="detail.formControls" ></app-create-dynamic-form>
                                     }                                  
-                              </div>
+                            
                               }
                               }
                               }

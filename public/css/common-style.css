@@ -10155,10 +10155,19 @@ button.dropbtn {
         .trl-preview-wrapper .trl-readview-item .trl-req-detail span {
         font-size: 12px;
         }
-        .trl-preview-wrapper .trl-readview-item .trl-req-detail {
-         
-        width: 100%;
-        }
+       .trl-preview-wrapper .trl-readview-item .trl-req-detail {
+	width: 100%;
+}
+.trl-preview-wrapper .trl-readview-item .trl-req-detail a {
+	font-size: 12px;
+	text-decoration: underline;
+	font-weight: bold;
+}
+.trl-preview-wrapper .trl-readview-item .trl-req-detail a:hover {
+	 
+	text-decoration: none;
+	 
+}
         .trl-preview-wrapper .trl-readview-item .trl-req-detail p {
         font-size: 12px;
         line-height: 16px;
@@ -12998,3 +13007,12 @@ width: 157px;
 }.space-wrap {
 	white-space: normal;
 }
+.phv-link {
+	font-weight: bold;
+	text-decoration: underline;
+	color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
+}
+.phv-link:hover {
+ 
+	text-decoration: none;
+ }

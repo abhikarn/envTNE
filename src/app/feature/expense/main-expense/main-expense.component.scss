@@ -15,9 +15,22 @@
 	}
 
 	.common-tab .mat-mdc-tab-header {
-		background-color: #f7f7fa;
-		border-radius: 10px;
-		margin-bottom: 12px;
+		 
+		margin-bottom: 15px;
+	}
+	  .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:first-child,  .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:last-child {
+	background: rgba(0, 0, 0, 0.01);
+	margin-top: 10px;
+	border-radius: 10px;
+}
+
+.policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:last-child {padding: 10px;}
+
+	.common-tab .mat-mdc-tab-list {
+ 
+  background-color: #f7f7fa;
+  border-radius: 10px;
+
 	}
 
 	.common-tab .mat-mdc-tab-label-container {
@@ -260,6 +273,9 @@
 		content: "";
 		background: url('../../../../../public/images/dropdown-arrow.png') no-repeat scroll 0 0;
 	}
+.form-control.ng-invalid {
+ 
+}
 
 	.mat-mdc-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-mdc-text-field-wrapper:focus-visible {
 
