@@ -184,7 +184,7 @@ export class DashboardComponent implements OnInit {
           sortable: col.sortable,
           order: col.order ? col.order : 0
         };
-      }).sort((a: any, b: any) => a.order - b.order); // 👈 sort columns by order
+      }).sort((a: any, b: any) => a.order - b.order);  
 
       this.columnKeys = this.displayedColumns.map(col => col.key);
       this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');
@@ -215,7 +215,8 @@ export class DashboardComponent implements OnInit {
   updateMobileDisplayData() {
     const start = 0;
     const end = this.mobileCurrentPage * this.mobilePageSize;
-    this.mobileDisplayData = this.dataSourceMobile.data.slice(0, end);
+    // Use filtered data for mobile
+    this.mobileDisplayData = this.dataSourceMobile.filteredData.slice(0, end);
   }
 
   onLoadMore() {
@@ -233,13 +234,28 @@ export class DashboardComponent implements OnInit {
   }
 
   applyGlobalFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+
+    // Desktop filtering
+    this.dataSource.filter = filterValue;
     this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
       return Object.values(data).some(value =>
         String(value).toLowerCase().includes(filter)
       );
     };
+
+    // Mobile filtering
+    this.dataSourceMobile.filter = filterValue;
+    this.dataSourceMobile.filterPredicate = (data: any, filter: string): boolean => {
+      return Object.values(data).some(value =>
+        String(value).toLowerCase().includes(filter)
+      );
+    };
+
+    if (this.isMobile) {
+      this.mobileCurrentPage = 1;
+      this.updateMobileDisplayData();
+    }
   }
 
   exportExcel(): void {

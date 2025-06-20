@@ -38,6 +38,8 @@ export class FileUploadComponent {
 
   @ViewChild('uploadMobileSheet') uploadMobileSheet!: TemplateRef<any>;
 
+  private currencyMap: Map<string, number> = new Map();
+
   constructor(
     private documentService: DocumentService,
     private domSanitizer: DomSanitizer,
@@ -48,6 +50,15 @@ export class FileUploadComponent {
     private bottomSheet?: MatBottomSheet
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
+    this.loadCurrencyMap();
+  }
+
+  private loadCurrencyMap() {
+    this.http.get('assets/currency.json').subscribe((data: any) => {
+      data.currencies.forEach((currency: any) => {
+        this.currencyMap.set(currency.code, currency.id);
+      });
+    });
   }
 
   ngOnInit() {
@@ -173,46 +184,15 @@ export class FileUploadComponent {
       .pipe(take(1))
       .subscribe({
         next: (res: any) => {
-
           this.ocrResult = res;
           if (this.ocrResult.StatusCode == 400) {
             this.snackbarService.error('OCR processing failed: ' + this.ocrResult.ErrorMessage);
             return;
           }
 
-          // Set Currency to 1 if it is "INR"
-          if (this.ocrResult?.Data?.Currency === "INR") {
-            this.ocrResult.Data.Currency = 1;
-          } else if (this.ocrResult?.Data?.Currency === "USD") {
-            this.ocrResult.Data.Currency = 2;
-          } else if (this.ocrResult?.Data?.Currency === "EUR") {
-            this.ocrResult.Data.Currency = 3;
-          } else if (this.ocrResult?.Data?.Currency === "GBP") {
-            this.ocrResult.Data.Currency = 4;
-          } else if (this.ocrResult?.Data?.Currency === "JPY") {
-            this.ocrResult.Data.Currency = 5;
-          } else if (this.ocrResult?.Data?.Currency === "AUD") {
-            this.ocrResult.Data.Currency = 6;
-          } else if (this.ocrResult?.Data?.Currency === "CAD") {
-            this.ocrResult.Data.Currency = 7;
-          } else if (this.ocrResult?.Data?.Currency === "SGD") {
-            this.ocrResult.Data.Currency = 8;
-          } else if (this.ocrResult?.Data?.Currency === "CNY") {
-            this.ocrResult.Data.Currency = 9;
-          } else if (this.ocrResult?.Data?.Currency === "RUB") {
-            this.ocrResult.Data.Currency = 10;
-          } else if (this.ocrResult?.Data?.Currency === "ZAR") {
-            this.ocrResult.Data.Currency = 11;
-          } else if (this.ocrResult?.Data?.Currency === "CHF") {
-            this.ocrResult.Data.Currency = 12;
-          } else if (this.ocrResult?.Data?.Currency === "NZD") {
-            this.ocrResult.Data.Currency = 13;
-          } else if (this.ocrResult?.Data?.Currency === "AED") {
-            this.ocrResult.Data.Currency = 14;
-          } else if (this.ocrResult?.Data?.Currency === "SAR") {
-            this.ocrResult.Data.Currency = 15;
-          } else {
-            this.ocrResult.Data.Currency = 1;
+          // Replace currency code with ID using the map
+          if (this.ocrResult?.Data?.Currency) {
+            this.ocrResult.Data.Currency = this.currencyMap.get(this.ocrResult.Data.Currency) || 1;
           }
 
           localStorage.setItem('ocrResult', JSON.stringify(this.ocrResult.Data));
