@@ -13,5 +13,9 @@ export const routes: Routes = [
     {
         path: 'expense',
         loadChildren: () => import('./feature/feature.module').then((m) => m.FeatureModule)
+    },
+    {
+        path: 'more',
+        loadComponent: () => import('../../src/core/components/mobile-nav/more/more.component').then((m) => m.MoreComponent)
     }
 ];
