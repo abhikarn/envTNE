@@ -843,7 +843,7 @@
                                                                                         data-bs-toggle="modal"
                                                                                         data-bs-target="#modal-expenseApprove">
                                                                                         <span data-bs-toggle="tooltip"
-                                                                                            matTooltip="One Click Approve"
+                                                                                            matTooltip="One Click Approve"   matTooltipPosition="above"
                                                                                             class="fa-hand-pointer fa-regular"
                                                                                             data-bs-original-title="One Click Approve"
                                                                                             aria-label="One Click Approve"></span>
@@ -853,7 +853,7 @@
                                                                                     <a [routerLink]="['/expense/expense/approval',element.TransactionId]"
                                                                                         class="btn-icon-action btn-icon-edit"><span
                                                                                             data-bs-toggle="tooltip"
-                                                                                            matTooltip="Approve"
+                                                                                            matTooltip="Approve"   matTooltipPosition="above"
                                                                                             class="fa-square-check fa-regular"
                                                                                             data-bs-original-title="Approve"
                                                                                             aria-label="Approve"></span>
@@ -865,7 +865,7 @@
                                                                                         data-bs-target="#modal-expenseReject"
                                                                                         data-expenserequestid="74"><span
                                                                                             data-bs-toggle="tooltip"
-                                                                                            matTooltip="Reject"
+                                                                                            matTooltip="Reject"   matTooltipPosition="above"
                                                                                             class="fa-xmark fa-solid"
                                                                                             data-bs-original-title="Reject"
                                                                                             aria-label="Reject"></span></a>
@@ -876,7 +876,7 @@
                                                                                         data-bs-target="#modal-expenseseekclarication"
                                                                                         data-expenserequestid="74">
                                                                                         <span data-bs-toggle="tooltip"
-                                                                                            matTooltip="Seek Clarification"
+                                                                                            matTooltip="Seek Clarification"   matTooltipPosition="above"
                                                                                             class="fa-rotate-right fa-solid"
                                                                                             data-bs-original-title="Seek Clarification"
                                                                                             aria-label="Seek Clarification"></span></a>
@@ -911,14 +911,14 @@
                                                                         @if (column.key === 'ClaimStatus') {
                                                                         @if (element['ClaimStatusId'] === 23) {
                                                                         <span class="status-green status-common"
-                                                                            matTooltip="Approved"
+                                                                            matTooltip="Approved"   matTooltipPosition="above"
                                                                             data-bs-toggle="tooltip" title="Completed"
                                                                             aria-label="Completed">
                                                                             {{ element[column.key] }}
                                                                         </span>
                                                                         } @else if (element['ClaimStatusId'] === 26) {
                                                                         <span class="status-grey   status-common"
-                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-toggle="tooltip"   matTooltipPosition="above"
                                                                             title="Expense Request Draft"
                                                                             matTooltip="Expense Request Draft"
                                                                             aria-label="Expense Request Draft">
@@ -927,7 +927,7 @@
                                                                         }
                                                                         @else if (element['ClaimStatusId'] === 27) {
                                                                         <span class="status-grey  status-common"
-                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-toggle="tooltip"   matTooltipPosition="above"
                                                                             title="Pending For Approval"
                                                                             matTooltip="Pending For Approval"
                                                                             aria-label="Pending For Approval">
@@ -937,14 +937,14 @@
                                                                         @else if (element['ClaimStatusId'] === 30) {
                                                                         <span class="status-red status-common"
                                                                             data-bs-toggle="tooltip" title="Rejected"
-                                                                            matTooltip="Rejected"
+                                                                            matTooltip="Rejected"   matTooltipPosition="above"
                                                                             aria-label="Rejected">
                                                                             {{ element[column.key] }}
                                                                         </span>
                                                                         }
                                                                         @else if (element['ClaimStatusId'] === 31) {
                                                                         <span class="status-orange  status-common"
-                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-toggle="tooltip"   matTooltipPosition="above"
                                                                             title="Seek Clarification"
                                                                             matTooltip="Seek Clarification"
                                                                             aria-label="Seek Clarification">
@@ -954,7 +954,7 @@
                                                                         @else if (element['ClaimStatusId'] === 32) {
                                                                         <span class="status-red status-common"
                                                                             data-bs-toggle="tooltip" title="Cancelled"
-                                                                            matTooltip="Cancelled"
+                                                                            matTooltip="Cancelled"   matTooltipPosition="above"
                                                                             aria-label="Cancelled">
                                                                             {{ element[column.key] }}
                                                                         </span>
@@ -962,7 +962,7 @@
                                                                         @else if (element['ClaimStatusId'] === 34) {
                                                                         <span class="status-green status-common"
                                                                             data-bs-toggle="tooltip" title="Approved"
-                                                                            matTooltip="Approved"
+                                                                            matTooltip="Approved"   matTooltipPosition="above"
                                                                             aria-label="Approved">
                                                                             {{ element[column.key] }}
                                                                         </span>

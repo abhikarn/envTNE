@@ -9,7 +9,7 @@ app-dashboard {
       vertical-align: middle;
     }
     
-  
+
     
   /* Material CSS */
   
@@ -224,7 +224,11 @@ app-dashboard {
 
 }
  .mat-sort-header-descending .mat-sort-header-arrow{	transform: rotate(0deg);}
-
+    .common-tab {
+	background-color: #f7f7fa !important;
+	border-radius: 10px;
+	border: none;
+}  
 	@media (max-width: 767px) {
   .dt-buttons {
 	order: 2 !important;

@@ -259,7 +259,7 @@
                                                 COMPLETED
                                                 </span>
                                              </td>
-                                             <td>
+                                             <td class="attribute-none">
                                                 <div class="TBL-actions">
                                                    <ul class="action-icons">
                                                       <li><a href="claim-expense-preview.html"
@@ -1109,7 +1109,7 @@
                                              'dd-MMM-yyyy' }}
                                           </ng-container>
                                           <ng-template #actionColumn>
-                                             <ng-container
+                                             <ng-container 
                                                 *ngIf="column.key === 'action'; else defaultColumn">
                                                 <div class="TBL-actions">
                                                    <ul class="action-icons">
@@ -1164,14 +1164,14 @@
                                                 @if (element['ClaimStatusId'] === 23) {
                                                 <span class="status-green status-common"
                                                  matTooltip="Completed"
-                                                   data-bs-toggle="tooltip" title="Completed"
+                                                   data-bs-toggle="tooltip" title="Completed"   matTooltipPosition="above"
                                                    aria-label="Completed">
                                                 {{ element[column.key] }}
                                                 </span>
                                                 } @else if (element['ClaimStatusId'] === 26) {
                                                 <span class="status-grey   status-common"
                                                  matTooltip="Expense Request Draft"
-                                                   data-bs-toggle="tooltip"
+                                                   data-bs-toggle="tooltip"   matTooltipPosition="above"
                                                    title="Expense Request Draft"
                                                    aria-label="Expense Request Draft">
                                                 {{ element[column.key] }}
@@ -1180,7 +1180,7 @@
                                                 @else if (element['ClaimStatusId'] === 27) {
                                                 <span class="status-grey  status-common"
                                                  matTooltip="Pending For Approval"
-                                                   data-bs-toggle="tooltip"
+                                                   data-bs-toggle="tooltip"   matTooltipPosition="above"
                                                    title="Pending For Approval"
                                                    aria-label="Pending For Approval">
                                                 {{ element[column.key] }}
@@ -1188,7 +1188,7 @@
                                                 }
                                                 @else if (element['ClaimStatusId'] === 30) {
                                                 <span class="status-red status-common"
-                                                matTooltip="Rejected"
+                                                matTooltip="Rejected"   matTooltipPosition="above"
                                                    data-bs-toggle="tooltip" title="Rejected"
                                                    aria-label="Rejected">
                                                 {{ element[column.key] }}
@@ -1197,7 +1197,7 @@
                                                 @else if (element['ClaimStatusId'] === 31) {
                                                 <span class="status-orange  status-common"
                                                   matTooltip="Seek Clarification"
-                                                   data-bs-toggle="tooltip"
+                                                   data-bs-toggle="tooltip"   matTooltipPosition="above"
                                                    title="Seek Clarification"
                                                    aria-label="Seek Clarification">
                                                 {{ element[column.key] }}
@@ -1205,7 +1205,7 @@
                                                 }
                                                 @else if (element['ClaimStatusId'] === 32) {
                                                 <span class="status-red status-common"
-                                                 matTooltip="Cancelled"
+                                                 matTooltip="Cancelled"   matTooltipPosition="above"
                                                    data-bs-toggle="tooltip" title="Cancelled"
                                                    aria-label="Cancelled">
                                                 {{ element[column.key] }}
@@ -1213,7 +1213,7 @@
                                                 }
                                                 @else if (element['ClaimStatusId'] === 34) {
                                                 <span class="status-green status-common"
-                                                 matTooltip="Approved"
+                                                 matTooltip="Approved"   matTooltipPosition="above"
                                                    data-bs-toggle="tooltip" title="Approved"
                                                    aria-label="Approved">
                                                 {{ element[column.key] }}
