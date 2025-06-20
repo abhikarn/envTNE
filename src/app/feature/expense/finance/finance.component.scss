@@ -13,7 +13,7 @@ app-dashboard {
     
   /* Material CSS */
   
-  .mat-mdc-form-field-infix {min-height: inherit!important; padding: 5px 0!important;}
+  .mat-mdc-form-field-infix {min-height: inherit!important; padding:0px 0!important;}
   .mat-mdc-form-field-infix {width: auto!important;}
   .mat-mdc-form-field-subscript-wrapper { display: none!important;}
   .mat-mdc-text-field-wrapper { padding: 0 5px!important;} 
@@ -28,7 +28,7 @@ app-dashboard {
      
       background-color: #f2f2f2;
       border-radius: 5px;
-      padding-left: 10px;
+      padding-left: 0px;
   } td .mat-mdc-form-field-flex {
       background: transparent;
       border-bottom: 1px solid #0000002b;
@@ -124,6 +124,48 @@ app-dashboard {
 	justify-content: space-between!important;
  
 }
+
+
+ .mat-sort-header-arrow svg {
+ 
+	display: none!important;
+}
+
+.mat-sort-header-arrow:after{
+
+  right: 0;
+  background: url(../../../../assets/images/downsort-arrow.svg) 0 0 no-repeat !important;
+  content: " ";
+  width: 11px;
+  height: 14px;
+  position: absolute;opacity: 0.8;
+}
+ .mat-sort-header-arrow::before {
+	right: -6px;
+	background: url("../../../../assets/images/upsort-arrow.svg") 0 0 no-repeat !important;
+	content: " ";
+	width: 11px;
+	height: 14px;
+	position: absolute;opacity: 0.8;
+}
+.mat-sort-header-arrow {
+ 
+	opacity: 1!important;
+	 
+}.mat-sort-header-ascending .mat-sort-header-arrow::after {
+	content: inherit;
+	display: none;
+}
+ .mat-sort-header-descending .mat-sort-header-arrow::before {
+	content: inherit;
+	display: none;
+
+}
+ .mat-sort-header-recently-cleared-descending .mat-sort-header-arrow {
+  animation:inherit!important;
+
+}
+ .mat-sort-header-descending .mat-sort-header-arrow{	transform: rotate(0deg);}
  
 .mat-mdc-paginator-page-size {
  

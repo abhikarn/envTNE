@@ -101,6 +101,17 @@
 	padding: 10px;
 	 
 }
+#expense-state tr td:last-child::before {
+	content: inherit;
+	display: none;
+}.logo-account-hold {
+   
+    top: -1px;
+}
+
+#expense-state  .TBL-actions {
+	padding-top: 10px;
+}
 
 .table.table-cust-modeA .TBL-actions ul.action-icons li {
 	margin-right: 12px !important;
@@ -302,7 +313,7 @@
     }#close-noti-mobile {
         display: block;
     }
-    .page-title { width: 100%; top: 48px;}
+    .page-title { width: 100%; top: 47px;}
     .sidebar-mini.sidebar-collapse .main-sidebar { display: none;}
     .sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .right-side {  width: 100%;}
     body.sidebar-mini.sidebar-collapse .content-wrapper, body.sidebar-mini.sidebar-collapse .main-footer {margin-left: 0 !important;}
@@ -730,6 +741,12 @@
 
 .export-btn {
     order: 2;
+}
+.list-group {
+    padding-top: 20px;
+}
+.mobile-acc-color  .accordion-button {
+    background-color: #f2f2f2!important;
 }
 }
 

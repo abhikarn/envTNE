@@ -12,10 +12,9 @@
   }
   
   .details-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 24px;
+   background-color: #F7F7FA;
+  padding: 13px 20px 13px;
+  border-radius: 8px;
   }
   
   .left-column, .right-column {

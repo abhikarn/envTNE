@@ -1,13 +1,50 @@
 <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
-    <div id="liveToast" class="toast" [ngClass]="toastClass" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="liveToast" class="   common-toast" [ngClass]="toastClass" role="alert" aria-live="assertive"
+        aria-atomic="true">
         <div class="toast-header">
             <h4>
+                @if(data.type=="success"){
                 <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="8" cy="8.5" r="8" fill="#05A660" />
                     <path d="M11 6.5L6.875 11L5 8.95455" stroke="#F7F7FC" stroke-width="1.33333" stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg>
-                {{ data.type | titlecase }} 
+                }
+                @if(data.type=="error"){
+                <svg width="16" height="17" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="10" cy="10" r="10" fill="#E63535"></circle>
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
+                        fill="white"></path>
+                </svg>
+
+                }
+                @if(data.type=="warning"){
+
+
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px"
+                    height="17px" viewBox="0 0 512 512" version="1.1">
+                    <title>warning-filled</title>
+                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="add" fill="#e2b62e" transform="translate(32.000000, 42.666667)">
+                            <path
+                                d="M246.312928,5.62892705 C252.927596,9.40873724 258.409564,14.8907053 262.189374,21.5053731 L444.667042,340.84129 C456.358134,361.300701 449.250007,387.363834 428.790595,399.054926 C422.34376,402.738832 415.04715,404.676552 407.622001,404.676552 L42.6666667,404.676552 C19.1025173,404.676552 7.10542736e-15,385.574034 7.10542736e-15,362.009885 C7.10542736e-15,354.584736 1.93772021,347.288125 5.62162594,340.84129 L188.099293,21.5053731 C199.790385,1.04596203 225.853517,-6.06216498 246.312928,5.62892705 Z M224,272 C208.761905,272 197.333333,283.264 197.333333,298.282667 C197.333333,313.984 208.415584,325.248 224,325.248 C239.238095,325.248 250.666667,313.984 250.666667,298.624 C250.666667,283.264 239.238095,272 224,272 Z M245.333333,106.666667 L202.666667,106.666667 L202.666667,234.666667 L245.333333,234.666667 L245.333333,106.666667 Z"
+                                id="Combined-Shape">
+
+                            </path>
+                        </g>
+                    </g>
+                </svg>
+                }
+                @if(data.type=="info"){
+                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="8.5" r="8" fill="#05A660" />
+                    <path d="M11 6.5L6.875 11L5 8.95455" stroke="#F7F7FC" stroke-width="1.33333" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                }
+
+                {{ data.type | titlecase }}
             </h4>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
