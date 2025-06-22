@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, signal } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject, signal } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { IFormControl } from '../form-control.interface';
 import { ServiceRegistryService } from '../../service/service-registry.service';
@@ -19,7 +19,7 @@ export class BaseFormControlComponent implements OnInit {
   displayValue = signal<any>(null);
   isLoading = signal<boolean>(false);
   errorMessage = signal<string>('');
-
+ private destroyRef = inject(DestroyRef);
   constructor(
     protected serviceRegistry: ServiceRegistryService,
     protected snackbarService: SnackbarService,
@@ -40,14 +40,14 @@ export class BaseFormControlComponent implements OnInit {
   protected setupSubscriptions(): void {
     // Subscribe to value changes
     this.control.valueChanges
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(value => {
         this.handleValueChange(value);
       });
 
     // Subscribe to status changes
     this.control.statusChanges
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(status => {
         this.handleStatusChange(status);
       });

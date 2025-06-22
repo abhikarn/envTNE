@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, Injector, Type, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, Injector, Type, inject, signal, computed, DestroyRef } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IFormControl, FormControlType } from './form-control.interface';
 import { ServiceRegistryService } from '../service/service-registry.service';
@@ -35,6 +35,7 @@ export class DynamicFormBaseComponent implements OnInit, OnChanges {
   isLoadingOptions = signal<boolean>(false);
   options = signal<any[]>([]);
   editIndex = 0;
+ private destroyRef = inject(DestroyRef);
 
   constructor(
     protected serviceRegistry: ServiceRegistryService,
@@ -73,7 +74,7 @@ export class DynamicFormBaseComponent implements OnInit, OnChanges {
   protected setupFormSubscriptions(): void {
     this.form.valueChanges
       .pipe(
-        takeUntilDestroyed()
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(values => {
         this.handleFormValueChanges(values);
@@ -82,7 +83,7 @@ export class DynamicFormBaseComponent implements OnInit, OnChanges {
 
     this.form.statusChanges
       .pipe(
-        takeUntilDestroyed()
+         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(status => {
         this.handleFormStatusChanges(status);
@@ -127,7 +128,7 @@ export class DynamicFormBaseComponent implements OnInit, OnChanges {
     const service = this.serviceRegistry.getService(control.apiService);
     if (service && typeof service[control.apiMethod] === 'function') {
       service[control.apiMethod]()
-        .pipe(takeUntilDestroyed())
+        .pipe( takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (response: any) => {
             if (response && Array.isArray(response)) {
@@ -182,4 +183,4 @@ export class DynamicFormBaseComponent implements OnInit, OnChanges {
       this.formSubmit.emit(this.form.value);
     }
   }
-} 
+}
