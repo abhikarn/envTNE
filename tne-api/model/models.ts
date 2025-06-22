@@ -23,6 +23,7 @@ export * from './expensePolicyEntitlementDurationParam';
 export * from './expensePolicyEntitlementParam';
 export * from './expenseRequestApprovalDetailType';
 export * from './expenseRequestApprovalsDashboardParam';
+export * from './expenseRequestCostCentrewiseAmmoutType';
 export * from './expenseRequestDashboardParam';
 export * from './expenseRequestDetailMetaDataType';
 export * from './expenseRequestDetailType';

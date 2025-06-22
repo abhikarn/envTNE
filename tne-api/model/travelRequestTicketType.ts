@@ -20,7 +20,6 @@ export interface TravelRequestTicketType {
     TicketSearchConstraintId?: number;
     Remarks?: string;
     IsViolation?: boolean;
-    IsOCRRestrictedKeyword?: boolean;
     TransactionId?: string;
     IsAPI?: boolean;
     IsSelfBookedTicket?: boolean;

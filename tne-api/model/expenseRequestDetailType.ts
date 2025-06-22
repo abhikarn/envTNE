@@ -35,5 +35,6 @@ export interface ExpenseRequestDetailType {
     TransactionId?: string;
     IsTravelRaiseRequest?: boolean;
     TaxAmount?: string;
+    OCRLogId?: number;
 }
 

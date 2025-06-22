@@ -7,6 +7,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../../../environment';
+import { take } from 'rxjs';
+import { NewExpenseService } from '../../../feature/expense/service/new-expense.service';
+import { SnackbarService } from '../../service/snackbar.service';
 
 @Component({
   selector: 'app-attachment-modal',
@@ -33,6 +36,8 @@ export class AttachmentModalComponent {
     @Optional() @Inject(MAT_BOTTOM_SHEET_DATA) public bottomSheetData: any,
     @Optional() private dialogRef: MatDialogRef<AttachmentModalComponent>,
     @Optional() private bottomSheetRef: MatBottomSheetRef<AttachmentModalComponent>,
+    private newexpenseService?: NewExpenseService, // Replace with actual service type
+    private snackbarService?: SnackbarService // Replace with actual service type
   ) {
     // Use whichever data is available
     this.attachments = (dialogData && dialogData.attachments) ||
@@ -85,18 +90,33 @@ export class AttachmentModalComponent {
   }
 
   downloadFile(file: any) {
-    
     const extension = file.FileName.split('.').pop()?.toLowerCase();
     const baseName = file.FileName.replace(/\.[^/.]+$/, '');
-    const fileUrl = `${environment.documentBaseUrl}/${baseName}-${file.Guid}.${extension}`;
-    // if (extension === 'pdf') {
-    window.open(fileUrl, '_blank');
-    // } else {
-    //   const link = document.createElement('a');
-    //   link.href = fileUrl;
-    //   link.download = file.FileName || 'downloaded-file';
-    //   link.click();
-    // }
+    const fileNameWithGuid = `${baseName}-${file.Guid}.${extension}`;
+    const originalFileName = `${baseName}.${extension}`;
+
+    const data = {
+      "originalFileName": originalFileName,
+      "fileName": fileNameWithGuid
+    };
+
+    // Subscribe to the observable to actually make the HTTP request and handle the download
+    this.newexpenseService?.documentDownload(data).pipe(take(1)).subscribe({
+      next: (blob: Blob) => {
+        debugger;
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = originalFileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err: any) => {
+        this.snackbarService?.error('Error downloading file');
+      }
+    });
   }
 
   close() {

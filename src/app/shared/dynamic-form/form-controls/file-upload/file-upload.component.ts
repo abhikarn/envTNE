@@ -2,17 +2,18 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angu
 import { FormControl } from '@angular/forms';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
 import { DocumentService } from '../../../../../../tne-api';
-import { take } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SnackbarService } from '../../../service/snackbar.service';
 import { environment } from '../../../../../environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ConfirmDialogService } from '../../../service/confirm-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { OcrResultDialogComponent } from './ocr-result-dialog.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NewExpenseService } from '../../../../feature/expense/service/new-expense.service';
 
 @Component({
   selector: 'lib-file-upload',
@@ -47,7 +48,8 @@ export class FileUploadComponent {
     private http: HttpClient,
     private confirmDialogService: ConfirmDialogService,
     private dialog: MatDialog,
-    private bottomSheet?: MatBottomSheet
+    private bottomSheet?: MatBottomSheet,
+    private newexpenseService?: NewExpenseService
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
     this.loadCurrencyMap();
@@ -150,36 +152,35 @@ export class FileUploadComponent {
   }
 
   downloadFile(file: any) {
-    debugger;
     const extension = file.FileName.split('.').pop()?.toLowerCase();
     const baseName = file.FileName.replace(/\.[^/.]+$/, '');
-    const fileUrl = `${environment.documentBaseUrl}/${baseName}-${file.Guid}.${extension}`;
-    
-    // Create fetch request to get file as blob
-    fetch(fileUrl)
-      .then(response => response.blob())
-      .then(blob => {
-        // Create blob URL and trigger download
-        const blobUrl = window.URL.createObjectURL(blob);
+    const fileNameWithGuid = `${baseName}-${file.Guid}.${extension}`;
+    const originalFileName = `${baseName}.${extension}`;
+
+    const data = {
+      "originalFileName": originalFileName,
+      "fileName": fileNameWithGuid
+    };
+
+    // Subscribe to the observable to actually make the HTTP request and handle the download
+    this.newexpenseService?.documentDownload(data).pipe(take(1)).subscribe({
+      next: (blob: Blob) => {
+        debugger;
+        const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = file.FileName;
+        link.href = url;
+        link.download = originalFileName;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        window.URL.revokeObjectURL(blobUrl);
-      })
-      .catch(error => {
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err: any) => {
         this.snackbarService.error('Error downloading file');
-        console.error('Download error:', error);
-      });
+      }
+    });
   }
 
-  /**
-   * Uploads a file to the OCR API and stores the result in ocrResult.
-   * @param file The file to upload for OCR processing.
-   * @param payload The file payload for uploadFile (optional, used for deferred upload)
-   */
   uploadOcrFile(file: File, payload?: any) {
 
     if (!file) {
