@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -54,4 +55,12 @@ export class NewExpenseService {
   getloginConfig() {
     return this.httpClient.get<any>(`${this.assetPath}/assets/config/login-config.json`);
   }
+
+
+  documentDownload(data: any): Observable<Blob> {
+    return this.httpClient.post(`${this.basePath}/api/Expense/Download`, data, {
+      responseType: 'blob'
+    });
+  }
+
 }

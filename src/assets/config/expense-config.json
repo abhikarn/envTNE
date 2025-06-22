@@ -83,7 +83,7 @@
             {
                 "name": "Travel Ticket",
                 "label": "Tickets Expense",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -128,7 +128,7 @@
                             ]
                         },
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 11
                     },
                     {
@@ -3792,8 +3792,8 @@
                 "columns": [
                     {
                         "type": "date",
-                        "name": "ClaimDate",
-                        "label": "Date",
+                        "name": "TravelDate",
+                        "label": "Travel Date",
                         "visible": true,
                         "position": "in-out"
                     },

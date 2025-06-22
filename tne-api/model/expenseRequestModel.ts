@@ -10,6 +10,7 @@
 import { ExpenseRequestDetailType } from './expenseRequestDetailType';
 import { RelocationExpenseOtherVendorQuoteDetailsType } from './relocationExpenseOtherVendorQuoteDetailsType';
 import { ExpenseRequestMetaDataType } from './expenseRequestMetaDataType';
+import { ExpenseRequestCostCentrewiseAmmoutType } from './expenseRequestCostCentrewiseAmmoutType';
 import { ExpenseRequestGstType } from './expenseRequestGstType';
 import { DocumentTyp } from './documentTyp';
 import { ExpenseRequestDetailMetaDataType } from './expenseRequestDetailMetaDataType';
@@ -30,6 +31,7 @@ export interface ExpenseRequestModel {
     ExpenseRequestMetaDataType?: Array<ExpenseRequestMetaDataType>;
     ExpenseRequestDetailMetaDataType?: Array<ExpenseRequestDetailMetaDataType>;
     ExpenseRequestGstType?: Array<ExpenseRequestGstType>;
+    ExpenseRequestCostCentrewiseAmmoutType?: Array<ExpenseRequestCostCentrewiseAmmoutType>;
     RelocationExpenseOtherVendorQuoteDetailsType?: Array<RelocationExpenseOtherVendorQuoteDetailsType>;
     DocumentType?: Array<DocumentTyp>;
     ActionBy?: number;

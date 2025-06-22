@@ -42,6 +42,7 @@ model/expensePolicyEntitlementDurationParam.ts
 model/expensePolicyEntitlementParam.ts
 model/expenseRequestApprovalDetailType.ts
 model/expenseRequestApprovalsDashboardParam.ts
+model/expenseRequestCostCentrewiseAmmoutType.ts
 model/expenseRequestDashboardParam.ts
 model/expenseRequestDetailMetaDataType.ts
 model/expenseRequestDetailType.ts

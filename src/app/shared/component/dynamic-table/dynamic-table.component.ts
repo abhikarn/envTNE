@@ -6,6 +6,9 @@ import { GlobalConfigService } from '../../service/global-config.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConfirmDialogService } from '../../service/confirm-dialog.service';
 import { environment } from '../../../../environment';
+import { NewExpenseService } from '../../../feature/expense/service/new-expense.service';
+import { take } from 'rxjs';
+import { SnackbarService } from '../../service/snackbar.service';
 
 @Component({
   selector: 'app-dynamic-table',
@@ -30,7 +33,9 @@ export class DynamicTableComponent implements OnInit {
     private domSanitizer: DomSanitizer,
     private configService: GlobalConfigService,
     private datePipe: DatePipe,
-    private confirmDialogService: ConfirmDialogService
+    private confirmDialogService: ConfirmDialogService,
+    private newexpenseService?: NewExpenseService,
+    private snackbarService?: SnackbarService
   ) { }
 
   ngOnInit() {
@@ -156,28 +161,36 @@ export class DynamicTableComponent implements OnInit {
     }
   }
 
-  // downloadFile(file: any) {
-  //   const url = this.domSanitizer.bypassSecurityTrustResourceUrl(file?.fileUrl || file?.Location);
-  //   const link = document.createElement('a');
-  //   link.href = url.toString();
-  //   link.download = file?.FileName || 'downloaded-file';
-  //   link.click();
-  // }
-
   downloadFile(file: any) {
-
     const extension = file.FileName.split('.').pop()?.toLowerCase();
     const baseName = file.FileName.replace(/\.[^/.]+$/, '');
-    const fileUrl = `${environment.documentBaseUrl}/${baseName}-${file.Guid}.${extension}`;
-    // if (extension === 'pdf') {
-    window.open(fileUrl, '_blank');
-    // } else {
-    //   const link = document.createElement('a');
-    //   link.href = fileUrl;
-    //   link.download = file.FileName || 'downloaded-file';
-    //   link.click();
-    // }
+    const fileNameWithGuid = `${baseName}-${file.Guid}.${extension}`;
+    const originalFileName = `${baseName}.${extension}`;
+
+    const data = {
+      "originalFileName": originalFileName,
+      "fileName": fileNameWithGuid
+    };
+
+    // Subscribe to the observable to actually make the HTTP request and handle the download
+    this.newexpenseService?.documentDownload(data).pipe(take(1)).subscribe({
+      next: (blob: Blob) => {
+        
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = originalFileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err: any) => {
+        this.snackbarService?.error('Error downloading file');
+      }
+    });
   }
+
 
   confirmDelete(index: number): void {
     this.confirmDialogService.confirm({

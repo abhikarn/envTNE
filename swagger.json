@@ -2011,6 +2011,43 @@
         }
       }
     },
+    "/api/document/download": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "operationId": "Document_DownloadDocument",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "fileNamewithGuid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
     "/api/ExpenseRequest/Create": {
       "post": {
         "tags": [
@@ -4802,6 +4839,12 @@
             "$ref": "#/definitions/ExpenseRequestGstType"
           }
         },
+        "ExpenseRequestCostCentrewiseAmmoutType": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExpenseRequestCostCentrewiseAmmoutType"
+          }
+        },
         "RelocationExpenseOtherVendorQuoteDetailsType": {
           "type": "array",
           "items": {
@@ -4901,6 +4944,9 @@
         "IsViolation": {
           "type": "boolean"
         },
+        "IsOCRRestrictedKeyword": {
+          "type": "boolean"
+        },
         "Violation": {
           "type": "string"
         },
@@ -4914,6 +4960,10 @@
         },
         "TaxAmount": {
           "type": "string"
+        },
+        "OCRLogId": {
+          "format": "int64",
+          "type": "integer"
         }
       }
     },
@@ -5079,6 +5129,39 @@
         "CostcenterId": {
           "format": "int64",
           "type": "integer"
+        },
+        "TransactionReference": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "ExpenseRequestCostCentrewiseAmmoutType": {
+      "type": "object",
+      "properties": {
+        "ExpenseRequestCostCentrewiseAmmoutId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ExpenseRequestDetailId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "CostCentreId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "CostCentre": {
+          "type": "string"
+        },
+        "AmmoutInPercentage": {
+          "format": "double",
+          "type": "number"
+        },
+        "AmmoutInActual": {
+          "format": "double",
+          "type": "number"
         },
         "TransactionReference": {
           "format": "uuid",
