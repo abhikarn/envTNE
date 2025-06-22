@@ -103,7 +103,7 @@ export class AttachmentModalComponent {
     // Subscribe to the observable to actually make the HTTP request and handle the download
     this.newexpenseService?.documentDownload(data).pipe(take(1)).subscribe({
       next: (blob: Blob) => {
-        debugger;
+        
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
