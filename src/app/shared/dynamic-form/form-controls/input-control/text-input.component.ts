@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, signal, computed } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, signal, computed, DestroyRef, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
@@ -35,6 +35,7 @@ export class TextInputComponent extends BaseFormControlComponent implements OnIn
   override displayValue = signal<any>(null);
   override isLoading = signal<boolean>(false);
   passwordVisible = signal<boolean>(false);
+  override readonly destroyRef = inject(DestroyRef);
 
   constructor(
     protected override serviceRegistry: ServiceRegistryService,
@@ -54,7 +55,7 @@ export class TextInputComponent extends BaseFormControlComponent implements OnIn
 
     if (this.controlConfig.autoComplete) {
       this.control.valueChanges
-        .pipe(takeUntilDestroyed())
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(inputValue => {
           this.validateSameOriginAndDestination();
           if (typeof inputValue !== "object") {

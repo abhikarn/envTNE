@@ -104,4 +104,5 @@ export interface IFormControl {
   apiDateLimit?: boolean;
   EntitlementAmountCalculation?: any;
   taxCalculation?: any;
+  class?: string;
 }

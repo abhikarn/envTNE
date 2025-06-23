@@ -56,6 +56,7 @@ export class SelectInputComponent extends BaseFormControlComponent implements Af
   }
 
   override ngOnInit() {
+    console.log('SelectInputComponent ngOnInit', this.controlConfig);
     super.ngOnInit();
     this.isMobile = window.innerWidth <= 768;
     this.loadOptions();

@@ -1,16 +1,19 @@
 <form [formGroup]="form" class="row">
   @for (control of formControls; track control) {
-    @if (control.formConfig.type !== 'hidden' && control.formConfig.showInUI !== false) {
-      @if (hasControlComponent(control.formConfig.type)) {
-        <div class="col-md-4">
-          <ng-container *ngComponentOutlet="getControlComponent(control.formConfig.type)!; injector: createInjector(control)"></ng-container>
-        </div>
-      } @else {
-        <div>
-          <p>Unsupported control type: {{ control.formConfig.type }}</p>
-        </div>
-      }
-    }
+  @if (control.formConfig.type !== 'hidden' && control.formConfig.showInUI !== false) {
+  @if (hasControlComponent(control.formConfig.type)) {
+  <div [ngClass]="control.formConfig.class ? control.formConfig.class : 'col-md-4'">
+    <ng-container *ngComponentOutlet="getControlComponent(control.formConfig.type)!; 
+                          injector: createInjector(control); 
+                          inputs: { controlConfig: control.formConfig, form: form }">
+    </ng-container>
+  </div>
+  } @else {
+  <div>
+    <p>Unsupported control type: {{ control.formConfig.type }}</p>
+  </div>
+  }
+  }
   }
 
   <div class="col-md-12 mt-0 mb-3">
@@ -24,11 +27,11 @@
   </div>
 
   @if (tableData().length > 0) {
-    @defer {
-      <app-dynamic-table [tableData]="tableData()" [categoryConfig]="category" (editRow)="onEditRow($event)"
-        (deleteRow)="onDeleteRow($event)"></app-dynamic-table>
-    } @loading {
-      <div class="loading-spinner">Loading table...</div>
-    }
+  @defer {
+  <app-dynamic-table [tableData]="tableData()" [categoryConfig]="category" (editRow)="onEditRow($event)"
+    (deleteRow)="onDeleteRow($event)"></app-dynamic-table>
+  } @loading {
+  <div class="loading-spinner">Loading table...</div>
+  }
   }
 </form>

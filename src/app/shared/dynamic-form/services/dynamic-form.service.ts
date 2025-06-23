@@ -110,7 +110,7 @@ export class DynamicFormService {
     this.formStateService.resetState();
   }
 
-  private loadDependentOptions(control: any, value: any, rowData: any): void {
+  loadDependentOptions(control: any, value: any, rowData: any): void {
     const service = this.serviceRegistry.getService(control.formConfig.apiService);
     const apiMethod = control.formConfig.apiMethod;
     const dependsOnValue = rowData[control.formConfig.dependsOn || ''];

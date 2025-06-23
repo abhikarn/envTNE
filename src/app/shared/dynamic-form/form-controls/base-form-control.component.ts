@@ -19,7 +19,8 @@ export class BaseFormControlComponent implements OnInit {
   displayValue = signal<any>(null);
   isLoading = signal<boolean>(false);
   errorMessage = signal<string>('');
- private destroyRef = inject(DestroyRef);
+  destroyRef = inject(DestroyRef);
+  
   constructor(
     protected serviceRegistry: ServiceRegistryService,
     protected snackbarService: SnackbarService,
@@ -39,18 +40,22 @@ export class BaseFormControlComponent implements OnInit {
 
   protected setupSubscriptions(): void {
     // Subscribe to value changes
-    this.control.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(value => {
-        this.handleValueChange(value);
-      });
+    if (this.control && this.control.valueChanges) {
+      this.control.valueChanges
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(value => {
+          this.handleValueChange(value);
+        });
+    }
 
     // Subscribe to status changes
-    this.control.statusChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(status => {
-        this.handleStatusChange(status);
-      });
+    if (this.control && this.control.statusChanges) {
+      this.control.statusChanges
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(status => {
+          this.handleStatusChange(status);
+        });
+    }
   }
 
   protected handleValueChange(value: any): void {
@@ -147,4 +152,4 @@ export class BaseFormControlComponent implements OnInit {
   protected displayFn(option: any): string {
     return option?.label || '';
   }
-} 
+}
