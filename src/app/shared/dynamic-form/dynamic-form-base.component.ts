@@ -65,7 +65,7 @@ export class DynamicFormBaseComponent implements OnInit, OnChanges {
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
 
-      if (config.apiService && config.apiMethod) {
+      if (config.apiService && config.apiMethod && !config?.payloadKey) {
         this.loadOptions(config);
       }
     });

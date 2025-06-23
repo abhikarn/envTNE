@@ -72,16 +72,6 @@ export class GstComponent extends BaseFormControlComponent implements AfterViewI
     if (localStorage.getItem('ocrResult') === 'true') {
       this.companyGSTForm.get('IsBillRaisedInCompanyGST')?.setValue(true);
     }
-    this.setupGstSubscriptions();
-  }
-
-  private setupGstSubscriptions(): void {
-    // Subscribe to form value changes
-    this.companyGSTForm.valueChanges
-      .pipe(takeUntilDestroyed())
-      .subscribe(value => {
-        this.formControlService.setGstData(value);
-      });
   }
 
   override trackByFn(index: number, item: any): string | number {
