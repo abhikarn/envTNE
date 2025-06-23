@@ -3,9 +3,13 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "paths": {
       "env-auto-form-builder": [
         "./dist/env-auto-form-builder"
+      ],
+      "@envTNE/*": [
+        "./src/app/*"
       ]
     },
     "outDir": "./dist/out-tsc",

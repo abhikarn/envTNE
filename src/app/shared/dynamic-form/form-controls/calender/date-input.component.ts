@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { MatNativeDateModule, MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,6 +14,7 @@ import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/mat
 import _moment from 'moment';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { CommonModule } from '@angular/common';
+import { BaseFormControlComponent } from '../base-form-control.component';
 
 // Custom date formats for display
 export const CUSTOM_DATE_FORMATS = {
@@ -33,6 +34,7 @@ export const CUSTOM_DATE_FORMATS = {
 
 @Component({
   selector: 'lib-date-input',
+  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -52,40 +54,57 @@ export const CUSTOM_DATE_FORMATS = {
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: false } }
   ]
 })
-
-export class DateInputComponent {
-  @Input() control: FormControl = new FormControl(null);
-  @Input() controlConfig: IFormControl = { name: '' };
-  @Input() form: any;
+export class DateInputComponent extends BaseFormControlComponent {
+  @Input() override control: FormControl = new FormControl(null);
+  @Input() override controlConfig: IFormControl = { name: '' };
+  @Input() override form: FormGroup = new FormGroup({});
+  @Input() minDate?: Date;
+  @Input() maxDate?: Date;
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   @Output() emitSpecificCase = new EventEmitter<any>();
   timeControl: FormControl = new FormControl(null);
   pendingTime: string | null = null;
-  minDate: Date | null = null;
-  maxDate: Date | null = null;
 
   constructor(
-    private serviceRegistry: ServiceRegistryService,
-    private snackbarService: SnackbarService,
-    private configService: GlobalConfigService
+    protected override serviceRegistry: ServiceRegistryService,
+    protected override snackbarService: SnackbarService,
+    protected override configService: GlobalConfigService
   ) {
-    this.getErrorMessage = this.getErrorMessage.bind(this);
-
+    super(serviceRegistry, snackbarService, configService);
   }
 
-  ngOnInit() {
-    if (this.controlConfig.disable) {
-      this.control.disable();
-    }
-
-    setTimeout(() => {
-      if (this.controlConfig.apiDateLimit) {
-        this.minDate = this.controlConfig.minDate ? new Date(this.controlConfig.minDate) : null;
-        this.maxDate = this.controlConfig.maxDate ? new Date(this.controlConfig.maxDate) : null;
-      } else {
-        this.setDateLimits();
+  override ngOnInit() {
+    super.ngOnInit();
+    this.control.valueChanges.subscribe(value => {
+      // If value is already an ISO string, do nothing
+      if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
+        return;
       }
-    }, 1000);
+      // If value is a Date object, treat as local and convert to UTC midnight
+      if (value instanceof Date) {
+        const isoDate = _moment.utc({
+          year: value.getFullYear(),
+          month: value.getMonth(),
+          day: value.getDate()
+        }).toISOString();
+        if (this.control.value !== isoDate) {
+          this.control.setValue(isoDate, { emitEvent: false });
+        }
+        return;
+      }
+      // If value is a moment object, treat as local and convert to UTC midnight
+      if (_moment.isMoment(value)) {
+        const isoDate = _moment.utc({
+          year: value.year(),
+          month: value.month(),
+          day: value.date()
+        }).toISOString();
+        if (this.control.value !== isoDate) {
+          this.control.setValue(isoDate, { emitEvent: false });
+        }
+        return;
+      }
+    });
 
     this.control.valueChanges.subscribe(value => this.handleDateChange(value));
     this.timeControl.valueChanges.subscribe(time => this.handleTimeChange(time));
@@ -161,16 +180,8 @@ export class DateInputComponent {
     this.control.setValue(localIso, { emitEvent: false });
   }
 
-  getErrorMessage(): string {
-    if (!this?.controlConfig?.validations) return '';
-
-    for (const validation of this.controlConfig.validations) {
-      if (this.control.hasError(validation.type)) {
-        return validation.message;
-      }
-    }
-
-    return 'Invalid selection'; // Default fallback message
+  override getErrorMessage(): string {
+    return super.getErrorMessage();
   }
 
   onDateSelect(event: MatDatepickerInputEvent<Date>): void {
@@ -204,68 +215,15 @@ export class DateInputComponent {
     }
   }
 
-  handleDependentCase(dependentCase: any) {
-    if (!dependentCase.apiService || !dependentCase.apiMethod) return;
-
-    let apiSubscription: Subscription;
-    const apiService = this.serviceRegistry.getService(dependentCase.apiService);
-
-    if (apiService && typeof apiService[dependentCase.apiMethod] === "function") {
-      // Dynamically populate request body from input controls
-      let requestBody: any = dependentCase.requestBody;
-      let shouldMakeApiCall = true;
-      Object.entries(dependentCase.inputControls).forEach(([controlName, requestKey]) => {
-        if (typeof requestKey === 'string') { // Ensure requestKey is a string
-          const controlValue = this.form.get(controlName)?.value;
-          if (!controlValue) {
-            this.snackbarService.error(`Please Select a ${controlName}.`);
-            shouldMakeApiCall = false;
-          } else {
-            requestBody[requestKey] = controlValue[dependentCase.key] ?? controlValue; // Extract Id if it's an object
-          }
-        }
-      });
-      if (shouldMakeApiCall) {
-        apiSubscription = apiService[dependentCase.apiMethod](requestBody).subscribe(
-          (response: any) => {
-            // Dynamically set output controls based on response mapping
-            if (typeof dependentCase.outputControl === 'string') {
-              // Single field case
-              const value = this.extractValueFromPath(response, dependentCase.outputControl);
-              if (value !== undefined) {
-                this.form.get(dependentCase.outputControl)?.setValue(value);
-              }
-            } else if (typeof dependentCase.outputControl === 'object') {
-              // Multiple fields case
-              for (const [outputControl, responsePath] of Object.entries(dependentCase.outputControl) as [string, string][]) {
-                const value = this.extractValueFromPath(response, responsePath);
-                if (value !== undefined) {
-                  const precision = dependentCase.autoFormat?.decimalPrecision
-                    ?? this.configService.getDecimalPrecision();
-
-                  const numericValue = parseFloat(value);
-                  const formatted = isNaN(numericValue) ? value : numericValue.toFixed(precision);
-
-                  this.form.get(outputControl)?.setValue(formatted, { emitEvent: false });
-                }
-              }
-            }
-          },
-          (error: any) => {
-            console.error("API Error:", error);
-          }
-        );
-      }
-    } else {
-      console.warn(`Invalid API service or method: ${dependentCase.apiService}.${dependentCase.apiMethod}`);
-    }
+  override handleDependentCase(dependentCase: any): void {
+    super.handleDependentCase(dependentCase);
   }
 
-  /**
-   * Extracts a nested value from an object using a dot-separated path.
-   * Example: extractValueFromPath({ ResponseValue: { Value: 1 } }, "ResponseValue.Value") => 1
-   */
-  private extractValueFromPath(obj: any, path: string): any {
-    return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
+  override handleDependentResponse(response: any, dependentCase: any): void {
+    super.handleDependentResponse(response, dependentCase);
+  }
+
+  override extractValueFromPath(obj: any, path: string): any {
+    return super.extractValueFromPath(obj, path);
   }
 }

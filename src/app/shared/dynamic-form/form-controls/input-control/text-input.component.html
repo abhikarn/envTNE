@@ -24,12 +24,12 @@
   }
   @else {
   @if (controlConfig.type == 'password') {
-  <input [type]="passwordVisible ? 'text' : 'password'" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'"
+  <input [type]="passwordVisible() ? 'text' : 'password'" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'"
     (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" />
     @if(controlConfig.passwordVisibility) {
-    <button mat-icon-button matSuffix (click)="passwordVisible = !passwordVisible" [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="!passwordVisible">
-        <mat-icon>{{passwordVisible ? 'visibility' : 'visibility_off'}}</mat-icon>
+    <button mat-icon-button matSuffix (click)="passwordVisible.set(!passwordVisible())" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="!passwordVisible()">
+        <mat-icon>{{passwordVisible() ? 'visibility' : 'visibility_off'}}</mat-icon>
         </button>
     }      
   }

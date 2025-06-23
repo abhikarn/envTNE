@@ -102,6 +102,8 @@ export class MainExpenseComponent {
   filteredOptions: any = [];
   billableControl: FormControl = new FormControl('');
   selectedTabIndex: number = 0;
+  travelModeList: any;
+  currencyList: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -196,34 +198,56 @@ export class MainExpenseComponent {
   // Load master data (baggage types, meals, travel modes) and expense config file.
   loadInitialData() {
     forkJoin({
+      // Master data from dataService
       baggageTypeList: this.dataService.dataGetBaggageType(),
       boMealsList: this.dataService.dataGetMealType(),
       localTravelTypeList: this.dataService.dataGetLocalTravelType(),
       localTravelModeList: this.dataService.dataGetLocalTravelMode(),
+      
+      // Additional data from dataService
+      pendingTravelRequests: this.dataService.dataGetTravelRequestFor('body', false, { httpHeaderAccept: 'application/json' }),
+      travelModeList: this.dataService.dataGetTravelMode(),
+      travelPaymentTypeList: this.dataService.dataGetPaymentType(),
+      currencyList: this.dataService.dataGetCurrencyView(),
+      // TODO: Replace mock with actual API call when available
+      // accommodationTypeList: this.dataService.dataGetAccommodationTypeList(),
+      accommodationTypeList: of({ ResponseValue: [] }), // Mock observable for now
+      otherTypeList: this.dataService.dataGetCarType(),
+      
+      // Config data
       expenseConfig: this.http.get<any>(`${this.assetPath}/assets/config/expense-config.json`)
     })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (responses) => this.handleInitialResponses(responses),
-        error: (err) => console.error(err)
+        next: (responses) => {
+          // Handle master data responses
+          this.baggageTypeList = responses.baggageTypeList.ResponseValue;
+          this.localTravelTypeList = responses.localTravelTypeList.ResponseValue;
+          this.localTravelModeList = responses.localTravelModeList.ResponseValue;
+          this.boMealsList = responses.boMealsList.ResponseValue;
+          
+          // Handle additional data responses
+          this.travelRequests = responses.pendingTravelRequests?.ResponseValue || [];
+          this.travelModeList = responses.travelModeList?.ResponseValue || [];
+          this.travelPaymentList = responses.travelPaymentTypeList?.ResponseValue || [];
+          this.currencyList = responses.currencyList?.ResponseValue || [];
+          this.accomodationTypeList = responses.accommodationTypeList?.ResponseValue || [];
+          this.otherTypeList = responses.otherTypeList?.ResponseValue || [];
+          
+          // Handle config data
+          this.expenseConfig = responses.expenseConfig.expenseRequest;
+          
+          // Initialize form structures
+          this.setupExpenseConfig();
+          this.setupCategories();
+          this.setupJustificationForm();
+
+          if (this.transactionId) {
+            this.loadExistingExpenseRequest();
+          }
+        },
+        error: (err) => console.error('Error loading initial data:', err)
       });
-  }
-
-  // Handle forkJoin API responses and initialize form structures and categories.
-  handleInitialResponses(responses: any) {
-    this.baggageTypeList = responses.baggageTypeList.ResponseValue;
-    this.localTravelTypeList = responses.localTravelTypeList.ResponseValue;
-    this.localTravelModeList = responses.localTravelModeList.ResponseValue;
-    this.boMealsList = responses.boMealsList.ResponseValue;
-    this.expenseConfig = responses.expenseConfig.expenseRequest;
-
-    this.setupExpenseConfig();
-    this.setupCategories();
-    this.setupJustificationForm();
-
-    if (this.transactionId) {
-      this.loadExistingExpenseRequest();
-    }
   }
 
   // Setup initial dynamic form control based on expenseConfig request object.

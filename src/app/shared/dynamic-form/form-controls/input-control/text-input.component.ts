@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, signal, computed } from '@angular/core';
+import { FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +13,8 @@ import { ServiceRegistryService } from '../../../service/service-registry.servic
 import { SnackbarService } from '../../../service/snackbar.service';
 import { MatIconModule } from '@angular/material/icon';
 import { GlobalConfigService } from '../../../service/global-config.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BaseFormControlComponent } from '../base-form-control.component';
 
 @Component({
   selector: 'lib-text-input',
@@ -25,60 +27,42 @@ import { GlobalConfigService } from '../../../service/global-config.service';
   styleUrls: ['./text-input.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TextInputComponent implements OnInit {
-  @Input() control: FormControl = new FormControl('');
-  @Input() controlConfig: IFormControl = { name: '' };
-  @Input() form: any;
-  @Output() emitInputValue = new EventEmitter<any>();
-  @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
-  displayValue: any;
-  passwordVisible: boolean = false;
+export class TextInputComponent extends BaseFormControlComponent implements OnInit {
+  @Input() override control: FormControl = new FormControl('');
+  @Input() override controlConfig: IFormControl = { name: '' };
+  @Input() override form: FormGroup = new FormGroup({});
+  @Output() override emitInputValue = new EventEmitter<any>();
+  override displayValue = signal<any>(null);
+  override isLoading = signal<boolean>(false);
+  passwordVisible = signal<boolean>(false);
 
   constructor(
-    private serviceRegistry: ServiceRegistryService,
-    private snackbarService: SnackbarService,
-    private configService: GlobalConfigService
+    protected override serviceRegistry: ServiceRegistryService,
+    protected override snackbarService: SnackbarService,
+    protected override configService: GlobalConfigService
   ) {
+    super(serviceRegistry, snackbarService, configService);
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
 
-  ngOnInit() {
-    this.control.valueChanges.subscribe(inputValue => {
-      if (inputValue) {
-        this.valueChange.emit({
-          event: inputValue,
-          control: this.controlConfig
-        });
-        if (this.controlConfig.readonly) {
-          if (this.controlConfig.dependentCases?.length > 0) {
-            this.controlConfig.dependentCases.forEach((dependentCase: any) => {
-              if (dependentCase.event === "onBlur") {
-                this.handleDependentCase(dependentCase);
-              }
-            });
-          }
-        }
-      }
-    });
+  override ngOnInit() {
+    super.ngOnInit();
 
     if (this.controlConfig.disable) {
       this.control.disable();
     }
 
     if (this.controlConfig.autoComplete) {
-      this.control.valueChanges.subscribe(inputValue => {
-        this.validateSameOriginAndDestination();
-        if (typeof inputValue !== "object") {
-          // Trigger only when inputValue is a string of exactly 2 characters
-          if (typeof inputValue === 'string' && inputValue.length >= 2) {
-            let input = {
-              inputValue: inputValue,
-              control: this.control
+      this.control.valueChanges
+        .pipe(takeUntilDestroyed())
+        .subscribe(inputValue => {
+          this.validateSameOriginAndDestination();
+          if (typeof inputValue !== "object") {
+            if (typeof inputValue === 'string' && inputValue.length >= 2) {
+              this.emitInputValue.emit({ inputValue, control: this.control });
+              this.displayValue.set(inputValue);
             }
-            this.emitInputValue.emit(input);
-            this.displayValue = inputValue;
           }
-        }
 
         if (inputValue !== null && inputValue !== undefined && typeof inputValue === "object") {
           if (this.controlConfig.dependentCases?.length > 0) {
@@ -89,29 +73,46 @@ export class TextInputComponent implements OnInit {
             });
           }
         }
-      });
+        });
     }
+  }
+
+  override handleValueChange(value: any): void {
+    super.handleValueChange(value);
+  }
+
+  override handleStatusChange(status: string): void {
+    super.handleStatusChange(status);
+  }
+
+  override getErrorMessage(): string {
+    return super.getErrorMessage();
+  }
+
+  override handleDependentCase(dependentCase: any): void {
+    super.handleDependentCase(dependentCase);
+  }
+
+  override handleDependentResponse(response: any, dependentCase: any): void {
+    super.handleDependentResponse(response, dependentCase);
   }
 
   onInput(event: any) {
     if (this.controlConfig.autoFormat) {
       let inputValue = (event.target.value).toString();
-      // Correctly apply the pattern as a RegExp
-      const pattern = this.controlConfig.autoFormat?.patterns[0];
+      const pattern = this.controlConfig.autoFormat?.patterns?.[0];
       if (pattern) {
         inputValue = inputValue.replace(new RegExp(pattern, 'g'), '');
       }
 
-      // Prevent more than one decimal point
       const parts = inputValue.split('.');
       if (parts.length > 2) {
         inputValue = parts[0] + '.' + parts.slice(1).join('');
       }
 
-      // Limit integer and decimal part lengths
       const [integerPart, decimalPart] = inputValue.split('.');
-      let maxLength = this.controlConfig.autoFormat.range?.max ?? 10;
-      let decimalPrecision = Number(this.controlConfig.autoFormat.decimalPrecision ?? 2);
+      const maxLength = this.controlConfig.autoFormat?.range?.max ?? 10;
+      const decimalPrecision = Number(this.controlConfig.autoFormat?.decimalPrecision ?? 2);
 
       let formattedValue = integerPart ? integerPart.slice(0, maxLength) : '';
       if (decimalPart !== undefined) {
@@ -139,7 +140,6 @@ export class TextInputComponent implements OnInit {
             (option: any) => option.value === value.value
           );
         setTimeout(() => {
-          // Only show error if user typed something (not empty/null/undefined)
           if (!isValid && value && value !== '') {
             this.control.setValue(null);
             this.snackbarService.error(`Please select a valid city from the list for ${this.controlConfig.label}.`);
@@ -154,15 +154,12 @@ export class TextInputComponent implements OnInit {
   onBlur() {
     let value = this.control.value;
 
-    // Handle empty or null input: set to 0 with precision
     if (value === null || value === undefined || value === '') {
       this.control.setValue(this.getFormattedValue(0));
       return;
     }
 
-    // Format value to required decimal precision on blur
     if (this.controlConfig.autoFormat) {
-      // Only format if value is a valid number
       const numericValue = parseFloat(value);
       if (!isNaN(numericValue)) {
         const formatted = this.getFormattedValue(numericValue);
@@ -170,7 +167,6 @@ export class TextInputComponent implements OnInit {
       }
     }
 
-    // Handle dependent cases if any
     if (this.controlConfig.dependentCases?.length > 0) {
       this.controlConfig.dependentCases.forEach((dependentCase: any) => {
         if (dependentCase.event === "onBlur") {
@@ -190,89 +186,12 @@ export class TextInputComponent implements OnInit {
     }
   }
 
-  handleDependentCase(dependentCase: any) {
-    if (!dependentCase.apiService || !dependentCase.apiMethod) return;
-
-    let apiSubscription: Subscription;
-    const apiService = this.serviceRegistry.getService(dependentCase.apiService);
-
-    if (apiService && typeof apiService[dependentCase.apiMethod] === "function") {
-      // Dynamically populate request body from input controls
-      let requestBody: any = dependentCase.requestBody;
-      let shouldMakeApiCall = true;
-      Object.entries(dependentCase.inputControls).forEach(([controlName, requestKey]) => {
-        if (typeof requestKey === 'string') { // Ensure requestKey is a string
-          const controlValue = this.form.get(controlName)?.value;
-          if (!controlValue) {
-            this.snackbarService.error(`Please Select a ${controlName}.`);
-            shouldMakeApiCall = false;
-          } else {
-            requestBody[requestKey] = controlValue[dependentCase.key] ?? controlValue; // Extract Id if it's an object
-          }
-        }
-      });
-      if (shouldMakeApiCall) {
-        apiSubscription = apiService[dependentCase.apiMethod](requestBody).subscribe(
-          (response: any) => {
-            // Dynamically set output controls based on response mapping
-            if (typeof dependentCase.outputControl === 'string') {
-              // Single field case
-              const value = this.extractValueFromPath(response, dependentCase.outputControl);
-              if (value !== undefined) {
-                this.form.get(dependentCase.outputControl)?.setValue(value);
-              }
-            } else if (typeof dependentCase.outputControl === 'object') {
-              // Multiple fields case
-              for (const [outputControl, responsePath] of Object.entries(dependentCase.outputControl) as [string, string][]) {
-                const value = this.extractValueFromPath(response, responsePath);
-                if (value !== undefined) {
-                  if (dependentCase.autoFormat?.decimal) {
-                    this.form.get(outputControl)?.setValue(`${value}${dependentCase.autoFormat.decimal}`);
-                  } else {
-                    this.form.get(outputControl)?.setValue(value);
-                  }
-                }
-              }
-            }
-          },
-          (error: any) => {
-            console.error("API Error:", error);
-          }
-        );
-      }
-
-    } else {
-      console.warn(`Invalid API service or method: ${dependentCase.apiService}.${dependentCase.apiMethod}`);
-    }
+  override trackByFn(index: number, item: any): string | number {
+    return super.trackByFn(index, item);
   }
 
-  /**
-   * Extracts a nested value from an object using a dot-separated path.
-   * Example: extractValueFromPath({ ResponseValue: { Value: 1 } }, "ResponseValue.Value") => 1
-   */
-  private extractValueFromPath(obj: any, path: string): any {
-    return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
-  }
-
-  trackByFn(index: number, item: any): string | number {
-    return item?.Key ?? index;
-  }
-
-  getErrorMessage(status: boolean): string {
-
-    if (!this.controlConfig?.validations) return '';
-
-    for (const validation of this.controlConfig.validations) {
-      if (this.control.hasError(validation.type)) {
-        return validation.message;
-      }
-    }
-
-    return 'Invalid selection'; // Default fallback message
-  }
-
-  displayFn(option: any): string {
-    return option ? option.label : '';
+  override displayFn(option: any): string {
+    return super.displayFn(option);
   }
 
   validateSameOriginAndDestination(): { [key: string]: boolean } | null {
@@ -287,5 +206,7 @@ export class TextInputComponent implements OnInit {
     return null;
   }
 
-
+  togglePasswordVisibility(): void {
+    this.passwordVisible.set(!this.passwordVisible());
+  }
 }

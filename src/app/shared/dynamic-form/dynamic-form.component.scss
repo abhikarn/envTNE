@@ -6,3 +6,27 @@ p {
   border: 2px solid #dc3545 !important;
   background-color: #fff0f0 !important;
 }
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 1.1rem;
+  
+  &::after {
+    content: '';
+    width: 2rem;
+    height: 2rem;
+    margin-left: 1rem;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

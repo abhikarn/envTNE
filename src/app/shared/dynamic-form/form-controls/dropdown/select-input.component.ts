@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, TemplateRef, Inject, Optional, AfterViewInit, ViewChild } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, TemplateRef, Optional, AfterViewInit, ViewChild, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../form-control.interface';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,6 +10,9 @@ import { ServiceRegistryService } from '../../../service/service-registry.servic
 import { MatIconModule } from '@angular/material/icon';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CommonModule } from '@angular/common';
+import { BaseFormControlComponent } from '../base-form-control.component';
+import { SnackbarService } from '../../../service/snackbar.service';
+import { GlobalConfigService } from '../../../service/global-config.service';
 
 @Component({
   selector: 'lib-select-input',
@@ -27,10 +30,15 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./select-input.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SelectInputComponent implements AfterViewInit {
-  @Input() control: FormControl = new FormControl('');
-  @Input() controlConfig: IFormControl = { name: '' };
+export class SelectInputComponent extends BaseFormControlComponent implements AfterViewInit {
+  @Input() override control: FormControl = new FormControl('');
+  @Input() override controlConfig: IFormControl = { name: '' };
+  @Input() override form: FormGroup = new FormGroup({});
+  @Output() override emitInputValue = new EventEmitter<any>();
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
+  
+  override displayValue = signal<any>(null);
+  override isLoading = signal<boolean>(false);
   disable: boolean = false;
   apiSubscription?: Subscription;
   isMobile = false;
@@ -38,15 +46,22 @@ export class SelectInputComponent implements AfterViewInit {
 
   @ViewChild('requestBottomSheet', { static: true }) requestBottomSheetTpl!: TemplateRef<any>;
 
-  trackByFn(index: number, item: any): string | number {
-    return item?.Key ?? item?.value ?? index;
-  }
-
   constructor(
-    private serviceRegistry: ServiceRegistryService,
+    protected override serviceRegistry: ServiceRegistryService,
+    protected override snackbarService: SnackbarService,
+    protected override configService: GlobalConfigService,
     @Optional() private _bottomSheet?: MatBottomSheet
   ) {
-    this.getErrorMessage = this.getErrorMessage.bind(this);
+    super(serviceRegistry, snackbarService, configService);
+  }
+
+  override ngOnInit() {
+    super.ngOnInit();
+    this.isMobile = window.innerWidth <= 768;
+    this.loadOptions();
+    if (this.controlConfig.defaultValue) {
+      this.control.setValue(this.controlConfig.defaultValue.Id);
+    }
   }
 
   ngAfterViewInit() {
@@ -56,60 +71,49 @@ export class SelectInputComponent implements AfterViewInit {
     }
   }
 
-  ngOnInit() {
-    this.isMobile = window.innerWidth <= 768;
-    this.loadOptions();
-    if (this.controlConfig.defaultValue) {
-      this.control.setValue(this.controlConfig.defaultValue.Id);
-    }
-
-    if (this.controlConfig.disable) {
-      this.control.disable();
-    }
-
-  }
-
   private loadOptions() {
-    
     if ((!this.controlConfig.apiService && !this.controlConfig.apiMethod)) return;
 
     const apiService = this.serviceRegistry.getService(this.controlConfig.apiService || '');
     if (apiService && typeof apiService[this.controlConfig.apiMethod || ''] === 'function') {
-
+      this.isLoading.set(true);
       const payload = this.controlConfig.payloadKey ? this.controlConfig.payloadKey : null;
-      if (this.controlConfig.payloadKey) {
 
-      }
       if (payload && typeof payload === 'object') {
-        this.apiSubscription = apiService[this.controlConfig.apiMethod || ''](payload).subscribe(
-          (data: any) => {
+        this.apiSubscription = apiService[this.controlConfig.apiMethod || ''](payload).subscribe({
+          next: (data: any) => {
             const labelKey = this.controlConfig.labelKey || 'label';
             const valueKey = this.controlConfig.valueKey || 'value';
             this.controlConfig.options = data.ResponseValue.map((item: any) => ({
               label: item[labelKey],
               value: item[valueKey]
             }));
+            this.isLoading.set(false);
           },
-          (error: any) => {
+          error: (error: any) => {
             console.error('API Error:', error);
+            this.snackbarService.error('Failed to load options');
+            this.isLoading.set(false);
           }
-        );
-      }
-      else {
+        });
+      } else {
         if (!this.controlConfig.payloadKey) {
-          this.apiSubscription = apiService[this.controlConfig.apiMethod || '']().subscribe(
-            (data: any) => {
+          this.apiSubscription = apiService[this.controlConfig.apiMethod || '']().subscribe({
+            next: (data: any) => {
               const labelKey = this.controlConfig.labelKey || 'label';
               const valueKey = this.controlConfig.valueKey || 'value';
               this.controlConfig.options = data.ResponseValue.map((item: any) => ({
                 label: item[labelKey],
                 value: item[valueKey]
               }));
+              this.isLoading.set(false);
             },
-            (error: any) => {
+            error: (error: any) => {
               console.error('API Error:', error);
+              this.snackbarService.error('Failed to load options');
+              this.isLoading.set(false);
             }
-          );
+          });
         }
       }
     } else {
@@ -117,21 +121,33 @@ export class SelectInputComponent implements AfterViewInit {
     }
   }
 
-  getErrorMessage(status: boolean): string {
-    if (!this?.controlConfig?.validations) return '';
-
-    for (const validation of this.controlConfig.validations) {
-      if (this.control.hasError(validation.type)) {
-        return validation.message;
-      }
-    }
-
-    return 'Invalid selection'; // Default fallback message
+  override handleValueChange(value: any): void {
+    super.handleValueChange(value);
+    this.valueChange.emit({ event: { value }, control: this.controlConfig });
   }
 
-  // Emit selection change event
-  onSelectionChange(event: any) {
-    this.valueChange.emit({ event, control: this.controlConfig });
+  override handleStatusChange(status: string): void {
+    super.handleStatusChange(status);
+  }
+
+  override getErrorMessage(): string {
+    return super.getErrorMessage();
+  }
+
+  override handleDependentCase(dependentCase: any): void {
+    super.handleDependentCase(dependentCase);
+  }
+
+  override handleDependentResponse(response: any, dependentCase: any): void {
+    super.handleDependentResponse(response, dependentCase);
+  }
+
+  override trackByFn(index: number, item: any): string | number {
+    return item?.Key ?? item?.value ?? index;
+  }
+
+  override displayFn(option: any): string {
+    return option?.label || '';
   }
 
   onReadonlySelection(event: MatSelectChange): void {
@@ -140,21 +156,22 @@ export class SelectInputComponent implements AfterViewInit {
     }
   }
 
-  // Only open bottom sheet on mobile, and prevent mat-select from opening
+  onSelectionChange(event: MatSelectChange): void {
+    this.handleValueChange(event.value);
+    this.valueChange.emit({ event, control: this.controlConfig });
+  }
+
   onMatSelectClick(event: Event) {
     if (this.isMobile) {
       event.preventDefault();
       event.stopPropagation();
       this.openRequestBottomSheet();
-      // Prevent mat-select from opening
       return false;
     }
-    // For desktop, allow default behavior
     return true;
   }
 
   openRequestBottomSheet() {
-    // Use the ViewChild template if @Input is not provided
     const tpl = this.requestBottomSheetTpl;
     if (this.bottomSheet && tpl) {
       this.bottomSheet.open(tpl, {
@@ -165,7 +182,7 @@ export class SelectInputComponent implements AfterViewInit {
 
   selectRequestFromSheet(option: any) {
     this.control.setValue(option.value);
-    this.onSelectionChange({ value: option.value });
+    this.handleValueChange(option.value);
     if (this.bottomSheet) {
       this.bottomSheet.dismiss();
     }

@@ -2,47 +2,101 @@ import { FormControl } from '@angular/forms';
 import { IValidationConfig } from './validation-config.interface';
 import { Observable } from 'rxjs';
 
+export type FormControlType = 
+  | 'text' 
+  | 'select' 
+  | 'date' 
+  | 'password' 
+  | 'multiSelect' 
+  | 'gst' 
+  | 'costCenter' 
+  | 'lineWiseCostCenter'
+  | 'hidden'
+  | 'email'
+  | 'textarea'
+  | 'radio'
+  | 'file'
+  | 'multi-select';
+
+export type FormControlDataType = 'string' | 'number' | 'boolean' | 'date' | 'object' | 'array';
+
+export interface IAutoFormatConfig {
+  decimalPrecision?: number;
+  patterns?: string[];
+  range?: {
+    max?: number;
+    min?: number;
+  };
+}
+
+export interface IPasswordSettings {
+  minLength?: number;
+  requireUppercase?: boolean;
+  requireLowercase?: boolean;
+  requireNumbers?: boolean;
+  requireSpecialChars?: boolean;
+}
+
 export interface IFormControl {
-  type?: string;
+  // Basic Properties
+  type?: FormControlType;
   subType?: string;
-  dataType?: string;
+  dataType?: FormControlDataType;
   name: string;
   label?: string;
-  isExcluded?: boolean;
   placeholder?: string;
   value?: any;
-  value$?:any;
+  value$?: Observable<any>;
+  defaultValue?: any;
+  required?: boolean;
+  requiredIf?: any;
+  readonly?: boolean;
+  disable?: boolean;
+  showInUI?: boolean;
+  icon?: string;
+  maxLength?: number;
+  minLength?: number;
+  pattern?: string;
+
+  // API Integration
+  apiService?: string;
+  apiMethod?: string;
+  payloadKey?: string;
+
+  // Options and Selection
   options?: any[];
   option$?: Observable<any[]>;
   labelKey?: string;
   valueKey?: string;
-  apiService?: string;
-  apiMethod?: string;
-  events?: any;
-  autoComplete?: boolean,
-  disable?: boolean;
-  defaultValue?: any;
-  autoFormat?: any;
-  dependentCases?: any;
-  readonly?: boolean;
-  multiple?: boolean; // File Control
-  accept?: string; // File Control
+  autoComplete?: boolean;
+  multiple?: boolean;
+
+  // File Upload
+  accept?: string;
+  maxSizeMB?: number;
+  referenceType?: string;
+
+  // Validation
   validations?: IValidationConfig[];
-  validationMessages?: any;
-  getControl?: any; // GST,
+  validationMessages?: Record<string, string>;
+
+  // Formatting and Calculation
+  autoFormat?: IAutoFormatConfig;
+  calculate?: any;
+
+  // Dependencies and Events
   dependsOn?: any;
-  payloadKey?: string;
-  showInUI?: boolean;
+  dependentCases?: any;
+  events?: Record<string, string>;
+  getControl?: any;
+
+  // Special Features
+  isExcluded?: boolean;
   fields?: any;
   notifications?: any;
-  required?: boolean;
-  requiredIf?: any;
   passwordVisibility?: boolean;
-  passwordSattings?: any;
-  icon?: string;
-  calculate?: any;
+  passwordSattings?: IPasswordSettings;
   policyViolationCheck?: any;
-  maxLength?: number;
   oCRRequired?: boolean;
   time?: any;
   minDate?: string | Date;
