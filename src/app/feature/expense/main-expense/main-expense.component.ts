@@ -415,7 +415,7 @@ export class MainExpenseComponent {
     if (event.index !== 5) {
       this.onTabChange(event);
     } else {
-      this.selectedTabIndex = 4;
+      this.selectedTabIndex = 0;
     }
   }
 
@@ -867,7 +867,6 @@ export class MainExpenseComponent {
       this.categories.splice(index, 1);
       this.categories.splice(4, 0, category);
     }
-    this.onTabChange(4); // Switch to the extra category tab
     this.selectedTabIndex = 4; // Update selected tab index
   }
 
