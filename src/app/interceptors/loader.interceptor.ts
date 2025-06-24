@@ -8,6 +8,7 @@ const LOADER_URLS = [
   '/api/expense',
   '/api/claims',
   '/api/reports',
+  '/api/Dashboard'
   // Add more URLs as needed
 ];
 
@@ -16,16 +17,16 @@ export const loaderInterceptor: HttpInterceptorFn = (request, next) => {
   
   // Check if the request URL should show loader
   const shouldShowLoader = LOADER_URLS.some(url => request.url.includes(url));
-  
-  // if (shouldShowLoader) {
+
+  if (shouldShowLoader) {
     loaderService.show();
-  // }
+  }
 
   return next(request).pipe(
     finalize(() => {
-      // if (shouldShowLoader) {
+      if (shouldShowLoader) {
         loaderService.hide();
-      // }
+      }
     })
   );
 };
