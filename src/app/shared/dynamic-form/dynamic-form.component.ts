@@ -288,7 +288,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.form.markAllAsTouched();
       if(this.form.controls['attachment'] && this.form.controls['attachment'].errors?.['required']) {
         this.snackbarService.error('Upload Your Bill is required.', 500000);
-      }      
+      } 
+      this.scrollToFirstInvalidControl();     
       return;
     }
     // Only check duplicate if OCRRequired is true for this category
@@ -864,4 +865,16 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.gstComponentRef.setGstDetailsFromOcr(ocrData.gst);
     }
   }
+
+  scrollToFirstInvalidControl() {
+    const firstInvalidControl: HTMLElement | null = document.querySelector(
+      'form .ng-invalid'
+    );
+
+    if (firstInvalidControl) {
+      firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstInvalidControl.focus?.(); // optional
+    }
+  }
+
 }
