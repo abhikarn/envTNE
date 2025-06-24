@@ -332,6 +332,7 @@ export class MainExpenseComponent {
     this.responseData = JSON.parse(JSON.stringify(response));
     this.updateCategoryCounts();
     this.expenseRequestData = response;
+    this.updateCategoryCounts();
     this.setCurrencyDropdown();
 
     setTimeout(() => {
@@ -347,7 +348,7 @@ export class MainExpenseComponent {
   // Update category item counts based on populated existing data.
   updateCategoryCounts() {
     this.categories?.forEach((cat: any) => {
-      const matchedData = this.responseData?.dynamicExpenseDetailModels?.find((data: any) => data.name == cat.name);
+      const matchedData = this.expenseRequestData?.dynamicExpenseDetailModels?.find((data: any) => data.name == cat.name);
       cat.count = matchedData ? matchedData.data.length : 0;
     });
   }
@@ -396,8 +397,18 @@ export class MainExpenseComponent {
       : eventOrIndex?.index ?? 0;
 
     const tabLabel = this.categories[tabIndex]?.name;
-    this.existingExpenseRequestData = this.responseData?.dynamicExpenseDetailModels
+    let filteredData = this.expenseRequestData?.dynamicExpenseDetailModels
       ?.find((t: any) => t.name === tabLabel)?.data || [];
+
+    this.existingExpenseRequestData = filteredData?.map((data: any) => {
+      if (data.excludedData) {
+        Object.keys(data.excludedData).forEach((key: string) => {
+          data[key] = data.excludedData[key];
+        });
+        delete data.excludedData;
+      }
+      return data;
+    });
   }
 
   onTabChangeIfAllowed(event: any) {
@@ -536,6 +547,7 @@ export class MainExpenseComponent {
         data: [data.data]
       });
     }
+    this.updateCategoryCounts();
     this.summaryComponent.calculatTotalExpenseAmount();
     this.summaryComponent.calculatCategoryWiseExpense();
     this.summaryComponent.calculateCostCenterWiseExpense();
@@ -837,8 +849,18 @@ export class MainExpenseComponent {
   onExtraCategorySelect(category: any) {
     this.selectedExtraCategory = category;
     // Optionally, update existingExpenseRequestData if needed for the dynamic form
-    this.existingExpenseRequestData = this.responseData?.dynamicExpenseDetailModels
+    let filteredData = this.expenseRequestData?.dynamicExpenseDetailModels
       ?.find((t: any) => t.name === category?.name)?.data || [];
+
+    this.existingExpenseRequestData = filteredData?.map((data: any) => {
+      if (data.excludedData) {
+        Object.keys(data.excludedData).forEach((key: string) => {
+          data[key] = data.excludedData[key];
+        });
+        delete data.excludedData;
+      }
+      return data;
+    });
 
     const index = this.categories.findIndex((c: any) => c.name === category.name);
     if (index !== -1) {
