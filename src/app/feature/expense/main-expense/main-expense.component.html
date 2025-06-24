@@ -175,7 +175,8 @@
                   @if (categories.length > 5) {
                   <mat-tab>
                     <ng-template mat-tab-label>
-                      <mat-form-field class="more-item" appearance="fill" (click)="$event.stopPropagation()">
+                      <mat-form-field class="more-item" appearance="fill" (click)="$event.stopPropagation()"
+                      (mousedown)="$event.stopPropagation()">
                         <mat-select placeholder="More" [value]="selectedExtraCategory"
                           (selectionChange)="onExtraCategorySelect($event.value)">
                           <mat-option *ngFor="let cat of categories.slice(5)" [value]="cat">
