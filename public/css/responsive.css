@@ -689,6 +689,10 @@
 	content: inherit;
 	display: none;
 }
+.nested-table td:last-child::before {
+    content: attr(data-label);
+    display: block;
+}
 .mobile-card-view-normaltable td:first-child {
 	display: none;
 }
@@ -747,6 +751,30 @@
 }
 .mobile-acc-color  .accordion-button {
     background-color: #f2f2f2!important;
+}
+.mobile-acc-color .accordion-body {
+    background-color: #f2f2f2;
+}
+.attached-doc-table thead {
+	display: none;
+ 
+}
+.attached-doc-table label {
+	        display: block !important;
+}.attached-doc-table tr td:last-child {
+    text-align: end;
+}
+.attached-doc-table tr td:first-child {
+	display: none;
+}
+.attached-doc-table tr td {
+	vertical-align: middle;
+}
+.attached-doc-table tr td label {
+	font-size: 10px !important;
+	color: #8F90A6 !important;
+	font-weight: 700 !important;
+	text-transform: uppercase;
 }
 }
 
