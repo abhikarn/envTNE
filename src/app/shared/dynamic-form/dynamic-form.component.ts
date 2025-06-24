@@ -189,6 +189,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
                   }
                 }
               });
+            } else {
+              const matchedOption = control.formConfig.options?.find(opt => opt.value === selected);
+              if (matchedOption) {
+                data[name] = matchedOption;
+              }
             }
           }
         }
