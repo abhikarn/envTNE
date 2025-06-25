@@ -265,7 +265,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       }
     });
-    this.updateConditionalValidators();
+    this.dynamicFormService.updateConditionalValidators(this.form, this.formConfig);
   }
 
   /**
@@ -608,7 +608,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         .confirm(confirmPopupData)
         .subscribe((confirmed) => {
           if (confirmed) {
-            this.setCalculatedFields();
+            this.dynamicFormService.setCalculatedFields(this.form, this.formControls, this.configService);
             this.setAutoCompleteFields();
             this.prepareFormJson();
             this.addDataToDynamicTable();
@@ -618,7 +618,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           }
         });
     } else {
-      this.setCalculatedFields();
+      this.dynamicFormService.setCalculatedFields(this.form, this.formControls, this.configService);
       this.setAutoCompleteFields();
       this.prepareFormJson();
       this.addDataToDynamicTable();
@@ -628,55 +628,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
   }
 
-  validateFieldPolicyViolation(control: IFormControl) {
-
-    let confirmPopupData: any = {};
-    if (!control.policyViolationCheck) return;
-
-    const service = this.serviceRegistry.getService(this.category.policyViolationCheckApi.apiService);
-    const apiMethod = this.category.policyViolationCheckApi.apiMethod;
-    let requestBody: any = this.category.policyViolationCheckApi.requestBody;
-
-    Object.entries(this.category.policyViolationCheckApi.inputControls).forEach(([controlName, requestKey]) => {
-      if (typeof requestKey === 'string') { // Ensure requestKey is a string
-        const controlValue = this.form.get(controlName)?.value;
-        requestBody[requestKey] = controlValue; // Extract Id if it's an object
-      }
-    });
-
-    const output = this.mapOtherControls(this.moduleData, this.category.policyViolationCheckApi.otherControls);
-
-    service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
-      (response: any) => {
-        if (typeof this.category.policyViolationCheckApi.outputControl === 'object') {
-          // Multiple fields case
-          for (const [outputControl, responsePath] of Object.entries(this.category.policyViolationCheckApi.outputControl) as [string, string][]) {
-            const value = this.extractValueFromPath(response, responsePath);
-            if (value !== undefined) {
-              this.form.get(outputControl)?.setValue(value);
-            }
-          }
-        }
-        if (typeof this.category.policyViolationCheckApi.confirmPopup === 'object') {
-          // Multiple fields case
-          for (const [confirmPopup, responsePath] of Object.entries(this.category.policyViolationCheckApi.confirmPopup) as [string, string][]) {
-            const value = this.extractValueFromPath(response, responsePath);
-            if (value !== undefined) {
-              confirmPopupData[confirmPopup] = value;
-            } else {
-              confirmPopupData[confirmPopup] = responsePath;
-            }
-          }
-        }
-
-        if (this.form.value.IsViolation) {
-          confirmPopupData.cancelButton = false;
-          this.confirmDialogService.confirm(confirmPopupData).subscribe();
-        }
-
-        this.updateConditionalValidators();
-      });
-  }
 
   validateFieldPolicyEntitlement(control: IFormControl) {
     if (!control.policyEntitlementCheck) return;
@@ -738,7 +689,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     if (control.policyViolationCheck) {
       setTimeout(() => {
-        this.validateFieldPolicyViolation(control);
+        this.dynamicFormService.validateFieldPolicyViolation(control, this.category, this.form, this.formConfig, this.moduleData);
       }, 500);
     }
     if (control.EntitlementAmountCalculation) {
@@ -816,68 +767,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
    */
   private extractValueFromPath(obj: any, path: string): any {
     return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
-  }
-
-  updateConditionalValidators() {
-    this.formConfig.forEach(config => {
-      if (config.requiredIf) {
-        const control = this.form.get(config.name);
-        let isRequired = false;
-
-        Object.entries(config.requiredIf).forEach(([field, expectedValues]) => {
-          const value = this.form.get(field)?.value;
-          const actualValue = typeof value === 'object' ? value?.value : value;
-          if (Array.isArray(expectedValues) && expectedValues.includes(actualValue)) {
-            isRequired = true;
-          }
-          // Support for boolean requiredIf (e.g., { IsViolation: true })
-          if (!Array.isArray(expectedValues) && actualValue === expectedValues) {
-            isRequired = true;
-          }
-        });
-
-        if (isRequired) {
-          control?.setValidators([Validators.required]);
-        } else {
-          control?.clearValidators();
-        }
-        control?.updateValueAndValidity();
-      }
-    });
-  }
-
-  setCalculatedFields() {
-    this.formControls.forEach(control => {
-      const calculateConfig = control.formConfig.calculate;
-      if (!calculateConfig) return;
-
-      const { formula, dependsOn } = calculateConfig;
-      if (!formula || !dependsOn?.length) return;
-
-      const values: Record<string, number> = {};
-
-      dependsOn.forEach((depName: any) => {
-        const rawValue = this.form.get(depName)?.value;
-        const numeric = typeof rawValue === 'object' ? rawValue?.value ?? 0 : rawValue;
-        values[depName] = parseFloat(numeric ?? 0);
-      });
-
-      const calculatedValue = this.safeEvaluateFormula(formula, values);
-      this.form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(this.configService.getDecimalPrecision()));
-    });
-  }
-
-
-  private safeEvaluateFormula(formula: string, values: Record<string, number>): number {
-    try {
-      const keys = Object.keys(values);
-      const vals = Object.values(values);
-      const fn = new Function(...keys, `return ${formula};`);
-      return fn(...vals);
-    } catch (e) {
-      console.warn('Formula evaluation error:', e);
-      return 0;
-    }
   }
 
   onDeleteRow(index: number) {
