@@ -283,13 +283,13 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
-    
+
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      if(this.form.controls['attachment'] && this.form.controls['attachment'].errors?.['required']) {
+      if (this.form.controls['attachment'] && this.form.controls['attachment'].errors?.['required']) {
         this.snackbarService.error('Upload Your Bill is required.', 500000);
-      } 
-      this.scrollToFirstInvalidControl();     
+      }
+      this.scrollToFirstInvalidControl();
       return;
     }
     // Only check duplicate if OCRRequired is true for this category
@@ -559,36 +559,36 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   validatePolicyViolation() {
-    
-    let confirmPopupData: any = {};
-    if (this.category.submitPolicyValidationApi) {
-      const service = this.serviceRegistry.getService(this.category.submitPolicyValidationApi.apiService);
-      const apiMethod = this.category.submitPolicyValidationApi.apiMethod;
-      let requestBody: any = this.category.submitPolicyValidationApi.requestBody;
 
-      Object.entries(this.category.submitPolicyValidationApi.inputControls).forEach(([controlName, requestKey]) => {
+    let confirmPopupData: any = {};
+    if (this.category.policyViolationCheckApi) {
+      const service = this.serviceRegistry.getService(this.category.policyViolationCheckApi.apiService);
+      const apiMethod = this.category.policyViolationCheckApi.apiMethod;
+      let requestBody: any = this.category.policyViolationCheckApi.requestBody;
+
+      Object.entries(this.category.policyViolationCheckApi.inputControls).forEach(([controlName, requestKey]) => {
         if (typeof requestKey === 'string') { // Ensure requestKey is a string
           const controlValue = this.form.get(controlName)?.value;
           requestBody[requestKey] = controlValue; // Extract Id if it's an object
         }
       });
 
-      const output = this.mapOtherControls(this.moduleData, this.category.submitPolicyValidationApi.otherControls);
+      const output = this.mapOtherControls(this.moduleData, this.category.policyViolationCheckApi.otherControls);
 
       service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
         (response: any) => {
-          if (typeof this.category.submitPolicyValidationApi.outputControl === 'object') {
+          if (typeof this.category.policyViolationCheckApi.outputControl === 'object') {
             // Multiple fields case
-            for (const [outputControl, responsePath] of Object.entries(this.category.submitPolicyValidationApi.outputControl) as [string, string][]) {
+            for (const [outputControl, responsePath] of Object.entries(this.category.policyViolationCheckApi.outputControl) as [string, string][]) {
               const value = this.extractValueFromPath(response, responsePath);
               if (value !== undefined) {
                 this.form.get(outputControl)?.setValue(value);
               }
             }
           }
-          if (typeof this.category.submitPolicyValidationApi.confirmPopup === 'object') {
+          if (typeof this.category.policyViolationCheckApi.confirmPopup === 'object') {
             // Multiple fields case
-            for (const [confirmPopup, responsePath] of Object.entries(this.category.submitPolicyValidationApi.confirmPopup) as [string, string][]) {
+            for (const [confirmPopup, responsePath] of Object.entries(this.category.policyViolationCheckApi.confirmPopup) as [string, string][]) {
               const value = this.extractValueFromPath(response, responsePath);
               if (value !== undefined) {
                 confirmPopupData[confirmPopup] = value;
@@ -597,22 +597,14 @@ export class DynamicFormComponent implements OnInit, OnChanges {
               }
             }
           }
+        });
+    }
 
-          if (this.form.value.IsViolation) {
-            this.confirmDialogService
-              .confirm(confirmPopupData)
-              .subscribe((confirmed) => {
-                if (confirmed) {
-                  this.setCalculatedFields();
-                  this.setAutoCompleteFields();
-                  this.prepareFormJson();
-                  this.addDataToDynamicTable();
-                  setTimeout(() => {
-                    this.clear();
-                  }, 500);
-                }
-              });
-          } else {
+    if (this.form.value.IsViolation) {
+      this.confirmDialogService
+        .confirm(confirmPopupData)
+        .subscribe((confirmed) => {
+          if (confirmed) {
             this.setCalculatedFields();
             this.setAutoCompleteFields();
             this.prepareFormJson();
@@ -622,41 +614,49 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             }, 500);
           }
         });
+    } else {
+      this.setCalculatedFields();
+      this.setAutoCompleteFields();
+      this.prepareFormJson();
+      this.addDataToDynamicTable();
+      setTimeout(() => {
+        this.clear();
+      }, 500);
     }
   }
 
   validateFieldPolicyViolation(control: IFormControl) {
-   
+
     let confirmPopupData: any = {};
     if (!control.policyViolationCheck) return;
 
-    const service = this.serviceRegistry.getService(this.category.submitPolicyValidationApi.apiService);
-    const apiMethod = this.category.submitPolicyValidationApi.apiMethod;
-    let requestBody: any = this.category.submitPolicyValidationApi.requestBody;
+    const service = this.serviceRegistry.getService(this.category.policyViolationCheckApi.apiService);
+    const apiMethod = this.category.policyViolationCheckApi.apiMethod;
+    let requestBody: any = this.category.policyViolationCheckApi.requestBody;
 
-    Object.entries(this.category.submitPolicyValidationApi.inputControls).forEach(([controlName, requestKey]) => {
+    Object.entries(this.category.policyViolationCheckApi.inputControls).forEach(([controlName, requestKey]) => {
       if (typeof requestKey === 'string') { // Ensure requestKey is a string
         const controlValue = this.form.get(controlName)?.value;
         requestBody[requestKey] = controlValue; // Extract Id if it's an object
       }
     });
 
-    const output = this.mapOtherControls(this.moduleData, this.category.submitPolicyValidationApi.otherControls);
+    const output = this.mapOtherControls(this.moduleData, this.category.policyViolationCheckApi.otherControls);
 
     service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
       (response: any) => {
-        if (typeof this.category.submitPolicyValidationApi.outputControl === 'object') {
+        if (typeof this.category.policyViolationCheckApi.outputControl === 'object') {
           // Multiple fields case
-          for (const [outputControl, responsePath] of Object.entries(this.category.submitPolicyValidationApi.outputControl) as [string, string][]) {
+          for (const [outputControl, responsePath] of Object.entries(this.category.policyViolationCheckApi.outputControl) as [string, string][]) {
             const value = this.extractValueFromPath(response, responsePath);
             if (value !== undefined) {
               this.form.get(outputControl)?.setValue(value);
             }
           }
         }
-        if (typeof this.category.submitPolicyValidationApi.confirmPopup === 'object') {
+        if (typeof this.category.policyViolationCheckApi.confirmPopup === 'object') {
           // Multiple fields case
-          for (const [confirmPopup, responsePath] of Object.entries(this.category.submitPolicyValidationApi.confirmPopup) as [string, string][]) {
+          for (const [confirmPopup, responsePath] of Object.entries(this.category.policyViolationCheckApi.confirmPopup) as [string, string][]) {
             const value = this.extractValueFromPath(response, responsePath);
             if (value !== undefined) {
               confirmPopupData[confirmPopup] = value;
@@ -671,32 +671,68 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           this.confirmDialogService.confirm(confirmPopupData).subscribe();
         }
 
-        if (this.form.value.IsActual) {
-          const fieldsToRemove = [
-            'EntitlementCurrency',
-            'EntitlementAmount',
-            'EntitlementConversionRate',
-            'DifferentialAmount(INR)'
-          ];
-
-          fieldsToRemove.forEach(field => {
-            this.form.removeControl(field);
-            const control = this.formControls.find(c => c.formConfig.name === field);
-            if (control) {
-              control.formConfig.showInUI = false;
-            }
-          });
-        }
-
         this.updateConditionalValidators();
       });
+  }
+
+  validateFieldPolicyEntitlement(control: IFormControl) {
+    if (!control.policyEntitlementCheck) return;
+
+    const service = this.serviceRegistry.getService(this.category.policyEntitlementCheckApi.apiService);
+    const apiMethod = this.category.policyEntitlementCheckApi.apiMethod;
+    let requestBody: any = this.category.policyEntitlementCheckApi.requestBody;
+
+    Object.entries(this.category.policyEntitlementCheckApi.inputControls).forEach(([controlName, requestKey]) => {
+      if (typeof requestKey === 'string') { // Ensure requestKey is a string
+        const controlValue = this.form.get(controlName)?.value;
+        requestBody[requestKey] = controlValue; // Extract Id if it's an object
+      }
+    });
+
+    const output = this.mapOtherControls(this.moduleData, this.category.policyEntitlementCheckApi.otherControls);
+
+    service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
+      (response: any) => {
+        if (typeof this.category.policyEntitlementCheckApi.outputControl === 'object') {
+          // Multiple fields case
+          for (const [outputControl, responsePath] of Object.entries(this.category.policyEntitlementCheckApi.outputControl) as [string, string][]) {
+            const value = this.extractValueFromPath(response, responsePath);
+            if (value !== undefined) {
+              this.form.get(outputControl)?.setValue(value);
+            }
+          }
+        }
+      });
+
+    if (this.form.value.IsActual) {
+      const fieldsToRemove = [
+        'EntitlementCurrency',
+        'EntitlementAmount',
+        'EntitlementConversionRate',
+        'DifferentialAmount(INR)'
+      ];
+
+      fieldsToRemove.forEach(field => {
+        this.form.removeControl(field);
+        const control = this.formControls.find(c => c.formConfig.name === field);
+        if (control) {
+          control.formConfig.showInUI = false;
+        }
+      });
+    }
+
   }
 
   onFieldValueChange(control: IFormControl) {
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
 
-    console.log(control.name)
+    if (control.policyEntitlementCheck) {
+      setTimeout(() => {
+        this.validateFieldPolicyEntitlement(control);
+      }, 500);
+    }
+
     if (control.policyViolationCheck) {
       setTimeout(() => {
         this.validateFieldPolicyViolation(control);
