@@ -18,6 +18,8 @@ import { GlobalConfigService } from '../service/global-config.service';
 import { LineWiseCostCenterComponent } from './form-controls/cost-center/line-wise-cost-center/line-wise-cost-center.component';
 import { CostCenterComponent } from "./form-controls/cost-center/cost-center.component";
 import { SnackbarService } from '../service/snackbar.service';
+import { UtilsService } from '../service/utils.service';
+import { DynamicFormService } from '../service/dynamic-form.service';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -67,6 +69,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     private confirmDialogService: ConfirmDialogService,
     private configService: GlobalConfigService,
     private snackbarService: SnackbarService,
+    private dynamicFormService: DynamicFormService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -289,7 +292,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       if (this.form.controls['attachment'] && this.form.controls['attachment'].errors?.['required']) {
         this.snackbarService.error('Upload Your Bill is required.', 500000);
       }
-      this.scrollToFirstInvalidControl();
+      this.dynamicFormService.scrollToFirstInvalidControl('form');
       return;
     }
     // Only check duplicate if OCRRequired is true for this category
@@ -899,17 +902,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     // Set gstDetails in AddGstComponent via GstComponent
     if (this.gstComponentRef && ocrData?.gst) {
       this.gstComponentRef.setGstDetailsFromOcr(ocrData.gst);
-    }
-  }
-
-  scrollToFirstInvalidControl() {
-    const firstInvalidControl: HTMLElement | null = document.querySelector(
-      'form .ng-invalid'
-    );
-
-    if (firstInvalidControl) {
-      firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      firstInvalidControl.focus?.(); // optional
     }
   }
 
