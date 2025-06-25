@@ -31,8 +31,7 @@
   @case ('date') {
   <div class="col-md-4">
     <lib-date-input [controlConfig]="control.formConfig" [control]="control.control" [form]="form"
-      (valueChange)="onFieldValueChange(control.formConfig);handleEvent('dateChange', $event)"
-      (emitSpecificCase)="getSpecificCase($event)">
+      (valueChange)="onFieldValueChange(control.formConfig);handleEvent('dateChange', $event)">
     </lib-date-input>
   </div>
   }

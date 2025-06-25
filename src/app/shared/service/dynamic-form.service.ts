@@ -3,6 +3,7 @@ import { Validators } from '@angular/forms';
 import { ServiceRegistryService } from './service-registry.service';
 import { IFormControl } from '../dynamic-form/form-control.interface';
 import { ConfirmDialogService } from './confirm-dialog.service';
+import { GlobalConfigService } from './global-config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class DynamicFormService {
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
-    private confirmDialogService: ConfirmDialogService
+    private confirmDialogService: ConfirmDialogService,
+    private configService: GlobalConfigService
   ) { }
 
 
@@ -55,6 +57,54 @@ export class DynamicFormService {
       console.warn('Formula evaluation error:', e);
       return 0;
     }
+  }
+
+  validateFieldPolicyEntitlement(control: IFormControl, category: any, form: any, formControls: any[], moduleData: any): void {
+    if (!control.policyEntitlementCheck) return;
+
+    const service = this.serviceRegistry.getService(category.policyEntitlementCheckApi.apiService);
+    const apiMethod = category.policyEntitlementCheckApi.apiMethod;
+    let requestBody: any = category.policyEntitlementCheckApi.requestBody;
+
+    Object.entries(category.policyEntitlementCheckApi.inputControls).forEach(([controlName, requestKey]) => {
+      if (typeof requestKey === 'string') { // Ensure requestKey is a string
+        const controlValue = form.get(controlName)?.value;
+        requestBody[requestKey] = controlValue; // Extract Id if it's an object
+      }
+    });
+
+    const output = this.mapOtherControls(moduleData, category.policyEntitlementCheckApi.otherControls);
+
+    service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
+      (response: any) => {
+        if (typeof category.policyEntitlementCheckApi.outputControl === 'object') {
+          // Multiple fields case
+          for (const [outputControl, responsePath] of Object.entries(category.policyEntitlementCheckApi.outputControl) as [string, string][]) {
+            const value = this.extractValueFromPath(response, responsePath);
+            if (value !== undefined) {
+              form.get(outputControl)?.setValue(value);
+            }
+          }
+        }
+      });
+
+    if (form.value.IsActual) {
+      const fieldsToRemove = [
+        'EntitlementCurrency',
+        'EntitlementAmount',
+        'EntitlementConversionRate',
+        'DifferentialAmount(INR)'
+      ];
+
+      fieldsToRemove.forEach(field => {
+        form.removeControl(field);
+        const control = formControls.find(c => c.formConfig.name === field);
+        if (control) {
+          control.formConfig.showInUI = false;
+        }
+      });
+    }
+
   }
 
   validateFieldPolicyViolation(control: IFormControl, category: any, form: any, formConfig: any[], moduleData: any): void {
@@ -147,5 +197,54 @@ export class DynamicFormService {
         control?.updateValueAndValidity();
       }
     });
+  }
+
+  calculateDifferentialAmount(control: IFormControl, form: any): void {
+    const config = control.taxCalculation;
+
+    const claimAmount = parseFloat(form.get(config.inputControls.ClaimAmount)?.value || 0);
+    const entitlementAmount = parseFloat(form.get(config.inputControls.EntitlementAmount)?.value || 0);
+    const taxAmount = parseFloat(form.get(control.name)?.value || 0); // control.name is "TaxAmount"
+    const outputControlName = Object.keys(config.outputControl)[0];
+
+    let differentialAmount = 0;
+
+    if (config.IsTaxExclusive) {
+      differentialAmount = entitlementAmount - claimAmount;
+    } else {
+      differentialAmount = entitlementAmount - (claimAmount + taxAmount);
+    }
+
+    if (differentialAmount < 0) {
+      differentialAmount = Math.abs(differentialAmount);
+      form.get(outputControlName)?.setValue(differentialAmount);
+      form.get('IsViolation')?.setValue(true);
+    } else {
+      const precision = this.configService.getDecimalPrecision();
+      form.get(outputControlName)?.setValue((0).toFixed(precision));
+      form.get('IsViolation')?.setValue(false);
+    }
+  }
+
+  calculateEntitlementAmount(control: IFormControl, form: any): void {
+    const config = control.EntitlementAmountCalculation;
+    if (!config) return;
+
+    const checkInDate = form.get(config.inputControls.CheckInDateTime)?.value;
+    const checkOutDate = form.get(config.inputControls.CheckOutDateTime)?.value;
+    const originalEntitlementAmount = parseFloat(form.get(config.inputControls.OriginalEntitlementAmount)?.value || 0);
+
+    if (checkInDate && checkOutDate && originalEntitlementAmount) {
+      const checkIn = new Date(checkInDate);
+      const checkOut = new Date(checkOutDate);
+
+      const timeDiff = Math.abs(checkOut.getTime() - checkIn.getTime());
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Calculate number of days
+
+      const entitlementAmount = originalEntitlementAmount * diffDays;
+      const outputFieldName = Object.keys(config.outputControl)[0];
+
+      form.get(outputFieldName)?.setValue(entitlementAmount.toFixed(this.configService.getDecimalPrecision()));
+    }
   }
 }

@@ -558,9 +558,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.emitTextData.emit(input);
   }
 
-  getSpecificCase(specificCaseData: any) {
-  }
-
   validatePolicyViolation() {
 
     let confirmPopupData: any = {};
@@ -628,62 +625,13 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
   }
 
-
-  validateFieldPolicyEntitlement(control: IFormControl) {
-    if (!control.policyEntitlementCheck) return;
-
-    const service = this.serviceRegistry.getService(this.category.policyEntitlementCheckApi.apiService);
-    const apiMethod = this.category.policyEntitlementCheckApi.apiMethod;
-    let requestBody: any = this.category.policyEntitlementCheckApi.requestBody;
-
-    Object.entries(this.category.policyEntitlementCheckApi.inputControls).forEach(([controlName, requestKey]) => {
-      if (typeof requestKey === 'string') { // Ensure requestKey is a string
-        const controlValue = this.form.get(controlName)?.value;
-        requestBody[requestKey] = controlValue; // Extract Id if it's an object
-      }
-    });
-
-    const output = this.mapOtherControls(this.moduleData, this.category.policyEntitlementCheckApi.otherControls);
-
-    service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
-      (response: any) => {
-        if (typeof this.category.policyEntitlementCheckApi.outputControl === 'object') {
-          // Multiple fields case
-          for (const [outputControl, responsePath] of Object.entries(this.category.policyEntitlementCheckApi.outputControl) as [string, string][]) {
-            const value = this.extractValueFromPath(response, responsePath);
-            if (value !== undefined) {
-              this.form.get(outputControl)?.setValue(value);
-            }
-          }
-        }
-      });
-
-    if (this.form.value.IsActual) {
-      const fieldsToRemove = [
-        'EntitlementCurrency',
-        'EntitlementAmount',
-        'EntitlementConversionRate',
-        'DifferentialAmount(INR)'
-      ];
-
-      fieldsToRemove.forEach(field => {
-        this.form.removeControl(field);
-        const control = this.formControls.find(c => c.formConfig.name === field);
-        if (control) {
-          control.formConfig.showInUI = false;
-        }
-      });
-    }
-
-  }
-
   onFieldValueChange(control: IFormControl) {
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
 
     if (control.policyEntitlementCheck) {
       setTimeout(() => {
-        this.validateFieldPolicyEntitlement(control);
+        this.dynamicFormService.validateFieldPolicyEntitlement(control, this.category, this.form, this.formConfig, this.moduleData);
       }, 500);
     }
 
@@ -693,62 +641,12 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       }, 500);
     }
     if (control.EntitlementAmountCalculation) {
-      this.calculateEntitlementAmount(control);
+      this.dynamicFormService.calculateEntitlementAmount(control, this.form);
     }
     if (control.taxCalculation) {
-      this.calculateDifferentialAmount(control);
+      this.dynamicFormService.calculateDifferentialAmount(control, this.form);
     }
 
-  }
-
-  calculateDifferentialAmount(control: IFormControl) {
-    const config = control.taxCalculation;
-
-    const claimAmount = parseFloat(this.form.get(config.inputControls.ClaimAmount)?.value || 0);
-    const entitlementAmount = parseFloat(this.form.get(config.inputControls.EntitlementAmount)?.value || 0);
-    const taxAmount = parseFloat(this.form.get(control.name)?.value || 0); // control.name is "TaxAmount"
-    const outputControlName = Object.keys(config.outputControl)[0];
-
-    let differentialAmount = 0;
-
-    if (config.IsTaxExclusive) {
-      differentialAmount = entitlementAmount - claimAmount;
-    } else {
-      differentialAmount = entitlementAmount - (claimAmount + taxAmount);
-    }
-
-    if (differentialAmount < 0) {
-      differentialAmount = Math.abs(differentialAmount);
-      this.form.get(outputControlName)?.setValue(differentialAmount);
-      this.form.get('IsViolation')?.setValue(true);
-    } else {
-      const precision = this.configService.getDecimalPrecision();
-      this.form.get(outputControlName)?.setValue((0).toFixed(precision));
-      this.form.get('IsViolation')?.setValue(false);
-    }
-  }
-
-
-  calculateEntitlementAmount(control: IFormControl) {
-    const config = control.EntitlementAmountCalculation;
-    if (!config) return;
-
-    const checkInDate = this.form.get(config.inputControls.CheckInDateTime)?.value;
-    const checkOutDate = this.form.get(config.inputControls.CheckOutDateTime)?.value;
-    const originalEntitlementAmount = parseFloat(this.form.get(config.inputControls.OriginalEntitlementAmount)?.value || 0);
-
-    if (checkInDate && checkOutDate && originalEntitlementAmount) {
-      const checkIn = new Date(checkInDate);
-      const checkOut = new Date(checkOutDate);
-
-      const timeDiff = Math.abs(checkOut.getTime() - checkIn.getTime());
-      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Calculate number of days
-
-      const entitlementAmount = originalEntitlementAmount * diffDays;
-      const outputFieldName = Object.keys(config.outputControl)[0];
-
-      this.form.get(outputFieldName)?.setValue(entitlementAmount.toFixed(this.configService.getDecimalPrecision()));
-    }
   }
 
   mapOtherControls(data: any, otherControls: Record<string, string>): Record<string, any> {

@@ -58,7 +58,6 @@ export class DateInputComponent {
   @Input() controlConfig: IFormControl = { name: '' };
   @Input() form: any;
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
-  @Output() emitSpecificCase = new EventEmitter<any>();
   timeControl: FormControl = new FormControl(null);
   pendingTime: string | null = null;
   minDate: Date | null = null;
@@ -197,8 +196,6 @@ export class DateInputComponent {
           if (dependentCase.event === "dateChange") {
             this.handleDependentCase(dependentCase);
           }
-        } else {
-          this.emitSpecificCase.emit(dependentCase);
         }
       });
     }
