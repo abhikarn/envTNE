@@ -211,9 +211,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      if (this.form.controls['attachment'] && this.form.controls['attachment'].errors?.['required']) {
-        this.snackbarService.error('Upload Your Bill is required.', 500000);
-      }
       this.dynamicFormService.scrollToFirstInvalidControl('form');
       return;
     }
@@ -276,18 +273,31 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       const checkOutDateTime = this.form.value?.CheckOutDateTime;
 
       if (checkInDateTime && checkOutDateTime) {
-        const isConflict = this.existingData.some((row: any) => {
-          const existingCheckIn = row.CheckInDateTime;
-          const existingCheckOut = row.CheckOutDateTime;
-          return (new Date(checkInDateTime) < new Date(existingCheckOut)) && (new Date(checkOutDateTime) > new Date(existingCheckIn));
+        const isConflict = this.existingData.some((row: any, index: number) => {
+          // Skip the current row if editing
+          if (this.editIndex !== null && this.editIndex !== undefined && index === (this.editIndex - 1)) {
+            return false;
+          }
+
+          const existingCheckIn = new Date(row.CheckInDateTime);
+          const existingCheckOut = new Date(row.CheckOutDateTime);
+
+          return (
+            new Date(checkInDateTime) < existingCheckOut &&
+            new Date(checkOutDateTime) > existingCheckIn
+          );
         });
 
         if (isConflict) {
-          this.snackbarService.error('Check-in and check-out times conflict with existing entries. Please adjust your dates.', 5000);
+          this.snackbarService.error(
+            'Check-in and check-out times conflict with existing entries. Please adjust your dates.',
+            5000
+          );
           return;
         }
       }
     }
+
     this.validatePolicyViolation();
   }
 
@@ -449,6 +459,15 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
         // If the value is an object with `.value`, extract it
         this.form.controls[name].setValue(typeof value === 'object' && value !== null ? value.value : value);
+      } else if (type === 'date') {
+        this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
+          if (dateInput.timeControl && dateInput.controlConfig.name === name) {
+            // If the value is a date string, convert it to a Date object
+            const dateValue = value ? new Date(value) : null;
+            dateInput.timeControl.setValue(dateValue);
+            dateInput.control.setValue(dateValue);
+          }
+        });
       } else {
         this.form.controls[name].setValue(value);
       }

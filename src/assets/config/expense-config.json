@@ -1092,6 +1092,9 @@
                         "referenceType": 123,
                         "maxSizeMB": 15,
                         "required": false,
+                        "requiredIf": {
+                            "IsBillRequired": true
+                        },
                         "oCRRequired": false,
                         "order": 1
                     },
