@@ -18,6 +18,9 @@ import { GlobalConfigService } from '../service/global-config.service';
 import { LineWiseCostCenterComponent } from './form-controls/cost-center/line-wise-cost-center/line-wise-cost-center.component';
 import { CostCenterComponent } from "./form-controls/cost-center/cost-center.component";
 import { SnackbarService } from '../service/snackbar.service';
+import { UtilsService } from '../service/utils.service';
+import { DynamicFormService } from '../service/dynamic-form.service';
+import { DynamicTableService } from '../service/dynamic-table.service';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -67,12 +70,16 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     private confirmDialogService: ConfirmDialogService,
     private configService: GlobalConfigService,
     private snackbarService: SnackbarService,
+    private dynamicFormService: DynamicFormService,
+    private dynamicTableService: DynamicTableService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['existingData'] && this.existingData?.length) {
       this.prepareOptions(this.existingData).then(() => {
-        this.populateTableData(this.existingData);
+        this.dynamicTableService.populateTableData(this.existingData, this.formControls).then((dataArray: any[]) => {
+          this.tableData = dataArray;
+        });
       });
     }
   }
@@ -121,88 +128,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       });
 
     await Promise.all(controlLoaders);
-  }
-
-  private async populateTableData(dataArray: any[]) {
-    const updatedDataArray = await Promise.all(
-      dataArray.map(async (data) => {
-        for (const control of this.formControls) {
-          const { type, name, autoComplete, options, apiService, apiMethod, dependsOn, payloadKey, labelKey, valueKey } = control.formConfig;
-
-          if ((type === 'select') && name in data) {
-            let selected = data[name];
-            if (selected && typeof selected === 'object') {
-              selected = selected.value;
-            }
-
-            // For dependent dropdowns: fetch options if not present
-            if ((!options || options.length === 0) && apiService && apiMethod && dependsOn) {
-              const dependsOnValue = data[dependsOn];
-              const payload = { [payloadKey || 'id']: dependsOnValue?.value || dependsOnValue };
-
-              const service = this.serviceRegistry.getService(apiService);
-              if (service && typeof service[apiMethod] === 'function') {
-                const response = await service[apiMethod](payload).toPromise();
-                const resultOptions = response?.ResponseValue?.map((item: any) => ({
-                  label: item[labelKey || 'label'],
-                  value: item[valueKey || 'value']
-                })) || [];
-                control.formConfig.options = resultOptions;
-              }
-            }
-
-            const matchedOption = control.formConfig.options?.find(opt => opt.value === selected);
-            if (matchedOption) {
-              data[name] = matchedOption;
-            }
-          }
-
-          if (autoComplete && name in data) {
-            let selected = data[name];
-            if ((!options || options.length === 0) && apiService && apiMethod) {
-              const requestBody = [
-                {
-                  id: selected,
-                  name: "",
-                  masterName: "City"
-                }
-              ];
-              const service = this.serviceRegistry.getService(apiService);
-              service[apiMethod](requestBody).subscribe({
-                next: (response: any) => {
-                  if (response) {
-                    response = response?.map((item: any) => ({
-                      CityMasterId: item.id,
-                      City: item.name
-                    }));
-                    if (labelKey && valueKey) {
-                      control.formConfig.options = response.filter((r: any) => r[valueKey] == selected);
-                      control.formConfig.options = control.formConfig.options?.map((item: any) => ({
-                        label: item[labelKey],
-                        value: item[valueKey]
-                      }));
-                      const matchedOption = control.formConfig.options?.find(opt => opt.value === selected);
-                      if (matchedOption) {
-                        data[name] = matchedOption;
-                      }
-                    }
-                  }
-                }
-              });
-            } else {
-              const matchedOption = control.formConfig.options?.find(opt => opt.value === selected);
-              if (matchedOption) {
-                data[name] = matchedOption;
-              }
-            }
-          }
-        }
-
-        return data;
-      })
-    );
-
-    this.tableData = updatedDataArray;
   }
 
   ngOnInit() {
@@ -262,7 +187,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       }
     });
-    this.updateConditionalValidators();
+    this.dynamicFormService.updateConditionalValidators(this.form, this.formConfig);
   }
 
   /**
@@ -283,13 +208,13 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
-    
+
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      if(this.form.controls['attachment'] && this.form.controls['attachment'].errors?.['required']) {
+      if (this.form.controls['attachment'] && this.form.controls['attachment'].errors?.['required']) {
         this.snackbarService.error('Upload Your Bill is required.', 500000);
-      } 
-      this.scrollToFirstInvalidControl();     
+      }
+      this.dynamicFormService.scrollToFirstInvalidControl('form');
       return;
     }
     // Only check duplicate if OCRRequired is true for this category
@@ -555,40 +480,37 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.emitTextData.emit(input);
   }
 
-  getSpecificCase(specificCaseData: any) {
-  }
-
   validatePolicyViolation() {
-    
-    let confirmPopupData: any = {};
-    if (this.category.submitPolicyValidationApi) {
-      const service = this.serviceRegistry.getService(this.category.submitPolicyValidationApi.apiService);
-      const apiMethod = this.category.submitPolicyValidationApi.apiMethod;
-      let requestBody: any = this.category.submitPolicyValidationApi.requestBody;
 
-      Object.entries(this.category.submitPolicyValidationApi.inputControls).forEach(([controlName, requestKey]) => {
+    let confirmPopupData: any = {};
+    if (this.category.policyViolationCheckApi) {
+      const service = this.serviceRegistry.getService(this.category.policyViolationCheckApi.apiService);
+      const apiMethod = this.category.policyViolationCheckApi.apiMethod;
+      let requestBody: any = this.category.policyViolationCheckApi.requestBody;
+
+      Object.entries(this.category.policyViolationCheckApi.inputControls).forEach(([controlName, requestKey]) => {
         if (typeof requestKey === 'string') { // Ensure requestKey is a string
           const controlValue = this.form.get(controlName)?.value;
           requestBody[requestKey] = controlValue; // Extract Id if it's an object
         }
       });
 
-      const output = this.mapOtherControls(this.moduleData, this.category.submitPolicyValidationApi.otherControls);
+      const output = this.mapOtherControls(this.moduleData, this.category.policyViolationCheckApi.otherControls);
 
       service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
         (response: any) => {
-          if (typeof this.category.submitPolicyValidationApi.outputControl === 'object') {
+          if (typeof this.category.policyViolationCheckApi.outputControl === 'object') {
             // Multiple fields case
-            for (const [outputControl, responsePath] of Object.entries(this.category.submitPolicyValidationApi.outputControl) as [string, string][]) {
+            for (const [outputControl, responsePath] of Object.entries(this.category.policyViolationCheckApi.outputControl) as [string, string][]) {
               const value = this.extractValueFromPath(response, responsePath);
               if (value !== undefined) {
                 this.form.get(outputControl)?.setValue(value);
               }
             }
           }
-          if (typeof this.category.submitPolicyValidationApi.confirmPopup === 'object') {
+          if (typeof this.category.policyViolationCheckApi.confirmPopup === 'object') {
             // Multiple fields case
-            for (const [confirmPopup, responsePath] of Object.entries(this.category.submitPolicyValidationApi.confirmPopup) as [string, string][]) {
+            for (const [confirmPopup, responsePath] of Object.entries(this.category.policyViolationCheckApi.confirmPopup) as [string, string][]) {
               const value = this.extractValueFromPath(response, responsePath);
               if (value !== undefined) {
                 confirmPopupData[confirmPopup] = value;
@@ -597,23 +519,15 @@ export class DynamicFormComponent implements OnInit, OnChanges {
               }
             }
           }
+        });
+    }
 
-          if (this.form.value.IsViolation) {
-            this.confirmDialogService
-              .confirm(confirmPopupData)
-              .subscribe((confirmed) => {
-                if (confirmed) {
-                  this.setCalculatedFields();
-                  this.setAutoCompleteFields();
-                  this.prepareFormJson();
-                  this.addDataToDynamicTable();
-                  setTimeout(() => {
-                    this.clear();
-                  }, 500);
-                }
-              });
-          } else {
-            this.setCalculatedFields();
+    if (this.form.value.IsViolation) {
+      this.confirmDialogService
+        .confirm(confirmPopupData)
+        .subscribe((confirmed) => {
+          if (confirmed) {
+            this.dynamicFormService.setCalculatedFields(this.form, this.formControls, this.configService);
             this.setAutoCompleteFields();
             this.prepareFormJson();
             this.addDataToDynamicTable();
@@ -622,143 +536,39 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             }, 500);
           }
         });
+    } else {
+      this.dynamicFormService.setCalculatedFields(this.form, this.formControls, this.configService);
+      this.setAutoCompleteFields();
+      this.prepareFormJson();
+      this.addDataToDynamicTable();
+      setTimeout(() => {
+        this.clear();
+      }, 500);
     }
-  }
-
-  validateFieldPolicyViolation(control: IFormControl) {
-   
-    let confirmPopupData: any = {};
-    if (!control.policyViolationCheck) return;
-
-    const service = this.serviceRegistry.getService(this.category.submitPolicyValidationApi.apiService);
-    const apiMethod = this.category.submitPolicyValidationApi.apiMethod;
-    let requestBody: any = this.category.submitPolicyValidationApi.requestBody;
-
-    Object.entries(this.category.submitPolicyValidationApi.inputControls).forEach(([controlName, requestKey]) => {
-      if (typeof requestKey === 'string') { // Ensure requestKey is a string
-        const controlValue = this.form.get(controlName)?.value;
-        requestBody[requestKey] = controlValue; // Extract Id if it's an object
-      }
-    });
-
-    const output = this.mapOtherControls(this.moduleData, this.category.submitPolicyValidationApi.otherControls);
-
-    service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
-      (response: any) => {
-        if (typeof this.category.submitPolicyValidationApi.outputControl === 'object') {
-          // Multiple fields case
-          for (const [outputControl, responsePath] of Object.entries(this.category.submitPolicyValidationApi.outputControl) as [string, string][]) {
-            const value = this.extractValueFromPath(response, responsePath);
-            if (value !== undefined) {
-              this.form.get(outputControl)?.setValue(value);
-            }
-          }
-        }
-        if (typeof this.category.submitPolicyValidationApi.confirmPopup === 'object') {
-          // Multiple fields case
-          for (const [confirmPopup, responsePath] of Object.entries(this.category.submitPolicyValidationApi.confirmPopup) as [string, string][]) {
-            const value = this.extractValueFromPath(response, responsePath);
-            if (value !== undefined) {
-              confirmPopupData[confirmPopup] = value;
-            } else {
-              confirmPopupData[confirmPopup] = responsePath;
-            }
-          }
-        }
-
-        if (this.form.value.IsViolation) {
-          confirmPopupData.cancelButton = false;
-          this.confirmDialogService.confirm(confirmPopupData).subscribe();
-        }
-
-        if (this.form.value.IsActual) {
-          const fieldsToRemove = [
-            'EntitlementCurrency',
-            'EntitlementAmount',
-            'EntitlementConversionRate',
-            'DifferentialAmount(INR)'
-          ];
-
-          fieldsToRemove.forEach(field => {
-            this.form.removeControl(field);
-            const control = this.formControls.find(c => c.formConfig.name === field);
-            if (control) {
-              control.formConfig.showInUI = false;
-            }
-          });
-        }
-
-        this.updateConditionalValidators();
-      });
   }
 
   onFieldValueChange(control: IFormControl) {
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
 
-    console.log(control.name)
+    if (control.policyEntitlementCheck) {
+      setTimeout(() => {
+        this.dynamicFormService.validateFieldPolicyEntitlement(control, this.category, this.form, this.formConfig, this.moduleData);
+      }, 500);
+    }
+
     if (control.policyViolationCheck) {
       setTimeout(() => {
-        this.validateFieldPolicyViolation(control);
+        this.dynamicFormService.validateFieldPolicyViolation(control, this.category, this.form, this.formConfig, this.moduleData);
       }, 500);
     }
     if (control.EntitlementAmountCalculation) {
-      this.calculateEntitlementAmount(control);
+      this.dynamicFormService.calculateEntitlementAmount(control, this.form);
     }
     if (control.taxCalculation) {
-      this.calculateDifferentialAmount(control);
+      this.dynamicFormService.calculateDifferentialAmount(control, this.form);
     }
 
-  }
-
-  calculateDifferentialAmount(control: IFormControl) {
-    const config = control.taxCalculation;
-
-    const claimAmount = parseFloat(this.form.get(config.inputControls.ClaimAmount)?.value || 0);
-    const entitlementAmount = parseFloat(this.form.get(config.inputControls.EntitlementAmount)?.value || 0);
-    const taxAmount = parseFloat(this.form.get(control.name)?.value || 0); // control.name is "TaxAmount"
-    const outputControlName = Object.keys(config.outputControl)[0];
-
-    let differentialAmount = 0;
-
-    if (config.IsTaxExclusive) {
-      differentialAmount = entitlementAmount - claimAmount;
-    } else {
-      differentialAmount = entitlementAmount - (claimAmount + taxAmount);
-    }
-
-    if (differentialAmount < 0) {
-      differentialAmount = Math.abs(differentialAmount);
-      this.form.get(outputControlName)?.setValue(differentialAmount);
-      this.form.get('IsViolation')?.setValue(true);
-    } else {
-      const precision = this.configService.getDecimalPrecision();
-      this.form.get(outputControlName)?.setValue((0).toFixed(precision));
-      this.form.get('IsViolation')?.setValue(false);
-    }
-  }
-
-
-  calculateEntitlementAmount(control: IFormControl) {
-    const config = control.EntitlementAmountCalculation;
-    if (!config) return;
-
-    const checkInDate = this.form.get(config.inputControls.CheckInDateTime)?.value;
-    const checkOutDate = this.form.get(config.inputControls.CheckOutDateTime)?.value;
-    const originalEntitlementAmount = parseFloat(this.form.get(config.inputControls.OriginalEntitlementAmount)?.value || 0);
-
-    if (checkInDate && checkOutDate && originalEntitlementAmount) {
-      const checkIn = new Date(checkInDate);
-      const checkOut = new Date(checkOutDate);
-
-      const timeDiff = Math.abs(checkOut.getTime() - checkIn.getTime());
-      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Calculate number of days
-
-      const entitlementAmount = originalEntitlementAmount * diffDays;
-      const outputFieldName = Object.keys(config.outputControl)[0];
-
-      this.form.get(outputFieldName)?.setValue(entitlementAmount.toFixed(this.configService.getDecimalPrecision()));
-    }
   }
 
   mapOtherControls(data: any, otherControls: Record<string, string>): Record<string, any> {
@@ -777,68 +587,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
    */
   private extractValueFromPath(obj: any, path: string): any {
     return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
-  }
-
-  updateConditionalValidators() {
-    this.formConfig.forEach(config => {
-      if (config.requiredIf) {
-        const control = this.form.get(config.name);
-        let isRequired = false;
-
-        Object.entries(config.requiredIf).forEach(([field, expectedValues]) => {
-          const value = this.form.get(field)?.value;
-          const actualValue = typeof value === 'object' ? value?.value : value;
-          if (Array.isArray(expectedValues) && expectedValues.includes(actualValue)) {
-            isRequired = true;
-          }
-          // Support for boolean requiredIf (e.g., { IsViolation: true })
-          if (!Array.isArray(expectedValues) && actualValue === expectedValues) {
-            isRequired = true;
-          }
-        });
-
-        if (isRequired) {
-          control?.setValidators([Validators.required]);
-        } else {
-          control?.clearValidators();
-        }
-        control?.updateValueAndValidity();
-      }
-    });
-  }
-
-  setCalculatedFields() {
-    this.formControls.forEach(control => {
-      const calculateConfig = control.formConfig.calculate;
-      if (!calculateConfig) return;
-
-      const { formula, dependsOn } = calculateConfig;
-      if (!formula || !dependsOn?.length) return;
-
-      const values: Record<string, number> = {};
-
-      dependsOn.forEach((depName: any) => {
-        const rawValue = this.form.get(depName)?.value;
-        const numeric = typeof rawValue === 'object' ? rawValue?.value ?? 0 : rawValue;
-        values[depName] = parseFloat(numeric ?? 0);
-      });
-
-      const calculatedValue = this.safeEvaluateFormula(formula, values);
-      this.form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(this.configService.getDecimalPrecision()));
-    });
-  }
-
-
-  private safeEvaluateFormula(formula: string, values: Record<string, number>): number {
-    try {
-      const keys = Object.keys(values);
-      const vals = Object.values(values);
-      const fn = new Function(...keys, `return ${formula};`);
-      return fn(...vals);
-    } catch (e) {
-      console.warn('Formula evaluation error:', e);
-      return 0;
-    }
   }
 
   onDeleteRow(index: number) {
@@ -863,17 +611,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     // Set gstDetails in AddGstComponent via GstComponent
     if (this.gstComponentRef && ocrData?.gst) {
       this.gstComponentRef.setGstDetailsFromOcr(ocrData.gst);
-    }
-  }
-
-  scrollToFirstInvalidControl() {
-    const firstInvalidControl: HTMLElement | null = document.querySelector(
-      'form .ng-invalid'
-    );
-
-    if (firstInvalidControl) {
-      firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      firstInvalidControl.focus?.(); // optional
     }
   }
 

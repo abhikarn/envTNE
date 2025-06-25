@@ -177,7 +177,7 @@
 
 	// for desktop
 	@media (min-width: 1200px) {
-		width: 103.5rem !important;
+		width: calc(100vw - 85px) !important;
 	}
 }
 
