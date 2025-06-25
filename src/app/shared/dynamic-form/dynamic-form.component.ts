@@ -211,9 +211,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      if (this.form.controls['attachment'] && this.form.controls['attachment'].errors?.['required']) {
-        this.snackbarService.error('Upload Your Bill is required.', 500000);
-      }
       this.dynamicFormService.scrollToFirstInvalidControl('form');
       return;
     }

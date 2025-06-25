@@ -18,13 +18,14 @@ export class DynamicFormService {
 
 
   scrollToFirstInvalidControl(querySelector: string): void {
-    const firstInvalidControl: HTMLElement | null = document.querySelector(querySelector + ' .ng-invalid');
+    const firstInvalidControl: HTMLElement | null = document.querySelector(`${querySelector} .ng-invalid`);
 
     if (firstInvalidControl) {
       firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       firstInvalidControl.focus?.(); // optional
     }
   }
+
 
   setCalculatedFields(form: any, formControls: any[], configService: any): void {
     formControls.forEach(control => {
@@ -104,7 +105,7 @@ export class DynamicFormService {
         }
       });
     }
-
+    this.updateConditionalValidators(form, formControls);
   }
 
   validateFieldPolicyViolation(control: IFormControl, category: any, form: any, formConfig: any[], moduleData: any): void {
