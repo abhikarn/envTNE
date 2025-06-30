@@ -1360,7 +1360,8 @@
                         "disable": false,
                         "readonly": true,
                         "order": 6,
-                        "international": true
+                        "international": true,
+                        "inPayload": false
                     },
                     {
                         "type": "text",
@@ -1381,7 +1382,8 @@
                         "readonly": true,
                         "order": 7,
                         "policyEntitlementCheck": true,
-                        "international": true
+                        "international": true,
+                        "inPayload": false
                     },
                     {
                         "type": "text",
@@ -1483,7 +1485,7 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false,
+                        "readonly": true,
                         "order": 10
                     },
                     {
@@ -1507,9 +1509,6 @@
                                 },
                                 "outputControl": {
                                     "EntitlementConversionRate": "ResponseValue.Value"
-                                },
-                                "autoFormat": {
-                                    "decimal": ".00"
                                 },
                                 "event": "onBlur",
                                 "requestBody": {},
@@ -1568,7 +1567,17 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12
+                        "order": 12,
+                        "setFields": [
+                            {
+                                "name": "EntitlementAmountInBaseCurrency",
+                                "formula": "EntitlementAmount * EntitlementConversionRate",
+                                "dependsOn": [
+                                    "EntitlementAmount",
+                                    "EntitlementConversionRate"
+                                ]
+                            }
+                        ]
                     },
                     {
                         "type": "select",
@@ -1693,7 +1702,17 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15
+                        "order": 15,
+                        "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            }
+                        ]
                     },
                     {
                         "type": "text",
@@ -1727,8 +1746,8 @@
                         "taxCalculation": {
                             "IsTaxExclusive": true,
                             "inputControls": {
-                                "ClaimAmount": "ClaimAmount",
-                                "EntitlementAmount": "EntitlementAmount"
+                                "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                                "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
                             },
                             "outputControl": {
                                 "DifferentialAmount": "DifferentialAmount"
@@ -2065,7 +2084,8 @@
                         "name": "CityGrade",
                         "isExcluded": true,
                         "value": 0,
-                        "showInUI": false
+                        "showInUI": false,
+                        "international": false
                     },
                     {
                         "type": "hidden",

@@ -355,10 +355,11 @@ export class DynamicFormService {
     return formConfig;
   }
 
-  evaluateFormula(formula: string, values: Record<string, number>): number {
+  evaluateFormula(formula: string, values: Record<string, number | string>): number {
     try {
       const keys = Object.keys(values);
-      const vals = Object.values(values);
+      // Convert all values to numbers safely
+      const vals = Object.values(values).map(v => Number(v));
       const fn = new Function(...keys, `return ${formula};`);
       return fn(...vals);
     } catch (e) {
@@ -366,4 +367,5 @@ export class DynamicFormService {
       return 0;
     }
   }
+
 }

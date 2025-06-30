@@ -216,6 +216,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.dynamicFormService.scrollToFirstInvalidControl('form');
       return;
     }
+    
     this.dynamicFormService.setCalculatedFields(this.form, this.formControls);
     // Only check duplicate if OCRRequired is true for this category
     if (this.category.OCRRequired) {
@@ -305,10 +306,16 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     if(this.category?.policyViolationManualCheck) {
       this.validateManualPolicyViolation();
     }
+
+    this.category.formControls?.forEach((control: any) => {
+      if(control.inPayload === false) {
+        // Remove control from form data if inPayload is false
+        this.form.removeControl(control.name);
+      }
+    });
   }
 
   validateManualPolicyViolation() {
-    debugger;
     const formula = this.category.policyViolationManualCheck.formula;
     const controls = this.category.policyViolationManualCheck.controls;
     const confirmPopup = this.category.policyViolationManualCheck.confirmPopup;
@@ -610,6 +617,21 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   onFieldValueChange(control: IFormControl) {
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
+
+    if(control.setFields) {
+      control.setFields.forEach((field: any) => {
+        const formula = field.formula;
+        const dependsOn = field.dependsOn || [];
+        const values: any = {};
+
+        dependsOn.forEach((dep: string) => {
+          values[dep] = this.form.get(dep)?.value;
+        });
+
+        const calculatedValue = this.dynamicFormService.evaluateFormula(formula, values);
+        this.form.get(field.name)?.setValue(calculatedValue);
+      });
+    }
 
     if (control.policyEntitlementCheck) {
       setTimeout(() => {
