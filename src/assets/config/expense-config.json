@@ -192,7 +192,10 @@
                         "value": "",
                         "dependentCases": [
                             {
-                                "type": ["domestic", "international"],
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
                                 "isGeneral": true,
                                 "key": "Id",
                                 "inputControls": {
@@ -416,7 +419,10 @@
                         "value": null,
                         "dependentCases": [
                             {
-                                "type": ["domestic", "international"],
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
@@ -1133,7 +1139,10 @@
                         "value": null,
                         "dependentCases": [
                             {
-                                "type": ["domestic", "international"],
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
                                 "isGeneral": true,
                                 "key": "Id",
                                 "inputControls": {
@@ -1152,7 +1161,9 @@
                                 "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
                             },
                             {
-                                "type": ["domestic"],
+                                "type": [
+                                    "domestic"
+                                ],
                                 "isGeneral": true,
                                 "key": "CityMasterId",
                                 "inputControls": {
@@ -1253,7 +1264,9 @@
                         "apiMethod": "getMasterNameById",
                         "dependentCases": [
                             {
-                                "type": ["domestic"],
+                                "type": [
+                                    "domestic"
+                                ],
                                 "isGeneral": true,
                                 "key": "CityMasterId",
                                 "inputControls": {
@@ -1273,7 +1286,9 @@
                                 "apiMethod": "dataGetCityGrade"
                             },
                             {
-                                "type": ["international"],
+                                "type": [
+                                    "international"
+                                ],
                                 "isGeneral": true,
                                 "key": "CityMasterId",
                                 "inputControls": {
@@ -1481,7 +1496,10 @@
                         "value": null,
                         "dependentCases": [
                             {
-                                "type": ["domestic", "international"],
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
                                 "key": "Id",
                                 "inputControls": {
                                     "EntitlementCurrency": "CurrencyId",
@@ -1593,7 +1611,10 @@
                         "value": null,
                         "dependentCases": [
                             {
-                                "type": ["domestic", "international"],
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
@@ -1635,8 +1656,8 @@
                         "taxCalculation": {
                             "IsTaxExclusive": true,
                             "inputControls": {
-                                "ClaimAmount": "ClaimAmount",
-                                "EntitlementAmount": "EntitlementAmount"
+                                "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                                "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
                             },
                             "outputControl": {
                                 "DifferentialAmount": "DifferentialAmount"
@@ -2124,6 +2145,19 @@
                         "showInUI": false
                     }
                 ],
+                "policyViolationManualCheck": {
+                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                    "controls": {
+                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                    },
+                    "confirmPopup": {
+                        "title": "Policy Violation",
+                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                        "confirmButtonText": "Yes",
+                        "cancelButtonText": "No"
+                    }
+                },
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
@@ -2961,7 +2995,10 @@
                         "apiMethod": "getMasterNameById",
                         "dependentCases": [
                             {
-                                "type": ["domestic", "international"],
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
                                 "isGeneral": true,
                                 "key": "CityMasterId",
                                 "inputControls": {
@@ -3122,7 +3159,10 @@
                         "value": null,
                         "dependentCases": [
                             {
-                                "type": ["domestic", "international"],
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",

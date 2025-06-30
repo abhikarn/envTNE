@@ -30,7 +30,7 @@ export class DynamicFormService {
   }
 
 
-  setCalculatedFields(form: any, formControls: any[], configService: any): void {
+  setCalculatedFields(form: any, formControls: any[]): void {
     formControls.forEach(control => {
       const calculateConfig = control.formConfig.calculate;
       if (!calculateConfig) return;
@@ -47,7 +47,7 @@ export class DynamicFormService {
       });
 
       const calculatedValue = this.safeEvaluateFormula(formula, values);
-      form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(configService.getDecimalPrecision()));
+      form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(this.configService.getDecimalPrecision()));
     });
   }
 
@@ -206,8 +206,8 @@ export class DynamicFormService {
   calculateDifferentialAmount(control: IFormControl, form: any): void {
     const config = control.taxCalculation;
 
-    const claimAmount = parseFloat(form.get(config.inputControls.ClaimAmount)?.value || 0);
-    const entitlementAmount = parseFloat(form.get(config.inputControls.EntitlementAmount)?.value || 0);
+    const claimAmount = parseFloat(form.get(config.inputControls.ClaimAmountInBaseCurrency)?.value || 0);
+    const entitlementAmount = parseFloat(form.get(config.inputControls.EntitlementAmountInBaseCurrency)?.value || 0);
     const taxAmount = parseFloat(form.get(control.name)?.value || 0); // control.name is "TaxAmount"
     const outputControlName = Object.keys(config.outputControl)[0];
 
@@ -353,5 +353,17 @@ export class DynamicFormService {
       });
     }
     return formConfig;
+  }
+
+  evaluateFormula(formula: string, values: Record<string, number>): number {
+    try {
+      const keys = Object.keys(values);
+      const vals = Object.values(values);
+      const fn = new Function(...keys, `return ${formula};`);
+      return fn(...vals);
+    } catch (e) {
+      console.warn('Formula evaluation error:', e);
+      return 0;
+    }
   }
 }
