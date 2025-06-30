@@ -377,6 +377,7 @@
                         "type": "select",
                         "dataType": "int",
                         "name": "Currency",
+                        "placeholder": "Select Currency",
                         "isExcluded": true,
                         "label": "Currency",
                         "labelKey": "Name",
@@ -2041,12 +2042,12 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
-                        "ClaimTypeId": 53,
                         "ExpenseCategoryId": 3,
                         "PolicyReferenceId": 53,
                         "CountryGradeId": 0
                     },
                     "otherControls": {
+                        "ClaimTypeId": "TravelTypeId",
                         "TravelRequestId": "TravelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
