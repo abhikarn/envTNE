@@ -435,7 +435,7 @@ export class MainExpenseComponent {
 
     this.categories?.forEach((category: any) =>
       category.formControls?.forEach((control: any) => {
-        if (control?.name === 'Currency') {
+        if (control?.name === 'Currency' || control?.name === 'EntitlementCurrency') {
           control.defaultValue = isWithoutCurrency ? null : defaultCurrency;
         }
       })

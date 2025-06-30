@@ -192,6 +192,7 @@
                         "value": "",
                         "dependentCases": [
                             {
+                                "type": ["domestic", "international"],
                                 "isGeneral": true,
                                 "key": "Id",
                                 "inputControls": {
@@ -415,6 +416,7 @@
                         "value": null,
                         "dependentCases": [
                             {
+                                "type": ["domestic", "international"],
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
@@ -1131,6 +1133,7 @@
                         "value": null,
                         "dependentCases": [
                             {
+                                "type": ["domestic", "international"],
                                 "isGeneral": true,
                                 "key": "Id",
                                 "inputControls": {
@@ -1149,6 +1152,7 @@
                                 "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
                             },
                             {
+                                "type": ["domestic"],
                                 "isGeneral": true,
                                 "key": "CityMasterId",
                                 "inputControls": {
@@ -1249,6 +1253,7 @@
                         "apiMethod": "getMasterNameById",
                         "dependentCases": [
                             {
+                                "type": ["domestic"],
                                 "isGeneral": true,
                                 "key": "CityMasterId",
                                 "inputControls": {
@@ -1257,9 +1262,29 @@
                                 },
                                 "outputControl": {
                                     "CityGrade": "ResponseValue.GradeId",
-                                    "CityGradeId": "ResponseValue.Grade",
+                                    "CityGradeId": "ResponseValue.Grade"
+                                },
+                                "otherControls": {
+                                    "Type": "TravelTypeId"
+                                },
+                                "event": "autoComplete",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetCityGrade"
+                            },
+                            {
+                                "type": ["international"],
+                                "isGeneral": true,
+                                "key": "CityMasterId",
+                                "inputControls": {
+                                    "City": "CityId",
+                                    "CheckInDateTime": "ReferenceDate"
+                                },
+                                "outputControl": {
                                     "Country": "ResponseValue.Country",
-                                    "CountryGrade": "ResponseValue.Grade"
+                                    "CountryId": "ResponseValue.CountryId",
+                                    "CountryGrade": "ResponseValue.Grade",
+                                    "CountryGradeId": "ResponseValue.GradeId"
                                 },
                                 "otherControls": {
                                     "Type": "TravelTypeId"
@@ -1340,6 +1365,7 @@
                         "disable": false,
                         "readonly": true,
                         "order": 7,
+                        "policyEntitlementCheck": true,
                         "international": true
                     },
                     {
@@ -1455,6 +1481,7 @@
                         "value": null,
                         "dependentCases": [
                             {
+                                "type": ["domestic", "international"],
                                 "key": "Id",
                                 "inputControls": {
                                     "EntitlementCurrency": "CurrencyId",
@@ -1566,6 +1593,7 @@
                         "value": null,
                         "dependentCases": [
                             {
+                                "type": ["domestic", "international"],
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
@@ -2080,6 +2108,20 @@
                                 "EntitlementConversionRate"
                             ]
                         }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "CountryId",
+                        "isExcluded": true,
+                        "value": 3,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "CountryGradeId",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
                     }
                 ],
                 "policyEntitlementCheckApi": {
@@ -2087,8 +2129,7 @@
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
                         "ExpenseCategoryId": 3,
-                        "PolicyReferenceId": 53,
-                        "CountryGradeId": 0
+                        "PolicyReferenceId": 53
                     },
                     "otherControls": {
                         "ClaimTypeId": "TravelTypeId",
@@ -2097,9 +2138,11 @@
                     },
                     "inputControls": {
                         "CheckInDateTime": "ReferenceDate",
-                        "CityGrade": "CityGradeId"
+                        "CityGrade": "CityGradeId",
+                        "CountryGradeId": "CountryGradeId"
                     },
                     "outputControl": {
+                        "EntitlementCurrency": "ResponseValue.CurrencyId",
                         "EntitlementAmount": "ResponseValue.EntitlementAmount",
                         "OriginalEntitlementAmount": "ResponseValue.EntitlementAmount",
                         "IsBillRequired": "ResponseValue.IsBillRequired",
@@ -2918,6 +2961,7 @@
                         "apiMethod": "getMasterNameById",
                         "dependentCases": [
                             {
+                                "type": ["domestic", "international"],
                                 "isGeneral": true,
                                 "key": "CityMasterId",
                                 "inputControls": {
@@ -3078,6 +3122,7 @@
                         "value": null,
                         "dependentCases": [
                             {
+                                "type": ["domestic", "international"],
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",

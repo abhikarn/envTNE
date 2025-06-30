@@ -329,6 +329,17 @@ export class DynamicFormService {
             formConfig.splice(index, 1);
           }
         }
+
+        if(control?.dependentCases?.length > 0) {
+          control.dependentCases.forEach((caseConfig: any) => {
+            if (caseConfig?.type?.includes('international')) {
+              // If the case type includes 'international', ensure the control is included
+              if (!formConfig.includes(control)) {
+                formConfig.push(control);
+              }
+            }
+          });
+        }
       });
     } else {
       formConfig.forEach((control: IFormControl) => {
