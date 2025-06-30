@@ -310,7 +310,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.category.formControls?.forEach((control: any) => {
       if(control.inPayload === false) {
         // Remove control from form data if inPayload is false
-        this.form.removeControl(control.name);
+        this.form.get(control.name)?.setValue(null);
       }
     });
   }
