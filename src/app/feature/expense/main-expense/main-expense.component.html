@@ -162,7 +162,7 @@
                                 [existingData]="existingExpenseRequestData" [category]="category"
                                 [formConfig]="category.formControls" [eventHandler]="this"
                                 (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
-                                (updateData)="updateCategoryData($event)">
+                                (updateData)="updateCategoryData($event)" [moduleConfig]="moduleConfig">
                               </app-dynamic-form>
                             </div>
                           </div>
@@ -197,7 +197,7 @@
                                   [existingData]="existingExpenseRequestData" [category]="selectedExtraCategory"
                                   [formConfig]="selectedExtraCategory.formControls" [eventHandler]="this"
                                   (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
-                                  (updateData)="updateCategoryData($event)">
+                                  (updateData)="updateCategoryData($event)" [moduleConfig]="moduleConfig">
                                 </app-dynamic-form>
                               </div>
                             </div>
@@ -233,7 +233,7 @@
                                 [existingData]="existingExpenseRequestData" [category]="category"
                                 [formConfig]="category.formControls" [eventHandler]="this"
                                 (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
-                                (updateData)="updateCategoryData($event)">
+                                (updateData)="updateCategoryData($event)" [moduleConfig]="moduleConfig">
                               </app-dynamic-form>
                             </div>
                           </div>

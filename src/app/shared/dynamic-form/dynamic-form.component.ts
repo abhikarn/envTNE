@@ -51,6 +51,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
   @Input() existingData: any;
+  @Input() moduleConfig: any;
   @Output() emitFormData = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();
   @Output() updateData = new EventEmitter<any>();
@@ -134,6 +135,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     this.formControls = []; // Reset to avoid duplication
     this.form = new FormGroup({});
+    this.formConfig = this.dynamicFormService.getFormConfig(this.formConfig, this.moduleConfig);
     this.formConfig.forEach(config => {
       if (config.dataType === 'numeric') {
         this.setupAutoFormat(config, this.configService);

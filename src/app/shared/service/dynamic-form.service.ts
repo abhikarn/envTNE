@@ -266,7 +266,7 @@ export class DynamicFormService {
       Object.entries(businessCaseData.inputControls).forEach(([controlName, requestKey]) => {
         if (typeof requestKey === 'string') { // Ensure requestKey is a string
           let controlValue = form.get(controlName)?.value;
-          if(typeof controlValue === 'object' && controlValue !== null) {
+          if (typeof controlValue === 'object' && controlValue !== null) {
             controlValue = controlValue.value ?? controlValue; // Handle case where controlValue is an object
           }
           if (!controlValue) {
@@ -277,7 +277,7 @@ export class DynamicFormService {
           }
         }
       });
-      debugger
+      // Handle other controls if they exist
       if (businessCaseData?.otherControls) {
         const output = this.mapOtherControls(moduleData, businessCaseData.otherControls);
         requestBody = { ...requestBody, ...output };
@@ -316,5 +316,31 @@ export class DynamicFormService {
     } else {
       console.warn(`Invalid API service or method: ${businessCaseData.apiService}.${businessCaseData.apiMethod}`);
     }
+  }
+
+  getFormConfig(formConfig: IFormControl[], moduleConfig: any): IFormControl[] {
+    // handle international data
+    if (moduleConfig?.internationalFlag) {
+      formConfig.forEach((control: IFormControl) => {
+        if (control.international === false) {
+          // remove control if international is false
+          const index = formConfig.indexOf(control);
+          if (index > -1) {
+            formConfig.splice(index, 1);
+          }
+        }
+      });
+    } else {
+      formConfig.forEach((control: IFormControl) => {
+        if (control.international === true) {
+          // remove control if international is true
+          const index = formConfig.indexOf(control);
+          if (index > -1) {
+            formConfig.splice(index, 1);
+          }
+        }
+      });
+    }
+    return formConfig;
   }
 }

@@ -51,4 +51,5 @@ export interface IFormControl {
   EntitlementAmountCalculation?: any;
   taxCalculation?: any;
   policyEntitlementCheck?: boolean;
+  international?: boolean;
 }

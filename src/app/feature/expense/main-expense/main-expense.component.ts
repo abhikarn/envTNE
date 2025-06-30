@@ -102,6 +102,7 @@ export class MainExpenseComponent {
   filteredOptions: any = [];
   billableControl: FormControl = new FormControl('');
   selectedTabIndex: number = 0;
+  moduleConfig: any = {};
 
   constructor(
     private expenseService: ExpenseService,
@@ -495,7 +496,8 @@ export class MainExpenseComponent {
           const meta = this.travelRequestPreview.TravelRequestMetaData || [];
           this.costcenterId = meta.find((d: any) => d.TravelRequestMetaId === 4)?.IntegerValue;
           this.purpose = meta.find((d: any) => d.TravelRequestMetaId === 1)?.IntegerValueReference;
-
+          const internationalFlag = [52, 54].includes(this.travelRequestPreview?.TravelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId);
+          this.moduleConfig.internationalFlag = internationalFlag;
           this.setCurrencyDropdown();
         },
         error: (error) => {
@@ -503,7 +505,6 @@ export class MainExpenseComponent {
         }
       });
   }
-
 
   // Update travelRequestId based on user selection and fetch travel request preview.
   onSelectTravelExpenseRequest(event: MatSelectChange) {

@@ -1299,7 +1299,8 @@
                         "disable": false,
                         "readonly": true,
                         "order": 5,
-                        "policyEntitlementCheck": true
+                        "policyEntitlementCheck": true,
+                        "international": false
                     },
                     {
                         "type": "text",
@@ -1318,7 +1319,8 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 6
+                        "order": 6,
+                        "international": true
                     },
                     {
                         "type": "text",
@@ -1337,7 +1339,8 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 7
+                        "order": 7,
+                        "international": true
                     },
                     {
                         "type": "text",
