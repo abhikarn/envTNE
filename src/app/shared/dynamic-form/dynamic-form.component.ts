@@ -132,7 +132,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-
+    this.category = this.dynamicFormService.getCategoryConfig(this.category, this.moduleConfig);
     this.formControls = []; // Reset to avoid duplication
     this.form = new FormGroup({});
     this.formConfig = this.dynamicFormService.getFormConfig(this.formConfig, this.moduleConfig);

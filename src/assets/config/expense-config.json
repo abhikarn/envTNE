@@ -1632,9 +1632,6 @@
                                 "outputControl": {
                                     "ConversionRate": "ResponseValue.Value"
                                 },
-                                "autoFormat": {
-                                    "decimal": ".00"
-                                },
                                 "event": "onBlur",
                                 "requestBody": {},
                                 "apiService": "DataService",
@@ -2288,14 +2285,16 @@
                         "label": "Country Grade",
                         "visible": true,
                         "position": "out",
-                        "order": 10
+                        "order": 10,
+                        "international": true
                     },
                     {
                         "name": "CityGradeId",
                         "label": "City Grade",
                         "visible": true,
                         "position": "out",
-                        "order": 11
+                        "order": 11,
+                        "international": false
                     },
                     {
                         "name": "BillNumber",
@@ -4718,124 +4717,109 @@
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
-                        "name": "Type",
+                        "name": "AccommodationType",
                         "label": "Type",
                         "visible": true,
                         "position": "in"
                     },
                     {
                         "type": "date",
-                        "name": "FromDate",
-                        "label": "From Date",
+                        "name": "CheckInDateTime",
+                        "label": "Check-in Date",
                         "visible": true,
                         "position": "in"
                     },
                     {
                         "type": "date",
-                        "name": "ToDate",
-                        "label": "To Date",
+                        "name": "CheckOutDateTime",
+                        "label": "Check-out Date",
                         "visible": true,
                         "position": "in"
-                    },
-                    {
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement",
-                        "visible": true,
-                        "position": "in"
-                    },
-                    {
-                        "name": "ClaimAmount",
-                        "label": "Claimed",
-                        "visible": true,
-                        "position": "in"
-                    },
-                    {
-                        "name": "AppovedAmount",
-                        "label": "Approved Amount",
-                        "visible": true,
-                        "type": "number",
-                        "controlType": "input",
-                        "position": "in"
-                    },
-                    {
-                        "name": "Currency",
-                        "label": "Currency",
-                        "visible": true,
-                        "position": "in"
-                    },
-                    {
-                        "name": "ConversionRate",
-                        "label": "Conversion",
-                        "visible": true,
-                        "position": "in"
-                    },
-                    {
-                        "name": "ClaimAmountInBaseCurrency",
-                        "label": "Approved(INR)",
-                        "visible": true,
-                        "position": "in"
-                    },
-                    {
-                        "name": "",
-                        "label": "Stay Name",
-                        "value": "",
-                        "visible": true,
-                        "position": "out"
-                    },
-                    {
-                        "name": "",
-                        "label": "Bill Number",
-                        "value": "",
-                        "visible": true,
-                        "position": "out"
-                    },
-                    {
-                        "type": "date",
-                        "name": "ClaimDate",
-                        "label": "Bill Date",
-                        "value": "",
-                        "visible": true,
-                        "position": "out"
                     },
                     {
                         "name": "City",
                         "label": "City",
-                        "value": "",
                         "visible": true,
-                        "position": "out"
+                        "position": "in"
+                    },
+                    {
+                        "name": "HotelName",
+                        "label": "Hotel Name / Guest House Name",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "in-out"
+                    },
+                    {
+                        "name": "ClaimAmount",
+                        "label": "Claimed Amount",
+                        "visible": true,
+                        "position": "in-out"
                     },
                     {
                         "name": "CityGrade",
                         "label": "City Grade",
-                        "value": "",
+                        "visible": true,
+                        "position": "out",
+                        "international": false
+                    },
+                    {
+                        "name": "CountryGrade",
+                        "label": "Country Grade",
+                        "visible": true,
+                        "position": "out",
+                        "international": true
+                    },
+                    {
+                        "type": "numeric",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount in Base Currency",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "label": "Payment Type",
                         "visible": true,
                         "position": "out"
                     },
                     {
                         "name": "EntitlementAmountInBaseCurrency",
-                        "label": "Entitlement Amount(INR)",
-                        "value": "",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out"
                     },
                     {
-                        "name": "",
-                        "label": "Differential Amount(INR)",
-                        "value": "",
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement Amount",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "DifferentialAmount",
+                        "label": "Differential Amount",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "Justification",
+                        "label": "Justification",
                         "visible": true,
                         "position": "out"
                     },
                     {
                         "name": "TaxAmount",
                         "label": "Tax Amount",
-                        "value": "",
-                        "visible": true,
-                        "position": "out"
-                    },
-                    {
-                        "name": "",
-                        "label": "Justification",
-                        "value": "",
                         "visible": true,
                         "position": "out"
                     }
@@ -4979,9 +4963,48 @@
                 },
                 "nestedTables": [
                     {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
                         "name": "gst",
                         "dataKey": "gst",
                         "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
                             {
                                 "name": "GstIn",
                                 "label": "GSTIN",

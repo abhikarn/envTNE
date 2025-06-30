@@ -368,4 +368,23 @@ export class DynamicFormService {
     }
   }
 
+  getCategoryConfig(category: any, moduleConfig: any): any {
+    if (!category) return null;
+
+    category.columns?.forEach((column: any) => {
+      if(moduleConfig?.internationalFlag) {
+        if(column.international === false) {
+          // remove column if international is false
+          const index = category.columns.indexOf(column);
+          if (index > -1) {
+            category.columns.splice(index, 1);
+          }
+        }
+      }
+    });
+
+    // If no type or no matching config found, return the original category
+    return category;
+  }
+
 }
