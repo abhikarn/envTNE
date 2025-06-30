@@ -1257,12 +1257,15 @@
                                 },
                                 "outputControl": {
                                     "CityGrade": "ResponseValue.GradeId",
-                                    "CityGradeId": "ResponseValue.Grade"
+                                    "CityGradeId": "ResponseValue.Grade",
+                                    "Country": "ResponseValue.Country",
+                                    "CountryGrade": "ResponseValue.Grade"
+                                },
+                                "otherControls": {
+                                    "Type": "TravelTypeId"
                                 },
                                 "event": "autoComplete",
-                                "requestBody": {
-                                    "Type": "53"
-                                },
+                                "requestBody": {},
                                 "apiService": "DataService",
                                 "apiMethod": "dataGetCityGrade"
                             }
@@ -1297,6 +1300,44 @@
                         "readonly": true,
                         "order": 5,
                         "policyEntitlementCheck": true
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "Country",
+                        "isExcluded": true,
+                        "label": "Country",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Country is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 6
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "CountryGrade",
+                        "isExcluded": true,
+                        "label": "Country Grade",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Country Grade is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 7
                     },
                     {
                         "type": "text",

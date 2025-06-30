@@ -633,4 +633,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
   }
 
+  handleBusinessCase(businessCaseData: any) {
+    this.dynamicFormService.handleBusinessCase(businessCaseData, this.form, this.moduleData);
+  }
+
 }
