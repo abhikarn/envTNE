@@ -4,6 +4,8 @@ import { ServiceRegistryService } from './service-registry.service';
 import { IFormControl } from '../dynamic-form/form-control.interface';
 import { ConfirmDialogService } from './confirm-dialog.service';
 import { GlobalConfigService } from './global-config.service';
+import { Subscription } from 'rxjs';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,8 @@ export class DynamicFormService {
   constructor(
     private serviceRegistry: ServiceRegistryService,
     private confirmDialogService: ConfirmDialogService,
-    private configService: GlobalConfigService
+    private configService: GlobalConfigService,
+    private snackbarService: SnackbarService
   ) { }
 
 
@@ -27,7 +30,7 @@ export class DynamicFormService {
   }
 
 
-  setCalculatedFields(form: any, formControls: any[], configService: any): void {
+  setCalculatedFields(form: any, formControls: any[]): void {
     formControls.forEach(control => {
       const calculateConfig = control.formConfig.calculate;
       if (!calculateConfig) return;
@@ -44,7 +47,7 @@ export class DynamicFormService {
       });
 
       const calculatedValue = this.safeEvaluateFormula(formula, values);
-      form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(configService.getDecimalPrecision()));
+      form.get(control.formConfig.name)?.setValue(calculatedValue.toFixed(this.configService.getDecimalPrecision()));
     });
   }
 
@@ -203,8 +206,8 @@ export class DynamicFormService {
   calculateDifferentialAmount(control: IFormControl, form: any): void {
     const config = control.taxCalculation;
 
-    const claimAmount = parseFloat(form.get(config.inputControls.ClaimAmount)?.value || 0);
-    const entitlementAmount = parseFloat(form.get(config.inputControls.EntitlementAmount)?.value || 0);
+    const claimAmount = parseFloat(form.get(config.inputControls.ClaimAmountInBaseCurrency)?.value || 0);
+    const entitlementAmount = parseFloat(form.get(config.inputControls.EntitlementAmountInBaseCurrency)?.value || 0);
     const taxAmount = parseFloat(form.get(control.name)?.value || 0); // control.name is "TaxAmount"
     const outputControlName = Object.keys(config.outputControl)[0];
 
@@ -248,4 +251,121 @@ export class DynamicFormService {
       form.get(outputFieldName)?.setValue(entitlementAmount.toFixed(this.configService.getDecimalPrecision()));
     }
   }
+
+
+  handleBusinessCase(businessCaseData: any, form: any, moduleData: any): void {
+    if (!businessCaseData.apiService || !businessCaseData.apiMethod) return;
+
+    let apiSubscription: Subscription;
+    const apiService = this.serviceRegistry.getService(businessCaseData.apiService);
+
+    if (apiService && typeof apiService[businessCaseData.apiMethod] === "function") {
+      // Dynamically populate request body from input controls
+      let requestBody: any = businessCaseData.requestBody;
+      let shouldMakeApiCall = true;
+      Object.entries(businessCaseData.inputControls).forEach(([controlName, requestKey]) => {
+        if (typeof requestKey === 'string') { // Ensure requestKey is a string
+          let controlValue = form.get(controlName)?.value;
+          if (typeof controlValue === 'object' && controlValue !== null) {
+            controlValue = controlValue.value ?? controlValue; // Handle case where controlValue is an object
+          }
+          if (!controlValue) {
+            this.snackbarService.error(`Please Select a ${controlName}.`);
+            shouldMakeApiCall = false;
+          } else {
+            requestBody[requestKey] = controlValue[businessCaseData.key] ?? controlValue; // Extract Id if it's an object
+          }
+        }
+      });
+      // Handle other controls if they exist
+      if (businessCaseData?.otherControls) {
+        const output = this.mapOtherControls(moduleData, businessCaseData.otherControls);
+        requestBody = { ...requestBody, ...output };
+      }
+
+      if (shouldMakeApiCall) {
+        apiSubscription = apiService[businessCaseData.apiMethod](requestBody).subscribe(
+          (response: any) => {
+            // Dynamically set output controls based on response mapping
+            if (typeof businessCaseData.outputControl === 'string') {
+              // Single field case
+              const value = this.extractValueFromPath(response, businessCaseData.outputControl);
+              if (value !== undefined) {
+                form.get(businessCaseData.outputControl)?.setValue(value);
+              }
+            } else if (typeof businessCaseData.outputControl === 'object') {
+              // Multiple fields case
+              for (const [outputControl, responsePath] of Object.entries(businessCaseData.outputControl) as [string, string][]) {
+                const value = this.extractValueFromPath(response, responsePath);
+                if (value !== undefined) {
+                  if (businessCaseData.autoFormat?.decimal) {
+                    form.get(outputControl)?.setValue(`${value}${businessCaseData.autoFormat.decimal}`);
+                  } else {
+                    form.get(outputControl)?.setValue(value);
+                  }
+                }
+              }
+            }
+          },
+          (error: any) => {
+            console.error("API Error:", error);
+          }
+        );
+      }
+
+    } else {
+      console.warn(`Invalid API service or method: ${businessCaseData.apiService}.${businessCaseData.apiMethod}`);
+    }
+  }
+
+  getFormConfig(formConfig: IFormControl[], moduleConfig: any): IFormControl[] {
+    // handle international data
+    if (moduleConfig?.internationalFlag) {
+      formConfig.forEach((control: IFormControl) => {
+        if (control.international === false) {
+          // remove control if international is false
+          const index = formConfig.indexOf(control);
+          if (index > -1) {
+            formConfig.splice(index, 1);
+          }
+        }
+
+        if(control?.dependentCases?.length > 0) {
+          control.dependentCases.forEach((caseConfig: any) => {
+            if (caseConfig?.type?.includes('international')) {
+              // If the case type includes 'international', ensure the control is included
+              if (!formConfig.includes(control)) {
+                formConfig.push(control);
+              }
+            }
+          });
+        }
+      });
+    } else {
+      formConfig.forEach((control: IFormControl) => {
+        if (control.international === true) {
+          // remove control if international is true
+          const index = formConfig.indexOf(control);
+          if (index > -1) {
+            formConfig.splice(index, 1);
+          }
+        }
+      });
+    }
+    return formConfig;
+  }
+
+  evaluateFormula(formula: string, values: Record<string, number | string>): number {
+    try {
+      const keys = Object.keys(values);
+      // Convert all values to numbers safely
+      const vals = Object.values(values).map(v => Number(v));
+      const fn = new Function(...keys, `return ${formula};`);
+      return fn(...vals);
+    } catch (e) {
+      console.warn('Formula evaluation error:', e);
+      return 0;
+    }
+  }
+
 }

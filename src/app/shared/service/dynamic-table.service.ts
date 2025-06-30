@@ -37,6 +37,19 @@ export class DynamicTableService {
                   control.formConfig.options = resultOptions;
                 }
               }
+
+              // for not dependent dropdowns: fetch options if not present
+              else if ((!options || options.length === 0) && apiService && apiMethod) {
+                const service = this.serviceRegistry.getService(apiService);
+                if (service && typeof service[apiMethod] === 'function') {
+                  const response = await service[apiMethod]().toPromise();
+                  const resultOptions = response?.ResponseValue?.map((item: any) => ({
+                    label: item[labelKey || 'label'],
+                    value: item[valueKey || 'value']
+                  })) || [];
+                  control.formConfig.options = resultOptions;
+                }
+              }
   
               const matchedOption = control.formConfig.options?.find((opt: any) => opt.value === selected);
               if (matchedOption) {

@@ -51,6 +51,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
   @Input() existingData: any;
+  @Input() moduleConfig: any;
   @Output() emitFormData = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();
   @Output() updateData = new EventEmitter<any>();
@@ -134,6 +135,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     this.formControls = []; // Reset to avoid duplication
     this.form = new FormGroup({});
+    this.formConfig = this.dynamicFormService.getFormConfig(this.formConfig, this.moduleConfig);
     this.formConfig.forEach(config => {
       if (config.dataType === 'numeric') {
         this.setupAutoFormat(config, this.configService);
@@ -214,6 +216,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.dynamicFormService.scrollToFirstInvalidControl('form');
       return;
     }
+    
+    this.dynamicFormService.setCalculatedFields(this.form, this.formControls);
     // Only check duplicate if OCRRequired is true for this category
     if (this.category.OCRRequired) {
       // Check for duplicate in tableData before DB check
@@ -299,6 +303,52 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
 
     this.validatePolicyViolation();
+    if(this.category?.policyViolationManualCheck) {
+      this.validateManualPolicyViolation();
+    }
+
+    this.category.formControls?.forEach((control: any) => {
+      if(control.inPayload === false) {
+        // Remove control from form data if inPayload is false
+        this.form.get(control.name)?.setValue(null);
+      }
+    });
+  }
+
+  validateManualPolicyViolation() {
+    const formula = this.category.policyViolationManualCheck.formula;
+    const controls = this.category.policyViolationManualCheck.controls;
+    const confirmPopup = this.category.policyViolationManualCheck.confirmPopup;
+    const controlValues: any = {};
+    for (const [key, value] of Object.entries(controls)) {
+      controlValues[key] = this.form.get(value as string)?.value;
+    }
+    const isViolation = this.dynamicFormService.evaluateFormula(formula, controlValues);
+    this.form.get('IsViolation')?.setValue(isViolation);
+    if (isViolation) {
+      // Show confirmation dialog
+      this.confirmDialogService.confirm(confirmPopup).subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          this.setAutoCompleteFields();
+          this.prepareFormJson();
+          this.addDataToDynamicTable();
+          setTimeout(() => {
+            this.clear();
+          }, 500);
+        } else {
+          // Reset IsViolation if user cancels
+          this.form.get('IsViolation')?.setValue(false);
+        }
+      });
+    } else {
+      // No violation, proceed with form submission
+      this.setAutoCompleteFields();
+      this.prepareFormJson();
+      this.addDataToDynamicTable();
+      setTimeout(() => {
+        this.clear();
+      }, 500);
+    }
   }
 
   /**
@@ -539,36 +589,49 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             }
           }
         });
-    }
 
-    if (this.form.value.IsViolation) {
-      this.confirmDialogService
-        .confirm(confirmPopupData)
-        .subscribe((confirmed) => {
-          if (confirmed) {
-            this.dynamicFormService.setCalculatedFields(this.form, this.formControls, this.configService);
-            this.setAutoCompleteFields();
-            this.prepareFormJson();
-            this.addDataToDynamicTable();
-            setTimeout(() => {
-              this.clear();
-            }, 500);
-          }
-        });
-    } else {
-      this.dynamicFormService.setCalculatedFields(this.form, this.formControls, this.configService);
-      this.setAutoCompleteFields();
-      this.prepareFormJson();
-      this.addDataToDynamicTable();
-      setTimeout(() => {
-        this.clear();
-      }, 500);
+      if (this.form.value.IsViolation) {
+        this.confirmDialogService
+          .confirm(confirmPopupData)
+          .subscribe((confirmed) => {
+            if (confirmed) {
+              this.setAutoCompleteFields();
+              this.prepareFormJson();
+              this.addDataToDynamicTable();
+              setTimeout(() => {
+                this.clear();
+              }, 500);
+            }
+          });
+      } else {
+        this.setAutoCompleteFields();
+        this.prepareFormJson();
+        this.addDataToDynamicTable();
+        setTimeout(() => {
+          this.clear();
+        }, 500);
+      }
     }
   }
 
   onFieldValueChange(control: IFormControl) {
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
+
+    if(control.setFields) {
+      control.setFields.forEach((field: any) => {
+        const formula = field.formula;
+        const dependsOn = field.dependsOn || [];
+        const values: any = {};
+
+        dependsOn.forEach((dep: string) => {
+          values[dep] = this.form.get(dep)?.value;
+        });
+
+        const calculatedValue = this.dynamicFormService.evaluateFormula(formula, values);
+        this.form.get(field.name)?.setValue(calculatedValue);
+      });
+    }
 
     if (control.policyEntitlementCheck) {
       setTimeout(() => {
@@ -631,6 +694,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     if (this.gstComponentRef && ocrData?.gst) {
       this.gstComponentRef.setGstDetailsFromOcr(ocrData.gst);
     }
+  }
+
+  handleBusinessCase(businessCaseData: any) {
+    this.dynamicFormService.handleBusinessCase(businessCaseData, this.form, this.moduleData);
   }
 
 }

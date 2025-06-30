@@ -51,4 +51,7 @@ export interface IFormControl {
   EntitlementAmountCalculation?: any;
   taxCalculation?: any;
   policyEntitlementCheck?: boolean;
+  international?: boolean;
+  setFields?: any; // For setting fields based on formula
+  inPayload?: boolean; // For fields that should not be sent in payload
 }
