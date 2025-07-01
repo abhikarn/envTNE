@@ -2489,7 +2489,7 @@
             },
             {
                 "name": "PerDiem",
-                "label": "Per Diem",
+                "label": "Per Diem Allowance",
                 "formControls": [
                     {
                         "type": "date",
@@ -2508,7 +2508,7 @@
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
-                                    "CheckInDateTime": "ReferenceDate"
+                                    "ClaimFromDate": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "ConversionRate": "ResponseValue.Value"
@@ -2529,7 +2529,7 @@
                                 "key": "CityMasterId",
                                 "inputControls": {
                                     "City": "CityId",
-                                    "CheckInDateTime": "ReferenceDate"
+                                    "ClaimFromDate": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "CityGrade": "ResponseValue.GradeId",
@@ -2968,7 +2968,7 @@
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
-                                    "CheckInDateTime": "ReferenceDate"
+                                    "ClaimFromDate": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "ConversionRate": "ResponseValue.Value"
@@ -3619,7 +3619,7 @@
                         "name": "Constraint",
                         "label": "Constraint",
                         "visible": true,
-                        "position": "in",
+                        "position": "out",
                         "order": 12
                     },
                     {
@@ -5805,13 +5805,6 @@
                 ]
             },
             {
-                "name": "Per Diem",
-                "label": "Per Dim",
-                "data": [],
-                "amount": 0,
-                "expanded": false
-            },
-            {
                 "name": "Accommodation",
                 "label": "Accommodation Expense",
                 "data": [],
@@ -6149,6 +6142,102 @@
                                 "visible": true
                             }
                         ]
+                    }
+                ]
+            },
+            {
+                "name": "Per Diem",
+                "label": "Per Dim",
+                "data": [],
+                "amount": 0,
+                "expanded": false,
+                "slNoLabel": "Sl. No.",
+                "columns": [
+                    {
+                        "type": "date",
+                        "name": "ClaimFromDate",
+                        "label": "From Date",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "type": "date",
+                        "name": "ClaimToDate",
+                        "label": "To Date",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement",
+                        "visible": true,
+                        "position": "in-out"
+                    },
+                    {
+                        "name": "ClaimedAmount",
+                        "label": "Claimed",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "ApprovedAmount",
+                        "label": "Approved",
+                        "visible": true,
+                        "isEditableInApproval": true,
+                        "isEditableInFinanceApproval": true,
+                        "controlType": "input",
+                        "position": "in"
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "type": "number",
+                        "name": "ConversionRate",
+                        "label": "Conversion Rate",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Approved(INR)",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "name": "City",
+                        "label": "City",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "CityGrade",
+                        "label": "City Grade",
+                        "visible": true,
+                        "position": "out",
+                        "international": false
+                    },
+                    {
+                        "name": "Constraint",
+                        "label": "Constraint",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement Amount(INR)",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "Justification",
+                        "label": "Justification",
+                        "visible": true,
+                        "position": "out"
                     }
                 ]
             },
