@@ -498,6 +498,7 @@ export class MainExpenseComponent {
           this.purpose = meta.find((d: any) => d.TravelRequestMetaId === 1)?.IntegerValueReference;
           const internationalFlag = [52, 54].includes(this.travelRequestPreview?.TravelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId);
           this.moduleConfig.internationalFlag = internationalFlag;
+          this.setupCategories();
           this.setCurrencyDropdown();
         },
         error: (error) => {

@@ -342,15 +342,11 @@ export class DynamicFormService {
         }
       });
     } else {
-      formConfig.forEach((control: IFormControl) => {
-        if (control.international === true) {
-          // remove control if international is true
-          const index = formConfig.indexOf(control);
-          if (index > -1) {
-            formConfig.splice(index, 1);
-          }
+      for (let i = formConfig.length - 1; i >= 0; i--) {
+        if (formConfig[i].international === true) {
+          formConfig.splice(i, 1);
         }
-      });
+      }
     }
     return formConfig;
   }
