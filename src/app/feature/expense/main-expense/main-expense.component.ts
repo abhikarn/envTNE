@@ -426,14 +426,19 @@ export class MainExpenseComponent {
       ?.find((t: any) => t.name === tabLabel)?.data || [];
 
     this.existingExpenseRequestData = filteredData?.map((data: any) => {
-      if (data.excludedData) {
-        Object.keys(data.excludedData).forEach((key: string) => {
-          data[key] = data.excludedData[key];
+      // Make a shallow copy so the original stays unchanged
+      const clonedData = { ...data };
+
+      if (clonedData.excludedData) {
+        Object.keys(clonedData.excludedData).forEach((key: string) => {
+          clonedData[key] = clonedData.excludedData[key];
         });
-        delete data.excludedData;
+        delete clonedData.excludedData;
       }
-      return data;
+
+      return clonedData;
     });
+
   }
 
   onTabChangeIfAllowed(event: any) {
@@ -855,13 +860,17 @@ export class MainExpenseComponent {
       ?.find((t: any) => t.name === category?.name)?.data || [];
 
     this.existingExpenseRequestData = filteredData?.map((data: any) => {
-      if (data.excludedData) {
-        Object.keys(data.excludedData).forEach((key: string) => {
-          data[key] = data.excludedData[key];
+      // Make a shallow copy so the original stays unchanged
+      const clonedData = { ...data };
+
+      if (clonedData.excludedData) {
+        Object.keys(clonedData.excludedData).forEach((key: string) => {
+          clonedData[key] = clonedData.excludedData[key];
         });
-        delete data.excludedData;
+        delete clonedData.excludedData;
       }
-      return data;
+
+      return clonedData;
     });
 
     const index = this.categories.findIndex((c: any) => c.name === category.name);
