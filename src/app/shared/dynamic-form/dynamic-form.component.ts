@@ -132,7 +132,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-
+    this.category = this.dynamicFormService.getCategoryConfig(this.category, this.moduleConfig);
     this.formControls = []; // Reset to avoid duplication
     this.form = new FormGroup({});
     this.formConfig = this.dynamicFormService.getFormConfig(this.formConfig, this.moduleConfig);
@@ -307,12 +307,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.validateManualPolicyViolation();
     }
 
-    this.category.formControls?.forEach((control: any) => {
-      if(control.inPayload === false) {
-        // Remove control from form data if inPayload is false
-        this.form.get(control.name)?.setValue(null);
-      }
-    });
   }
 
   validateManualPolicyViolation() {
@@ -413,7 +407,12 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.formControls.forEach(control => {
       const type = control.formConfig.type;
       const fieldName = control.formConfig.name;
-      let fieldValue = this.form.value[fieldName];
+      let fieldValue: any;
+      if (control.formConfig.inPayload === false) {
+        fieldValue = null;
+      } else {
+        fieldValue = this.form.value[fieldName];
+      }
 
       control.formConfig.value = fieldValue;
       if (!this.formData.data) {

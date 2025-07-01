@@ -342,15 +342,11 @@ export class DynamicFormService {
         }
       });
     } else {
-      formConfig.forEach((control: IFormControl) => {
-        if (control.international === true) {
-          // remove control if international is true
-          const index = formConfig.indexOf(control);
-          if (index > -1) {
-            formConfig.splice(index, 1);
-          }
+      for (let i = formConfig.length - 1; i >= 0; i--) {
+        if (formConfig[i].international === true) {
+          formConfig.splice(i, 1);
         }
-      });
+      }
     }
     return formConfig;
   }
@@ -366,6 +362,25 @@ export class DynamicFormService {
       console.warn('Formula evaluation error:', e);
       return 0;
     }
+  }
+
+  getCategoryConfig(category: any, moduleConfig: any): any {
+    if (!category) return null;
+
+    category.columns?.forEach((column: any) => {
+      if(moduleConfig?.internationalFlag) {
+        if(column.international === false) {
+          // remove column if international is false
+          const index = category.columns.indexOf(column);
+          if (index > -1) {
+            category.columns.splice(index, 1);
+          }
+        }
+      }
+    });
+
+    // If no type or no matching config found, return the original category
+    return category;
   }
 
 }
