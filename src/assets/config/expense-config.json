@@ -1296,10 +1296,10 @@
                                     "CheckInDateTime": "ReferenceDate"
                                 },
                                 "outputControl": {
-                                    "Country": "ResponseValue.Country",
-                                    "CountryId": "ResponseValue.CountryId",
-                                    "CountryGrade": "ResponseValue.Grade",
-                                    "CountryGradeId": "ResponseValue.GradeId"
+                                    "Country": "ResponseValue.CountryId",
+                                    "CountryId": "ResponseValue.Country",
+                                    "CountryGrade": "ResponseValue.GradeId",
+                                    "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
                                     "Type": "TravelTypeId"
@@ -1346,7 +1346,7 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
-                        "name": "Country",
+                        "name": "CountryId",
                         "isExcluded": true,
                         "label": "Country",
                         "value": "",
@@ -1367,7 +1367,7 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
-                        "name": "CountryGrade",
+                        "name": "CountryGradeId",
                         "isExcluded": true,
                         "label": "Country Grade",
                         "value": "",
@@ -2149,14 +2149,14 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "CountryId",
+                        "name": "Country",
                         "isExcluded": true,
                         "value": 3,
                         "showInUI": false
                     },
                     {
                         "type": "hidden",
-                        "name": "CountryGradeId",
+                        "name": "CountryGrade",
                         "isExcluded": true,
                         "value": 0,
                         "showInUI": false,
@@ -2191,7 +2191,7 @@
                     "inputControls": {
                         "CheckInDateTime": "ReferenceDate",
                         "CityGrade": "CityGradeId",
-                        "CountryGradeId": "CountryGradeId"
+                        "CountryGrade": "CountryGradeId"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -2290,7 +2290,7 @@
                         "international": true
                     },
                     {
-                        "name": "CityGradeId",
+                        "name": "CityGrade",
                         "label": "City Grade",
                         "visible": true,
                         "position": "out",
