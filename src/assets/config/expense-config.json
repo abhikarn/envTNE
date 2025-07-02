@@ -13060,34 +13060,70 @@
                         "position": "in"
                     },
                     {
-                        "name": "City",
-                        "label": "City",
+                        "type": "number",
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement",
+                        "visible": true,
+                        "position": "in-out"
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Claimed",
                         "visible": true,
                         "position": "in"
                     },
                     {
-                        "name": "HotelName",
-                        "label": "Hotel Name / Guest House Name",
+                        "type": "numeric",
+                        "name": "ApprovedAmount",
+                        "label": "Approved Amount",
+                        "visible": true,
+                        "isEditableInApproval": true,
+                        "isEditableInFinanceApproval": true,
+                        "controlType": "input",
+                        "position": "in"
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
                         "visible": true,
                         "position": "in"
                     },
                     {
-                        "type": "date",
-                        "name": "BillDate",
-                        "label": "Bill Date",
-                        "visible": true
+                        "type": "number",
+                        "name": "ConversionRate",
+                        "label": "Conversion Rate",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Approved(INR)",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
+                        
                     },
                     {
                         "name": "BillNumber",
                         "label": "Bill Number",
                         "visible": true,
-                        "position": "in-out"
+                        "position": "out"
                     },
                     {
-                        "name": "ClaimAmount",
-                        "label": "Claimed Amount",
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
                         "visible": true,
-                        "position": "in-out"
+                        "position": "out"
+                    },
+                    {
+                        "name": "City",
+                        "label": "City",
+                        "visible": true,
+                        "position": "out"
                     },
                     {
                         "name": "CityGrade",
@@ -13104,27 +13140,8 @@
                         "international": true
                     },
                     {
-                        "type": "numeric",
-                        "name": "ClaimAmountInBaseCurrency",
-                        "label": "Claim Amount in Base Currency",
-                        "visible": true,
-                        "position": "out"
-                    },
-                    {
-                        "name": "PaymentMode",
-                        "label": "Payment Type",
-                        "visible": true,
-                        "position": "out"
-                    },
-                    {
                         "name": "EntitlementAmountInBaseCurrency",
                         "label": "Entitlement Amount in Base Currency",
-                        "visible": true,
-                        "position": "out"
-                    },
-                    {
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount",
                         "visible": true,
                         "position": "out"
                     },
