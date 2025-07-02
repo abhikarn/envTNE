@@ -11508,58 +11508,6 @@
                         }
                     }
                 ],
-                "policyEntitlementCheckApi": {
-                    "apiService": "ExpenseService",
-                    "apiMethod": "expenseGetExpensePolicyEntitlement",
-                    "requestBody": {
-                        "ClaimTypeId": 53,
-                        "ExpenseCategoryId": 3,
-                        "PolicyReferenceId": 53,
-                        "CountryGradeId": 0
-                    },
-                    "otherControls": {
-                        "TravelRequestId": "TravelRequestId",
-                        "UserMasterId": "UserMasterId"
-                    },
-                    "inputControls": {
-                        "ClaimDate": "ReferenceDate",
-                        "CityGrade": "CityGradeId"
-                    },
-                    "outputControl": {
-                        "EntitlementAmount": "ResponseValue.EntitlementAmount",
-                        "OriginalEntitlementAmount": "ResponseValue.EntitlementAmount",
-                        "IsBillRequired": "ResponseValue.IsBillRequired",
-                        "IsActual": "ResponseValue.IsActual",
-                        "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
-                    }
-                },
-                "policyViolationCheckApi": {
-                    "apiService": "ExpenseService",
-                    "apiMethod": "expenseValidateExpenseClaimLocalTravelConveyance",
-                    "requestBody": {
-                        "IsKmLimitRequired": true,
-                        "DistanceLimitPerDay": 0
-                    },
-                    "otherControls": {
-                        "TravelRequestId": "TravelRequestId",
-                        "UserMasterId": "UserMasterId"
-                    },
-                    "inputControls": {
-                        "LocalTravelMode": "LocalTravelMode",
-                        "ClaimDate": "ClaimedDate",
-                        "KM": "Distance"
-                    },
-                    "outputControl": {
-                        "IsViolation": "ResponseValue.IsPolicyViolation",
-                        "Violation": "ResponseValue.Message"
-                    },
-                    "confirmPopup": {
-                        "title": "Local Travel Conveyance Expense",
-                        "message": "ResponseValue.Message",
-                        "confirmText": "Ok",
-                        "cancelText": "Cancel"
-                    }
-                },
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
@@ -11711,201 +11659,524 @@
                 ]
             },
             {
-                "name": "Lump sum",
-                "label": "Lump sum",
+                "name": "Other Expenses",
+                "label": "Other Expenses",
                 "formControls": [
                     {
+                        "type": "file",
+                        "dataType": "file",
+                        "name": "attachment",
+                        "isExcluded": false,
+                        "label": "Upload Your Bill",
+                        "value": [],
+                        "multiple": true,
+                        "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
+                        "referenceType": 123,
+                        "maxSizeMB": 15,
+                        "required": false,
+                        "disable": false,
+                        "oCRRequired": false,
+                        "order": 1
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "ClaimDate",
+                        "isExcluded": false,
+                        "label": "Claim Date",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim Date is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 2,
+                        "apiDateLimit": true
+                    },
+                    {
                         "type": "select",
-                        "name": "AccommodationType",
-                        "label": "Accommodation Type",
-                        "placeholder": "Select Accommodation Type",
+                        "dataType": "int",
+                        "name": "OtherType",
+                        "isExcluded": false,
+                        "label": "Other Type",
+                        "placeholder": "Select Other Type",
+                        "value": null,
                         "options": [],
+                        "labelKey": "Value",
+                        "valueKey": "Key",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetOtherExpenseCategoryDomestic",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Accommodation Type is required"
+                                "message": "Other Type is required"
                             }
-                        ]
-                    },
-                    {
-                        "type": "date",
-                        "name": "CheckInDateTime",
-                        "label": "Check-in Date Time",
-                        "value": null,
-                        "events": {
-                            "dateChange": "onSelectDate"
-                        },
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Check-in Date Time is required"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "date",
-                        "name": "CheckOutDateTime",
-                        "label": "Check-out Date Time",
-                        "value": null,
-                        "events": {
-                            "dateChange": "onSelectDate",
-                            "api": [
-                                {
-                                    "service": "ExpenseService",
-                                    "method": "ValidateUserLeaveDateForDuration",
-                                    "payload": {
-                                        "UserMasterId": 0,
-                                        "FromDate": "",
-                                        "ToDate": "",
-                                        "TravelRequestId": 0
-                                    }
-                                }
-                            ]
-                        },
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Check-out Date Time Time is required"
-                            }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 3
                     },
                     {
                         "type": "text",
                         "subType": "text",
+                        "dataType": "int",
                         "autoComplete": true,
                         "name": "City",
                         "isExcluded": true,
                         "label": "City",
-                        "option$": "filteredCities$",
+                        "value": null,
+                        "options": [],
+                        "labelKey": "City",
+                        "valueKey": "CityMasterId",
+                        "apiService": "NewExpenseService",
+                        "apiMethod": "getMasterNameById",
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic"
+                                ],
+                                "isGeneral": true,
+                                "key": "CityMasterId",
+                                "inputControls": {
+                                    "City": "CityId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "CityGrade": "ResponseValue.GradeId",
+                                    "CityGradeId": "ResponseValue.Grade"
+                                },
+                                "otherControls": {
+                                    "Type": "TravelTypeId"
+                                },
+                                "event": "autoComplete",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetCityGrade"
+                            },
+                            {
+                                "type": [
+                                    "international"
+                                ],
+                                "isGeneral": true,
+                                "key": "CityMasterId",
+                                "inputControls": {
+                                    "City": "CityId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "Country": "ResponseValue.CountryId",
+                                    "CountryId": "ResponseValue.Country",
+                                    "CountryGrade": "ResponseValue.GradeId",
+                                    "CountryGradeId": "ResponseValue.Grade"
+                                },
+                                "otherControls": {
+                                    "Type": "TravelTypeId"
+                                },
+                                "event": "autoComplete",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetCityGrade"
+                            }
+                        ],
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "City is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 4
                     },
                     {
                         "type": "text",
                         "subType": "text",
+                        "dataType": "string",
                         "name": "CityGradeId",
-                        "readonly": true,
                         "isExcluded": true,
                         "label": "City Grade",
+                        "value": "",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "City Grade is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 5,
+                        "policyEntitlementCheck": true,
+                        "international": false
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "CountryId",
+                        "isExcluded": true,
+                        "label": "Country",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Country is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 6,
+                        "international": true,
+                        "inPayload": false
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "CountryGradeId",
+                        "isExcluded": true,
+                        "label": "Country Grade",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Country Grade is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 7,
+                        "policyEntitlementCheck": true,
+                        "international": true,
+                        "inPayload": false
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "name": "ParticularsOfExpense",
+                        "label": "Particulars of Expense",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Particulars of Expense is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 5
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "BillNumber",
+                        "isExcluded": false,
+                        "label": "Bill Number",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Bill Number is required"
+                            }
+                        ],
+                        "order": 7
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "BillDate",
+                        "isExcluded": false,
+                        "label": "Bill Date",
+                        "value": null,
+                        "required": false,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
+                        "order": 8
                     },
                     {
                         "type": "select",
-                        "name": "PaymentType",
+                        "dataType": "int",
+                        "name": "PaymentMode",
                         "isExcluded": true,
                         "label": "Payment Type",
                         "placeholder": "Select Payment Type",
+                        "value": "",
                         "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetPaymentType",
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Payment Type is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 10
                     },
                     {
                         "type": "select",
-                        "name": "EntitlementCurrency",
-                        "isExcluded": true,
-                        "label": "Entitlement Currency",
-                        "options": [],
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Entitlement Currency is required"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "text",
-                        "subType": "number",
-                        "name": "EntitlementAmount",
-                        "isExcluded": true,
-                        "label": "Entitlement Amount",
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Entitlement Amount is required"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "text",
-                        "subType": "number",
-                        "name": "EntitlementConversionRate",
-                        "isExcluded": true,
-                        "label": "Entitlement Conversion Rate",
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Entitlement Conversion Rate is required"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "select",
+                        "dataType": "int",
                         "name": "Currency",
                         "isExcluded": true,
                         "label": "Currency",
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetCurrencyView",
+                        "value": 0,
+                        "defaultValue": {
+                            "Id": 1,
+                            "Code": "INR",
+                            "Name": "Indian Rupee",
+                            "Alias": "Indian Rupee",
+                            "IsBaseCurrency": true,
+                            "Display": "Indian Rupee : INR"
+                        },
                         "options": [],
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Currency is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 11
                     },
                     {
                         "type": "text",
-                        "subType": "number",
-                        "name": "ClaimedAmount",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "ClaimAmount",
                         "isExcluded": true,
-                        "label": "Claimed Amount",
+                        "label": "Total Amount",
+                        "value": null,
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "autoFormat": {
+                                    "decimal": ".00"
+                                },
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                            }
+                        ],
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9.]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "decimalPrecision": "2"
+                        },
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Claimed Amount is required"
+                                "message": "Amount is required"
                             }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 13
                     },
                     {
                         "type": "text",
-                        "subType": "number",
+                        "subType": "text",
+                        "dataType": "numeric",
                         "name": "ConversionRate",
                         "isExcluded": true,
-                        "label": "Claimed Conversion Rate",
+                        "label": "Conversion Rate",
+                        "value": "",
+                        "defaultValue": "1",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "setValue": "1"
+                        },
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Claimed Conversion Rate is required"
+                                "message": "Conversion Rate is required"
                             }
-                        ]
-                    },
-                    {
-                        "type": "text",
-                        "subType": "number",
-                        "name": "DifferentialAmount",
-                        "label": "Differential Amount(INR)",
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Differential Amount is required"
-                            }
-                        ]
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 14
                     },
                     {
                         "type": "textarea",
-                        "name": "Justification",
-                        "label": "Justification"
+                        "dataType": "string",
+                        "name": "Remarks",
+                        "isExcluded": false,
+                        "label": "Justification",
+                        "value": "",
+                        "required": false,
+                        "order": 15
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "CityGrade",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsViolation",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false,
+                        "calculate": {
+                            "formula": "ClaimAmount * ConversionRate",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "ConversionRate"
+                            ]
+                        }
+                    }
+                ],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [
+                    {
+                        "name": "__slNo",
+                        "label": "Sl. No",
+                        "visible": true,
+                        "position": "in",
+                        "order": 1
+                    },
+                    {
+                        "name": "OtherType",
+                        "label": "Other Type",
+                        "visible": true,
+                        "position": "in",
+                        "order": 1
+                    },
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "label": "Claim Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 2
+                    },
+                    {
+                        "name": "City",
+                        "label": "City",
+                        "visible": true,
+                        "position": "in",
+                        "order": 3
+                    },
+                    {
+                        "name": "ParticularsOfExpense",
+                        "label": "Particulars of Expense",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "label": "Payment Type",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Amount",
+                        "visible": true,
+                        "position": "in-out",
+                        "decimalPrecision": "2",
+                        "order": 6
+                    },
+                    {
+                        "name": "__actions",
+                        "label": "Actions",
+                        "visible": true,
+                        "position": "in",
+                        "order": 10
+                    },
+                    {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 17
+                    },
+                    {
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 18
+                    },
+                    {
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 21
+                    },
+                    {
+                        "name": "Remarks",
+                        "label": "Justification",
+                        "visible": true,
+                        "position": "out",
+                        "order": 22
                     }
                 ]
             },
@@ -14195,13 +14466,6 @@
             {
                 "name": "Conveyance During Travel",
                 "label": "Conveyance During Travel",
-                "data": [],
-                "amount": 0,
-                "expanded": false
-            },
-            {
-                "name": "Other Expenses",
-                "label": "Miscellaneous",
                 "data": [],
                 "amount": 0,
                 "expanded": false
