@@ -628,6 +628,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         });
 
         const calculatedValue = this.dynamicFormService.evaluateFormula(formula, values);
+        if (calculatedValue < 0) {
+          this.form.get(field.name)?.setValue(0);
+          return;
+        }
         this.form.get(field.name)?.setValue(calculatedValue);
       });
     }
