@@ -2180,8 +2180,7 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
-                        "ExpenseCategoryId": 3,
-                        "PolicyReferenceId": 53
+                        "ExpenseCategoryId": 3
                     },
                     "otherControls": {
                         "ClaimTypeId": "TravelTypeId",
@@ -2191,7 +2190,8 @@
                     "inputControls": {
                         "CheckInDateTime": "ReferenceDate",
                         "CityGrade": "CityGradeId",
-                        "CountryGrade": "CountryGradeId"
+                        "CountryGrade": "CountryGradeId",
+                        "AccommodationType": "PolicyReferenceId"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -3531,8 +3531,7 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
                     "requestBody": {
-                        "ExpenseCategoryId": 2,
-                        "PolicyReferenceId": 53
+                        "ExpenseCategoryId": 2
                     },
                     "otherControls": {
                         "ClaimTypeId": "TravelTypeId",
@@ -3543,7 +3542,8 @@
                         "ClaimFromDate": "ReferenceFromDate",
                         "ClaimToDate": "ReferenceToDate",
                         "CityGrade": "CityGradeId",
-                        "CountryGrade": "CountryGradeId"
+                        "CountryGrade": "CountryGradeId",
+                        "Constraint": "PolicyReferenceId"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -4854,8 +4854,7 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
                     "requestBody": {
-                        "ExpenseCategoryId": 2,
-                        "PolicyReferenceId": 53
+                        "ExpenseCategoryId": 2
                     },
                     "otherControls": {
                         "ClaimTypeId": "TravelTypeId",
@@ -4866,7 +4865,8 @@
                         "ClaimFromDate": "ReferenceFromDate",
                         "ClaimToDate": "ReferenceToDate",
                         "CityGrade": "CityGradeId",
-                        "CountryGrade": "CountryGradeId"
+                        "CountryGrade": "CountryGradeId",
+                        "Constraint": "PolicyReferenceId"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -6177,8 +6177,7 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
                     "requestBody": {
-                        "ExpenseCategoryId": 2,
-                        "PolicyReferenceId": 53
+                        "ExpenseCategoryId": 2
                     },
                     "otherControls": {
                         "ClaimTypeId": "TravelTypeId",
@@ -6189,7 +6188,8 @@
                         "ClaimFromDate": "ReferenceFromDate",
                         "ClaimToDate": "ReferenceToDate",
                         "CityGrade": "CityGradeId",
-                        "CountryGrade": "CountryGradeId"
+                        "CountryGrade": "CountryGradeId",
+                        "Constraint": "PolicyReferenceId"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -7461,8 +7461,7 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
-                        "ExpenseCategoryId": 33,
-                        "PolicyReferenceId": 53
+                        "ExpenseCategoryId": 33
                     },
                     "otherControls": {
                         "ClaimTypeId": "TravelTypeId",
@@ -7472,7 +7471,8 @@
                     "inputControls": {
                         "ClaimDate": "ReferenceDate",
                         "CityGrade": "CityGradeId",
-                        "CountryGrade": "CountryGradeId"
+                        "CountryGrade": "CountryGradeId",
+                        "AccommodationType": "PolicyReferenceId"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -7733,7 +7733,7 @@
                 ]
             },
             {
-                "name": "Laundry",
+                "name": "Laundry service",
                 "label": "Laundry",
                 "formControls": [
                     {
@@ -8233,6 +8233,15 @@
                                     "ClaimAmount",
                                     "ConversionRate"
                                 ]
+                            },
+                            {
+                                "name": "DifferentialAmount",
+                                "formula": "ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "dependsOn": [
+                                    "ClaimAmountInBaseCurrency",
+                                    "EntitlementAmountInBaseCurrency"
+                                ],
+                                "setValue": 0
                             }
                         ]
                     },
@@ -8726,10 +8735,9 @@
                 },
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
-                    "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
+                    "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
-                        "ExpenseCategoryId": 2,
-                        "PolicyReferenceId": 53
+                        "ExpenseCategoryId": 11
                     },
                     "otherControls": {
                         "ClaimTypeId": "TravelTypeId",
@@ -8737,10 +8745,10 @@
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
-                        "ClaimFromDate": "ReferenceFromDate",
-                        "ClaimToDate": "ReferenceToDate",
+                        "ClaimDate": "ReferenceDate",
                         "CityGrade": "CityGradeId",
-                        "CountryGrade": "CountryGradeId"
+                        "CountryGrade": "CountryGradeId",
+                        "AccommodationType": "PolicyReferenceId"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -8762,17 +8770,17 @@
                         "order": 1
                     },
                     {
-                        "type": "datetime",
-                        "name": "ClaimFromDate",
-                        "label": "Claim From Date",
+                        "type": "text",
+                        "name": "AccommodationType",
+                        "label": "Accommodation Type",
                         "visible": true,
                         "position": "in",
                         "order": 2
                     },
                     {
-                        "type": "datetime",
-                        "name": "ClaimToDate",
-                        "label": "ClaimToDate",
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "label": "Claim Date",
                         "visible": true,
                         "position": "in",
                         "order": 3
@@ -8838,13 +8846,6 @@
                         "position": "out",
                         "order": 11,
                         "international": false
-                    },
-                    {
-                        "name": "Constraint",
-                        "label": "Constraint",
-                        "visible": true,
-                        "position": "out",
-                        "order": 12
                     },
                     {
                         "type": "number",
@@ -10104,8 +10105,7 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
-                        "ExpenseCategoryId": 3,
-                        "PolicyReferenceId": 53
+                        "ExpenseCategoryId": 3
                     },
                     "otherControls": {
                         "ClaimTypeId": "TravelTypeId",
@@ -10115,7 +10115,8 @@
                     "inputControls": {
                         "CheckInDateTime": "ReferenceDate",
                         "CityGrade": "CityGradeId",
-                        "CountryGrade": "CountryGradeId"
+                        "CountryGrade": "CountryGradeId",
+                        "AccommodationType": "PolicyReferenceId"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -10883,18 +10884,18 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
-                        "ClaimTypeId": 53,
-                        "ExpenseCategoryId": 3,
-                        "PolicyReferenceId": 53,
-                        "CountryGradeId": 0
+                        "ExpenseCategoryId": 3
                     },
                     "otherControls": {
+                        "ClaimTypeId": "TravelTypeId",
                         "TravelRequestId": "TravelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
                         "ClaimDate": "ReferenceDate",
-                        "CityGrade": "CityGradeId"
+                        "CityGrade": "CityGradeId",
+                        "CountryGrade": "CountryGradeId",
+                        "LocalTravelMode": "PolicyReferenceId"
                     },
                     "outputControl": {
                         "EntitlementAmount": "ResponseValue.EntitlementAmount",
@@ -11039,7 +11040,7 @@
                 ]
             },
             {
-                "name": "BusinessEntertainment",
+                "name": "Business Entertainment",
                 "label": "Business Entertainment",
                 "formControls": [
                     {
@@ -12344,8 +12345,7 @@
                         "dependentCases": [
                             {
                                 "type": [
-                                    "domestic",
-                                    "international"
+                                    "domestic"
                                 ],
                                 "isGeneral": true,
                                 "key": "CityMasterId",
@@ -12357,10 +12357,35 @@
                                     "CityGrade": "ResponseValue.GradeId",
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
-                                "event": "autoComplete",
-                                "requestBody": {
-                                    "Type": "53"
+                                "otherControls": {
+                                    "Type": "TravelTypeId"
                                 },
+                                "event": "autoComplete",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetCityGrade"
+                            },
+                            {
+                                "type": [
+                                    "international"
+                                ],
+                                "isGeneral": true,
+                                "key": "CityMasterId",
+                                "inputControls": {
+                                    "City": "CityId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "Country": "ResponseValue.CountryId",
+                                    "CountryId": "ResponseValue.Country",
+                                    "CountryGrade": "ResponseValue.GradeId",
+                                    "CountryGradeId": "ResponseValue.Grade"
+                                },
+                                "otherControls": {
+                                    "Type": "TravelTypeId"
+                                },
+                                "event": "autoComplete",
+                                "requestBody": {},
                                 "apiService": "DataService",
                                 "apiMethod": "dataGetCityGrade"
                             }
@@ -12374,7 +12399,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 7
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -12393,8 +12418,52 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 8,
-                        "policyEntitlementCheck": true
+                        "order": 5,
+                        "policyEntitlementCheck": true,
+                        "international": false
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "CountryId",
+                        "isExcluded": true,
+                        "label": "Country",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Country is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 6,
+                        "international": true,
+                        "inPayload": false
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "CountryGradeId",
+                        "isExcluded": true,
+                        "label": "Country Grade",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Country Grade is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 7,
+                        "policyEntitlementCheck": true,
+                        "international": true,
+                        "inPayload": false
                     },
                     {
                         "type": "text",
@@ -12631,18 +12700,18 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
-                        "ClaimTypeId": 53,
-                        "ExpenseCategoryId": 3,
-                        "PolicyReferenceId": 53,
-                        "CountryGradeId": 0
+                        "ExpenseCategoryId": 3
                     },
                     "otherControls": {
+                        "ClaimTypeId": "TravelTypeId",
                         "TravelRequestId": "TravelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
                         "ClaimDate": "ReferenceDate",
-                        "CityGrade": "CityGradeId"
+                        "CityGrade": "CityGradeId",
+                        "CountryGrade": "CountryGradeId",
+                        "LocalTravelMode": "PolicyReferenceId"
                     },
                     "outputControl": {
                         "EntitlementAmount": "ResponseValue.EntitlementAmount",
@@ -14273,20 +14342,32 @@
                         "label": "Per Diem"
                     },
                     {
-                        "name": "Lumpsum",
-                        "label": "Lump sum"
+                        "name": "Business Entertainment",
+                        "label": "Business Entertainment"
                     },
                     {
-                        "name": "Conveyance During Travel",
-                        "label": "Conveyance During Travel"
+                        "name": "Visa",
+                        "label": "Visa Expenses"
                     },
                     {
-                        "name": "Other Expenses",
-                        "label": "Miscellaneous"
+                        "name": "Travel Insurance",
+                        "label": "Travel Insurance"
                     },
                     {
-                        "name": "Total",
-                        "label": "Total"
+                        "name": "Roaming",
+                        "label": "Roaming Expenses"
+                    },
+                    {
+                        "name": "Transit Allowance",
+                        "label": "Transit Allowance"
+                    },
+                    {
+                        "name": "Baggage and Outfit Allowance",
+                        "label": "Baggage and Outfit Allowance"
+                    },
+                    {
+                        "name": "Porterage Expenses",
+                        "label": "Porterage Expenses"
                     }
                 ]
             },
@@ -15123,93 +15204,110 @@
                         "name": "ClaimFromDate",
                         "label": "From Date",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 1
                     },
                     {
                         "type": "date",
                         "name": "ClaimToDate",
                         "label": "To Date",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 2
                     },
                     {
+                        "type": "number",
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out"
+                        "position": "in-out",
+                        "order": 3
                     },
                     {
+                        "type": "number",
                         "name": "ClaimAmount",
                         "label": "Claimed",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 4
                     },
                     {
+                        "type": "numeric",
                         "name": "ApprovedAmount",
                         "label": "Approved",
                         "visible": true,
                         "isEditableInApproval": true,
                         "isEditableInFinanceApproval": true,
                         "controlType": "input",
-                        "position": "in"
+                        "position": "in",
+                        "order": 5
                     },
                     {
                         "name": "Currency",
                         "label": "Currency",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 6
                     },
                     {
                         "type": "number",
                         "name": "ConversionRate",
                         "label": "Conversion Rate",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 7
                     },
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
                         "label": "Approved(INR)",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 8
                     },
                     {
                         "name": "City",
                         "label": "City",
                         "visible": true,
-                        "position": "out"
+                        "position": "out",
+                        "order": 9
                     },
                     {
                         "name": "CityGrade",
                         "label": "City Grade",
                         "visible": true,
                         "position": "out",
-                        "international": false
+                        "international": false,
+                        "order": 10
                     },
                     {
                         "name": "CountryGrade",
                         "label": "Country Grade",
                         "visible": true,
                         "position": "out",
-                        "international": true
+                        "international": true,
+                        "order": 11
                     },
                     {
                         "name": "Constraint",
                         "label": "Constraint",
                         "visible": true,
-                        "position": "out"
+                        "position": "out",
+                        "order": 12
                     },
                     {
                         "name": "EntitlementAmount",
                         "label": "Entitlement Amount(INR)",
                         "visible": true,
-                        "position": "out"
+                        "position": "out",
+                        "order": 13
                     },
                     {
                         "name": "Justification",
                         "label": "Justification",
                         "visible": true,
-                        "position": "out"
+                        "position": "out",
+                        "order": 14
                     }
                 ]
             },
@@ -15226,87 +15324,104 @@
                         "name": "ClaimFromDate",
                         "label": "From Date",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 1
                     },
                     {
                         "type": "date",
                         "name": "ClaimToDate",
                         "label": "To Date",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 2
                     },
                     {
+                        "type": "number",
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out"
+                        "position": "in-out",
+                        "order": 3
                     },
                     {
+                        "type": "number",
                         "name": "ClaimAmount",
                         "label": "Claimed",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 4
                     },
                     {
+                        "type": "numeric",
                         "name": "ApprovedAmount",
                         "label": "Approved",
                         "visible": true,
                         "isEditableInApproval": true,
                         "isEditableInFinanceApproval": true,
                         "controlType": "input",
-                        "position": "in"
+                        "position": "in",
+                        "order": 5
                     },
                     {
                         "name": "Currency",
                         "label": "Currency",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 6
                     },
                     {
                         "type": "number",
                         "name": "ConversionRate",
                         "label": "Conversion Rate",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 7
                     },
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
                         "label": "Approved(INR)",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 8
                     },
                     {
                         "name": "City",
                         "label": "City",
                         "visible": true,
-                        "position": "out"
+                        "position": "out",
+                        "order": 9
                     },
                     {
                         "name": "CityGrade",
                         "label": "City Grade",
                         "visible": true,
                         "position": "out",
-                        "international": false
+                        "international": false,
+                        "order": 10
                     },
                     {
                         "name": "CountryGrade",
                         "label": "Country Grade",
                         "visible": true,
                         "position": "out",
-                        "international": true
+                        "international": true,
+                        "order": 11
                     },
                     {
                         "name": "Constraint",
                         "label": "Constraint",
                         "visible": true,
-                        "position": "out"
+                        "position": "out",
+                        "order": 12
                     },
                     {
+                        "type": "number",
                         "name": "EntitlementAmount",
                         "label": "Entitlement Amount(INR)",
                         "visible": true,
-                        "position": "out"
+                        "position": "out",
+                        "order": 13
                     },
                     {
                         "name": "Justification",
@@ -15329,30 +15444,165 @@
                         "name": "ClaimFromDate",
                         "label": "From Date",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 1
                     },
                     {
                         "type": "date",
                         "name": "ClaimToDate",
                         "label": "To Date",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 2
                     },
                     {
+                        "type": "number",
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out"
+                        "position": "in-out",
+                        "order": 3
                     },
                     {
+                        "type": "number",
                         "name": "ClaimAmount",
                         "label": "Claimed",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 4
                     },
                     {
+                        "type": "numeric",
                         "name": "ApprovedAmount",
                         "label": "Approved",
+                        "visible": true,
+                        "isEditableInApproval": true,
+                        "isEditableInFinanceApproval": true,
+                        "controlType": "input",
+                        "position": "in",
+                        "order": 5
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 6
+                    },
+                    {
+                        "type": "number",
+                        "name": "ConversionRate",
+                        "label": "Conversion Rate",
+                        "visible": true,
+                        "position": "in",
+                        "order": 7
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Approved(INR)",
+                        "visible": true,
+                        "position": "in",
+                        "order": 8
+                    },
+                    {
+                        "name": "City",
+                        "label": "City",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "name": "CityGrade",
+                        "label": "City Grade",
+                        "visible": true,
+                        "position": "out",
+                        "international": false,
+                        "order": 10
+                    },
+                    {
+                        "name": "CountryGrade",
+                        "label": "Country Grade",
+                        "visible": true,
+                        "position": "out",
+                        "international": true,
+                        "order": 11
+                    },
+                    {
+                        "name": "Constraint",
+                        "label": "Constraint",
+                        "visible": true,
+                        "position": "out",
+                        "order": 12
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement Amount(INR)",
+                        "visible": true,
+                        "position": "out",
+                        "order": 13
+                    },
+                    {
+                        "name": "Justification",
+                        "label": "Justification",
+                        "visible": true,
+                        "position": "out",
+                        "order": 14
+                    }
+                ]
+            },
+            {
+                "name": "FlatOrOwnArrangement",
+                "label": "Flat / Own Arrangement",
+                "data": [],
+                "amount": 0,
+                "expanded": false,
+                "slNoLabel": "Sl. No.",
+                "columns": [
+                    {
+                        "name": "AccommodationType",
+                        "label": "Type",
+                        "visible": true,
+                        "position": "in",
+                        "order": 1
+                    },
+                    {
+                        "type": "date",
+                        "name": "CheckInDateTime",
+                        "label": "Check-in Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 2
+                    },
+                    {
+                        "type": "date",
+                        "name": "CheckOutDateTime",
+                        "label": "Check-out Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 3
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement",
+                        "visible": true,
+                        "position": "in-out",
+                        "order": 4
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Claimed",
+                        "visible": true,
+                        "position": "in",
+                        "order": 5
+                    },
+                    {
+                        "type": "numeric",
+                        "name": "ApprovedAmount",
+                        "label": "Approved Amount",
                         "visible": true,
                         "isEditableInApproval": true,
                         "isEditableInFinanceApproval": true,
@@ -15363,59 +15613,743 @@
                         "name": "Currency",
                         "label": "Currency",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 6
                     },
                     {
                         "type": "number",
                         "name": "ConversionRate",
                         "label": "Conversion Rate",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 7
                     },
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
                         "label": "Approved(INR)",
                         "visible": true,
-                        "position": "in"
+                        "position": "in",
+                        "order": 8
+                    },
+                    {},
+                    {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
                     },
                     {
                         "name": "City",
                         "label": "City",
                         "visible": true,
-                        "position": "out"
+                        "position": "out",
+                        "order": 11
                     },
                     {
                         "name": "CityGrade",
                         "label": "City Grade",
                         "visible": true,
                         "position": "out",
-                        "international": false
+                        "international": false,
+                        "order": 12
                     },
                     {
                         "name": "CountryGrade",
                         "label": "Country Grade",
                         "visible": true,
                         "position": "out",
-                        "international": true
+                        "international": true,
+                        "order": 13
                     },
                     {
-                        "name": "Constraint",
-                        "label": "Constraint",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
-                        "position": "out"
+                        "position": "out",
+                        "order": 14
                     },
                     {
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "type": "number",
+                        "name": "DifferentialAmount",
+                        "label": "Differential Amount",
                         "visible": true,
-                        "position": "out"
+                        "position": "out",
+                        "order": 15
                     },
                     {
                         "name": "Justification",
                         "label": "Justification",
                         "visible": true,
-                        "position": "out"
+                        "position": "out",
+                        "order": 16
+                    },
+                    {
+                        "name": "TaxAmount",
+                        "label": "Tax Amount",
+                        "visible": true,
+                        "position": "out",
+                        "order": 17
+                    }
+                ],
+                "gst": {
+                    "name": "gst",
+                    "label": "GST",
+                    "value": [],
+                    "getControl": "ApprovedAmount",
+                    "fields": [
+                        {
+                            "name": "ExpenseRequestGstTypeId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "ExpenseRequestDetailId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "GstIn",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "custom",
+                                    "name": "validateGST",
+                                    "message": "Invalid GST number"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "InvoiceNumber",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            },
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "min",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "SGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "CGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "IGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "UGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        }
+                    ],
+                    "notifications": {
+                        "GSTAmount": "The GST amount should not be greater than the approved amount.",
+                        "validGSTAmount": "Please enter a valid GST amount.",
+                        "claimedAmount": "Please enter a approved amount."
+                    }
+                },
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gst",
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "ConveyanceDuringTravel",
+                "label": "Conveyance During Travel",
+                "data": [],
+                "amount": 0,
+                "expanded": false,
+                "slNoLabel": "Sl. No.",
+                "columns": [
+                    {
+                        "name": "LocalTravelType",
+                        "label": "Type",
+                        "visible": true,
+                        "position": "in",
+                        "order": 1
+                    },
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "label": "Claim Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 2
+                    },
+                    {
+                        "name": "LocalTravelMode",
+                        "label": "Mode",
+                        "visible": true,
+                        "position": "in",
+                        "order": 3
+                    },
+                    {
+                        "name": "OriginPointName",
+                        "label": "Origin",
+                        "visible": true,
+                        "position":"in",
+                        "order": 4
+                    },
+                    {
+                        "name": "DestinationPointName",
+                        "label": "Destination",
+                        "visible": true,
+                        "position":"in",
+                        "order": 5
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Claimed",
+                        "visible": true,
+                        "position": "in",
+                        "order": 6
+                    },
+                    {
+                        "type": "numeric",
+                        "name": "ApprovedAmount",
+                        "label": "Approved Amount",
+                        "visible": true,
+                        "isEditableInApproval": true,
+                        "isEditableInFinanceApproval": true,
+                        "controlType": "input",
+                        "position": "in",
+                        "order": 7
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 8
+                    },
+                    {
+                        "type": "number",
+                        "name": "ConversionRate",
+                        "label": "Conversion Rate",
+                        "visible": true,
+                        "position": "in",
+                        "order": 9
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Approved(INR)",
+                        "visible": true,
+                        "position": "in",
+                        "order": 10
+                    },
+                    {
+                        "name": "City",
+                        "label": "City",
+                        "visible": true,
+                        "position": "out",
+                        "order": 11
+                    },
+                    {
+                        "name": "CityGrade",
+                        "label": "City Grade",
+                        "visible": true,
+                        "position": "out",
+                        "international": false,
+                        "order": 12
+                    },
+                    {
+                        "name": "CountryGrade",
+                        "label": "Country Grade",
+                        "visible": true,
+                        "position": "out",
+                        "international": true,
+                        "order": 13
+                    },
+                    {
+                        "name": "Distance",
+                        "label": "Distance(KM)",
+                        "visible": true,
+                        "position": "out",
+                        "order": 14
+                    },
+                    {
+                        "name": "Purpose",
+                        "label": "Purpose",
+                        "visible": true,
+                        "position": "out",
+                        "order": 15
+                    },
+                    {
+                        "name": "Justification",
+                        "label": "Justification",
+                        "visible": true,
+                        "position": "out",
+                        "order": 16
+                    }
+                ]
+            },
+            {
+                "name": "Local Conveyance",
+                "label": "Local Conveyance",
+                "data": [],
+                "amount": 0,
+                "expanded": false,
+                "slNoLabel": "Sl. No.",
+                "columns": [
+                    {
+                        "name": "LocalTravelType",
+                        "label": "Type",
+                        "visible": true,
+                        "position": "in",
+                        "order": 1
+                    },
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "label": "Claim Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 2
+                    },
+                    {
+                        "name": "LocalTravelMode",
+                        "label": "Mode",
+                        "visible": true,
+                        "position": "in",
+                        "order": 3
+                    },
+                    {
+                        "name": "OriginPointName",
+                        "label": "Origin",
+                        "visible": true,
+                        "position":"in",
+                        "order": 4
+                    },
+                    {
+                        "name": "DestinationPointName",
+                        "label": "Destination",
+                        "visible": true,
+                        "position":"in",
+                        "order": 5
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Claimed",
+                        "visible": true,
+                        "position": "in",
+                        "order": 6
+                    },
+                    {
+                        "type": "numeric",
+                        "name": "ApprovedAmount",
+                        "label": "Approved Amount",
+                        "visible": true,
+                        "isEditableInApproval": true,
+                        "isEditableInFinanceApproval": true,
+                        "controlType": "input",
+                        "position": "in",
+                        "order": 7
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 8
+                    },
+                    {
+                        "type": "number",
+                        "name": "ConversionRate",
+                        "label": "Conversion Rate",
+                        "visible": true,
+                        "position": "in",
+                        "order": 9
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Approved(INR)",
+                        "visible": true,
+                        "position": "in",
+                        "order": 10
+                    },
+                    {
+                        "name": "City",
+                        "label": "City",
+                        "visible": true,
+                        "position": "out",
+                        "order": 11
+                    },
+                    {
+                        "name": "CityGrade",
+                        "label": "City Grade",
+                        "visible": true,
+                        "position": "out",
+                        "international": false,
+                        "order": 12
+                    },
+                    {
+                        "name": "CountryGrade",
+                        "label": "Country Grade",
+                        "visible": true,
+                        "position": "out",
+                        "international": true,
+                        "order": 13
+                    },
+                    {
+                        "name": "Distance",
+                        "label": "Distance(KM)",
+                        "visible": true,
+                        "position": "out",
+                        "order": 14
+                    },
+                    {
+                        "name": "Purpose",
+                        "label": "Purpose",
+                        "visible": true,
+                        "position": "out",
+                        "order": 15
+                    },
+                    {
+                        "name": "Justification",
+                        "label": "Justification",
+                        "visible": true,
+                        "position": "out",
+                        "order": 16
+                    }
+                ]
+            },
+            {
+                "name": "Business Entertainment",
+                "label": "Business Entertainment",
+                "data": [],
+                "amount": 0,
+                "expanded": false,
+                "slNoLabel": "Sl. No.",
+                "columns": [
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "label": "Claim Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 1
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Claimed",
+                        "visible": true,
+                        "position": "in",
+                        "order": 2
+                    },
+                    {
+                        "type": "numeric",
+                        "name": "ApprovedAmount",
+                        "label": "Approved Amount",
+                        "visible": true,
+                        "isEditableInApproval": true,
+                        "isEditableInFinanceApproval": true,
+                        "controlType": "input",
+                        "position": "in",
+                        "order": 3
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
+                    },
+                    {
+                        "type": "number",
+                        "name": "ConversionRate",
+                        "label": "Conversion Rate",
+                        "visible": true,
+                        "position": "in",
+                        "order": 5
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Approved(INR)",
+                        "visible": true,
+                        "position": "in",
+                        "order": 6
+                    },
+                    {
+                        "name": "TravelType",
+                        "label": "Travel Type",
+                        "visible": true,
+                        "position": "out",
+                        "order": 7
+                    },
+                    {
+                        "name": "City",
+                        "label": "City",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "name": "CityGrade",
+                        "label": "City Grade",
+                        "visible": true,
+                        "position": "out",
+                        "international": false,
+                        "order": 9
+                    },
+                    {
+                        "name": "Country",
+                        "label": "Country",
+                        "visible": true,
+                        "position": "out",
+                        "international": true,
+                        "order": 10
+                    },
+                    {
+                        "name": "CountryGrade",
+                        "label": "Country Grade",
+                        "visible": true,
+                        "position": "out",
+                        "international": true,
+                        "order": 10
+                    },
+                    {
+                        "name": "Location",
+                        "label": "Location",
+                        "visible": true,
+                        "position": "out",
+                        "order": 11
+                    },
+                    {
+                        "name": "PurposeOfEntertainment",
+                        "label": "Purpose of Entertainment",
+                        "visible": true,
+                        "position": "out",
+                        "order": 12
+                    },
+                    {
+                        "name": "Description",
+                        "label": "Description",
+                        "visible": true,
+                        "position": "out",
+                        "order": 13
+                    },
+                    {
+                        "name": "Number Of Clients",
+                        "label": "Number of Clients",
+                        "visible": true,
+                        "position": "out",
+                        "order": 14
+                    },
+                    {
+                        "name": "Name Of The Client/Organization",
+                        "label": "Name of the Client/Organization",
+                        "visible": true,
+                        "position": "out",
+                        "order": 15
+                    },
+                    {
+                        "name": "Bill Number",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 11
+                    },
+                    {
+                        "type": "date",
+                        "name": "Bill Date",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 12
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Amount in Base Currency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 13
+                    },
+                    {
+                        "name": "Justification",
+                        "label": "Justification",
+                        "visible": true,
+                        "position": "out",
+                        "order": 12
                     }
                 ]
             }
