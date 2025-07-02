@@ -6457,7 +6457,7 @@
                 ]
             },
             {
-                "name": "Incidental",
+                "name": "Incidental Expenses",
                 "label": "Incidental",
                 "formControls": [
                     {
@@ -6957,6 +6957,15 @@
                                     "ClaimAmount",
                                     "ConversionRate"
                                 ]
+                            },
+                            {
+                                "name": "DifferentialAmount",
+                                "formula": "ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "dependsOn": [
+                                    "ClaimAmountInBaseCurrency",
+                                    "EntitlementAmountInBaseCurrency"
+                                ],
+                                "setValue": 0
                             }
                         ]
                     },
@@ -7450,9 +7459,9 @@
                 },
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
-                    "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
+                    "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
-                        "ExpenseCategoryId": 2,
+                        "ExpenseCategoryId": 33,
                         "PolicyReferenceId": 53
                     },
                     "otherControls": {
@@ -7461,8 +7470,7 @@
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
-                        "ClaimFromDate": "ReferenceFromDate",
-                        "ClaimToDate": "ReferenceToDate",
+                        "ClaimDate": "ReferenceDate",
                         "CityGrade": "CityGradeId",
                         "CountryGrade": "CountryGradeId"
                     },
@@ -7486,17 +7494,17 @@
                         "order": 1
                     },
                     {
-                        "type": "datetime",
-                        "name": "ClaimFromDate",
-                        "label": "Claim From Date",
+                        "type": "text",
+                        "name": "AccommodationType",
+                        "label": "Accommodation Type",
                         "visible": true,
                         "position": "in",
                         "order": 2
                     },
                     {
-                        "type": "datetime",
-                        "name": "ClaimToDate",
-                        "label": "ClaimToDate",
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "label": "Claim Date",
                         "visible": true,
                         "position": "in",
                         "order": 3
@@ -7562,13 +7570,6 @@
                         "position": "out",
                         "order": 11,
                         "international": false
-                    },
-                    {
-                        "name": "Constraint",
-                        "label": "Constraint",
-                        "visible": true,
-                        "position": "out",
-                        "order": 12
                     },
                     {
                         "type": "number",
