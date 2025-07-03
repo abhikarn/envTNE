@@ -307,6 +307,14 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.validateManualPolicyViolation();
     }
 
+    if(!this.category?.policyViolationCheckApi && !this.category?.policyViolationManualCheck) {
+      this.setAutoCompleteFields();
+      this.prepareFormJson();
+      this.addDataToDynamicTable();
+      setTimeout(() => {
+        this.clear();
+      }, 500);
+    }
   }
 
   validateManualPolicyViolation() {
