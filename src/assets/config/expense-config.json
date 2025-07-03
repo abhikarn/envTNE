@@ -15309,6 +15309,230 @@
                         "position": "out",
                         "order": 14
                     }
+                ],
+                "gst": {
+                    "name": "gst",
+                    "label": "GST",
+                    "value": [],
+                    "getControl": "ApprovedAmount",
+                    "fields": [
+                        {
+                            "name": "ExpenseRequestGstTypeId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "ExpenseRequestDetailId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "GstIn",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "custom",
+                                    "name": "validateGST",
+                                    "message": "Invalid GST number"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "InvoiceNumber",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            },
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "min",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "SGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "CGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "IGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "UGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        }
+                    ],
+                    "notifications": {
+                        "GSTAmount": "The GST amount should not be greater than the approved amount.",
+                        "validGSTAmount": "Please enter a valid GST amount.",
+                        "claimedAmount": "Please enter a approved amount."
+                    }
+                },
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gst",
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
+                    }
                 ]
             },
             {
@@ -15428,6 +15652,230 @@
                         "label": "Justification",
                         "visible": true,
                         "position": "out"
+                    }
+                ],
+                "gst": {
+                    "name": "gst",
+                    "label": "GST",
+                    "value": [],
+                    "getControl": "ApprovedAmount",
+                    "fields": [
+                        {
+                            "name": "ExpenseRequestGstTypeId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "ExpenseRequestDetailId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "GstIn",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "custom",
+                                    "name": "validateGST",
+                                    "message": "Invalid GST number"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "InvoiceNumber",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            },
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "min",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "SGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "CGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "IGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "UGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        }
+                    ],
+                    "notifications": {
+                        "GSTAmount": "The GST amount should not be greater than the approved amount.",
+                        "validGSTAmount": "Please enter a valid GST amount.",
+                        "claimedAmount": "Please enter a approved amount."
+                    }
+                },
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gst",
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
                     }
                 ]
             },
@@ -15549,6 +15997,230 @@
                         "visible": true,
                         "position": "out",
                         "order": 14
+                    }
+                ],
+                "gst": {
+                    "name": "gst",
+                    "label": "GST",
+                    "value": [],
+                    "getControl": "ApprovedAmount",
+                    "fields": [
+                        {
+                            "name": "ExpenseRequestGstTypeId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "ExpenseRequestDetailId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "GstIn",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "custom",
+                                    "name": "validateGST",
+                                    "message": "Invalid GST number"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "InvoiceNumber",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            },
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "min",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "SGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "CGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "IGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "UGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        }
+                    ],
+                    "notifications": {
+                        "GSTAmount": "The GST amount should not be greater than the approved amount.",
+                        "validGSTAmount": "Please enter a valid GST amount.",
+                        "claimedAmount": "Please enter a approved amount."
+                    }
+                },
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gst",
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
                     }
                 ]
             },
@@ -15684,6 +16356,230 @@
                         "position": "out",
                         "order": 13
                     }
+                ],
+                "gst": {
+                    "name": "gst",
+                    "label": "GST",
+                    "value": [],
+                    "getControl": "ApprovedAmount",
+                    "fields": [
+                        {
+                            "name": "ExpenseRequestGstTypeId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "ExpenseRequestDetailId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "GstIn",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "custom",
+                                    "name": "validateGST",
+                                    "message": "Invalid GST number"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "InvoiceNumber",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            },
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "min",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "SGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "CGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "IGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "UGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        }
+                    ],
+                    "notifications": {
+                        "GSTAmount": "The GST amount should not be greater than the approved amount.",
+                        "validGSTAmount": "Please enter a valid GST amount.",
+                        "claimedAmount": "Please enter a approved amount."
+                    }
+                },
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gst",
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
+                    }
                 ]
             },
             {
@@ -15817,6 +16713,230 @@
                         "visible": true,
                         "position": "out",
                         "order": 13
+                    }
+                ],
+                "gst": {
+                    "name": "gst",
+                    "label": "GST",
+                    "value": [],
+                    "getControl": "ApprovedAmount",
+                    "fields": [
+                        {
+                            "name": "ExpenseRequestGstTypeId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "ExpenseRequestDetailId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "GstIn",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "custom",
+                                    "name": "validateGST",
+                                    "message": "Invalid GST number"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "InvoiceNumber",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            },
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "min",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "SGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "CGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "IGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "UGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        }
+                    ],
+                    "notifications": {
+                        "GSTAmount": "The GST amount should not be greater than the approved amount.",
+                        "validGSTAmount": "Please enter a valid GST amount.",
+                        "claimedAmount": "Please enter a approved amount."
+                    }
+                },
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gst",
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
                     }
                 ]
             },
@@ -16324,6 +17444,230 @@
                         "position": "out",
                         "order": 16
                     }
+                ],
+                "gst": {
+                    "name": "gst",
+                    "label": "GST",
+                    "value": [],
+                    "getControl": "ApprovedAmount",
+                    "fields": [
+                        {
+                            "name": "ExpenseRequestGstTypeId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "ExpenseRequestDetailId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "GstIn",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "custom",
+                                    "name": "validateGST",
+                                    "message": "Invalid GST number"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "InvoiceNumber",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            },
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "min",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "SGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "CGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "IGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "UGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        }
+                    ],
+                    "notifications": {
+                        "GSTAmount": "The GST amount should not be greater than the approved amount.",
+                        "validGSTAmount": "Please enter a valid GST amount.",
+                        "claimedAmount": "Please enter a approved amount."
+                    }
+                },
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gst",
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
+                    }
                 ]
             },
             {
@@ -16455,6 +17799,230 @@
                         "visible": true,
                         "position": "out",
                         "order": 16
+                    }
+                ],
+                "gst": {
+                    "name": "gst",
+                    "label": "GST",
+                    "value": [],
+                    "getControl": "ApprovedAmount",
+                    "fields": [
+                        {
+                            "name": "ExpenseRequestGstTypeId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "ExpenseRequestDetailId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "GstIn",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "custom",
+                                    "name": "validateGST",
+                                    "message": "Invalid GST number"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "InvoiceNumber",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            },
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "min",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "SGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "CGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "IGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "UGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        }
+                    ],
+                    "notifications": {
+                        "GSTAmount": "The GST amount should not be greater than the approved amount.",
+                        "validGSTAmount": "Please enter a valid GST amount.",
+                        "claimedAmount": "Please enter a approved amount."
+                    }
+                },
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gst",
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
                     }
                 ]
             },
@@ -16618,6 +18186,230 @@
                         "visible": true,
                         "position": "out",
                         "order": 12
+                    }
+                ],
+                "gst": {
+                    "name": "gst",
+                    "label": "GST",
+                    "value": [],
+                    "getControl": "ApprovedAmount",
+                    "fields": [
+                        {
+                            "name": "ExpenseRequestGstTypeId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "ExpenseRequestDetailId",
+                            "type": "number",
+                            "value": 0,
+                            "showInUI": false
+                        },
+                        {
+                            "name": "GstIn",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "custom",
+                                    "name": "validateGST",
+                                    "message": "Invalid GST number"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "InvoiceNumber",
+                            "type": "text",
+                            "showInUI": true,
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Amount",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            },
+                            "validations": [
+                                {
+                                    "type": "required",
+                                    "message": "Required"
+                                },
+                                {
+                                    "type": "min",
+                                    "value": 0
+                                }
+                            ]
+                        },
+                        {
+                            "name": "SGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "CGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "IGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        },
+                        {
+                            "name": "UGST",
+                            "type": "text",
+                            "showInUI": true,
+                            "autoFormat": {
+                                "patterns": [
+                                    "[^0-9.]",
+                                    "^0+(?=\\d)"
+                                ],
+                                "range": {
+                                    "min": 0,
+                                    "max": 10
+                                }
+                            }
+                        }
+                    ],
+                    "notifications": {
+                        "GSTAmount": "The GST amount should not be greater than the approved amount.",
+                        "validGSTAmount": "Please enter a valid GST amount.",
+                        "claimedAmount": "Please enter a approved amount."
+                    }
+                },
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gst",
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
                     }
                 ]
             }
