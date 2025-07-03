@@ -307,6 +307,14 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.validateManualPolicyViolation();
     }
 
+    if(!this.category?.policyViolationCheckApi && !this.category?.policyViolationManualCheck) {
+      this.setAutoCompleteFields();
+      this.prepareFormJson();
+      this.addDataToDynamicTable();
+      setTimeout(() => {
+        this.clear();
+      }, 500);
+    }
   }
 
   validateManualPolicyViolation() {
@@ -628,6 +636,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         });
 
         const calculatedValue = this.dynamicFormService.evaluateFormula(formula, values);
+        if (calculatedValue < 0) {
+          this.form.get(field.name)?.setValue(0);
+          return;
+        }
         this.form.get(field.name)?.setValue(calculatedValue);
       });
     }
