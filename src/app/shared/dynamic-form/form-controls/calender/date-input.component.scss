@@ -114,9 +114,9 @@
 		border-bottom-color: var(--mdc-filled-text-field-active-indicator-color, #E4E4EB) !important;
 	}
 
-	.mat-form-field-invalid .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
-		border-bottom-color: var(--mdc-filled-text-field-active-indicator-color, #E53535) !important;
-	}
+	// .mat-form-field-invalid .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+	// 	border-bottom-color: var(--mdc-filled-text-field-active-indicator-color, #E53535) !important;
+	// }
 
 	.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
 		top: 0 !important;
@@ -146,7 +146,11 @@
 	height: 60px !important;
 }
 
-
+.mat-mdc-dialog-container {
+	width: 50%!important;
+ 
+	margin: 0 auto;
+}
 // .mat-mdc-dialog-container {
 // 	width: 500px!important;
  

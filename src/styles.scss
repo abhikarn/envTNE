@@ -252,4 +252,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .attached-doc-table label {
 	display: none;
 }
- 
+.custom-more-select-panel {
+	position: absolute !important;
+	top: 7px;
+	background: #ffffff !important;
+	border: 1px solid #ffffff;
+	padding: 5px !important;
+	border-radius: 4px !important;
+	z-index: 100;
+	width: 204px !important;
+	box-shadow: 0px 0 6px 4px rgba(181, 177, 177, 0.2) !important;
+	 
+}
+.custom-more-select-panel .mat-mdc-option.mat-mdc-option-active.mdc-list-item {
+	background-color: transparent !important;
+	color: #2A5EE3;
+}
+.custom-more-select-panel  .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+	background-color: transparent !important;
+		color: #2A5EE3;
+}

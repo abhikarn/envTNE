@@ -396,14 +396,17 @@ span.auto-label {
     }
 
 /* =============== Header style =========== */
-
 .logo-main {
-    width: 100%;
-    height: auto;
-    max-width: 250px;
-    max-height: 35px;
-    margin-top: 2px;
-    }
+	width: 100%;
+	height: auto;
+	max-width: 95px;
+	max-height: 40px;
+	margin-top: 2px;
+}
+.left-app-logo .logo-main {
+	max-width: 75px;
+	margin-bottom: 3px;
+}
     .logo-spendmantra {
     margin-left: 24px;
     }
@@ -889,7 +892,7 @@ ul.header-notify-hold {
         padding: 7px 10px !important;
     }
     .color-table tr td {
-        padding: 7px 0px;
+        padding: 7px 8px;
         text-align: left;
         font-size: 11px;
     }
@@ -4794,21 +4797,8 @@ button.dropbtn {
     margin-bottom: 12px;
     }
   #expenseHead .menu-item {
-	background: #FFFFFF;
-	height: 26px;
-	line-height: 18px;
-	padding: 0 0px;
-	margin: 0px 10px 0 0;
-	/* border-radius: 0px; */
-	text-align: center;
-	/* cursor: poRoboto; */
-	border: 1px solid #e4e4eb;
-	border-radius: 6px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	/* width: 19%; */
-	cursor: pointer;
+    width: 100%;
+
 }.expense-list-head {
         width: 100%;
     }#expenseHead .more-dropdown .menu-item {
@@ -4824,11 +4814,11 @@ button.dropbtn {
         justify-content: space-between;
         padding-left: 10px;
         width: 100%;
-    } div#expenseHead {
-        display: flex;
-            justify-content: space-between;
-
-    }div#visible-menus {
+    }  div#expenseHead {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}div#visible-menus {
         display: flex;
         width: 100%;
     }
@@ -10168,12 +10158,13 @@ button.dropbtn {
 	text-decoration: none;
 	 
 }
-        .trl-preview-wrapper .trl-readview-item .trl-req-detail p {
-        font-size: 12px;
-        line-height: 16px;
-        padding: 0 0;
-        margin: 0 0;
-        }
+   .trl-preview-wrapper .trl-readview-item .trl-req-detail p {
+	font-size: 12px;
+	line-height: 16px;
+	padding: 0 0;
+	margin: 0 0;
+	white-space: pre-line;
+}
         .containerCB {
         display: block;
         position: relative;

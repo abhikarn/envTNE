@@ -765,7 +765,7 @@
     text-align: end;
 }
 .attached-doc-table tr td:first-child {
-	display: none;
+	display: none!important;
 }
 .attached-doc-table tr td {
 	vertical-align: middle;
@@ -779,11 +779,16 @@
 }
 
 @media (max-width: 575px) {
-          .mobile-card-view-normaltable tr {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 5px;
-    }
+    .mobile-card-view-normaltable tr {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    padding: 0;
+}#tblTeGST tr:first-child td {
+    min-height: 90px;
+}#tblTeGST tr:first-child td:last-child {
+    min-height: inherit;
+}
   .mobile-card-view-normaltable td:last-child {
 	grid-column: span 2;
 	border-top: 1px solid #e6e6e6 !important;
