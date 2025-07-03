@@ -177,8 +177,8 @@
                     <ng-template mat-tab-label>
                       <mat-form-field class="more-item" appearance="fill" (click)="$event.stopPropagation()"
                       (mousedown)="$event.stopPropagation()">
-                        <mat-select placeholder="More" [value]="selectedExtraCategory"
-                          (selectionChange)="onExtraCategorySelect($event.value)">
+                        <mat-select class="more-item-select" placeholder="More" [value]="selectedExtraCategory"
+                          (selectionChange)="onExtraCategorySelect($event.value)" panelClass="custom-more-select-panel">
                           <mat-option *ngFor="let cat of categories.slice(5)" [value]="cat">
                             {{cat.label}}
                           </mat-option>

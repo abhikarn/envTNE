@@ -15,7 +15,7 @@
     <!-- Preview Mode: Serial Number Column -->
     <ng-container *ngIf="mode === 'preview'" matColumnDef="slNo">
         <th mat-header-cell *matHeaderCellDef>{{ slNoLabel }}</th>
-        <td class="text-center" mat-cell *matCellDef="let row">{{ row.slNo }}</td>
+        <td class="text-start" mat-cell *matCellDef="let row">{{ row.slNo }}</td>
     </ng-container>
     <!-- Common Action Icons -->
     <ng-container matColumnDef="actions">
@@ -218,7 +218,7 @@
         <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
             <div *ngIf="row.ClaimStatusId !== 5" class="remarks-container"
                 [ngClass]="{ 'remarks-error': isRemarkInvalid(row) }">
-                <label class="remarks-label">Remarks</label>
+                <label class="remarks-label">Remarks</label> 
                 <textarea [(ngModel)]="row.remarks" class="form-control chm-formtextarea" rows="2"
                     maxlength="500"></textarea>
             </div>

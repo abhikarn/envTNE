@@ -3698,6 +3698,7 @@ textarea.form-control-lg {
 	border-top-left-radius: var(--bs-nav-tabs-border-radius);
 	border-top-right-radius: var(--bs-nav-tabs-border-radius);
 	font-size: 12px;
+  text-transform: capitalize;
 }
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
 	isolation: isolate;
