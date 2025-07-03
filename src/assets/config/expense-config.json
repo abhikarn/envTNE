@@ -14155,7 +14155,8 @@
                         "disable": false,
                         "readonly": false,
                         "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "policyentitlementCheck": true
                     },
                     {
                         "type": "multi-select",
@@ -14889,7 +14890,8 @@
                         "disable": false,
                         "readonly": false,
                         "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "policyentitlementCheck": true
                     },
                     {
                         "type": "text",
