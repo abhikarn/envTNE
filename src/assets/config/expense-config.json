@@ -22482,8 +22482,8 @@
                 ]
             },
             {
-                "name": "Travel Ticket",
-                "label": "Ticket",
+                "name": "Visa",
+                "label": "Visa",
                 "data": [],
                 "amount": 0,
                 "expanded": true,
