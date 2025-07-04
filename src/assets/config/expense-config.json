@@ -18012,6 +18012,114 @@
                 ]
             },
             {
+                "name": "Broadband",
+                "label": "Broadband",
+                "formControls": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Mobile",
+                "label": "Mobile",
+                "formControls": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Marriage Gift",
+                "label": "Marriage Gift",
+                "formControls": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Deputation",
+                "label": "Deputation",
+                "formControls": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Food",
+                "label": "Food/Meals",
+                "formControls": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Car Maintainance",
+                "label": "Car Maintainance",
+                "formControls": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Learning & Fees Expense",
+                "label": "Learning & Fees Expense",
+                "formControls": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Bereavement Support",
+                "label": "Bereavement Support",
+                "formControls": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Training & Certification",
+                "label": "Training & Certification",
+                "formControls": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Lease & Rent Deposit",
+                "label": "Lease & Rent Deposit",
+                "formControls": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Vehicle Road Tax",
+                "label": "Vehicle Road Tax",
+                "formControls": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "School Capitation Fees",
+                "label": "School Capitation Fees",
+                "formControls": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
                 "name": "Roaming",
                 "label": "Roaming",
                 "formControls": [
@@ -18634,6 +18742,58 @@
                     {
                         "name": "Relocation Travel Ticket Claim",
                         "label": "Transportation Claim"
+                    },
+                    {
+                        "name": "Broadband",
+                        "label": "Broadband"
+                    },
+                    {
+                        "name": "Mobile",
+                        "label": "Mobile"
+                    },
+                    {
+                        "name": "Marriage Gift",
+                        "label": "Marriage Gift"
+                    },
+                    {
+                        "name": "Deputation",
+                        "label": "Deputation"
+                    },
+                    {
+                        "name": "Food",
+                        "label": "Food/Meals"
+                    },
+                    {
+                        "name": "Car Maintainance",
+                        "label": "Car Maintainance"
+                    },
+                    {
+                        "name": "Learning & Fees Expense",
+                        "label": "Learning & Fees Expense"
+                    },
+                    {
+                        "name": "Bereavement Support",
+                        "label": "Bereavement Support"
+                    },
+                    {
+                        "name": "Training & Certification",
+                        "label": "Training & Certification"
+                    },
+                    {
+                        "name": "Lease & Rent Deposit",
+                        "label": "Lease & Rent Deposit"
+                    },
+                    {
+                        "name": "Vehicle Road Tax",
+                        "label": "Vehicle Road Tax"
+                    },
+                    {
+                        "name": "School Capitation Fees",
+                        "label": "School Capitation Fees"
+                    },
+                    {
+                        "name": "Roaming",
+                        "label": "Roaming"
                     }
                 ]
             },
@@ -23882,6 +24042,136 @@
                         ]
                     }
                 ]
+            },
+            {
+                "name": "Broadband",
+                "label": "Broadband",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Mobile",
+                "label": "Mobile",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Marriage Gift",
+                "label": "Marriage Gift",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Deputation",
+                "label": "Deputation",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Food",
+                "label": "Food/Meals",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Car Maintainance",
+                "label": "Car Maintainance",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Learning & Fees Expense",
+                "label": "Learning & Fees Expense",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Bereavement Support",
+                "label": "Bereavement Support",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Training & Certification",
+                "label": "Training & Certification",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Lease & Rent Deposit",
+                "label": "Lease & Rent Deposit",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Vehicle Road Tax",
+                "label": "Vehicle Road Tax",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "School Capitation Fees",
+                "label": "School Capitation Fees",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
+            },
+            {
+                "name": "Roaming",
+                "label": "Roaming",
+                "data": [],
+                "amount": 0,
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": []
             }
         ],
         "justification": {
