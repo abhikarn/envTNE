@@ -18014,11 +18014,975 @@
             {
                 "name": "Broadband",
                 "label": "Broadband",
-                "formControls": [],
-                "expanded": true,
+                "formControls": [
+                    {
+                        "type": "file",
+                        "dataType": "file",
+                        "name": "attachment",
+                        "isExcluded": false,
+                        "label": "Upload Your Bill",
+                        "value": [],
+                        "multiple": true,
+                        "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
+                        "referenceType": 123,
+                        "maxSizeMB": 15,
+                        "required": false,
+                        "requiredIf": {
+                            "IsBillRequired": true
+                        },
+                        "oCRRequired": false,
+                        "order": 1
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "ClaimFromDate",
+                        "isExcluded": false,
+                        "label": "Claim From Date",
+                        "value": null,
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "isGeneral": true,
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimFromDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "autoFormat": {
+                                    "decimal": ".00"
+                                },
+                                "event": "dateChange",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                            },
+                            {
+                                "type": [
+                                    "domestic"
+                                ],
+                                "isGeneral": true,
+                                "key": "CityMasterId",
+                                "inputControls": {
+                                    "City": "CityId",
+                                    "ClaimFromDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "CityGrade": "ResponseValue.GradeId",
+                                    "CityGradeId": "ResponseValue.Grade"
+                                },
+                                "event": "dateChange",
+                                "requestBody": {
+                                    "Type": "53"
+                                },
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetCityGrade"
+                            }
+                        ],
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim From Date Time is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "time": {
+                            "type": "time",
+                            "name": "ClaimFromTime",
+                            "label": "time",
+                            "value": null,
+                            "required": true
+                        },
+                        "order": 2,
+                        "apiDateLimit": true,
+                        "policyEntitlementCheck": true,
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "ClaimFromDate": "ClaimFromDate",
+                                "ClaimToDate": "ClaimToDate",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        }
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "ClaimToDate",
+                        "isExcluded": false,
+                        "label": "Claim To Date",
+                        "value": null,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim To Date Time is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "time": {
+                            "type": "time",
+                            "name": "ClaimToTime",
+                            "label": "time",
+                            "value": null,
+                            "required": true
+                        },
+                        "order": 3,
+                        "apiDateLimit": true,
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "ClaimFromDate": "ClaimFromDate",
+                                "ClaimToDate": "ClaimToDate",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "Frequency",
+                        "isExcluded": false,
+                        "label": "Frequency",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Frequency is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 4
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "Month",
+                        "isExcluded": false,
+                        "label": "Month",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Month is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 4
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "MobileNumber",
+                        "isExcluded": false,
+                        "label": "Mobile Number",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Mobile number is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 4
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "BillNumber",
+                        "isExcluded": false,
+                        "label": "Bill Number",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Bill Number is required"
+                            }
+                        ],
+                        "order": 7
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "BillDate",
+                        "isExcluded": false,
+                        "label": "Bill Date",
+                        "value": null,
+                        "required": false,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
+                        "order": 8
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "EntitlementCurrency",
+                        "isExcluded": true,
+                        "label": "Entitlement Currency",
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetCurrencyView",
+                        "value": 0,
+                        "defaultValue": {
+                            "Id": 1,
+                            "Code": "INR",
+                            "Name": "Indian Rupee",
+                            "Alias": "Indian Rupee",
+                            "IsBaseCurrency": true,
+                            "Display": "Indian Rupee : INR"
+                        },
+                        "options": [],
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Currency is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 10
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "EntitlementAmount",
+                        "isExcluded": true,
+                        "label": "Entitlement Amount",
+                        "value": null,
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "EntitlementCurrency": "CurrencyId",
+                                    "ClaimFromDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "EntitlementConversionRate": "ResponseValue.Value"
+                                },
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                            }
+                        ],
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9.]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "decimalPrecision": "2"
+                        },
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Amount is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 11
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "EntitlementConversionRate",
+                        "isExcluded": true,
+                        "label": "Entitlement Conversion Rate",
+                        "value": "",
+                        "defaultValue": "1",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "setValue": "1"
+                        },
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Entitlement Conversion Rate is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 12,
+                        "setFields": [
+                            {
+                                "name": "EntitlementAmountInBaseCurrency",
+                                "formula": "EntitlementAmount * EntitlementConversionRate",
+                                "dependsOn": [
+                                    "EntitlementAmount",
+                                    "EntitlementConversionRate"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "Currency",
+                        "isExcluded": true,
+                        "label": "Currency",
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetCurrencyView",
+                        "value": 0,
+                        "defaultValue": {
+                            "Id": 1,
+                            "Code": "INR",
+                            "Name": "Indian Rupee",
+                            "Alias": "Indian Rupee",
+                            "IsBaseCurrency": true,
+                            "Display": "Indian Rupee : INR"
+                        },
+                        "options": [],
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Currency is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 13
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "ClaimAmount",
+                        "isExcluded": true,
+                        "label": "Claimed Amount",
+                        "value": null,
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimFromDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                            }
+                        ],
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9.]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "decimalPrecision": "2"
+                        },
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claimed Amount is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 14,
+                        "taxCalculation": {
+                            "IsTaxExclusive": true,
+                            "inputControls": {
+                                "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                                "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            },
+                            "outputControl": {
+                                "DifferentialAmount": "DifferentialAmount"
+                            }
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "ConversionRate",
+                        "isExcluded": true,
+                        "label": "Claimed Conversion Rate",
+                        "value": 0,
+                        "defaultValue": "1",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "setValue": "1"
+                        },
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claimed Conversion Rate is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 15,
+                        "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
+                            {
+                                "name": "DifferentialAmount",
+                                "formula": "ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "dependsOn": [
+                                    "ClaimAmountInBaseCurrency",
+                                    "EntitlementAmountInBaseCurrency"
+                                ],
+                                "setValue": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "PaymentMode",
+                        "isExcluded": true,
+                        "label": "Payment Type",
+                        "placeholder": "Select Payment Type",
+                        "value": "",
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetPaymentType",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Payment Type is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 9
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "DifferentialAmount",
+                        "isExcluded": false,
+                        "label": "Differential Amount(INR)",
+                        "value": 0,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Differential Amount is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 17
+                    },
+                    {
+                        "type": "textarea",
+                        "dataType": "string",
+                        "name": "Justification",
+                        "isExcluded": false,
+                        "label": "Justification",
+                        "value": "",
+                        "required": false,
+                        "order": 18
+                    },
+                    {
+                        "type": "costcenter",
+                        "dataType": "object",
+                        "name": "costcentreWiseExpense",
+                        "isExcluded": false,
+                        "label": "Cost Centre",
+                        "value": [],
+                        "getControl": "ClaimAmount",
+                        "fields": [
+                            {
+                                "name": "ExpenseRequestCostCentrewiseAmmoutId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 1
+                            },
+                            {
+                                "name": "ExpenseRequestDetailId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 2
+                            },
+                            {
+                                "type": "text",
+                                "subType": "text",
+                                "dataType": "int",
+                                "autoComplete": true,
+                                "name": "CostCentre",
+                                "isExcluded": false,
+                                "label": "Cost Center",
+                                "value": null,
+                                "options": [],
+                                "labelKey": "Display",
+                                "valueKey": "CostCentreId",
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetCityAutocomplete",
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Cost Center is required"
+                                    }
+                                ],
+                                "disable": false,
+                                "readonly": false,
+                                "order": 3,
+                                "showInUI": true
+                            },
+                            {
+                                "name": "CostCentreId",
+                                "type": "text",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 4
+                            },
+                            {
+                                "name": "AmmoutInPercentage",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "label": "Amount In(%)",
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 2
+                                    }
+                                },
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    },
+                                    {
+                                        "type": "min",
+                                        "value": 0
+                                    }
+                                ],
+                                "order": 5
+                            },
+                            {
+                                "name": "AmmoutInActual",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "label": "Amount In Actual",
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    }
+                                },
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    },
+                                    {
+                                        "type": "min",
+                                        "value": 0
+                                    }
+                                ],
+                                "order": 6
+                            }
+                        ]
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "CityGrade",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false,
+                        "international": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsBillRequired",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsActual",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTaxIncluded",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "OriginalEntitlementAmount",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsViolation",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false,
+                        "calculate": {
+                            "formula": "ClaimAmount * ConversionRate",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "ConversionRate"
+                            ]
+                        }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false,
+                        "calculate": {
+                            "formula": "EntitlementAmount * EntitlementConversionRate",
+                            "dependsOn": [
+                                "EntitlementAmount",
+                                "EntitlementConversionRate"
+                            ]
+                        }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Country",
+                        "isExcluded": true,
+                        "value": 3,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "CountryGrade",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
+                    }
+                ],
+                "policyViolationManualCheck": {
+                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                    "controls": {
+                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                    },
+                    "confirmPopup": {
+                        "title": "Policy Violation",
+                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                        "confirmButtonText": "Yes",
+                        "cancelButtonText": "No"
+                    }
+                },
+                "policyEntitlementCheckApi": {
+                    "apiService": "ExpenseService",
+                    "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
+                    "requestBody": {
+                        "ExpenseCategoryId": 0
+                    },
+                    "otherControls": {
+                        "ClaimTypeId": "TravelTypeId",
+                        "TravelRequestId": "TravelRequestId",
+                        "UserMasterId": "UserMasterId"
+                    },
+                    "inputControls": {
+                        "ClaimFromDate": "ReferenceFromDate",
+                        "ClaimToDate": "ReferenceToDate",
+                        "CityGrade": "CityGradeId",
+                        "CountryGrade": "CountryGradeId",
+                        "Constraint": "PolicyReferenceId"
+                    },
+                    "outputControl": {
+                        "EntitlementCurrency": "ResponseValue.CurrencyId",
+                        "EntitlementAmount": "ResponseValue.EntitlementAmount",
+                        "OriginalEntitlementAmount": "ResponseValue.EntitlementAmount",
+                        "IsBillRequired": "ResponseValue.IsBillRequired",
+                        "IsActual": "ResponseValue.IsActual",
+                        "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    }
+                },
+                "expanded": false,
                 "slNoLabel": "Sl. No.",
-                "columns": [],
-                "nestedTables": []
+                "columns": [
+                    {
+                        "name": "__slNo",
+                        "label": "Sl. No",
+                        "visible": true,
+                        "position": "in",
+                        "order": 1
+                    },
+                    {
+                        "type": "datetime",
+                        "name": "ClaimFromDate",
+                        "label": "Claim From Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 2
+                    },
+                    {
+                        "type": "datetime",
+                        "name": "ClaimToDate",
+                        "label": "ClaimToDate",
+                        "visible": true,
+                        "position": "in",
+                        "order": 3
+                    },
+                    {
+                        "name": "Frequency",
+                        "label": "Frequency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
+                    },
+                    {
+                        "name": "Month",
+                        "label": "Month",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
+                    },
+                    {
+                        "name": "MobileNumber",
+                        "label": "Mobile Number",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
+                    },
+                    {
+                        "type": "string",
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "in",
+                        "order": 5
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 6
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "label": "Payment Type",
+                        "visible": true,
+                        "position": "in",
+                        "order": 7
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Claimed Amount",
+                        "visible": true,
+                        "position": "in-out",
+                        "decimalPrecision": "2",
+                        "order": 8
+                    },
+                    {
+                        "name": "__actions",
+                        "label": "Actions",
+                        "visible": true,
+                        "position": "in",
+                        "order": 9
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "ClaimAmountInBaseCurrency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 13
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 14
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement Amount",
+                        "visible": true,
+                        "position": "out",
+                        "order": 15
+                    },
+                    {
+                        "label": "Differential Amount",
+                        "name": "DifferentialAmount",
+                        "type": "number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 16
+                    },
+                    {
+                        "name": "Justification",
+                        "label": "Justification",
+                        "visible": true,
+                        "position": "out",
+                        "order": 17
+                    }
+                ],
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "attachment",
+                        "label": "Attachments",
+                        "dataKey": "attachment",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "FileName",
+                                "label": "File Name",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "name": "__actions",
+                                "label": "Action",
+                                "visible": true,
+                                "order": 3
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "name": "Mobile",
@@ -25467,10 +26431,146 @@
                 "label": "Broadband",
                 "data": [],
                 "amount": 0,
-                "expanded": true,
+                "expanded": false,
                 "slNoLabel": "Sl. No.",
-                "columns": [],
-                "nestedTables": []
+                "columns": [
+                    {
+                        "type": "date",
+                        "name": "ClaimFromDate",
+                        "label": "From Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 1
+                    },
+                    {
+                        "type": "date",
+                        "name": "ClaimToDate",
+                        "label": "To Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 2
+                    },
+                    {
+                        "name": "Frequency",
+                        "label": "Frequency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 3
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement",
+                        "visible": true,
+                        "position": "in-out",
+                        "order": 4
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Claimed",
+                        "visible": true,
+                        "position": "in",
+                        "order": 5
+                    },
+                    {
+                        "type": "numeric",
+                        "name": "ApprovedAmount",
+                        "label": "Approved",
+                        "visible": true,
+                        "isEditableInApproval": true,
+                        "isEditableInFinanceApproval": true,
+                        "controlType": "input",
+                        "position": "in",
+                        "order": 6
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 7
+                    },
+                    {
+                        "type": "number",
+                        "name": "ConversionRate",
+                        "label": "Conversion Rate",
+                        "visible": true,
+                        "position": "in",
+                        "order": 8
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Approved(INR)",
+                        "visible": true,
+                        "position": "in",
+                        "order": 9
+                    },
+                    {
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement Amount(INR)",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "Month",
+                        "label": "Month",
+                        "visible": true,
+                        "position": "out",
+                        "order": 11
+                    },
+                    {
+                        "name": "MobileNumber",
+                        "label": "Mobile Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 12
+                    },
+                    {
+                        "name": "Justification",
+                        "label": "Justification",
+                        "visible": true,
+                        "position": "out",
+                        "order": 13
+                    }
+                ],
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "name": "Mobile",
