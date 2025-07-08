@@ -15,9 +15,9 @@ export const routes: Routes = [
         data: { title: 'Travel Expense' }
       },
       {
-        path: 'edit-expense/:id',
+        path: 'edit-expense/:ExpenseClaimTypeDescription/:id',
         loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
-        data: { title: 'Edit Travel Expense' }
+        data: { title: 'Edit Expense' }
       },
       // Local Travel Conveyance
       {

@@ -5176,7 +5176,7 @@
                 }
             },
             {
-                "name": "Boarding",
+                "name": "Boarding Expense",
                 "label": "Boarding",
                 "formControls": [
                     {
@@ -24450,7 +24450,7 @@
                         "label": "Accommodation Expenses"
                     },
                     {
-                        "name": "Boarding",
+                        "name": "Boarding Expense",
                         "label": "Boarding Expenses"
                     },
                     {
@@ -26080,7 +26080,7 @@
                 ]
             },
             {
-                "name": "Boarding",
+                "name": "Boarding Expense",
                 "label": "Boarding",
                 "data": [],
                 "amount": 0,

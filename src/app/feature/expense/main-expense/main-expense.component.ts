@@ -103,6 +103,7 @@ export class MainExpenseComponent {
   billableControl: FormControl = new FormControl('');
   selectedTabIndex: number = 0;
   moduleConfig: any = {};
+  expenseClaimTypeDescription: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -187,6 +188,7 @@ export class MainExpenseComponent {
   initializeBasicFields() {
     this.userMasterId = Number(localStorage.getItem('userMasterId'));
     this.transactionId = this.route.snapshot.paramMap.get('id') || 0;
+    this.expenseClaimTypeDescription = this.route.snapshot.paramMap.get('ExpenseClaimTypeDescription') || '';
     if (this.transactionId) {
       this.editMode = true;
     }
@@ -231,22 +233,41 @@ export class MainExpenseComponent {
   setupExpenseConfig() {
     let title: string = '';
 
-    this.route.data.subscribe(data => {
-      title = data['title'];
+    if (!this.editMode) {
+      this.route.data.subscribe(data => {
+        title = data['title'];
 
-      if (this.expenseConfig?.pageTitles) {
-        this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[title] || title;
-      }
-
-      this.categories = []; // reset categories to avoid duplicates
-
-      this.expenseConfig?.category?.forEach((category: any) => {
-        if (category?.displayPage?.[title]) {
-          // Add only categories applicable for the current page
-          this.categories.push(category);
+        if (this.expenseConfig?.pageTitles) {
+          this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[title] || title;
         }
+
+        this.categories = []; // reset categories to avoid duplicates
+
+        this.expenseConfig?.category?.forEach((category: any) => {
+          if (category?.displayPage?.[title]) {
+            // Add only categories applicable for the current page
+            this.categories.push(category);
+          }
+        });
       });
-    });
+    } else {
+      console.log(this.expenseClaimTypeDescription)
+      if(this.expenseClaimTypeDescription == 'Domestic' || this.expenseClaimTypeDescription == 'International') {
+        let title = "Travel Expense";
+        if (this.expenseConfig?.pageTitles) {
+          this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[title] || title;
+        }
+
+        this.categories = []; // reset categories to avoid duplicates
+
+        this.expenseConfig?.category?.forEach((category: any) => {
+          if (category?.displayPage?.[title]) {
+            // Add only categories applicable for the current page
+            this.categories.push(category);
+          }
+        });
+      }
+    }
 
     if (this.expenseConfig?.request) {
       this.getTravelRequestList();
