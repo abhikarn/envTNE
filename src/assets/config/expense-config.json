@@ -12412,7 +12412,7 @@
             },
             {
                 "name": "Other Expenses",
-                "label": "Other Expenses",
+                "label": "Other Expense",
                 "formControls": [
                     {
                         "type": "file",
@@ -12471,7 +12471,33 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 3
+                        "order": 3,
+                        "international": false
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "OtherType",
+                        "isExcluded": false,
+                        "label": "Other Type",
+                        "placeholder": "Select Other Type",
+                        "value": null,
+                        "options": [],
+                        "labelKey": "Value",
+                        "valueKey": "Key",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetOtherExpenseCategoryInternational",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Other Type is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 3,
+                        "international": true
                     },
                     {
                         "type": "text",
