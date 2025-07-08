@@ -19116,11 +19116,59 @@
                         "order": 1
                     },
                     {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "FrequencyType",
+                        "isExcluded": true,
+                        "label": "Frequency Type",
+                        "placeholder": "Select Frequency Type",
+                        "value": "",
+                        "options": [],
+                        "labelKey": "",
+                        "valueKey": "",
+                        "apiService": "",
+                        "apiMethod": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Frequency Type is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 9
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "Month",
+                        "isExcluded": true,
+                        "label": "Month",
+                        "placeholder": "Select Month",
+                        "value": "",
+                        "options": [],
+                        "labelKey": "",
+                        "valueKey": "",
+                        "apiService": "",
+                        "apiMethod": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Month is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 9
+                    },
+                    {
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimFromDate",
                         "isExcluded": false,
-                        "label": "Claim From Date",
+                        "label": "Billing From Date",
                         "value": null,
                         "dependentCases": [
                             {
@@ -19202,7 +19250,7 @@
                         "dataType": "datetime",
                         "name": "ClaimToDate",
                         "isExcluded": false,
-                        "label": "Claim To Date",
+                        "label": "Billing To Date",
                         "value": null,
                         "required": true,
                         "validations": [
@@ -19232,44 +19280,6 @@
                                 "EntitlementAmount": "EntitlementAmount"
                             }
                         }
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "dataType": "string",
-                        "name": "Frequency",
-                        "isExcluded": false,
-                        "label": "Frequency",
-                        "value": "",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Frequency is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 4
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "dataType": "string",
-                        "name": "Month",
-                        "isExcluded": false,
-                        "label": "Month",
-                        "value": "",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Month is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 4
                     },
                     {
                         "type": "text",
