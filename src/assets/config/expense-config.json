@@ -1,5 +1,10 @@
 {
     "expenseRequest": {
+        "pageTitles": {
+            "Travel Expense": "Travel Expense",
+            "Local Travel Conveyance": "Local Travel Conveyance Claim",
+            "Direct Expense": "Direct Expense"
+        },
         "request": {
             "type": "select",
             "dataType": "int",
@@ -19,6 +24,12 @@
                 "title": "Travel Request",
                 "message": "Please select a Travel Request.",
                 "confirmText": "Ok"
+            },
+            "displayPage": {
+                "Travel Expense": true,
+                "Direct Expense": false,
+                "Local Travel Conveyance": false,
+                "Mobile Handset Purchase": false
             }
         },
         "travelDetails": {
@@ -72,7 +83,11 @@
                     "displayKey": "Display",
                     "valueKey": "CostCentreId"
                 }
-            ]
+            ],
+            "displayPage": {
+                "Travel Expense": true,
+                "Direct Expense": false
+            }
         },
         "dateExtension": {
             "label": "Date Extension",
@@ -1082,7 +1097,14 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true,
+                    "Joining Expense": true,
+                    "Transfer Expense": true,
+                    "Relocation Expense": true
+                }
             },
             {
                 "name": "Accommodation",
@@ -2485,7 +2507,14 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true,
+                    "Joining Expense": true,
+                    "Transfer Expense": true,
+                    "Relocation Expense": true
+                }
             },
             {
                 "name": "PerDiem",
@@ -3808,7 +3837,13 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true,
+                    "Joining Expense": true,
+                    "Transfer Expense": true
+                }
             },
             {
                 "name": "DailyAllowance",
@@ -5131,7 +5166,14 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true,
+                    "Joining Expense": true,
+                    "Transfer Expense": true,
+                    "Sales Force Expense": true
+                }
             },
             {
                 "name": "Boarding",
@@ -6454,7 +6496,13 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true,
+                    "Joining Expense": true,
+                    "Transfer Expense": true
+                }
             },
             {
                 "name": "Incidental Expenses",
@@ -7730,7 +7778,11 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true
+                }
             },
             {
                 "name": "Laundry service",
@@ -9006,7 +9058,11 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true
+                }
             },
             {
                 "name": "FlatOrOwnArrangement",
@@ -10410,7 +10466,11 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true
+                }
             },
             {
                 "name": "ConveyanceDuringTravel",
@@ -11037,7 +11097,11 @@
                         "position": "out",
                         "order": 12
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true
+                }
             },
             {
                 "name": "Business Entertainment",
@@ -11685,11 +11749,15 @@
                         "position": "out",
                         "order": 22
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true
+                }
             },
             {
-                "name": "Local Conveyance",
-                "label": "Local Conveyance",
+                "name": "Local Travel Conveyance",
+                "label": "Local Travel Conveyance",
                 "formControls": [
                     {
                         "type": "file",
@@ -12331,7 +12399,15 @@
                         "position": "out",
                         "order": 12
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Local Travel Conveyance": true,
+                    "Direct Expense": false,
+                    "Joining Expense": true,
+                    "Transfer Expense": true,
+                    "Relocation Expense": true
+                }
             },
             {
                 "name": "Other Expenses",
@@ -12853,7 +12929,11 @@
                         "position": "out",
                         "order": 22
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true
+                }
             },
             {
                 "name": "Medical Claim",
@@ -14116,7 +14196,10 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Joining Expense": true
+                }
             },
             {
                 "name": "Baggage and Outfit Allowance",
@@ -14851,7 +14934,11 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true
+                }
             },
             {
                 "name": "Mobile Handset Purchase",
@@ -15515,7 +15602,10 @@
                         "position": "out",
                         "order": 15
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Mobile Handset Purchase": true
+                }
             },
             {
                 "name": "Transit Allowance",
@@ -16388,7 +16478,11 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true
+                }
             },
             {
                 "name": "Visa",
@@ -16859,7 +16953,11 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true
+                }
             },
             {
                 "name": "Travel Insurance",
@@ -17336,7 +17434,10 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true
+                }
             },
             {
                 "name": "Relocation Travel Ticket Claim",
@@ -18009,7 +18110,12 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Joining Expense": true,
+                    "Transfer Expense": true,
+                    "Relocation Expense": true
+                }
             },
             {
                 "name": "Broadband",
@@ -18982,7 +19088,10 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Broadband Expense": true
+                }
             },
             {
                 "name": "Mobile",
@@ -19955,7 +20064,10 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Mobile Expense": true
+                }
             },
             {
                 "name": "Marriage Gift",
@@ -20668,7 +20780,10 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Marriage Gift Expense": true
+                }
             },
             {
                 "name": "Deputation",
@@ -21694,7 +21809,10 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Deputation Expense": true
+                }
             },
             {
                 "name": "Food",
@@ -22976,6 +23094,7 @@
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": []
+
             },
             {
                 "name": "Bereavement Support",
@@ -23699,7 +23818,10 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Bereavement Support Claim": true
+                }
             },
             {
                 "name": "Training & Certification",
@@ -23708,7 +23830,10 @@
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
-                "nestedTables": []
+                "nestedTables": [],
+                "displayPage": {
+                    "Training and Certification Expense": true
+                }
             },
             {
                 "name": "Lease & Rent Deposit",
@@ -23717,7 +23842,12 @@
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
-                "nestedTables": []
+                "nestedTables": [],
+                "displayPage": {
+                    "Joining Expense": true,
+                    "Transfer Expense": true,
+                    "Relocation Expense": true
+                }
             },
             {
                 "name": "Vehicle Road Tax",
@@ -23726,7 +23856,12 @@
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
-                "nestedTables": []
+                "nestedTables": [],
+                "displayPage": {
+                    "Joining Expense": true,
+                    "Transfer Expense": true,
+                    "Relocation Expense": true
+                }
             },
             {
                 "name": "School Capitation Fees",
@@ -23735,7 +23870,24 @@
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
-                "nestedTables": []
+                "nestedTables": [],
+                "displayPage": {
+                    "Joining Expense": true,
+                    "Transfer Expense": true,
+                    "Relocation Expense": true
+                }
+            },
+            {
+                "name": "Travel Allowance",
+                "label": "Travel Allowance",
+                "formControls": [],
+                "expanded": true,
+                "slNoLabel": "Sl. No.",
+                "columns": [],
+                "nestedTables": [],
+                "displayPage": {
+                   "Sales Force Expense": true
+                }
             },
             {
                 "name": "Roaming",
@@ -24105,7 +24257,11 @@
                         "position": "out",
                         "order": 12
                     }
-                ]
+                ],
+                "displayPage": {
+                    "Travel Expense": true,
+                    "Direct Expense": true
+                }
             }
         ],
         "otherDetails": [

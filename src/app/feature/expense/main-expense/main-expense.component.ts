@@ -130,7 +130,7 @@ export class MainExpenseComponent {
   handleClickOutside(event: Event) {
     const element = this.eRef.nativeElement.querySelector('#expenseCategories');
 
-    if (!this.dialogOpen && element && element.contains(event.target) && this.travelRequestId == 0) {
+    if (!this.dialogOpen && element && element.contains(event.target) && this.travelRequestId == 0 && this.expenseConfig.request?.displayPage[this.moduleConfig.pageTitle]) {
       this.dialogOpen = true;
       this.confirmDialogService
         .confirm(this.expenseConfig.request.confirmPopup)
@@ -229,6 +229,25 @@ export class MainExpenseComponent {
 
   // Setup initial dynamic form control based on expenseConfig request object.
   setupExpenseConfig() {
+    let title: string = '';
+
+    this.route.data.subscribe(data => {
+      title = data['title'];
+
+      if (this.expenseConfig?.pageTitles) {
+        this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[title] || title;
+      }
+
+      this.categories = []; // reset categories to avoid duplicates
+
+      this.expenseConfig?.category?.forEach((category: any) => {
+        if (category?.displayPage?.[title]) {
+          // Add only categories applicable for the current page
+          this.categories.push(category);
+        }
+      });
+    });
+
     if (this.expenseConfig?.request) {
       this.getTravelRequestList();
       const control = FormControlFactory.createControl(this.expenseConfig.request);
@@ -255,7 +274,7 @@ export class MainExpenseComponent {
       LocalTravelMode: this.localTravelModeList
     };
 
-    this.categories = this.expenseConfig.category.map((category: any) => ({
+    this.categories = this.categories.map((category: any) => ({
       ...category,
       formControls: category.formControls.map((control: any) => ({
         ...control,
