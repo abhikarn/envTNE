@@ -94,7 +94,21 @@
         "title": "Sales Force Expense",
         "img": "assets/images/salesforce-exp.png",
         "link": "expense/expense/create-sales-force-expense",
-        "colorClass": "expense-color7",
+        "colorClass": "expense-color6",
         "alt": "Sales Force Expense"
+    },
+    {
+        "title": "Business Entertainment Expense",
+        "img": "assets/images/expense-business.png",
+        "link": "expense/expense/create-business-entertainment-expense",
+        "colorClass": "expense-color7",
+        "alt": "Business Entertainment Expense"
+    },
+    {
+        "title": "Other Expense",
+        "img": "assets/images/expense-other.svg",
+        "link": "expense/expense/create-other-expense",
+        "colorClass": "expense-color7",
+        "alt": "Other Expense"
     }
 ]

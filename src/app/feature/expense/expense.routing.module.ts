@@ -97,6 +97,18 @@ export const routes: Routes = [
         loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
         data: { title: 'Sales Force Expense' }
       },
+      // Business Entertainment Expense
+      {
+        path: 'create-business-entertainment-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Business Entertainment Expense' }
+      },
+      // Other Expense
+      {
+        path: 'create-other-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Other Expense' }
+      },
       {
         path: 'landing',
         loadComponent: () => import('./landing/landing.component').then(m => m.LandingComponent),
