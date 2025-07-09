@@ -54,4 +54,5 @@ export interface IFormControl {
   international?: boolean;
   setFields?: any; // For setting fields based on formula
   inPayload?: boolean; // For fields that should not be sent in payload
+  landingBoxConfig?: any;
 }
