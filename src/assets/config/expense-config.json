@@ -10473,7 +10473,7 @@
                 }
             },
             {
-                "name": "ConveyanceDuringTravel",
+                "name": "Local Conveyance During Travel",
                 "label": "Conveyance During Travel",
                 "formControls": [
                     {
@@ -10496,7 +10496,7 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -10524,6 +10524,33 @@
                         "valueKey": "Key",
                         "apiService": "DataService",
                         "apiMethod": "dataGetLocalTravelType",
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "payloadType": "queryString",
+                                "key": "Id",
+                                "inputControls": {},
+                                "outputControl": {
+                                    "LocalTravelMode": "ResponseValue"
+                                },
+                                "otherControls": {
+                                    "claimTypeId": "TravelTypeId",
+                                    "travelRequestId": "TravelRequestId",
+                                    "userMasterId": "UserMasterId"
+                                },
+                                "queryStringParameter": {
+                                    "expenseCategoryId": 4
+                                },
+                                "event": "onBlur",
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetUserLocalTravelMode",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -10544,10 +10571,6 @@
                         "placeholder": "Select Travel Type",
                         "value": null,
                         "options": [],
-                        "labelKey": "KeyData",
-                        "valueKey": "KeyDataId",
-                        "apiService": "DataService",
-                        "apiMethod": "dataGetLocalTravelMode",
                         "required": true,
                         "validations": [
                             {
@@ -10785,7 +10808,7 @@
                         "subType": "number",
                         "name": "KM",
                         "label": "KM",
-                        "isExcluded": true,
+                        "isExcluded": false,
                         "value": null,
                         "autoFormat": {
                             "patterns": [
@@ -10893,6 +10916,124 @@
                         "disable": false,
                         "readonly": true,
                         "order": 14
+                    },
+                    {
+                        "type": "costcenter",
+                        "dataType": "object",
+                        "name": "costcentreWiseExpense",
+                        "isExcluded": false,
+                        "label": "Cost Centre",
+                        "value": [],
+                        "getControl": "ClaimAmount",
+                        "fields": [
+                            {
+                                "name": "ExpenseRequestCostCentrewiseAmmoutId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 1
+                            },
+                            {
+                                "name": "ExpenseRequestDetailId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 2
+                            },
+                            {
+                                "type": "text",
+                                "subType": "text",
+                                "dataType": "int",
+                                "autoComplete": true,
+                                "name": "CostCentre",
+                                "isExcluded": false,
+                                "label": "Cost Center",
+                                "value": null,
+                                "options": [],
+                                "labelKey": "Display",
+                                "valueKey": "CostCentreId",
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetCityAutocomplete",
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Cost Center is required"
+                                    }
+                                ],
+                                "disable": false,
+                                "readonly": false,
+                                "order": 3,
+                                "showInUI": true
+                            },
+                            {
+                                "name": "CostCentreId",
+                                "type": "text",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 4
+                            },
+                            {
+                                "name": "AmmoutInPercentage",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "label": "Amount In(%)",
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 2
+                                    }
+                                },
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    },
+                                    {
+                                        "type": "min",
+                                        "value": 0
+                                    }
+                                ],
+                                "order": 5
+                            },
+                            {
+                                "name": "AmmoutInActual",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "label": "Amount In Actual",
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    }
+                                },
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    },
+                                    {
+                                        "type": "min",
+                                        "value": 0
+                                    }
+                                ],
+                                "order": 6
+                            }
+                        ]
                     },
                     {
                         "type": "textarea",
@@ -11096,6 +11237,66 @@
                         "visible": true,
                         "position": "out",
                         "order": 12
+                    }
+                ],
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "attachment",
+                        "label": "Attachments",
+                        "dataKey": "attachment",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "FileName",
+                                "label": "File Name",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "name": "__actions",
+                                "label": "Action",
+                                "visible": true,
+                                "order": 3
+                            }
+                        ]
                     }
                 ],
                 "displayPage": {

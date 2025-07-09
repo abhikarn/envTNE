@@ -395,4 +395,70 @@ export class DynamicFormService {
     return category;
   }
 
+  handleBusinessCaseForQueryString(caseItem: any, form: any, moduleData: any, formConfig: any): void {
+    debugger
+    if (!caseItem || caseItem.payloadType !== 'queryString') return;
+    const service = this.serviceRegistry.getService(caseItem.apiService);
+    const apiMethod = caseItem.apiMethod;
+    if (!service || typeof service[apiMethod] !== 'function') {
+      console.warn(`Invalid API service or method: ${caseItem.apiService}.${caseItem.apiMethod}`);
+      return;
+    }
+    const queryParams: Record<string, any> = { ...caseItem.queryStringParameter };
+    Object.entries(caseItem.inputControls).forEach(([controlName, requestKey]) => {
+      if (typeof requestKey === 'string') { // Ensure requestKey is a string
+        let controlValue = form.get(controlName)?.value;
+        if (typeof controlValue === 'object' && controlValue !== null) {
+          controlValue = controlValue.value ?? controlValue; // Handle case where controlValue is an object
+        }
+        queryParams[requestKey] = controlValue; // Extract Id if it's an object
+      }
+    }
+    );
+    const output = this.mapOtherControls(moduleData, caseItem.otherControls, caseItem?.landingBoxData);
+    const requestBody: any = { ...queryParams, ...output };
+    const claimTypeId = requestBody['claimTypeId'];
+    const expenseCategoryId = requestBody['expenseCategoryId'];
+    const userMasterId = requestBody['userMasterId'];
+    const travelRequestId = requestBody['travelRequestId'];
+
+    service[apiMethod](claimTypeId, expenseCategoryId, userMasterId, travelRequestId).subscribe(
+      (response: any) => {
+        if (typeof caseItem.outputControl === 'object') {
+          for (const [outputControl, responsePath] of Object.entries(caseItem.outputControl) as [string, string][]) {
+            const extracted = this.extractValueFromPath(response, responsePath);
+
+            if (extracted !== undefined && Array.isArray(extracted)) {
+              // Find the form config item by control name
+              const dependentCaseItem = formConfig.find(
+                (item: any) => item.formConfig?.name === outputControl
+              );
+
+              if (dependentCaseItem) {
+                dependentCaseItem.formConfig.options = extracted.map((item: any) => {
+                  return {
+                    label: item[caseItem.labelKey || 'label'],
+                    value: item[caseItem.valueKey || 'value']
+                  };
+                });
+              } else {
+                console.warn(`Dependent config for control "${outputControl}" not found in formConfig.`);
+              }
+            } else {
+              console.warn(`No array data found at path "${responsePath}" in response.`);
+            }
+          }
+        } else if (typeof caseItem.outputControl === 'string') {
+          // Single field case
+          const value = this.extractValueFromPath(response, caseItem.outputControl);
+          if (value !== undefined) {
+            form.get(caseItem.outputControl)?.setValue(value);
+          }
+        }
+      },
+      (error: any) => {
+        console.error("API Error:", error);
+      }
+    );
+  }
 }
