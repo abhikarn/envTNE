@@ -10532,7 +10532,9 @@
                                 ],
                                 "payloadType": "queryString",
                                 "key": "Id",
-                                "inputControls": {},
+                                "inputControls": {
+                                    "LocalTravelType": "expenseCategoryId"
+                                },
                                 "outputControl": {
                                     "LocalTravelMode": "ResponseValue"
                                 },
@@ -10541,9 +10543,7 @@
                                     "travelRequestId": "TravelRequestId",
                                     "userMasterId": "UserMasterId"
                                 },
-                                "queryStringParameter": {
-                                    "expenseCategoryId": 4
-                                },
+                                "queryStringParameter": {},
                                 "event": "onBlur",
                                 "apiService": "DataService",
                                 "apiMethod": "dataGetUserLocalTravelMode",
