@@ -103,6 +103,7 @@ export class MainExpenseComponent {
   billableControl: FormControl = new FormControl('');
   selectedTabIndex: number = 0;
   moduleConfig: any = {};
+  expenseClaimTypeDescription: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -130,7 +131,7 @@ export class MainExpenseComponent {
   handleClickOutside(event: Event) {
     const element = this.eRef.nativeElement.querySelector('#expenseCategories');
 
-    if (!this.dialogOpen && element && element.contains(event.target) && this.travelRequestId == 0) {
+    if (!this.dialogOpen && element && element.contains(event.target) && this.travelRequestId == 0 && this.expenseConfig.request?.displayPage[this.moduleConfig.pageTitle]) {
       this.dialogOpen = true;
       this.confirmDialogService
         .confirm(this.expenseConfig.request.confirmPopup)
@@ -187,6 +188,7 @@ export class MainExpenseComponent {
   initializeBasicFields() {
     this.userMasterId = Number(localStorage.getItem('userMasterId'));
     this.transactionId = this.route.snapshot.paramMap.get('id') || 0;
+    this.expenseClaimTypeDescription = this.route.snapshot.paramMap.get('ExpenseClaimTypeDescription') || '';
     if (this.transactionId) {
       this.editMode = true;
     }
@@ -229,6 +231,44 @@ export class MainExpenseComponent {
 
   // Setup initial dynamic form control based on expenseConfig request object.
   setupExpenseConfig() {
+    let title: string = '';
+
+    if (!this.editMode) {
+      this.route.data.subscribe(data => {
+        title = data['title'];
+
+        if (this.expenseConfig?.pageTitles) {
+          this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[title] || title;
+        }
+
+        this.categories = []; // reset categories to avoid duplicates
+
+        this.expenseConfig?.category?.forEach((category: any) => {
+          if (category?.displayPage?.[title]) {
+            // Add only categories applicable for the current page
+            this.categories.push(category);
+          }
+        });
+      });
+    } else {
+      console.log(this.expenseClaimTypeDescription)
+      if(this.expenseClaimTypeDescription == 'Domestic' || this.expenseClaimTypeDescription == 'International') {
+        let title = "Travel Expense";
+        if (this.expenseConfig?.pageTitles) {
+          this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[title] || title;
+        }
+
+        this.categories = []; // reset categories to avoid duplicates
+
+        this.expenseConfig?.category?.forEach((category: any) => {
+          if (category?.displayPage?.[title]) {
+            // Add only categories applicable for the current page
+            this.categories.push(category);
+          }
+        });
+      }
+    }
+
     if (this.expenseConfig?.request) {
       this.getTravelRequestList();
       const control = FormControlFactory.createControl(this.expenseConfig.request);
@@ -255,7 +295,7 @@ export class MainExpenseComponent {
       LocalTravelMode: this.localTravelModeList
     };
 
-    this.categories = this.expenseConfig.category.map((category: any) => ({
+    this.categories = this.categories.map((category: any) => ({
       ...category,
       formControls: category.formControls.map((control: any) => ({
         ...control,

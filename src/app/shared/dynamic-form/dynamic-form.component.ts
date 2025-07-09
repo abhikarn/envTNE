@@ -476,7 +476,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   onEditRow(rowData: any) {
     if (rowData.row?.costcentreWiseExpense?.length > 0) {
-      this.costCenterComponentRef.setMultipleCostCenterFlag(true);
+      this.costCenterComponentRef?.setMultipleCostCenterFlag(true);
       this.costCenterComponentRef.costCenterData = rowData.row?.costcentreWiseExpense;
     }
     if (rowData.row?.gst?.length > 0) {
@@ -537,7 +537,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
       dateInput.timeControl.reset();
     });
-    this.costCenterComponentRef.setMultipleCostCenterFlag(false);
+    this.costCenterComponentRef?.setMultipleCostCenterFlag(false);
     this.costCenterComponentRef.costCenterData = [];
     this.gstComponentRef.setCompanyGSTFlag(false);
     this.gstComponentRef.gstData = [];

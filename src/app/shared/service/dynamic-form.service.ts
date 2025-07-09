@@ -161,11 +161,23 @@ export class DynamicFormService {
       });
   }
 
-  mapOtherControls(data: any, otherControls: Record<string, string>): Record<string, any> {
+  mapOtherControls(data: any, otherControls: Record<string, string>, landingBoxData?: any): Record<string, any> {
     const mappedResult: Record<string, any> = {};
 
     for (const [outputKey, sourceKey] of Object.entries(otherControls)) {
-      mappedResult[outputKey] = data[sourceKey] ?? null; // fallback to null if key not found
+      if(data) {
+        // If data is available, use it
+        const value = (data && data[sourceKey] !== undefined) ? data[sourceKey] : null;
+        mappedResult[outputKey] = value;
+      } else if (landingBoxData && landingBoxData[sourceKey] !== undefined) {
+        // If data is not available, check landingBoxData
+        const value = landingBoxData[sourceKey] !== undefined ? landingBoxData[sourceKey] : null;
+        mappedResult[outputKey] = value;
+        continue;
+      } else {
+        // If neither data nor landingBoxData has the key, set it to null
+        mappedResult[outputKey] = null;
+      }
     }
 
     return mappedResult;
@@ -279,7 +291,7 @@ export class DynamicFormService {
       });
       // Handle other controls if they exist
       if (businessCaseData?.otherControls) {
-        const output = this.mapOtherControls(moduleData, businessCaseData.otherControls);
+        const output = this.mapOtherControls(moduleData, businessCaseData.otherControls, businessCaseData?.landingBoxData);
         requestBody = { ...requestBody, ...output };
       }
 

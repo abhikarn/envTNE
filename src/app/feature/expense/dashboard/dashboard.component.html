@@ -1114,7 +1114,7 @@
                                                 <div class="TBL-actions">
                                                    <ul class="action-icons">
                                                       <li *ngIf="element.IsEdit">
-                                                         <a [routerLink]="['/expense/expense/edit-expense',element.TransactionId]"
+                                                         <a [routerLink]="['/expense/expense/edit-expense', element.ExpenseClaimTypeDescription,element.TransactionId]"
                                                             class="btn-icon-action btn-icon-view">
                                                          <span data-bs-toggle="tooltip"
                                                             class="fa fa-pencil"

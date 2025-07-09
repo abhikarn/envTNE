@@ -1,6 +1,6 @@
 <div class="position-relative">
   <div class="page-title justify-content-between d-flex align-items-center">
-    <h2 class="page-header">Expense</h2>
+    <h2 class="page-header">Expense - {{this.moduleConfig.pageTitle}}</h2>
   </div>
   <div class="custom-select self-select form-group mb-0 min-w-self  chm-formgroup ">
     <div class="selected  form-control chm-formselect">Self </div>
@@ -28,7 +28,8 @@
       <div class="all-data-wrapper">
         <div class="global-container-hold">
           <div class="left-container-wider scroll-left-align mar-tmd3">
-            <div class="common-block mb-3">
+            @if (expenseConfig?.request && expenseConfig.request?.displayPage[moduleConfig.pageTitle]) {
+              <div class="common-block mb-3">
               @if (!editMode) {
               <h6 class="common-title fw-bold mb-3">Select Request </h6>
               <div class="common-block-mobile">
@@ -84,13 +85,16 @@
               </div>
               }
             </div>
+            }
+            
             <!-- Travel Details -->
+            @if (expenseConfig?.request && expenseConfig.travelDetails?.displayPage[moduleConfig.pageTitle]) {
             <div class="common-block  mb-3">
               <div class="d-flex align-items-center mb-3 justify-content-between">
                 <h6 class="common-title fw-bold mb-0">{{ travelDetails?.label || 'Travel Details'}} </h6>
                 @if (expenseConfig?.dateExtension?.visible) {
                 <div class="date-extension">
-                  <button type="button" [class]="expenseConfig.dateExtension.class" [disabled]="!travelRequestId"
+                  <button type="button" [class]="expenseConfig.dateExtension.class" [disabled]="!travelRequestId && expenseConfig.request?.displayPage[moduleConfig.pageTitle]"
                     (click)="openModal()">
                     {{ expenseConfig.dateExtension.label }}
                   </button>
@@ -134,11 +138,13 @@
                 </div>
               </div>
             </div>
+            }
+            
             <!-- expense category -->
-            <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId">
+            <div id="expenseCategories" class="expense-core-wrapper" [class.disabled]="!travelRequestId && expenseConfig?.request?.displayPage[moduleConfig.pageTitle]">
               <!-- Desktop/Tablet: Show tab grouping logic -->
               <ng-container *ngIf="!isMobile; else mobileTabs">
-                <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="expense-tab-sec" fitInkBarToContent
+                <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="expense-tab-sec" fitInkBarToContent="false"
                   (selectedTabChange)="onTabChangeIfAllowed($event)">
                   <!-- Show first 5 categories as tabs -->
                   @for (category of categories.slice(0, 5); track category) {

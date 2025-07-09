@@ -8,13 +8,106 @@ export const routes: Routes = [
     path: '',
     component: BaseExpenseComponent,
     children: [
+      // Travel Expense
       {
         path: 'create-expense',
         loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Travel Expense' }
       },
       {
-        path: 'edit-expense/:id',
-        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent)
+        path: 'edit-expense/:ExpenseClaimTypeDescription/:id',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Edit Expense' }
+      },
+      // Local Travel Conveyance
+      {
+        path: 'create-local-travel-conveyance',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Local Travel Conveyance' }
+      },
+      // Mobile Handset Purchase
+      {
+        path: 'create-mobile-handset-purchase',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Mobile Handset Purchase' }
+      },
+      // Broadband Expense
+      {
+        path: 'create-broadband-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Broadband Expense' }
+      },
+      // Mobile Expense
+      {
+        path: 'create-mobile-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Mobile Expense' }
+      },
+      // Marriage Gift Expense
+      {
+        path: 'create-marriage-gift-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Marriage Gift Expense' }
+      },
+      // Deputation Expense
+      {
+        path: 'create-deputation-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Deputation Expense' }
+      },
+      // Direct Expense
+      {
+        path: 'create-direct-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Direct Expense' }
+      },
+      // Bereavement Support Claim
+      {
+        path: 'create-bereavement-support-claim',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Bereavement Support Claim' }
+      },
+      // Training and Certification Expense
+      {
+        path: 'create-training-certification-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Training and Certification Expense' }
+      },
+      // Joining Expense
+      {
+        path: 'create-joining-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Joining Expense' }
+      },
+      // Transfer Expense
+      {
+        path: 'create-transfer-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Transfer Expense' }
+      },
+      // Relocation Expense
+      {
+        path: 'create-relocation-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Relocation Expense' }
+      },
+      // Sales Force Expense
+      {
+        path: 'create-sales-force-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Sales Force Expense' }
+      },
+      // Business Entertainment Expense
+      {
+        path: 'create-business-entertainment-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Business Entertainment Expense' }
+      },
+      // Other Expense
+      {
+        path: 'create-other-expense',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Other Expense' }
       },
       {
         path: 'landing',
