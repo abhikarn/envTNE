@@ -90,25 +90,71 @@ export class DynamicFormService {
             }
           }
         }
-      });
 
-    if (form.value.IsActual) {
-      const fieldsToRemove = [
-        'EntitlementCurrency',
-        'EntitlementAmount',
-        'EntitlementConversionRate',
-        'DifferentialAmount(INR)'
-      ];
+        if (response?.ExpensePolicyEntitlementMetaData?.length > 0) {
+          const metaDataMap = category.policyEntitlementCheckApi.metaData || {};
 
-      fieldsToRemove.forEach(field => {
-        form.removeControl(field);
-        const control = formControls.find(c => c.formConfig.name === field);
-        if (control) {
-          control.formConfig.showInUI = false;
+          response.ExpensePolicyEntitlementMetaData.forEach((meta: any) => {
+            // Find the matching control name by comparing meta.FieldName with metaDataMap values
+            const matchedControlName = Object.keys(metaDataMap).find(
+              (controlName) => metaDataMap[controlName] === meta.FieldName
+            );
+
+            if (matchedControlName) {
+              let value: any;
+
+              // Extract value based on DataTypeId or DataType
+              if (meta.DataType === 'NumericValue' || meta.DataTypeId === 71) {
+                value = meta.NumericValue;
+              } else if (meta.DataType === 'IntegerValue' || meta.DataTypeId === 70) {
+                value = meta.IntegerValue;
+              } else if (meta.DataType === 'DatetimeValue' || meta.DataTypeId === 69) {
+                value = meta.DatetimeValue;
+              } else if (meta.DataType === 'BitValue') {
+                value = meta.BitValue;
+              } else if (meta.DataType === 'VarcharValue') {
+                value = meta.VarcharValue;
+              } else {
+                console.warn(`Unsupported DataType for field "${meta.FieldName}"`);
+              }
+
+              // If we got a value, set it
+              if (value !== undefined) {
+                const formControl = form.get(matchedControlName);
+                if (formControl) {
+                  formControl.setValue(value);
+                } else {
+                  console.warn(`Form control "${matchedControlName}" not found`);
+                }
+              }
+            }
+          });
         }
+
+        if (form.value.IsActual) {
+          const fieldsToRemove = [
+            'EntitlementCurrency',
+            'EntitlementAmount',
+            'EntitlementConversionRate',
+            'DifferentialAmount(INR)'
+          ];
+
+          fieldsToRemove.forEach(field => {
+            form.removeControl(field);
+            const control = formControls.find(c => c.formConfig?.name === field);
+            if (control) {
+              control.formConfig.showInUI = false;
+            }
+          });
+
+          // disable KM field
+          const kmControl = form.get('KM');
+          if (kmControl) {
+            kmControl.disable();
+          }
+        }
+        this.updateConditionalValidators(form, formControls);
       });
-    }
-    this.updateConditionalValidators(form, formControls);
   }
 
   validateFieldPolicyViolation(control: IFormControl, category: any, form: any, formConfig: any[], moduleData: any): void {

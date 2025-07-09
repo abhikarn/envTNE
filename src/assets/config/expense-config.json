@@ -11079,13 +11079,20 @@
                                 "ConversionRate"
                             ]
                         }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsActual",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
                 ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
-                        "ExpenseCategoryId": 3
+                        "ExpenseCategoryId": 4
                     },
                     "otherControls": {
                         "ClaimTypeId": "TravelTypeId",
@@ -11099,11 +11106,14 @@
                         "LocalTravelMode": "PolicyReferenceId"
                     },
                     "outputControl": {
-                        "EntitlementAmount": "ResponseValue.EntitlementAmount",
-                        "OriginalEntitlementAmount": "ResponseValue.EntitlementAmount",
-                        "IsBillRequired": "ResponseValue.IsBillRequired",
-                        "IsActual": "ResponseValue.IsActual",
-                        "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                        "EntitlementAmount": "EntitlementAmount",
+                        "OriginalEntitlementAmount": "EntitlementAmount",
+                        "IsBillRequired": "IsBillRequired",
+                        "IsActual": "IsActual",
+                        "IsTaxIncluded": "IsTaxIncluded"
+                    },
+                    "metaData": {
+                        "ClaimAmount": "Maximum Amount"
                     }
                 },
                 "policyViolationCheckApi": {
