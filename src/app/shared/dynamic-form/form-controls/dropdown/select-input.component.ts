@@ -10,6 +10,7 @@ import { ServiceRegistryService } from '../../../service/service-registry.servic
 import { MatIconModule } from '@angular/material/icon';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CommonModule } from '@angular/common';
+import { DynamicFormService } from '../../../service/dynamic-form.service';
 
 @Component({
   selector: 'lib-select-input',
@@ -30,6 +31,9 @@ import { CommonModule } from '@angular/common';
 export class SelectInputComponent implements AfterViewInit {
   @Input() control: FormControl = new FormControl('');
   @Input() controlConfig: IFormControl = { name: '' };
+  @Input() form: any;
+  @Input() moduleData: any;
+  @Input() formConfig: any;
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   disable: boolean = false;
   apiSubscription?: Subscription;
@@ -43,6 +47,7 @@ export class SelectInputComponent implements AfterViewInit {
   }
 
   constructor(
+    private dynamicFormService: DynamicFormService,
     private serviceRegistry: ServiceRegistryService,
     @Optional() private _bottomSheet?: MatBottomSheet
   ) {
@@ -174,5 +179,22 @@ export class SelectInputComponent implements AfterViewInit {
     const value = this.control.value;
     const found = this.controlConfig.options?.find((r: any) => r.value === value);
     return found ? found.label : '';
+  }
+
+  onSelectOpenedChange(opened: boolean) {
+    if (!opened) {
+      // The dropdown has closed — treat this as blur
+      this.onSelectBlur();
+    }
+  }
+
+  onSelectBlur() {
+    if (this.controlConfig.dependentCases) {
+      this.controlConfig.dependentCases.forEach((caseItem: any) => {
+        if (caseItem?.event == "onBlur" && caseItem?.payloadType === 'queryString') {
+          this.dynamicFormService.handleBusinessCaseForQueryString(caseItem, this.form, this.moduleData, this.formConfig);
+        }
+      });
+    }
   }
 }

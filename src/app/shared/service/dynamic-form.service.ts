@@ -90,25 +90,71 @@ export class DynamicFormService {
             }
           }
         }
-      });
 
-    if (form.value.IsActual) {
-      const fieldsToRemove = [
-        'EntitlementCurrency',
-        'EntitlementAmount',
-        'EntitlementConversionRate',
-        'DifferentialAmount(INR)'
-      ];
+        if (response?.ResponseValue?.ExpensePolicyEntitlementMetaData?.length > 0) {
+          const metaDataMap = category.policyEntitlementCheckApi.metaData || {};
 
-      fieldsToRemove.forEach(field => {
-        form.removeControl(field);
-        const control = formControls.find(c => c.formConfig.name === field);
-        if (control) {
-          control.formConfig.showInUI = false;
+          response?.ResponseValue.ExpensePolicyEntitlementMetaData.forEach((meta: any) => {
+            // Find the matching control name by comparing meta.FieldName with metaDataMap values
+            const matchedControlName = Object.keys(metaDataMap).find(
+              (controlName) => metaDataMap[controlName] === meta.FieldName
+            );
+
+            if (matchedControlName) {
+              let value: any;
+
+              // Extract value based on DataTypeId or DataType
+              if (meta.DataType === 'NumericValue' || meta.DataTypeId === 71) {
+                value = meta.NumericValue;
+              } else if (meta.DataType === 'IntegerValue' || meta.DataTypeId === 70) {
+                value = meta.IntegerValue;
+              } else if (meta.DataType === 'DatetimeValue' || meta.DataTypeId === 69) {
+                value = meta.DatetimeValue;
+              } else if (meta.DataType === 'BitValue') {
+                value = meta.BitValue;
+              } else if (meta.DataType === 'VarcharValue') {
+                value = meta.VarcharValue;
+              } else {
+                console.warn(`Unsupported DataType for field "${meta.FieldName}"`);
+              }
+
+              // If we got a value, set it
+              if (value !== undefined) {
+                const formControl = form.get(matchedControlName);
+                if (formControl) {
+                  formControl.setValue(value);
+                } else {
+                  console.warn(`Form control "${matchedControlName}" not found`);
+                }
+              }
+            }
+          });
         }
+
+        if (form.value.IsActual) {
+          const fieldsToRemove = [
+            'EntitlementCurrency',
+            'EntitlementAmount',
+            'EntitlementConversionRate',
+            'DifferentialAmount(INR)'
+          ];
+
+          fieldsToRemove.forEach(field => {
+            form.removeControl(field);
+            const control = formControls.find(c => c.formConfig?.name === field);
+            if (control) {
+              control.formConfig.showInUI = false;
+            }
+          });
+
+          // disable KM field
+          const kmControl = form.get('KM');
+          if (kmControl) {
+            kmControl.disable();
+          }
+        }
+        this.updateConditionalValidators(form, formControls);
       });
-    }
-    this.updateConditionalValidators(form, formControls);
   }
 
   validateFieldPolicyViolation(control: IFormControl, category: any, form: any, formConfig: any[], moduleData: any): void {
@@ -395,4 +441,69 @@ export class DynamicFormService {
     return category;
   }
 
+  handleBusinessCaseForQueryString(caseItem: any, form: any, moduleData: any, formConfig: any): void {
+    if (!caseItem || caseItem.payloadType !== 'queryString') return;
+    const service = this.serviceRegistry.getService(caseItem.apiService);
+    const apiMethod = caseItem.apiMethod;
+    if (!service || typeof service[apiMethod] !== 'function') {
+      console.warn(`Invalid API service or method: ${caseItem.apiService}.${caseItem.apiMethod}`);
+      return;
+    }
+    const queryParams: Record<string, any> = { ...caseItem.queryStringParameter };
+    Object.entries(caseItem.inputControls).forEach(([controlName, requestKey]) => {
+      if (typeof requestKey === 'string') { // Ensure requestKey is a string
+        let controlValue = form.get(controlName)?.value;
+        if (typeof controlValue === 'object' && controlValue !== null) {
+          controlValue = controlValue.value ?? controlValue; // Handle case where controlValue is an object
+        }
+        queryParams[requestKey] = controlValue; // Extract Id if it's an object
+      }
+    }
+    );
+    const output = this.mapOtherControls(moduleData, caseItem.otherControls, caseItem?.landingBoxData);
+    const requestBody: any = { ...queryParams, ...output };
+    const claimTypeId = requestBody['claimTypeId'];
+    const expenseCategoryId = requestBody['expenseCategoryId'];
+    const userMasterId = requestBody['userMasterId'];
+    const travelRequestId = requestBody['travelRequestId'];
+
+    service[apiMethod](claimTypeId, expenseCategoryId, userMasterId, travelRequestId).subscribe(
+      (response: any) => {
+        if (typeof caseItem.outputControl === 'object') {
+          for (const [outputControl, responsePath] of Object.entries(caseItem.outputControl) as [string, string][]) {
+            const extracted = this.extractValueFromPath(response, responsePath);
+
+            if (extracted !== undefined && Array.isArray(extracted)) {
+              // Find the form config item by control name
+              const dependentCaseItem = formConfig.find(
+                (item: any) => item.formConfig?.name === outputControl
+              );
+
+              if (dependentCaseItem) {
+                dependentCaseItem.formConfig.options = extracted.map((item: any) => {
+                  return {
+                    label: item[caseItem.labelKey || 'label'],
+                    value: item[caseItem.valueKey || 'value']
+                  };
+                });
+              } else {
+                console.warn(`Dependent config for control "${outputControl}" not found in formConfig.`);
+              }
+            } else {
+              console.warn(`No array data found at path "${responsePath}" in response.`);
+            }
+          }
+        } else if (typeof caseItem.outputControl === 'string') {
+          // Single field case
+          const value = this.extractValueFromPath(response, caseItem.outputControl);
+          if (value !== undefined) {
+            form.get(caseItem.outputControl)?.setValue(value);
+          }
+        }
+      },
+      (error: any) => {
+        console.error("API Error:", error);
+      }
+    );
+  }
 }
