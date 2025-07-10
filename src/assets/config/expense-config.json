@@ -2205,6 +2205,17 @@
                         "showInUI": false
                     }
                 ],
+                "freezFormControls": [
+                    "AccommodationType",
+                    "CheckInDateTime",
+                    "CheckOutDateTime",
+                    "City",
+                    "HotelName",
+                    "PaymentMode",
+                    "ClaimAmount",
+                    "ConversionRate",
+                    "TaxAmount"
+                ],
                 "policyViolationManualCheck": {
                     "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                     "controls": {
@@ -11145,11 +11156,30 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "isHideDelete",
+                        "name": "IsHideDelete",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsFreeze",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
                     }
+                ],
+                "freezFormControls": [
+                    "ClaimDate",
+                    "LocalTravelType",
+                    "LocalTravelMode",
+                    "OriginPointName",
+                    "DestinationPointName",
+                    "City",
+                    "VendorName",
+                    "PaymentMode",
+                    "ClaimAmount",
+                    "ConversionRate"
                 ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",

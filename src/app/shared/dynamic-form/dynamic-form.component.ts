@@ -210,12 +210,18 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
-
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       this.dynamicFormService.scrollToFirstInvalidControl('form');
       return;
     }
+
+    // enable all controls before submission
+    this.formControls.forEach(control => {
+      if (control.control.disabled) {
+        control.control.enable({ emitEvent: false });
+      }
+    });
     
     this.dynamicFormService.setCalculatedFields(this.form, this.formControls);
     // Only check duplicate if OCRRequired is true for this category
@@ -541,6 +547,15 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         this.form.controls[name].setValue(value);
       }
     });
+    // Disable controls based on IsFreeze flag
+    if (rowData.row?.IsFreeze) {
+      this.category.freezFormControls?.forEach((controlName: string) => {
+        const control = this.form.get(controlName);
+        if (control) {
+          control.disable({ emitEvent: false });
+        }
+      });
+    }
   }
 
   clear() {
@@ -551,8 +566,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     });
     this.costCenterComponentRef?.setMultipleCostCenterFlag(false);
     this.costCenterComponentRef.costCenterData = [];
-    this.gstComponentRef.setCompanyGSTFlag(false);
-    this.gstComponentRef.gstData = [];
+    this.gstComponentRef?.setCompanyGSTFlag(false);
+    if (this.gstComponentRef) {
+      this.gstComponentRef.gstData = [];
+    }
     this.selectedFiles = [];
     this.formControls?.forEach((control: any) => {
       if (control.formConfig?.defaultValue) {

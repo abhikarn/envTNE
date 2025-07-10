@@ -525,11 +525,14 @@ export class MainExpenseComponent {
     this.newExpenseService.getTravelRequestBookedDetail(requestBody).pipe(take(1)).subscribe({
       next: (response) => {
         if (!this.editMode) {
+          // Hide delete button for all Direct Travel Expense categories Data
           response?.dynamicExpenseDetailModels?.forEach((catdata: any) => {
             catdata.data?.forEach((data: any) => {
-              data.isHideDelete = true;
+              data.IsHideDelete = true;
+              data.IsFreeze = true;
             });
           });
+
           this.responseData = JSON.parse(JSON.stringify(response));
           this.updateCategoryCounts();
           this.expenseRequestData = response;
