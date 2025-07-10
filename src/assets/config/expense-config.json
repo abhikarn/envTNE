@@ -849,6 +849,13 @@
                             ]
                         },
                         "order": 13
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "isHideDelete",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
                 ],
                 "policyViolationCheckApi": {
@@ -2189,6 +2196,13 @@
                         "value": 0,
                         "showInUI": false,
                         "international": true
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "isHideDelete",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
                 ],
                 "policyViolationManualCheck": {
@@ -11128,6 +11142,13 @@
                         "isExcluded": true,
                         "value": 0,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "isHideDelete",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
                 ],
                 "policyEntitlementCheckApi": {
@@ -13233,6 +13254,13 @@
                                 "ConversionRate"
                             ]
                         }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "isHideDelete",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
                 ],
                 "expanded": true,
