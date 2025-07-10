@@ -38,14 +38,14 @@
             "data": [
                 {
                     "isEnabled": true,
-                    "name": "TravelDateFromString",
+                    "name": "travelDateFromString",
                     "label": "Travel From Date",
                     "value": null,
                     "order": 1
                 },
                 {
                     "isEnabled": true,
-                    "name": "TravelDateToString",
+                    "name": "travelDateToString",
                     "label": "Travel To Date",
                     "value": null,
                     "order": 2
@@ -857,8 +857,8 @@
                     "requestBody": {},
                     "otherControls": {
                         "UserMasterId": "UserMasterId",
-                        "TravelTypeId": "TravelTypeId",
-                        "RequestForId": "RequestForId"
+                        "TravelTypeId": "travelTypeId",
+                        "RequestForId": "requestForId"
                     },
                     "inputControls": {
                         "TravelMode": "TravelModeId",
@@ -1300,7 +1300,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -1324,7 +1324,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -2205,8 +2205,8 @@
                         "ExpenseCategoryId": 3
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -2709,7 +2709,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -2733,7 +2733,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -3563,8 +3563,8 @@
                         "ExpenseCategoryId": 2
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -4038,7 +4038,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -4062,7 +4062,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -4892,8 +4892,8 @@
                         "ExpenseCategoryId": 2
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -5368,7 +5368,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -5392,7 +5392,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -6222,8 +6222,8 @@
                         "ExpenseCategoryId": 2
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -6598,7 +6598,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -6622,7 +6622,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -7512,8 +7512,8 @@
                         "ExpenseCategoryId": 33
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -7878,7 +7878,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -7902,7 +7902,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -8792,8 +8792,8 @@
                         "ExpenseCategoryId": 11
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -9258,7 +9258,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -9282,7 +9282,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -10164,8 +10164,8 @@
                         "ExpenseCategoryId": 3
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -10539,8 +10539,8 @@
                                     "LocalTravelMode": "ResponseValue"
                                 },
                                 "otherControls": {
-                                    "claimTypeId": "TravelTypeId",
-                                    "travelRequestId": "TravelRequestId",
+                                    "claimTypeId": "travelTypeId",
+                                    "travelRequestId": "travelRequestId",
                                     "userMasterId": "UserMasterId"
                                 },
                                 "queryStringParameter": {},
@@ -11108,8 +11108,8 @@
                         "ExpenseCategoryId": 4
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -11407,7 +11407,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -11431,7 +11431,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -12116,7 +12116,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -12140,7 +12140,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -12461,8 +12461,8 @@
                         "ExpenseCategoryId": 3
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -12487,7 +12487,7 @@
                         "DistanceLimitPerDay": 0
                     },
                     "otherControls": {
-                        "TravelRequestId": "TravelRequestId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -12740,7 +12740,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "landingBoxData": {
                                     "TravelTypeId": 53
@@ -12767,7 +12767,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "landingBoxData": {
                                     "TravelTypeId": 53
@@ -13365,7 +13365,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -13389,7 +13389,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -14271,8 +14271,8 @@
                         "PolicyReferenceId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -15080,8 +15080,8 @@
                         "CountryGradeId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -15833,8 +15833,8 @@
                         "CountryGradeId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -16061,7 +16061,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -16085,7 +16085,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -16651,8 +16651,8 @@
                         "ExpenseCategoryId": 26
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -18278,8 +18278,8 @@
                         "PolicyReferenceId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -19244,8 +19244,8 @@
                         "ExpenseCategoryId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -20230,8 +20230,8 @@
                         "ExpenseCategoryId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -20979,8 +20979,8 @@
                         "PolicyReferenceId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -21326,7 +21326,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -21350,7 +21350,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -21973,8 +21973,8 @@
                         "ExpenseCategoryId": 2
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -22378,7 +22378,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -22402,7 +22402,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -23232,8 +23232,8 @@
                         "ExpenseCategoryId": 2
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -24016,8 +24016,8 @@
                         "PolicyReferenceId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -24771,7 +24771,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -24795,7 +24795,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "TravelTypeId"
+                                    "Type": "travelTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -25200,8 +25200,8 @@
                         "ExpenseCategoryId": 3
                     },
                     "otherControls": {
-                        "ClaimTypeId": "TravelTypeId",
-                        "TravelRequestId": "TravelRequestId",
+                        "ClaimTypeId": "travelTypeId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -25226,7 +25226,7 @@
                         "DistanceLimitPerDay": 0
                     },
                     "otherControls": {
-                        "TravelRequestId": "TravelRequestId",
+                        "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
