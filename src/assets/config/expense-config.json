@@ -10830,8 +10830,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 12,
-                        "policyViolationCheck": true
+                        "order": 12
                     },
                     {
                         "type": "text",
@@ -11086,6 +11085,20 @@
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsBillRequired",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "MaximumAmount",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
                     }
                 ],
                 "policyEntitlementCheckApi": {
@@ -11106,41 +11119,28 @@
                         "LocalTravelMode": "PolicyReferenceId"
                     },
                     "outputControl": {
-                        "EntitlementAmount": "EntitlementAmount",
-                        "OriginalEntitlementAmount": "EntitlementAmount",
-                        "IsBillRequired": "IsBillRequired",
-                        "IsActual": "IsActual",
-                        "IsTaxIncluded": "IsTaxIncluded"
+                        "EntitlementAmount": "ResponseValue.EntitlementAmount",
+                        "OriginalEntitlementAmount": "ResponseValue.EntitlementAmount",
+                        "IsBillRequired": "ResponseValue.IsBillRequired",
+                        "IsActual": "ResponseValue.IsActual",
+                        "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
                     },
                     "metaData": {
-                        "ClaimAmount": "Maximum Amount"
+                        "ClaimAmount": "Maximum Amount",
+                        "MaximumAmount": "Maximum Amount"
                     }
                 },
-                "policyViolationCheckApi": {
-                    "apiService": "ExpenseService",
-                    "apiMethod": "expenseValidateExpenseClaimLocalTravelConveyance",
-                    "requestBody": {
-                        "IsKmLimitRequired": true,
-                        "DistanceLimitPerDay": 0
-                    },
-                    "otherControls": {
-                        "TravelRequestId": "TravelRequestId",
-                        "UserMasterId": "UserMasterId"
-                    },
-                    "inputControls": {
-                        "LocalTravelMode": "LocalTravelMode",
-                        "ClaimDate": "ClaimedDate",
-                        "KM": "Distance"
-                    },
-                    "outputControl": {
-                        "IsViolation": "ResponseValue.IsPolicyViolation",
-                        "Violation": "ResponseValue.Message"
+                "policyViolationManualCheck": {
+                    "formula": "ClaimAmountInBaseCurrency > MaximumAmount",
+                    "controls": {
+                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                        "MaximumAmount": "MaximumAmount"
                     },
                     "confirmPopup": {
-                        "title": "Local Travel Conveyance Expense",
-                        "message": "ResponseValue.Message",
-                        "confirmText": "Ok",
-                        "cancelText": "Cancel"
+                        "title": "Policy Violation",
+                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                        "confirmButtonText": "Yes",
+                        "cancelButtonText": "No"
                     }
                 },
                 "expanded": true,
@@ -25368,7 +25368,8 @@
                 "name": "PolicyViolations",
                 "label": "Policy Violations",
                 "Travel Ticket": "You Are Not Eligible To Travel in the selected Mode and Class.",
-                "Accommodation": "Claimed amount is greater than entitled amount."
+                "Accommodation": "Claimed amount is greater than entitled amount.",
+                "Local Conveyance During Travel": "Claimed amount is greater than entitled amount."
             },
             {
                 "name": "Approvaldetails",

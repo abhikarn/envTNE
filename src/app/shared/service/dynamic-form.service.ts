@@ -91,10 +91,10 @@ export class DynamicFormService {
           }
         }
 
-        if (response?.ExpensePolicyEntitlementMetaData?.length > 0) {
+        if (response?.ResponseValue?.ExpensePolicyEntitlementMetaData?.length > 0) {
           const metaDataMap = category.policyEntitlementCheckApi.metaData || {};
 
-          response.ExpensePolicyEntitlementMetaData.forEach((meta: any) => {
+          response?.ResponseValue.ExpensePolicyEntitlementMetaData.forEach((meta: any) => {
             // Find the matching control name by comparing meta.FieldName with metaDataMap values
             const matchedControlName = Object.keys(metaDataMap).find(
               (controlName) => metaDataMap[controlName] === meta.FieldName
@@ -442,7 +442,6 @@ export class DynamicFormService {
   }
 
   handleBusinessCaseForQueryString(caseItem: any, form: any, moduleData: any, formConfig: any): void {
-    debugger
     if (!caseItem || caseItem.payloadType !== 'queryString') return;
     const service = this.serviceRegistry.getService(caseItem.apiService);
     const apiMethod = caseItem.apiMethod;
