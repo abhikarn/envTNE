@@ -12651,7 +12651,7 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -29803,7 +29803,7 @@
                         "order": 7
                     },
                     {
-                        "name": "Bill Number",
+                        "name": "BillNumber",
                         "label": "Bill Number",
                         "visible": true,
                         "position": "out",
@@ -29811,14 +29811,14 @@
                     },
                     {
                         "type": "date",
-                        "name": "Bill Date",
+                        "name": "BillDate",
                         "label": "Bill Date",
                         "visible": true,
                         "position": "out",
                         "order": 9
                     },
                     {
-                        "name": "Justification",
+                        "name": "Remarks",
                         "label": "Justification",
                         "visible": true,
                         "position": "out",
