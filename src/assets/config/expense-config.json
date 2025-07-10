@@ -1800,7 +1800,13 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 18,
+                        "disable": false,
+                        "readonly": false,
+                        "requiredIf": {
+                            "IsViolation": true
+                        },
+                        "maxLength": 500
                     },
                     {
                         "type": "costcenter",
@@ -3159,7 +3165,13 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 18,
+                        "disable": false,
+                        "readonly": false,
+                        "requiredIf": {
+                            "IsViolation": true
+                        },
+                        "maxLength": 500
                     },
                     {
                         "type": "costcenter",
@@ -4488,7 +4500,13 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 18,
+                        "disable": false,
+                        "readonly": false,
+                        "requiredIf": {
+                            "IsViolation": true
+                        },
+                        "maxLength": 500
                     },
                     {
                         "type": "costcenter",
@@ -11047,7 +11065,13 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 15
+                        "order": 15,
+                        "disable": false,
+                        "readonly": false,
+                        "requiredIf": {
+                            "IsViolation": true
+                        },
+                        "maxLength": 500
                     },
                     {
                         "type": "hidden",
@@ -13167,7 +13191,13 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 15
+                        "order": 15,
+                        "disable": false,
+                        "readonly": false,
+                        "requiredIf": {
+                            "IsViolation": true
+                        },
+                        "maxLength": 500
                     },
                     {
                         "type": "hidden",
