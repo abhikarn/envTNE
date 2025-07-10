@@ -318,6 +318,18 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   validateManualPolicyViolation() {
+    if (!this.category.policyViolationManualCheck) return;
+    // Check if the condition to evaluate is true
+    if (this.category.policyViolationManualCheck.checkIfTrue && !this.form.get(this.category.policyViolationManualCheck.checkIfTrue)?.value) {
+      this.form.get('IsViolation')?.setValue(false);
+      this.setAutoCompleteFields();
+      this.prepareFormJson();
+      this.addDataToDynamicTable();
+      setTimeout(() => {
+        this.clear();
+      }, 500);
+      return;
+    }
     const formula = this.category.policyViolationManualCheck.formula;
     const controls = this.category.policyViolationManualCheck.controls;
     const confirmPopup = this.category.policyViolationManualCheck.confirmPopup;

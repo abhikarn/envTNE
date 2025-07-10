@@ -10488,6 +10488,9 @@
                         "referenceType": 123,
                         "maxSizeMB": 15,
                         "required": false,
+                        "requiredIf": {
+                            "IsBillRequired": true
+                        },
                         "disable": false,
                         "oCRRequired": false,
                         "order": 1
@@ -10571,6 +10574,8 @@
                         "placeholder": "Select Travel Type",
                         "value": null,
                         "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
                         "required": true,
                         "validations": [
                             {
@@ -11131,6 +11136,7 @@
                     }
                 },
                 "policyViolationManualCheck": {
+                    "checkIfTrue": "IsActual",
                     "formula": "ClaimAmountInBaseCurrency > MaximumAmount",
                     "controls": {
                         "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
@@ -25574,7 +25580,7 @@
                         "label": "Flat or Own Arrangement"
                     },
                     {
-                        "name": "ConveyanceDuringTravel",
+                        "name": "Local Conveyance During Travel",
                         "label": "Conveyance During Travel"
                     },
                     {
