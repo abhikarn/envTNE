@@ -36,7 +36,7 @@
     },
     {
         "title": "Marriage Gift Expense",
-        "img": "assets/images/expense-mobile.svg",
+        "img": "assets/images/expense-marriage.svg",
         "link": "expense/expense/create-marriage-gift-expense",
         "colorClass": "expense-color7",
         "alt": "Marriage Gift Expense"
@@ -57,7 +57,7 @@
     },
     {
         "title": "Bereavement Support Claim",
-        "img": "assets/images/expense-bereavement.png",
+        "img": "assets/images/expense-bereavement.svg",
         "link": "expense/expense/create-bereavement-support-claim",
         "colorClass": "expense-color1",
         "alt": "Bereavement Support Claim"
@@ -85,21 +85,21 @@
     },
     {
         "title": "Relocation Expense",
-        "img": "assets/images/expense-relocation.png",
+        "img": "assets/images/expense-relocation.svg",
         "link": "expense/expense/create-relocation-expense",
         "colorClass": "expense-color5",
         "alt": "Relocation Expense"
     },
     {
         "title": "Sales Force Expense",
-        "img": "assets/images/salesforce-exp.png",
+        "img": "assets/images/salesforce-exp.svg",
         "link": "expense/expense/create-sales-force-expense",
         "colorClass": "expense-color6",
         "alt": "Sales Force Expense"
     },
     {
         "title": "Business Entertainment Expense",
-        "img": "assets/images/expense-business.png",
+        "img": "assets/images/expense-business.svg",
         "link": "expense/expense/create-business-entertainment-expense",
         "colorClass": "expense-color7",
         "alt": "Business Entertainment Expense"
@@ -108,7 +108,7 @@
         "title": "Other Expense",
         "img": "assets/images/expense-other.svg",
         "link": "expense/expense/create-other-expense",
-        "colorClass": "expense-color7",
+        "colorClass": "expense-color2",
         "alt": "Other Expense"
     }
 ]

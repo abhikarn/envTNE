@@ -16,9 +16,9 @@
 
 	.common-tab .mat-mdc-tab-header {
 		 
-		margin-bottom: 15px;
+		margin-bottom: 5px;
 	}
-	  .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:first-child,  .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:last-child {
+	  .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:first-child  .mat-mdc-tab-body-content ul,  .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:last-child .mat-mdc-tab-body-content  ul {
 	background: rgba(0, 0, 0, 0.01);
 	margin-top: 10px;
 	border-radius: 10px;
@@ -103,8 +103,9 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-min-width: 160px;
+min-width: 153px;
 	cursor: pointer;
+	max-width: 181px !important;
 	}
  .expense-tab-sec .mdc-tab .mdc-tab__content {
 	width: 100%;
