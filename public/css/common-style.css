@@ -1068,7 +1068,7 @@ ul.header-notify-hold {
 	padding: 0 15px;
 	position: fixed;
 	width: 96%;
-	height: 45px;
+	height:50px;
 	z-index: 9;
 	background-color: #fff;
 	box-shadow: 0px 11px 11px -7px rgba(0, 0, 0, 0.04);
@@ -9611,13 +9611,23 @@ button.dropbtn {
         right: 0;
         margin-right: 15px;
         top: 102px;
-        }.right-container-nrw .common-block {
-	height: 100vh;
+  
+        }
+        .right-container-scroll {
+	height: 100%;
+	overflow-y: scroll;
+	max-height: 500px;
+	scrollbar-width: thin;
+	scrollbar-color: #dbdbdb #f1f1f1;
+}
+.right-container-nrw .common-block {
+	height: 100%;
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 	padding: 13px 13px 13px;
-}
-        body.sidebar-mini.sidebar-collapse .left-container-wider {
+}   
+
+body.sidebar-mini.sidebar-collapse .left-container-wider {
         min-width: 75% !important;
         width: 75% !important;
         }
@@ -12290,7 +12300,7 @@ button.dropbtn {
         }
         .expense-block {
             width: 100%;
-            min-height: 100px;
+               min-height: 108px;
             /* text-align: center; */
             padding: 10px 15px;
             /* margin-bottom: 6px; */
@@ -12787,7 +12797,7 @@ button.dropbtn {
 	margin: 1px 0;
 	border-radius: 5px;
 	position: relative;
-    color: #000000 !important;
+    color: #000000 !important;cursor: pointer;
 }.side-pro-menu li a span {
 	margin-right: 10px;
 }.side-pro-menu li {

@@ -1,6 +1,6 @@
 <div class="position-relative">
   <div class="page-title justify-content-between d-flex align-items-center">
-    <h2 class="page-header">Expense - {{this.moduleConfig.pageTitle}}</h2>
+    <h2 class="page-header">Expense - <span> {{this.moduleConfig.pageTitle}} </span></h2>
   </div>
   <div class="custom-select self-select form-group mb-0 min-w-self  chm-formgroup ">
     <div class="selected  form-control chm-formselect">Self </div>
@@ -253,7 +253,8 @@
             </div>
             <!-- Other Details -->
             <div class="row ">
-              <div class="col-md-12">
+              <div class="col-md-12"> 
+                <div class="tab-scroll-container">
                 <mat-tab-group class="common-tab policy-tab" fitInkBarToContent>
                   @for (detail of expenseConfig?.otherDetails; track detail) {
                   <mat-tab>
@@ -327,6 +328,7 @@
                   </mat-tab>
                   }
                 </mat-tab-group>
+                </div>
               </div>
             </div>
             <!-- left-container-wider -->
@@ -407,7 +409,9 @@
           </div>
           <!-- Sidebar: Only show on desktop/tablet -->
           <div class="right-container-nrw rt-aside-fixed d-none d-md-block d-lg-block">
+            <div class="right-container-scroll">
             <ng-container *ngTemplateOutlet="expenseSummarySheet"></ng-container>
+            </div>
           </div>
         </div>
         <!-- all-data-wrapper -->
