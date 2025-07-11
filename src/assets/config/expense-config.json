@@ -10859,6 +10859,79 @@
                     {
                         "type": "text",
                         "subType": "number",
+                        "name": "MinimumKM",
+                        "label": "Minimum KM",
+                        "isExcluded": true,
+                        "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9.]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10000
+                            },
+                            "decimalPrecision": "2"
+                        },
+                        "required": false,
+                        "disable": false,
+                        "readonly": true,
+                        "showInUI": false,
+                        "order": 12
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "name": "MaximumKM",
+                        "label": "Maximum KM",
+                        "isExcluded": true,
+                        "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9.]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10000
+                            },
+                            "decimalPrecision": "2"
+                        },
+                        "required": false,
+                        "disable": false,
+                        "readonly": true,
+                        "showInUI": false,
+                        "order": 12
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "AmountPerKM",
+                        "isExcluded": true,
+                        "label": "Amount Per KM",
+                        "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9.]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "decimalPrecision": "2"
+                        },
+                        "required": false,
+                        "disable": false,
+                        "readonly": true,
+                        "showInUI": false,
+                        "order": 13
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
                         "name": "KM",
                         "label": "KM",
                         "isExcluded": false,
@@ -10883,6 +10956,17 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "setFields": [
+                            {
+                                "checkIfTrue": "IsPerKmLimitRequired",
+                                "name": "ClaimAmount",
+                                "formula": "AmountPerKM * KM",
+                                "dependsOn": [
+                                    "AmountPerKM",
+                                    "KM"
+                                ]
+                            }
+                        ],
                         "order": 12
                     },
                     {
@@ -11172,6 +11256,13 @@
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsKmLimitRequired",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
                 ],
                 "freezFormControls": [
@@ -11211,11 +11302,15 @@
                     },
                     "metaData": {
                         "ClaimAmount": "Maximum Amount",
-                        "MaximumAmount": "Maximum Amount"
+                        "MaximumAmount": "Maximum Amount",
+                        "IsKmLimitRequired": "Is Per Km Limit Required",
+                        "AmountPerKM": "Amount Per Km",
+                        "MinimumKM": "Minimum Km",
+                        "MaximumKM": "Maximum Km"
                     }
                 },
                 "policyViolationManualCheck": {
-                    "checkIfTrue": "IsActual",
+                    "checkIfTrue": "MaximumAmount",
                     "formula": "ClaimAmountInBaseCurrency > MaximumAmount",
                     "controls": {
                         "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
