@@ -324,52 +324,68 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   validateManualPolicyViolation() {
-    if (!this.category.policyViolationManualCheck) return;
-    // Check if the condition to evaluate is true
-    if (this.category.policyViolationManualCheck.checkIfTrue && !this.form.get(this.category.policyViolationManualCheck.checkIfTrue)?.value) {
-      this.form.get('IsViolation')?.setValue(false);
-      this.setAutoCompleteFields();
-      this.prepareFormJson();
-      this.addDataToDynamicTable();
-      setTimeout(() => {
-        this.clear();
-      }, 500);
+    const policyChecks = this.category.policyViolationManualCheck;
+    if (!Array.isArray(policyChecks) || policyChecks.length === 0) {
+      // No violations defined
+      this.proceedWithSubmission();
       return;
     }
-    const formula = this.category.policyViolationManualCheck.formula;
-    const controls = this.category.policyViolationManualCheck.controls;
-    const confirmPopup = this.category.policyViolationManualCheck.confirmPopup;
-    const controlValues: any = {};
-    for (const [key, value] of Object.entries(controls)) {
-      controlValues[key] = this.form.get(value as string)?.value;
-    }
-    const isViolation = this.dynamicFormService.evaluateFormula(formula, controlValues);
-    this.form.get('IsViolation')?.setValue(isViolation);
-    if (isViolation) {
-      // Show confirmation dialog
-      this.confirmDialogService.confirm(confirmPopup).subscribe((confirmed: boolean) => {
-        if (confirmed) {
-          this.setAutoCompleteFields();
-          this.prepareFormJson();
-          this.addDataToDynamicTable();
-          setTimeout(() => {
-            this.clear();
-          }, 500);
-        } else {
-          // Reset IsViolation if user cancels
-          this.form.get('IsViolation')?.setValue(false);
-        }
-      });
-    } else {
-      // No violation, proceed with form submission
-      this.setAutoCompleteFields();
-      this.prepareFormJson();
-      this.addDataToDynamicTable();
-      setTimeout(() => {
-        this.clear();
-      }, 500);
-    }
+
+    const checkNext = (index: number) => {
+      if (index >= policyChecks.length) {
+        // No more violations to check
+        this.proceedWithSubmission();
+        return;
+      }
+
+      const currentCheck = policyChecks[index];
+
+      // If checkIfTrue is specified and is false, skip this check
+      if (currentCheck.checkIfTrue && !this.form.get(currentCheck.checkIfTrue)?.value) {
+        checkNext(index + 1);
+        return;
+      }
+
+      // Prepare control values for formula evaluation
+      const controls = currentCheck.controls;
+      const controlValues: any = {};
+      for (const [key, value] of Object.entries(controls)) {
+        controlValues[key] = this.form.get(value as string)?.value;
+      }
+
+      const isViolation = this.dynamicFormService.evaluateFormula(currentCheck.formula, controlValues);
+
+      if (isViolation) {
+        this.form.get('IsViolation')?.setValue(true);
+        // Show confirmation dialog
+        this.confirmDialogService.confirm(currentCheck.confirmPopup).subscribe((confirmed: boolean) => {
+          if (confirmed) {
+            // Proceed to next violation check
+            checkNext(index + 1);
+          } else {
+            // User cancelled
+            this.form.get('IsViolation')?.setValue(false);
+            return;
+          }
+        });
+      } else {
+        // Not violated, move to next
+        checkNext(index + 1);
+      }
+    };
+
+    checkNext(0); // Start from the first check
   }
+
+  proceedWithSubmission() {
+    this.setAutoCompleteFields();
+    this.prepareFormJson();
+    this.addDataToDynamicTable();
+    setTimeout(() => {
+      this.clear();
+    }, 500);
+  }
+
 
   /**
    * Calls the OCR duplicate check API and returns true if duplicate found, false otherwise.
@@ -656,7 +672,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     if(control.setFields) {
       control.setFields.forEach((field: any) => {
-        
+
         const checkIfTrue = field?.checkIfTrue;
         if (checkIfTrue) {
           const conditionValue = this.form.get(checkIfTrue)?.value;

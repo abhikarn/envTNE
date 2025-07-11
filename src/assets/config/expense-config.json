@@ -2221,19 +2221,21 @@
                     "ConversionRate",
                     "TaxAmount"
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
@@ -3585,19 +3587,21 @@
                         "showInUI": false
                     }
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
@@ -4920,19 +4924,21 @@
                         "showInUI": false
                     }
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
@@ -6250,19 +6256,21 @@
                         "showInUI": false
                     }
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
@@ -7540,19 +7548,21 @@
                         "showInUI": false
                     }
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
@@ -8820,19 +8830,21 @@
                         "showInUI": false
                     }
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
@@ -10192,19 +10204,21 @@
                         "international": true
                     }
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
@@ -10521,7 +10535,7 @@
                 }
             },
             {
-                "name": "Local Conveyance During Travel ",
+                "name": "Local Conveyance During Travel",
                 "label": "Conveyance During Travel",
                 "formControls": [
                     {
@@ -11309,20 +11323,50 @@
                         "MaximumKM": "Maximum Km"
                     }
                 },
-                "policyViolationManualCheck": {
-                    "checkIfTrue": "MaximumAmount",
-                    "formula": "ClaimAmountInBaseCurrency > MaximumAmount",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "MaximumAmount": "MaximumAmount"
+                "policyViolationManualCheck": [
+                    {
+                        "checkIfTrue": "MaximumAmount",
+                        "formula": "ClaimAmountInBaseCurrency > MaximumAmount",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "MaximumAmount": "MaximumAmount"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                    {
+                        "checkIfTrue": "MinimumKM",
+                        "formula": "KM < MinimumKM",
+                        "controls": {
+                            "KM": "KM",
+                            "MinimumKM": "MinimumKM"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "KM is less than minimum KM. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
+                    },
+                    {
+                        "checkIfTrue": "MaximumKM",
+                        "formula": "KM > MaximumKM",
+                        "controls": {
+                            "KM": "KM",
+                            "MaximumKM": "MaximumKM"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "KM is greater than maximum KM. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
@@ -13215,7 +13259,7 @@
                         "readonly": true,
                         "order": 14
                     },
-                     {
+                    {
                         "type": "costcenter",
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
@@ -14450,19 +14494,21 @@
                         "international": true
                     }
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
@@ -17069,7 +17115,7 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Processing Date",
                         "value": "",
                         "required": true,
@@ -19424,19 +19470,21 @@
                         "showInUI": false
                     }
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
@@ -20410,19 +20458,21 @@
                         "showInUI": false
                     }
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
@@ -21154,21 +21204,22 @@
                             ]
                         }
                     }
-
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
@@ -22153,19 +22204,21 @@
                         "showInUI": false
                     }
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
@@ -23412,19 +23465,21 @@
                         "showInUI": false
                     }
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
@@ -23665,7 +23720,6 @@
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": []
-
             },
             {
                 "name": "Bereavement Support",
@@ -24191,21 +24245,22 @@
                             ]
                         }
                     }
-
                 ],
-                "policyViolationManualCheck": {
-                    "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
-                    "controls": {
-                        "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                        "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                    },
-                    "confirmPopup": {
-                        "title": "Policy Violation",
-                        "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
-                        "confirmButtonText": "Yes",
-                        "cancelButtonText": "No"
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
                     }
-                },
+                ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
@@ -24472,7 +24527,7 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -25569,7 +25624,7 @@
                 "label": "Policy Violations",
                 "Travel Ticket": "You Are Not Eligible To Travel in the selected Mode and Class.",
                 "Accommodation": "Claimed amount is greater than entitled amount.",
-                "Local Conveyance During Travel ": "Claimed amount is greater than entitled amount."
+                "Local Conveyance During Travel": "Claimed amount is greater than entitled amount."
             },
             {
                 "name": "Approvaldetails",
@@ -25774,7 +25829,7 @@
                         "label": "Flat or Own Arrangement"
                     },
                     {
-                        "name": "Local Conveyance During Travel ",
+                        "name": "Local Conveyance During Travel",
                         "label": "Conveyance During Travel"
                     },
                     {
@@ -32072,7 +32127,7 @@
                         "position": "in",
                         "order": 7
                     },
-                     {
+                    {
                         "name": "ServiceProvider",
                         "label": "Service Provider",
                         "visible": true,
