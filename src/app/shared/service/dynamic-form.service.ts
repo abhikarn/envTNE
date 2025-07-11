@@ -79,8 +79,25 @@ export class DynamicFormService {
 
     const output = this.mapOtherControls(moduleData, category.policyEntitlementCheckApi.otherControls);
 
+    console.log('Policy Entitlement Check Request Body:', requestBody);
+    console.log('Policy Entitlement Check Output:', output);
+    // if any value of requestBody is null the return
+    if (Object.values(requestBody).some(value => value === null)) {
+      return;
+    }
+      
+    // if any value of output is null the return
+    if (Object.values(output).some(value => value === null)) {
+      return;
+    }
+
     service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
       (response: any) => {
+        console.log('Policy Entitlement Check Response:', response);
+        if(!response?.ResponseValue) {
+          this.snackbarService.error('No Policy Entitlement is available. Please contact your administrator.');
+          return;
+        }
         if (typeof category.policyEntitlementCheckApi.outputControl === 'object') {
           // Multiple fields case
           for (const [outputControl, responsePath] of Object.entries(category.policyEntitlementCheckApi.outputControl) as [string, string][]) {
@@ -90,7 +107,6 @@ export class DynamicFormService {
             }
           }
         }
-
         if (response?.ResponseValue?.ExpensePolicyEntitlementMetaData?.length > 0) {
           const metaDataMap = category.policyEntitlementCheckApi.metaData || {};
 
@@ -147,10 +163,54 @@ export class DynamicFormService {
             }
           });
 
-          // disable KM field
+
+          // IsKmLimitRequired bit value is true, display AmountPerKM
+            const isKmLimitRequired = form.get('IsKmLimitRequired')?.value;
+          if (isKmLimitRequired) {
+            const amountPerKMControl = formControls.find(c => c.name === 'AmountPerKM');
+            if (amountPerKMControl) {
+              form.addControl('AmountPerKM', amountPerKMControl);
+              amountPerKMControl.showInUI = true;
+            }
+          }
+
+
+
+          // disable KM field if MaximumAmount is present
           const kmControl = form.get('KM');
           if (kmControl) {
-            kmControl.disable();
+            const maximumAmountControl = form.get('MaximumAmount');
+            if (maximumAmountControl && maximumAmountControl.value) {
+              kmControl.disable();
+            } else {
+              kmControl.enable();
+            }
+          }
+        } else {
+          // If IsActual is false, ensure the entitlement fields are present
+          const entitlementFields = [
+            'EntitlementCurrency',
+            'EntitlementAmount',
+            'EntitlementConversionRate',
+            'DifferentialAmount(INR)'
+          ];
+
+          entitlementFields.forEach((field: any) => {
+            if (!form.get(field)) {
+              const entitlementControlConfig = formControls.find(c => c.formConfig?.name === field);
+              if (entitlementControlConfig) {
+                form.addControl(field, entitlementControlConfig.formConfig.control);
+              }
+              const controlConfig = formControls.find(c => c.formConfig?.name === field);
+              if (controlConfig) {
+                controlConfig.formConfig.showInUI = true;
+              }
+            }
+          });
+          // enable KM field
+          const kmControl = form.get('KM');
+          if (kmControl) {
+            kmControl.enable();
           }
         }
         this.updateConditionalValidators(form, formControls);

@@ -656,6 +656,16 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     if(control.setFields) {
       control.setFields.forEach((field: any) => {
+        
+        const checkIfTrue = field?.checkIfTrue;
+        if (checkIfTrue) {
+          const conditionValue = this.form.get(checkIfTrue)?.value;
+          if (!conditionValue) {
+            // Skip this field if the condition is not met
+            return;
+          }
+        }
+
         const formula = field.formula;
         const dependsOn = field.dependsOn || [];
         const values: any = {};
