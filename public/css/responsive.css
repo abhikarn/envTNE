@@ -876,6 +876,14 @@ ul.quick-menu-links li {
         font-size: 12px;
       
     }
+.uname-dp {
+	background-color: transparent;
+	height: auto;
+	border-radius: 0;
+	line-height: inherit;
+	width: auto;
+}
+ 
     .ui-datepicker {
         width: 90%;
     }

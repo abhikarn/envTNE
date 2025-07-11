@@ -746,7 +746,7 @@ ul.header-notify-hold {
         /* border-bottom: 1px solid rgba(45, 45, 45, 0.15); */
         margin-bottom: 4px;
     }
-    ul#menu-log label::after {
+    #profile-mobile::after {
     content: "\f107";
     position: absolute;
     top: 0;
