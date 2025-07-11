@@ -63,4 +63,8 @@ export class NewExpenseService {
     });
   }
 
+  getTravelRequestBookedDetail(request: any) {
+    return this.httpClient.post<any>(`${this.basePath}Travel/TravelRequestBookedDetailGet`, request);
+  }
+
 }

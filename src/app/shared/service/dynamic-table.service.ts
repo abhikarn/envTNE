@@ -51,6 +51,11 @@ export class DynamicTableService {
                 }
               }
   
+              control.formConfig.options = control.formConfig.options?.map((item: any) => ({
+                label: item[labelKey] || item.label,
+                value: item[valueKey] || item.value
+              }));
+
               const matchedOption = control.formConfig.options?.find((opt: any) => opt.value === selected);
               if (matchedOption) {
                 data[name] = matchedOption;

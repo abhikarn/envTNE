@@ -210,12 +210,18 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
-
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       this.dynamicFormService.scrollToFirstInvalidControl('form');
       return;
     }
+
+    // enable all controls before submission
+    this.formControls.forEach(control => {
+      if (control.control.disabled) {
+        control.control.enable({ emitEvent: false });
+      }
+    });
     
     this.dynamicFormService.setCalculatedFields(this.form, this.formControls);
     // Only check duplicate if OCRRequired is true for this category
@@ -318,6 +324,18 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   validateManualPolicyViolation() {
+    if (!this.category.policyViolationManualCheck) return;
+    // Check if the condition to evaluate is true
+    if (this.category.policyViolationManualCheck.checkIfTrue && !this.form.get(this.category.policyViolationManualCheck.checkIfTrue)?.value) {
+      this.form.get('IsViolation')?.setValue(false);
+      this.setAutoCompleteFields();
+      this.prepareFormJson();
+      this.addDataToDynamicTable();
+      setTimeout(() => {
+        this.clear();
+      }, 500);
+      return;
+    }
     const formula = this.category.policyViolationManualCheck.formula;
     const controls = this.category.policyViolationManualCheck.controls;
     const confirmPopup = this.category.policyViolationManualCheck.confirmPopup;
@@ -529,6 +547,15 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         this.form.controls[name].setValue(value);
       }
     });
+    // Disable controls based on IsFreeze flag
+    if (rowData.row?.IsFreeze) {
+      this.category.freezFormControls?.forEach((controlName: string) => {
+        const control = this.form.get(controlName);
+        if (control) {
+          control.disable({ emitEvent: false });
+        }
+      });
+    }
   }
 
   clear() {
@@ -539,8 +566,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     });
     this.costCenterComponentRef?.setMultipleCostCenterFlag(false);
     this.costCenterComponentRef.costCenterData = [];
-    this.gstComponentRef.setCompanyGSTFlag(false);
-    this.gstComponentRef.gstData = [];
+    this.gstComponentRef?.setCompanyGSTFlag(false);
+    if (this.gstComponentRef) {
+      this.gstComponentRef.gstData = [];
+    }
     this.selectedFiles = [];
     this.formControls?.forEach((control: any) => {
       if (control.formConfig?.defaultValue) {

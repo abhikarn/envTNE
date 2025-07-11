@@ -305,9 +305,9 @@ export class MainExpenseComponent {
 
     // Number of travel days
     let travelDays = 0;
-    if (this.travelRequestPreview?.TravelDateFrom && this.travelRequestPreview?.TravelDateTo) {
-      const fromDate = new Date(this.travelRequestPreview.TravelDateFrom);
-      const toDate = new Date(this.travelRequestPreview.TravelDateTo);
+    if (this.travelRequestPreview?.travelDateFrom && this.travelRequestPreview?.travelDateTo) {
+      const fromDate = new Date(this.travelRequestPreview.travelDateFrom);
+      const toDate = new Date(this.travelRequestPreview.travelDateTo);
       travelDays = Math.ceil((toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24));
     }
 
@@ -318,10 +318,10 @@ export class MainExpenseComponent {
       category.formControls?.forEach((control: any) => {
         if (control.apiDateLimit) {
           if (!control?.minDate) {
-            control.minDate = this.travelRequestPreview?.TravelDateFrom;
+            control.minDate = this.travelRequestPreview?.travelDateFrom;
           }
           if (!control?.maxDate) {
-            control.maxDate = this.travelRequestPreview?.TravelDateTo;
+            control.maxDate = this.travelRequestPreview?.travelDateTo;
           }
         }
       })
@@ -372,7 +372,6 @@ export class MainExpenseComponent {
   populateExistingExpenseData(response: any) {
     this.travelRequestId = response.travelRequestId;
     this.justificationForm.get(this.expenseConfig.justification.controlName).setValue(response?.remarks);
-    this.getTravelRequestPreview();
 
     const categoryMap = new Map(this.categories.map((cat: any) => [cat.name, cat]));
 
@@ -408,6 +407,7 @@ export class MainExpenseComponent {
 
     this.applyExcludedFields();
     this.onTabChange(0);
+    this.getTravelRequestPreview();
   }
 
   // Update category item counts based on populated existing data.
@@ -491,7 +491,7 @@ export class MainExpenseComponent {
 
   // Set default currency for 'Currency' fields based on travel type.
   setCurrencyDropdown() {
-    const isWithoutCurrency = [52, 54].includes(this.travelRequestPreview?.TravelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId);
+    const isWithoutCurrency = [52, 54].includes(this.travelRequestPreview?.travelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId);
 
     const defaultCurrency = {
       Id: 1,
@@ -515,41 +515,72 @@ export class MainExpenseComponent {
   // Fetch travel request preview and extract user, cost center, and purpose info.
   getTravelRequestPreview() {
     if (!this.travelRequestId) return;
-    this.travelService
-      .travelGetTravelRequestPreview({ TravelRequestId: this.travelRequestId })
-      .pipe(take(1))
-      .subscribe({
-        next: (response) => {
-          const preview = response.ResponseValue;
-          this.travelRequestPreview = { ...preview, UserMasterId: this.userMasterId };
 
-          this.travelDetails?.data?.forEach((config: any) => {
-            const prop = config.name;
-            if (this.travelRequestPreview && this.travelRequestPreview.hasOwnProperty(prop)) {
-              config.value = this.travelRequestPreview[prop];
-            }
-            if (this.travelRequestPreview?.TravelRequestMetaData) {
-              this.travelRequestPreview.TravelRequestMetaData.forEach((meta: any) => {
-                if (meta && meta.FieldName === prop) {
-                  config.value = meta.IntegerValueReference;
-                }
-              });
-            }
+    this.travelRequestId = Number(this.travelRequestId) || 0;
+    let requestBody = {
+      TravelRequestId: this.travelRequestId,
+      ActionBy: this.userMasterId
+    };
+
+    this.newExpenseService.getTravelRequestBookedDetail(requestBody).pipe(take(1)).subscribe({
+      next: (response) => {
+        if (!this.editMode) {
+          // Hide delete button for all Direct Travel Expense categories Data
+          response?.dynamicExpenseDetailModels?.forEach((catdata: any) => {
+            catdata.data?.forEach((data: any) => {
+              data.IsHideDelete = true;
+              data.IsFreeze = true;
+            });
           });
-          this.travelDetails?.data?.sort((a: any, b: any) => a.order - b.order);
 
-          const meta = this.travelRequestPreview.TravelRequestMetaData || [];
-          this.costcenterId = meta.find((d: any) => d.TravelRequestMetaId === 4)?.IntegerValue;
-          this.purpose = meta.find((d: any) => d.TravelRequestMetaId === 1)?.IntegerValueReference;
-          const internationalFlag = [52, 54].includes(this.travelRequestPreview?.TravelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId);
-          this.moduleConfig.internationalFlag = internationalFlag;
-          this.setupCategories();
+          this.responseData = JSON.parse(JSON.stringify(response));
+          this.updateCategoryCounts();
+          this.expenseRequestData = response;
+          this.updateCategoryCounts();
           this.setCurrencyDropdown();
-        },
-        error: (error) => {
-          console.error('Error fetching travel request preview:', error);
+
+          setTimeout(() => {
+            this.summaryComponent.calculatTotalExpenseAmount();
+            this.summaryComponent.calculatCategoryWiseExpense();
+            this.summaryComponent.calculateCostCenterWiseExpense();
+          }, 1000);
+
+          this.applyExcludedFields();
+          this.onTabChange(0);
         }
-      });
+        
+        const preview = response;
+        this.travelRequestPreview = { ...preview, UserMasterId: this.userMasterId };
+
+        this.travelDetails?.data?.forEach((config: any) => {
+          const prop = config.name;
+          if (this.travelRequestPreview && this.travelRequestPreview.hasOwnProperty(prop)) {
+            config.value = this.travelRequestPreview[prop];
+          }
+          if (this.travelRequestPreview?.travelRequestMetaData) {
+            this.travelRequestPreview.travelRequestMetaData.forEach((meta: any) => {
+              if (meta && meta.fieldName === prop) {
+                config.value = meta.integerValueReference;
+              }
+            });
+          }
+        });
+        this.travelDetails?.data?.sort((a: any, b: any) => a.order - b.order);
+
+        const meta = this.travelRequestPreview.travelRequestMetaData || [];
+        this.costcenterId = meta.find((d: any) => d.TravelRequestMetaId === 4)?.IntegerValue;
+        this.purpose = meta.find((d: any) => d.TravelRequestMetaId === 1)?.IntegerValueReference;
+        const internationalFlag = [52, 54].includes(this.travelRequestPreview?.travelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId);
+        this.moduleConfig.internationalFlag = internationalFlag;
+        this.setupCategories();
+        this.setCurrencyDropdown();
+      },
+      error: (error) => {
+        console.error('Error fetching travel request booked detail:', error);
+        this.travelRequestId = 0;
+      }
+    });
+
   }
 
   // Update travelRequestId based on user selection and fetch travel request preview.
@@ -632,7 +663,7 @@ export class MainExpenseComponent {
     if (typeof inputValue === 'string') {
       const requestBody = {
         SearchText: inputValue,
-        TravelTypeId: this.travelRequestPreview?.TravelTypeId || 0
+        TravelTypeId: this.travelRequestPreview?.travelTypeId || 0
       };
 
       this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
@@ -762,9 +793,9 @@ export class MainExpenseComponent {
     this.mainExpenseData = {
       ...this.mainExpenseData,
       ExpenseRequestId: this.expenseRequestId,
-      RequestForId: this.travelRequestPreview.RequestForId,
+      RequestForId: this.travelRequestPreview.requestForId,
       RequesterId: this.userMasterId,
-      TravelRequestId: this.travelRequestPreview.TravelRequestId,
+      TravelRequestId: this.travelRequestPreview.travelRequestId,
       RequestDate: new Date().toISOString(),
       Purpose: this.purpose,
       CostCentreId: this.costcenterId,
@@ -774,6 +805,48 @@ export class MainExpenseComponent {
       dynamicExpenseDetailModels: this.utilsService.simplifyObject(this.expenseRequestData?.dynamicExpenseDetailModels)
     };
     console.log(this.mainExpenseData);
+
+    // Check for missing required fields grouped by category
+    const missingFieldsByCategory = this.mainExpenseData.dynamicExpenseDetailModels
+      .map((expenseCategory: any) => {
+        const configCategory = this.categories.find((cat: any) => cat.name === expenseCategory.name);
+        if (!configCategory) return null;
+
+        const requiredFields = configCategory.formControls
+          .filter((control: any) => control.required && !control.isExcluded)
+          .map((control: any) => control.name);
+
+        const missingFields = requiredFields.filter((field: string) => {
+          return !expenseCategory.data.some((item: any) => {
+            const value = item[field];
+            return value !== undefined && value !== null && value !== '';
+          });
+        });
+
+        if (missingFields.length === 0) return null;
+
+        return {
+          categoryName: expenseCategory.name,
+          missingFields
+        };
+      })
+      .filter(Boolean);
+
+    // If there are missing fields, block and show them in a confirm dialog
+    if (missingFieldsByCategory.length > 0) {
+      const missingFieldsMessage = missingFieldsByCategory
+        .map((cat: any) => `${cat.categoryName}: ${cat.missingFields.join(', ')}`)
+        .join('\n\n');
+
+      this.confirmDialogService.confirm({
+        title: 'Missing Required Fields',
+        message: `Please fill in the following required fields:\n\n${missingFieldsMessage}`,
+        confirmText: 'OK',
+        cancelButton: false
+      }).subscribe();
+
+      return;
+    }
 
     this.confirmDialogService
       .confirm({
@@ -805,9 +878,9 @@ export class MainExpenseComponent {
 
   openModal() {
     const data = {
-      TravelDateFrom: this.travelRequestPreview?.TravelDateFromExtended,
-      TravelDateTo: this.travelRequestPreview?.TravelDateToExtended,
-      remarks: this.travelRequestPreview?.TravelRequestDateExtensionRemarks
+      TravelDateFrom: this.travelRequestPreview?.travelDateFromExtended,
+      TravelDateTo: this.travelRequestPreview?.travelDateToExtended,
+      remarks: this.travelRequestPreview?.travelRequestDateExtensionRemarks
     };
 
     if (window.innerWidth <= 768) { // Use bottom sheet for mobile

@@ -186,7 +186,7 @@
                         <mat-select class="more-item-select" placeholder="More" [value]="selectedExtraCategory"
                           (selectionChange)="onExtraCategorySelect($event.value)" panelClass="custom-more-select-panel">
                           <mat-option *ngFor="let cat of categories.slice(5)" [value]="cat">
-                            {{cat.label}}
+                            {{cat.label}} <span style="font-weight: bold;">{{cat.count}}</span>
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
