@@ -858,6 +858,11 @@
                         "showInUI": false
                     }
                 ],
+                "freezFormControls": [
+                    "TravelDate",
+                    "PaymentMode",
+                    "ClaimAmount"
+                ],
                 "policyViolationCheckApi": {
                     "apiService": "TravelService",
                     "apiMethod": "travelValidateTravelTicketPolicy",
@@ -10516,7 +10521,7 @@
                 }
             },
             {
-                "name": "Local Conveyance During Travel",
+                "name": "Local Conveyance During Travel ",
                 "label": "Conveyance During Travel",
                 "formControls": [
                     {
@@ -13291,6 +13296,13 @@
                         "value": false,
                         "showInUI": false
                     }
+                ],
+                "freezFormControls": [
+                    "ClaimDate",
+                    "OtherType",
+                    "City",
+                    "PaymentMode",
+                    "ClaimAmount"
                 ],
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
@@ -25462,7 +25474,7 @@
                 "label": "Policy Violations",
                 "Travel Ticket": "You Are Not Eligible To Travel in the selected Mode and Class.",
                 "Accommodation": "Claimed amount is greater than entitled amount.",
-                "Local Conveyance During Travel": "Claimed amount is greater than entitled amount."
+                "Local Conveyance During Travel ": "Claimed amount is greater than entitled amount."
             },
             {
                 "name": "Approvaldetails",
@@ -25667,7 +25679,7 @@
                         "label": "Flat or Own Arrangement"
                     },
                     {
-                        "name": "Local Conveyance During Travel",
+                        "name": "Local Conveyance During Travel ",
                         "label": "Conveyance During Travel"
                     },
                     {
