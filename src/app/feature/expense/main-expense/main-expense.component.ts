@@ -806,6 +806,48 @@ export class MainExpenseComponent {
     };
     console.log(this.mainExpenseData);
 
+    // Check for missing required fields grouped by category
+    const missingFieldsByCategory = this.mainExpenseData.dynamicExpenseDetailModels
+      .map((expenseCategory: any) => {
+        const configCategory = this.categories.find((cat: any) => cat.name === expenseCategory.name);
+        if (!configCategory) return null;
+
+        const requiredFields = configCategory.formControls
+          .filter((control: any) => control.required && !control.isExcluded)
+          .map((control: any) => control.name);
+
+        const missingFields = requiredFields.filter((field: string) => {
+          return !expenseCategory.data.some((item: any) => {
+            const value = item[field];
+            return value !== undefined && value !== null && value !== '';
+          });
+        });
+
+        if (missingFields.length === 0) return null;
+
+        return {
+          categoryName: expenseCategory.name,
+          missingFields
+        };
+      })
+      .filter(Boolean);
+
+    // If there are missing fields, block and show them in a confirm dialog
+    if (missingFieldsByCategory.length > 0) {
+      const missingFieldsMessage = missingFieldsByCategory
+        .map((cat: any) => `${cat.categoryName}: ${cat.missingFields.join(', ')}`)
+        .join('\n\n');
+
+      this.confirmDialogService.confirm({
+        title: 'Missing Required Fields',
+        message: `Please fill in the following required fields:\n\n${missingFieldsMessage}`,
+        confirmText: 'OK',
+        cancelButton: false
+      }).subscribe();
+
+      return;
+    }
+
     this.confirmDialogService
       .confirm({
         title: 'Create Expense Request',

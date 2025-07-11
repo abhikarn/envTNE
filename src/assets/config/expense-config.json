@@ -11176,7 +11176,6 @@
                     "OriginPointName",
                     "DestinationPointName",
                     "City",
-                    "VendorName",
                     "PaymentMode",
                     "ClaimAmount",
                     "ConversionRate"
