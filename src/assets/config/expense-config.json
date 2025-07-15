@@ -24271,6 +24271,13 @@
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "costcentreWiseExpense",
+                        "dataType": "object",
+                        "isExcluded": true,
+                        "value": []
                     }
                 ],
                 "freezFormControls": [

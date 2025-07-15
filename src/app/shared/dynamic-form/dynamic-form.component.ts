@@ -598,7 +598,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       dateInput.timeControl.reset();
     });
     this.costCenterComponentRef?.setMultipleCostCenterFlag(false);
-    this.costCenterComponentRef.costCenterData = [];
+    if (this.costCenterComponentRef) {
+      this.costCenterComponentRef.costCenterData = [];
+    }
     this.gstComponentRef?.setCompanyGSTFlag(false);
     if (this.gstComponentRef) {
       this.gstComponentRef.gstData = [];
