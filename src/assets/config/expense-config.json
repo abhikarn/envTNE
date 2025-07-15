@@ -16819,16 +16819,11 @@
                         ]
                     },
                     {
-                        "type": "textarea",
+                        "type": "hidden",
                         "dataType": "string",
                         "name": "Processing Remarks",
                         "isExcluded": false,
-                        "label": "Booking Remarks",
-                        "value": "",
-                        "required": false,
-                        "disable": false,
-                        "readonly": true,
-                        "order": 10
+                        "value": ""
                     },
                     {
                         "type": "textarea",
@@ -17341,16 +17336,11 @@
                         ]
                     },
                     {
-                        "type": "textarea",
+                        "type": "hidden",
                         "dataType": "string",
                         "name": "Processing Remarks",
                         "isExcluded": false,
-                        "label": "Booking Remarks",
-                        "value": "",
-                        "required": false,
-                        "disable": false,
-                        "readonly": true,
-                        "order": 10
+                        "value": ""
                     },
                     {
                         "type": "textarea",
@@ -24231,16 +24221,11 @@
                         "order": 14
                     },
                     {
-                        "type": "textarea",
+                        "type": "hidden",
                         "dataType": "string",
                         "name": "Processing Remarks",
                         "isExcluded": false,
-                        "label": "Booking Remarks",
-                        "value": "",
-                        "required": false,
-                        "disable": false,
-                        "readonly": true,
-                        "order": 10
+                        "value": ""
                     },
                     {
                         "type": "textarea",
