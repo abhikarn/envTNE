@@ -565,8 +565,14 @@
         text-transform: uppercase;
     }
 
-
-
+main.body-wrapper {
+   
+    display: block;
+     
+}
+.recent-exp-req {
+    background-color: transparent;
+}
 
 
     
@@ -859,7 +865,9 @@ ul.quick-menu-links li {
 	max-height: 2.5em;
 	overflow: hidden;
 }
-     
+   .line-tab .nav-link {
+    font-size: 13px!important;
+}  
     /* #expenseHead .menu-item { width: 29%;} */
 
  ul#menu-log .uname-dp {

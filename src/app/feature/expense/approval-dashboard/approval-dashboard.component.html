@@ -66,7 +66,7 @@
                                                     <div class="row">
                                                         <div class="col-sm-12">
                                                             <table id="tblMyTravelRequest"
-                                                                class="table table-cust-modeA filterColumnTable travelreq-app table-bordered table-striped table-cust-new d-table dataTable no-footer"
+                                                                class="table table-travelreq mobile-card-view-datatable table-cust-modeA filterColumnTableVer2 recent-exp-req table table-bordered table-striped table-cust-new d-table no-footer dataTable"
                                                                 role="grid">
                                                                 <thead>
                                                                     <tr role="row">
@@ -999,7 +999,7 @@
                                                 <tr mat-row *matRowDef="let row; columns: columnKeys"></tr>
                                             </table>
                                            <div class="text-center">
-                                    <button *ngIf="isMobile" id="loadMoreBtn1" class="dash-loadmore"
+                                    <button *ngIf="isMobile" id="loadMoreBtn1" class="dash-loadmore my-2"
                                     (click)="onLoadMore()">
                                     Load More
                                     <svg width="18" height="14" viewBox="0 0 18 14" fill="none"
