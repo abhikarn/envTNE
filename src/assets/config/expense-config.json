@@ -859,11 +859,34 @@
                     }
                 ],
                 "freezFormControls": [
-                    "TravelMode",
-                    "AvailedClass",
-                    "TravelDate",
-                    "PaymentMode",
-                    "ClaimAmount"
+                    {
+                        "name": "TravelMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "AvailedClass",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "TravelDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ClaimDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "Currency",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ClaimAmount",
+                        "valueCheck": true
+                    }
                 ],
                 "policyViolationCheckApi": {
                     "apiService": "TravelService",
@@ -2213,15 +2236,27 @@
                     }
                 ],
                 "freezFormControls": [
-                    "AccommodationType",
-                    "CheckInDateTime",
-                    "CheckOutDateTime",
-                    "City",
-                    "HotelName",
-                    "PaymentMode",
-                    "ClaimAmount",
-                    "ConversionRate",
-                    "TaxAmount"
+                    {
+                        "name": "AccommodationType",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "CheckInDateTime",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "CheckOutDateTime",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "City",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ClaimAmount",
+                        "valueCheck": true
+                    }
+
                 ],
                 "policyViolationManualCheck": [
                     {
@@ -11275,15 +11310,42 @@
                     }
                 ],
                 "freezFormControls": [
-                    "ClaimDate",
-                    "LocalTravelType",
-                    "LocalTravelMode",
-                    "OriginPointName",
-                    "DestinationPointName",
-                    "City",
-                    "PaymentMode",
-                    "ClaimAmount",
-                    "ConversionRate"
+                    {
+                        "name": "ClaimDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "LocalTravelType",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "LocalTravelMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "OriginPointName",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "DestinationPointName",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "City",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ClaimAmount",
+                        "valueCheck": true
+                    },
+                    {
+                        "name": "ConversionRate",
+                        "valueCheck": false
+                    }
                 ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
@@ -12778,11 +12840,26 @@
                     }
                 ],
                 "freezFormControls": [
-                    "ClaimDate",
-                    "OtherType",
-                    "City",
-                    "PaymentMode",
-                    "ClaimAmount"
+                    {
+                        "name": "ClaimDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ClaimAmount",
+                        "valueCheck": true
+                    },
+                    {
+                        "name": "OtherType",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "City",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "valueCheck": false
+                    }
                 ],
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
@@ -16779,12 +16856,26 @@
                     }
                 ],
                 "freezFormControls": [
-                    "ClaimDate",
-                    "Country",
-                    "PaymentMode",
-                    "Currency",
-                    "ClaimAmount",
-                    "ConversionRate"
+                    {
+                        "name": "ClaimDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ClaimAmount",
+                        "valueCheck": true
+                    },
+                    {
+                        "name": "Country",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ConversionRate",
+                        "valueCheck": false
+                    }
                 ],
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
@@ -17275,11 +17366,22 @@
                     }
                 ],
                 "freezFormControls": [
-                    "ClaimDate",
-                    "PaymentMode",
-                    "Currency",
-                    "ClaimAmount",
-                    "ConversionRate"
+                    {
+                        "name": "ClaimDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ClaimAmount",
+                        "valueCheck": true
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ConversionRate",
+                        "valueCheck": false
+                    }
                 ],
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
@@ -24156,13 +24258,30 @@
                     }
                 ],
                 "freezFormControls": [
-                    "ClaimDate",
-                    "ServiceProvider",
-                    "RoamingPlan",
-                    "PaymentMode",
-                    "Currency",
-                    "ClaimAmount",
-                    "ConversionRate"
+                    {
+                        "name": "ClaimDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ServiceProvider",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "RoamingPlan",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "Currency",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ClaimAmount",
+                        "valueCheck": true
+                    }
                 ],
                 "expanded": true,
                 "slNoLabel": "Sl. No.",

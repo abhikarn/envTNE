@@ -565,10 +565,19 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     });
     // Disable controls based on IsTravelRaiseRequest flag
     if (rowData.row?.IsTravelRaiseRequest) {
-      this.category.freezFormControls?.forEach((controlName: string) => {
-        const control = this.form.get(controlName);
-        if (control) {
-          control.disable({ emitEvent: false });
+      this.category.freezFormControls?.forEach((controlName: any) => {
+        const control = this.form.get(controlName.name);
+        if (controlName?.valueCheck) {
+          const value = this.form.get(controlName.name)?.value;
+          if (value) {
+            control?.disable({ emitEvent: false });
+          } else {
+            control?.enable({ emitEvent: false });
+          }
+        } else {
+          if (control) {
+            control.disable({ emitEvent: false });
+          }
         }
       });
     }
