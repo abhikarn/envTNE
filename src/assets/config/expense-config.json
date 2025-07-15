@@ -2241,10 +2241,12 @@
                         "valueCheck": false
                     },
                     {
+                        "type": "datetime",
                         "name": "CheckInDateTime",
                         "valueCheck": false
                     },
                     {
+                        "type": "datetime",
                         "name": "CheckOutDateTime",
                         "valueCheck": false
                     },
@@ -16819,6 +16821,18 @@
                     {
                         "type": "textarea",
                         "dataType": "string",
+                        "name": "Processing Remarks",
+                        "isExcluded": false,
+                        "label": "Booking Remarks",
+                        "value": "",
+                        "required": false,
+                        "disable": false,
+                        "readonly": true,
+                        "order": 10
+                    },
+                    {
+                        "type": "textarea",
+                        "dataType": "string",
                         "name": "Remarks",
                         "isExcluded": false,
                         "label": "Remarks",
@@ -17325,6 +17339,18 @@
                                 "order": 6
                             }
                         ]
+                    },
+                    {
+                        "type": "textarea",
+                        "dataType": "string",
+                        "name": "Processing Remarks",
+                        "isExcluded": false,
+                        "label": "Booking Remarks",
+                        "value": "",
+                        "required": false,
+                        "disable": false,
+                        "readonly": true,
+                        "order": 10
                     },
                     {
                         "type": "textarea",
@@ -24207,19 +24233,24 @@
                     {
                         "type": "textarea",
                         "dataType": "string",
+                        "name": "Processing Remarks",
+                        "isExcluded": false,
+                        "label": "Booking Remarks",
+                        "value": "",
+                        "required": false,
+                        "disable": false,
+                        "readonly": true,
+                        "order": 10
+                    },
+                    {
+                        "type": "textarea",
+                        "dataType": "string",
                         "name": "Remarks",
                         "isExcluded": false,
                         "label": "Justification",
                         "value": "",
                         "required": false,
                         "order": 15
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "CityGrade",
-                        "isExcluded": true,
-                        "value": 0,
-                        "showInUI": false
                     },
                     {
                         "type": "hidden",
@@ -24260,14 +24291,6 @@
                 "freezFormControls": [
                     {
                         "name": "ClaimDate",
-                        "valueCheck": false
-                    },
-                    {
-                        "name": "ServiceProvider",
-                        "valueCheck": false
-                    },
-                    {
-                        "name": "RoamingPlan",
                         "valueCheck": false
                     },
                     {

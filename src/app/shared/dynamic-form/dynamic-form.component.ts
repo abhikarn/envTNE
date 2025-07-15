@@ -575,6 +575,14 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             control?.enable({ emitEvent: false });
           }
         } else {
+          // if control is date then i want to disable the time control for that date control
+          if (controlName?.type === 'datetime' && this.dateInputComponentRef) {
+            this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
+              if (dateInput.controlConfig.name === controlName.name && dateInput.timeControl) {
+                dateInput.timeControl.disable({ emitEvent: false });
+              }
+            });
+          }
           if (control) {
             control.disable({ emitEvent: false });
           }
