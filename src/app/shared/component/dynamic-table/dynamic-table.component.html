@@ -46,7 +46,7 @@
                     matTooltipPosition="above"></i>
                 </span>
                 }
-                @if (!row?.IsHideDelete) {
+                @if (!row?.IsTravelRaiseRequest) {
                 <span>
                   <button class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Remove" type="submit"
                     (click)="confirmDelete(i)">

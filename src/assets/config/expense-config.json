@@ -852,14 +852,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "IsHideDelete",
-                        "isExcluded": true,
-                        "value": false,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "IsFreeze",
+                        "name": "IsTravelRaiseRequest",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
@@ -2213,14 +2206,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "IsHideDelete",
-                        "isExcluded": true,
-                        "value": false,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "IsFreeze",
+                        "name": "IsTravelRaiseRequest",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
@@ -11275,14 +11261,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "IsHideDelete",
-                        "isExcluded": true,
-                        "value": false,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "IsFreeze",
+                        "name": "IsTravelRaiseRequest",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
@@ -12792,14 +12771,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "IsHideDelete",
-                        "isExcluded": true,
-                        "value": false,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "IsFreeze",
+                        "name": "IsTravelRaiseRequest",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
@@ -16800,14 +16772,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "IsHideDelete",
-                        "isExcluded": true,
-                        "value": false,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "IsFreeze",
+                        "name": "IsTravelRaiseRequest",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
@@ -17303,14 +17268,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "IsHideDelete",
-                        "isExcluded": true,
-                        "value": false,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "IsFreeze",
+                        "name": "IsTravelRaiseRequest",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
@@ -24191,14 +24149,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "IsHideDelete",
-                        "isExcluded": true,
-                        "value": false,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "IsFreeze",
+                        "name": "IsTravelRaiseRequest",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false

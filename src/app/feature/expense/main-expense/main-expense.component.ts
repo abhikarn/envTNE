@@ -526,14 +526,6 @@ export class MainExpenseComponent {
       next: (response) => {
         console.log("Travel Request Preview Response: ", response);
         if (!this.editMode) {
-          // Hide delete button for all Direct Travel Expense categories Data
-          response?.dynamicExpenseDetailModels?.forEach((catdata: any) => {
-            catdata.data?.forEach((data: any) => {
-              data.IsHideDelete = true;
-              data.IsFreeze = true;
-            });
-          });
-
           this.responseData = JSON.parse(JSON.stringify(response));
           this.updateCategoryCounts();
           this.expenseRequestData = response;
