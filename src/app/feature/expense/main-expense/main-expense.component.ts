@@ -524,6 +524,7 @@ export class MainExpenseComponent {
 
     this.newExpenseService.getTravelRequestBookedDetail(requestBody).pipe(take(1)).subscribe({
       next: (response) => {
+        console.log("Travel Request Preview Response: ", response);
         if (!this.editMode) {
           // Hide delete button for all Direct Travel Expense categories Data
           response?.dynamicExpenseDetailModels?.forEach((catdata: any) => {
