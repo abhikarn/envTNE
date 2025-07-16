@@ -1327,6 +1327,7 @@
                         "setFields": [
                             {
                                 "name": "NoOfDays",
+                                "label":"No. of Days",
                                 "formula": "Math.max(1, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
@@ -11098,6 +11099,26 @@
                                 "dependsOn": [
                                     "AmountPerKM",
                                     "KM"
+                                ]
+                            },
+                            {
+                                "checkIfTrue": "MinimumKM",
+                                "name": "ClaimAmount",
+                                "formula": "KM < MinimumKM ? 0 : AmountPerKM * KM",
+                                "dependsOn": [
+                                    "AmountPerKM",
+                                    "KM",
+                                    "MinimumKM"
+                                ]
+                            },
+                            {
+                                "checkIfTrue": "MaximumKM",
+                                "name": "ClaimAmount",
+                                "formula": "KM > MaximumKM ? AmountPerKM * MaximumKM : AmountPerKM * KM",
+                                "dependsOn": [
+                                    "AmountPerKM",
+                                    "KM",
+                                    "MaximumKM"
                                 ]
                             }
                         ],
