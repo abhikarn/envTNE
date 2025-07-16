@@ -25746,7 +25746,7 @@
                     },
                     {
                         "type": "number",
-                        "name": "ClaimAmountInBaseCurrency",
+                        "name": "ApprovedAmountInBaseCurrency",
                         "label": "Approved(INR)",
                         "visible": true,
                         "position": "in"

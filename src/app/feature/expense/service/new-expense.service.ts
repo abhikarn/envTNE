@@ -58,7 +58,7 @@ export class NewExpenseService {
 
 
   documentDownload(data: any): Observable<Blob> {
-    return this.httpClient.post(`${this.basePath}/api/Expense/Download`, data, {
+    return this.httpClient.post(`${this.basePath}Expense/Download`, data, {
       responseType: 'blob'
     });
   }

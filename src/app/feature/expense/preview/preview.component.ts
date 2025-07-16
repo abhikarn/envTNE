@@ -154,13 +154,13 @@ export class PreviewComponent {
       next: (response: any) => {
 
         if (response) {
-          if([52, 54].includes(response?.claimTypeId)) {
+          if ([52, 54].includes(response?.claimTypeId)) {
             this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((config: any) => {
               config.columns?.forEach((column: any) => {
-                if(column.international == true) {
+                if (column.international == true) {
                   column.visible = true;
-                } 
-                if(column.international == false){
+                }
+                if (column.international == false) {
                   column.visible = false;
                 }
               });
@@ -261,7 +261,7 @@ export class PreviewComponent {
     if (this.transactionId) {
       this.getExpenseConfig();
       this.getExpenseRequestPreviewDetails();
-      
+
 
     }
     const segments = this.route.snapshot.url;
@@ -360,6 +360,8 @@ export class PreviewComponent {
   }
 
   calculatTotalExpenseAmountPreview() {
+    
+    // alert('calculatTotalExpenseAmountPreview called');
     const EXPENSE_SUMMARY_ID = "expense-summary";
     const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
     const PAYABLE_KEYS = [91, 94];
@@ -375,16 +377,17 @@ export class PreviewComponent {
 
     // Add claim amounts to respective payment modes
     this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
-      
+
       CATEGORY_NAME = expenseRequest.name;
-      expenseRequest.data?.filter((request: any) => request.ClaimStatusId !== 5 && request.selected==true).forEach((request: any) => {
-        
-        const { PaymentModeId, ClaimAmountInBaseCurrency } = request || {};
-          this.updateExpenseItem(summary, PaymentModeId, ClaimAmountInBaseCurrency);
-        });
+      expenseRequest.data?.filter((request: any) => request.ClaimStatusId !== 5 && request.selected == true).forEach((request: any) => {
+
+        // const { PaymentModeId, ClaimAmountInBaseCurrency } = request || {};
+        const { PaymentModeId, ApprovedAmountInBaseCurrency } = request || {};
+        this.updateExpenseItem(summary, PaymentModeId, ApprovedAmountInBaseCurrency);
+      });
     });
 
-    
+
     // Set adjustments value from expenseRequestAdjustment[0]?.adjustmentAmount if available (array support)
     let adjustmentAmount = 0;
     if (Array.isArray(this.expenseRequestPreviewData?.expenseRequestAdjustment) && this.expenseRequestPreviewData.expenseRequestAdjustment.length > 0) {
@@ -436,6 +439,7 @@ export class PreviewComponent {
 
   calculatCategoryWiseExpensePreview() {
     
+  //  alert('calculatCategoryWiseExpensePreview called');
     const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
     let CATEGORY_NAME = '';
 
@@ -456,9 +460,10 @@ export class PreviewComponent {
           expenseRequest.data
             ?.filter((request: any) => request.ClaimStatusId !== 5 && request.selected === true)
             .forEach((request: any) => {
-               
-              const { ClaimAmountInBaseCurrency } = request?.excludedData || request || {};
-              totalCategoryExpense = totalCategoryExpense + Number(ClaimAmountInBaseCurrency);
+
+              // const { ClaimAmountInBaseCurrency } = request?.excludedData || request || {};
+              const { ApprovedAmount } = request?.excludedData || request || {};
+              totalCategoryExpense = totalCategoryExpense + Number(ApprovedAmount);
             });
           item.value = totalCategoryExpense.toFixed(2);
         }
@@ -511,7 +516,7 @@ export class PreviewComponent {
   }
 
   getSelection(category: any) {
-    
+      
     this.expenseRequestApprovalDetailType = [];
     let dynamicExpenseDetailModels = this.expenseRequestPreviewData?.dynamicExpenseDetailModels || [];
     dynamicExpenseDetailModels?.forEach((cat: any) => {
@@ -554,7 +559,7 @@ export class PreviewComponent {
     // Add claim amounts to respective payment modes
     dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
       CATEGORY_NAME = expenseRequest.name;
-      expenseRequest.data?.filter((request: any) => request.ClaimStatusId !== 5 && request.selected==true)?.forEach((request: any) => {
+      expenseRequest.data?.filter((request: any) => request.ClaimStatusId !== 5 && request.selected == true)?.forEach((request: any) => {
         const { PaymentModeId, ApprovedAmount, selected } = request || {};
         if (selected) {
           this.updateExpenseItem(summary, PaymentModeId, ApprovedAmount);
@@ -621,7 +626,7 @@ export class PreviewComponent {
   }
 
   prepareAdjustmentFormPayload() {
-    
+
     this.dynamicAdjustmentFormpayload = {};
 
     const adjustmentSection = this.otherDetails?.find((details: any) => details?.name === 'Adjustment');
@@ -726,6 +731,14 @@ export class PreviewComponent {
       }
 
       this.prepareAdjustmentFormPayload();
+ 
+      if (Object.keys(this.dynamicAdjustmentFormpayload).length > 0) {
+        const adjustmentData = this.dynamicAdjustmentFormpayload;
+        if (adjustmentData?.AdjustmentAmount && adjustmentData?.AdjustmentAmount > 0 && adjustmentData?.AdjustmentRemarks=== '') {
+          this.snackbarService.error('Please provide adjustment remarks for the entered amount.');
+          return;
+        }
+      }
 
       const financePayload = {
         ExpenseRequestId: this.expenseRequestPreviewData?.expenseRequestId || 0,
@@ -762,14 +775,14 @@ export class PreviewComponent {
   }
 
   onTabChange(eventOrIndex?: MatTabChangeEvent | number) {
-    
+
     const tabIndex = typeof eventOrIndex === 'number'
       ? eventOrIndex
       : eventOrIndex?.index ?? 0;
 
     const tabLabel = this.otherDetails[tabIndex]?.name;
     if (tabLabel == 'Adjustment') {
-      
+
       this.isCreateAdjustmentform = true;
       // Bind values from review data to formControls
       const adjustmentSection = this.otherDetails?.find((details: any) => details?.name === 'Adjustment');

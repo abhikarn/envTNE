@@ -9,7 +9,8 @@
     <lib-text-input [controlConfig]="control.formConfig" [control]="control.control"
       (emitInputValue)="getInputValue($event)" [form]="form"
       (valueChange)="onFieldValueChange(control.formConfig)"
-      (emitBusinessCaseData)="handleBusinessCase($event)">
+      (emitBusinessCaseData)="handleBusinessCase($event)"
+      (autoCompleteFocus)="onAutoCompleteFocus($event)">
     </lib-text-input>
   </div>
   }

@@ -175,6 +175,14 @@ export class SelectInputComponent implements AfterViewInit {
     }
   }
 
+  selectDefaultRequestFromSheet(option: any) {
+    this.control.setValue(option.Id);
+    this.onSelectionChange({ value: option.Id });
+    if (this.bottomSheet) {
+      this.bottomSheet.dismiss();
+    }
+  }
+
   getSelectedRequestLabel(): string {
     const value = this.control.value;
     const found = this.controlConfig.options?.find((r: any) => r.value === value);

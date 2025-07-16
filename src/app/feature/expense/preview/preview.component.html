@@ -94,7 +94,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="  common-block mb-3">
+                  <div class="common-block mb-3">
                      <div class="common-block-mobile">
                         <div class="row  ">
                            <div class="col-md-12">
@@ -107,7 +107,7 @@
                                  <app-expansion-panel [title]="category.label" [expanded]="category.expanded"
                                     [amount]="category.amount">
                                     @if(category.columns) {
-                                    <app-material-table
+                                    <app-material-table 
                                        [categoryName]="category.name"
                                        [categoryGST]="category?.gst"
                                        [mode]="mode"
@@ -116,7 +116,7 @@
                                        [slNoLabel]="category.slNoLabel"
                                        [nestedTables]="category.nestedTables"
                                        (selectionChanged)="getSelection($event)"
-                                       (emitExpenseRequestDetailId)="showRemarks($event)">
+                                       (emitExpenseRequestDetailId)="showRemarks($event)"> 
                                     </app-material-table>
                                     }
                                  </app-expansion-panel>
