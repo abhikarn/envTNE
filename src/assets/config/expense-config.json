@@ -1149,7 +1149,12 @@
                     "Transfer Expense": true,
                     "Relocation Expense": true
                 },
-                "showCategoryFor": [51, 52, 53, 54]
+                "showCategoryFor": [
+                    51,
+                    52,
+                    53,
+                    54
+                ]
             },
             {
                 "name": "Accommodation",
@@ -1327,7 +1332,7 @@
                         "setFields": [
                             {
                                 "name": "NoOfDays",
-                                "label":"No. of Days",
+                                "label": "No. of Days",
                                 "formula": "Math.max(1, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
@@ -2326,7 +2331,6 @@
                         "name": "ClaimAmount",
                         "valueCheck": true
                     }
-
                 ],
                 "policyViolationManualCheck": [
                     {
@@ -2667,7 +2671,12 @@
                     "Transfer Expense": true,
                     "Relocation Expense": true
                 },
-                "showCategoryFor": [51, 52, 53, 54]
+                "showCategoryFor": [
+                    51,
+                    52,
+                    53,
+                    54
+                ]
             },
             {
                 "name": "PerDiem",
@@ -4005,7 +4014,12 @@
                     "Joining Expense": true,
                     "Transfer Expense": true
                 },
-                "showCategoryFor": [51, 52, 53, 54]
+                "showCategoryFor": [
+                    51,
+                    52,
+                    53,
+                    54
+                ]
             },
             {
                 "name": "DailyAllowance",
@@ -5344,7 +5358,12 @@
                     "Transfer Expense": true,
                     "Sales Force Expense": true
                 },
-                "showCategoryFor": [51, 52, 53, 54]
+                "showCategoryFor": [
+                    51,
+                    52,
+                    53,
+                    54
+                ]
             },
             {
                 "name": "Boarding Expense",
@@ -6676,7 +6695,12 @@
                     "Joining Expense": true,
                     "Transfer Expense": true
                 },
-                "showCategoryFor": [51, 52, 53, 54]
+                "showCategoryFor": [
+                    51,
+                    52,
+                    53,
+                    54
+                ]
             },
             {
                 "name": "Incidental Expenses",
@@ -6727,14 +6751,33 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
-                        "label": "Claim Date",
-                        "value": "",
+                        "isExcluded": true,
+                        "label": "Claim From Date",
+                        "value": null,
                         "required": true,
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Claim Date is required"
+                                "message": "Claim From Date is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 2,
+                        "apiDateLimit": true
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "ClaimToDate",
+                        "isExcluded": false,
+                        "label": "Claim To Date",
+                        "value": null,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim To Date is required"
                             }
                         ],
                         "disable": false,
@@ -7098,7 +7141,7 @@
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
-                                    "ClaimFromDate": "ReferenceDate"
+                                    "ClaimDate": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "ConversionRate": "ResponseValue.Value"
@@ -7663,7 +7706,8 @@
                         "name": "CountryGrade",
                         "isExcluded": true,
                         "value": 0,
-                        "showInUI": false
+                        "showInUI": false,
+                        "international": true
                     }
                 ],
                 "policyViolationManualCheck": [
@@ -7728,10 +7772,18 @@
                     {
                         "type": "date",
                         "name": "ClaimDate",
-                        "label": "Claim Date",
+                        "label": "Claim From Date",
                         "visible": true,
                         "position": "in",
                         "order": 3
+                    },
+                    {
+                        "type": "date",
+                        "name": "ClaimToDate",
+                        "label": "Claim To Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
                     },
                     {
                         "name": "City",
@@ -7959,7 +8011,12 @@
                     "Travel Expense": true,
                     "Direct Expense": true
                 },
-                "showCategoryFor": [51, 52, 53, 54]
+                "showCategoryFor": [
+                    51,
+                    52,
+                    53,
+                    54
+                ]
             },
             {
                 "name": "Laundry service",
@@ -8010,14 +8067,33 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
-                        "label": "Claim Date",
-                        "value": "",
+                        "isExcluded": true,
+                        "label": "Claim From Date",
+                        "value": null,
                         "required": true,
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Claim Date is required"
+                                "message": "Claim From Date Time is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 2,
+                        "apiDateLimit": true
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "ClaimToDate",
+                        "isExcluded": false,
+                        "label": "Claim To Date",
+                        "value": null,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claim To Date Time is required"
                             }
                         ],
                         "disable": false,
@@ -8381,7 +8457,7 @@
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
-                                    "ClaimFromDate": "ReferenceDate"
+                                    "ClaimDate": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "ConversionRate": "ResponseValue.Value"
@@ -8946,7 +9022,8 @@
                         "name": "CountryGrade",
                         "isExcluded": true,
                         "value": 0,
-                        "showInUI": false
+                        "showInUI": false,
+                        "international": true
                     }
                 ],
                 "policyViolationManualCheck": [
@@ -9011,10 +9088,18 @@
                     {
                         "type": "date",
                         "name": "ClaimDate",
-                        "label": "Claim Date",
+                        "label": "Claim From Date",
                         "visible": true,
                         "position": "in",
                         "order": 3
+                    },
+                    {
+                        "type": "text",
+                        "name": "ClaimToDate",
+                        "label": "Claim To Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
                     },
                     {
                         "name": "City",
@@ -9242,7 +9327,12 @@
                     "Travel Expense": true,
                     "Direct Expense": true
                 },
-                "showCategoryFor": [51, 52, 53, 54]
+                "showCategoryFor": [
+                    51,
+                    52,
+                    53,
+                    54
+                ]
             },
             {
                 "name": "FlatOrOwnArrangement",
@@ -9275,6 +9365,10 @@
                         "label": "Accommodation Type",
                         "placeholder": "Select Accommodation Type",
                         "value": null,
+                        "defaultValue": {
+                            "Id": 55,
+                            "Display": "Own Arrangement"
+                        },
                         "options": [],
                         "labelKey": "KeyData",
                         "valueKey": "KeyDataId",
@@ -9370,7 +9464,17 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "setFields": [
+                            {
+                                "name": "NoOfDays",
+                                "formula": "Math.max(1, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
+                                "dependsOn": [
+                                    "CheckInDateTime",
+                                    "CheckOutDateTime"
+                                ]
+                            }
+                        ]
                     },
                     {
                         "type": "date",
@@ -9406,7 +9510,46 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "setFields": [
+                            {
+                                "name": "NoOfDays",
+                                "label": "No. of Days",
+                                "formula": "Math.max(1, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
+                                "dependsOn": [
+                                    "CheckInDateTime",
+                                    "CheckOutDateTime"
+                                ],
+                                "setValidations": [
+                                    {
+                                        "type": "max",
+                                        "calculateValue": {
+                                            "formula": "NoOfDays + 1",
+                                            "dependsOn": [
+                                                "NoOfDays"
+                                            ]
+                                        },
+                                        "message": "No of Days should not be greater than `NoOfDays + 1`"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "dataType": "int",
+                        "name": "NoOfDays",
+                        "isExcluded": false,
+                        "label": "No. of Days",
+                        "value": null,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "No. of Days is required"
+                            }
+                        ]
                     },
                     {
                         "type": "text",
@@ -9549,16 +9692,15 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
-                        "autoComplete": false,
-                        "name": "VendorName",
+                        "name": "HotelName",
                         "isExcluded": false,
-                        "label": "Vendor Name",
-                        "value": null,
+                        "label": "Hotel Name",
+                        "value": "",
                         "required": true,
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Vendor Name is required"
+                                "message": "Hotel Name is required"
                             }
                         ],
                         "disable": false,
@@ -9815,6 +9957,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -9868,6 +10016,14 @@
                                 "dependsOn": [
                                     "ClaimAmount",
                                     "ConversionRate"
+                                ]
+                            },
+                            {
+                                "name": "DifferentialAmount",
+                                "formula": "ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "dependsOn": [
+                                    "ClaimAmountInBaseCurrency",
+                                    "EntitlementAmountInBaseCurrency"
                                 ]
                             }
                         ]
@@ -9939,7 +10095,13 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 18,
+                        "disable": false,
+                        "readonly": false,
+                        "requiredIf": {
+                            "IsViolation": true
+                        },
+                        "maxLength": 500
                     },
                     {
                         "type": "costcenter",
@@ -10322,6 +10484,34 @@
                         "value": 0,
                         "showInUI": false,
                         "international": true
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTravelRaiseRequest",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    }
+                ],
+                "freezFormControls": [
+                    {
+                        "name": "AccommodationType",
+                        "valueCheck": false
+                    },
+                    {
+                        "type": "datetime",
+                        "name": "CheckInDateTime",
+                        "valueCheck": false
+                    },
+                    {
+                        "type": "datetime",
+                        "name": "CheckOutDateTime",
+                        "valueCheck": false
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
                     }
                 ],
                 "policyViolationManualCheck": [
@@ -10443,6 +10633,13 @@
                         "visible": true,
                         "position": "in",
                         "order": 10
+                    },
+                    {
+                        "name": "NoOfDays",
+                        "label": "No. of Days",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
                     },
                     {
                         "name": "CountryGradeId",
@@ -10651,9 +10848,17 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true
+                    "Direct Expense": true,
+                    "Joining Expense": true,
+                    "Transfer Expense": true,
+                    "Relocation Expense": true
                 },
-                "showCategoryFor": [51, 52, 53, 54]
+                "showCategoryFor": [
+                    51,
+                    52,
+                    53,
+                    54
+                ]
             },
             {
                 "name": "Local Conveyance During Travel",
@@ -10672,7 +10877,9 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "requiredIf": {
-                            "LocalTravelMode": [58]
+                            "LocalTravelMode": [
+                                58
+                            ]
                         },
                         "disable": false,
                         "oCRRequired": false,
@@ -11705,7 +11912,12 @@
                     "Travel Expense": true,
                     "Direct Expense": true
                 },
-                "showCategoryFor": [51, 52, 53, 54]
+                "showCategoryFor": [
+                    51,
+                    52,
+                    53,
+                    54
+                ]
             },
             {
                 "name": "Business Entertainment",
@@ -12359,7 +12571,12 @@
                     "Direct Expense": true,
                     "Business Entertainment Expense": true
                 },
-                "showCategoryFor": [51, 52, 53, 54]
+                "showCategoryFor": [
+                    51,
+                    52,
+                    53,
+                    54
+                ]
             },
             {
                 "name": "Other Expenses",
@@ -13077,7 +13294,12 @@
                     "Direct Expense": true,
                     "Other Expense": true
                 },
-                "showCategoryFor": [51, 52, 53, 54]
+                "showCategoryFor": [
+                    51,
+                    52,
+                    53,
+                    54
+                ]
             },
             {
                 "name": "Medical Claim",
@@ -15085,7 +15307,10 @@
                     "Travel Expense": true,
                     "Direct Expense": true
                 },
-                "showCategoryFor": [52, 54]
+                "showCategoryFor": [
+                    52,
+                    54
+                ]
             },
             {
                 "name": "Mobile Handset Purchase",
@@ -16630,7 +16855,10 @@
                     "Travel Expense": true,
                     "Direct Expense": true
                 },
-                "showCategoryFor": [52, 54]
+                "showCategoryFor": [
+                    52,
+                    54
+                ]
             },
             {
                 "name": "Visa",
@@ -17149,7 +17377,10 @@
                     "Travel Expense": true,
                     "Direct Expense": true
                 },
-                "showCategoryFor": [52, 54]
+                "showCategoryFor": [
+                    52,
+                    54
+                ]
             },
             {
                 "name": "Travel Insurance",
@@ -17669,7 +17900,10 @@
                 "displayPage": {
                     "Travel Expense": true
                 },
-                "showCategoryFor": [52, 54]
+                "showCategoryFor": [
+                    52,
+                    54
+                ]
             },
             {
                 "name": "Relocation Travel Ticket Claim",
@@ -24540,7 +24774,10 @@
                     "Travel Expense": true,
                     "Direct Expense": true
                 },
-                "showCategoryFor": [52, 54]
+                "showCategoryFor": [
+                    52,
+                    54
+                ]
             },
             {
                 "name": "Travel Allowance",
@@ -25288,8 +25525,10 @@
                 "name": "PolicyViolations",
                 "label": "Policy Violations",
                 "Travel Ticket": "You Are Not Eligible To Travel in the selected Mode and Class.",
-                "Accommodation": "Claimed amount is greater than entitled amount.",
-                "Local Conveyance During Travel": "Claimed amount is greater than entitled amount."
+                "Accommodation": "Claimed amount is greater than Entitled amount.",
+                "Local Conveyance During Travel": "Claimed amount is greater than Entitled amount.",
+                "Incidental Expenses": "Claimed amount is greater than Entitled amount.",
+                "Laundry service": "Claimed amount is greater than Entitled amount."
             },
             {
                 "name": "Approvaldetails",
@@ -27408,10 +27647,18 @@
                     {
                         "type": "date",
                         "name": "ClaimDate",
-                        "label": "Claim Date",
+                        "label": "Claim From Date",
                         "visible": true,
                         "position": "in",
                         "order": 2
+                    },
+                    {
+                        "type": "date",
+                        "name": "ClaimToDate",
+                        "label": "Claim To Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 3
                     },
                     {
                         "type": "number",
@@ -27766,10 +28013,18 @@
                     {
                         "type": "date",
                         "name": "ClaimDate",
-                        "label": "Claim Date",
+                        "label": "Claim From Date",
                         "visible": true,
                         "position": "in",
                         "order": 2
+                    },
+                    {
+                        "type": "date",
+                        "name": "ClaimToDate",
+                        "label": "To Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 3
                     },
                     {
                         "type": "number",
