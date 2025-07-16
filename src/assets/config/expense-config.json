@@ -11099,6 +11099,26 @@
                                     "AmountPerKM",
                                     "KM"
                                 ]
+                            },
+                            {
+                                "checkIfTrue": "MinimumKM",
+                                "name": "ClaimAmount",
+                                "formula": "KM < MinimumKM ? 0 : AmountPerKM * KM",
+                                "dependsOn": [
+                                    "AmountPerKM",
+                                    "KM",
+                                    "MinimumKM"
+                                ]
+                            },
+                            {
+                                "checkIfTrue": "MaximumKM",
+                                "name": "ClaimAmount",
+                                "formula": "KM > MaximumKM ? AmountPerKM * MaximumKM : AmountPerKM * KM",
+                                "dependsOn": [
+                                    "AmountPerKM",
+                                    "KM",
+                                    "MaximumKM"
+                                ]
                             }
                         ],
                         "order": 12
