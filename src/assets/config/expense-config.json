@@ -471,6 +471,12 @@
                             {
                                 "type": "required",
                                 "message": "Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -2440,6 +2446,13 @@
                         "visible": true,
                         "position": "in",
                         "order": 10
+                    },
+                    {
+                        "name": "NoOfDays",
+                        "label": "No. of Days",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
                     },
                     {
                         "name": "CountryGradeId",
@@ -11137,6 +11150,12 @@
                             {
                                 "type": "required",
                                 "message": "Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -12698,6 +12717,12 @@
                             {
                                 "type": "required",
                                 "message": "Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -16738,6 +16763,12 @@
                             {
                                 "type": "required",
                                 "message": "Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -17257,6 +17288,12 @@
                             {
                                 "type": "required",
                                 "message": "Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -24262,6 +24299,12 @@
                             {
                                 "type": "required",
                                 "message": "Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -26046,6 +26089,12 @@
                     {
                         "name": "DifferentialAmount",
                         "label": "Differential Amount",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "NoOfDays",
+                        "label": "No. of Days",
                         "visible": true,
                         "position": "out"
                     },
