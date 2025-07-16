@@ -1271,7 +1271,17 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "setFields": [
+                            {
+                                "name": "NoOfDays",
+                                "formula": "Math.max(1, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
+                                "dependsOn": [
+                                    "CheckInDateTime",
+                                    "CheckOutDateTime"
+                                ]
+                            }
+                        ]
                     },
                     {
                         "type": "date",
@@ -1307,7 +1317,45 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "setFields": [
+                            {
+                                "name": "NoOfDays",
+                                "formula": "Math.max(1, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
+                                "dependsOn": [
+                                    "CheckInDateTime",
+                                    "CheckOutDateTime"
+                                ],
+                                "setValidations": [
+                                    {
+                                        "type": "max",
+                                        "calculateValue": {
+                                            "formula": "NoOfDays + 1",
+                                            "dependsOn": [
+                                                "NoOfDays"
+                                            ]
+                                        },
+                                        "message": "No of Days should not be greater than `NoOfDays + 1`"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "dataType": "int",
+                        "name": "NoOfDays",
+                        "isExcluded": false,
+                        "label": "No. of Days",
+                        "value": null,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "No. of Days is required"
+                            }
+                        ]
                     },
                     {
                         "type": "text",
@@ -1715,6 +1763,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,

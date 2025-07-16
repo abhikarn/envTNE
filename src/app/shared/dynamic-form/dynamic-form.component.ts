@@ -715,32 +715,46 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
 
-    if(control.setFields) {
+    if (control.setFields) {
       control.setFields.forEach((field: any) => {
-
-        const checkIfTrue = field?.checkIfTrue;
-        if (checkIfTrue) {
-          const conditionValue = this.form.get(checkIfTrue)?.value;
-          if (!conditionValue) {
-            // Skip this field if the condition is not met
-            return;
-          }
-        }
-
-        const formula = field.formula;
+        // Prepare values for formula
         const dependsOn = field.dependsOn || [];
         const values: any = {};
-
         dependsOn.forEach((dep: string) => {
           values[dep] = this.form.get(dep)?.value;
         });
 
-        const calculatedValue = this.dynamicFormService.evaluateFormula(formula, values);
-        if (calculatedValue < 0) {
-          this.form.get(field.name)?.setValue(0);
-          return;
+        // 1. Calculate the field value
+        const calculatedValue = this.dynamicFormService.evaluateFormula(field.formula, values);
+
+        // 2. Set value
+        this.form.get(field.name)?.setValue(calculatedValue < 0 ? 0 : calculatedValue);
+
+        // 3. Check for setValidations
+        if (field.setValidations && field.setValidations.length > 0) {
+          field.setValidations.forEach((validation: any) => {
+            if (validation.type === 'max') {
+              // Calculate the dynamic max
+              const maxDependsOn = validation.calculateValue.dependsOn || [];
+              const maxValues: any = {};
+              maxDependsOn.forEach((dep: string) => {
+                maxValues[dep] = this.form.get(dep)?.value;
+              });
+
+              const maxValue = this.dynamicFormService.evaluateFormula(
+                validation.calculateValue.formula,
+                maxValues
+              );
+
+              // Update the validator
+              const controlToValidate = this.form.get(field.name);
+              controlToValidate?.setValidators([
+                Validators.max(maxValue)
+              ]);
+              controlToValidate?.updateValueAndValidity();
+            }
+          });
         }
-        this.form.get(field.name)?.setValue(calculatedValue);
       });
     }
 

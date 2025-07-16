@@ -1,6 +1,14 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export class CustomValidators {
+
+  static greaterThanZeroValidator(message?: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = parseFloat(control.value);
+      return value > 0 ? null : { greaterThanZeroValidator: message || 'Amount must be greater than zero'};
+    };
+  }
+
   static validateGST(message?: string): ValidatorFn {
      
     return (control: AbstractControl): ValidationErrors | null => {
