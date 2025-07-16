@@ -208,11 +208,13 @@ export class TextInputComponent implements OnInit {
   }
 
   getErrorMessage(status: boolean): string {
-
     if (!this.controlConfig?.validations) return '';
 
     for (const validation of this.controlConfig.validations) {
-      if (this.control.hasError(validation.type)) {
+      if (
+        (validation.type && this.control.hasError(validation.type)) ||
+        (validation.subType && this.control.hasError(validation.subType))
+      ) {
         return validation.message;
       }
     }

@@ -471,6 +471,12 @@
                             {
                                 "type": "required",
                                 "message": "Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -852,16 +858,42 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "isHideDelete",
+                        "name": "IsTravelRaiseRequest",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
                     }
                 ],
                 "freezFormControls": [
-                    "TravelDate",
-                    "PaymentMode",
-                    "ClaimAmount"
+                    {
+                        "name": "TravelMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "AvailedClass",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "TravelDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ClaimDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "Currency",
+                        "valueCheck": false
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
+                    }
                 ],
                 "policyViolationCheckApi": {
                     "apiService": "TravelService",
@@ -1116,7 +1148,8 @@
                     "Joining Expense": true,
                     "Transfer Expense": true,
                     "Relocation Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Accommodation",
@@ -1244,7 +1277,17 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "setFields": [
+                            {
+                                "name": "NoOfDays",
+                                "formula": "Math.max(1, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
+                                "dependsOn": [
+                                    "CheckInDateTime",
+                                    "CheckOutDateTime"
+                                ]
+                            }
+                        ]
                     },
                     {
                         "type": "date",
@@ -1280,7 +1323,45 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "setFields": [
+                            {
+                                "name": "NoOfDays",
+                                "formula": "Math.max(1, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
+                                "dependsOn": [
+                                    "CheckInDateTime",
+                                    "CheckOutDateTime"
+                                ],
+                                "setValidations": [
+                                    {
+                                        "type": "max",
+                                        "calculateValue": {
+                                            "formula": "NoOfDays + 1",
+                                            "dependsOn": [
+                                                "NoOfDays"
+                                            ]
+                                        },
+                                        "message": "No of Days should not be greater than `NoOfDays + 1`"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "subType": "number",
+                        "dataType": "int",
+                        "name": "NoOfDays",
+                        "isExcluded": false,
+                        "label": "No. of Days",
+                        "value": null,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "No. of Days is required"
+                            }
+                        ]
                     },
                     {
                         "type": "text",
@@ -1688,6 +1769,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -1741,6 +1828,14 @@
                                 "dependsOn": [
                                     "ClaimAmount",
                                     "ConversionRate"
+                                ]
+                            },
+                            {
+                                "name": "DifferentialAmount",
+                                "formula": "ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "dependsOn": [
+                                    "ClaimAmountInBaseCurrency",
+                                    "EntitlementAmountInBaseCurrency"
                                 ]
                             }
                         ]
@@ -2204,22 +2299,33 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "isHideDelete",
+                        "name": "IsTravelRaiseRequest",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
                     }
                 ],
                 "freezFormControls": [
-                    "AccommodationType",
-                    "CheckInDateTime",
-                    "CheckOutDateTime",
-                    "City",
-                    "HotelName",
-                    "PaymentMode",
-                    "ClaimAmount",
-                    "ConversionRate",
-                    "TaxAmount"
+                    {
+                        "name": "AccommodationType",
+                        "valueCheck": false
+                    },
+                    {
+                        "type": "datetime",
+                        "name": "CheckInDateTime",
+                        "valueCheck": false
+                    },
+                    {
+                        "type": "datetime",
+                        "name": "CheckOutDateTime",
+                        "valueCheck": false
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
+                    }
+
                 ],
                 "policyViolationManualCheck": [
                     {
@@ -2340,6 +2446,13 @@
                         "visible": true,
                         "position": "in",
                         "order": 10
+                    },
+                    {
+                        "name": "NoOfDays",
+                        "label": "No. of Days",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
                     },
                     {
                         "name": "CountryGradeId",
@@ -2552,7 +2665,8 @@
                     "Joining Expense": true,
                     "Transfer Expense": true,
                     "Relocation Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "PerDiem",
@@ -3889,7 +4003,8 @@
                     "Direct Expense": true,
                     "Joining Expense": true,
                     "Transfer Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "DailyAllowance",
@@ -5227,7 +5342,8 @@
                     "Joining Expense": true,
                     "Transfer Expense": true,
                     "Sales Force Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Boarding Expense",
@@ -6558,7 +6674,8 @@
                     "Direct Expense": true,
                     "Joining Expense": true,
                     "Transfer Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Incidental Expenses",
@@ -7840,7 +7957,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Laundry service",
@@ -9122,7 +9240,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "FlatOrOwnArrangement",
@@ -10532,7 +10651,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Local Conveyance During Travel",
@@ -11030,6 +11150,12 @@
                             {
                                 "type": "required",
                                 "message": "Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -11259,14 +11385,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "IsHideDelete",
-                        "isExcluded": true,
-                        "value": false,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "IsFreeze",
+                        "name": "IsTravelRaiseRequest",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
@@ -11280,15 +11399,43 @@
                     }
                 ],
                 "freezFormControls": [
-                    "ClaimDate",
-                    "LocalTravelType",
-                    "LocalTravelMode",
-                    "OriginPointName",
-                    "DestinationPointName",
-                    "City",
-                    "PaymentMode",
-                    "ClaimAmount",
-                    "ConversionRate"
+                    {
+                        "name": "ClaimDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "LocalTravelType",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "LocalTravelMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "OriginPointName",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "DestinationPointName",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "City",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
+                    },
+                    {
+                        "name": "ConversionRate",
+                        "valueCheck": false
+                    }
                 ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
@@ -11536,7 +11683,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Business Entertainment",
@@ -12189,661 +12337,8 @@
                     "Travel Expense": true,
                     "Direct Expense": true,
                     "Business Entertainment Expense": true
-                }
-            },
-            {
-                "name": "Local Travel Conveyance",
-                "label": "Local Travel Conveyance",
-                "formControls": [
-                    {
-                        "type": "file",
-                        "dataType": "file",
-                        "name": "attachment",
-                        "isExcluded": false,
-                        "label": "Upload Your Bill",
-                        "value": [],
-                        "multiple": true,
-                        "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
-                        "referenceType": 123,
-                        "maxSizeMB": 15,
-                        "required": false,
-                        "disable": false,
-                        "oCRRequired": false,
-                        "order": 1
-                    },
-                    {
-                        "type": "date",
-                        "dataType": "datetime",
-                        "name": "ClaimDate",
-                        "isExcluded": false,
-                        "label": "Claim Date",
-                        "value": "",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Claim Date is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
-                    },
-                    {
-                        "type": "select",
-                        "dataType": "int",
-                        "name": "LocalTravelType",
-                        "isExcluded": false,
-                        "label": "Local Travel Type",
-                        "placeholder": "Select Travel Type",
-                        "value": null,
-                        "options": [],
-                        "labelKey": "Value",
-                        "valueKey": "Key",
-                        "apiService": "DataService",
-                        "apiMethod": "dataGetLocalTravelType",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Local Travel Type is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 3
-                    },
-                    {
-                        "type": "select",
-                        "dataType": "int",
-                        "name": "LocalTravelMode",
-                        "isExcluded": false,
-                        "label": "Local Travel Mode",
-                        "placeholder": "Select Travel Type",
-                        "value": null,
-                        "options": [],
-                        "labelKey": "KeyData",
-                        "valueKey": "KeyDataId",
-                        "apiService": "DataService",
-                        "apiMethod": "dataGetLocalTravelMode",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Local Travel Mode is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 4
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "name": "OriginPointName",
-                        "label": "Origin Point Name",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Origin Point Name is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 5
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "name": "DestinationPointName",
-                        "label": "Destination Point Name",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Destination Point Name is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 6
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "dataType": "int",
-                        "autoComplete": true,
-                        "name": "City",
-                        "isExcluded": true,
-                        "label": "City",
-                        "value": null,
-                        "options": [],
-                        "labelKey": "City",
-                        "valueKey": "CityMasterId",
-                        "apiService": "NewExpenseService",
-                        "apiMethod": "getMasterNameById",
-                        "dependentCases": [
-                            {
-                                "type": [
-                                    "domestic"
-                                ],
-                                "isGeneral": true,
-                                "key": "CityMasterId",
-                                "inputControls": {
-                                    "City": "CityId",
-                                    "ClaimDate": "ReferenceDate"
-                                },
-                                "outputControl": {
-                                    "CityGrade": "ResponseValue.GradeId",
-                                    "CityGradeId": "ResponseValue.Grade"
-                                },
-                                "otherControls": {
-                                    "Type": "travelTypeId"
-                                },
-                                "event": "autoComplete",
-                                "requestBody": {},
-                                "apiService": "DataService",
-                                "apiMethod": "dataGetCityGrade"
-                            },
-                            {
-                                "type": [
-                                    "international"
-                                ],
-                                "isGeneral": true,
-                                "key": "CityMasterId",
-                                "inputControls": {
-                                    "City": "CityId",
-                                    "ClaimDate": "ReferenceDate"
-                                },
-                                "outputControl": {
-                                    "Country": "ResponseValue.CountryId",
-                                    "CountryId": "ResponseValue.Country",
-                                    "CountryGrade": "ResponseValue.GradeId",
-                                    "CountryGradeId": "ResponseValue.Grade"
-                                },
-                                "otherControls": {
-                                    "Type": "travelTypeId"
-                                },
-                                "event": "autoComplete",
-                                "requestBody": {},
-                                "apiService": "DataService",
-                                "apiMethod": "dataGetCityGrade"
-                            }
-                        ],
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "City is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 4
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "dataType": "string",
-                        "name": "CityGradeId",
-                        "isExcluded": true,
-                        "label": "City Grade",
-                        "value": "",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "City Grade is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": true,
-                        "order": 5,
-                        "policyEntitlementCheck": true,
-                        "international": false
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "dataType": "string",
-                        "name": "CountryId",
-                        "isExcluded": true,
-                        "label": "Country",
-                        "value": "",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Country is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": true,
-                        "order": 6,
-                        "international": true,
-                        "inPayload": false
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "dataType": "string",
-                        "name": "CountryGradeId",
-                        "isExcluded": true,
-                        "label": "Country Grade",
-                        "value": "",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Country Grade is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": true,
-                        "order": 7,
-                        "policyEntitlementCheck": true,
-                        "international": true,
-                        "inPayload": false
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "name": "Purpose",
-                        "label": "Purpose",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Purpose is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 9
-                    },
-                    {
-                        "type": "select",
-                        "dataType": "int",
-                        "name": "PaymentMode",
-                        "isExcluded": true,
-                        "label": "Payment Type",
-                        "placeholder": "Select Payment Type",
-                        "value": "",
-                        "options": [],
-                        "labelKey": "KeyData",
-                        "valueKey": "KeyDataId",
-                        "apiService": "DataService",
-                        "apiMethod": "dataGetPaymentType",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Payment Type is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 10
-                    },
-                    {
-                        "type": "select",
-                        "dataType": "int",
-                        "name": "Currency",
-                        "isExcluded": true,
-                        "label": "Currency",
-                        "labelKey": "Name",
-                        "valueKey": "Id",
-                        "apiService": "DataService",
-                        "apiMethod": "dataGetCurrencyView",
-                        "value": 0,
-                        "defaultValue": {
-                            "Id": 1,
-                            "Code": "INR",
-                            "Name": "Indian Rupee",
-                            "Alias": "Indian Rupee",
-                            "IsBaseCurrency": true,
-                            "Display": "Indian Rupee : INR"
-                        },
-                        "options": [],
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Currency is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 11
-                    },
-                    {
-                        "type": "text",
-                        "subType": "number",
-                        "name": "KM",
-                        "label": "KM",
-                        "isExcluded": true,
-                        "value": null,
-                        "autoFormat": {
-                            "patterns": [
-                                "[^0-9.]",
-                                "^0+(?=\\d)"
-                            ],
-                            "range": {
-                                "min": 0,
-                                "max": 10000
-                            },
-                            "decimalPrecision": "2"
-                        },
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "KM is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 12,
-                        "policyViolationCheck": true
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "dataType": "numeric",
-                        "name": "ClaimAmount",
-                        "isExcluded": true,
-                        "label": "Total Amount",
-                        "value": null,
-                        "dependentCases": [
-                            {
-                                "type": [
-                                    "domestic",
-                                    "international"
-                                ],
-                                "key": "Id",
-                                "inputControls": {
-                                    "Currency": "CurrencyId",
-                                    "ClaimDate": "ReferenceDate"
-                                },
-                                "outputControl": {
-                                    "ConversionRate": "ResponseValue.Value"
-                                },
-                                "autoFormat": {
-                                    "decimal": ".00"
-                                },
-                                "event": "onBlur",
-                                "requestBody": {},
-                                "apiService": "DataService",
-                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
-                            }
-                        ],
-                        "autoFormat": {
-                            "patterns": [
-                                "[^0-9.]",
-                                "^0+(?=\\d)"
-                            ],
-                            "range": {
-                                "min": 0,
-                                "max": 10
-                            },
-                            "decimalPrecision": "2"
-                        },
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Amount is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 13
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "dataType": "numeric",
-                        "name": "ConversionRate",
-                        "isExcluded": true,
-                        "label": "Conversion Rate",
-                        "value": "",
-                        "defaultValue": "1",
-                        "autoFormat": {
-                            "patterns": [
-                                "[^0-9]",
-                                "^0+(?=\\d)"
-                            ],
-                            "range": {
-                                "min": 0,
-                                "max": 10
-                            },
-                            "setValue": "1"
-                        },
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Conversion Rate is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": true,
-                        "order": 14
-                    },
-                    {
-                        "type": "textarea",
-                        "dataType": "string",
-                        "name": "Remarks",
-                        "isExcluded": false,
-                        "label": "Justification",
-                        "value": "",
-                        "required": false,
-                        "order": 15
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "CityGrade",
-                        "isExcluded": true,
-                        "value": 0,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "IsViolation",
-                        "isExcluded": true,
-                        "value": false,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "Violation",
-                        "isExcluded": true,
-                        "value": "",
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "ClaimAmountInBaseCurrency",
-                        "isExcluded": true,
-                        "value": 0,
-                        "showInUI": false,
-                        "calculate": {
-                            "formula": "ClaimAmount * ConversionRate",
-                            "dependsOn": [
-                                "ClaimAmount",
-                                "ConversionRate"
-                            ]
-                        }
-                    }
-                ],
-                "policyEntitlementCheckApi": {
-                    "apiService": "ExpenseService",
-                    "apiMethod": "expenseGetExpensePolicyEntitlement",
-                    "requestBody": {
-                        "ExpenseCategoryId": 3
-                    },
-                    "otherControls": {
-                        "ClaimTypeId": "travelTypeId",
-                        "TravelRequestId": "travelRequestId",
-                        "UserMasterId": "UserMasterId"
-                    },
-                    "inputControls": {
-                        "ClaimDate": "ReferenceDate",
-                        "CityGrade": "CityGradeId",
-                        "CountryGrade": "CountryGradeId",
-                        "LocalTravelMode": "PolicyReferenceId"
-                    },
-                    "outputControl": {
-                        "EntitlementAmount": "ResponseValue.EntitlementAmount",
-                        "OriginalEntitlementAmount": "ResponseValue.EntitlementAmount",
-                        "IsBillRequired": "ResponseValue.IsBillRequired",
-                        "IsActual": "ResponseValue.IsActual",
-                        "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
-                    }
                 },
-                "policyViolationCheckApi": {
-                    "apiService": "ExpenseService",
-                    "apiMethod": "expenseValidateExpenseClaimLocalTravelConveyance",
-                    "requestBody": {
-                        "IsKmLimitRequired": true,
-                        "DistanceLimitPerDay": 0
-                    },
-                    "otherControls": {
-                        "TravelRequestId": "travelRequestId",
-                        "UserMasterId": "UserMasterId"
-                    },
-                    "inputControls": {
-                        "LocalTravelMode": "LocalTravelMode",
-                        "ClaimDate": "ClaimedDate",
-                        "KM": "Distance"
-                    },
-                    "outputControl": {
-                        "IsViolation": "ResponseValue.IsPolicyViolation",
-                        "Violation": "ResponseValue.Message"
-                    },
-                    "confirmPopup": {
-                        "title": "Local Travel Conveyance Expense",
-                        "message": "ResponseValue.Message",
-                        "confirmText": "Ok",
-                        "cancelText": "Cancel"
-                    }
-                },
-                "expanded": true,
-                "slNoLabel": "Sl. No.",
-                "columns": [
-                    {
-                        "name": "__slNo",
-                        "label": "Sl. No",
-                        "visible": true,
-                        "position": "in",
-                        "order": 1
-                    },
-                    {
-                        "type": "date",
-                        "name": "ClaimDate",
-                        "label": "Claim Date",
-                        "visible": true,
-                        "position": "in",
-                        "order": 2
-                    },
-                    {
-                        "name": "LocalTravelType",
-                        "label": "Local Travel Type",
-                        "visible": true,
-                        "position": "in",
-                        "order": 3
-                    },
-                    {
-                        "name": "LocalTravelMode",
-                        "label": "LocalTravelMode",
-                        "visible": true,
-                        "position": "in",
-                        "order": 4
-                    },
-                    {
-                        "name": "OriginPointName",
-                        "label": "Origin Point Name",
-                        "visible": true,
-                        "position": "in",
-                        "order": 5
-                    },
-                    {
-                        "name": "DestinationPointName",
-                        "label": "Destination Point Name",
-                        "visible": true,
-                        "position": "in",
-                        "order": 6
-                    },
-                    {
-                        "name": "City",
-                        "label": "City",
-                        "visible": true,
-                        "position": "in",
-                        "order": 7
-                    },
-                    {
-                        "name": "PaymentMode",
-                        "label": "Payment Type",
-                        "visible": true,
-                        "position": "in",
-                        "order": 7
-                    },
-                    {
-                        "type": "number",
-                        "name": "ClaimAmount",
-                        "label": "Amount",
-                        "visible": true,
-                        "position": "in-out",
-                        "decimalPrecision": "2",
-                        "order": 8
-                    },
-                    {
-                        "name": "__actions",
-                        "label": "Actions",
-                        "visible": true,
-                        "position": "in",
-                        "order": 10
-                    },
-                    {
-                        "name": "KM",
-                        "label": "KM",
-                        "visible": true,
-                        "position": "out",
-                        "order": 10
-                    },
-                    {
-                        "name": "Purpose",
-                        "label": "Purpose",
-                        "visible": true,
-                        "position": "out",
-                        "order": 10
-                    },
-                    {
-                        "type": "number",
-                        "name": "ClaimAmountInBaseCurrency",
-                        "label": "Claim Amount In Base Currency",
-                        "visible": true,
-                        "position": "out",
-                        "order": 11
-                    },
-                    {
-                        "name": "Remarks",
-                        "label": "Justification",
-                        "visible": true,
-                        "position": "out",
-                        "order": 12
-                    }
-                ],
-                "displayPage": {
-                    "Travel Expense": true,
-                    "Local Travel Conveyance": true,
-                    "Direct Expense": false,
-                    "Joining Expense": true,
-                    "Transfer Expense": true,
-                    "Relocation Expense": true
-                }
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Other Expenses",
@@ -13222,6 +12717,12 @@
                             {
                                 "type": "required",
                                 "message": "Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -13430,18 +12931,34 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "isHideDelete",
+                        "name": "IsTravelRaiseRequest",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
                     }
                 ],
                 "freezFormControls": [
-                    "ClaimDate",
-                    "OtherType",
-                    "City",
-                    "PaymentMode",
-                    "ClaimAmount"
+                    {
+                        "name": "ClaimDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
+                    },
+                    {
+                        "name": "OtherType",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "City",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "valueCheck": false
+                    }
                 ],
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
@@ -13538,7 +13055,8 @@
                     "Travel Expense": true,
                     "Direct Expense": true,
                     "Other Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Medical Claim",
@@ -15545,7 +15063,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [52, 54]
             },
             {
                 "name": "Mobile Handset Purchase",
@@ -17089,7 +16608,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [52, 54]
             },
             {
                 "name": "Visa",
@@ -17243,6 +16763,12 @@
                             {
                                 "type": "required",
                                 "message": "Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -17399,6 +16925,13 @@
                         ]
                     },
                     {
+                        "type": "hidden",
+                        "dataType": "string",
+                        "name": "Processing Remarks",
+                        "isExcluded": false,
+                        "value": ""
+                    },
+                    {
                         "type": "textarea",
                         "dataType": "string",
                         "name": "Remarks",
@@ -17428,6 +16961,36 @@
                             ]
                         },
                         "order": 13
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTravelRaiseRequest",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    }
+                ],
+                "freezFormControls": [
+                    {
+                        "name": "ClaimDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
+                    },
+                    {
+                        "name": "Country",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ConversionRate",
+                        "valueCheck": false
                     }
                 ],
                 "expanded": true,
@@ -17564,7 +17127,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [52, 54]
             },
             {
                 "name": "Travel Insurance",
@@ -17724,6 +17288,12 @@
                             {
                                 "type": "required",
                                 "message": "Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -17880,6 +17450,13 @@
                         ]
                     },
                     {
+                        "type": "hidden",
+                        "dataType": "string",
+                        "name": "Processing Remarks",
+                        "isExcluded": false,
+                        "value": ""
+                    },
+                    {
                         "type": "textarea",
                         "dataType": "string",
                         "name": "Remarks",
@@ -17909,6 +17486,32 @@
                             ]
                         },
                         "order": 13
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTravelRaiseRequest",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    }
+                ],
+                "freezFormControls": [
+                    {
+                        "name": "ClaimDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "ConversionRate",
+                        "valueCheck": false
                     }
                 ],
                 "expanded": true,
@@ -18044,7 +17647,8 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true
-                }
+                },
+                "showCategoryFor": [52, 54]
             },
             {
                 "name": "Relocation Travel Ticket Claim",
@@ -24695,6 +24299,12 @@
                             {
                                 "type": "required",
                                 "message": "Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -24733,6 +24343,13 @@
                         "order": 14
                     },
                     {
+                        "type": "hidden",
+                        "dataType": "string",
+                        "name": "Processing Remarks",
+                        "isExcluded": false,
+                        "value": ""
+                    },
+                    {
                         "type": "textarea",
                         "dataType": "string",
                         "name": "Remarks",
@@ -24741,13 +24358,6 @@
                         "value": "",
                         "required": false,
                         "order": 15
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "CityGrade",
-                        "isExcluded": true,
-                        "value": 0,
-                        "showInUI": false
                     },
                     {
                         "type": "hidden",
@@ -24776,6 +24386,39 @@
                                 "ConversionRate"
                             ]
                         }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTravelRaiseRequest",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "costcentreWiseExpense",
+                        "dataType": "object",
+                        "isExcluded": true,
+                        "value": null
+                    }
+                ],
+                "freezFormControls": [
+                    {
+                        "name": "ClaimDate",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "Currency",
+                        "valueCheck": false
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
                     }
                 ],
                 "expanded": true,
@@ -24875,7 +24518,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [52, 54]
             },
             {
                 "name": "Travel Allowance",
@@ -25841,20 +25485,8 @@
                         "label": "Other Expenses"
                     },
                     {
-                        "name": "Local Conveyance",
-                        "label": "Local Conveyance"
-                    },
-                    {
-                        "name": "Medical Claim",
-                        "label": "Medical Claim"
-                    },
-                    {
                         "name": "Baggage and Outfit Allowance",
                         "label": "Baggage and Outfit Allowance"
-                    },
-                    {
-                        "name": "Mobile Handset Purchase",
-                        "label": "Mobile Handset Purchase"
                     },
                     {
                         "name": "Transit Allowance",
@@ -25869,64 +25501,12 @@
                         "label": "Travel Insurance"
                     },
                     {
-                        "name": "Relocation Travel Ticket Claim",
-                        "label": "Transportation Claim"
-                    },
-                    {
-                        "name": "Broadband",
-                        "label": "Broadband"
-                    },
-                    {
-                        "name": "Mobile",
-                        "label": "Mobile"
-                    },
-                    {
-                        "name": "Marriage Gift",
-                        "label": "Marriage Gift"
-                    },
-                    {
-                        "name": "Deputation",
-                        "label": "Deputation"
-                    },
-                    {
                         "name": "Food",
                         "label": "Food/Meals"
                     },
                     {
-                        "name": "Car Maintainance",
-                        "label": "Car Maintainance"
-                    },
-                    {
-                        "name": "Learning & Fees Expense",
-                        "label": "Learning & Fees Expense"
-                    },
-                    {
-                        "name": "Bereavement Support",
-                        "label": "Bereavement Support"
-                    },
-                    {
-                        "name": "Training & Certification",
-                        "label": "Training & Certification"
-                    },
-                    {
-                        "name": "Lease & Rent Deposit",
-                        "label": "Lease & Rent Deposit"
-                    },
-                    {
-                        "name": "Vehicle Road Tax",
-                        "label": "Vehicle Road Tax"
-                    },
-                    {
-                        "name": "School Capitation Fees",
-                        "label": "School Capitation Fees"
-                    },
-                    {
                         "name": "Roaming",
                         "label": "Roaming"
-                    },
-                    {
-                        "name": "Travel Allowance",
-                        "label": "Travel Allowance"
                     }
                 ]
             },
@@ -26509,6 +26089,12 @@
                     {
                         "name": "DifferentialAmount",
                         "label": "Differential Amount",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "name": "NoOfDays",
+                        "label": "No. of Days",
                         "visible": true,
                         "position": "out"
                     },
@@ -28874,7 +28460,7 @@
                 ]
             },
             {
-                "name": "ConveyanceDuringTravel",
+                "name": "Local Conveyance During Travel",
                 "label": "Conveyance During Travel",
                 "data": [],
                 "amount": 0,

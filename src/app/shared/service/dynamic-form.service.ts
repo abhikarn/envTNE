@@ -152,7 +152,7 @@ export class DynamicFormService {
             'EntitlementCurrency',
             'EntitlementAmount',
             'EntitlementConversionRate',
-            'DifferentialAmount(INR)'
+            'DifferentialAmount'
           ];
 
           fieldsToRemove.forEach(field => {
@@ -192,7 +192,7 @@ export class DynamicFormService {
             'EntitlementCurrency',
             'EntitlementAmount',
             'EntitlementConversionRate',
-            'DifferentialAmount(INR)'
+            'DifferentialAmount'
           ];
 
           entitlementFields.forEach((field: any) => {
@@ -471,16 +471,25 @@ export class DynamicFormService {
 
   evaluateFormula(formula: string, values: Record<string, number | string>): number {
     try {
+      console.log('Evaluating formula:', formula, 'with values:', values);
       const keys = Object.keys(values);
-      // Convert all values to numbers safely
-      const vals = Object.values(values).map(v => Number(v));
+      const vals = Object.values(values).map(v => {
+        if (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}/.test(v)) {
+          const dateOnly = v.split('T')[0];
+          return new Date(dateOnly + 'T00:00:00Z').getTime();
+        }
+        return Number(v);
+      });
+
       const fn = new Function(...keys, `return ${formula};`);
-      return fn(...vals);
+      const result = fn(...vals);
+      return result;
     } catch (e) {
       console.warn('Formula evaluation error:', e);
       return 0;
     }
   }
+
 
   getCategoryConfig(category: any, moduleConfig: any): any {
     if (!category) return null;

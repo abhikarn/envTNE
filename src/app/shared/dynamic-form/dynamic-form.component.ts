@@ -210,6 +210,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
+    console.log('Form submitted:', this.form.value);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       this.dynamicFormService.scrollToFirstInvalidControl('form');
@@ -509,6 +510,25 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onEditRow(rowData: any) {
+    if (!rowData?.row?.IsActual) {
+      const fieldsToRemove = [
+        'EntitlementCurrency',
+        'EntitlementAmount',
+        'EntitlementConversionRate',
+        'DifferentialAmount'
+      ];
+
+      fieldsToRemove.forEach(field => {
+        this.form.removeControl(field);
+        const control = this.formControls.find(c => c.formConfig?.name === field);
+        if (control) {
+          control.formConfig.required = false;
+          control.formConfig.showInUI = false;
+        }
+      });
+    }
+
+    console.log('Editing row:', rowData);
     if (rowData.row?.costcentreWiseExpense?.length > 0) {
       this.costCenterComponentRef?.setMultipleCostCenterFlag(true);
       this.costCenterComponentRef.costCenterData = rowData.row?.costcentreWiseExpense;
@@ -563,12 +583,35 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         this.form.controls[name].setValue(value);
       }
     });
-    // Disable controls based on IsFreeze flag
-    if (rowData.row?.IsFreeze) {
-      this.category.freezFormControls?.forEach((controlName: string) => {
-        const control = this.form.get(controlName);
-        if (control) {
-          control.disable({ emitEvent: false });
+    // Disable controls based on IsTravelRaiseRequest flag
+    if (rowData.row?.IsTravelRaiseRequest) {
+      this.category.freezFormControls?.forEach((controlName: any) => {
+        const control = this.form.get(controlName.name);
+        if (controlName?.valueCheck) {
+          const value = this.form.get(controlName.name)?.value;
+          if (value) {
+            if (controlName?.type === 'number') {
+              if (Number(value) == 0) {
+                control?.enable({ emitEvent: false });
+              } else {
+                control?.disable({ emitEvent: false });
+              }
+            }
+          } else {
+            control?.enable({ emitEvent: false });
+          }
+        } else {
+          // if control is date then i want to disable the time control for that date control
+          if (controlName?.type === 'datetime' && this.dateInputComponentRef) {
+            this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
+              if (dateInput.controlConfig.name === controlName.name && dateInput.timeControl) {
+                dateInput.timeControl.disable({ emitEvent: false });
+              }
+            });
+          }
+          if (control) {
+            control.disable({ emitEvent: false });
+          }
         }
       });
     }
@@ -581,7 +624,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       dateInput.timeControl.reset();
     });
     this.costCenterComponentRef?.setMultipleCostCenterFlag(false);
-    this.costCenterComponentRef.costCenterData = [];
+    if (this.costCenterComponentRef) {
+      this.costCenterComponentRef.costCenterData = [];
+    }
     this.gstComponentRef?.setCompanyGSTFlag(false);
     if (this.gstComponentRef) {
       this.gstComponentRef.gstData = [];
@@ -670,32 +715,46 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
 
-    if(control.setFields) {
+    if (control.setFields) {
       control.setFields.forEach((field: any) => {
-
-        const checkIfTrue = field?.checkIfTrue;
-        if (checkIfTrue) {
-          const conditionValue = this.form.get(checkIfTrue)?.value;
-          if (!conditionValue) {
-            // Skip this field if the condition is not met
-            return;
-          }
-        }
-
-        const formula = field.formula;
+        // Prepare values for formula
         const dependsOn = field.dependsOn || [];
         const values: any = {};
-
         dependsOn.forEach((dep: string) => {
           values[dep] = this.form.get(dep)?.value;
         });
 
-        const calculatedValue = this.dynamicFormService.evaluateFormula(formula, values);
-        if (calculatedValue < 0) {
-          this.form.get(field.name)?.setValue(0);
-          return;
+        // 1. Calculate the field value
+        const calculatedValue = this.dynamicFormService.evaluateFormula(field.formula, values);
+
+        // 2. Set value
+        this.form.get(field.name)?.setValue(calculatedValue < 0 ? 0 : calculatedValue);
+
+        // 3. Check for setValidations
+        if (field.setValidations && field.setValidations.length > 0) {
+          field.setValidations.forEach((validation: any) => {
+            if (validation.type === 'max') {
+              // Calculate the dynamic max
+              const maxDependsOn = validation.calculateValue.dependsOn || [];
+              const maxValues: any = {};
+              maxDependsOn.forEach((dep: string) => {
+                maxValues[dep] = this.form.get(dep)?.value;
+              });
+
+              const maxValue = this.dynamicFormService.evaluateFormula(
+                validation.calculateValue.formula,
+                maxValues
+              );
+
+              // Update the validator
+              const controlToValidate = this.form.get(field.name);
+              controlToValidate?.setValidators([
+                Validators.max(maxValue)
+              ]);
+              controlToValidate?.updateValueAndValidity();
+            }
+          });
         }
-        this.form.get(field.name)?.setValue(calculatedValue);
       });
     }
 

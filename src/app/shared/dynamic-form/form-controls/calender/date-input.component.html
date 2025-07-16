@@ -28,7 +28,7 @@
   @if (controlConfig.time) {
   <div class="col-md-4">
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" [ariaReadOnly]="controlConfig.readonly">
       <mat-label>{{ controlConfig.time.label }}
         @if (controlConfig.time.required) {
         <span class="required-star">*</span>
