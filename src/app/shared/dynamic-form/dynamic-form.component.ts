@@ -751,6 +751,15 @@ export class DynamicFormComponent implements OnInit, OnChanges {
               controlToValidate?.setValidators([
                 Validators.max(maxValue)
               ]);
+              this.formConfig.forEach((config: any) => {
+                if (field.name === config.name) {
+                  config.validations.push({
+                    type: 'max',
+                    value: maxValue,
+                    message: `${field?.label} cannot exceed ${maxValue}.`
+                  })
+                }
+              });
               controlToValidate?.updateValueAndValidity();
             }
           });
