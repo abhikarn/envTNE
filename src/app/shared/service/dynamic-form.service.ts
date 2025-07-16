@@ -152,7 +152,7 @@ export class DynamicFormService {
             'EntitlementCurrency',
             'EntitlementAmount',
             'EntitlementConversionRate',
-            'DifferentialAmount(INR)'
+            'DifferentialAmount'
           ];
 
           fieldsToRemove.forEach(field => {
@@ -192,7 +192,7 @@ export class DynamicFormService {
             'EntitlementCurrency',
             'EntitlementAmount',
             'EntitlementConversionRate',
-            'DifferentialAmount(INR)'
+            'DifferentialAmount'
           ];
 
           entitlementFields.forEach((field: any) => {

@@ -210,6 +210,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
+    console.log('Form submitted:', this.form.value);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       this.dynamicFormService.scrollToFirstInvalidControl('form');
@@ -509,6 +510,25 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onEditRow(rowData: any) {
+    if (!rowData?.row?.IsActual) {
+      const fieldsToRemove = [
+        'EntitlementCurrency',
+        'EntitlementAmount',
+        'EntitlementConversionRate',
+        'DifferentialAmount'
+      ];
+
+      fieldsToRemove.forEach(field => {
+        this.form.removeControl(field);
+        const control = this.formControls.find(c => c.formConfig?.name === field);
+        if (control) {
+          control.formConfig.required = false;
+          control.formConfig.showInUI = false;
+        }
+      });
+    }
+
+    console.log('Editing row:', rowData);
     if (rowData.row?.costcentreWiseExpense?.length > 0) {
       this.costCenterComponentRef?.setMultipleCostCenterFlag(true);
       this.costCenterComponentRef.costCenterData = rowData.row?.costcentreWiseExpense;
@@ -570,7 +590,13 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         if (controlName?.valueCheck) {
           const value = this.form.get(controlName.name)?.value;
           if (value) {
-            control?.disable({ emitEvent: false });
+            if (controlName?.type === 'number') {
+              if (Number(value) == 0) {
+                control?.enable({ emitEvent: false });
+              } else {
+                control?.disable({ emitEvent: false });
+              }
+            }
           } else {
             control?.enable({ emitEvent: false });
           }

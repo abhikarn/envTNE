@@ -288,21 +288,6 @@ export class MainExpenseComponent {
 
   // Setup form categories with dynamic options mapping from master data.
   setupCategories() {
-    const optionMapping: { [key: string]: any[] } = {
-      BaggageType: this.baggageTypeList,
-      BoMeals: this.boMealsList,
-      LocalTravelType: this.localTravelTypeList,
-      LocalTravelMode: this.localTravelModeList
-    };
-
-    this.categories = this.categories.map((category: any) => ({
-      ...category,
-      formControls: category.formControls.map((control: any) => ({
-        ...control,
-        options: optionMapping[control.name] || control.options
-      }))
-    }));
-
     // Number of travel days
     let travelDays = 0;
     if (this.travelRequestPreview?.travelDateFrom && this.travelRequestPreview?.travelDateTo) {
@@ -525,7 +510,18 @@ export class MainExpenseComponent {
     this.newExpenseService.getTravelRequestBookedDetail(requestBody).pipe(take(1)).subscribe({
       next: (response) => {
         console.log("Travel Request Preview Response: ", response);
+        this.categories = this.categories.filter((category: any) => {
+          // Keep category if:
+          // 1. showCategoryFor is not defined (so it's for all travel types)
+          // 2. OR travelTypeId is included in showCategoryFor
+          return !category.showCategoryFor || category.showCategoryFor.includes(response?.travelTypeId || response?.claimTypeId);
+        });
         if (!this.editMode) {
+          response?.dynamicExpenseDetailModels?.forEach((catdata: any) => {
+            catdata.data?.forEach((data: any) => {
+              data.ReferenceId = 0;
+            });
+          });
           this.responseData = JSON.parse(JSON.stringify(response));
           this.updateCategoryCounts();
           this.expenseRequestData = response;

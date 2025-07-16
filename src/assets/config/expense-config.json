@@ -884,6 +884,7 @@
                         "valueCheck": false
                     },
                     {
+                        "type": "number",
                         "name": "ClaimAmount",
                         "valueCheck": true
                     }
@@ -1141,7 +1142,8 @@
                     "Joining Expense": true,
                     "Transfer Expense": true,
                     "Relocation Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Accommodation",
@@ -1767,6 +1769,14 @@
                                     "ClaimAmount",
                                     "ConversionRate"
                                 ]
+                            },
+                            {
+                                "name": "DifferentialAmount",
+                                "formula": "ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "dependsOn": [
+                                    "ClaimAmountInBaseCurrency",
+                                    "EntitlementAmountInBaseCurrency"
+                                ]
                             }
                         ]
                     },
@@ -2251,10 +2261,7 @@
                         "valueCheck": false
                     },
                     {
-                        "name": "City",
-                        "valueCheck": false
-                    },
-                    {
+                        "type": "number",
                         "name": "ClaimAmount",
                         "valueCheck": true
                     }
@@ -2591,7 +2598,8 @@
                     "Joining Expense": true,
                     "Transfer Expense": true,
                     "Relocation Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "PerDiem",
@@ -3928,7 +3936,8 @@
                     "Direct Expense": true,
                     "Joining Expense": true,
                     "Transfer Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "DailyAllowance",
@@ -5266,7 +5275,8 @@
                     "Joining Expense": true,
                     "Transfer Expense": true,
                     "Sales Force Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Boarding Expense",
@@ -6597,7 +6607,8 @@
                     "Direct Expense": true,
                     "Joining Expense": true,
                     "Transfer Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Incidental Expenses",
@@ -7879,7 +7890,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Laundry service",
@@ -9161,7 +9173,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "FlatOrOwnArrangement",
@@ -10571,7 +10584,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Local Conveyance During Travel",
@@ -11341,6 +11355,7 @@
                         "valueCheck": false
                     },
                     {
+                        "type": "number",
                         "name": "ClaimAmount",
                         "valueCheck": true
                     },
@@ -11595,7 +11610,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Business Entertainment",
@@ -12248,7 +12264,8 @@
                     "Travel Expense": true,
                     "Direct Expense": true,
                     "Business Entertainment Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Other Expenses",
@@ -12847,6 +12864,7 @@
                         "valueCheck": false
                     },
                     {
+                        "type": "number",
                         "name": "ClaimAmount",
                         "valueCheck": true
                     },
@@ -12958,7 +12976,8 @@
                     "Travel Expense": true,
                     "Direct Expense": true,
                     "Other Expense": true
-                }
+                },
+                "showCategoryFor": [51, 52, 53, 54]
             },
             {
                 "name": "Medical Claim",
@@ -14965,7 +14984,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [52, 54]
             },
             {
                 "name": "Mobile Handset Purchase",
@@ -16509,7 +16529,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [52, 54]
             },
             {
                 "name": "Visa",
@@ -16870,6 +16891,7 @@
                         "valueCheck": false
                     },
                     {
+                        "type": "number",
                         "name": "ClaimAmount",
                         "valueCheck": true
                     },
@@ -17020,7 +17042,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [52, 54]
             },
             {
                 "name": "Travel Insurance",
@@ -17387,6 +17410,7 @@
                         "valueCheck": false
                     },
                     {
+                        "type": "number",
                         "name": "ClaimAmount",
                         "valueCheck": true
                     },
@@ -17532,7 +17556,8 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true
-                }
+                },
+                "showCategoryFor": [52, 54]
             },
             {
                 "name": "Relocation Travel Ticket Claim",
@@ -24277,7 +24302,7 @@
                         "name": "costcentreWiseExpense",
                         "dataType": "object",
                         "isExcluded": true,
-                        "value": []
+                        "value": null
                     }
                 ],
                 "freezFormControls": [
@@ -24294,6 +24319,7 @@
                         "valueCheck": false
                     },
                     {
+                        "type": "number",
                         "name": "ClaimAmount",
                         "valueCheck": true
                     }
@@ -24395,7 +24421,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense": true
-                }
+                },
+                "showCategoryFor": [52, 54]
             },
             {
                 "name": "Travel Allowance",
