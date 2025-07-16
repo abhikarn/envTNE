@@ -22,7 +22,6 @@ export class DynamicFormService {
 
   scrollToFirstInvalidControl(querySelector: string): void {
     const firstInvalidControl: HTMLElement | null = document.querySelector(`${querySelector} .ng-invalid`);
-
     if (firstInvalidControl) {
       firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       firstInvalidControl.focus?.(); // optional
