@@ -10672,7 +10672,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "requiredIf": {
-                            "IsBillRequired": true
+                            "LocalTravelMode": [58]
                         },
                         "disable": false,
                         "oCRRequired": false,
