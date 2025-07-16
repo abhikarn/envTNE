@@ -278,8 +278,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .custom-more-select-panel  .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
 	background-color: transparent !important;
 		color: #2A5EE3;
+}.custom-more-select-panel .mat-mdc-option.mdc-list-item span span {
+	color: #2a5ee3;
 }
-
+.custom-more-select-panel .mat-mdc-option.mdc-list-item .mdc-list-item__primary-text {
+	display: flex;
+	justify-content: space-between;
+	margin-right: 0;
+	width: 100%;
+}
 
 .mat-mdc-radio-button .mdc-radio__outer-circle {
 	 
