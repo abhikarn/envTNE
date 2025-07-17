@@ -1,4 +1,11 @@
-import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  ViewEncapsulation,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../form-control.interface';
 
@@ -8,9 +15,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
+import { DynamicFormService } from '../../../service/dynamic-form.service';
+import { ServiceRegistryService } from '../../../service/service-registry.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'lib-multi-select-input',
+  standalone: true,
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -20,14 +31,14 @@ import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
     MatCheckboxModule,
     MatIconModule,
     FunctionWrapperPipe
-],
+  ],
   templateUrl: './multi-select-input.component.html',
   styleUrls: ['./multi-select-input.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MultiSelectInputComponent {
+export class MultiSelectInputComponent implements OnInit, OnDestroy {
   @Input() control!: FormControl;
-  @Input() controlConfig: IFormControl = {name: ''};
+  @Input() controlConfig: IFormControl = { name: '' };
 
   @ViewChild('select') select!: MatSelect;
 
@@ -35,19 +46,54 @@ export class MultiSelectInputComponent {
   allSelected = false;
   allOptions: any[] = [];
   filteredOptions: any[] = [];
+  apiSubscription?: Subscription;
 
-  constructor() {
+  constructor(
+    private dynamicFormService: DynamicFormService,
+    private serviceRegistry: ServiceRegistryService,
+  ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
 
   ngOnInit() {
-    this.allOptions = this.controlConfig?.options || [];
-    this.filteredOptions = [...this.allOptions];
+    this.loadOptions();
+    this.control.valueChanges.subscribe(() => {
+      this.updateAllSelectedState();
+    });
+  }
+
+  ngOnDestroy() {
+    this.apiSubscription?.unsubscribe();
+  }
+
+  loadOptions() {
+    if ((!this.controlConfig.apiService && !this.controlConfig.apiMethod)) return;
+
+    const apiService = this.serviceRegistry.getService(this.controlConfig.apiService || '');
+    if (apiService && typeof apiService[this.controlConfig.apiMethod || ''] === 'function') {
+      this.apiSubscription = apiService[this.controlConfig.apiMethod || '']().subscribe(
+        (data: any) => {
+          const labelKey = this.controlConfig.labelKey || 'label';
+          const valueKey = this.controlConfig.valueKey || 'value';
+          this.controlConfig.options = data.ResponseValue.map((item: any) => ({
+            label: item[labelKey],
+            value: item[valueKey]
+          }));
+          this.allOptions = this.controlConfig.options ?? [];
+          this.filteredOptions = [...this.allOptions];
+          this.updateAllSelectedState();
+        },
+        (error: any) => {
+          console.error('API Error:', error);
+        }
+      );
+    }
   }
 
   filterOptions() {
+    const term = this.searchTerm.toLowerCase();
     this.filteredOptions = this.allOptions.filter(option =>
-      option.Value.toLowerCase().includes(this.searchTerm.toLowerCase())
+      option.label.toLowerCase().includes(term)
     );
   }
 
@@ -58,22 +104,28 @@ export class MultiSelectInputComponent {
 
   toggleSelectAll() {
     this.allSelected = !this.allSelected;
-    this.control.setValue(this.allSelected ? this.allOptions.map(o => o.Key) : []);
+    this.control.setValue(this.allSelected ? this.allOptions.map(o => o.value) : []);
   }
 
   isSelected(value: any): boolean {
     return this.control.value?.includes(value);
   }
 
+  updateAllSelectedState() {
+    const selectedValues = this.control.value || [];
+    this.allSelected = selectedValues.length > 0 &&
+      this.allOptions.every(o => selectedValues.includes(o.value));
+  }
+
   getErrorMessage(): string {
     if (!this.controlConfig?.validations) return '';
-  
+
     for (const validation of this.controlConfig.validations) {
       if (this.control.hasError(validation.type)) {
         return validation.message;
       }
     }
-  
-    return 'Invalid selection'; // Default fallback message
+
+    return 'Invalid selection';
   }
 }

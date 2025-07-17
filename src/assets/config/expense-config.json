@@ -2836,10 +2836,33 @@
                     {
                         "type": "select",
                         "dataType": "int",
+                        "name": "AccommodationType",
+                        "isExcluded": false,
+                        "label": "Accommodation Type",
+                        "placeholder": "Select Accommodation Type",
+                        "value": null,
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetStayType",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Accommodation Type is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false
+                    },
+                    {
+                        "type": "multi-select",
+                        "dataType": "int",
                         "name": "Constraint",
                         "isExcluded": false,
                         "label": "Constraint",
-                        "placeholder": "Select Per Diem Type",
+                        "placeholder": "Select Constraint",
                         "value": null,
                         "options": [],
                         "labelKey": "KeyData",
