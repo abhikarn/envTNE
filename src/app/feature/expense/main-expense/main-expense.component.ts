@@ -397,9 +397,16 @@ export class MainExpenseComponent {
 
   // Update category item counts based on populated existing data.
   updateCategoryCounts() {
+    this.moduleConfig.categories = [];
     this.categories?.forEach((cat: any) => {
       const matchedData = this.expenseRequestData?.dynamicExpenseDetailModels?.find((data: any) => data.name == cat.name);
       cat.count = matchedData ? matchedData.data.length : 0;
+
+      this.moduleConfig.categories.push({
+        name: cat.name,
+        label: cat.label,
+        count: cat.count
+      });
     });
   }
 
@@ -510,6 +517,14 @@ export class MainExpenseComponent {
     this.newExpenseService.getTravelRequestBookedDetail(requestBody).pipe(take(1)).subscribe({
       next: (response) => {
         console.log("Travel Request Preview Response: ", response);
+        const from = new Date(response?.travelDateFrom);
+        const to = new Date(response?.travelDateTo);
+        // Duration in milliseconds
+        const durationMs = to.getTime() - from.getTime();
+
+        // Duration in days (rounded to nearest integer)
+        this.moduleConfig.tripDuration = Math.ceil(durationMs / (1000 * 60 * 60 * 24));
+
         this.categories = this.categories.filter((category: any) => {
           // Keep category if:
           // 1. showCategoryFor is not defined (so it's for all travel types)

@@ -4019,6 +4019,12 @@
                     52,
                     53,
                     54
+                ],
+                "claimRestriction": [
+                    {
+                        "name": "Incidental Expenses",
+                        "message": "If Incidental Expenses are claimed, then Per Diem cannot be claimed."
+                    }
                 ]
             },
             {
@@ -6705,6 +6711,7 @@
             {
                 "name": "Incidental Expenses",
                 "label": "Incidental",
+                "noOfEntryCheck": true,
                 "formControls": [
                     {
                         "type": "file",
@@ -8016,11 +8023,18 @@
                     52,
                     53,
                     54
+                ],
+                "claimRestriction": [
+                    {
+                        "name": "PerDiem",
+                        "message": "If Per Diem is claimed, then Incidental Expenses cannot be claimed."
+                    }
                 ]
             },
             {
                 "name": "Laundry service",
                 "label": "Laundry",
+                "noOfEntryCheck": true,
                 "formControls": [
                     {
                         "type": "file",
@@ -9332,6 +9346,13 @@
                     52,
                     53,
                     54
+                ],
+                "claimRestriction": [
+                    {
+                        "name": "Laundry service",
+                        "minimumStayduration": 3,
+                        "message": "Laundry service can only be claimed for stays longer than 3 days."
+                    }
                 ]
             },
             {
