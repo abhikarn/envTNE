@@ -247,16 +247,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         return;
       }
     }
-    this.formControls.forEach(control => {
-      if (control.formConfig.type === 'date') {
-        const ctrl = this.form.get(control.formConfig.name);
-        const val = ctrl?.value;
-        if (val) {
-          const formatted = this.datePipe.transform(val, 'yyyy-MM-dd');
-          ctrl?.setValue(formatted);
-        }
-      }
-    });
+    
 
     // enable all controls before submission
     this.formControls.forEach(control => {
