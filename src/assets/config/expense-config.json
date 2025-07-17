@@ -3204,6 +3204,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -3705,6 +3711,20 @@
                         "value": 0,
                         "showInUI": false,
                         "international": true
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTravelRaiseRequest",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    }
+                ],
+                "freezFormControls": [
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
                     }
                 ],
                 "policyViolationManualCheck": [
@@ -4549,6 +4569,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -5050,6 +5076,20 @@
                         "value": 0,
                         "showInUI": false,
                         "international": true
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTravelRaiseRequest",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    }
+                ],
+                "freezFormControls": [
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
                     }
                 ],
                 "policyViolationManualCheck": [
@@ -5888,6 +5928,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -6389,6 +6435,13 @@
                         "value": 0,
                         "showInUI": false,
                         "international": true
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTravelRaiseRequest",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
                 ],
                 "policyViolationManualCheck": [
@@ -7168,6 +7221,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -7708,6 +7767,20 @@
                         "value": 0,
                         "showInUI": false,
                         "international": true
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTravelRaiseRequest",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    }
+                ],
+                "freezFormControls": [
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
                     }
                 ],
                 "policyViolationManualCheck": [
@@ -8491,6 +8564,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -9031,6 +9110,20 @@
                         "value": 0,
                         "showInUI": false,
                         "international": true
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTravelRaiseRequest",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    }
+                ],
+                "freezFormControls": [
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
                     }
                 ],
                 "policyViolationManualCheck": [
@@ -13760,6 +13853,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -14849,6 +14948,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -15616,6 +15721,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -16414,6 +16525,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -16667,6 +16784,20 @@
                         "value": 0,
                         "showInUI": false,
                         "international": true
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTravelRaiseRequest",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    }
+                ],
+                "freezFormControls": [
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
                     }
                 ],
                 "policyEntitlementCheckApi": {
@@ -19020,6 +19151,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -20860,6 +20997,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -22837,6 +22980,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -23338,6 +23487,20 @@
                         "value": 0,
                         "showInUI": false,
                         "international": true
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTravelRaiseRequest",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    }
+                ],
+                "freezFormControls": [
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "valueCheck": true
                     }
                 ],
                 "policyViolationManualCheck": [
@@ -23933,6 +24096,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -25355,6 +25524,12 @@
                             {
                                 "type": "required",
                                 "message": "Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -25617,7 +25792,9 @@
                 "Local Conveyance During Travel": "Claimed amount is greater than Entitled amount.",
                 "Incidental Expenses": "Claimed amount is greater than Entitled amount.",
                 "Laundry service": "Claimed amount is greater than Entitled amount.",
-                "Boarding Expense": "Claimed amount is greater than Entitled amount."
+                "Boarding Expense": "Claimed amount is greater than Entitled amount.",
+                "Per Diem": "Claimed amount is greater than Entitled amount.",
+                "DailyAllowance": "Claimed amount is greater than Entitled amount."
             },
             {
                 "name": "Approvaldetails",
@@ -25802,7 +25979,7 @@
                         "label": "Boarding Expenses"
                     },
                     {
-                        "name": "Per Diem",
+                        "name": "PerDiem",
                         "label": "Per Diem"
                     },
                     {
@@ -26686,7 +26863,7 @@
                 ]
             },
             {
-                "name": "Per Diem",
+                "name": "PerDiem",
                 "label": "Per Diem",
                 "data": [],
                 "amount": 0,
@@ -26695,7 +26872,7 @@
                 "columns": [
                     {
                         "type": "date",
-                        "name": "ClaimFromDate",
+                        "name": "ClaimDate",
                         "label": "From Date",
                         "visible": true,
                         "position": "in",
@@ -27039,7 +27216,7 @@
                 "columns": [
                     {
                         "type": "date",
-                        "name": "ClaimFromDate",
+                        "name": "ClaimDate",
                         "label": "From Date",
                         "visible": true,
                         "position": "in",
@@ -31692,7 +31869,7 @@
                 "columns": [
                     {
                         "type": "date",
-                        "name": "ClaimFromDate",
+                        "name": "ClaimDate",
                         "label": "From Date",
                         "visible": true,
                         "position": "in",
