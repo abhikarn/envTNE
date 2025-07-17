@@ -314,7 +314,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     if (this.existingData?.length > 0) {
       if (this.category?.duplicateEntryCheck) {
-        const { fields, message } = this.category.duplicateEntryCheck;
+        const { fields, name } = this.category.duplicateEntryCheck;
         if (!fields || fields.length === 0) return;
 
         // If only one field (e.g., single date) is provided
@@ -330,7 +330,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           });
 
           if (isDuplicate) {
-            this.snackbarService.error(message, 5000);
+            this.snackbarService.error(`${name} for the date ${this.form.value[field]} has already been claimed.`, 5000);
             return;
           }
         }
@@ -352,7 +352,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           });
 
           if (isConflict) {
-            this.snackbarService.error(message, 5000);
+            this.snackbarService.error(`${name} for the date ${this.form.value[checkInField]} - ${this.form.value[checkOutField]} has already been claimed.`, 5000);
             return;
           }
         }
