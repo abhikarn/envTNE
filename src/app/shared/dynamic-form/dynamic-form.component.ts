@@ -213,6 +213,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
+     console.log(this.category)
+      console.log(this.moduleConfig)
     console.log('Form submitted:', this.form.value);
     
     if (this.form.invalid) {
@@ -222,6 +224,29 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       return;
     }
 
+    // claim restriction check
+    if (this.category.claimRestriction && this.category.claimRestriction.length > 0) {
+      console.log(this.category)
+      console.log(this.moduleConfig)
+      const claimRestriction = this.category.claimRestriction;
+      const isClaimed = claimRestriction.some((restriction: any) => {
+        return this.moduleConfig.categories.some((cat: any) => {
+          return cat.name === restriction.name && cat.count > 0;
+        });
+      });
+      if (isClaimed) {
+        const restrictionMessage = claimRestriction.map((restriction: any) => restriction.message || `Claim for ${restriction.name} is restricted.`).join(' ');
+        this.snackbarService.error(restrictionMessage, 5000);
+        return;
+      }
+
+      // Check for minimum stay duration
+      const minimumStayDuration = claimRestriction.find((restriction: any) => restriction.minimumStayduration);
+      if (minimumStayDuration && this.moduleConfig.tripDuration <= minimumStayDuration.minimumStayduration) {
+        this.snackbarService.error(minimumStayDuration.message || `Minimum stay duration of ${minimumStayDuration.minimumStayduration} days is required.`, 5000);
+        return;
+      }
+    }
     this.formControls.forEach(control => {
       if (control.formConfig.type === 'date') {
         const ctrl = this.form.get(control.formConfig.name);
