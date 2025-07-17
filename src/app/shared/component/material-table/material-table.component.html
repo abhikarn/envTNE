@@ -98,7 +98,7 @@
                 (keydown)="preventInvalidKeys($event)" (ngModelChange)="onApprovedAmountChange(row)"
                 (blur)="onAmountBlur($event, row, col.name, col.decimalPrecision || 2); validateApprovedAmount(row)"
                 min="0" max="9999999999" (input)="enforceLimit($event, row, col.name)" />
-            } @else {
+            } @else { 
             @if (col.type == 'date') {
             {{ row[col.name] | globalDate }}
             } @else {

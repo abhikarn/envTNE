@@ -23,9 +23,8 @@
                      [routerLink]="this.expenseDashboardConfig?.dashboard?.link">{{this.expenseDashboardConfig?.dashboard?.name}}</a>
                </li>
                <li class="nav-item" role="presentation">
-                  <a id="menu-dashboard-action" class="nav-link"
-                     [routerLink]="['/expense/expense/approval']">Approver
-                  Dashboard</a>
+                  <a id="menu-dashboard-action" class="nav-link" [routerLink]="['/expense/expense/approval']">Approver
+                     Dashboard</a>
                </li>
             </ul>
             <div class="row mb-lg-3 mb-md-3 mb-sm-2">
@@ -71,7 +70,7 @@
                      <div class="col-md-6">
                         <div class="common-block common-block-nothide mb-3">
                            <h6 class="common-title fw-bold mb-3">
-                              {{this.expenseDashboardConfig?.dashboard?.statusWiseExpenseRequest.name}} 
+                              {{this.expenseDashboardConfig?.dashboard?.statusWiseExpenseRequest.name}}
                            </h6>
                            <ul class="ps-0 list-unstyled req-count mb-0">
                               <li *ngFor="let item of statusWiseExpenseDataCount">
@@ -103,27 +102,26 @@
                   <ul class="quick-menu-links list-unstyled  ps-0">
                      <li>
                         <a *ngIf="expenseDashboardConfig?.dashboard?.quickActivities?.[0]?.url"
-                        [routerLink]="expenseDashboardConfig?.dashboard?.quickActivities?.[0]?.url">
-                        <div class="d-flex align-items-center">
-                           <div class="quick-link-icon">
-                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                 <path
-                                    d="M12 12.5C11.0717 12.5 10.1815 12.8687 9.52513 13.5251C8.86875 14.1815 8.5 15.0717 8.5 16C8.5 16.9283 8.86875 17.8185 9.52513 18.4749C10.1815 19.1313 11.0717 19.5 12 19.5C12.9283 19.5 13.8185 19.1313 14.4749 18.4749C15.1313 17.8185 15.5 16.9283 15.5 16C15.5 15.0717 15.1313 14.1815 14.4749 13.5251C13.8185 12.8687 12.9283 12.5 12 12.5ZM10.5 16C10.5 15.6022 10.658 15.2206 10.9393 14.9393C11.2206 14.658 11.6022 14.5 12 14.5C12.3978 14.5 12.7794 14.658 13.0607 14.9393C13.342 15.2206 13.5 15.6022 13.5 16C13.5 16.3978 13.342 16.7794 13.0607 17.0607C12.7794 17.342 12.3978 17.5 12 17.5C11.6022 17.5 11.2206 17.342 10.9393 17.0607C10.658 16.7794 10.5 16.3978 10.5 16Z"
-                                    fill="#031842"></path>
-                                 <path
-                                    d="M17.526 5.11716L14.347 0.660156L2.658 9.99816L2.01 9.99116V10.0012H1.5V22.0012H22.5V10.0012H21.538L19.624 4.40216L17.526 5.11716ZM19.425 10.0012H9.397L16.866 7.45516L18.388 6.96816L19.425 10.0012ZM15.55 5.79116L7.84 8.41916L13.946 3.54116L15.55 5.79116ZM3.5 18.1702V13.8302C3.92218 13.6812 4.30565 13.4396 4.62231 13.1231C4.93896 12.8066 5.18077 12.4233 5.33 12.0012H18.67C18.8191 12.4234 19.0609 12.807 19.3775 13.1236C19.6942 13.4403 20.0777 13.6821 20.5 13.8312V18.1712C20.0777 18.3203 19.6942 18.562 19.3775 18.8787C19.0609 19.1953 18.8191 19.5789 18.67 20.0012H5.332C5.18218 19.5788 4.93996 19.1953 4.62302 18.8785C4.30607 18.5618 3.9224 18.3197 3.5 18.1702Z"
-                                    fill="#031842"></path>
-                              </svg>
+                           [routerLink]="expenseDashboardConfig?.dashboard?.quickActivities?.[0]?.url">
+                           <div class="d-flex align-items-center">
+                              <div class="quick-link-icon">
+                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                       d="M12 12.5C11.0717 12.5 10.1815 12.8687 9.52513 13.5251C8.86875 14.1815 8.5 15.0717 8.5 16C8.5 16.9283 8.86875 17.8185 9.52513 18.4749C10.1815 19.1313 11.0717 19.5 12 19.5C12.9283 19.5 13.8185 19.1313 14.4749 18.4749C15.1313 17.8185 15.5 16.9283 15.5 16C15.5 15.0717 15.1313 14.1815 14.4749 13.5251C13.8185 12.8687 12.9283 12.5 12 12.5ZM10.5 16C10.5 15.6022 10.658 15.2206 10.9393 14.9393C11.2206 14.658 11.6022 14.5 12 14.5C12.3978 14.5 12.7794 14.658 13.0607 14.9393C13.342 15.2206 13.5 15.6022 13.5 16C13.5 16.3978 13.342 16.7794 13.0607 17.0607C12.7794 17.342 12.3978 17.5 12 17.5C11.6022 17.5 11.2206 17.342 10.9393 17.0607C10.658 16.7794 10.5 16.3978 10.5 16Z"
+                                       fill="#031842"></path>
+                                    <path
+                                       d="M17.526 5.11716L14.347 0.660156L2.658 9.99816L2.01 9.99116V10.0012H1.5V22.0012H22.5V10.0012H21.538L19.624 4.40216L17.526 5.11716ZM19.425 10.0012H9.397L16.866 7.45516L18.388 6.96816L19.425 10.0012ZM15.55 5.79116L7.84 8.41916L13.946 3.54116L15.55 5.79116ZM3.5 18.1702V13.8302C3.92218 13.6812 4.30565 13.4396 4.62231 13.1231C4.93896 12.8066 5.18077 12.4233 5.33 12.0012H18.67C18.8191 12.4234 19.0609 12.807 19.3775 13.1236C19.6942 13.4403 20.0777 13.6821 20.5 13.8312V18.1712C20.0777 18.3203 19.6942 18.562 19.3775 18.8787C19.0609 19.1953 18.8191 19.5789 18.67 20.0012H5.332C5.18218 19.5788 4.93996 19.1953 4.62302 18.8785C4.30607 18.5618 3.9224 18.3197 3.5 18.1702Z"
+                                       fill="#031842"></path>
+                                 </svg>
+                              </div>
+                              <span>Raise Expense Claim</span>
                            </div>
-                           <span>Raise Expense Claim</span>
-                        </div>
-                        <svg width="11" height="8" viewBox="0 0 11 8" fill="none"
-                           xmlns="http://www.w3.org/2000/svg">
-                           <path fill-rule="evenodd" clip-rule="evenodd"
-                              d="M6.44178 1.46953C6.25881 1.28495 6.26011 0.986994 6.44469 0.804024C6.62927 0.621054 6.92723 0.622359 7.1102 0.806939L9.96714 3.68901C10.1501 3.87359 10.1488 4.17155 9.96422 4.35452L6.84198 7.44953C6.6574 7.63251 6.35944 7.6312 6.17647 7.44662C5.9935 7.26204 5.99481 6.96408 6.17939 6.78111L8.49478 4.48592L0.663662 4.45162C0.403766 4.45048 0.194001 4.23887 0.195138 3.97898C0.196277 3.71908 0.407887 3.50931 0.667784 3.51045L8.4989 3.54475L6.44178 1.46953Z"
-                              fill="#031842"></path>
-                        </svg>
+                           <svg width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd"
+                                 d="M6.44178 1.46953C6.25881 1.28495 6.26011 0.986994 6.44469 0.804024C6.62927 0.621054 6.92723 0.622359 7.1102 0.806939L9.96714 3.68901C10.1501 3.87359 10.1488 4.17155 9.96422 4.35452L6.84198 7.44953C6.6574 7.63251 6.35944 7.6312 6.17647 7.44662C5.9935 7.26204 5.99481 6.96408 6.17939 6.78111L8.49478 4.48592L0.663662 4.45162C0.403766 4.45048 0.194001 4.23887 0.195138 3.97898C0.196277 3.71908 0.407887 3.50931 0.667784 3.51045L8.4989 3.54475L6.44178 1.46953Z"
+                                 fill="#031842"></path>
+                           </svg>
                         </a>
                      </li>
                      <li>
@@ -134,14 +132,13 @@
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                        d="M17.8 19.2L16 11L19.5 7.5C21 6 21.5 4 21 3C20 2.5 18 3 16.5 4.5L13 8L4.8 6.2C4.3 6.1 3.9 6.3 3.7 6.7L3.4 7.2C3.2 7.7 3.3 8.2 3.7 8.5L9 12L7 15H4L3 16L6 18L8 21L9 20V17L12 15L15.5 20.3C15.8 20.7 16.3 20.8 16.8 20.6L17.3 20.4C17.7 20.1 17.9 19.7 17.8 19.2Z"
-                                       stroke="#031842" stroke-width="2" stroke-linecap="round"
-                                       stroke-linejoin="round"></path>
+                                       stroke="#031842" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    </path>
                                  </svg>
                               </div>
                               <span>Travel Request</span>
                            </div>
-                           <svg width="11" height="8" viewBox="0 0 11 8" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
+                           <svg width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" clip-rule="evenodd"
                                  d="M6.44178 1.46953C6.25881 1.28495 6.26011 0.986994 6.44469 0.804024C6.62927 0.621054 6.92723 0.622359 7.1102 0.806939L9.96714 3.68901C10.1501 3.87359 10.1488 4.17155 9.96422 4.35452L6.84198 7.44953C6.6574 7.63251 6.35944 7.6312 6.17647 7.44662C5.9935 7.26204 5.99481 6.96408 6.17939 6.78111L8.49478 4.48592L0.663662 4.45162C0.403766 4.45048 0.194001 4.23887 0.195138 3.97898C0.196277 3.71908 0.407887 3.50931 0.667784 3.51045L8.4989 3.54475L6.44178 1.46953Z"
                                  fill="#2A5EE3"></path>
@@ -155,20 +152,19 @@
                <div class="col-md-12 ">
                   <div id="recent-req-tabs" class="custom-wrapper-general">
                      <div class="position-relative">
-                        <ul class="nav nav-tabs line-tab mb-lg-4 mb-md-4 mb-sm-3 mb-3" id="linetab"
-                           role="tablist">
+                        <ul class="nav nav-tabs line-tab mb-lg-4 mb-md-4 mb-sm-3 mb-3" id="linetab" role="tablist">
                            <li class="nav-item" role="presentation">
-                              <button class="nav-link active requesttab" id="travel-req-tab"
-                                 data-bs-toggle="tab" data-bs-target="#travel-req" type="button" role="tab"
-                                 aria-controls="travel-req" aria-selected="true">Travel Request - 42
+                              <button class="nav-link active requesttab" id="travel-req-tab" data-bs-toggle="tab"
+                                 data-bs-target="#travel-req" type="button" role="tab" aria-controls="travel-req"
+                                 aria-selected="true">Travel Request - 42
                               </button>
                            </li>
                            <li class="nav-item" role="presentation">
                               <button class="nav-link requesttab" id="expense-state-tab" data-bs-toggle="tab"
-                                 data-bs-target="#expense-state" type="button" role="tab"
-                                 aria-controls="expense-state" aria-selected="false">
-                              {{expenseDashboardConfig?.dashboard?.expenseStatement.name}}
-                              - {{this.expenseRequesData.length}} </button>
+                                 data-bs-target="#expense-state" type="button" role="tab" aria-controls="expense-state"
+                                 aria-selected="false">
+                                 {{expenseDashboardConfig?.dashboard?.expenseStatement.name}}
+                                 - {{this.expenseRequesData.length}} </button>
                            </li>
                         </ul>
                      </div>
@@ -178,22 +174,20 @@
                            <div class="table-responsive">
                               <div class="row">
                                  <div class="col-sm-6">
-                                    <div class="dt-buttons"><button
-                                       class="dt-button buttons-excel buttons-html5" tabindex="0"
-                                       aria-controls="tblMyTravelRequest"
-                                       type="button"><span>Excel</span></button> </div>
+                                    <div class="dt-buttons"><button class="dt-button buttons-excel buttons-html5"
+                                          tabindex="0" aria-controls="tblMyTravelRequest"
+                                          type="button"><span>Excel</span></button> </div>
                                  </div>
                                  <div class="col-sm-6">
                                     <div id="tblMyTravelRequest_filter" class="dataTables_filter">
-                                       <label>Search:<input type="search"
-                                          class="form-control form-control-sm" placeholder=""
-                                          aria-controls="tblMyTravelRequest"></label>
+                                       <label>Search:<input type="search" class="form-control form-control-sm"
+                                             placeholder="" aria-controls="tblMyTravelRequest"></label>
                                     </div>
                                  </div>
                               </div>
                               <div class="row">
                                  <div class="col-sm-12">
- 
+
                                     <table
                                        class=" table table-travelreq mobile-card-view-datatable table-cust-modeA filterColumnTableVer2 recent-exp-req table table-bordered table-striped table-cust-new d-table no-footer dataTable"
                                        id="tblMyTravelRequest" role="grid">
@@ -229,23 +223,19 @@
                                              </td>
                                              <td data-label="Service For">
                                                 <span class="tbl-ww1">
-                                                Ticket | Accommodation | Cab
+                                                   Ticket | Accommodation | Cab
                                                 </span>
                                              </td>
                                              <td data-label="Request For">Self</td>
                                              <td data-label="Policy Violation">
                                                 <span class="pol-vio text-red" data-bs-toggle="tooltip"
-                                                   title="Policy Violation"
-                                                   data-bs-original-title="Policy Violation"
+                                                   title="Policy Violation" data-bs-original-title="Policy Violation"
                                                    aria-label="Policy Violation">
                                                    <span class="font-20">
-                                                      <svg width="20" height="20" viewBox="0 0 20 20"
-                                                         fill="none"
+                                                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
-                                                         <circle cx="10" cy="10" r="10"
-                                                            fill="#E63535" />
-                                                         <path fill-rule="evenodd"
-                                                            clip-rule="evenodd"
+                                                         <circle cx="10" cy="10" r="10" fill="#E63535" />
+                                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                                             d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
                                                             fill="white" />
                                                       </svg>
@@ -253,37 +243,32 @@
                                                 </span>
                                              </td>
                                              <td data-label="Status">
-                                                <span class="status-green status-common"
-                                                   data-bs-toggle="tooltip" title="Completed"
-                                                   data-bs-original-title="Completed"
+                                                <span class="status-green status-common" data-bs-toggle="tooltip"
+                                                   title="Completed" data-bs-original-title="Completed"
                                                    aria-label="Completed">
-                                                COMPLETED
+                                                   COMPLETED
                                                 </span>
                                              </td>
                                              <td class="attribute-none">
                                                 <div class="TBL-actions">
                                                    <ul class="action-icons">
                                                       <li><a href="claim-expense-preview.html"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip"
-                                                         title="View"
-                                                         class="fa-eye   fa-regular"></span></a>
+                                                            class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="View"
+                                                               class="fa-eye   fa-regular"></span></a>
                                                       </li>
-                                                      <li><a href="#"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip" title="PDF"
-                                                         class="fa-regular fa-file-pdf"></span></a>
+                                                      <li><a href="#" class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="PDF"
+                                                               class="fa-regular fa-file-pdf"></span></a>
                                                       </li>
                                                       <li>
-                                                         <a href="#"
-                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                         <a href="#" class="btn-icon-action btn-icon-view p-relative"
                                                             RequestId="22" RequestType="Travel"
                                                             id="communicationThread">
-                                                            <span data-toggle="tooltip"
-                                                               title="Communication"
+                                                            <span data-toggle="tooltip" title="Communication"
                                                                class="fa-comment-dots fa-regular"></span>
                                                             <div class="communication-count"><span
-                                                               id="CommCountTravel22">0</span>
+                                                                  id="CommCountTravel22">0</span>
                                                             </div>
                                                          </a>
                                                       </li>
@@ -308,62 +293,53 @@
                                              </td>
                                              <td data-label="Service For">
                                                 <span class="tbl-ww1">
-                                                Accommodation
+                                                   Accommodation
                                                 </span>
                                              </td>
                                              <td data-label="Request For">Self</td>
                                              <td data-label="Policy Violation">
-                                                <span class="pol-vio text-green"
-                                                   data-bs-toggle="tooltip" title="No Policy Violation"
+                                                <span class="pol-vio text-green" data-bs-toggle="tooltip"
+                                                   title="No Policy Violation"
                                                    data-bs-original-title="No Policy Violation"
                                                    aria-label="No Policy Violation">
                                                    <span class="font-20">
-                                                      <svg width="20" height="20" viewBox="0 0 20 20"
-                                                         fill="none"
+                                                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
-                                                         <circle cx="10" cy="10" r="10"
-                                                            fill="#05A660" />
-                                                         <path
-                                                            d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
-                                                            stroke="#F7F7FC" stroke-width="2"
-                                                            stroke-linecap="round"
+                                                         <circle cx="10" cy="10" r="10" fill="#05A660" />
+                                                         <path d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
+                                                            stroke="#F7F7FC" stroke-width="2" stroke-linecap="round"
                                                             stroke-linejoin="round" />
                                                       </svg>
                                                    </span>
                                                 </span>
                                              </td>
                                              <td data-label="Status">
-                                                <span class="status-red status-common"
-                                                   data-bs-toggle="tooltip" title="Rejected"
-                                                   data-bs-original-title="Rejected"
+                                                <span class="status-red status-common" data-bs-toggle="tooltip"
+                                                   title="Rejected" data-bs-original-title="Rejected"
                                                    aria-label="Rejected">
-                                                REJECTED
+                                                   REJECTED
                                                 </span>
                                              </td>
                                              <td>
                                                 <div class="TBL-actions">
                                                    <ul class="action-icons">
                                                       <li><a href="claim-expense-preview.html"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip"
-                                                         title="View"
-                                                         class="fa-eye   fa-regular"></span></a>
+                                                            class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="View"
+                                                               class="fa-eye   fa-regular"></span></a>
                                                       </li>
-                                                      <li><a href="#"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip" title="PDF"
-                                                         class="fa-regular fa-file-pdf"></span></a>
+                                                      <li><a href="#" class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="PDF"
+                                                               class="fa-regular fa-file-pdf"></span></a>
                                                       </li>
                                                       <li>
-                                                         <a href="#"
-                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                         <a href="#" class="btn-icon-action btn-icon-view p-relative"
                                                             RequestId="24" RequestType="Travel"
                                                             id="communicationThread">
-                                                            <span data-toggle="tooltip"
-                                                               title="Communication"
+                                                            <span data-toggle="tooltip" title="Communication"
                                                                class="fa-comment-dots fa-regular"></span>
                                                             <div class="communication-count"><span
-                                                               id="CommCountTravel24">0</span>
+                                                                  id="CommCountTravel24">0</span>
                                                             </div>
                                                          </a>
                                                       </li>
@@ -388,23 +364,19 @@
                                              </td>
                                              <td data-label="Service For">
                                                 <span class="tbl-ww1">
-                                                Ticket | Accommodation
+                                                   Ticket | Accommodation
                                                 </span>
                                              </td>
                                              <td data-label="Request For">Self</td>
                                              <td data-label="Policy Violation">
                                                 <span class="pol-vio text-red" data-bs-toggle="tooltip"
-                                                   title="Policy Violation"
-                                                   data-bs-original-title="Policy Violation"
+                                                   title="Policy Violation" data-bs-original-title="Policy Violation"
                                                    aria-label="Policy Violation">
                                                    <span class="font-20">
-                                                      <svg width="20" height="20" viewBox="0 0 20 20"
-                                                         fill="none"
+                                                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
-                                                         <circle cx="10" cy="10" r="10"
-                                                            fill="#E63535" />
-                                                         <path fill-rule="evenodd"
-                                                            clip-rule="evenodd"
+                                                         <circle cx="10" cy="10" r="10" fill="#E63535" />
+                                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                                             d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
                                                             fill="white" />
                                                       </svg>
@@ -412,33 +384,29 @@
                                                 </span>
                                              </td>
                                              <td data-label="Status">
-                                                <span class="status-grey status-common"
-                                                   data-bs-toggle="tooltip"
+                                                <span class="status-grey status-common" data-bs-toggle="tooltip"
                                                    title="Pending for Approvals"
                                                    data-bs-original-title="Pending for Approvals"
                                                    aria-label="Pending for Approvals">
-                                                PENDING FOR APPROVALS
+                                                   PENDING FOR APPROVALS
                                                 </span>
                                              </td>
                                              <td>
                                                 <div class="TBL-actions">
                                                    <ul class="action-icons">
                                                       <li><a href="claim-expense-preview.html"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip"
-                                                         title="View"
-                                                         class="fa-eye   fa-regular"></span></a>
+                                                            class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="View"
+                                                               class="fa-eye   fa-regular"></span></a>
                                                       </li>
                                                       <li>
-                                                         <a href="#"
-                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                         <a href="#" class="btn-icon-action btn-icon-view p-relative"
                                                             RequestId="25" RequestType="Travel"
                                                             id="communicationThread">
-                                                            <span data-toggle="tooltip"
-                                                               title="Communication"
+                                                            <span data-toggle="tooltip" title="Communication"
                                                                class="fa-comment-dots fa-regular"></span>
                                                             <div class="communication-count"><span
-                                                               id="CommCountTravel25">0</span>
+                                                                  id="CommCountTravel25">0</span>
                                                             </div>
                                                          </a>
                                                       </li>
@@ -463,23 +431,19 @@
                                              </td>
                                              <td data-label="Service For">
                                                 <span class="tbl-ww1">
-                                                Ticket | Accommodation | Cab
+                                                   Ticket | Accommodation | Cab
                                                 </span>
                                              </td>
                                              <td data-label="Request For">Self</td>
                                              <td data-label="Policy Violation">
                                                 <span class="pol-vio text-red" data-bs-toggle="tooltip"
-                                                   title="Policy Violation"
-                                                   data-bs-original-title="Policy Violation"
+                                                   title="Policy Violation" data-bs-original-title="Policy Violation"
                                                    aria-label="Policy Violation">
                                                    <span class="font-20">
-                                                      <svg width="20" height="20" viewBox="0 0 20 20"
-                                                         fill="none"
+                                                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
-                                                         <circle cx="10" cy="10" r="10"
-                                                            fill="#E63535" />
-                                                         <path fill-rule="evenodd"
-                                                            clip-rule="evenodd"
+                                                         <circle cx="10" cy="10" r="10" fill="#E63535" />
+                                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                                             d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
                                                             fill="white" />
                                                       </svg>
@@ -487,37 +451,33 @@
                                                 </span>
                                              </td>
                                              <td data-label="Status">
-                                                <span class="status-green status-common"
-                                                   data-bs-toggle="tooltip" title="Budget Verification"
+                                                <span class="status-green status-common" data-bs-toggle="tooltip"
+                                                   title="Budget Verification"
                                                    data-bs-original-title="Budget Verification"
                                                    aria-label="Budget Verification">
-                                                BUDEGET VERIFICATION
+                                                   BUDEGET VERIFICATION
                                                 </span>
                                              </td>
                                              <td>
                                                 <div class="TBL-actions">
                                                    <ul class="action-icons">
                                                       <li><a href="claim-expense-preview.html"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip"
-                                                         title="View"
-                                                         class="fa-eye   fa-regular"></span></a>
+                                                            class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="View"
+                                                               class="fa-eye   fa-regular"></span></a>
                                                       </li>
-                                                      <li><a href="#"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip" title="PDF"
-                                                         class="fa-regular fa-file-pdf"></span></a>
+                                                      <li><a href="#" class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="PDF"
+                                                               class="fa-regular fa-file-pdf"></span></a>
                                                       </li>
                                                       <li>
-                                                         <a href="#"
-                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                         <a href="#" class="btn-icon-action btn-icon-view p-relative"
                                                             RequestId="26" RequestType="Travel"
                                                             id="communicationThread">
-                                                            <span data-toggle="tooltip"
-                                                               title="Communication"
+                                                            <span data-toggle="tooltip" title="Communication"
                                                                class="fa-comment-dots fa-regular"></span>
                                                             <div class="communication-count"><span
-                                                               id="CommCountTravel26">0</span>
+                                                                  id="CommCountTravel26">0</span>
                                                             </div>
                                                          </a>
                                                       </li>
@@ -542,66 +502,57 @@
                                              </td>
                                              <td data-label="Service For">
                                                 <span class="tbl-ww1">
-                                                Ticket | Accommodation | Cab | Advance
+                                                   Ticket | Accommodation | Cab | Advance
                                                 </span>
                                              </td>
                                              <td data-label="Request For">Group</td>
                                              <td data-label="Policy Violation">
-                                                <span class="pol-vio text-green"
-                                                   data-bs-toggle="tooltip" title="No Policy Violation"
+                                                <span class="pol-vio text-green" data-bs-toggle="tooltip"
+                                                   title="No Policy Violation"
                                                    data-bs-original-title="No Policy Violation"
                                                    aria-label="No Policy Violation">
                                                    <span class="font-20">
-                                                      <svg width="20" height="20" viewBox="0 0 20 20"
-                                                         fill="none"
+                                                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
-                                                         <circle cx="10" cy="10" r="10"
-                                                            fill="#05A660" />
-                                                         <path
-                                                            d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
-                                                            stroke="#F7F7FC" stroke-width="2"
-                                                            stroke-linecap="round"
+                                                         <circle cx="10" cy="10" r="10" fill="#05A660" />
+                                                         <path d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
+                                                            stroke="#F7F7FC" stroke-width="2" stroke-linecap="round"
                                                             stroke-linejoin="round" />
                                                       </svg>
                                                    </span>
                                                 </span>
                                              </td>
                                              <td data-label="Status">
-                                                <span class="status-orange status-common"
-                                                   data-bs-toggle="tooltip" title="Seek Clarification"
+                                                <span class="status-orange status-common" data-bs-toggle="tooltip"
+                                                   title="Seek Clarification"
                                                    data-bs-original-title="Seek Clarification"
                                                    aria-label="Seek Clarification ">
-                                                SEEK CLARIFICATION
+                                                   SEEK CLARIFICATION
                                                 </span>
                                              </td>
                                              <td>
                                                 <div class="TBL-actions">
                                                    <ul class="action-icons">
                                                       <li><a href="claim-expense-preview.html"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip"
-                                                         title="View"
-                                                         class="fa-eye   fa-regular"></span></a>
+                                                            class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="View"
+                                                               class="fa-eye   fa-regular"></span></a>
                                                       </li>
                                                       <li>
-                                                         <a href="#"
-                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                         <a href="#" class="btn-icon-action btn-icon-view p-relative"
                                                             RequestId="27" RequestType="Travel"
                                                             id="communicationThread">
-                                                            <span data-toggle="tooltip"
-                                                               title="Communication"
+                                                            <span data-toggle="tooltip" title="Communication"
                                                                class="fa-comment-dots fa-regular"></span>
                                                             <div class="communication-count"><span
-                                                               id="CommCountTravel27">0</span>
+                                                                  id="CommCountTravel27">0</span>
                                                             </div>
                                                          </a>
                                                       </li>
-                                                      <li><a href="#"
-                                                         class="btn-icon-action btn-icon-cancel"><span
-                                                         data-bs-toggle="tooltip"
-                                                         title="Cancel Request"
-                                                         class="fa-solid fa-xmark"
-                                                         aria-label="Cancel Request"></span></a>
+                                                      <li><a href="#" class="btn-icon-action btn-icon-cancel"><span
+                                                               data-bs-toggle="tooltip" title="Cancel Request"
+                                                               class="fa-solid fa-xmark"
+                                                               aria-label="Cancel Request"></span></a>
                                                       </li>
                                                    </ul>
                                                 </div>
@@ -624,23 +575,19 @@
                                              </td>
                                              <td data-label="Service For">
                                                 <span class="tbl-ww1">
-                                                Ticket | Accommodation | Cab
+                                                   Ticket | Accommodation | Cab
                                                 </span>
                                              </td>
                                              <td data-label="Request For">Self</td>
                                              <td data-label="Policy Violation">
                                                 <span class="pol-vio text-red" data-bs-toggle="tooltip"
-                                                   title="Policy Violation"
-                                                   data-bs-original-title="Policy Violation"
+                                                   title="Policy Violation" data-bs-original-title="Policy Violation"
                                                    aria-label="Policy Violation">
                                                    <span class="font-20">
-                                                      <svg width="20" height="20" viewBox="0 0 20 20"
-                                                         fill="none"
+                                                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
-                                                         <circle cx="10" cy="10" r="10"
-                                                            fill="#E63535" />
-                                                         <path fill-rule="evenodd"
-                                                            clip-rule="evenodd"
+                                                         <circle cx="10" cy="10" r="10" fill="#E63535" />
+                                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                                             d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
                                                             fill="white" />
                                                       </svg>
@@ -648,38 +595,33 @@
                                                 </span>
                                              </td>
                                              <td data-label="Status">
-                                                <span class="status-green status-common"
-                                                   data-bs-toggle="tooltip"
+                                                <span class="status-green status-common" data-bs-toggle="tooltip"
                                                    title="Approved Booking Pending"
                                                    data-bs-original-title="Approved Booking Pending"
                                                    aria-label="Approved Booking Pending">
-                                                Approved-Booking Pending
+                                                   Approved-Booking Pending
                                                 </span>
                                              </td>
                                              <td>
                                                 <div class="TBL-actions">
                                                    <ul class="action-icons">
                                                       <li><a href="claim-expense-preview.html"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip"
-                                                         title="View"
-                                                         class="fa-eye   fa-regular"></span></a>
+                                                            class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="View"
+                                                               class="fa-eye   fa-regular"></span></a>
                                                       </li>
-                                                      <li><a href="#"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip" title="PDF"
-                                                         class="fa-regular fa-file-pdf"></span></a>
+                                                      <li><a href="#" class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="PDF"
+                                                               class="fa-regular fa-file-pdf"></span></a>
                                                       </li>
                                                       <li>
-                                                         <a href="#"
-                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                         <a href="#" class="btn-icon-action btn-icon-view p-relative"
                                                             RequestId="28" RequestType="Travel"
                                                             id="communicationThread">
-                                                            <span data-toggle="tooltip"
-                                                               title="Communication"
+                                                            <span data-toggle="tooltip" title="Communication"
                                                                class="fa-comment-dots fa-regular"></span>
                                                             <div class="communication-count"><span
-                                                               id="CommCountTravel28">0</span>
+                                                                  id="CommCountTravel28">0</span>
                                                             </div>
                                                          </a>
                                                       </li>
@@ -704,57 +646,50 @@
                                              </td>
                                              <td data-label="Service For">
                                                 <span class="tbl-ww1">
-                                                Accommodation
+                                                   Accommodation
                                                 </span>
                                              </td>
                                              <td data-label="Request For">Self</td>
                                              <td data-label="Policy Violation">
-                                                <span class="pol-vio text-green"
-                                                   data-bs-toggle="tooltip" title="No Policy Violation"
+                                                <span class="pol-vio text-green" data-bs-toggle="tooltip"
+                                                   title="No Policy Violation"
                                                    data-bs-original-title="No Policy Violation"
                                                    aria-label="No Policy Violation">
                                                    <span class="font-20">
-                                                      <svg width="20" height="20" viewBox="0 0 20 20"
-                                                         fill="none"
+                                                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
-                                                         <circle cx="10" cy="10" r="10"
-                                                            fill="#05A660" />
-                                                         <path
-                                                            d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
-                                                            stroke="#F7F7FC" stroke-width="2"
-                                                            stroke-linecap="round"
+                                                         <circle cx="10" cy="10" r="10" fill="#05A660" />
+                                                         <path d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
+                                                            stroke="#F7F7FC" stroke-width="2" stroke-linecap="round"
                                                             stroke-linejoin="round" />
                                                       </svg>
                                                    </span>
                                                 </span>
                                              </td>
                                              <td data-label="Status">
-                                                <span class="status-grey status-common"
-                                                   data-bs-toggle="tooltip" title="Pending for Option"
+                                                <span class="status-grey status-common" data-bs-toggle="tooltip"
+                                                   title="Pending for Option"
                                                    data-bs-original-title="Pending for Option"
                                                    aria-label="Pending for Option">
-                                                PENDING FOR OPTION
+                                                   PENDING FOR OPTION
                                                 </span>
                                              </td>
                                              <td>
                                                 <div class="TBL-actions">
                                                    <ul class="action-icons">
                                                       <li><a href="claim-expense-preview.html"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip"
-                                                         title="View"
-                                                         class="fa-eye   fa-regular"></span></a>
+                                                            class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="View"
+                                                               class="fa-eye   fa-regular"></span></a>
                                                       </li>
                                                       <li>
-                                                         <a href="#"
-                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                         <a href="#" class="btn-icon-action btn-icon-view p-relative"
                                                             RequestId="31" RequestType="Travel"
                                                             id="communicationThread">
-                                                            <span data-toggle="tooltip"
-                                                               title="Communication"
+                                                            <span data-toggle="tooltip" title="Communication"
                                                                class="fa-comment-dots fa-regular"></span>
                                                             <div class="communication-count"><span
-                                                               id="CommCountTravel31">2</span>
+                                                                  id="CommCountTravel31">2</span>
                                                             </div>
                                                          </a>
                                                       </li>
@@ -779,25 +714,21 @@
                                              </td>
                                              <td data-label="Service For">
                                                 <span class="tbl-ww1">
-                                                Accommodation
+                                                   Accommodation
                                                 </span>
                                              </td>
                                              <td data-label="Request For">Self</td>
                                              <td data-label="Policy Violation">
-                                                <span class="pol-vio text-green"
-                                                   data-bs-toggle="tooltip" title="No Policy Violation"
+                                                <span class="pol-vio text-green" data-bs-toggle="tooltip"
+                                                   title="No Policy Violation"
                                                    data-bs-original-title="No Policy Violation"
                                                    aria-label="No Policy Violation">
                                                    <span class="font-20">
-                                                      <svg width="20" height="20" viewBox="0 0 20 20"
-                                                         fill="none"
+                                                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
-                                                         <circle cx="10" cy="10" r="10"
-                                                            fill="#05A660" />
-                                                         <path
-                                                            d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
-                                                            stroke="#F7F7FC" stroke-width="2"
-                                                            stroke-linecap="round"
+                                                         <circle cx="10" cy="10" r="10" fill="#05A660" />
+                                                         <path d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
+                                                            stroke="#F7F7FC" stroke-width="2" stroke-linecap="round"
                                                             stroke-linejoin="round" />
                                                       </svg>
                                                    </span>
@@ -805,28 +736,25 @@
                                              </td>
                                              <td data-label="Status">
                                                 <span class="status-blue status-common">
-                                                PENDING FOR OPTION
+                                                   PENDING FOR OPTION
                                                 </span>
                                              </td>
                                              <td>
                                                 <div class="TBL-actions">
                                                    <ul class="action-icons">
                                                       <li><a href="claim-expense-preview.html"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip"
-                                                         title="View"
-                                                         class="fa-eye   fa-regular"></span></a>
+                                                            class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="View"
+                                                               class="fa-eye   fa-regular"></span></a>
                                                       </li>
                                                       <li>
-                                                         <a href="#"
-                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                         <a href="#" class="btn-icon-action btn-icon-view p-relative"
                                                             RequestId="32" RequestType="Travel"
                                                             id="communicationThread">
-                                                            <span data-toggle="tooltip"
-                                                               title="Communication"
+                                                            <span data-toggle="tooltip" title="Communication"
                                                                class="fa-comment-dots fa-regular"></span>
                                                             <div class="communication-count"><span
-                                                               id="CommCountTravel32">0</span>
+                                                                  id="CommCountTravel32">0</span>
                                                             </div>
                                                          </a>
                                                       </li>
@@ -851,23 +779,19 @@
                                              </td>
                                              <td data-label="Service For">
                                                 <span class="tbl-ww1">
-                                                Ticket | Accommodation | Cab | Advance
+                                                   Ticket | Accommodation | Cab | Advance
                                                 </span>
                                              </td>
                                              <td data-label="Request For">Self</td>
                                              <td data-label="Policy Violation">
                                                 <span class="pol-vio text-red" data-bs-toggle="tooltip"
-                                                   title="Policy Violation"
-                                                   data-bs-original-title="Policy Violation"
+                                                   title="Policy Violation" data-bs-original-title="Policy Violation"
                                                    aria-label="Policy Violation">
                                                    <span class="font-20">
-                                                      <svg width="20" height="20" viewBox="0 0 20 20"
-                                                         fill="none"
+                                                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
-                                                         <circle cx="10" cy="10" r="10"
-                                                            fill="#E63535" />
-                                                         <path fill-rule="evenodd"
-                                                            clip-rule="evenodd"
+                                                         <circle cx="10" cy="10" r="10" fill="#E63535" />
+                                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                                             d="M14.4571 6.95711C14.8476 6.56658 14.8476 5.93342 14.4571 5.54289C14.0666 5.15237 13.4334 5.15237 13.0429 5.54289L10 8.58579L6.95711 5.54289C6.56658 5.15237 5.93342 5.15237 5.54289 5.54289C5.15237 5.93342 5.15237 6.56658 5.54289 6.95711L8.58579 10L5.54289 13.0429C5.15237 13.4334 5.15237 14.0666 5.54289 14.4571C5.93342 14.8476 6.56658 14.8476 6.95711 14.4571L10 11.4142L13.0429 14.4571C13.4334 14.8476 14.0666 14.8476 14.4571 14.4571C14.8476 14.0666 14.8476 13.4334 14.4571 13.0429L11.4142 10L14.4571 6.95711Z"
                                                             fill="white" />
                                                       </svg>
@@ -876,33 +800,29 @@
                                              </td>
                                              <td data-label="Status">
                                                 <span class="status-green status-common">
-                                                COMPLETED
+                                                   COMPLETED
                                                 </span>
                                              </td>
                                              <td>
                                                 <div class="TBL-actions">
                                                    <ul class="action-icons">
                                                       <li><a href="claim-expense-preview.html"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip"
-                                                         title="View"
-                                                         class="fa-eye   fa-regular"></span></a>
+                                                            class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="View"
+                                                               class="fa-eye   fa-regular"></span></a>
                                                       </li>
-                                                      <li><a href="#"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip" title="PDF"
-                                                         class="fa-regular fa-file-pdf"></span></a>
+                                                      <li><a href="#" class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="PDF"
+                                                               class="fa-regular fa-file-pdf"></span></a>
                                                       </li>
                                                       <li>
-                                                         <a href="#"
-                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                         <a href="#" class="btn-icon-action btn-icon-view p-relative"
                                                             RequestId="35" RequestType="Travel"
                                                             id="communicationThread">
-                                                            <span data-toggle="tooltip"
-                                                               title="Communication"
+                                                            <span data-toggle="tooltip" title="Communication"
                                                                class="fa-comment-dots fa-regular"></span>
                                                             <div class="communication-count"><span
-                                                               id="CommCountTravel35">1</span>
+                                                                  id="CommCountTravel35">1</span>
                                                             </div>
                                                          </a>
                                                       </li>
@@ -927,25 +847,21 @@
                                              </td>
                                              <td data-label="Service For">
                                                 <span class="tbl-ww1">
-                                                Ticket | Accommodation | Cab
+                                                   Ticket | Accommodation | Cab
                                                 </span>
                                              </td>
                                              <td data-label="Request For">Self</td>
                                              <td data-label="Policy Violation">
-                                                <span class="pol-vio text-green"
-                                                   data-bs-toggle="tooltip" title="No Policy Violation"
+                                                <span class="pol-vio text-green" data-bs-toggle="tooltip"
+                                                   title="No Policy Violation"
                                                    data-bs-original-title="No Policy Violation"
                                                    aria-label="No Policy Violation">
                                                    <span class="font-20">
-                                                      <svg width="20" height="20" viewBox="0 0 20 20"
-                                                         fill="none"
+                                                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
-                                                         <circle cx="10" cy="10" r="10"
-                                                            fill="#05A660" />
-                                                         <path
-                                                            d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
-                                                            stroke="#F7F7FC" stroke-width="2"
-                                                            stroke-linecap="round"
+                                                         <circle cx="10" cy="10" r="10" fill="#05A660" />
+                                                         <path d="M13.75 7.5L8.59375 13.125L6.25 10.5682"
+                                                            stroke="#F7F7FC" stroke-width="2" stroke-linecap="round"
                                                             stroke-linejoin="round" />
                                                       </svg>
                                                    </span>
@@ -953,33 +869,29 @@
                                              </td>
                                              <td data-label="Status">
                                                 <span class="status-green status-common">
-                                                COMPLETED
+                                                   COMPLETED
                                                 </span>
                                              </td>
                                              <td>
                                                 <div class="TBL-actions">
                                                    <ul class="action-icons">
                                                       <li><a href="claim-expense-preview.html"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip"
-                                                         title="View"
-                                                         class="fa-eye   fa-regular"></span></a>
+                                                            class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="View"
+                                                               class="fa-eye   fa-regular"></span></a>
                                                       </li>
-                                                      <li><a href="#"
-                                                         class="btn-icon-action btn-icon-view"><span
-                                                         data-bs-toggle="tooltip" title="PDF"
-                                                         class="fa-regular fa-file-pdf"></span></a>
+                                                      <li><a href="#" class="btn-icon-action btn-icon-view"><span
+                                                               data-bs-toggle="tooltip" title="PDF"
+                                                               class="fa-regular fa-file-pdf"></span></a>
                                                       </li>
                                                       <li>
-                                                         <a href="#"
-                                                            class="btn-icon-action btn-icon-view p-relative"
+                                                         <a href="#" class="btn-icon-action btn-icon-view p-relative"
                                                             RequestId="33" RequestType="Travel"
                                                             id="communicationThread">
-                                                            <span data-toggle="tooltip"
-                                                               title="Communication"
+                                                            <span data-toggle="tooltip" title="Communication"
                                                                class="fa-comment-dots fa-regular"></span>
                                                             <div class="communication-count"><span
-                                                               id="CommCountTravel33">1</span>
+                                                                  id="CommCountTravel33">1</span>
                                                             </div>
                                                          </a>
                                                       </li>
@@ -996,8 +908,7 @@
                                     <div class="dataTables_length" id="tblMyTravelRequest_length">
                                        <label>
                                           Show
-                                          <select name="tblMyTravelRequest_length"
-                                             aria-controls="tblMyTravelRequest"
+                                          <select name="tblMyTravelRequest_length" aria-controls="tblMyTravelRequest"
                                              class="custom-select custom-select-sm form-control form-control-sm">
                                              <option value="5">5</option>
                                              <option value="10">10</option>
@@ -1014,29 +925,28 @@
                                        <ul class="pagination">
                                           <li class="paginate_button page-item previous disabled"
                                              id="tblMyTravelRequest_previous"><a href="#"
-                                             aria-controls="tblMyTravelRequest" data-dt-idx="0"
-                                             tabindex="0" class="page-link">Previous</a></li>
+                                                aria-controls="tblMyTravelRequest" data-dt-idx="0" tabindex="0"
+                                                class="page-link">Previous</a></li>
                                           <li class="paginate_button page-item active"><a href="#"
-                                             aria-controls="tblMyTravelRequest" data-dt-idx="1"
-                                             tabindex="0" class="page-link">1</a></li>
+                                                aria-controls="tblMyTravelRequest" data-dt-idx="1" tabindex="0"
+                                                class="page-link">1</a></li>
                                           <li class="paginate_button page-item "><a href="#"
-                                             aria-controls="tblMyTravelRequest" data-dt-idx="2"
-                                             tabindex="0" class="page-link">2</a></li>
-                                          <li class="paginate_button page-item next"
-                                             id="tblMyTravelRequest_next"><a href="#"
-                                             aria-controls="tblMyTravelRequest" data-dt-idx="3"
-                                             tabindex="0" class="page-link">Next</a></li>
+                                                aria-controls="tblMyTravelRequest" data-dt-idx="2" tabindex="0"
+                                                class="page-link">2</a></li>
+                                          <li class="paginate_button page-item next" id="tblMyTravelRequest_next"><a
+                                                href="#" aria-controls="tblMyTravelRequest" data-dt-idx="3" tabindex="0"
+                                                class="page-link">Next</a></li>
                                        </ul>
                                     </div>
                                  </div>
                               </div>
                            </div>
                         </div>
-                        <div id="expense-state" role="tabpanel" aria-labelledby="expense-state-tab" class="tab-pane fade pt-0 position-relative">
+                        <div id="expense-state" role="tabpanel" aria-labelledby="expense-state-tab"
+                           class="tab-pane fade pt-0 position-relative">
                            <div class="datatable-right">
                               <div class="dt-buttons">
-                                 <button
-                                    class="btn btn-outline-secondary me-2 py-1 fw-normal  px-3 btn-sm export-btn"
+                                 <button class="btn btn-outline-secondary me-2 py-1 fw-normal  px-3 btn-sm export-btn"
                                     tabindex="0" aria-controls="tblMyExpenseRequest" type="button"
                                     (click)="exportExcel()">
                                     <svg class="me-2" width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -1049,12 +959,10 @@
                                     Download Excel
                                  </button>
                               </div>
-                              <div id="tblMyExpenseRequest_filter"
-                                 class="dataTables_filter position-relative">
-                                 <mat-form-field class="datatable-search position-relative"
-                                    appearance="outline">
-                                    <input class="custom-search" matInput
-                                       (keyup)="applyGlobalFilter($event)" placeholder="Search" />
+                              <div id="tblMyExpenseRequest_filter" class="dataTables_filter position-relative">
+                                 <mat-form-field class="datatable-search position-relative" appearance="outline">
+                                    <input class="custom-search" matInput (keyup)="applyGlobalFilter($event)"
+                                       placeholder="Search" />
                                     <svg width="21" height="21" viewBox="0 0 21 21" fill="none"
                                        xmlns="http://www.w3.org/2000/svg">
                                        <path fill-rule="evenodd" clip-rule="evenodd"
@@ -1070,204 +978,186 @@
                                     [dataSource]="isMobile ? mobileDisplayData : dataSource" matSort
                                     class="table table-travelreq mobile-card-view-datatable table-cust-modeA filterColumnTableVer2 recent-exp-req table table-bordered table-striped table-cust-new d-table no-footer dataTable">
                                     <!-- Column Definitions for Data and Header -->
-                                    <ng-container *ngFor="let column of displayedColumns"
-                                    [matColumnDef]="column.key">
-                                    <!-- Header Cell -->
-                                    <!-- <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.sortable ? column.key : ''">
+                                    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.key">
+                                       <!-- Header Cell -->
+                                       <!-- <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.sortable ? column.key : ''">
                                        {{ column.label }}
                                        </th> -->
-                                    <ng-container *ngIf="column.sortable; else noSortHeader">
-                                       <th mat-header-cell *matHeaderCellDef
-                                          mat-sort-header="{{ column.key }}">
-                                          {{ column.label }}
-                                       </th>
-                                    </ng-container>
-                                    <ng-template #noSortHeader>
-                                       <th mat-header-cell *matHeaderCellDef>
-                                          {{ column.label }}
-                                       </th>
-                                    </ng-template>
-                                    <!-- Data Cell -->
-                                    <td [attr.data-label]="column.label" mat-cell
-                                    *matCellDef="let element; let i = index">
-                                    <ng-container *ngIf="column.key === 'slNo'; else columnContent">
-                                       <span class="text-center d-block"> {{ i + 1 }}</span>
-                                    </ng-container>
-                                    <ng-template #columnContent>
-                                       <ng-container
-                                          *ngIf="column.key === 'PolicyViolationCount'; else requestDateColumn">
-                                          <mat-icon
-                                          [ngClass]="element[column.key] > 0 ? 'violation-icon-red' : 'violation-icon-green'"
-                                          [matTooltip]="element[column.key] > 0 ? 'Policy Violation' : 'No Policy Violation'">
-                                          {{ element[column.key] > 0 ?
-                                          'cancel' : 'check_circle' }}
-                                          </mat-icon>
+                                       <ng-container *ngIf="column.sortable; else noSortHeader">
+                                          <th mat-header-cell *matHeaderCellDef mat-sort-header="{{ column.key }}">
+                                             {{ column.label }}
+                                          </th>
                                        </ng-container>
-                                       <ng-template #requestDateColumn>
-                                          <ng-container
-                                             *ngIf="column.key === 'RequestDate'; else actionColumn">
-                                             {{ element[column.key] | date:
-                                             'dd-MMM-yyyy' }}
+                                       <ng-template #noSortHeader>
+                                          <th mat-header-cell *matHeaderCellDef>
+                                             {{ column.label }}
+                                          </th>
+                                       </ng-template>
+                                       <!-- Data Cell -->
+                                       <td [attr.data-label]="column.label" mat-cell
+                                          *matCellDef="let element; let i = index">
+                                          <ng-container *ngIf="column.key === 'slNo'; else columnContent">
+                                             <span class="text-center d-block"> {{ i + 1 }}</span>
                                           </ng-container>
-                                          <ng-template #actionColumn>
-                                             <ng-container 
-                                                *ngIf="column.key === 'action'; else defaultColumn">
-                                                <div class="TBL-actions">
-                                                   <ul class="action-icons">
-                                                      <li *ngIf="element.IsEdit">
-                                                         <a [routerLink]="['/expense/expense/edit-expense', element.ExpenseClaimTypeDescription,element.TransactionId]"
-                                                            class="btn-icon-action btn-icon-view">
-                                                         <span data-bs-toggle="tooltip"
-                                                            class="fa fa-pencil"
-                                                            aria-label="Edit"
-                                                            matTooltip="Edit"></span>
-                                                         </a>
-                                                      </li>
-                                                      <li *ngIf="element.IsPreview">
-                                                         <a [routerLink]="['/expense/expense/preview',element.TransactionId]"
-                                                            class="btn-icon-action btn-icon-view">
-                                                         <span data-bs-toggle="tooltip"
-                                                            class="fa-eye fa-regular"
-                                                            aria-label="View"
-                                                            matTooltip="View"></span>
-                                                         </a>
-                                                      </li>
-                                                      <li>
-                                                         <a href="#"
-                                                            class="btn-icon-action btn-icon-view">
-                                                         <span data-bs-toggle="tooltip"
-                                                            class="fa-regular fa-file-pdf"
-                                                            aria-label="PDF"
-                                                            matTooltip="PDF"></span>
-                                                         </a>
-                                                      </li>
-                                                      <li>
-                                                         <a href="#"
-                                                         class="btn-icon-action btn-icon-view p-relative"
-                                                         [attr.requestid]="element.TransactionId"
-                                                         [attr.requesttype]="element.ExpenseRequestType"
-                                                         id="communicationThread">
-                                                         <span data-toggle="tooltip"
-                                                            title="Communication"
-                                                            class="fa-comment-dots fa-regular"></span>
-                                                         <div
-                                                            class="communication-count">
-                                                            <span
-                                                               [id]="'CommCount' + element.requestType + element.requestId">0</span>
-                                                         </div>
-                                                         </a>
-                                                      </li>
-                                                   </ul>
-                                                </div>
+                                          <ng-template #columnContent>
+                                             <ng-container
+                                                *ngIf="column.key === 'PolicyViolationCount'; else requestDateColumn">
+                                                <mat-icon
+                                                   [ngClass]="element[column.key] > 0 ? 'violation-icon-red' : 'violation-icon-green'"
+                                                   [matTooltip]="element[column.key] > 0 ? 'Policy Violation' : 'No Policy Violation'">
+                                                   {{ element[column.key] > 0 ?
+                                                   'cancel' : 'check_circle' }}
+                                                </mat-icon>
                                              </ng-container>
-                                             <ng-template #defaultColumn>
-                                                @if (column.key === 'ClaimStatus') {
-                                                @if (element['ClaimStatusId'] === 23) {
-                                                <span class="status-green status-common"
-                                                 matTooltip="Completed"
-                                                   data-bs-toggle="tooltip" title="Completed"   matTooltipPosition="above"
-                                                   aria-label="Completed">
-                                                {{ element[column.key] }}
-                                                </span>
-                                                } @else if (element['ClaimStatusId'] === 26) {
-                                                <span class="status-grey   status-common"
-                                                 matTooltip="Expense Request Draft"
-                                                   data-bs-toggle="tooltip"   matTooltipPosition="above"
-                                                   title="Expense Request Draft"
-                                                   aria-label="Expense Request Draft">
-                                                {{ element[column.key] }}
-                                                </span>
-                                                }
-                                                @else if (element['ClaimStatusId'] === 27) {
-                                                <span class="status-grey  status-common"
-                                                 matTooltip="Pending For Approval"
-                                                   data-bs-toggle="tooltip"   matTooltipPosition="above"
-                                                   title="Pending For Approval"
-                                                   aria-label="Pending For Approval">
-                                                {{ element[column.key] }}
-                                                </span>
-                                                }
-                                                @else if (element['ClaimStatusId'] === 30) {
-                                                <span class="status-red status-common"
-                                                matTooltip="Rejected"   matTooltipPosition="above"
-                                                   data-bs-toggle="tooltip" title="Rejected"
-                                                   aria-label="Rejected">
-                                                {{ element[column.key] }}
-                                                </span>
-                                                }
-                                                @else if (element['ClaimStatusId'] === 31) {
-                                                <span class="status-orange  status-common"
-                                                  matTooltip="Seek Clarification"
-                                                   data-bs-toggle="tooltip"   matTooltipPosition="above"
-                                                   title="Seek Clarification"
-                                                   aria-label="Seek Clarification">
-                                                {{ element[column.key] }}
-                                                </span>
-                                                }
-                                                @else if (element['ClaimStatusId'] === 32) {
-                                                <span class="status-red status-common"
-                                                 matTooltip="Cancelled"   matTooltipPosition="above"
-                                                   data-bs-toggle="tooltip" title="Cancelled"
-                                                   aria-label="Cancelled">
-                                                {{ element[column.key] }}
-                                                </span>
-                                                }
-                                                @else if (element['ClaimStatusId'] === 34) {
-                                                <span class="status-green status-common"
-                                                 matTooltip="Approved"   matTooltipPosition="above"
-                                                   data-bs-toggle="tooltip" title="Approved"
-                                                   aria-label="Approved">
-                                                {{ element[column.key] }}
-                                                </span>
-                                                }
-                                                @else {
-                                                {{ element[column.key] }}
-                                                }
-                                                } @else {
-                                                {{ element[column.key] }}
-                                                }
+                                             <ng-template #requestDateColumn>
+                                                <ng-container *ngIf="column.key === 'RequestDate'; else actionColumn">
+                                                   {{ element[column.key] | date:
+                                                   'dd-MMM-yyyy' }}
+                                                </ng-container>
+                                                <ng-template #actionColumn>
+                                                   <ng-container *ngIf="column.key === 'action'; else defaultColumn">
+                                                      <div class="TBL-actions">
+                                                         <ul class="action-icons">
+                                                            <li *ngIf="element.IsEdit">
+                                                               <a [routerLink]="['/expense/expense/edit-expense', element.ExpenseClaimTypeDescription,element.TransactionId]"
+                                                                  class="btn-icon-action btn-icon-view">
+                                                                  <span data-bs-toggle="tooltip" class="fa fa-pencil"
+                                                                     aria-label="Edit" matTooltip="Edit"></span>
+                                                               </a>
+                                                            </li>
+                                                            <li *ngIf="element.IsPreview">
+                                                               <a [routerLink]="['/expense/expense/preview',element.TransactionId]"
+                                                                  class="btn-icon-action btn-icon-view">
+                                                                  <span data-bs-toggle="tooltip"
+                                                                     class="fa-eye fa-regular" aria-label="View"
+                                                                     matTooltip="View"></span>
+                                                               </a>
+                                                            </li>
+                                                            <li>
+                                                               <a href="#" class="btn-icon-action btn-icon-view">
+                                                                  <span data-bs-toggle="tooltip"
+                                                                     class="fa-regular fa-file-pdf" aria-label="PDF"
+                                                                     matTooltip="PDF"></span>
+                                                               </a>
+                                                            </li>
+                                                            <li>
+                                                               <a href="#"
+                                                                  class="btn-icon-action btn-icon-view p-relative"
+                                                                  [attr.requestid]="element.TransactionId"
+                                                                  [attr.requesttype]="element.ExpenseRequestType"
+                                                                  id="communicationThread">
+                                                                  <span data-toggle="tooltip" title="Communication"
+                                                                     class="fa-comment-dots fa-regular"></span>
+                                                                  <div class="communication-count">
+                                                                     <span
+                                                                        [id]="'CommCount' + element.requestType + element.requestId">0</span>
+                                                                  </div>
+                                                               </a>
+                                                            </li>
+                                                         </ul>
+                                                      </div>
+                                                   </ng-container>
+                                                   <ng-template #defaultColumn>
+                                                      @if (column.key === 'ClaimStatus') {
+                                                      @if (element['ClaimStatusId'] === 23) {
+                                                      <span class="status-green status-common" matTooltip="Completed"
+                                                         data-bs-toggle="tooltip" title="Completed"
+                                                         matTooltipPosition="above" aria-label="Completed">
+                                                         {{ element[column.key] }}
+                                                      </span>
+                                                      } @else if (element['ClaimStatusId'] === 26) {
+                                                      <span class="status-grey   status-common"
+                                                         matTooltip="Expense Request Draft" data-bs-toggle="tooltip"
+                                                         matTooltipPosition="above" title="Expense Request Draft"
+                                                         aria-label="Expense Request Draft">
+                                                         {{ element[column.key] }}
+                                                      </span>
+                                                      }
+                                                      @else if (element['ClaimStatusId'] === 27) {
+                                                      <span class="status-grey  status-common"
+                                                         matTooltip="Pending For Approval" data-bs-toggle="tooltip"
+                                                         matTooltipPosition="above" title="Pending For Approval"
+                                                         aria-label="Pending For Approval">
+                                                         {{ element[column.key] }}
+                                                      </span>
+                                                      }
+                                                      @else if (element['ClaimStatusId'] === 30) {
+                                                      <span class="status-red status-common" matTooltip="Rejected"
+                                                         matTooltipPosition="above" data-bs-toggle="tooltip"
+                                                         title="Rejected" aria-label="Rejected">
+                                                         {{ element[column.key] }}
+                                                      </span>
+                                                      }
+                                                      @else if (element['ClaimStatusId'] === 31) {
+                                                      <span class="status-orange  status-common"
+                                                         matTooltip="Seek Clarification" data-bs-toggle="tooltip"
+                                                         matTooltipPosition="above" title="Seek Clarification"
+                                                         aria-label="Seek Clarification">
+                                                         {{ element[column.key] }}
+                                                      </span>
+                                                      }
+                                                      @else if (element['ClaimStatusId'] === 32) {
+                                                      <span class="status-red status-common" matTooltip="Cancelled"
+                                                         matTooltipPosition="above" data-bs-toggle="tooltip"
+                                                         title="Cancelled" aria-label="Cancelled">
+                                                         {{ element[column.key] }}
+                                                      </span>
+                                                      }
+                                                      @else if (element['ClaimStatusId'] === 34) {
+                                                      <span class="status-green status-common" matTooltip="Approved"
+                                                         matTooltipPosition="above" data-bs-toggle="tooltip"
+                                                         title="Approved" aria-label="Approved">
+                                                         {{ element[column.key] }}
+                                                      </span>
+                                                      }
+                                                      @else {
+                                                      {{ element[column.key] }}
+                                                      }
+                                                      } @else {
+                                                      {{ element[column.key] }}
+                                                      }
+                                                   </ng-template>
+                                                </ng-template>
                                              </ng-template>
                                           </ng-template>
-                                       </ng-template>
-                                    </ng-template>
-                                    </td>
+                                       </td>
                                     </ng-container>
+                                    
                                     <!-- Filter Row Column Definitions -->
-                                    <ng-container *ngFor="let column of displayedColumns"
-                                    [matColumnDef]="column.key + '_filter'">
-                                    <td mat-header-cell *matHeaderCellDef class="filter-cell">
-                                       <mat-form-field appearance="outline">
-                                          <input matInput (keyup)="applyFilter($event, column.key)"
-                                             placeholder="Search" />
-                                       </mat-form-field>
-                                    </td>
+                                    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.key + '_filter'">
+                                       <td mat-header-cell *matHeaderCellDef class="filter-cell">
+                                          <mat-form-field appearance="outline">
+                                             <input matInput (keyup)="applyFilter($event, column.key)" placeholder="Search" />
+                                          </mat-form-field>
+                                       </td>
                                     </ng-container>
+
                                     <!-- Header Row (Single) -->
                                     <tr mat-header-row *matHeaderRowDef="columnKeys"></tr>
+                                    
                                     <!-- Filter Row (As Header Row) -->
-                                    <tr mat-header-row *matHeaderRowDef="filterColumnKeys"
-                                       class="filter-row">
+                                    <tr mat-header-row *matHeaderRowDef="filterColumnKeys" class="filter-row">
                                     </tr>
+
                                     <!-- Data Rows -->
                                     <tr mat-row *matRowDef="let row; columns: columnKeys">
                                     </tr>
                                  </table>
                                  <div class="text-center">
                                     <button *ngIf="isMobile" id="loadMoreBtn1" class="dash-loadmore"
-                                    (click)="onLoadMore()">
-                                    Load More
-                                    <svg width="18" height="14" viewBox="0 0 18 14" fill="none"
-                                       xmlns="http://www.w3.org/2000/svg">
-                                       <path
-                                          d="M9.00009 13.4581C7.21163 13.4581 5.68813 12.8275 4.42959 11.5663C3.17105 10.3051 2.54178 8.78293 2.54178 6.99982V6.3283L1.52251 7.34757C1.3879 7.48218 1.23459 7.54948 1.06259 7.54948C0.890591 7.54948 0.737286 7.47523 0.602674 7.32673C0.454147 7.19212 0.379883 7.03881 0.379883 6.8668C0.379883 6.6948 0.45414 6.53455 0.602654 6.38605L2.63951 4.34919C2.73138 4.25732 2.82406 4.19188 2.91755 4.15288C3.01102 4.11388 3.10797 4.09438 3.2084 4.09438C3.30883 4.09438 3.40579 4.11388 3.49926 4.15288C3.59274 4.19188 3.68542 4.25732 3.7773 4.34919L5.83499 6.40688C5.96961 6.54149 6.03692 6.6948 6.03692 6.8668C6.03692 7.03881 5.96961 7.19212 5.83499 7.32673C5.68649 7.47523 5.52624 7.54948 5.35424 7.54948C5.18224 7.54948 5.02893 7.47523 4.89432 7.32673L3.87505 6.3283V6.99982C3.87505 8.4058 4.37772 9.61147 5.38307 10.6168C6.38843 11.6222 7.5941 12.1248 9.00009 12.1248C9.28322 12.1248 9.56954 12.1005 9.85907 12.0519C10.1486 12.0033 10.4306 11.9277 10.7052 11.8251C10.8206 11.7803 10.9429 11.7739 11.0722 11.8059C11.2015 11.838 11.3056 11.8935 11.3847 11.9726C11.5845 12.1724 11.6619 12.3855 11.6171 12.612C11.5722 12.8385 11.4301 12.9939 11.1908 13.0783C10.8457 13.2119 10.4854 13.3086 10.1099 13.3684C9.73433 13.4282 9.36441 13.4581 9.00009 13.4581ZM14.7918 9.88442C14.6913 9.88442 14.5944 9.86492 14.5009 9.82592C14.4074 9.78692 14.3147 9.72148 14.2229 9.62961L12.1652 7.57192C12.0306 7.43731 11.9632 7.284 11.9632 7.112C11.9632 6.93999 12.0375 6.77973 12.186 6.63123C12.3206 6.49662 12.4739 6.42932 12.6459 6.42932C12.8179 6.42932 12.9782 6.49662 13.1267 6.63123L14.1251 7.6505V6.99982C14.1251 5.59383 13.6224 4.38816 12.6171 3.38282C11.6117 2.37747 10.4061 1.8748 9.00009 1.8748C8.73085 1.8748 8.45147 1.8991 8.16195 1.94771C7.87242 1.99632 7.59037 2.06497 7.3158 2.15365C7.20041 2.19852 7.07808 2.20493 6.94882 2.17288C6.81954 2.14082 6.71538 2.08527 6.63632 2.00621C6.43654 1.80643 6.36256 1.5933 6.41436 1.36682C6.46618 1.14032 6.61174 0.984865 6.85105 0.900462C7.19615 0.780809 7.55299 0.691067 7.92157 0.631233C8.29015 0.571414 8.64966 0.541504 9.00009 0.541504C10.7885 0.541504 12.312 1.17211 13.5706 2.43332C14.8291 3.69454 15.4584 5.21671 15.4584 6.99982V7.6505L16.4777 6.63123C16.6123 6.49662 16.7656 6.42932 16.9376 6.42932C17.1096 6.42932 17.2698 6.49662 17.4183 6.63123C17.553 6.77973 17.6203 6.93999 17.6203 7.112C17.6203 7.284 17.553 7.43731 17.4183 7.57192L15.3607 9.62961C15.2688 9.72148 15.1761 9.78692 15.0826 9.82592C14.9891 9.86492 14.8922 9.88442 14.7918 9.88442Z"
-                                          fill="#2A5EE3" />
-                                    </svg>
+                                       (click)="onLoadMore()">
+                                       Load More
+                                       <svg width="18" height="14" viewBox="0 0 18 14" fill="none"
+                                          xmlns="http://www.w3.org/2000/svg">
+                                          <path
+                                             d="M9.00009 13.4581C7.21163 13.4581 5.68813 12.8275 4.42959 11.5663C3.17105 10.3051 2.54178 8.78293 2.54178 6.99982V6.3283L1.52251 7.34757C1.3879 7.48218 1.23459 7.54948 1.06259 7.54948C0.890591 7.54948 0.737286 7.47523 0.602674 7.32673C0.454147 7.19212 0.379883 7.03881 0.379883 6.8668C0.379883 6.6948 0.45414 6.53455 0.602654 6.38605L2.63951 4.34919C2.73138 4.25732 2.82406 4.19188 2.91755 4.15288C3.01102 4.11388 3.10797 4.09438 3.2084 4.09438C3.30883 4.09438 3.40579 4.11388 3.49926 4.15288C3.59274 4.19188 3.68542 4.25732 3.7773 4.34919L5.83499 6.40688C5.96961 6.54149 6.03692 6.6948 6.03692 6.8668C6.03692 7.03881 5.96961 7.19212 5.83499 7.32673C5.68649 7.47523 5.52624 7.54948 5.35424 7.54948C5.18224 7.54948 5.02893 7.47523 4.89432 7.32673L3.87505 6.3283V6.99982C3.87505 8.4058 4.37772 9.61147 5.38307 10.6168C6.38843 11.6222 7.5941 12.1248 9.00009 12.1248C9.28322 12.1248 9.56954 12.1005 9.85907 12.0519C10.1486 12.0033 10.4306 11.9277 10.7052 11.8251C10.8206 11.7803 10.9429 11.7739 11.0722 11.8059C11.2015 11.838 11.3056 11.8935 11.3847 11.9726C11.5845 12.1724 11.6619 12.3855 11.6171 12.612C11.5722 12.8385 11.4301 12.9939 11.1908 13.0783C10.8457 13.2119 10.4854 13.3086 10.1099 13.3684C9.73433 13.4282 9.36441 13.4581 9.00009 13.4581ZM14.7918 9.88442C14.6913 9.88442 14.5944 9.86492 14.5009 9.82592C14.4074 9.78692 14.3147 9.72148 14.2229 9.62961L12.1652 7.57192C12.0306 7.43731 11.9632 7.284 11.9632 7.112C11.9632 6.93999 12.0375 6.77973 12.186 6.63123C12.3206 6.49662 12.4739 6.42932 12.6459 6.42932C12.8179 6.42932 12.9782 6.49662 13.1267 6.63123L14.1251 7.6505V6.99982C14.1251 5.59383 13.6224 4.38816 12.6171 3.38282C11.6117 2.37747 10.4061 1.8748 9.00009 1.8748C8.73085 1.8748 8.45147 1.8991 8.16195 1.94771C7.87242 1.99632 7.59037 2.06497 7.3158 2.15365C7.20041 2.19852 7.07808 2.20493 6.94882 2.17288C6.81954 2.14082 6.71538 2.08527 6.63632 2.00621C6.43654 1.80643 6.36256 1.5933 6.41436 1.36682C6.46618 1.14032 6.61174 0.984865 6.85105 0.900462C7.19615 0.780809 7.55299 0.691067 7.92157 0.631233C8.29015 0.571414 8.64966 0.541504 9.00009 0.541504C10.7885 0.541504 12.312 1.17211 13.5706 2.43332C14.8291 3.69454 15.4584 5.21671 15.4584 6.99982V7.6505L16.4777 6.63123C16.6123 6.49662 16.7656 6.42932 16.9376 6.42932C17.1096 6.42932 17.2698 6.49662 17.4183 6.63123C17.553 6.77973 17.6203 6.93999 17.6203 7.112C17.6203 7.284 17.553 7.43731 17.4183 7.57192L15.3607 9.62961C15.2688 9.72148 15.1761 9.78692 15.0826 9.82592C14.9891 9.86492 14.8922 9.88442 14.7918 9.88442Z"
+                                             fill="#2A5EE3" />
+                                       </svg>
                                     </button>
                                  </div>
                                  <mat-paginator *ngIf="!isMobile"
-                                 [length]="isMobile ? mobileDisplayData.length : dataSource.data.length"
-                                 [pageSize]="lastPageSize" [pageSizeOptions]="[5, 10, 25]"
-                                 showFirstLastButtons>
+                                    [length]="isMobile ? mobileDisplayData.length : dataSource.data.length"
+                                    [pageSize]="lastPageSize" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons>
                                  </mat-paginator>
                               </div>
                            </div>

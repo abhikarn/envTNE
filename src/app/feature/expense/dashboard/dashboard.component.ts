@@ -85,6 +85,8 @@ export class DashboardComponent implements OnInit {
   lastPageSize: number = 5;
   lastPageIndex: number = 0;
 
+  columnFilterValues: { [key: string]: string } = {}; // Track filter values per column
+
   constructor(
     private expenseService: ExpenseService,
     private dashboardService: DashboardService,
@@ -107,7 +109,7 @@ export class DashboardComponent implements OnInit {
     this.getMyExpenseRequestDashBoard();
     this.checkScreen();
     window.addEventListener('resize', this.checkScreen.bind(this));
- 
+
   }
 
   ngAfterViewInit(): void {
@@ -184,7 +186,7 @@ export class DashboardComponent implements OnInit {
           sortable: col.sortable,
           order: col.order ? col.order : 0
         };
-      }).sort((a: any, b: any) => a.order - b.order);  
+      }).sort((a: any, b: any) => a.order - b.order);
 
       this.columnKeys = this.displayedColumns.map(col => col.key);
       this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');
@@ -220,37 +222,49 @@ export class DashboardComponent implements OnInit {
   }
 
   onLoadMore() {
-    
+
     this.mobileCurrentPage++;
     this.updateMobileDisplayData();
   }
 
   applyFilter(event: Event, column: string) {
+    ;
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.columnFilterValues[column] = filterValue;
+
     this.dataSource.filterPredicate = (data: any, filter: string) => {
-      return (data[column] ?? '').toString().toLowerCase().includes(filter);
+      const filters = JSON.parse(filter);
+      return Object.keys(filters).every(col =>
+        (data[col] ?? '').toString().toLowerCase().includes(filters[col])
+      );
     };
-    this.dataSource.filter = filterValue;
+    this.dataSource.filter = JSON.stringify(this.columnFilterValues);
+
+    // For mobile
+    this.dataSourceMobile.filterPredicate = this.dataSource.filterPredicate;
+    this.dataSourceMobile.filter = JSON.stringify(this.columnFilterValues);
+
+    if (this.isMobile) {
+      this.mobileCurrentPage = 1;
+      this.updateMobileDisplayData();
+    }
   }
 
   applyGlobalFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
 
-    // Desktop filtering
-    this.dataSource.filter = filterValue;
+    // Clear column filters when global filter is used
+    this.columnFilterValues = {};
+
     this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
       return Object.values(data).some(value =>
         String(value).toLowerCase().includes(filter)
       );
     };
+    this.dataSource.filter = filterValue;
 
-    // Mobile filtering
+    this.dataSourceMobile.filterPredicate = this.dataSource.filterPredicate;
     this.dataSourceMobile.filter = filterValue;
-    this.dataSourceMobile.filterPredicate = (data: any, filter: string): boolean => {
-      return Object.values(data).some(value =>
-        String(value).toLowerCase().includes(filter)
-      );
-    };
 
     if (this.isMobile) {
       this.mobileCurrentPage = 1;

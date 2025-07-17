@@ -47,7 +47,6 @@ export const appConfig: ApplicationConfig = {
         return format;
       }
     }
-
   ]
 };
 
