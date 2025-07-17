@@ -32,6 +32,7 @@ export class TextInputComponent implements OnInit {
   @Output() emitInputValue = new EventEmitter<any>();
   @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
   @Output() emitBusinessCaseData = new EventEmitter<any>();
+  @Output() autoCompleteFocus = new EventEmitter<IFormControl>();
   displayValue: any;
   passwordVisible: boolean = false;
 
@@ -127,15 +128,14 @@ export class TextInputComponent implements OnInit {
   onCityAutoCompleteInput() {
     setTimeout(() => {
       let value = this.control.value;
-
+      // Only validate if options are present
       if (
         (this.controlConfig.name === 'Origin' || this.controlConfig.name === 'Destination') &&
         this.controlConfig.autoComplete &&
-        Array.isArray(this.controlConfig.options)
+        Array.isArray(this.controlConfig.options) &&
+        this.controlConfig.options.length > 0 // <-- Only validate if options exist
       ) {
-        const isValid =
-          typeof value === 'object' &&
-          value !== null &&
+        const isValid = typeof value === 'object' && value !== null &&
           this.controlConfig.options.some(
             (option: any) => option.value === value.value
           );
@@ -149,7 +149,6 @@ export class TextInputComponent implements OnInit {
         }, 500);
       }
     }, 500);
-
   }
 
   onBlur() {
@@ -238,5 +237,9 @@ export class TextInputComponent implements OnInit {
     return null;
   }
 
+  onAutoCompleteFocus() {
+    
+    this.autoCompleteFocus.emit(this.controlConfig);
+  }
 
 }

@@ -1,11 +1,12 @@
 <div class="position-relative">
   <div class="page-title justify-content-between d-flex align-items-center">
-    <h2 class="page-header">Expense - {{this.moduleConfig.pageTitle}}</h2>
+    <h2 class="page-header">Expense - <span> {{this.moduleConfig.pageTitle}} </span></h2>
   </div>
   <div class="custom-select self-select form-group mb-0 min-w-self  chm-formgroup ">
     <div class="selected  form-control chm-formselect">Self </div>
     <div class="options">
-      <div class="text-center  d-block d-lg-none d-md-none d-sm-block"> <span class="select-mobile-line"></span></div>
+      <div class="text-center  d-block d-lg-none d-md-none d-sm-block"> 
+        <span class="select-mobile-line"></span></div>
       <option class="option" value="182">XXXXX</option>
       <option class="option" value="183">YYYYY</option>
     </div>
@@ -183,8 +184,8 @@
                     <ng-template mat-tab-label>
                       <mat-form-field class="more-item" appearance="fill" (click)="$event.stopPropagation()"
                       (mousedown)="$event.stopPropagation()">
-                        <mat-select placeholder="More" [value]="selectedExtraCategory"
-                          (selectionChange)="onExtraCategorySelect($event.value)">
+                        <mat-select class="more-item-select" placeholder="More" [value]="selectedExtraCategory"
+                          (selectionChange)="onExtraCategorySelect($event.value)" panelClass="custom-more-select-panel">
                           <mat-option *ngFor="let cat of categories.slice(5)" [value]="cat">
                             {{cat.label}} <span style="font-weight: bold;">{{cat.count}}</span>
                           </mat-option>
@@ -253,7 +254,8 @@
             </div>
             <!-- Other Details -->
             <div class="row ">
-              <div class="col-md-12">
+              <div class="col-md-12"> 
+                <div class="tab-scroll-container">
                 <mat-tab-group class="common-tab policy-tab" fitInkBarToContent>
                   @for (detail of expenseConfig?.otherDetails; track detail) {
                   <mat-tab>
@@ -327,6 +329,7 @@
                   </mat-tab>
                   }
                 </mat-tab-group>
+                </div>
               </div>
             </div>
             <!-- left-container-wider -->
@@ -407,7 +410,9 @@
           </div>
           <!-- Sidebar: Only show on desktop/tablet -->
           <div class="right-container-nrw rt-aside-fixed d-none d-md-block d-lg-block">
+            <div class="right-container-scroll">
             <ng-container *ngTemplateOutlet="expenseSummarySheet"></ng-container>
+            </div>
           </div>
         </div>
         <!-- all-data-wrapper -->

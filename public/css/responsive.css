@@ -317,7 +317,13 @@
     .sidebar-mini.sidebar-collapse .main-sidebar { display: none;}
     .sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .right-side {  width: 100%;}
     body.sidebar-mini.sidebar-collapse .content-wrapper, body.sidebar-mini.sidebar-collapse .main-footer {margin-left: 0 !important;}
-    h2.page-header { font-size: 18px;}
+   h2.page-header {
+	font-size: 16px;
+	line-height: 18px;
+}h2.page-header span {
+	font-size: 12px;
+	display: block;
+}
     .common-title {font-size: 15px;}
     .common-block {background-color: transparent;padding: 0;border-radius: 0;}
     .common-block-mobile { background-color: #F7F7FA;padding: 13px 10px 13px;border-radius: 8px;}
@@ -559,8 +565,14 @@
         text-transform: uppercase;
     }
 
-
-
+main.body-wrapper {
+   
+    display: block;
+     
+}
+.recent-exp-req {
+    background-color: transparent;
+}
 
 
     
@@ -765,7 +777,7 @@
     text-align: end;
 }
 .attached-doc-table tr td:first-child {
-	display: none;
+	display: none!important;
 }
 .attached-doc-table tr td {
 	vertical-align: middle;
@@ -779,11 +791,16 @@
 }
 
 @media (max-width: 575px) {
-          .mobile-card-view-normaltable tr {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 5px;
-    }
+    .mobile-card-view-normaltable tr {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    padding: 0;
+}#tblTeGST tr:first-child td {
+    min-height: 90px;
+}#tblTeGST tr:first-child td:last-child {
+    min-height: inherit;
+}
   .mobile-card-view-normaltable td:last-child {
 	grid-column: span 2;
 	border-top: 1px solid #e6e6e6 !important;
@@ -848,7 +865,9 @@ ul.quick-menu-links li {
 	max-height: 2.5em;
 	overflow: hidden;
 }
-     
+   .line-tab .nav-link {
+    font-size: 13px!important;
+}  
     /* #expenseHead .menu-item { width: 29%;} */
 
  ul#menu-log .uname-dp {
@@ -865,6 +884,14 @@ ul.quick-menu-links li {
         font-size: 12px;
       
     }
+.uname-dp {
+	background-color: transparent;
+	height: auto;
+	border-radius: 0;
+	line-height: inherit;
+	width: auto;
+}
+ 
     .ui-datepicker {
         width: 90%;
     }
@@ -875,8 +902,15 @@ ul.quick-menu-links li {
 	overflow: hidden;
 }
 .expense-block {
- 
 	height: auto;
- 
+	min-height: 120px;
+}
+.common-tab.policy-tab .mat-mdc-tab-label-container {
+	width: 278px;
+}
+.common-tab.policy-tab  .mdc-tab {
+	min-width: inherit;
+	padding: 13px 13px;
+	height: auto !important;
 }
 }

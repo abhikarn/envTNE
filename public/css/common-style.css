@@ -396,14 +396,17 @@ span.auto-label {
     }
 
 /* =============== Header style =========== */
-
 .logo-main {
-    width: 100%;
-    height: auto;
-    max-width: 250px;
-    max-height: 35px;
-    margin-top: 2px;
-    }
+	width: 100%;
+	height: auto;
+	max-width: 95px;
+	max-height: 40px;
+	margin-top: 2px;
+}
+.left-app-logo .logo-main {
+	max-width: 75px;
+	margin-bottom: 3px;
+}
     .logo-spendmantra {
     margin-left: 24px;
     }
@@ -743,7 +746,7 @@ ul.header-notify-hold {
         /* border-bottom: 1px solid rgba(45, 45, 45, 0.15); */
         margin-bottom: 4px;
     }
-    ul#menu-log label::after {
+    #profile-mobile::after {
     content: "\f107";
     position: absolute;
     top: 0;
@@ -889,7 +892,7 @@ ul.header-notify-hold {
         padding: 7px 10px !important;
     }
     .color-table tr td {
-        padding: 7px 0px;
+        padding: 7px 8px;
         text-align: left;
         font-size: 11px;
     }
@@ -1065,7 +1068,7 @@ ul.header-notify-hold {
 	padding: 0 15px;
 	position: fixed;
 	width: 96%;
-	height: 45px;
+	height:50px;
 	z-index: 9;
 	background-color: #fff;
 	box-shadow: 0px 11px 11px -7px rgba(0, 0, 0, 0.04);
@@ -4794,21 +4797,8 @@ button.dropbtn {
     margin-bottom: 12px;
     }
   #expenseHead .menu-item {
-	background: #FFFFFF;
-	height: 26px;
-	line-height: 18px;
-	padding: 0 0px;
-	margin: 0px 10px 0 0;
-	/* border-radius: 0px; */
-	text-align: center;
-	/* cursor: poRoboto; */
-	border: 1px solid #e4e4eb;
-	border-radius: 6px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	/* width: 19%; */
-	cursor: pointer;
+    width: 100%;
+
 }.expense-list-head {
         width: 100%;
     }#expenseHead .more-dropdown .menu-item {
@@ -4824,11 +4814,11 @@ button.dropbtn {
         justify-content: space-between;
         padding-left: 10px;
         width: 100%;
-    } div#expenseHead {
-        display: flex;
-            justify-content: space-between;
-
-    }div#visible-menus {
+    }  div#expenseHead {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}div#visible-menus {
         display: flex;
         width: 100%;
     }
@@ -9621,13 +9611,23 @@ button.dropbtn {
         right: 0;
         margin-right: 15px;
         top: 102px;
-        }.right-container-nrw .common-block {
-	height: 100vh;
+  
+        }
+        .right-container-scroll {
+	height: 100%;
+	overflow-y: scroll;
+	max-height: 500px;
+	scrollbar-width: thin;
+	scrollbar-color: #dbdbdb #f1f1f1;
+}
+.right-container-nrw .common-block {
+	height: 100%;
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 	padding: 13px 13px 13px;
-}
-        body.sidebar-mini.sidebar-collapse .left-container-wider {
+}   
+
+body.sidebar-mini.sidebar-collapse .left-container-wider {
         min-width: 75% !important;
         width: 75% !important;
         }
@@ -10168,12 +10168,13 @@ button.dropbtn {
 	text-decoration: none;
 	 
 }
-        .trl-preview-wrapper .trl-readview-item .trl-req-detail p {
-        font-size: 12px;
-        line-height: 16px;
-        padding: 0 0;
-        margin: 0 0;
-        }
+   .trl-preview-wrapper .trl-readview-item .trl-req-detail p {
+	font-size: 12px;
+	line-height: 16px;
+	padding: 0 0;
+	margin: 0 0;
+	white-space: pre-line;
+}
         .containerCB {
         display: block;
         position: relative;
@@ -12299,7 +12300,7 @@ button.dropbtn {
         }
         .expense-block {
             width: 100%;
-            min-height: 100px;
+               min-height: 105px;
             /* text-align: center; */
             padding: 10px 15px;
             /* margin-bottom: 6px; */
@@ -12796,7 +12797,7 @@ button.dropbtn {
 	margin: 1px 0;
 	border-radius: 5px;
 	position: relative;
-    color: #000000 !important;
+    color: #000000 !important;cursor: pointer;
 }.side-pro-menu li a span {
 	margin-right: 10px;
 }.side-pro-menu li {

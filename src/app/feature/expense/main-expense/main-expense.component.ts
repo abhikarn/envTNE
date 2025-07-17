@@ -483,6 +483,7 @@ export class MainExpenseComponent {
 
   // Set default currency for 'Currency' fields based on travel type.
   setCurrencyDropdown() {
+    
     const isWithoutCurrency = [52, 54].includes(this.travelRequestPreview?.travelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId);
 
     const defaultCurrency = {
@@ -651,6 +652,7 @@ export class MainExpenseComponent {
 
   // Populate autoComplete options by input value (ID or search text) and update matching control.
   getTextData(inputData: any) {
+    
     const { inputValue, control } = inputData;
 
     if (typeof inputValue === 'number') {
@@ -938,7 +940,7 @@ export class MainExpenseComponent {
   openExpenseSummarySheet(templateRef: TemplateRef<any>) {
     if (window.innerWidth <= 768) {
       this.bottomSheet.open(templateRef, {
-        panelClass: 'expense-bottom-sheet'
+        panelClass: 'expense-bottom-sheet' 
       });
     }
   }
@@ -1014,7 +1016,23 @@ export class MainExpenseComponent {
   }
 
   updateBillableCostCentre(billableCostcentreId: number) {
-    this.mainExpenseData.BillableCostCentreId = billableCostcentreId;
+    this.mainExpenseData.BillableCostCentreId = billableCostcentreId; 
+  }
+
+  // Call this from (autoCompleteFocus) output of your text input component
+  onAutoCompleteFocus(focusedControlConfig: any) {
+    // Clear options for all other autocomplete controls except the focused one
+    this.categories?.forEach((category: any) => {
+      category.formControls?.forEach((control: any) => {
+        if (
+          control.autoComplete &&
+          control.name !== focusedControlConfig.name &&
+          Array.isArray(control.options)
+        ) {
+          control.options = [];
+        }
+      });
+    });
   }
 }
 

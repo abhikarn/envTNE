@@ -7,7 +7,7 @@
         <div class="right-container">
             <div class="bidder-login">
                 <div class="form-hold mt-0 mb-3">
-                    <div class="logo-inline-flex">
+                    <div class="logo-inline-flex text-center">
                         <img [src]="config.images.applicationLogo" [alt]="config.titles.loginPageTitle"
                             [title]="config.titles.loginPageTitle" class="logo-main">
                     </div>
@@ -42,7 +42,7 @@
                     </div>
                 </form> -->
 
-                <form [formGroup]="form" class="row adjustemnt-container">
+                <form [formGroup]="form" class="  adjustemnt-container">
                     <div class="row">
                         @for (control of formControls; track control) {
                         @if (control.formConfig.type !== 'hidden' && control.formConfig.showInUI !==

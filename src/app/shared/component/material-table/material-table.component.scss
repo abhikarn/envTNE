@@ -27,10 +27,11 @@ app-material-table {
     border-bottom-color: currentcolor;
   }
 
-  .disabled-row {
-    background-color: #e0e0e0 !important;
-  }
-
+ .disabled-row td {
+	background-color: #d9d9d9 !important;
+	opacity: 0.5;
+  
+}
   .ocr-riestricted-row {
     background-color: #f5da89 !important;
   }

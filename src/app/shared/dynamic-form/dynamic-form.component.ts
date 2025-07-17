@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControlFactory } from './form-control.factory';
 import { IFormControl } from './form-control.interface';
+import { DatePipe } from '@angular/common';
 
 import { TextInputComponent } from './form-controls/input-control/text-input.component';
 import { SelectInputComponent } from './form-controls/dropdown/select-input.component';
@@ -39,7 +40,8 @@ import { DynamicTableService } from '../service/dynamic-table.service';
     CostCenterComponent
   ],
   templateUrl: './dynamic-form.component.html',
-  styleUrls: ['./dynamic-form.component.scss']
+  styleUrls: ['./dynamic-form.component.scss'],
+  providers: [DatePipe]
 })
 
 export class DynamicFormComponent implements OnInit, OnChanges {
@@ -72,7 +74,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     private configService: GlobalConfigService,
     private snackbarService: SnackbarService,
     private dynamicFormService: DynamicFormService,
-    private dynamicTableService: DynamicTableService
+    private dynamicTableService: DynamicTableService,
+    private datePipe: DatePipe // inject DatePipe
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -213,9 +216,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
      console.log(this.category)
       console.log(this.moduleConfig)
     console.log('Form submitted:', this.form.value);
+    
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       this.dynamicFormService.scrollToFirstInvalidControl('form');
+      this.scrollToFirstInvalidControl();
       return;
     }
 
@@ -242,6 +247,16 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         return;
       }
     }
+    this.formControls.forEach(control => {
+      if (control.formConfig.type === 'date') {
+        const ctrl = this.form.get(control.formConfig.name);
+        const val = ctrl?.value;
+        if (val) {
+          const formatted = this.datePipe.transform(val, 'yyyy-MM-dd');
+          ctrl?.setValue(formatted);
+        }
+      }
+    });
 
     // enable all controls before submission
     this.formControls.forEach(control => {
@@ -251,6 +266,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     });
     
     this.dynamicFormService.setCalculatedFields(this.form, this.formControls);
+    
     // Only check duplicate if OCRRequired is true for this category
     if (this.category.OCRRequired) {
       // Check for duplicate in tableData before DB check
@@ -859,5 +875,43 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   handleBusinessCase(businessCaseData: any) {
     this.dynamicFormService.handleBusinessCase(businessCaseData, this.form, this.moduleData);
   }
+
+  // Add this method to clear options for other autocomplete controls
+  onAutoCompleteFocus(focusedControlConfig: IFormControl) {
+    
+    this.formControls.forEach(({ formConfig }) => {
+      if (
+        formConfig.autoComplete &&
+        formConfig.name !== focusedControlConfig.name &&
+        Array.isArray(formConfig.options)
+      ) {
+        formConfig.options = [];
+      }
+    });
+  }
+
+  private scrollToFirstInvalidControl(): void {
+  // Wait for the next animation frame to ensure DOM updates
+  requestAnimationFrame(() => {
+    // Broader selector to include various invalid controls
+    const invalidControl = document.querySelector(
+      '.ng-invalid[formcontrolname], .ng-invalid[ng-reflect-name], .ng-invalid input'
+    ) as HTMLElement | null;
+
+    if (invalidControl) {
+      // Scroll to the element
+      invalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Focus the control only if it's focusable
+      if (invalidControl.tabIndex >= 0 || invalidControl.tagName.match(/INPUT|TEXTAREA|SELECT/)) {
+        invalidControl.focus();
+      }
+
+      // Optional: Announce to screen readers
+      invalidControl.setAttribute('aria-live', 'polite');
+      invalidControl.setAttribute('aria-describedby', 'error-message');
+    }
+  });
+}
 
 }

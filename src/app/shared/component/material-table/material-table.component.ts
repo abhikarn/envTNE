@@ -72,7 +72,8 @@ export class MaterialTableComponent implements OnChanges {
         ApprovedAmount: row.ClaimStatusId == 5
           ? '0'
           : parseFloat(row.ApprovedAmount == 0 ? row.ClaimAmount : row.ApprovedAmount || '0').toFixed(decimalPrecision),
-        remarks: row.remarks || ''
+        remarks: row.remarks || '',
+
       }));
     } else {
       this.processedData = [];
@@ -82,8 +83,7 @@ export class MaterialTableComponent implements OnChanges {
     this.selectAll = selectableRows.length > 0 && selectableRows.every(r => r.selected);
   }
 
-  ngOnInit() {
-    
+  ngOnInit() {    
     console.log(this.nestedTables)
     this.setDecimalPrecision();
     // selectAll should be true only if there is at least one selectable row and all selectable rows are selected
@@ -214,9 +214,10 @@ export class MaterialTableComponent implements OnChanges {
   }
 
   onRowSelectionChange(row: any) {
-    
+     
     const decimalPrecision = this.configService.getDecimalPrecision ? this.configService.getDecimalPrecision() : 2;
     row.ApprovedAmount = row.selected ? (parseFloat(row.originalApproved || '0').toFixed(decimalPrecision)) : 0;
+    row.ApprovedAmountInBaseCurrency = row.selected ? (parseFloat(row.originalApproved || '0').toFixed(decimalPrecision)) : 0;
     // selectAll should be true only if there is at least one selectable row and all selectable rows are selected
     const selectableRows = this.processedData;
     this.selectAll = selectableRows.length > 0 && selectableRows.every(r => r.selected);
@@ -227,6 +228,7 @@ export class MaterialTableComponent implements OnChanges {
   }
 
   onApprovedAmountChange(row: any) {
+    
     this.selectionChanged.emit({
       name: this.categoryName,
       data: this.processedData
@@ -241,6 +243,7 @@ export class MaterialTableComponent implements OnChanges {
   }
 
   enforceLimit(event: Event, row: any, key: string, maxLength: number = 10, decimalPrecision: number = 2): void {
+     
     const input = event.target as HTMLInputElement;
     let inputValue = (input.value || '').toString();
 
@@ -268,11 +271,13 @@ export class MaterialTableComponent implements OnChanges {
     if (key === 'ApprovedAmount') {
       const approvedAmount = parseFloat(formattedValue) || 0;
       const conversionRate = parseFloat(row['ConversionRate']) || 0;
-      row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(decimalPrecision);
+      // row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(decimalPrecision);
+      row['ApprovedAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(decimalPrecision);
     }
   }
 
   onAmountBlur(event: Event, row: any, key: string, decimalPrecision: number = 2): void {
+      
     const input = event.target as HTMLInputElement;
     let value = input.value;
 
@@ -287,7 +292,8 @@ export class MaterialTableComponent implements OnChanges {
       if (key === 'ApprovedAmount') {
         const approvedAmount = parseFloat(formatted) || 0;
         const conversionRate = parseFloat(row['ConversionRate']) || 0;
-        row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(decimalPrecision);
+        // row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(decimalPrecision);
+        row['ApprovedAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(decimalPrecision);
       }
 
       // If value is 0.00, prompt for rejection confirmation
@@ -303,6 +309,7 @@ export class MaterialTableComponent implements OnChanges {
             if (confirmed) {
               // Unselect the row and require remarks
               row.selected = false;
+              this.selectAll = false;
               if (!row.remarks || row.remarks.trim() === '') {
                 row.remarks = '';
               }
@@ -316,7 +323,7 @@ export class MaterialTableComponent implements OnChanges {
               if (key === 'ApprovedAmount') {
                 const approvedAmount = parseFloat(prev) || 0;
                 const conversionRate = parseFloat(row['ConversionRate']) || 0;
-                row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(decimalPrecision);
+                row['ApprovedAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(decimalPrecision);
               }
             }
           });
@@ -326,7 +333,7 @@ export class MaterialTableComponent implements OnChanges {
       row[key] = '';
       // Also clear ClaimAmountInBaseCurrency if ApprovedAmount is cleared
       if (key === 'ApprovedAmount') {
-        row['ClaimAmountInBaseCurrency'] = '';
+        row['ApprovedAmountInBaseCurrency'] = '';
         // Unselect the row and require remarks if ApprovedAmount is removed
         row.selected = false;
         if (!row.remarks || row.remarks.trim() === '') {
@@ -337,6 +344,7 @@ export class MaterialTableComponent implements OnChanges {
   }
 
   validateApprovedAmount(row: any): void {
+    
     const approved = +row.ApprovedAmount;
     const claimed = +row.ClaimAmount;
 
@@ -355,13 +363,15 @@ export class MaterialTableComponent implements OnChanges {
           // Realtime calculation after validation
           const approvedAmount = parseFloat(row.ApprovedAmount) || 0;
           const conversionRate = parseFloat(row['ConversionRate']) || 0;
-          row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(2);
+          // row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(2);
+          row['ApprovedAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(2);
         });
     } else {
       // Always recalculate even if not greater
       const approvedAmount = parseFloat(row.ApprovedAmount) || 0;
       const conversionRate = parseFloat(row['ConversionRate']) || 0;
-      row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(2);
+      // row['ClaimAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(2);
+      row['ApprovedAmountInBaseCurrency'] = (approvedAmount * conversionRate).toFixed(2);
     }
   }
 

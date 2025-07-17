@@ -9,8 +9,7 @@
     <mat-icon matPrefix>{{ controlConfig.icon }}</mat-icon>
     } -->
     <mat-select [formControl]="control" placeholder="{{controlConfig.placeholder || 'Select an option'}}"
-      (mousedown)="onMatSelectClick($event);" (openedChange)="onSelectOpenedChange($event)"
-      [disabled]="isMobile"
+      (mousedown)="onMatSelectClick($event);" (openedChange)="onSelectOpenedChange($event)" [disabled]="isMobile"
       (selectionChange)="onReadonlySelection($event);onSelectionChange($event)">
       @if (!!controlConfig.defaultValue) {
       <mat-option [value]="controlConfig.defaultValue.Id">{{controlConfig.defaultValue.Display}}</mat-option>
@@ -31,7 +30,7 @@
   </mat-form-field>
 </div>
 
-<ng-template #requestBottomSheet>
+<!-- <ng-template #requestBottomSheet>
   <div class="bottom-sheet-select">
     <span class="select-mobile-line"></span>
     <ul class="list-group">
@@ -41,4 +40,22 @@
       </li>
     </ul>
   </div>
+</ng-template> -->
+
+<ng-template #requestBottomSheet>
+  <div class="bottom-sheet-select">
+    <span class="select-mobile-line"></span>
+    <ul class="list-group">
+      @if (controlConfig.defaultValue) {
+        <li class="list-group-item"  (click)="selectDefaultRequestFromSheet(controlConfig.defaultValue)">
+          {{ controlConfig.defaultValue.Name}}
+        </li>
+      } @else  {
+         <li class="list-group-item" *ngFor="let option of controlConfig.options; trackBy: trackByFn" (click)="selectRequestFromSheet(option)">
+           {{option.label}}
+        </li>
+      }
+    </ul>
+  </div>
 </ng-template>
+
