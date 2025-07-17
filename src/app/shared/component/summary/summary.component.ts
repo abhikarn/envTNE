@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-summary',
@@ -6,12 +6,18 @@ import { Component, Input } from '@angular/core';
   templateUrl: './summary.component.html',
   styleUrl: './summary.component.scss'
 })
-export class SummaryComponent {
+export class SummaryComponent implements OnChanges {
 
   @Input() summaries: any;
   @Input() expenseRequestData: any;
   totalExpense: number = 0;
 
+  ngOnChanges(changes: SimpleChanges): void {
+    // Recalculate cost center summary when input changes
+    if (changes['summaries'] || changes['expenseRequestData']) {
+      this.calculateCostCenterWiseExpense();
+    }
+  }
 
   toggleAccordion(activeId: string): void {
      
@@ -116,8 +122,8 @@ export class SummaryComponent {
         if (item.name == CATEGORY_NAME) {
           let totalCategoryExpense = 0;
           expenseRequest.data?.forEach((request: any) => {
-            const { ClaimAmountInBaseCurrency } = request?.excludedData || request || {};
-            totalCategoryExpense = totalCategoryExpense + Number(ClaimAmountInBaseCurrency);
+            const { ApprovedAmountInBaseCurrency } = request?.excludedData || request || {};
+            totalCategoryExpense = totalCategoryExpense + Number(ApprovedAmountInBaseCurrency);
           });
           item.value = totalCategoryExpense.toFixed(2);
         }
@@ -192,6 +198,7 @@ export class SummaryComponent {
 
           const item = summary.items.find((item: any) => item.label === costCenterName);
           if (item) {
+           
             item.value = (Number(item.value) + amount).toFixed(2);
           }
         });
