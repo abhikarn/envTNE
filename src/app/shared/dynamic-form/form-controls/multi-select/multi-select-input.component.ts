@@ -39,6 +39,7 @@ import { Subscription } from 'rxjs';
 export class MultiSelectInputComponent implements OnInit, OnDestroy {
   @Input() control!: FormControl;
   @Input() controlConfig: IFormControl = { name: '' };
+  @Input() form: any;
 
   @ViewChild('select') select!: MatSelect;
 
@@ -60,6 +61,9 @@ export class MultiSelectInputComponent implements OnInit, OnDestroy {
     this.control.valueChanges.subscribe(() => {
       this.updateAllSelectedState();
     });
+    if (this.controlConfig.disable) {
+      this.control.disable();
+    }
   }
 
   ngOnDestroy() {
@@ -105,9 +109,15 @@ export class MultiSelectInputComponent implements OnInit, OnDestroy {
   toggleSelectAll() {
     this.allSelected = !this.allSelected;
     this.control.setValue(this.allSelected ? this.allOptions.map(o => o.value) : []);
+    this.form.get(this.controlConfig.getReadableValue.controlName)?.setValue(
+      this.allSelected ? this.allOptions.map(o => o.label).join(', ') : []
+    );
   }
 
   isSelected(value: any): boolean {
+    this.form.get(this.controlConfig.getReadableValue.controlName)?.setValue(
+      this.control.value?.map((v: any) => this.allOptions.find(o => o.value === v)?.label).join(', ') || []
+    );
     return this.control.value?.includes(value);
   }
 

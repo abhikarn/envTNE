@@ -55,4 +55,5 @@ export interface IFormControl {
   setFields?: any; // For setting fields based on formula
   inPayload?: boolean; // For fields that should not be sent in payload
   landingBoxConfig?: any;
+  getReadableValue?: any;
 }

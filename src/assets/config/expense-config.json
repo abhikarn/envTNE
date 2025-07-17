@@ -2873,11 +2873,15 @@
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Per Diem Type is required"
+                                "message": "Constraint is required"
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": true,
+                        "order": 4,
+                        "getReadableValue": {
+                            "controlName": "ConstraintNames"
+                        }
                     },
                     {
                         "type": "text",
@@ -3756,6 +3760,13 @@
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "ConstraintNames",
+                        "isExcluded": false,
+                        "value": "",
+                        "showInUI": false
                     }
                 ],
                 "freezFormControls": [
@@ -3782,7 +3793,7 @@
                 ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
-                    "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
+                    "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
                         "ExpenseCategoryId": 2
                     },
@@ -3792,11 +3803,10 @@
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
-                        "ClaimDate": "ReferenceFromDate",
-                        "ClaimToDate": "ReferenceToDate",
+                        "ClaimDate": "ReferenceDate",
                         "CityGrade": "CityGradeId",
                         "CountryGrade": "CountryGradeId",
-                        "Constraint": "PolicyReferenceId"
+                        "AccommodationType": "PolicyReferenceId"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -3896,7 +3906,14 @@
                         "international": false
                     },
                     {
-                        "name": "Constraint",
+                        "name": "AccommodationType",
+                        "label": "Accommodation Type",
+                        "visible": true,
+                        "position": "out",
+                        "order": 12
+                    },
+                    {
+                        "name": "ConstraintNames",
                         "label": "Constraint",
                         "visible": true,
                         "position": "out",
