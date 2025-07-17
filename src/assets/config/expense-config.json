@@ -1161,11 +1161,11 @@
                 "label": "Accommodation",
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
+                    "name": "Accommodation Expense",
                     "fields": [
                         "CheckInDateTime",
                         "CheckOutDateTime"
-                    ],
-                    "message": "Check-in and check-out times conflict with existing entries. Please adjust your dates."
+                    ]
                 },
                 "formControls": [
                     {
@@ -2690,11 +2690,11 @@
                 "label": "Per Diem",
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
+                    "name": "Per Diem Expense",
                     "fields": [
                         "ClaimDate",
                         "ClaimToDate"
-                    ],
-                    "message": "Duplicate entry found for the same date range. Please check your entries."
+                    ]
                 },
                 "formControls": [
                     {
@@ -4063,11 +4063,11 @@
                 "label": "Daily Allowance",
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
+                    "name": "Daily Allowance Expense",
                     "fields": [
                         "ClaimDate",
                         "ClaimToDate"
-                    ],
-                    "message": "Duplicate entry found for the same date range. Please check your entries."
+                    ]
                 },
                 "formControls": [
                     {
@@ -5430,11 +5430,11 @@
                 "label": "Boarding",
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
+                    "name": "Boarding Expense",
                     "fields": [
                         "ClaimDate",
                         "ClaimToDate"
-                    ],
-                    "message": "Duplicate entry found for the same date range. Please check your entries."
+                    ]
                 },
                 "formControls": [
                     {
@@ -6790,11 +6790,11 @@
                 "label": "Incidental",
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
+                    "name": "Incidental Expense",
                     "fields": [
                         "ClaimDate",
                         "ClaimToDate"
-                    ],
-                    "message": "Duplicate entry found for the same date range. Please check your entries."
+                    ]
                 },
                 "formControls": [
                     {
@@ -8140,11 +8140,11 @@
                 "label": "Laundry",
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
+                    "name": "Laundry Expense",
                     "fields": [
                         "ClaimDate",
                         "ClaimToDate"
-                    ],
-                    "message": "Duplicate entry found for the same date range. Please check your entries."
+                    ]
                 },
                 "formControls": [
                     {
@@ -9491,11 +9491,11 @@
                 "label": "Flat / Own Arrangement",
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
+                    "name": "Flat / Own Arrangement Expense",
                     "fields": [
                         "ClaimDate",
                         "ClaimToDate"
-                    ],
-                    "message": "Duplicate entry found for the same date range. Please check your entries."
+                    ]
                 },
                 "formControls": [
                     {
@@ -22511,11 +22511,11 @@
                 "label": "Food/Meals",
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
+                    "name": "Food Expense",
                     "fields": [
                         "ClaimDate",
                         "ClaimToDate"
-                    ],
-                    "message": "Duplicate entry found for the same date range. Please check your entries."
+                    ]
                 },
                 "formControls": [
                     {

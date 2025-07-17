@@ -314,26 +314,47 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     if (this.existingData?.length > 0) {
       if (this.category?.duplicateEntryCheck) {
-        const { fields, message } = this.category.duplicateEntryCheck;
-        if (!fields || fields.length < 2) return;
+        const { fields, name } = this.category.duplicateEntryCheck;
+        if (!fields || fields.length === 0) return;
 
-        const [checkInField, checkOutField] = fields;
-        const newCheckIn = new Date(this.form.value[checkInField]);
-        const newCheckOut = new Date(this.form.value[checkOutField]);
+        // If only one field (e.g., single date) is provided
+        if (fields.length === 1) {
+          const [field] = fields;
+          const newDate = new Date(this.form.value[field]).getTime();
 
-        const isConflict = this.existingData.some((row: any, index: number) => {
-          // Skip if it's the same row being edited
-          if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
+          const isDuplicate = this.existingData.some((row: any, index: number) => {
+            if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
 
-          const existingCheckIn = new Date(row[checkInField]);
-          const existingCheckOut = new Date(row[checkOutField]);
+            const existingDate = new Date(row[field]).getTime();
+            return newDate === existingDate;
+          });
 
-          return newCheckIn < existingCheckOut && newCheckOut > existingCheckIn;
-        });
+          if (isDuplicate) {
+            this.snackbarService.error(`${name} for the date ${this.form.value[field]} has already been claimed.`, 5000);
+            return;
+          }
+        }
 
-        if (isConflict) {
-          this.snackbarService.error(message, 5000);
-          return;
+        // If two fields (range comparison)
+        if (fields.length === 2) {
+          const [checkInField, checkOutField] = fields;
+          const newCheckIn = new Date(this.form.value[checkInField]);
+          const newCheckOut = new Date(this.form.value[checkOutField]);
+
+          const isConflict = this.existingData.some((row: any, index: number) => {
+            // Skip if it's the same row being edited
+            if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
+
+            const existingCheckIn = new Date(row[checkInField]);
+            const existingCheckOut = new Date(row[checkOutField]);
+
+            return newCheckIn < existingCheckOut && newCheckOut > existingCheckIn;
+          });
+
+          if (isConflict) {
+            this.snackbarService.error(`${name} for the date ${this.form.value[checkInField]} - ${this.form.value[checkOutField]} has already been claimed.`, 5000);
+            return;
+          }
         }
       }
     }
