@@ -313,30 +313,26 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
 
     if (this.existingData?.length > 0) {
-      const checkInDateTime = this.form.value?.CheckInDateTime;
-      const checkOutDateTime = this.form.value?.CheckOutDateTime;
+      if (this.category?.duplicateEntryCheck) {
+        const { fields, message } = this.category.duplicateEntryCheck;
+        if (!fields || fields.length < 2) return;
 
-      if (checkInDateTime && checkOutDateTime) {
+        const [checkInField, checkOutField] = fields;
+        const newCheckIn = new Date(this.form.value[checkInField]);
+        const newCheckOut = new Date(this.form.value[checkOutField]);
+
         const isConflict = this.existingData.some((row: any, index: number) => {
-          // Skip the current row if editing
-          if (this.editIndex !== null && this.editIndex !== undefined && index === (this.editIndex - 1)) {
-            return false;
-          }
+          // Skip if it's the same row being edited
+          if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
 
-          const existingCheckIn = new Date(row.CheckInDateTime);
-          const existingCheckOut = new Date(row.CheckOutDateTime);
+          const existingCheckIn = new Date(row[checkInField]);
+          const existingCheckOut = new Date(row[checkOutField]);
 
-          return (
-            new Date(checkInDateTime) < existingCheckOut &&
-            new Date(checkOutDateTime) > existingCheckIn
-          );
+          return newCheckIn < existingCheckOut && newCheckOut > existingCheckIn;
         });
 
         if (isConflict) {
-          this.snackbarService.error(
-            'Check-in and check-out times conflict with existing entries. Please adjust your dates.',
-            5000
-          );
+          this.snackbarService.error(message, 5000);
           return;
         }
       }
