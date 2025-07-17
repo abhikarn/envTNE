@@ -1,33 +1,36 @@
 <mat-form-field appearance="fill">
-  <mat-label>{{ controlConfig.label }}
+  <mat-label>
+    {{ controlConfig.label }}
     @if (controlConfig.required) {
-      <span class="required-star">*</span>
+    <span class="required-star">*</span>
     }
   </mat-label>
-  <mat-select [formControl]="control" multiple panelClass="multi-select-panel" #select (openedChange)="resetSearch()">
+
+  <mat-select [formControl]="control" multiple #select (openedChange)="resetSearch()">
 
     <!-- Search Box -->
-    <mat-form-field class="search-box">
+    <mat-form-field class="search-box" appearance="outline">
       <mat-icon matPrefix>search</mat-icon>
       <input matInput placeholder="Search" [(ngModel)]="searchTerm" (keyup)="filterOptions()" />
     </mat-form-field>
 
-    <!-- Select All -->
-    <mat-option (click)="toggleSelectAll()" [value]="allSelected ? [] : allOptions">
+    <!-- Select All Option -->
+    <mat-option (click)="toggleSelectAll()" [disabled]="!filteredOptions.length">
       <mat-checkbox [checked]="allSelected">Select All</mat-checkbox>
     </mat-option>
 
     <!-- Filtered Options -->
     @for (option of filteredOptions; track option) {
-      <mat-option [value]="option.Key">
-        <mat-checkbox [checked]="isSelected(option.Key)">{{ option.Value }}</mat-checkbox>
-      </mat-option>
+    <mat-option [value]="option.value">
+      <mat-checkbox [checked]="isSelected(option.value)">{{ option.label }}</mat-checkbox>
+    </mat-option>
     }
 
   </mat-select>
+
   @if (control.invalid && control.touched) {
-    <mat-error>
-      {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
-    </mat-error>
+  <mat-error>
+    {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
+  </mat-error>
   }
 </mat-form-field>
