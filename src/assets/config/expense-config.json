@@ -12589,6 +12589,20 @@
                                 "ConversionRate"
                             ]
                         }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTravelRaiseRequest",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "costcentreWiseExpense",
+                        "dataType": "object",
+                        "isExcluded": false,
+                        "value": null
                     }
                 ],
                 "expanded": true,
@@ -14795,15 +14809,15 @@
                         "valueKey": "KeyDataId",
                         "apiService": "DataService",
                         "apiMethod": "dataGetMealType",
-                        "required": true,
+                        "required": false,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Constraint is required"
                             }
                         ],
-                        "disable": false,
-                        "readonly": true,
+                        "disable": true,
+                        "readonly": false,
                         "order": 4,
                         "getReadableValue": {
                             "controlName": "ConstraintNames"
@@ -25047,7 +25061,7 @@
                         "type": "hidden",
                         "name": "costcentreWiseExpense",
                         "dataType": "object",
-                        "isExcluded": true,
+                        "isExcluded": false,
                         "value": null
                     }
                 ],
