@@ -12139,34 +12139,10 @@
                         "order": 1
                     },
                     {
-                        "type": "select",
-                        "dataType": "int",
-                        "name": "TravelType",
-                        "isExcluded": false,
-                        "label": "Travel Type",
-                        "placeholder": "Select Travel Type",
-                        "value": null,
-                        "options": [],
-                        "labelKey": "KeyData",
-                        "valueKey": "KeyDataId",
-                        "apiService": "DataService",
-                        "apiMethod": "dataGetTravelType",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Travel Type is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 3
-                    },
-                    {
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -12272,7 +12248,6 @@
                         "disable": false,
                         "readonly": true,
                         "order": 5,
-                        "policyEntitlementCheck": true,
                         "international": false
                     },
                     {
@@ -12677,13 +12652,6 @@
                         "visible": true,
                         "position": "in",
                         "order": 10
-                    },
-                    {
-                        "name": "TravelType",
-                        "label": "Travel Type",
-                        "visible": true,
-                        "position": "out",
-                        "order": 11
                     },
                     {
                         "name": "NumberOfClients",
@@ -14798,7 +14766,7 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -14812,12 +14780,34 @@
                         "readonly": false,
                         "order": 2,
                         "apiDateLimit": true,
-                        "policyentitlementCheck": true
+                        "policyEntitlementCheck": true
                     },
                     {
                         "type": "multi-select",
+                        "dataType": "int",
                         "name": "Constraint",
-                        "label": "Constraint"
+                        "isExcluded": false,
+                        "label": "Constraint",
+                        "placeholder": "Select Constraint",
+                        "value": null,
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetMealType",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Constraint is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 4,
+                        "getReadableValue": {
+                            "controlName": "ConstraintNames"
+                        }
                     },
                     {
                         "type": "select",
@@ -15050,17 +15040,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
-                        "taxCalculation": {
-                            "IsTaxExclusive": true,
-                            "inputControls": {
-                                "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                                "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                            },
-                            "outputControl": {
-                                "DifferentialAmount": "DifferentialAmount"
-                            }
-                        }
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -15286,8 +15266,58 @@
                                 "EntitlementConversionRate"
                             ]
                         }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "CityGrade",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false,
+                        "international": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "CountryGrade",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false,
+                        "international": true
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsTravelRaiseRequest",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
                 ],
+                "policyViolationCheckApi": {
+                    "apiService": "ExpenseService",
+                    "apiMethod": "ValidateInternationalBaggageOutfitPolicy",
+                    "requestBody": {
+                        "ExpenseCategoryId": 27
+                    },
+                    "otherControls": {
+                        "UserMasterId": "UserMasterId",
+                        "TravelRequestId": "travelRequestId"
+                    },
+                    "inputControls": {
+                        "ClaimDate": "ReferenceDate",
+                        "ClaimAmount": "ClaimAmount",
+                        "Constraint": "Constraint"
+
+                    },
+                    "outputControl": {
+                        "IsViolation": "ResponseValue.IsPolicyViolation",
+                        "Violation": "ResponseValue.Message"
+                    },
+                    "confirmPopup": {
+                        "title": "Baggage & Outfit Expense",
+                        "message": "ResponseValue.Message",
+                        "confirmText": "Ok",
+                        "cancelText": "Cancel"
+                    }
+                },
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
@@ -15331,6 +15361,13 @@
                         "visible": true,
                         "position": "in",
                         "order": 2
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "label": "Payment Mode",
+                        "visible": true,
+                        "position": "in",
+                        "order": 3
                     },
                     {
                         "type": "number",
@@ -16220,7 +16257,7 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -29872,13 +29909,6 @@
                         "order": 6
                     },
                     {
-                        "name": "TravelType",
-                        "label": "Travel Type",
-                        "visible": true,
-                        "position": "out",
-                        "order": 7
-                    },
-                    {
                         "name": "City",
                         "label": "City",
                         "visible": true,
@@ -30694,7 +30724,7 @@
                         "order": 1
                     },
                     {
-                        "name": "Constraint",
+                        "name": "ConstraintNames",
                         "label": "Constraint",
                         "visible": true,
                         "position": "in",
