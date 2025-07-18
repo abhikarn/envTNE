@@ -542,7 +542,7 @@ export class MainExpenseComponent {
           }, 1000);
 
           this.applyExcludedFields();
-          this.onTabChange(0);
+          this.selectedTabIndex = 0;
         }
         
         const preview = response;
