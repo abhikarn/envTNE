@@ -697,7 +697,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   validatePolicyViolation() {
-
     let confirmPopupData: any = {};
     if (this.category.policyViolationCheckApi) {
       const service = this.serviceRegistry.getService(this.category.policyViolationCheckApi.apiService);
