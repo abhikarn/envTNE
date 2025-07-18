@@ -570,6 +570,7 @@ export class MainExpenseComponent {
         this.moduleConfig.internationalFlag = internationalFlag;
         this.setupCategories();
         this.setCurrencyDropdown();
+        this.onTabChange(this.selectedTabIndex);
       },
       error: (error) => {
         console.error('Error fetching travel request booked detail:', error);
