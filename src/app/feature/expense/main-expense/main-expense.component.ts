@@ -199,10 +199,6 @@ export class MainExpenseComponent {
   // Load master data (baggage types, meals, travel modes) and expense config file.
   loadInitialData() {
     forkJoin({
-      baggageTypeList: this.dataService.dataGetBaggageType(),
-      boMealsList: this.dataService.dataGetMealType(),
-      localTravelTypeList: this.dataService.dataGetLocalTravelType(),
-      localTravelModeList: this.dataService.dataGetLocalTravelMode(),
       expenseConfig: this.http.get<any>(`${this.assetPath}/assets/config/expense-config.json`)
     })
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -214,14 +210,9 @@ export class MainExpenseComponent {
 
   // Handle forkJoin API responses and initialize form structures and categories.
   handleInitialResponses(responses: any) {
-    this.baggageTypeList = responses.baggageTypeList.ResponseValue;
-    this.localTravelTypeList = responses.localTravelTypeList.ResponseValue;
-    this.localTravelModeList = responses.localTravelModeList.ResponseValue;
-    this.boMealsList = responses.boMealsList.ResponseValue;
     this.expenseConfig = responses.expenseConfig.expenseRequest;
 
     this.setupExpenseConfig();
-    this.setupCategories();
     this.setupJustificationForm();
 
     if (this.transactionId) {
