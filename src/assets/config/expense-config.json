@@ -14809,15 +14809,15 @@
                         "valueKey": "KeyDataId",
                         "apiService": "DataService",
                         "apiMethod": "dataGetMealType",
-                        "required": true,
+                        "required": false,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Constraint is required"
                             }
                         ],
-                        "disable": false,
-                        "readonly": true,
+                        "disable": true,
+                        "readonly": false,
                         "order": 4,
                         "getReadableValue": {
                             "controlName": "ConstraintNames"
