@@ -2341,10 +2341,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -3778,10 +3779,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -5157,10 +5159,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -6517,10 +6520,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -7863,10 +7867,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -9213,10 +9218,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -10715,10 +10721,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -11907,7 +11914,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than Maximum amount. Do you want to proceed?",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -14444,10 +14451,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -19625,10 +19633,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -20613,10 +20622,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -21366,10 +21376,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -22365,10 +22376,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -23656,10 +23668,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -24515,10 +24528,11 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",

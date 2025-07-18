@@ -405,6 +405,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       }
 
       const isViolation = this.dynamicFormService.evaluateFormula(currentCheck.formula, controlValues);
+      console.log('Checking violation formula:', currentCheck.formula, 'Result:', isViolation, 'Values:', controlValues);
 
       if (isViolation) {
         this.form.get('IsViolation')?.setValue(true);
