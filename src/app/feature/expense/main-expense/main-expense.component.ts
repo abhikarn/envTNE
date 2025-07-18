@@ -743,16 +743,10 @@ export class MainExpenseComponent {
         return;
       }
     }
-
-    // if (type === 'submit' || type === 'draft') {
-    //   this.mainExpenseData.IsDraft = type === 'draft';
-    //   this.expenseConfirmMessage= this.applicationMessageService.getApplicationMessage({Flag: 'ExpenseSubmitConfirm'})
-    //   this.createExpenseRequest();
-    // } else {
-    //   this.router.navigate(['expense/expense/landing']);
-    // }
+ 
     if (type === 'submit' || type === 'draft') {
       this.mainExpenseData.IsDraft = type === 'draft';
+ 
 
       this.applicationMessageService.getApplicationMessage({ Flag: 'ExpenseSubmitConfirm' })
         .subscribe((data: any) => {
@@ -765,11 +759,18 @@ export class MainExpenseComponent {
   }
 
   // Prepare and submit the main expense request after confirmation.
-  createExpenseRequest() {
-
+  createExpenseRequest() { 
+    ;
     if (!this.travelRequestId || !this.expenseRequestData?.dynamicExpenseDetailModels) {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return;
+    }
+
+    if(this.travelRequestId>0){
+      if(this.expenseRequestData?.dynamicExpenseDetailModels.length === 0) {
+        this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+        return;
+      }
     }
 
     if (this.billableControl.invalid) {

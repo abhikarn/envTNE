@@ -31,6 +31,12 @@ export class SideMenuComponent {
     }
   }
 
+  toggleSideBar(): void {
+    const body = document.querySelector('body');
+    if (body) {
+      body.classList.toggle('sidebar-collapse');
+    }
+  }
 
   toggleProfileMenu(): void {
     this.profileMenuVisible = !this.profileMenuVisible;

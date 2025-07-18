@@ -261,8 +261,6 @@ export class PreviewComponent {
     if (this.transactionId) {
       this.getExpenseConfig();
       this.getExpenseRequestPreviewDetails();
-
-
     }
     const segments = this.route.snapshot.url;
     const segment = segments[0]?.path;
@@ -360,8 +358,7 @@ export class PreviewComponent {
   }
 
   calculatTotalExpenseAmountPreview() {
-    
-    // alert('calculatTotalExpenseAmountPreview called');
+     
     const EXPENSE_SUMMARY_ID = "expense-summary";
     const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
     const PAYABLE_KEYS = [91, 94];
@@ -437,9 +434,7 @@ export class PreviewComponent {
     }
   }
 
-  calculatCategoryWiseExpensePreview() {
-    
-  //  alert('calculatCategoryWiseExpensePreview called');
+  calculatCategoryWiseExpensePreview() { 
     const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
     let CATEGORY_NAME = '';
 
@@ -460,8 +455,6 @@ export class PreviewComponent {
           expenseRequest.data
             ?.filter((request: any) => request.ClaimStatusId !== 5 && request.selected === true)
             .forEach((request: any) => {
-
-              // const { ClaimAmountInBaseCurrency } = request?.excludedData || request || {};
               const { ApprovedAmount } = request?.excludedData || request || {};
               totalCategoryExpense = totalCategoryExpense + Number(ApprovedAmount);
             });
@@ -469,10 +462,16 @@ export class PreviewComponent {
         }
       })
     });
+    this.calculateCostCenterWiseExpense();
+    // Ensure summary component is also updated
+    if (this.summaryComponent && typeof this.summaryComponent.calculateCostCenterWiseExpense === 'function') {
+      this.summaryComponent.calculateCostCenterWiseExpense();
+    }
     this.setCategoryWiseAmount();
   }
 
   calculateCostCenterWiseExpense() {
+    ; // (optional: remove or keep as needed)
     const COST_CENTER_WISE_EXPENSE_ID = "cost-center-wise-expense";
     const summary = this.expenseSummary?.find((s: any) => s.id === COST_CENTER_WISE_EXPENSE_ID);
     if (!summary) return;
@@ -485,9 +484,20 @@ export class PreviewComponent {
 
     this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
       expenseRequest?.data?.forEach((request: any) => {
-        request?.costcentreWiseExpense?.forEach((costCenter: any) => {
-          uniqueCostCenters.add(costCenter.CostCentre);
-        });
+        // Calculate AmmoutInActual for each cost center based on AmmoutInPercentage
+        if (Array.isArray(request?.costcentreWiseExpense)) {
+          request.costcentreWiseExpense.forEach((costCenter: any) => {
+            if (
+              typeof costCenter.AmmoutInPercentage === 'number' &&
+              typeof request.ApprovedAmountInBaseCurrency === 'number'
+            ) {
+              // Divide ApprovedAmountInBaseCurrency by AmmoutInPercentage (if AmmoutInPercentage is not zero)
+              costCenter.AmmoutInActual = costCenter.AmmoutInPercentage !== 0 ? (Number(request.ApprovedAmount)*Number(request.ConversionRate)) * (costCenter.AmmoutInPercentage/100.00)
+                  : 0;
+            }
+            uniqueCostCenters.add(costCenter.CostCentre);
+          });
+        }
       });
     });
 
@@ -502,21 +512,21 @@ export class PreviewComponent {
     // Second pass: sum up AmmoutInActual for each cost center
     this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
       expenseRequest?.data?.forEach((request: any) => {
-        request?.costcentreWiseExpense?.forEach((costCenter: any) => {
-          const costCenterName = costCenter.CostCentre;
-          const amount = Number(costCenter?.AmmoutInActual) || 0;
-
-          const item = summary.items.find((item: any) => item.label === costCenterName);
-          if (item) {
-            item.value = (Number(item.value) + amount).toFixed(2);
-          }
-        });
+        if (Array.isArray(request?.costcentreWiseExpense)) {
+          request.costcentreWiseExpense.forEach((costCenter: any) => {
+            const costCenterName = costCenter.CostCentre;
+            const amount = Number(costCenter?.AmmoutInActual) || 0;
+            const item = summary.items.find((item: any) => item.label === costCenterName);
+            if (item) { 
+              item.value = (Number(item.value) + amount).toFixed(2);
+            }
+          });
+        }
       });
     });
   }
 
-  getSelection(category: any) {
-      
+  getSelection(category: any) {      
     this.expenseRequestApprovalDetailType = [];
     let dynamicExpenseDetailModels = this.expenseRequestPreviewData?.dynamicExpenseDetailModels || [];
     dynamicExpenseDetailModels?.forEach((cat: any) => {
@@ -537,11 +547,14 @@ export class PreviewComponent {
             row.selected = updatedRow.selected;
             row.ApprovedAmount = updatedRow.ApprovedAmount;
             row.remarks = updatedRow.remarks;
+            row.approvedAmountInBaseCurrency = updatedRow.ApprovedAmountInBaseCurrency;
             // Copy any other fields you want to keep in sync
           }
         });
       }
     });
+
+    
 
     const EXPENSE_SUMMARY_ID = "expense-summary";
     const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
