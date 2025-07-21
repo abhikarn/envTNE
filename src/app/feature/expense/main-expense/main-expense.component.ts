@@ -825,7 +825,6 @@ export class MainExpenseComponent {
       val === undefined ||
       val === null ||
       val === '' ||
-      val === 0 ||
       val === '0001-01-01T00:00:00' ||
       val === '1970-01-01T00:00:00';
 
