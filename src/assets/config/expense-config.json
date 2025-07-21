@@ -8386,7 +8386,43 @@
                         "label": "Local Travel Mode",
                         "placeholder": "Select Travel Type",
                         "value": null,
-                        "options": [],
+                        "options": [
+                            {
+                                "KeyDataId": 94,
+                                "KeyData": "2 Wheeler",
+                                "KeyDataAlias": "2 Wheeler"
+                            },
+                            {
+                                "KeyDataId": 60,
+                                "KeyData": "4 Wheeler",
+                                "KeyDataAlias": "4 Wheeler"
+                            },
+                            {
+                                "KeyDataId": 76,
+                                "KeyData": "Auto",
+                                "KeyDataAlias": "Auto"
+                            },
+                            {
+                                "KeyDataId": 61,
+                                "KeyData": "Company Car",
+                                "KeyDataAlias": "Company Car"
+                            },
+                            {
+                                "KeyDataId": 59,
+                                "KeyData": "Local Bus",
+                                "KeyDataAlias": "Local Bus"
+                            },
+                            {
+                                "KeyDataId": 77,
+                                "KeyData": "Metro",
+                                "KeyDataAlias": "Metro"
+                            },
+                            {
+                                "KeyDataId": 58,
+                                "KeyData": "Taxi",
+                                "KeyDataAlias": "Taxi"
+                            }
+                        ],
                         "labelKey": "KeyData",
                         "valueKey": "KeyDataId",
                         "required": true,
@@ -12544,7 +12580,6 @@
                         "ClaimDate": "ReferenceDate",
                         "ClaimAmount": "ClaimAmount",
                         "Constraint": "Constraint"
-
                     },
                     "outputControl": {
                         "IsViolation": "ResponseValue.IsPolicyViolation",
