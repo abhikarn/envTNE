@@ -8388,39 +8388,32 @@
                         "value": null,
                         "options": [
                             {
-                                "KeyDataId": 94,
-                                "KeyData": "2 Wheeler",
-                                "KeyDataAlias": "2 Wheeler"
+                                "value": 94,
+                                "label": "2 Wheeler"
                             },
                             {
-                                "KeyDataId": 60,
-                                "KeyData": "4 Wheeler",
-                                "KeyDataAlias": "4 Wheeler"
+                                "value": 60,
+                                "label": "4 Wheeler"
                             },
                             {
-                                "KeyDataId": 76,
-                                "KeyData": "Auto",
-                                "KeyDataAlias": "Auto"
+                                "value": 76,
+                                "label": "Auto"
                             },
                             {
-                                "KeyDataId": 61,
-                                "KeyData": "Company Car",
-                                "KeyDataAlias": "Company Car"
+                                "value": 61,
+                                "label": "Company Car"
                             },
                             {
-                                "KeyDataId": 59,
-                                "KeyData": "Local Bus",
-                                "KeyDataAlias": "Local Bus"
+                                "value": 59,
+                                "label": "Local Bus"
                             },
                             {
-                                "KeyDataId": 77,
-                                "KeyData": "Metro",
-                                "KeyDataAlias": "Metro"
+                                "value": 77,
+                                "label": "Metro"
                             },
                             {
-                                "KeyDataId": 58,
-                                "KeyData": "Taxi",
-                                "KeyDataAlias": "Taxi"
+                                "value": 58,
+                                "label": "Taxi"
                             }
                         ],
                         "labelKey": "KeyData",
