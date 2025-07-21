@@ -243,7 +243,7 @@ export class MainExpenseComponent {
       });
     } else {
       console.log(this.expenseClaimTypeDescription)
-      if(this.expenseClaimTypeDescription == 'Domestic' || this.expenseClaimTypeDescription == 'International') {
+      if (this.expenseClaimTypeDescription == 'Domestic' || this.expenseClaimTypeDescription == 'International') {
         let title = "Travel Expense";
         if (this.expenseConfig?.pageTitles) {
           this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[title] || title;
@@ -270,7 +270,7 @@ export class MainExpenseComponent {
     if (this.expenseConfig?.travelDetails) {
       this.travelDetails = this.expenseConfig?.travelDetails;
       this.travelDetails.data?.forEach((config: any) => {
-        if(config.controlType === 'autocomplete' && config.isEnabled) {
+        if (config.controlType === 'autocomplete' && config.isEnabled) {
           this.initBillanleControl();
         }
       })
@@ -490,7 +490,7 @@ export class MainExpenseComponent {
 
   // Set default currency for 'Currency' fields based on travel type.
   setCurrencyDropdown() {
-    
+
     const isWithoutCurrency = [52, 54].includes(this.travelRequestPreview?.travelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId);
 
     const defaultCurrency = {
@@ -560,7 +560,7 @@ export class MainExpenseComponent {
           this.applyExcludedFields();
           this.selectedTabIndex = 0;
         }
-        
+
         const preview = response;
         this.travelRequestPreview = { ...preview, UserMasterId: this.userMasterId };
 
@@ -660,7 +660,7 @@ export class MainExpenseComponent {
 
   // Populate autoComplete options by input value (ID or search text) and update matching control.
   getTextData(inputData: any) {
-    
+
     const { inputValue, control } = inputData;
 
     if (typeof inputValue === 'number') {
@@ -760,10 +760,10 @@ export class MainExpenseComponent {
         return;
       }
     }
- 
+
     if (type === 'submit' || type === 'draft') {
       this.mainExpenseData.IsDraft = type === 'draft';
- 
+
 
       this.applicationMessageService.getApplicationMessage({ Flag: 'ExpenseSubmitConfirm' })
         .subscribe((data: any) => {
@@ -776,15 +776,15 @@ export class MainExpenseComponent {
   }
 
   // Prepare and submit the main expense request after confirmation.
-  createExpenseRequest() { 
+  createExpenseRequest() {
     ;
     if (!this.travelRequestId || !this.expenseRequestData?.dynamicExpenseDetailModels) {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return;
     }
 
-    if(this.travelRequestId>0){
-      if(this.expenseRequestData?.dynamicExpenseDetailModels.length === 0) {
+    if (this.travelRequestId > 0) {
+      if (this.expenseRequestData?.dynamicExpenseDetailModels.length === 0) {
         this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
         return;
       }
@@ -821,36 +821,51 @@ export class MainExpenseComponent {
     };
     console.log(this.mainExpenseData);
 
-    // Check for missing required fields grouped by category
+    const isEmptyValue = (val: any): boolean =>
+      val === undefined ||
+      val === null ||
+      val === '' ||
+      val === 0 ||
+      val === '0001-01-01T00:00:00' ||
+      val === '1970-01-01T00:00:00';
+
     const missingFieldsByCategory = this.mainExpenseData.dynamicExpenseDetailModels
       .map((expenseCategory: any) => {
-        const configCategory = this.categories.find((cat: any) => cat.name === expenseCategory.name);
+        const configCategory = this.categories.find(
+          (cat: any) => expenseCategory?.data?.length > 0 && cat.name === expenseCategory.name
+        );
         if (!configCategory) return null;
 
         const requiredFields = configCategory.formControls
           .filter((control: any) => control.required && !control.isExcluded)
           .map((control: any) => control.name);
 
-        const missingFields = requiredFields.filter((field: string) => {
-          return !expenseCategory.data.some((item: any) => {
-            const value = item[field];
-            return value !== undefined && value !== null && value !== '';
+        const missingInItems = expenseCategory.data.map((item: any, index: number) => {
+          const missing = requiredFields.filter((field: string) => {
+            const value = item[field] ?? item.excludedData?.[field];
+            return isEmptyValue(value);
           });
-        });
+          return missing.length > 0 ? { index, missing } : null;
+        }).filter(Boolean);
 
-        if (missingFields.length === 0) return null;
+        if (missingInItems.length === 0) return null;
 
         return {
           categoryName: expenseCategory.name,
-          missingFields
+          items: missingInItems
         };
       })
       .filter(Boolean);
 
-    // If there are missing fields, block and show them in a confirm dialog
+    // Show in dialog
     if (missingFieldsByCategory.length > 0) {
       const missingFieldsMessage = missingFieldsByCategory
-        .map((cat: any) => `${cat.categoryName}: ${cat.missingFields.join(', ')}`)
+        .map((cat: any) => {
+          const itemsText = cat.items
+            .map((item: any) => `Row ${item.index + 1}: ${item.missing.join(', ')}`)
+            .join('\n');
+          return `${cat.categoryName}:\n${itemsText}`;
+        })
         .join('\n\n');
 
       this.confirmDialogService.confirm({
@@ -949,7 +964,7 @@ export class MainExpenseComponent {
   openExpenseSummarySheet(templateRef: TemplateRef<any>) {
     if (window.innerWidth <= 768) {
       this.bottomSheet.open(templateRef, {
-        panelClass: 'expense-bottom-sheet' 
+        panelClass: 'expense-bottom-sheet'
       });
     }
   }
@@ -1013,7 +1028,7 @@ export class MainExpenseComponent {
   trackByReq(index: number, req: any) {
     return req.value;
   }
-  
+
   onOptionSelected(event: any, item: any) {
     const selectedDisplay = event.option.value;
     const selected = this.filteredOptions.find((opt: any) => opt[item.displayKey] === selectedDisplay);
@@ -1025,7 +1040,7 @@ export class MainExpenseComponent {
   }
 
   updateBillableCostCentre(billableCostcentreId: number) {
-    this.mainExpenseData.BillableCostCentreId = billableCostcentreId; 
+    this.mainExpenseData.BillableCostCentreId = billableCostcentreId;
   }
 
   // Call this from (autoCompleteFocus) output of your text input component
