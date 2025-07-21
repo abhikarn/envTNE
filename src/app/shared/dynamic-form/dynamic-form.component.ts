@@ -644,6 +644,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             if (controlName?.type === 'number') {
               if (Number(value) == 0) {
                 control?.enable({ emitEvent: false });
+                this.category.freezFormControls?.forEach((controlName: any) => {
+                  // remove the control name from freezFormControls
+                  this.category.freezFormControls = this.category.freezFormControls.filter((item: any) => item.name !== controlName.name);
+                });
               } else {
                 control?.disable({ emitEvent: false });
               }
