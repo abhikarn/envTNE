@@ -64,7 +64,7 @@ export class DynamicTableService {
   
             if (autoComplete && name in data) {
               let selected = data[name];
-              if ((!options || options.length === 0) && apiService && apiMethod) {
+              if (apiService && apiMethod) {
                 const requestBody = [
                   {
                     id: selected,
@@ -94,11 +94,6 @@ export class DynamicTableService {
                     }
                   }
                 });
-              } else {
-                const matchedOption = control.formConfig.options?.find((opt: any) => opt.value === selected);
-                if (matchedOption) {
-                  data[name] = matchedOption;
-                }
               }
             }
           }
