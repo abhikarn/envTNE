@@ -58,6 +58,7 @@ model/forgotPasswordCustomParam.ts
 model/forgotPasswordParam.ts
 model/gradeGetParam.ts
 model/guestHouseListParam.ts
+model/localTravelMode.ts
 model/loginViewModel.ts
 model/marriageGiftPolicyParam.ts
 model/mobileAppDashboardDataParam.ts

@@ -39,6 +39,7 @@ export * from './forgotPasswordCustomParam';
 export * from './forgotPasswordParam';
 export * from './gradeGetParam';
 export * from './guestHouseListParam';
+export * from './localTravelMode';
 export * from './loginViewModel';
 export * from './marriageGiftPolicyParam';
 export * from './mobileAppDashboardDataParam';

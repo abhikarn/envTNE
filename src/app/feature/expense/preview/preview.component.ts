@@ -379,8 +379,8 @@ export class PreviewComponent {
       expenseRequest.data?.filter((request: any) => request.ClaimStatusId !== 5 && request.selected == true).forEach((request: any) => {
 
         // const { PaymentModeId, ClaimAmountInBaseCurrency } = request || {};
-        const { PaymentModeId, ApprovedAmountInBaseCurrency } = request || {};
-        this.updateExpenseItem(summary, PaymentModeId, ApprovedAmountInBaseCurrency);
+        const { PaymentModeId, ApprovedAmountInBaseCurrency, ClaimAmountInBaseCurrency } = request || {};
+        this.updateExpenseItem(summary, PaymentModeId, ApprovedAmountInBaseCurrency || ClaimAmountInBaseCurrency || 0);
       });
     });
 

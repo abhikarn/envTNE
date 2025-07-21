@@ -199,8 +199,8 @@ export class SelectInputComponent implements AfterViewInit {
   onSelectBlur() {
     if (this.controlConfig.dependentCases) {
       this.controlConfig.dependentCases.forEach((caseItem: any) => {
-        if (caseItem?.event == "onBlur" && caseItem?.payloadType === 'queryString') {
-          this.dynamicFormService.handleBusinessCaseForQueryString(caseItem, this.form, this.moduleData, this.formConfig);
+        if (caseItem?.event == "onBlur") {
+          this.dynamicFormService.handleFieldBusinessCase(caseItem, this.form, this.moduleData, this.formConfig);
         }
       });
     }

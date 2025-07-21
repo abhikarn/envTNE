@@ -561,7 +561,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onEditRow(rowData: any) {
-    if (!rowData?.row?.IsActual) {
+    if (rowData?.row?.IsActual) {
       const fieldsToRemove = [
         'EntitlementCurrency',
         'EntitlementAmount',
