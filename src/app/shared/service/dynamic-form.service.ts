@@ -436,36 +436,37 @@ export class DynamicFormService {
   }
 
   getFormConfig(formConfig: IFormControl[], moduleConfig: any): IFormControl[] {
+    let modifiedFormConfig = [...formConfig]; // Create a copy of the original formConfig
     // handle international data
     if (moduleConfig?.internationalFlag) {
-      formConfig.forEach((control: IFormControl) => {
+      modifiedFormConfig.forEach((control: IFormControl) => {
         if (control.international === false) {
           // remove control if international is false
-          const index = formConfig.indexOf(control);
+          const index = modifiedFormConfig.indexOf(control);
           if (index > -1) {
-            formConfig.splice(index, 1);
+            modifiedFormConfig.splice(index, 1);
           }
         }
 
-        if(control?.dependentCases?.length > 0) {
+        if (control?.dependentCases?.length > 0) {
           control.dependentCases.forEach((caseConfig: any) => {
             if (caseConfig?.type?.includes('international')) {
               // If the case type includes 'international', ensure the control is included
-              if (!formConfig.includes(control)) {
-                formConfig.push(control);
+              if (!modifiedFormConfig.includes(control)) {
+                modifiedFormConfig.push(control);
               }
             }
           });
         }
       });
     } else {
-      for (let i = formConfig.length - 1; i >= 0; i--) {
-        if (formConfig[i].international === true) {
-          formConfig.splice(i, 1);
+      for (let i = modifiedFormConfig.length - 1; i >= 0; i--) {
+        if (modifiedFormConfig[i].international === true) {
+          modifiedFormConfig.splice(i, 1);
         }
       }
     }
-    return formConfig;
+    return modifiedFormConfig;
   }
 
   evaluateFormula(formula: string, values: Record<string, number | string>): number {
