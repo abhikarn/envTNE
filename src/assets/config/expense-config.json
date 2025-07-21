@@ -11129,7 +11129,6 @@
                                     "domestic",
                                     "international"
                                 ],
-                                "payloadType": "queryString",
                                 "key": "Id",
                                 "inputControls": {
                                     "LocalTravelType": "expenseCategoryId"
@@ -11138,14 +11137,14 @@
                                     "LocalTravelMode": "ResponseValue"
                                 },
                                 "otherControls": {
-                                    "claimTypeId": "travelTypeId",
-                                    "travelRequestId": "travelRequestId",
-                                    "userMasterId": "UserMasterId"
+                                    "ClaimTypeId": "travelTypeId",
+                                    "TravelRequestId": "travelRequestId",
+                                    "UserMasterId": "UserMasterId"
                                 },
-                                "queryStringParameter": {},
+                                "requestBody": {},
                                 "event": "onBlur",
                                 "apiService": "DataService",
-                                "apiMethod": "dataGetUserLocalTravelMode",
+                                "apiMethod": "dataUserLocalTravelMode",
                                 "labelKey": "Value",
                                 "valueKey": "Key"
                             }

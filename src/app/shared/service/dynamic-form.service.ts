@@ -509,10 +509,11 @@ export class DynamicFormService {
     return category;
   }
 
-  handleBusinessCaseForQueryString(caseItem: any, form: any, moduleData: any, formConfig: any): void {
-    if (!caseItem || caseItem.payloadType !== 'queryString') return;
+  handleFieldBusinessCase(caseItem: any, form: any, moduleData: any, formConfig: any): void {
+    debugger;
     const service = this.serviceRegistry.getService(caseItem.apiService);
     const apiMethod = caseItem.apiMethod;
+    let requestBody: any = caseItem.requestBody;
     if (!service || typeof service[apiMethod] !== 'function') {
       console.warn(`Invalid API service or method: ${caseItem.apiService}.${caseItem.apiMethod}`);
       return;
@@ -529,13 +530,9 @@ export class DynamicFormService {
     }
     );
     const output = this.mapOtherControls(moduleData, caseItem.otherControls, caseItem?.landingBoxData);
-    const requestBody: any = { ...queryParams, ...output };
-    const claimTypeId = requestBody['claimTypeId'];
-    const expenseCategoryId = requestBody['expenseCategoryId'];
-    const userMasterId = requestBody['userMasterId'];
-    const travelRequestId = requestBody['travelRequestId'];
+    requestBody = { ...queryParams, ...output };
 
-    service[apiMethod](claimTypeId, expenseCategoryId, userMasterId, travelRequestId).subscribe(
+    service[apiMethod](requestBody).subscribe(
       (response: any) => {
         if (typeof caseItem.outputControl === 'object') {
           for (const [outputControl, responsePath] of Object.entries(caseItem.outputControl) as [string, string][]) {

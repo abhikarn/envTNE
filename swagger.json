@@ -1097,6 +1097,45 @@
         }
       }
     },
+    "/api/Data/UserLocalTravelMode": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "operationId": "Data_UserLocalTravelMode",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "localTravelMode",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LocalTravelMode"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Expense/OtherExpenseCategoryDomestic": {
       "post": {
         "tags": [
@@ -2011,43 +2050,6 @@
         }
       }
     },
-    "/api/document/download": {
-      "get": {
-        "tags": [
-          "Document"
-        ],
-        "operationId": "Document_DownloadDocument",
-        "consumes": [],
-        "produces": [
-          "application/json",
-          "text/json",
-          "application/xml",
-          "text/xml"
-        ],
-        "parameters": [
-          {
-            "name": "fileNamewithGuid",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "fileName",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      }
-    },
     "/api/ExpenseRequest/Create": {
       "post": {
         "tags": [
@@ -2210,6 +2212,45 @@
           "Expense"
         ],
         "operationId": "Expense_GetTravelRequestBookedDetail",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "travelRequestBookedDetailParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TravelRequestBookedDetailParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Expense/TravelRequestBookedDetailCategory": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_GetTravelRequestBookedDetailCategory",
         "consumes": [
           "application/json",
           "text/json",
@@ -4447,6 +4488,27 @@
       "properties": {
         "SearchText": {
           "type": "string"
+        }
+      }
+    },
+    "LocalTravelMode": {
+      "type": "object",
+      "properties": {
+        "ClaimTypeId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ExpenseCategoryId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "UserMasterId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "TravelRequestId": {
+          "format": "int64",
+          "type": "integer"
         }
       }
     },
