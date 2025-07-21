@@ -1374,6 +1374,16 @@
                                 "type": "required",
                                 "message": "No. of Days is required"
                             }
+                        ],
+                        "setFields": [
+                            {
+                                "name": "EntitlementAmount",
+                                "formula": "Math.max(0, (NoOfDays * OriginalEntitlementAmount))",
+                                "dependsOn": [
+                                    "NoOfDays",
+                                    "OriginalEntitlementAmount"
+                                ]
+                            }
                         ]
                     },
                     {
@@ -7563,10 +7573,6 @@
                     },
                     {
                         "name": "DestinationPointName",
-                        "valueCheck": false
-                    },
-                    {
-                        "name": "City",
                         "valueCheck": false
                     },
                     {
@@ -20474,55 +20480,68 @@
                 "items": [
                     {
                         "name": "Travel Ticket",
-                        "label": "Tickets Expense"
+                        "label": "Tickets Expense",
+                        "includeIn": ["domestic", "international"]
                     },
                     {
                         "name": "Accommodation",
-                        "label": "Accommodation Expenses"
+                        "label": "Accommodation Expenses",
+                        "includeIn": ["domestic", "international"]
                     },
                     {
                         "name": "Boarding Expense",
-                        "label": "Boarding Expenses"
+                        "label": "Boarding Expenses",
+                        "includeIn": ["domestic", "international"]
                     },
                     {
                         "name": "Incidental Expenses",
-                        "label": "Incidental Expenses"
+                        "label": "Incidental Expenses",
+                        "includeIn": ["domestic", "international"]
                     },
                     {
                         "name": "Laundry service",
-                        "label": "Laundry Service"
+                        "label": "Laundry Service",
+                        "includeIn": ["domestic", "international"]
                     },
                     {
                         "name": "Local Conveyance During Travel",
-                        "label": "Conveyance During Travel"
+                        "label": "Conveyance During Travel",
+                        "includeIn": ["domestic", "international"]
                     },
                     {
                         "name": "Business Entertainment",
-                        "label": "Business Entertainment"
+                        "label": "Business Entertainment",
+                        "includeIn": ["domestic", "international"]
                     },
                     {
                         "name": "Other Expenses",
-                        "label": "Other Expenses"
+                        "label": "Other Expenses",
+                        "includeIn": ["domestic", "international"]
                     },
                     {
                         "name": "Baggage and Outfit Allowance",
-                        "label": "Baggage and Outfit Allowance"
+                        "label": "Baggage and Outfit Allowance",
+                        "includeIn": ["international"]
                     },
                     {
                         "name": "Transit Allowance",
-                        "label": "Transit Allowance"
+                        "label": "Transit Allowance",
+                        "includeIn": ["international"]
                     },
                     {
                         "name": "Visa",
-                        "label": "Visa"
+                        "label": "Visa",
+                        "includeIn": ["international"]
                     },
                     {
                         "name": "Travel Insurance",
-                        "label": "Travel Insurance"
+                        "label": "Travel Insurance",
+                        "includeIn": ["international"]
                     },
                     {
                         "name": "Roaming",
-                        "label": "Roaming"
+                        "label": "Roaming",
+                        "includeIn": ["international"]
                     }
                 ]
             },
