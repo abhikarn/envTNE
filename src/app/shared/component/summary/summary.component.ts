@@ -104,7 +104,6 @@ export class SummaryComponent implements OnChanges {
   }
 
   calculatCategoryWiseExpense() {
-    
     const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
     let CATEGORY_NAME = '';
 
@@ -122,8 +121,8 @@ export class SummaryComponent implements OnChanges {
         if (item.name == CATEGORY_NAME) {
           let totalCategoryExpense = 0;
           expenseRequest.data?.forEach((request: any) => {
-            const { ApprovedAmountInBaseCurrency } = request?.excludedData || request || {};
-            totalCategoryExpense = totalCategoryExpense + Number(ApprovedAmountInBaseCurrency);
+            const { ApprovedAmountInBaseCurrency, ClaimAmountInBaseCurrency } = request?.excludedData || request || {};
+            totalCategoryExpense = totalCategoryExpense + Number(ApprovedAmountInBaseCurrency || ClaimAmountInBaseCurrency || 0);
           });
           item.value = totalCategoryExpense.toFixed(2);
         }
