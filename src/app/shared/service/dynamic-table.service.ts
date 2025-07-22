@@ -23,7 +23,7 @@ export class DynamicTableService {
               }
   
               // For dependent dropdowns: fetch options if not present
-              if ((!options || options.length === 0) && apiService && apiMethod && dependsOn) {
+              if (apiService && apiMethod && dependsOn) {
                 const dependsOnValue = data[dependsOn];
                 const payload = { [payloadKey || 'id']: dependsOnValue?.value || dependsOnValue };
   
@@ -39,7 +39,7 @@ export class DynamicTableService {
               }
 
               // for not dependent dropdowns: fetch options if not present
-              else if ((!options || options.length === 0) && apiService && apiMethod) {
+              else if (apiService && apiMethod) {
                 const service = this.serviceRegistry.getService(apiService);
                 if (service && typeof service[apiMethod] === 'function') {
                   const response = await service[apiMethod]().toPromise();
