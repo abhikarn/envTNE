@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { ServiceRegistryService } from './service-registry.service';
 import { IFormControl } from '../dynamic-form/form-control.interface';
 import { ConfirmDialogService } from './confirm-dialog.service';
@@ -84,7 +84,7 @@ export class DynamicFormService {
     if (Object.values(requestBody).some(value => value === null)) {
       return;
     }
-      
+
     // if any value of output is null the return
     if (Object.values(output).some(value => value === null)) {
       return;
@@ -93,7 +93,7 @@ export class DynamicFormService {
     service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
       (response: any) => {
         console.log('Policy Entitlement Check Response:', response);
-        if(!response?.ResponseValue) {
+        if (!response?.ResponseValue) {
           this.snackbarService.error('No Policy Entitlement is available. Please contact your administrator.');
           return;
         }
@@ -164,7 +164,7 @@ export class DynamicFormService {
 
 
           // IsKmLimitRequired bit value is true, display AmountPerKM
-            const isKmLimitRequired = form.get('IsKmLimitRequired')?.value;
+          const isKmLimitRequired = form.get('IsKmLimitRequired')?.value;
           if (isKmLimitRequired) {
             const amountPerKMControl = formControls.find(c => c.name === 'AmountPerKM');
             if (amountPerKMControl) {
@@ -270,7 +270,7 @@ export class DynamicFormService {
     const mappedResult: Record<string, any> = {};
 
     for (const [outputKey, sourceKey] of Object.entries(otherControls)) {
-      if(data) {
+      if (data) {
         // If data is available, use it
         const value = (data && data[sourceKey] !== undefined) ? data[sourceKey] : null;
         mappedResult[outputKey] = value;
@@ -495,8 +495,8 @@ export class DynamicFormService {
     if (!category) return null;
 
     category.columns?.forEach((column: any) => {
-      if(moduleConfig?.internationalFlag) {
-        if(column.international === false) {
+      if (moduleConfig?.internationalFlag) {
+        if (column.international === false) {
           // remove column if international is false
           const index = category.columns.indexOf(column);
           if (index > -1) {
@@ -571,4 +571,66 @@ export class DynamicFormService {
       }
     );
   }
+
+  /**
+   * Checks for duplicate claims based on the provided form values and configuration.
+   * @param form - The FormGroup containing the form values.
+   * @param config - The configuration object containing fields and date range fields.
+   * @param dataList - The list of existing claims to check against.
+   * @param fieldsKey - The key in the config that contains the fields to compare.
+   * @param dateRangeFieldsKey - The key in the config that contains the date range fields (optional).
+   * @returns {boolean} - Returns true if a duplicate claim is found, otherwise false.
+   */
+  checkDuplicateClaim(
+    form: FormGroup,
+    config: any,
+    dataList: any[],
+    fieldsKey: string,
+    dateRangeFieldsKey: string = 'dateRangeFields'
+  ): boolean {
+    console.log('Checking for duplicate claims', { fieldsKey, config, dataList }, form.value);
+    const fields = config[fieldsKey];
+    const dateFieldConfig = config.dateRangeFields?.[dateRangeFieldsKey] || {};
+
+    const checkInField = dateFieldConfig.start;
+    const checkOutField = dateFieldConfig.end;
+
+    const currentFormValues: any = {};
+    fields.forEach((field: string) => {
+      currentFormValues[field] = form.get(field)?.value;
+    });
+
+    const currentCheckIn = checkInField ? new Date(currentFormValues[checkInField]).getTime() : null;
+    const currentCheckOut = checkOutField ? new Date(currentFormValues[checkOutField]).getTime() : null;
+
+    const matchedCategory = dataList
+      ?.filter((entry: any) => entry.name === config.name)
+      ?.flatMap((cat: any) => cat.data || []);
+
+    return matchedCategory?.some((row: any) => {
+      const rowCheckIn = checkInField ? new Date(row[checkInField]).getTime() : null;
+      const rowCheckOut = checkOutField ? new Date(row[checkOutField]).getTime() : null;
+
+      const isOverlap =
+        currentCheckIn != null &&
+        currentCheckOut != null &&
+        rowCheckIn != null &&
+        rowCheckOut != null &&
+        currentCheckIn <= rowCheckOut &&
+        currentCheckOut >= rowCheckIn;
+
+      const otherFieldsMatch = fields
+        .filter((f: any) => f !== checkInField && f !== checkOutField)
+        .every((field: string) => {
+          const formValue = currentFormValues[field];
+          const rowValue = row[field];
+          const val1 = typeof formValue === 'object' && formValue !== null ? formValue.value : formValue;
+          const val2 = typeof rowValue === 'object' && rowValue !== null ? rowValue.value : rowValue;
+          return val1 == val2;
+        });
+
+      return isOverlap && otherFieldsMatch;
+    }) ?? false;
+  }
+
 }

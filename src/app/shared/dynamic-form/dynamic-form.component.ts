@@ -213,10 +213,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
-     console.log(this.category)
-      console.log(this.moduleConfig)
+    console.log(this.category);
+    console.log(this.moduleConfig);
+    console.log(this.moduleData)
     console.log('Form submitted:', this.form.value);
-    
+
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       this.dynamicFormService.scrollToFirstInvalidControl('form');
@@ -226,28 +227,48 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     // claim restriction check
     if (this.category.claimRestriction && this.category.claimRestriction.length > 0) {
-      console.log(this.category)
-      console.log(this.moduleConfig)
-      const claimRestriction = this.category.claimRestriction;
-      const isClaimed = claimRestriction.some((restriction: any) => {
-        return this.moduleConfig.categories.some((cat: any) => {
-          return cat.name === restriction.name && cat.count > 0;
-        });
-      });
-      if (isClaimed) {
-        const restrictionMessage = claimRestriction.map((restriction: any) => restriction.message || `Claim for ${restriction.name} is restricted.`).join(' ');
-        this.snackbarService.error(restrictionMessage, 5000);
-        return;
-      }
+      for (const claimRestriction of this.category.claimRestriction) {
 
-      // Check for minimum stay duration
-      const minimumStayDuration = claimRestriction.find((restriction: any) => restriction.minimumStayduration);
-      if (minimumStayDuration && this.moduleConfig.tripDuration <= minimumStayDuration.minimumStayduration) {
-        this.snackbarService.error(minimumStayDuration.message || `Minimum stay duration of ${minimumStayDuration.minimumStayduration} days is required.`, 5000);
-        return;
-      }
+        // 1. Duplicate Category Check
+        if (claimRestriction.duplicateCategoryCheck && Array.isArray(claimRestriction.categories)) {
+          const isClaimed = claimRestriction.categories.some((restriction: any) => {
+            return this.moduleConfig.categories?.some((cat: any) => {
+              return cat.name === restriction.name && cat.count > 0;
+            });
+          });
+
+          if (isClaimed) {
+            const restrictionMessage = claimRestriction.categories
+              .map((restriction: any) => restriction.message || `Claim for ${restriction.name} is restricted.`)
+              .join(' ');
+            this.snackbarService.error(restrictionMessage, 5000);
+            return;
+          }
+        }
+
+        // 2. Minimum Stay Duration Check
+        if (claimRestriction.minimumStayduration) {
+          if (this.moduleConfig.tripDuration <= claimRestriction.minimumStayduration) {
+            this.snackbarService.error(
+              claimRestriction.message || `Minimum stay duration of ${claimRestriction.minimumStayduration} days is required.`,
+              5000
+            );
+            return;
+          }
+        }
+
+        // 3. Duplicate Claim Check
+        if (claimRestriction.duplicateClaimedCheck) {
+          const isDuplicate = this.dynamicFormService.checkDuplicateClaim(this.form, claimRestriction, this.moduleData.dynamicExpenseDetailModels, 'fieldsToCompare', 'dateRangeFieldsKey');
+
+          if (isDuplicate) {
+            this.snackbarService.error(`Duplicate claim detected in ${claimRestriction.name}.`, 5000);
+            return;
+          }
+        }
+
+      };
     }
-    
 
     // enable all controls before submission
     this.formControls.forEach(control => {
@@ -255,9 +276,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         control.control.enable({ emitEvent: false });
       }
     });
-    
+
     this.dynamicFormService.setCalculatedFields(this.form, this.formControls);
-    
+
     // Only check duplicate if OCRRequired is true for this category
     if (this.category.OCRRequired) {
       // Check for duplicate in tableData before DB check
@@ -360,11 +381,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
 
     this.validatePolicyViolation();
-    if(this.category?.policyViolationManualCheck) {
+    if (this.category?.policyViolationManualCheck) {
       this.validateManualPolicyViolation();
     }
 
-    if(!this.category?.policyViolationCheckApi && !this.category?.policyViolationManualCheck) {
+    if (!this.category?.policyViolationCheckApi && !this.category?.policyViolationManualCheck) {
       this.setAutoCompleteFields();
       this.prepareFormJson();
       this.addDataToDynamicTable();
@@ -890,7 +911,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   // Add this method to clear options for other autocomplete controls
   onAutoCompleteFocus(focusedControlConfig: IFormControl) {
-    
+
     this.formControls.forEach(({ formConfig }) => {
       if (
         formConfig.autoComplete &&
@@ -903,27 +924,27 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   private scrollToFirstInvalidControl(): void {
-  // Wait for the next animation frame to ensure DOM updates
-  requestAnimationFrame(() => {
-    // Broader selector to include various invalid controls
-    const invalidControl = document.querySelector(
-      '.ng-invalid[formcontrolname], .ng-invalid[ng-reflect-name], .ng-invalid input'
-    ) as HTMLElement | null;
+    // Wait for the next animation frame to ensure DOM updates
+    requestAnimationFrame(() => {
+      // Broader selector to include various invalid controls
+      const invalidControl = document.querySelector(
+        '.ng-invalid[formcontrolname], .ng-invalid[ng-reflect-name], .ng-invalid input'
+      ) as HTMLElement | null;
 
-    if (invalidControl) {
-      // Scroll to the element
-      invalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (invalidControl) {
+        // Scroll to the element
+        invalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-      // Focus the control only if it's focusable
-      if (invalidControl.tabIndex >= 0 || invalidControl.tagName.match(/INPUT|TEXTAREA|SELECT/)) {
-        invalidControl.focus();
+        // Focus the control only if it's focusable
+        if (invalidControl.tabIndex >= 0 || invalidControl.tagName.match(/INPUT|TEXTAREA|SELECT/)) {
+          invalidControl.focus();
+        }
+
+        // Optional: Announce to screen readers
+        invalidControl.setAttribute('aria-live', 'polite');
+        invalidControl.setAttribute('aria-describedby', 'error-message');
       }
-
-      // Optional: Announce to screen readers
-      invalidControl.setAttribute('aria-live', 'polite');
-      invalidControl.setAttribute('aria-describedby', 'error-message');
-    }
-  });
-}
+    });
+  }
 
 }
