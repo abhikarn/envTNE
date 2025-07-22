@@ -72,6 +72,13 @@
                     "order": 6
                 },
                 {
+                    "isEnabled": true,
+                    "name": "travelType",
+                    "label": "Travel Type",
+                    "value": null,
+                    "order": 7
+                },
+                {
                     "isEnabled": false,
                     "label": "Billable Cost Centre",
                     "name": "billableCostcentre",
@@ -12719,6 +12726,22 @@
                         "Outfit": "Outfit"
                     }
                 },
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
+                    }
+                ],
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
@@ -12736,6 +12759,13 @@
                         "visible": true,
                         "position": "in",
                         "order": 2
+                    },
+                    {
+                        "name": "ConstraintNames",
+                        "label": "Constraint",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
                     },
                     {
                         "name": "PaymentMode",
