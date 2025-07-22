@@ -121,6 +121,13 @@
                         "isRequired": true
                     }
                 ],
+                "duplicateEntryCheck": {
+                    "name": "Travel Ticket",
+                    "fields": [
+                        "TravelDate"
+                    ],
+                    "skipTimeCheck": true
+                },
                 "formControls": [
                     {
                         "type": "file",
