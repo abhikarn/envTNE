@@ -12079,7 +12079,16 @@
                         "readonly": false,
                         "order": 2,
                         "apiDateLimit": true,
-                        "policyEntitlementCheck": true
+                        "policyEntitlementCheck": true,
+                        "setFields": [
+                            {
+                                "name": "Constraint",
+                                "formula": "Constraint = []",
+                                "dependsOn": [
+                                    "Constraint"
+                                ]
+                            }
+                        ]
                     },
                     {
                         "type": "multi-select",
@@ -12089,24 +12098,42 @@
                         "label": "Constraint",
                         "placeholder": "Select Constraint",
                         "value": null,
-                        "options": [],
-                        "labelKey": "KeyData",
-                        "valueKey": "KeyDataId",
-                        "apiService": "DataService",
-                        "apiMethod": "dataGetMealType",
-                        "required": false,
+                        "options": [
+                            {
+                                "label": "Baggage",
+                                "value": 101
+                            },
+                            {
+                                "label": "OutFit",
+                                "value": 102
+                            }
+                        ],
+                        "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Constraint is required"
                             }
                         ],
-                        "disable": true,
+                        "disable": false,
                         "readonly": false,
                         "order": 4,
                         "getReadableValue": {
                             "controlName": "ConstraintNames"
-                        }
+                        },
+                        "setFields": [
+                            {
+                                "checkFormula": "Constraint.length > 0",
+                                "name": "EntitlementAmount",
+                                "formula": "Constraint.length > 0 ? (Constraint.includes(101) ? Baggage * 1 : 0) + (Constraint.includes(102) ? Outfit * 1 : 0) : 0",
+                                "dependsOn": [
+                                    "EntitlementAmount",
+                                    "Baggage",
+                                    "Outfit",
+                                    "Constraint"
+                                ]
+                            }
+                        ]
                     },
                     {
                         "type": "select",
@@ -12588,6 +12615,48 @@
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "NoOfTimes",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Frequency",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Duration",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "MinimumAnnualTravelRequiredForConsecutiveClaims",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Baggage",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Outfit",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
                     }
                 ],
                 "policyViolationCheckApi": {
@@ -12640,6 +12709,14 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    },
+                    "metaData": {
+                        "NoOfTimes": "No Of Times",
+                        "Frequency": "Frequency",
+                        "Duration": "Duration",
+                        "MinimumAnnualTravelRequiredForConsecutiveClaims": "Minimum annual travel required for consecutive claims",
+                        "Baggage": "Baggage",
+                        "Outfit": "Outfit"
                     }
                 },
                 "expanded": true,

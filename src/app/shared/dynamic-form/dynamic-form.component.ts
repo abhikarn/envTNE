@@ -808,6 +808,16 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     if (control.setFields) {
       control.setFields.forEach((field: any) => {
         // Prepare values for formula
+        const checkFormula = field.checkFormula || '';
+        if (checkFormula) {
+          const values: any = {};
+          field.dependsOn?.forEach((dep: string) => {
+            values[dep] = this.form.get(dep)?.value;
+          });
+          const isFormulaValid = this.dynamicFormService.evaluateFormula(checkFormula, values);
+          if (!isFormulaValid)
+            return; // Skip if checkFormula is false
+        }
         const dependsOn = field.dependsOn || [];
         const values: any = {};
         dependsOn.forEach((dep: string) => {
