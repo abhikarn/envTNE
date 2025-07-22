@@ -469,16 +469,17 @@ export class DynamicFormService {
     return modifiedFormConfig;
   }
 
-  evaluateFormula(formula: string, values: Record<string, number | string>): number {
+  evaluateFormula(formula: string, values: Record<string, any>): number {
     try {
       console.log('Evaluating formula:', formula, 'with values:', values);
       const keys = Object.keys(values);
-      const vals = Object.values(values).map(v => {
+      const vals = keys.map(k => {
+        const v = values[k];
         if (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}/.test(v)) {
           const dateOnly = v.split('T')[0];
           return new Date(dateOnly + 'T00:00:00Z').getTime();
         }
-        return Number(v);
+        return v; // preserve arrays/objects
       });
 
       const fn = new Function(...keys, `return ${formula};`);

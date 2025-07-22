@@ -335,24 +335,39 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     if (this.existingData?.length > 0) {
       if (this.category?.duplicateEntryCheck) {
-        const { fields, name } = this.category.duplicateEntryCheck;
+        const { fields, name, skipTimeCheck } = this.category.duplicateEntryCheck;
         if (!fields || fields.length === 0) return;
 
         // If only one field (e.g., single date) is provided
         if (fields.length === 1) {
           const [field] = fields;
-          const newDate = new Date(this.form.value[field]).getTime();
 
-          const isDuplicate = this.existingData.some((row: any, index: number) => {
-            if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
+          if (skipTimeCheck) {
+            // If skipTimeCheck is true, compare only the date part
+            const newDate = this.datePipe.transform(this.form.value[field], 'yyyy-MM-dd');
+            const isDuplicate = this.existingData.some((row: any, index: number) => {
+              if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
 
-            const existingDate = new Date(row[field]).getTime();
-            return newDate === existingDate;
-          });
+              const existingDate = this.datePipe.transform(row[field], 'yyyy-MM-dd');
+              return newDate === existingDate;
+            });
+            if (isDuplicate) {
+              this.snackbarService.error(`${name} for ${this.datePipe.transform(this.form.value[field], 'yyyy-MM-dd')} has already been claimed.`, 5000);
+              return;
+            }
+          } else {
+            const newDate = new Date(this.form.value[field]).getTime();
 
-          if (isDuplicate) {
-            this.snackbarService.error(`${name} for the date ${this.form.value[field]} has already been claimed.`, 5000);
-            return;
+            const isDuplicate = this.existingData.some((row: any, index: number) => {
+              if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
+
+              const existingDate = new Date(row[field]).getTime();
+              return newDate === existingDate;
+            });
+            if (isDuplicate) {
+              this.snackbarService.error(`${name} for ${this.form.value[field]} has already been claimed.`, 5000);
+              return;
+            }
           }
         }
 
@@ -793,6 +808,16 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     if (control.setFields) {
       control.setFields.forEach((field: any) => {
         // Prepare values for formula
+        const checkFormula = field.checkFormula || '';
+        if (checkFormula) {
+          const values: any = {};
+          field.dependsOn?.forEach((dep: string) => {
+            values[dep] = this.form.get(dep)?.value;
+          });
+          const isFormulaValid = this.dynamicFormService.evaluateFormula(checkFormula, values);
+          if (!isFormulaValid)
+            return; // Skip if checkFormula is false
+        }
         const dependsOn = field.dependsOn || [];
         const values: any = {};
         dependsOn.forEach((dep: string) => {

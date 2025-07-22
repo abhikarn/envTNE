@@ -4,7 +4,9 @@ import {
   ViewChild,
   ViewEncapsulation,
   OnInit,
-  OnDestroy
+  OnDestroy,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../form-control.interface';
@@ -40,6 +42,7 @@ export class MultiSelectInputComponent implements OnInit, OnDestroy {
   @Input() control!: FormControl;
   @Input() controlConfig: IFormControl = { name: '' };
   @Input() form: any;
+  @Output() valueChange = new EventEmitter<{ event: any; control: IFormControl }>();
 
   @ViewChild('select') select!: MatSelect;
 
@@ -59,6 +62,7 @@ export class MultiSelectInputComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadOptions();
     this.control.valueChanges.subscribe(() => {
+      this.valueChange.emit({ event: this.control.value, control: this.controlConfig });
       this.updateAllSelectedState();
     });
     if (this.controlConfig.disable) {
@@ -71,7 +75,13 @@ export class MultiSelectInputComponent implements OnInit, OnDestroy {
   }
 
   loadOptions() {
-    if ((!this.controlConfig.apiService && !this.controlConfig.apiMethod)) return;
+    if(this.controlConfig.options && this.controlConfig.options.length > 0) {
+      this.allOptions = this.controlConfig.options;
+      this.filteredOptions = [...this.allOptions];
+      this.updateAllSelectedState();
+      return;
+    }
+    if ((!this.controlConfig.apiService && !this.controlConfig.apiMethod && (this.controlConfig.options && this.controlConfig.options.length > 0))) return;
 
     const apiService = this.serviceRegistry.getService(this.controlConfig.apiService || '');
     if (apiService && typeof apiService[this.controlConfig.apiMethod || ''] === 'function') {
@@ -80,8 +90,8 @@ export class MultiSelectInputComponent implements OnInit, OnDestroy {
           const labelKey = this.controlConfig.labelKey || 'label';
           const valueKey = this.controlConfig.valueKey || 'value';
           this.controlConfig.options = data.ResponseValue.map((item: any) => ({
-            label: item[labelKey],
-            value: item[valueKey]
+            label: item[labelKey] || item.label,
+            value: item[valueKey] || item.value
           }));
           this.allOptions = this.controlConfig.options ?? [];
           this.filteredOptions = [...this.allOptions];
