@@ -6768,8 +6768,8 @@
                 "duplicateEntryCheck": {
                     "name": "Flat Allowance",
                     "fields": [
-                        "ClaimDate",
-                        "ClaimToDate"
+                        "CheckInDateTime",
+                        "CheckOutDateTime"
                     ]
                 },
                 "formControls": [
