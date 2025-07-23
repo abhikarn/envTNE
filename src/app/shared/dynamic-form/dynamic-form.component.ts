@@ -396,18 +396,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
 
     this.validatePolicyViolation();
-    if (this.category?.policyViolationManualCheck) {
-      this.validateManualPolicyViolation();
-    }
-
-    if (!this.category?.policyViolationCheckApi && !this.category?.policyViolationManualCheck) {
-      this.setAutoCompleteFields();
-      this.prepareFormJson();
-      this.addDataToDynamicTable();
-      setTimeout(() => {
-        this.clear();
-      }, 500);
-    }
   }
 
   validateManualPolicyViolation() {
@@ -755,49 +743,54 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
       service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
         (response: any) => {
-          if (typeof this.category.policyViolationCheckApi.outputControl === 'object') {
-            // Multiple fields case
-            for (const [outputControl, responsePath] of Object.entries(this.category.policyViolationCheckApi.outputControl) as [string, string][]) {
-              const value = this.extractValueFromPath(response, responsePath);
-              if (value !== undefined) {
-                this.form.get(outputControl)?.setValue(value);
+          if (response?.ResponseValue) {
+            if (typeof this.category.policyViolationCheckApi.outputControl === 'object') {
+              // Multiple fields case
+              for (const [outputControl, responsePath] of Object.entries(this.category.policyViolationCheckApi.outputControl) as [string, string][]) {
+                const value = this.extractValueFromPath(response, responsePath);
+                if (value !== undefined) {
+                  this.form.get(outputControl)?.setValue(value);
+                }
               }
             }
-          }
-          if (typeof this.category.policyViolationCheckApi.confirmPopup === 'object') {
-            // Multiple fields case
-            for (const [confirmPopup, responsePath] of Object.entries(this.category.policyViolationCheckApi.confirmPopup) as [string, string][]) {
-              const value = this.extractValueFromPath(response, responsePath);
-              if (value !== undefined) {
-                confirmPopupData[confirmPopup] = value;
+            if (typeof this.category.policyViolationCheckApi.confirmPopup === 'object') {
+              // Multiple fields case
+              for (const [confirmPopup, responsePath] of Object.entries(this.category.policyViolationCheckApi.confirmPopup) as [string, string][]) {
+                const value = this.extractValueFromPath(response, responsePath);
+                if (value !== undefined) {
+                  confirmPopupData[confirmPopup] = value;
+                } else {
+                  confirmPopupData[confirmPopup] = responsePath;
+                }
+              }
+            }
+            if (this.form.value.IsViolation) {
+              this.confirmDialogService
+                .confirm(confirmPopupData)
+                .subscribe((confirmed) => {
+                  if (confirmed) {
+                    if (this.category?.policyViolationManualCheck) {
+                      this.validateManualPolicyViolation();
+                    } else {
+                      this.proceedWithSubmission();
+                    }
+                  }
+                });
+            } else {
+              if (this.category?.policyViolationManualCheck) {
+                this.validateManualPolicyViolation();
               } else {
-                confirmPopupData[confirmPopup] = responsePath;
+                this.proceedWithSubmission();
               }
             }
           }
         });
-
-      if (this.form.value.IsViolation) {
-        this.confirmDialogService
-          .confirm(confirmPopupData)
-          .subscribe((confirmed) => {
-            if (confirmed) {
-              this.setAutoCompleteFields();
-              this.prepareFormJson();
-              this.addDataToDynamicTable();
-              setTimeout(() => {
-                this.clear();
-              }, 500);
-            }
-          });
-      } else {
-        this.setAutoCompleteFields();
-        this.prepareFormJson();
-        this.addDataToDynamicTable();
-        setTimeout(() => {
-          this.clear();
-        }, 500);
-      }
+    } else if (this.category?.policyViolationManualCheck) {
+      // If only manual checks are defined, validate them
+      this.validateManualPolicyViolation();
+    } else {
+      // No policy violation checks defined, proceed with submission
+      this.proceedWithSubmission();
     }
   }
 

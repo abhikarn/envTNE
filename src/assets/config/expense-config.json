@@ -72,6 +72,13 @@
                     "order": 6
                 },
                 {
+                    "isEnabled": true,
+                    "name": "travelType",
+                    "label": "Travel Type",
+                    "value": null,
+                    "order": 7
+                },
+                {
                     "isEnabled": false,
                     "label": "Billable Cost Centre",
                     "name": "billableCostcentre",
@@ -12657,13 +12664,28 @@
                         "isExcluded": true,
                         "value": 0,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "ConstraintNames",
+                        "isExcluded": true,
+                        "value": 0,
+                        "showInUI": false
                     }
                 ],
                 "policyViolationCheckApi": {
                     "apiService": "ExpenseService",
-                    "apiMethod": "ValidateInternationalBaggageOutfitPolicy",
+                    "apiMethod": "expenseValidateInternationalBaggageOutfitPolicy",
                     "requestBody": {
-                        "ExpenseCategoryId": 27
+                        "ExpenseCategoryId": 27,
+                        "ConstraintIdList": [
+                            {
+                                "ReferenceId": 101
+                            },
+                            {
+                                "ReferenceId": 102
+                            }
+                        ]
                     },
                     "otherControls": {
                         "UserMasterId": "UserMasterId",
@@ -12671,8 +12693,7 @@
                     },
                     "inputControls": {
                         "ClaimDate": "ReferenceDate",
-                        "ClaimAmount": "ClaimAmount",
-                        "Constraint": "Constraint"
+                        "ClaimAmount": "ClaimAmount"
                     },
                     "outputControl": {
                         "IsViolation": "ResponseValue.IsPolicyViolation",
@@ -12719,6 +12740,22 @@
                         "Outfit": "Outfit"
                     }
                 },
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
+                    }
+                ],
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
@@ -12736,6 +12773,13 @@
                         "visible": true,
                         "position": "in",
                         "order": 2
+                    },
+                    {
+                        "name": "ConstraintNames",
+                        "label": "Constraint",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
                     },
                     {
                         "name": "PaymentMode",
@@ -21943,7 +21987,8 @@
                 "Incidental Expenses": "Claimed amount is greater than Entitled amount.",
                 "Laundry service": "Claimed amount is greater than Entitled amount.",
                 "Boarding Expense": "Claimed amount is greater than Entitled amount.",
-                "Flat Allowance": "Claimed amount is greater than Entitled amount."
+                "Flat Allowance": "Claimed amount is greater than Entitled amount.",
+                "Baggage and Outfit Allowance": "Claimed amount is greater than Entitled amount."
             },
             {
                 "name": "Approvaldetails",
