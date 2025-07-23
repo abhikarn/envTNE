@@ -22,6 +22,7 @@ import { SnackbarService } from '../service/snackbar.service';
 import { UtilsService } from '../service/utils.service';
 import { DynamicFormService } from '../service/dynamic-form.service';
 import { DynamicTableService } from '../service/dynamic-table.service';
+import { TextAutocompleteComponent } from './form-controls/text-autocomplete/text-autocomplete.component';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -37,7 +38,8 @@ import { DynamicTableService } from '../service/dynamic-table.service';
     DynamicTableComponent,
     RadioInputComponent,
     GstComponent,
-    CostCenterComponent
+    CostCenterComponent,
+    TextAutocompleteComponent
   ],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss'],

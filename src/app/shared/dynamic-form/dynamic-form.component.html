@@ -14,6 +14,14 @@
     </lib-text-input>
   </div>
   }
+  <!-- Handling 'autocomplete' type controls -->
+  @case ('autocomplete') {
+  <div class="col-md-4">
+    <lib-text-autocomplete [controlConfig]="control.formConfig" [control]="control.control"
+      (valueChange)="onFieldValueChange(control.formConfig)" [form]="form">
+    </lib-text-autocomplete>
+  </div>
+  }
   <!-- Handling 'select' type controls -->
   @case ('select') {
   <div class="col-md-4">

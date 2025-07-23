@@ -192,8 +192,7 @@
                         }
                     },
                     {
-                        "type": "text",
-                        "subType": "text",
+                        "type": "autocomplete",
                         "dataType": "int",
                         "autoComplete": true,
                         "name": "BillableCostCenterId",

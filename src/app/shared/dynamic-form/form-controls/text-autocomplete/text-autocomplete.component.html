@@ -1,0 +1,22 @@
+@if (!!controlConfig) {
+<mat-form-field appearance="fill">
+    <mat-label>
+        {{ controlConfig.label }}
+        <span *ngIf="controlConfig.required" class="required-star">*</span>
+    </mat-label>
+
+    <input matInput type="text" [formControl]="control" [matAutocomplete]="auto"
+        [placeholder]="controlConfig.placeholder || 'Enter text'" [readonly]="controlConfig.readonly"/>
+
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of controlConfig.options; trackBy: trackByFn" [value]="option.value"
+        (onSelectionChange)="onOptionSelected($event, option)">
+            {{ option.label }}
+        </mat-option>
+    </mat-autocomplete>
+
+    <mat-error *ngIf="control.invalid && control.touched">
+        {{ getErrorMessage | fnWrap : control.invalid && control.touched }}
+    </mat-error>
+</mat-form-field>
+}
