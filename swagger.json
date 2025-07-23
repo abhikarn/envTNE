@@ -2713,6 +2713,45 @@
         }
       }
     },
+    "/api/Expense/ValidateInternationalBaggageOutfitPolicy": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_ValidateInternationalBaggageOutfitPolicy",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "internationalBaggageOutfitPolicyParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/InternationalBaggageOutfitPolicyParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Dashboard/ApprovalsFinanceExpenseRequest": {
       "post": {
         "tags": [
@@ -5805,6 +5844,46 @@
         },
         "Amount": {
           "type": "string"
+        }
+      }
+    },
+    "InternationalBaggageOutfitPolicyParam": {
+      "type": "object",
+      "properties": {
+        "UserMasterId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ReferenceDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "TravelRequestId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ExpenseRequestId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ClaimAmount": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ConstraintIdList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FilterType"
+          }
+        }
+      }
+    },
+    "FilterType": {
+      "type": "object",
+      "properties": {
+        "ReferenceId": {
+          "format": "int64",
+          "type": "integer"
         }
       }
     },
