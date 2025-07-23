@@ -213,6 +213,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
+    debugger;
     console.log(this.category);
     console.log(this.moduleConfig);
     console.log(this.moduleData)
@@ -396,10 +397,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
 
     this.validatePolicyViolation();
-
-    if (!this.category?.policyViolationCheckApi && !this.category?.policyViolationManualCheck) {
-      this.proceedWithSubmission();
-    }
   }
 
   validateManualPolicyViolation() {
@@ -789,6 +786,12 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             }
           }
         });
+    } else if (this.category?.policyViolationManualCheck) {
+      // If only manual checks are defined, validate them
+      this.validateManualPolicyViolation();
+    } else {
+      // No policy violation checks defined, proceed with submission
+      this.proceedWithSubmission();
     }
   }
 
