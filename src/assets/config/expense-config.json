@@ -96,6 +96,162 @@
                 "Direct Expense": false
             }
         },
+        "expenseLandingBox": [
+            {
+                "name": "DirectExpense",
+                "label": "Direct Expense",
+                "formControls": [
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "TravelFromDateTime",
+                        "isExcluded": false,
+                        "label": "Travel From Date",
+                        "value": null,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Travel From Date Time is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
+                        "time": {
+                            "type": "time",
+                            "name": "TravelFromTime",
+                            "label": "time",
+                            "value": null,
+                            "required": true
+                        },
+                        "setFields": [
+                            {
+                                "name": "TravelToDateTime",
+                                "setConfig": {
+                                    "minDate": "TravelFromDateTime",
+                                    "maxDate": "today"
+                                }
+                            }
+                        ],
+                        "order": 1
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "TravelToDateTime",
+                        "isExcluded": false,
+                        "label": "Travel To Date",
+                        "value": null,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Travel To Date Time is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
+                        "time": {
+                            "type": "time",
+                            "name": "TravelToTime",
+                            "label": "time",
+                            "value": null,
+                            "required": true
+                        },
+                        "order": 2
+                    },
+                    {
+                        "type": "multi-select",
+                        "dataType": "int",
+                        "name": "PurposeOfTravel",
+                        "isExcluded": false,
+                        "label": "Purpose of Travel",
+                        "placeholder": "Select Purpose of Travel",
+                        "value": null,
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetPurposeOfTravel",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Purpose Of Travel is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 4,
+                        "getReadableValue": {
+                            "controlName": "PurposeOfTravelNames"
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "int",
+                        "autoComplete": true,
+                        "name": "BillableCostCenterId",
+                        "isExcluded": false,
+                        "label": "Billable Cost Center",
+                        "value": null,
+                        "options": [],
+                        "labelKey": "Display",
+                        "valueKey": "CostCentreId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetCostCentreAutocomplete",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Billable Cost Center is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 4
+                    },
+                    {
+                        "type": "textarea",
+                        "dataType": "string",
+                        "name": "TravelDetails",
+                        "isExcluded": false,
+                        "label": "Travel Details",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Travel Details is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 5,
+                        "maxLength": 500,
+                        "blockClass": "col-md-12"
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "PurposeOfTravelNames",
+                        "isExcluded": false,
+                        "value": null,
+                        "order": 6
+                    }
+                ],
+                "displayPage": {
+                    "Travel Expense": false,
+                    "Direct Expense": true
+                },
+                "displayTable": false,
+                "displayAddClearButton": false
+            }
+        ],
         "dateExtension": {
             "label": "Date Extension",
             "visible": true,

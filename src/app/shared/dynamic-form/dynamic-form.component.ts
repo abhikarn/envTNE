@@ -54,6 +54,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() eventHandler: any;
   @Input() existingData: any;
   @Input() moduleConfig: any;
+  @Input() displayTable: boolean = false;
+  @Input() displayAddClearButton: boolean = true;
   @Output() emitFormData = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();
   @Output() updateData = new EventEmitter<any>();

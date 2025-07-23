@@ -6,10 +6,12 @@ import { FormControlFactory } from '../../form-control.factory';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'lib-text-area-input',
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
