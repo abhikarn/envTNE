@@ -213,7 +213,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
-    debugger;
     console.log(this.category);
     console.log(this.moduleConfig);
     console.log(this.moduleData)
