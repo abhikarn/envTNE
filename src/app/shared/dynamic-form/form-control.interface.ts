@@ -56,4 +56,5 @@ export interface IFormControl {
   inPayload?: boolean; // For fields that should not be sent in payload
   landingBoxConfig?: any;
   getReadableValue?: any;
+  blockClass?: string; // For custom styling
 }

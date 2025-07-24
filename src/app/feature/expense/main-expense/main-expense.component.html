@@ -29,6 +29,18 @@
       <div class="all-data-wrapper">
         <div class="global-container-hold">
           <div class="left-container-wider scroll-left-align mar-tmd3">
+
+            @for (box of expenseConfig?.expenseLandingBox; track $index) {
+            @if (box?.displayPage?.[moduleConfig.pageTitle]) {
+            <div class="common-block mb-3">
+              <app-dynamic-form [formConfig]="box.formControls" [displayTable]="box.displayTable"
+              [displayAddClearButton]="box.displayAddClearButton">
+              </app-dynamic-form>
+            </div>
+            
+            }
+            }
+
             @if (expenseConfig?.request && expenseConfig.request?.displayPage[moduleConfig.pageTitle]) {
               <div class="common-block mb-3">
               @if (!editMode) {
