@@ -27,7 +27,6 @@ export class TextAutocompleteComponent {
   @Input() control: FormControl = new FormControl('');
   @Input() controlConfig: IFormControl = { name: '' };
   @Input() form: any
-  displayValue: any;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -46,9 +45,14 @@ export class TextAutocompleteComponent {
     });
   }
 
-  displayFn(option: any): string {
-    return typeof option === 'object' ? option?.label ?? '' : '';
-  }
+  displayFn = (value: any): string => {
+    if (typeof value === 'object') return value?.label ?? '';
+
+    const matched = this.controlConfig.options?.find(opt => opt.value === value);
+    return matched?.label ?? '';
+  };
+
+
 
   trackByFn(index: number, item: any): string | number {
     return item?.Key ?? index;
@@ -84,9 +88,12 @@ export class TextAutocompleteComponent {
     }
   }
 
-  onOptionSelected(event: any, option: any) {
-    console.log('Selected option:', option);
+  onOptionSelected(event: any) {
+    const selectedOption = event.option.value;
+    console.log('Selected option:', selectedOption);
+    this.control.setValue(selectedOption.value);
   }
+
 
   getErrorMessage(): string {
     if (this.control.hasError('required')) {

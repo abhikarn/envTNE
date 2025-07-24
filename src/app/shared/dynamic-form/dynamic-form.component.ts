@@ -23,6 +23,8 @@ import { UtilsService } from '../service/utils.service';
 import { DynamicFormService } from '../service/dynamic-form.service';
 import { DynamicTableService } from '../service/dynamic-table.service';
 import { TextAutocompleteComponent } from './form-controls/text-autocomplete/text-autocomplete.component';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -157,9 +159,14 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     });
     this.form.reset();
 
-    this.form.valueChanges.subscribe(() => {
-      this.emitFormValue.emit(this.form);
-    });
+    this.form.valueChanges
+      .pipe(
+        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
+      )
+      .subscribe(() => {
+        this.emitFormValue.emit(this.form);
+      });
+
   }
 
   setupAutoFormat(config: any, configService: GlobalConfigService): void {

@@ -3,7 +3,8 @@
         "pageTitles": {
             "Travel Expense": "Travel Expense",
             "Local Travel Conveyance": "Local Travel Conveyance Claim",
-            "Direct Expense": "Direct Expense"
+            "Direct Expense Domestic": "Direct Expense Domestic",
+            "Direct Expense International": "Direct Expense International"
         },
         "request": {
             "type": "select",
@@ -27,7 +28,8 @@
             },
             "displayPage": {
                 "Travel Expense": true,
-                "Direct Expense": false,
+                "Direct Expense Domestic": false,
+                "Direct Expense International": false,
                 "Local Travel Conveyance": false,
                 "Mobile Handset Purchase": false
             }
@@ -93,13 +95,14 @@
             ],
             "displayPage": {
                 "Travel Expense": true,
-                "Direct Expense": false
+                "Direct Expense Domestic": false,
+                "Direct Expense International": false
             }
         },
         "expenseLandingBox": [
             {
-                "name": "DirectExpense",
-                "label": "Direct Expense",
+                "name": "DirectExpenseDomestic",
+                "label": "Direct Expense Domestic",
                 "formControls": [
                     {
                         "type": "date",
@@ -126,15 +129,6 @@
                             "value": null,
                             "required": true
                         },
-                        "setFields": [
-                            {
-                                "name": "travelDateToActual",
-                                "setConfig": {
-                                    "minDate": "TravelFromDateTime",
-                                    "maxDate": "today"
-                                }
-                            }
-                        ],
                         "order": 1
                     },
                     {
@@ -245,13 +239,164 @@
                 ],
                 "displayPage": {
                     "Travel Expense": false,
-                    "Direct Expense": true
+                    "Direct Expense Domestic": true
                 },
                 "displayTable": false,
                 "displayAddClearButton": false,
                 "moduleData": {
-                    "travelTypeId": 51,
-                    "requestForId": 80
+                    "travelTypeId": 53,
+                    "requestForId": 53,
+                    "claimTypeId": 53
+                }
+            },
+            {
+                "name": "DirectExpenseInternational",
+                "label": "Direct Expense International",
+                "formControls": [
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "travelDateFromActual",
+                        "isExcluded": false,
+                        "label": "Travel From Date",
+                        "value": null,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Travel From Date Time is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
+                        "time": {
+                            "type": "time",
+                            "name": "TravelFromTime",
+                            "label": "time",
+                            "value": null,
+                            "required": true
+                        },
+                        "order": 1
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "travelDateToActual",
+                        "isExcluded": false,
+                        "label": "Travel To Date",
+                        "value": null,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Travel To Date Time is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
+                        "time": {
+                            "type": "time",
+                            "name": "TravelToTime",
+                            "label": "time",
+                            "value": null,
+                            "required": true
+                        },
+                        "order": 2
+                    },
+                    {
+                        "type": "multi-select",
+                        "dataType": "int",
+                        "name": "PurposeOfTravel",
+                        "isExcluded": false,
+                        "label": "Purpose of Travel",
+                        "placeholder": "Select Purpose of Travel",
+                        "value": null,
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetPurposeOfTravel",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Purpose Of Travel is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 4,
+                        "getReadableValue": {
+                            "controlName": "purpose"
+                        }
+                    },
+                    {
+                        "type": "autocomplete",
+                        "dataType": "int",
+                        "autoComplete": true,
+                        "name": "billableCostcentreId",
+                        "isExcluded": false,
+                        "label": "Billable Cost Center",
+                        "value": null,
+                        "options": [],
+                        "labelKey": "Display",
+                        "valueKey": "CostCentreId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetCostCentreAutocomplete",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Billable Cost Center is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 4
+                    },
+                    {
+                        "type": "textarea",
+                        "dataType": "string",
+                        "name": "remarks",
+                        "isExcluded": false,
+                        "label": "Travel Details",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Travel Details is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 5,
+                        "maxLength": 500,
+                        "blockClass": "col-md-12"
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "purpose",
+                        "isExcluded": false,
+                        "value": null,
+                        "order": 6
+                    }
+                ],
+                "displayPage": {
+                    "Travel Expense": false,
+                    "Direct Expense International": true
+                },
+                "displayTable": false,
+                "displayAddClearButton": false,
+                "international": true,
+                "moduleData": {
+                    "travelTypeId": 54,
+                    "requestForId": 54,
+                    "claimTypeId": 54
                 }
             }
         ],
@@ -1319,7 +1464,8 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true,
+                    "Direct Expense Domestic": true,
+                    "Direct Expense International": true,
                     "Joining Expense": true,
                     "Transfer Expense": true,
                     "Relocation Expense": true
@@ -2567,6 +2713,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -2859,7 +3007,8 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true,
+                    "Direct Expense Domestic": true,
+                    "Direct Expense International": true,
                     "Joining Expense": true,
                     "Transfer Expense": true,
                     "Relocation Expense": true
@@ -3965,6 +4114,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -4221,7 +4372,8 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true,
+                    "Direct Expense Domestic": true,
+                    "Direct Expense International": true,
                     "Joining Expense": true,
                     "Transfer Expense": true
                 },
@@ -5311,6 +5463,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -5568,7 +5722,8 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true
+                    "Direct Expense Domestic": true,
+                    "Direct Expense International": true
                 },
                 "showCategoryFor": [
                     51,
@@ -6663,6 +6818,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -6920,7 +7077,8 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true
+                    "Direct Expense Domestic": true,
+                    "Direct Expense International": true
                 },
                 "showCategoryFor": [
                     51,
@@ -8166,6 +8324,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -8458,7 +8618,8 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true,
+                    "Direct Expense Domestic": true,
+                    "Direct Expense International": true,
                     "Joining Expense": true,
                     "Transfer Expense": true,
                     "Relocation Expense": true
@@ -9394,6 +9555,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -9561,7 +9724,8 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true
+                    "Direct Expense Domestic": true,
+                    "Direct Expense International": true
                 },
                 "showCategoryFor": [
                     51,
@@ -10058,6 +10222,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -10201,7 +10367,8 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true,
+                    "Direct Expense Domestic": true,
+                    "Direct Expense International": true,
                     "Business Entertainment Expense": true
                 },
                 "showCategoryFor": [
@@ -10832,6 +10999,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -10924,7 +11093,8 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true,
+                    "Direct Expense Domestic": true,
+                    "Direct Expense International": true,
                     "Other Expense": true
                 },
                 "showCategoryFor": [
@@ -11937,6 +12107,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -12918,6 +13090,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -13133,7 +13307,7 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true
+                    "Direct Expense International": true
                 },
                 "showCategoryFor": [
                     52,
@@ -13695,6 +13869,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -14536,6 +14712,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -14707,7 +14885,7 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true
+                    "Direct Expense International": true
                 },
                 "showCategoryFor": [
                     52,
@@ -15097,6 +15275,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -15229,7 +15409,7 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true
+                    "Direct Expense International": true
                 },
                 "showCategoryFor": [
                     52,
@@ -15621,6 +15801,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -16254,6 +16436,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -17233,6 +17417,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -18222,6 +18408,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -18975,6 +19163,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -19976,6 +20166,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -20172,6 +20364,8 @@
                 "label": "Car Maintainance",
                 "formControls": [],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": []
@@ -20181,6 +20375,8 @@
                 "label": "Learning & Fees Expense",
                 "formControls": [],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": []
@@ -20759,6 +20955,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -20925,6 +21123,8 @@
                 "label": "Training & Certification",
                 "formControls": [],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": [],
@@ -20937,6 +21137,8 @@
                 "label": "Lease & Rent Deposit",
                 "formControls": [],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": [],
@@ -20951,6 +21153,8 @@
                 "label": "Vehicle Road Tax",
                 "formControls": [],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": [],
@@ -20965,6 +21169,8 @@
                 "label": "School Capitation Fees",
                 "formControls": [],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": [],
@@ -21289,6 +21495,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -21384,7 +21592,7 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true
+                    "Direct Expense International": true
                 },
                 "showCategoryFor": [
                     52,
@@ -22021,6 +22229,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
