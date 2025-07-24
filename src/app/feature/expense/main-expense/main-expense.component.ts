@@ -1159,22 +1159,32 @@ export class MainExpenseComponent {
   getFormValue(form: any) {
     this.expenseLandingBoxForm = form;
 
-    // Set minDate and maxDate for controls with apiDateLimit if both dates are valid and present
     const fromDate = this.expenseLandingBoxForm.get('travelDateFromActual')?.value;
     const toDate = this.expenseLandingBoxForm.get('travelDateToActual')?.value;
 
     if (fromDate && toDate && this.expenseLandingBoxForm.get('travelDateFromActual')?.valid && this.expenseLandingBoxForm.get('travelDateToActual')?.valid) {
-      this.categories.forEach((category: any) => {
-        category.formControls.forEach((control: any) => {
+      this.categories = this.categories.map((category: any) => {
+        const updatedControls = category.formControls.map((control: any) => {
           if (control.apiDateLimit) {
-            control.minDate = fromDate;
-            control.maxDate = toDate;
+            return {
+              ...control,
+              minDate: fromDate,
+              maxDate: toDate
+            };
           }
+          return control;
         });
+
+        return {
+          ...category,
+          formControls: updatedControls
+        };
       });
+
       console.log("Updated categories with date limits:", this.categories);
     }
   }
+
 }
 
 
