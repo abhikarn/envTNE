@@ -29,7 +29,7 @@
       <div class="all-data-wrapper">
         <div class="global-container-hold">
           <div class="left-container-wider scroll-left-align mar-tmd3">
-
+            @if(!this.travelRequestId) {
             @for (box of expenseConfig?.expenseLandingBox; track $index) {
             @if (box?.displayPage?.[moduleConfig.pageTitle]) {
             <div class="common-block mb-3">
@@ -40,10 +40,13 @@
             </div>
             }
             }
+            }
+            
 
             @if (expenseConfig?.request && expenseConfig.request?.displayPage[moduleConfig.pageTitle]) {
-              <div class="common-block mb-3">
-              @if (!editMode) {
+            
+            @if (!editMode) {
+            <div class="common-block mb-3">
               <h6 class="common-title fw-bold mb-3">Select Request </h6>
               <div class="common-block-mobile">
                 <div class="row">
@@ -55,8 +58,7 @@
                       <ng-container *ngIf="!isMobile; else mobileSelect">
                         <mat-form-field appearance="fill" class="w-100">
                           <mat-select [formControlName]="expenseConfig.request.name" id="ddlTravelExpenseRequest"
-                            name="ExpenseRequest" class="chm-formselect"
-                            (selectionChange)="onSelectTravelExpenseRequest($event)">
+                            name="ExpenseRequest" class="chm-formselect" (selectionChange)="onSelectTravelExpenseRequest($event)">
                             <mat-option value="">{{expenseConfig.request.placeholder}}</mat-option>
                             @for (req of travelRequests; track req) {
                             <mat-option [value]="req.value">
@@ -79,7 +81,10 @@
                   </div>
                 </div>
               </div>
-              } @else {
+            </div>
+            } @else {
+            @if (expenseRequestData?.travelRequestId) {
+            <div class="common-block mb-3">
               <div class="common-block-mobile">
                 <div class="row">
                   <div class="col-md-3 col-sm-6 col-lg-2 col-6">
@@ -96,12 +101,13 @@
                   </div>
                 </div>
               </div>
-              }
             </div>
+            }
+            }
             }
             
             <!-- Travel Details -->
-            @if (expenseConfig?.request && expenseConfig.travelDetails?.displayPage[moduleConfig.pageTitle]) {
+            @if (expenseConfig?.request && expenseConfig.travelDetails?.displayPage[moduleConfig.pageTitle] && this.travelRequestId) {
             <div class="common-block  mb-3">
               <div class="d-flex align-items-center mb-3 justify-content-between">
                 <h6 class="common-title fw-bold mb-0">{{ travelDetails?.label || 'Travel Details'}} </h6>

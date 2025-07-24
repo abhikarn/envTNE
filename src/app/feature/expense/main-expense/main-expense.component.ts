@@ -106,6 +106,7 @@ export class MainExpenseComponent {
   expenseClaimTypeDescription: any;
   expenseLandingBoxForm: FormGroup = new FormGroup({});
   boxModuleData: any;
+  title: string = '';
 
   constructor(
     private expenseService: ExpenseService,
@@ -224,47 +225,36 @@ export class MainExpenseComponent {
 
   // Setup initial dynamic form control based on expenseConfig request object.
   setupExpenseConfig() {
-    let title: string = '';
 
     if (!this.editMode) {
       this.route.data.subscribe(data => {
-        title = data['title'];
+        this.title = data['title'];
 
         if (this.expenseConfig?.pageTitles) {
-          this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[title] || title;
+          this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[this.title] || this.title;
         }
 
         this.categories = []; // reset categories to avoid duplicates
 
         this.expenseConfig?.category?.forEach((category: any) => {
-          if (category?.displayPage?.[title]) {
+          if (category?.displayPage?.[this.title]) {
             // Add only categories applicable for the current page
             this.categories.push(category);
-          }
-        });
-
-        this.expenseConfig?.expenseLandingBox?.forEach((box: any) => {
-          if (box?.displayPage?.[title]) {
-            box.moduleData = { ...box.moduleData, UserMasterId: this.userMasterId };
-            this.boxModuleData = box.moduleData;
-            this.moduleConfig.page = box.name;
-            this.moduleConfig[box.name] = box;
-            this.moduleConfig.internationalFlag = box.international || false;
           }
         });
       });
     } else {
       console.log(this.expenseClaimTypeDescription)
       if (this.expenseClaimTypeDescription == 'Domestic' || this.expenseClaimTypeDescription == 'International') {
-        let title = "Travel Expense";
+        this.title = "Travel Expense";
         if (this.expenseConfig?.pageTitles) {
-          this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[title] || title;
+          this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[this.title] || this.title;
         }
 
         this.categories = []; // reset categories to avoid duplicates
 
         this.expenseConfig?.category?.forEach((category: any) => {
-          if (category?.displayPage?.[title]) {
+          if (category?.displayPage?.[this.title]) {
             // Add only categories applicable for the current page
             this.categories.push(category);
           }
@@ -287,6 +277,15 @@ export class MainExpenseComponent {
         }
       })
     }
+    this.expenseConfig?.expenseLandingBox?.forEach((box: any) => {
+      if (box?.displayPage?.[this.title]) {
+        box.moduleData = { ...box.moduleData, UserMasterId: this.userMasterId };
+        this.boxModuleData = box.moduleData;
+        this.moduleConfig.page = box.name;
+        this.moduleConfig[box.name] = box;
+        this.moduleConfig.internationalFlag = box.international || false;
+      }
+    });
     console.log("Expense Config: ", this.expenseConfig.summaries);
     this.expenseSummary = JSON.parse(JSON.stringify(this.expenseConfig.summaries));
     this.setExpenseSummary();
@@ -381,6 +380,30 @@ export class MainExpenseComponent {
 
   // Populate existing expense request data into form structure for editing.
   populateExistingExpenseData(response: any) {
+    if (response?.travelRequestId == 0) {
+      if (response?.claimTypeId == 53) {
+        this.title = "Direct Expense Domestic";
+        this.moduleConfig.pageTitle = "Direct Expense Domestic";
+      }
+      if (response?.claimTypeId == 54) {
+        this.title = "Direct Expense International";
+        this.moduleConfig.pageTitle = "Direct Expense International";
+      }
+      this.expenseConfig?.expenseLandingBox?.forEach((box: any) => {
+        if (box?.displayPage?.[this.title]) {
+          box.moduleData = { ...box.moduleData, UserMasterId: this.userMasterId };
+          this.boxModuleData = box.moduleData;
+          this.moduleConfig.page = box.name;
+          this.moduleConfig[box.name] = box;
+          this.moduleConfig.internationalFlag = box.international || false;
+        }
+      });
+      
+      setTimeout(() => {
+        this.expenseLandingBoxForm.patchValue(response);
+      }, 1000);
+    }
+    
     this.travelRequestId = response.travelRequestId;
     this.justificationForm.get(this.expenseConfig.justification.controlName).setValue(response?.remarks);
 
@@ -1080,7 +1103,7 @@ export class MainExpenseComponent {
       RequesterId: this.userMasterId,
       TravelRequestId: 0,
       RequestDate: new Date().toISOString(),
-      Purpose: this.expenseLandingBoxForm.value.purpose,
+      PurposeOfTravel: this.expenseLandingBoxForm.value.PurposeOfTravel,
       BillableCostCentreId: this.expenseLandingBoxForm.value.billableCostcentreId,
       Remarks: this.justificationForm.get(this.expenseConfig.justification.controlName)?.value,
       ActionBy: this.userMasterId,
