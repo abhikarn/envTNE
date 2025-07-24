@@ -33,11 +33,11 @@
             @for (box of expenseConfig?.expenseLandingBox; track $index) {
             @if (box?.displayPage?.[moduleConfig.pageTitle]) {
             <div class="common-block mb-3">
-              <app-dynamic-form [formConfig]="box.formControls" [displayTable]="box.displayTable"
-              [displayAddClearButton]="box.displayAddClearButton">
+              <app-dynamic-form [formConfig]="box.formControls" [displayTable]="box.displayTable" [boxModuleData]="box.moduleData"
+                [existingData]="existingExpenseRequestData" [displayAddClearButton]="box.displayAddClearButton"
+                (emitFormValue)="getFormValue($event)">
               </app-dynamic-form>
             </div>
-            
             }
             }
 
@@ -177,7 +177,8 @@
                           <div class="common-block mb-3">
                             <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
                             <div class="common-block-mobile">
-                              <app-dynamic-form [moduleData]="travelRequestPreview"
+                              <app-dynamic-form [moduleData]="travelRequestPreview" [boxModuleData]="boxModuleData"
+                                [displayTable]="category.displayTable" [displayAddClearButton]="category.displayAddClearButton"
                                 [existingData]="existingExpenseRequestData" [category]="category"
                                 [formConfig]="category.formControls" [eventHandler]="this"
                                 (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
@@ -212,7 +213,8 @@
                             <div class="common-block mb-3">
                               <h6 class="common-title fw-bold mb-3">{{selectedExtraCategory.label}}</h6>
                               <div class="common-block-mobile">
-                                <app-dynamic-form [moduleData]="travelRequestPreview"
+                                <app-dynamic-form [moduleData]="travelRequestPreview" [boxModuleData]="boxModuleData"
+                                  [displayTable]="selectedExtraCategory.displayTable" [displayAddClearButton]="selectedExtraCategory.displayAddClearButton"
                                   [existingData]="existingExpenseRequestData" [category]="selectedExtraCategory"
                                   [formConfig]="selectedExtraCategory.formControls" [eventHandler]="this"
                                   (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
@@ -248,7 +250,8 @@
                           <div class="common-block mb-3">
                             <h6 class="common-title fw-bold mb-3">{{category.label}}</h6>
                             <div class="common-block-mobile">
-                              <app-dynamic-form [moduleData]="travelRequestPreview"
+                              <app-dynamic-form [moduleData]="travelRequestPreview" [boxModuleData]="boxModuleData"
+                                [displayTable]="category.displayTable" [displayAddClearButton]="category.displayAddClearButton"
                                 [existingData]="existingExpenseRequestData" [category]="category"
                                 [formConfig]="category.formControls" [eventHandler]="this"
                                 (emitFormData)="getFormData($event)" (emitTextData)="getTextData($event)"
@@ -383,25 +386,25 @@
               <div
                 class="bottom-buttons d-lg-flex d-md-flex  pe-lg-3  pe-md-3  justify-content-lg-end  justify-content-md-end   align-items-center    ">
                 <div class="d-flex align-items-center me-lg-2 combine-btn ">
-                  @if (expenseConfig.actions[1]) {
+                  @if (expenseConfig.actions.draft) {
                   @if(expenseRequestPreviewData?.claimStatusId == 26 || !editMode) {
-                  <button type="button" [ngClass]="expenseConfig.actions[1].class"
-                    (click)="onAction(expenseConfig.actions[1].type)">
-                    {{ expenseConfig.actions[1].label }}
+                  <button type="button" [ngClass]="expenseConfig.actions.draft.class"
+                    (click)="onAction(expenseConfig.actions.draft.type)">
+                    {{ expenseConfig.actions.draft.label }}
                   </button>
                   }
                   }
-                  @if (expenseConfig.actions[0]) {
-                  <button type="button" [ngClass]="expenseConfig.actions[0].class"
-                    (click)="onAction(expenseConfig.actions[0].type);">
-                    {{ expenseConfig.actions[0].label }}
+                  @if (expenseConfig.actions.cancel) {
+                  <button type="button" [ngClass]="expenseConfig.actions.cancel.class"
+                    (click)="onAction(expenseConfig.actions.cancel.type);">
+                    {{ expenseConfig.actions.cancel.label }}
                   </button>
                   }
                 </div>
-                @if (expenseConfig.actions[2]) {
-                <button type="button" [ngClass]="expenseConfig.actions[2].class"
-                  (click)="onAction(expenseConfig.actions[2].type)">
-                  {{ expenseConfig.actions[2].label }}
+                @if (expenseConfig.actions.submit) {
+                <button type="button" [ngClass]="expenseConfig.actions.submit.class"
+                  (click)="onAction(expenseConfig.actions.submit.type)">
+                  {{ expenseConfig.actions.submit.label }}
                 </button>
                 }
               </div>

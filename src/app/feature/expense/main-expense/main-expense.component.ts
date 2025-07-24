@@ -104,6 +104,8 @@ export class MainExpenseComponent {
   selectedTabIndex: number = 0;
   moduleConfig: any = {};
   expenseClaimTypeDescription: any;
+  expenseLandingBoxForm: FormGroup = new FormGroup({});
+  boxModuleData: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -240,6 +242,15 @@ export class MainExpenseComponent {
             this.categories.push(category);
           }
         });
+
+        this.expenseConfig?.expenseLandingBox?.forEach((box: any) => {
+          if (box?.displayPage?.[title]) {
+            box.moduleData = { ...box.moduleData, UserMasterId: this.userMasterId };
+            this.boxModuleData = box.moduleData;
+            this.moduleConfig.page = box.name;
+            this.moduleConfig[box.name] = box;
+          }
+        });
       });
     } else {
       console.log(this.expenseClaimTypeDescription)
@@ -275,6 +286,7 @@ export class MainExpenseComponent {
         }
       })
     }
+    this.expenseSummary = this.expenseConfig.summaries;
   }
 
   // Setup form categories with dynamic options mapping from master data.
@@ -303,7 +315,7 @@ export class MainExpenseComponent {
       })
     });
     this.updateCategoryCounts();
-    this.expenseSummary = this.expenseConfig.summaries;
+    // this.expenseSummary = this.expenseConfig.summaries;
     this.expenseSummary.forEach((summary: any) => {
       if (summary.id === "category-wise-expense") {
         summary.items = summary.items.filter((item: any) => {
@@ -777,105 +789,23 @@ export class MainExpenseComponent {
 
   // Prepare and submit the main expense request after confirmation.
   createExpenseRequest() {
-    ;
-    if (!this.travelRequestId || !this.expenseRequestData?.dynamicExpenseDetailModels) {
-      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
-      return;
+    if (this.moduleConfig.pageTitle === 'Travel Expense') {
+      const isValid = this.validateAndPrepareMainExpenseDataForTravelExpense();
+      if (!isValid) return;
+    } else {
+      const isValid = this.validateAndPrepareMainExpenseDataForOtherExpenses();
+      if (!isValid) return;
     }
 
-    if (this.travelRequestId > 0) {
-      if (this.expenseRequestData?.dynamicExpenseDetailModels.length === 0) {
-        this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
-        return;
-      }
-    }
+    console.log("Main Expense Data: ", this.mainExpenseData);
 
-    if (this.billableControl.invalid) {
-      this.billableControl.markAsTouched();
-      return;
-    }
+    const hasMissingFields = this.checkMissingRequiredFields(
+      this.mainExpenseData.dynamicExpenseDetailModels,
+      this.categories,
+      this.confirmDialogService
+    );
 
-    if (this.expenseRequestForm.invalid) {
-      this.expenseRequestForm.markAllAsTouched();
-      return;
-    }
-
-    if (this.justificationForm.invalid) {
-      this.justificationForm.markAllAsTouched();
-      return;
-    }
-
-    this.mainExpenseData = {
-      ...this.mainExpenseData,
-      ExpenseRequestId: this.expenseRequestId,
-      RequestForId: this.travelRequestPreview.requestForId,
-      RequesterId: this.userMasterId,
-      TravelRequestId: this.travelRequestPreview.travelRequestId,
-      RequestDate: new Date().toISOString(),
-      Purpose: this.purpose,
-      CostCentreId: this.costcenterId,
-      BillableCostCentreId: this.costcenterId,
-      Remarks: this.justificationForm.get(this.expenseConfig.justification.controlName)?.value,
-      ActionBy: this.userMasterId,
-      dynamicExpenseDetailModels: this.utilsService.simplifyObject(this.expenseRequestData?.dynamicExpenseDetailModels)
-    };
-    console.log(this.mainExpenseData);
-
-    const isEmptyValue = (val: any): boolean =>
-      val === undefined ||
-      val === null ||
-      val === '' ||
-      val === '0001-01-01T00:00:00' ||
-      val === '1970-01-01T00:00:00';
-
-    const missingFieldsByCategory = this.mainExpenseData.dynamicExpenseDetailModels
-      .map((expenseCategory: any) => {
-        const configCategory = this.categories.find(
-          (cat: any) => expenseCategory?.data?.length > 0 && cat.name === expenseCategory.name
-        );
-        if (!configCategory) return null;
-
-        const requiredFields = configCategory.formControls
-          .filter((control: any) => control.required && !control.isExcluded)
-          .map((control: any) => control.name);
-
-        const missingInItems = expenseCategory.data.map((item: any, index: number) => {
-          const missing = requiredFields.filter((field: string) => {
-            const value = item[field] ?? item.excludedData?.[field];
-            return isEmptyValue(value);
-          });
-          return missing.length > 0 ? { index, missing } : null;
-        }).filter(Boolean);
-
-        if (missingInItems.length === 0) return null;
-
-        return {
-          categoryName: expenseCategory.name,
-          items: missingInItems
-        };
-      })
-      .filter(Boolean);
-
-    // Show in dialog
-    if (missingFieldsByCategory.length > 0) {
-      const missingFieldsMessage = missingFieldsByCategory
-        .map((cat: any) => {
-          const itemsText = cat.items
-            .map((item: any) => `Row ${item.index + 1}: ${item.missing.join(', ')}`)
-            .join('\n');
-          return `${cat.categoryName}:\n${itemsText}`;
-        })
-        .join('\n\n');
-
-      this.confirmDialogService.confirm({
-        title: 'Missing Required Fields',
-        message: `Please fill in the following required fields:\n\n${missingFieldsMessage}`,
-        confirmText: 'OK',
-        cancelButton: false
-      }).subscribe();
-
-      return;
-    }
+    if (hasMissingFields) return;
 
     this.confirmDialogService
       .confirm({
@@ -1056,6 +986,171 @@ export class MainExpenseComponent {
         }
       });
     });
+  }
+
+  validateAndPrepareMainExpenseDataForTravelExpense(): boolean {
+    const requestData = this.expenseRequestData?.dynamicExpenseDetailModels;
+
+    // Check for required data presence
+    if (!this.travelRequestId || !requestData) {
+      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+      return false;
+    }
+
+    if (this.travelRequestId > 0 && requestData.length === 0) {
+      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+      return false;
+    }
+
+    // Validate Billable control
+    if (this.billableControl.invalid) {
+      this.billableControl.markAsTouched();
+      return false;
+    }
+
+    // Validate main form
+    if (this.expenseRequestForm.invalid) {
+      this.expenseRequestForm.markAllAsTouched();
+      return false;
+    }
+
+    // Validate justification form
+    if (this.justificationForm.invalid) {
+      this.justificationForm.markAllAsTouched();
+      return false;
+    }
+
+    // All validations passed, prepare data
+    this.mainExpenseData = {
+      ...this.mainExpenseData,
+      ExpenseRequestId: this.expenseRequestId,
+      RequestForId: this.travelRequestPreview.requestForId,
+      RequesterId: this.userMasterId,
+      TravelRequestId: this.travelRequestPreview.travelRequestId,
+      RequestDate: new Date().toISOString(),
+      Purpose: this.purpose,
+      CostCentreId: this.costcenterId,
+      BillableCostCentreId: this.costcenterId,
+      Remarks: this.justificationForm.get(this.expenseConfig.justification.controlName)?.value,
+      ActionBy: this.userMasterId,
+      dynamicExpenseDetailModels: this.utilsService.simplifyObject(requestData)
+    };
+
+    return true;
+  }
+
+  validateAndPrepareMainExpenseDataForOtherExpenses(): boolean {
+    const requestData = this.expenseRequestData?.dynamicExpenseDetailModels;
+
+    // Validate expenseLandingBoxForm
+    if (this.expenseLandingBoxForm.invalid) {
+      this.expenseLandingBoxForm.markAllAsTouched();
+      return false;
+    }
+
+    // Check for required data presence
+    if (!requestData || requestData.length === 0) {
+      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+      return false;
+    }
+
+    // Validate main form
+    if (this.expenseRequestForm.invalid) {
+      this.expenseRequestForm.markAllAsTouched();
+      return false;
+    }
+
+    // Validate justification form
+    if (this.justificationForm.invalid) {
+      this.justificationForm.markAllAsTouched();
+      return false;
+    }
+
+    this.mainExpenseData = {
+      ...this.mainExpenseData,
+      ExpenseRequestId: this.expenseRequestId,
+      RequestForId: 80 ,
+      RequesterId: this.userMasterId,
+      TravelRequestId: 0,
+      RequestDate: new Date().toISOString(),
+      Purpose: this.expenseLandingBoxForm.value.purpose,
+      BillableCostCentreId: this.expenseLandingBoxForm.value.billableCostcentreId,
+      Remarks: this.justificationForm.get(this.expenseConfig.justification.controlName)?.value,
+      ActionBy: this.userMasterId,
+      dynamicExpenseDetailModels: this.utilsService.simplifyObject(requestData)
+    };
+
+    return true;
+  }
+
+  checkMissingRequiredFields(
+    dynamicExpenseDetailModels: any[],
+    categories: any[],
+    confirmDialogService: any
+  ): boolean {
+    const isEmptyValue = (val: any): boolean =>
+      val === undefined ||
+      val === null ||
+      val === '' ||
+      val === '0001-01-01T00:00:00' ||
+      val === '1970-01-01T00:00:00';
+
+    const missingFieldsByCategory = dynamicExpenseDetailModels
+      .map((expenseCategory: any) => {
+        const configCategory = categories.find(
+          (cat: any) => expenseCategory?.data?.length > 0 && cat.name === expenseCategory.name
+        );
+        if (!configCategory) return null;
+
+        const requiredFields = configCategory.formControls
+          .filter((control: any) => control.required && !control.isExcluded)
+          .map((control: any) => control.name);
+
+        const missingInItems = expenseCategory.data
+          .map((item: any, index: number) => {
+            const missing = requiredFields.filter((field: string) => {
+              const value = item[field] ?? item.excludedData?.[field];
+              return isEmptyValue(value);
+            });
+            return missing.length > 0 ? { index, missing } : null;
+          })
+          .filter(Boolean);
+
+        if (missingInItems.length === 0) return null;
+
+        return {
+          categoryName: expenseCategory.name,
+          items: missingInItems
+        };
+      })
+      .filter(Boolean);
+
+    if (missingFieldsByCategory.length > 0) {
+      const missingFieldsMessage = missingFieldsByCategory
+        .map((cat: any) => {
+          const itemsText = cat.items
+            .map((item: any) => `Row ${item.index + 1}: ${item.missing.join(', ')}`)
+            .join('\n');
+          return `${cat.categoryName}:\n${itemsText}`;
+        })
+        .join('\n\n');
+
+      confirmDialogService.confirm({
+        title: 'Missing Required Fields',
+        message: `Please fill in the following required fields:\n\n${missingFieldsMessage}`,
+        confirmText: 'OK',
+        cancelButton: false
+      }).subscribe();
+
+      return true;
+    }
+
+    return false;
+  }
+
+
+  getFormValue(form: any) {
+    this.expenseLandingBoxForm = form;
   }
 }
 

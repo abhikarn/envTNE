@@ -104,7 +104,7 @@
                     {
                         "type": "date",
                         "dataType": "datetime",
-                        "name": "TravelFromDateTime",
+                        "name": "travelDateFromActual",
                         "isExcluded": false,
                         "label": "Travel From Date",
                         "value": null,
@@ -128,7 +128,7 @@
                         },
                         "setFields": [
                             {
-                                "name": "TravelToDateTime",
+                                "name": "travelDateToActual",
                                 "setConfig": {
                                     "minDate": "TravelFromDateTime",
                                     "maxDate": "today"
@@ -140,7 +140,7 @@
                     {
                         "type": "date",
                         "dataType": "datetime",
-                        "name": "TravelToDateTime",
+                        "name": "travelDateToActual",
                         "isExcluded": false,
                         "label": "Travel To Date",
                         "value": null,
@@ -188,14 +188,14 @@
                         "readonly": true,
                         "order": 4,
                         "getReadableValue": {
-                            "controlName": "PurposeOfTravelNames"
+                            "controlName": "purpose"
                         }
                     },
                     {
                         "type": "autocomplete",
                         "dataType": "int",
                         "autoComplete": true,
-                        "name": "BillableCostCenterId",
+                        "name": "billableCostcentreId",
                         "isExcluded": false,
                         "label": "Billable Cost Center",
                         "value": null,
@@ -218,7 +218,7 @@
                     {
                         "type": "textarea",
                         "dataType": "string",
-                        "name": "TravelDetails",
+                        "name": "remarks",
                         "isExcluded": false,
                         "label": "Travel Details",
                         "value": "",
@@ -237,7 +237,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "PurposeOfTravelNames",
+                        "name": "purpose",
                         "isExcluded": false,
                         "value": null,
                         "order": 6
@@ -248,7 +248,11 @@
                     "Direct Expense": true
                 },
                 "displayTable": false,
-                "displayAddClearButton": false
+                "displayAddClearButton": false,
+                "moduleData": {
+                    "travelTypeId": 51,
+                    "requestForId": 80
+                }
             }
         ],
         "dateExtension": {
@@ -1092,6 +1096,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -22438,23 +22444,23 @@
             "maxLength": 2000,
             "required": true
         },
-        "actions": [
-            {
+        "actions": {
+            "cancel": {
                 "label": "Cancel",
                 "type": "cancel",
-                "class": "btn btn-outline-secondary  "
+                "class": "btn btn-outline-secondary"
             },
-            {
+            "draft": {
                 "label": "Save as Draft",
                 "type": "draft",
-                "class": "btn btn-outline-secondary  me-2  "
+                "class": "btn btn-outline-secondary me-2"
             },
-            {
+            "submit": {
                 "label": "Submit",
                 "type": "submit",
                 "class": "btn btn-light"
             }
-        ],
+        },
         "notifications": {
             "AtLeastOneClaimDataEntry": "Please add at least one claim data entry!"
         }
