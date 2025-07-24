@@ -445,7 +445,7 @@ export class MainExpenseComponent {
       if (category) {
         requestData.data = requestData.data.map((entry: any) => {
           const formattedData: any = {
-            ReferenceId: entry.ReferenceId,
+            ReferenceId: entry.ReferenceId ?? 0,
             excludedData: {}
           };
 
@@ -668,7 +668,7 @@ export class MainExpenseComponent {
     if (categoryBlock) {
       categoryBlock.data = updated.data;
     }
-
+    this.applyExcludedFields();
     const tab = this.categories.find((c: any) => c.name === updated.name);
     if (tab) tab.count = updated.data.length;
 

@@ -409,7 +409,7 @@
             {
                 "name": "Travel Ticket",
                 "label": "Tickets Expense",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -461,7 +461,7 @@
                             ]
                         },
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 11
                     },
                     {
@@ -2713,6 +2713,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -4112,6 +4114,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -5459,6 +5463,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -6812,6 +6818,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -8316,6 +8324,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -9545,6 +9555,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -10210,6 +10222,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -10985,6 +10999,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -12091,6 +12107,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -13072,6 +13090,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -13849,6 +13869,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -14690,6 +14712,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -15251,6 +15275,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -15775,6 +15801,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -16408,6 +16436,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -17387,6 +17417,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -18376,6 +18408,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -19129,6 +19163,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -20130,6 +20166,8 @@
                     }
                 },
                 "expanded": false,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -20326,6 +20364,8 @@
                 "label": "Car Maintainance",
                 "formControls": [],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": []
@@ -20335,6 +20375,8 @@
                 "label": "Learning & Fees Expense",
                 "formControls": [],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": []
@@ -20913,6 +20955,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -21079,6 +21123,8 @@
                 "label": "Training & Certification",
                 "formControls": [],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": [],
@@ -21091,6 +21137,8 @@
                 "label": "Lease & Rent Deposit",
                 "formControls": [],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": [],
@@ -21105,6 +21153,8 @@
                 "label": "Vehicle Road Tax",
                 "formControls": [],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": [],
@@ -21119,6 +21169,8 @@
                 "label": "School Capitation Fees",
                 "formControls": [],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
                 "nestedTables": [],
@@ -21443,6 +21495,8 @@
                     }
                 ],
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -22175,6 +22229,8 @@
                     }
                 },
                 "expanded": true,
+                "displayTable": true,
+                "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
