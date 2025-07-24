@@ -9725,7 +9725,8 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense Domestic": true,
-                    "Direct Expense International": true
+                    "Direct Expense International": true,
+                    "Local Travel Conveyance": true
                 },
                 "showCategoryFor": [
                     51,
