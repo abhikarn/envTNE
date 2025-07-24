@@ -57,9 +57,15 @@ export const routes: Routes = [
       },
       // Direct Expense
       {
-        path: 'create-direct-expense',
+        path: 'create-direct-expense-domestic',
         loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
-        data: { title: 'Direct Expense' }
+        data: { title: 'Direct Expense Domestic' }
+      },
+      // Direct Expense International
+      {
+        path: 'create-direct-expense-international',
+        loadComponent: () => import('./main-expense/main-expense.component').then(m => m.MainExpenseComponent),
+        data: { title: 'Direct Expense International' }
       },
       // Bereavement Support Claim
       {

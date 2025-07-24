@@ -49,11 +49,18 @@
         "alt": "Deputation Expense"
     },
     {
-        "title": "Direct Expense",
+        "title": "Direct Expense Domestic",
         "img": "assets/images/expense-direct.svg",
-        "link": "expense/expense/create-direct-expense",
+        "link": "expense/expense/create-direct-expense-domestic",
         "colorClass": "expense-color9",
-        "alt": "Direct Expense"
+        "alt": "Direct Expense Domestic"
+    },
+    {
+        "title": "Direct Expense International",
+        "img": "assets/images/expense-direct.svg",
+        "link": "expense/expense/create-direct-expense-international",
+        "colorClass": "expense-color9",
+        "alt": "Direct Expense International"
     },
     {
         "title": "Bereavement Support Claim",
@@ -108,7 +115,7 @@
         "title": "Other Expense",
         "img": "assets/images/expense-other.svg",
         "link": "expense/expense/create-other-expense",
-        "colorClass": "expense-color2",
+        "colorClass": "expense-color8",
         "alt": "Other Expense"
     }
 ]

@@ -249,6 +249,7 @@ export class MainExpenseComponent {
             this.boxModuleData = box.moduleData;
             this.moduleConfig.page = box.name;
             this.moduleConfig[box.name] = box;
+            this.moduleConfig.internationalFlag = box.international || false;
           }
         });
       });
@@ -286,7 +287,9 @@ export class MainExpenseComponent {
         }
       })
     }
-    this.expenseSummary = this.expenseConfig.summaries;
+    console.log("Expense Config: ", this.expenseConfig.summaries);
+    this.expenseSummary = JSON.parse(JSON.stringify(this.expenseConfig.summaries));
+    this.setExpenseSummary();
   }
 
   // Setup form categories with dynamic options mapping from master data.
@@ -315,7 +318,11 @@ export class MainExpenseComponent {
       })
     });
     this.updateCategoryCounts();
-    // this.expenseSummary = this.expenseConfig.summaries;
+    this.expenseSummary = JSON.parse(JSON.stringify(this.expenseConfig.summaries));
+    this.setExpenseSummary();
+  }
+
+  setExpenseSummary() {
     this.expenseSummary.forEach((summary: any) => {
       if (summary.id === "category-wise-expense") {
         summary.items = summary.items.filter((item: any) => {
@@ -1068,8 +1075,8 @@ export class MainExpenseComponent {
 
     this.mainExpenseData = {
       ...this.mainExpenseData,
+      ...this.boxModuleData,
       ExpenseRequestId: this.expenseRequestId,
-      RequestForId: 80 ,
       RequesterId: this.userMasterId,
       TravelRequestId: 0,
       RequestDate: new Date().toISOString(),
@@ -1151,6 +1158,22 @@ export class MainExpenseComponent {
 
   getFormValue(form: any) {
     this.expenseLandingBoxForm = form;
+
+    // Set minDate and maxDate for controls with apiDateLimit if both dates are valid and present
+    const fromDate = this.expenseLandingBoxForm.get('travelDateFromActual')?.value;
+    const toDate = this.expenseLandingBoxForm.get('travelDateToActual')?.value;
+
+    if (fromDate && toDate && this.expenseLandingBoxForm.get('travelDateFromActual')?.valid && this.expenseLandingBoxForm.get('travelDateToActual')?.valid) {
+      this.categories.forEach((category: any) => {
+        category.formControls.forEach((control: any) => {
+          if (control.apiDateLimit) {
+            control.minDate = fromDate;
+            control.maxDate = toDate;
+          }
+        });
+      });
+      console.log("Updated categories with date limits:", this.categories);
+    }
   }
 }
 
