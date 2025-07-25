@@ -207,7 +207,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 4,
+                        "setNameControl": "billableCostcentre"
                     },
                     {
                         "type": "textarea",
@@ -235,6 +236,13 @@
                         "isExcluded": false,
                         "value": null,
                         "order": 6
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "billableCostcentre",
+                        "isExcluded": false,
+                        "value": null,
+                        "order": 7
                     }
                 ],
                 "displayPage": {

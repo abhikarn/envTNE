@@ -57,4 +57,5 @@ export interface IFormControl {
   landingBoxConfig?: any;
   getReadableValue?: any;
   blockClass?: string; // For custom styling
+  setNameControl?: string; // For setting control name based on value
 }
