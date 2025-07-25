@@ -107,7 +107,7 @@
                     {
                         "type": "date",
                         "dataType": "datetime",
-                        "name": "travelDateFromActual",
+                        "name": "travelDateFrom",
                         "isExcluded": false,
                         "label": "Travel From Date",
                         "value": null,
@@ -134,7 +134,7 @@
                     {
                         "type": "date",
                         "dataType": "datetime",
-                        "name": "travelDateToActual",
+                        "name": "travelDateTo",
                         "isExcluded": false,
                         "label": "Travel To Date",
                         "value": null,
@@ -161,7 +161,7 @@
                     {
                         "type": "multi-select",
                         "dataType": "int",
-                        "name": "PurposeOfTravel",
+                        "name": "purposeOfTravel",
                         "isExcluded": false,
                         "label": "Purpose of Travel",
                         "placeholder": "Select Purpose of Travel",
@@ -207,12 +207,13 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 4,
+                        "setNameControl": "billableCostcentre"
                     },
                     {
                         "type": "textarea",
                         "dataType": "string",
-                        "name": "remarks",
+                        "name": "travelDetails",
                         "isExcluded": false,
                         "label": "Travel Details",
                         "value": "",
@@ -235,6 +236,20 @@
                         "isExcluded": false,
                         "value": null,
                         "order": 6
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "billableCostcentre",
+                        "isExcluded": false,
+                        "value": null,
+                        "order": 7
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "travelRemark",
+                        "isExcluded": false,
+                        "value": "",
+                        "order": 8
                     }
                 ],
                 "displayPage": {

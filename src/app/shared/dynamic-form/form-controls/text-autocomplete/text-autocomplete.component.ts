@@ -49,7 +49,7 @@ export class TextAutocompleteComponent {
     if (typeof value === 'object') return value?.label ?? '';
 
     const matched = this.controlConfig.options?.find(opt => opt.value === value);
-    return matched?.label ?? '';
+    return matched?.label ?? this.form.get(this.controlConfig?.setNameControl)?.value ?? '' ;
   };
 
 

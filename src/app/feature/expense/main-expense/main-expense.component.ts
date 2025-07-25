@@ -107,6 +107,7 @@ export class MainExpenseComponent {
   expenseLandingBoxForm: FormGroup = new FormGroup({});
   boxModuleData: any;
   title: string = '';
+  otherExpenseResponse: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -381,6 +382,7 @@ export class MainExpenseComponent {
   // Populate existing expense request data into form structure for editing.
   populateExistingExpenseData(response: any) {
     if (response?.travelRequestId == 0) {
+      this.otherExpenseResponse = response;
       if (response?.claimTypeId == 53) {
         this.title = "Direct Expense Domestic";
         this.moduleConfig.pageTitle = "Direct Expense Domestic";
@@ -398,12 +400,8 @@ export class MainExpenseComponent {
           this.moduleConfig.internationalFlag = box.international || false;
         }
       });
-      
-      setTimeout(() => {
-        this.expenseLandingBoxForm.patchValue(response);
-      }, 1000);
     }
-    
+
     this.travelRequestId = response.travelRequestId;
     this.justificationForm.get(this.expenseConfig.justification.controlName).setValue(response?.remarks);
 
@@ -1103,8 +1101,12 @@ export class MainExpenseComponent {
       RequesterId: this.userMasterId,
       TravelRequestId: 0,
       RequestDate: new Date().toISOString(),
-      PurposeOfTravel: this.expenseLandingBoxForm.value.PurposeOfTravel,
-      BillableCostCentreId: this.expenseLandingBoxForm.value.billableCostcentreId,
+      // Header Data
+      travelDateFrom: this.expenseLandingBoxForm.value.travelDateFrom,
+      travelDateTo: this.expenseLandingBoxForm.value.travelDateTo,
+      purposeOfTravel: this.expenseLandingBoxForm.value.PurposeOfTravel,
+      billableCostCentreId: this.expenseLandingBoxForm.value.billableCostcentreId,
+      travelRemark: this.expenseLandingBoxForm.value.travelRemark || '',
       Remarks: this.justificationForm.get(this.expenseConfig.justification.controlName)?.value,
       ActionBy: this.userMasterId,
       dynamicExpenseDetailModels: this.utilsService.simplifyObject(requestData)
@@ -1182,10 +1184,10 @@ export class MainExpenseComponent {
   getFormValue(form: any) {
     this.expenseLandingBoxForm = form;
 
-    const fromDate = this.expenseLandingBoxForm.get('travelDateFromActual')?.value;
-    const toDate = this.expenseLandingBoxForm.get('travelDateToActual')?.value;
+    const fromDate = this.expenseLandingBoxForm.get('travelDateFrom')?.value;
+    const toDate = this.expenseLandingBoxForm.get('travelDateTo')?.value;
 
-    if (fromDate && toDate && this.expenseLandingBoxForm.get('travelDateFromActual')?.valid && this.expenseLandingBoxForm.get('travelDateToActual')?.valid) {
+    if (fromDate && toDate && this.expenseLandingBoxForm.get('travelDateFrom')?.valid && this.expenseLandingBoxForm.get('travelDateTo')?.valid) {
       this.categories = this.categories.map((category: any) => {
         const updatedControls = category.formControls.map((control: any) => {
           if (control.apiDateLimit) {
@@ -1206,6 +1208,27 @@ export class MainExpenseComponent {
 
       console.log("Updated categories with date limits:", this.categories);
     }
+  }
+
+  getDateInputComponentValue(dateInputComponents: any) {
+    this.expenseLandingBoxForm.patchValue(this.otherExpenseResponse);
+    console.log("Date Input Components: ", dateInputComponents);
+    this.expenseConfig?.expenseLandingBox?.forEach((box: any) => {
+      if (box?.displayPage?.[this.title]) {
+        box.formControls.forEach((control: any) => {
+          if (control.type === 'date') {
+            dateInputComponents.forEach((dateInput: any) => {
+              if (dateInput.timeControl && dateInput.controlConfig.name === control.name) {
+                // If the value is a date string, convert it to a Date object
+                const dateValue = this.expenseLandingBoxForm.get(control.name)?.value;
+                dateInput.timeControl.setValue(dateValue);
+                dateInput.control.setValue(dateValue);
+              }
+            });
+          }
+        });
+      }
+    });
   }
 
 }

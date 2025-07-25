@@ -65,6 +65,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @Output() emitFormValue = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();
   @Output() updateData = new EventEmitter<any>();
+  @Output() emitDateInputComponentValue = new EventEmitter<any>();
   form: FormGroup = new FormGroup({});
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
   tableData: any = [];
@@ -165,6 +166,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       )
       .subscribe(() => {
         this.emitFormValue.emit(this.form);
+        this.emitDateInputComponentValue.emit(this.dateInputComponentRef || []);
       });
 
   }
