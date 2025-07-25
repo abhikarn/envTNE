@@ -107,6 +107,7 @@ export class MainExpenseComponent {
   expenseLandingBoxForm: FormGroup = new FormGroup({});
   boxModuleData: any;
   title: string = '';
+  otherExpenseResponse: any;
 
   constructor(
     private expenseService: ExpenseService,
@@ -381,6 +382,7 @@ export class MainExpenseComponent {
   // Populate existing expense request data into form structure for editing.
   populateExistingExpenseData(response: any) {
     if (response?.travelRequestId == 0) {
+      this.otherExpenseResponse = response;
       if (response?.claimTypeId == 53) {
         this.title = "Direct Expense Domestic";
         this.moduleConfig.pageTitle = "Direct Expense Domestic";
@@ -398,12 +400,8 @@ export class MainExpenseComponent {
           this.moduleConfig.internationalFlag = box.international || false;
         }
       });
-      
-      setTimeout(() => {
-        this.expenseLandingBoxForm.patchValue(response);
-      }, 1000);
     }
-    
+
     this.travelRequestId = response.travelRequestId;
     this.justificationForm.get(this.expenseConfig.justification.controlName).setValue(response?.remarks);
 
@@ -1210,6 +1208,27 @@ export class MainExpenseComponent {
 
       console.log("Updated categories with date limits:", this.categories);
     }
+  }
+
+  getDateInputComponentValue(dateInputComponents: any) {
+    this.expenseLandingBoxForm.patchValue(this.otherExpenseResponse);
+    console.log("Date Input Components: ", dateInputComponents);
+    this.expenseConfig?.expenseLandingBox?.forEach((box: any) => {
+      if (box?.displayPage?.[this.title]) {
+        box.formControls.forEach((control: any) => {
+          if (control.type === 'date') {
+            dateInputComponents.forEach((dateInput: any) => {
+              if (dateInput.timeControl && dateInput.controlConfig.name === control.name) {
+                // If the value is a date string, convert it to a Date object
+                const dateValue = this.expenseLandingBoxForm.get(control.name)?.value;
+                dateInput.timeControl.setValue(dateValue);
+                dateInput.control.setValue(dateValue);
+              }
+            });
+          }
+        });
+      }
+    });
   }
 
 }
