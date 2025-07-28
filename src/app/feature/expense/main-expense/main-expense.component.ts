@@ -402,6 +402,10 @@ export class MainExpenseComponent {
       });
     }
 
+    setTimeout(() => {
+      this.expenseLandingBoxForm.patchValue(this.otherExpenseResponse, { emitEvent: false });
+    }, 1000);
+
     this.travelRequestId = response.travelRequestId;
     this.justificationForm.get(this.expenseConfig.justification.controlName).setValue(response?.remarks);
 
@@ -1093,20 +1097,15 @@ export class MainExpenseComponent {
       this.justificationForm.markAllAsTouched();
       return false;
     }
-
+    console.log('valid',this.mainExpenseData)
     this.mainExpenseData = {
       ...this.mainExpenseData,
       ...this.boxModuleData,
+      ...this.expenseLandingBoxForm.value,
       ExpenseRequestId: this.expenseRequestId,
       RequesterId: this.userMasterId,
       TravelRequestId: 0,
       RequestDate: new Date().toISOString(),
-      // Header Data
-      travelDateFrom: this.expenseLandingBoxForm.value.travelDateFrom,
-      travelDateTo: this.expenseLandingBoxForm.value.travelDateTo,
-      purposeOfTravel: this.expenseLandingBoxForm.value.PurposeOfTravel,
-      billableCostCentreId: this.expenseLandingBoxForm.value.billableCostcentreId,
-      travelRemark: this.expenseLandingBoxForm.value.travelRemark || '',
       Remarks: this.justificationForm.get(this.expenseConfig.justification.controlName)?.value,
       ActionBy: this.userMasterId,
       dynamicExpenseDetailModels: this.utilsService.simplifyObject(requestData)
@@ -1211,7 +1210,6 @@ export class MainExpenseComponent {
   }
 
   getDateInputComponentValue(dateInputComponents: any) {
-    this.expenseLandingBoxForm.patchValue(this.otherExpenseResponse);
     console.log("Date Input Components: ", dateInputComponents);
     this.expenseConfig?.expenseLandingBox?.forEach((box: any) => {
       if (box?.displayPage?.[this.title]) {
@@ -1221,8 +1219,10 @@ export class MainExpenseComponent {
               if (dateInput.timeControl && dateInput.controlConfig.name === control.name) {
                 // If the value is a date string, convert it to a Date object
                 const dateValue = this.expenseLandingBoxForm.get(control.name)?.value;
-                dateInput.timeControl.setValue(dateValue);
-                dateInput.control.setValue(dateValue);
+                if (dateValue && typeof dateValue === 'string') {
+                  dateInput.timeControl.setValue(dateValue);
+                  dateInput.control.setValue(dateValue);
+                }
               }
             });
           }

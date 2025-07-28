@@ -182,7 +182,7 @@
                         "readonly": true,
                         "order": 4,
                         "getReadableValue": {
-                            "controlName": "purpose"
+                            "controlName": "purposeOfTravelNames"
                         }
                     },
                     {
@@ -232,7 +232,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "purpose",
+                        "name": "purposeOfTravelNames",
                         "isExcluded": false,
                         "value": null,
                         "order": 6
@@ -243,13 +243,6 @@
                         "isExcluded": false,
                         "value": null,
                         "order": 7
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "travelRemark",
-                        "isExcluded": false,
-                        "value": "",
-                        "order": 8
                     }
                 ],
                 "displayPage": {
