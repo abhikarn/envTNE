@@ -714,6 +714,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       });
     }
+    this.dynamicFormService.updateConditionalValidators(this.form, this.formConfig);
+    this.scrollToFirstInvalidControl();
   }
 
   clear() {
