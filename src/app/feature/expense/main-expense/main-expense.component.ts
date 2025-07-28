@@ -1029,6 +1029,16 @@ export class MainExpenseComponent {
       return false;
     }
 
+    // Check for required data presense in all requested categories
+    const hasRequiredData = requestData.some((category: any) => {
+      return category.data && category.data.length > 0;
+    });
+
+    if (!hasRequiredData) {
+      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+      return false;
+    }
+
     if (this.travelRequestId > 0 && requestData.length === 0) {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return false;
@@ -1082,6 +1092,15 @@ export class MainExpenseComponent {
 
     // Check for required data presence
     if (!requestData || requestData.length === 0) {
+      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+      return false;
+    }
+    // Check for required data presense in all requested categories
+    const hasRequiredData = requestData.some((category: any) => {
+      return category.data && category.data.length > 0;
+    });
+
+    if (!hasRequiredData) {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return false;
     }
