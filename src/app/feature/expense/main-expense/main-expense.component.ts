@@ -245,9 +245,13 @@ export class MainExpenseComponent {
         });
       });
     } else {
-      console.log(this.expenseClaimTypeDescription)
       if (this.expenseClaimTypeDescription == 'Domestic' || this.expenseClaimTypeDescription == 'International') {
-        this.title = "Travel Expense";
+        if(this.travelRequestId) {
+          this.title = "Travel Expense";
+        } else {
+          this.title = `Direct Expense ${this.expenseClaimTypeDescription}`;
+        }
+        
         if (this.expenseConfig?.pageTitles) {
           this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[this.title] || this.title;
         }
@@ -287,6 +291,7 @@ export class MainExpenseComponent {
         this.moduleConfig.internationalFlag = box.international || false;
       }
     });
+    this.setCurrencyDropdown();
     console.log("Expense Config: ", this.expenseConfig.summaries);
     this.expenseSummary = JSON.parse(JSON.stringify(this.expenseConfig.summaries));
     this.setExpenseSummary();
@@ -366,13 +371,8 @@ export class MainExpenseComponent {
           if (response) {
             this.expenseRequestId = response.expenseRequestId;
             this.expenseRequestPreviewData = response;
-            // this.travelDetails?.data?.forEach((config: any) => {
-            //   const prop = config.name;
-            //   if (this.expenseRequestPreviewData && this.expenseRequestPreviewData.hasOwnProperty(prop)) {
-            //     config.value = this.expenseRequestPreviewData[prop];
-            //   }
-            // });
-            // this.travelDetails?.data?.sort((a: any, b: any) => a.order - b.order);
+                
+
             this.populateExistingExpenseData(response);
           }
         }
@@ -535,7 +535,7 @@ export class MainExpenseComponent {
   // Set default currency for 'Currency' fields based on travel type.
   setCurrencyDropdown() {
 
-    const isWithoutCurrency = [52, 54].includes(this.travelRequestPreview?.travelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId);
+    const isWithoutCurrency = [52, 54].includes(this.travelRequestPreview?.travelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId) || [52, 54].includes(this.boxModuleData?.claimTypeId);
 
     const defaultCurrency = {
       Id: 1,
@@ -721,7 +721,7 @@ export class MainExpenseComponent {
     if (typeof inputValue === 'string') {
       const requestBody = {
         SearchText: inputValue,
-        TravelTypeId: this.travelRequestPreview?.travelTypeId || 0
+        TravelTypeId: this.travelRequestPreview?.travelTypeId || this.boxModuleData?.travelTypeId || 0,
       };
 
       this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({

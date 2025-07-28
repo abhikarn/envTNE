@@ -216,7 +216,7 @@ export class DynamicFormService {
       });
   }
 
-  validateFieldPolicyViolation(control: IFormControl, category: any, form: any, formConfig: any[], moduleData: any, boxModuleData: any): void {
+  validateFieldPolicyViolation(control: IFormControl, category: any, form: any, formConfig: any[], moduleData: any): void {
     let confirmPopupData: any = {};
     if (!control.policyViolationCheck) return;
 
@@ -231,7 +231,7 @@ export class DynamicFormService {
       }
     });
 
-    const output = this.mapOtherControls(moduleData || boxModuleData, category.policyViolationCheckApi.otherControls);
+    const output = this.mapOtherControls(moduleData, category.policyViolationCheckApi.otherControls);
 
     service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
       (response: any) => {

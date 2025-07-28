@@ -53,7 +53,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @ViewChild(GstComponent) gstComponentRef!: GstComponent;
   @ViewChildren(DateInputComponent) dateInputComponentRef!: QueryList<DateInputComponent>;
   @Input() moduleData: any;
-  @Input() boxModuleData: any;
   @Input() category: any;
   @Input() formConfig: IFormControl[] = [];
   @Input() eventHandler: any;
@@ -145,7 +144,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     console.log(this.moduleData);
-    console.log(this.boxModuleData);
     this.category = this.dynamicFormService.getCategoryConfig(this.category, this.moduleConfig);
     this.formControls = []; // Reset to avoid duplication
     this.form = new FormGroup({});
@@ -747,7 +745,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   validatePolicyViolation() {
-    debugger;
     let confirmPopupData: any = {};
     if (this.category.policyViolationCheckApi) {
       const service = this.serviceRegistry.getService(this.category.policyViolationCheckApi.apiService);
@@ -761,7 +758,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       });
 
-      const output = this.mapOtherControls(this.moduleData || this.boxModuleData, this.category.policyViolationCheckApi.otherControls);
+      const output = this.mapOtherControls(this.moduleData, this.category.policyViolationCheckApi.otherControls);
 
       service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
         (response: any) => {
@@ -890,7 +887,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     if (control.policyViolationCheck) {
       setTimeout(() => {
-        this.dynamicFormService.validateFieldPolicyViolation(control, this.category, this.form, this.formConfig, this.moduleData, this.boxModuleData);
+        this.dynamicFormService.validateFieldPolicyViolation(control, this.category, this.form, this.formConfig, this.moduleData);
       }, 500);
     }
     if (control.EntitlementAmountCalculation) {
