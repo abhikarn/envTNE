@@ -245,9 +245,13 @@ export class MainExpenseComponent {
         });
       });
     } else {
-      console.log(this.expenseClaimTypeDescription)
       if (this.expenseClaimTypeDescription == 'Domestic' || this.expenseClaimTypeDescription == 'International') {
-        this.title = "Travel Expense";
+        if(this.travelRequestId) {
+          this.title = "Travel Expense";
+        } else {
+          this.title = `Direct Expense ${this.expenseClaimTypeDescription}`;
+        }
+        
         if (this.expenseConfig?.pageTitles) {
           this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[this.title] || this.title;
         }
@@ -287,6 +291,7 @@ export class MainExpenseComponent {
         this.moduleConfig.internationalFlag = box.international || false;
       }
     });
+    this.setCurrencyDropdown();
     console.log("Expense Config: ", this.expenseConfig.summaries);
     this.expenseSummary = JSON.parse(JSON.stringify(this.expenseConfig.summaries));
     this.setExpenseSummary();
@@ -366,13 +371,8 @@ export class MainExpenseComponent {
           if (response) {
             this.expenseRequestId = response.expenseRequestId;
             this.expenseRequestPreviewData = response;
-            // this.travelDetails?.data?.forEach((config: any) => {
-            //   const prop = config.name;
-            //   if (this.expenseRequestPreviewData && this.expenseRequestPreviewData.hasOwnProperty(prop)) {
-            //     config.value = this.expenseRequestPreviewData[prop];
-            //   }
-            // });
-            // this.travelDetails?.data?.sort((a: any, b: any) => a.order - b.order);
+                
+
             this.populateExistingExpenseData(response);
           }
         }
@@ -401,6 +401,10 @@ export class MainExpenseComponent {
         }
       });
     }
+
+    setTimeout(() => {
+      this.expenseLandingBoxForm.patchValue(this.otherExpenseResponse, { emitEvent: false });
+    }, 1000);
 
     this.travelRequestId = response.travelRequestId;
     this.justificationForm.get(this.expenseConfig.justification.controlName).setValue(response?.remarks);
@@ -531,7 +535,7 @@ export class MainExpenseComponent {
   // Set default currency for 'Currency' fields based on travel type.
   setCurrencyDropdown() {
 
-    const isWithoutCurrency = [52, 54].includes(this.travelRequestPreview?.travelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId);
+    const isWithoutCurrency = [52, 54].includes(this.travelRequestPreview?.travelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId) || [52, 54].includes(this.boxModuleData?.claimTypeId);
 
     const defaultCurrency = {
       Id: 1,
@@ -717,7 +721,7 @@ export class MainExpenseComponent {
     if (typeof inputValue === 'string') {
       const requestBody = {
         SearchText: inputValue,
-        TravelTypeId: this.travelRequestPreview?.travelTypeId || 0
+        TravelTypeId: this.travelRequestPreview?.travelTypeId || this.boxModuleData?.travelTypeId || 0,
       };
 
       this.dataService.dataGetCityAutocomplete(requestBody).pipe(take(1)).subscribe({
@@ -1025,6 +1029,16 @@ export class MainExpenseComponent {
       return false;
     }
 
+    // Check for required data presense in all requested categories
+    const hasRequiredData = requestData.some((category: any) => {
+      return category.data && category.data.length > 0;
+    });
+
+    if (!hasRequiredData) {
+      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+      return false;
+    }
+
     if (this.travelRequestId > 0 && requestData.length === 0) {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return false;
@@ -1081,6 +1095,15 @@ export class MainExpenseComponent {
       this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return false;
     }
+    // Check for required data presense in all requested categories
+    const hasRequiredData = requestData.some((category: any) => {
+      return category.data && category.data.length > 0;
+    });
+
+    if (!hasRequiredData) {
+      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+      return false;
+    }
 
     // Validate main form
     if (this.expenseRequestForm.invalid) {
@@ -1093,20 +1116,15 @@ export class MainExpenseComponent {
       this.justificationForm.markAllAsTouched();
       return false;
     }
-
+    console.log('valid',this.mainExpenseData)
     this.mainExpenseData = {
       ...this.mainExpenseData,
       ...this.boxModuleData,
+      ...this.expenseLandingBoxForm.value,
       ExpenseRequestId: this.expenseRequestId,
       RequesterId: this.userMasterId,
       TravelRequestId: 0,
       RequestDate: new Date().toISOString(),
-      // Header Data
-      travelDateFrom: this.expenseLandingBoxForm.value.travelDateFrom,
-      travelDateTo: this.expenseLandingBoxForm.value.travelDateTo,
-      purposeOfTravel: this.expenseLandingBoxForm.value.PurposeOfTravel,
-      billableCostCentreId: this.expenseLandingBoxForm.value.billableCostcentreId,
-      travelRemark: this.expenseLandingBoxForm.value.travelRemark || '',
       Remarks: this.justificationForm.get(this.expenseConfig.justification.controlName)?.value,
       ActionBy: this.userMasterId,
       dynamicExpenseDetailModels: this.utilsService.simplifyObject(requestData)
@@ -1211,7 +1229,6 @@ export class MainExpenseComponent {
   }
 
   getDateInputComponentValue(dateInputComponents: any) {
-    this.expenseLandingBoxForm.patchValue(this.otherExpenseResponse);
     console.log("Date Input Components: ", dateInputComponents);
     this.expenseConfig?.expenseLandingBox?.forEach((box: any) => {
       if (box?.displayPage?.[this.title]) {
@@ -1221,8 +1238,10 @@ export class MainExpenseComponent {
               if (dateInput.timeControl && dateInput.controlConfig.name === control.name) {
                 // If the value is a date string, convert it to a Date object
                 const dateValue = this.expenseLandingBoxForm.get(control.name)?.value;
-                dateInput.timeControl.setValue(dateValue);
-                dateInput.control.setValue(dateValue);
+                if (dateValue && typeof dateValue === 'string') {
+                  dateInput.timeControl.setValue(dateValue);
+                  dateInput.control.setValue(dateValue);
+                }
               }
             });
           }
