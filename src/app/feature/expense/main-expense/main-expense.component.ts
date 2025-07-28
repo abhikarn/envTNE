@@ -244,27 +244,6 @@ export class MainExpenseComponent {
           }
         });
       });
-    } else {
-      if (this.expenseClaimTypeDescription == 'Domestic' || this.expenseClaimTypeDescription == 'International') {
-        if(this.travelRequestId) {
-          this.title = "Travel Expense";
-        } else {
-          this.title = `Direct Expense ${this.expenseClaimTypeDescription}`;
-        }
-        
-        if (this.expenseConfig?.pageTitles) {
-          this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[this.title] || this.title;
-        }
-
-        this.categories = []; // reset categories to avoid duplicates
-
-        this.expenseConfig?.category?.forEach((category: any) => {
-          if (category?.displayPage?.[this.title]) {
-            // Add only categories applicable for the current page
-            this.categories.push(category);
-          }
-        });
-      }
     }
 
     if (this.expenseConfig?.request) {
@@ -371,12 +350,27 @@ export class MainExpenseComponent {
           if (response) {
             this.expenseRequestId = response.expenseRequestId;
             this.expenseRequestPreviewData = response;
-                
+
 
             this.populateExistingExpenseData(response);
           }
         }
       });
+  }
+
+  setupExpenseConfigForEditMode(editResponse: any, title: string = '') {
+    if (this.expenseConfig?.pageTitles) {
+      this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[title] || title;
+    }
+
+    this.categories = []; // reset categories to avoid duplicates
+
+    this.expenseConfig?.category?.forEach((category: any) => {
+      if (category?.displayPage?.[title]) {
+        // Add only categories applicable for the current page
+        this.categories.push(category);
+      }
+    });
   }
 
   // Populate existing expense request data into form structure for editing.
@@ -400,6 +394,10 @@ export class MainExpenseComponent {
           this.moduleConfig.internationalFlag = box.international || false;
         }
       });
+      this.setupExpenseConfigForEditMode(response, this.title);
+    } else {
+      this.title = 'Travel Expense';
+      this.setupExpenseConfigForEditMode(response, this.title);
     }
 
     setTimeout(() => {
@@ -1116,7 +1114,7 @@ export class MainExpenseComponent {
       this.justificationForm.markAllAsTouched();
       return false;
     }
-    console.log('valid',this.mainExpenseData)
+    console.log('valid', this.mainExpenseData)
     this.mainExpenseData = {
       ...this.mainExpenseData,
       ...this.boxModuleData,
