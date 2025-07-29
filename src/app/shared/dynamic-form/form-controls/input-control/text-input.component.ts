@@ -35,6 +35,7 @@ export class TextInputComponent implements OnInit {
   @Output() autoCompleteFocus = new EventEmitter<IFormControl>();
   displayValue: any;
   passwordVisible: boolean = false;
+  filteredOptions: any[] = [];
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -238,8 +239,20 @@ export class TextInputComponent implements OnInit {
   }
 
   onAutoCompleteFocus() {
-    
+
     this.autoCompleteFocus.emit(this.controlConfig);
   }
+
+  onUserTyping(event: any) {
+    const value = event.target.value?.toLowerCase() || '';
+    if (value.length >= 2 && Array.isArray(this.controlConfig.options)) {
+      this.filteredOptions = this.controlConfig.options.filter((option: any) =>
+        option.label.toLowerCase().includes(value)
+      );
+    } else {
+      this.filteredOptions = []; // no panel if input too short
+    }
+  }
+
 
 }

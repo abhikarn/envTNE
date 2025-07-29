@@ -22465,12 +22465,6 @@
                                 "max": 10
                             }
                         },
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Amount is required"
-                            }
-                        ],
                         "order": 2
                     },
                     {

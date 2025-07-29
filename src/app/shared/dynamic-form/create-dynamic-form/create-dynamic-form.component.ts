@@ -11,6 +11,7 @@ import { TextAreaInputComponent } from '../form-controls/text-area/text-area-inp
 import { IFormControl } from '../form-control.interface';
 import { ServiceRegistryService } from '../../service/service-registry.service';
 import { FormControlFactory } from '../form-control.factory';
+import { distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-create-dynamic-form',
@@ -32,6 +33,7 @@ import { FormControlFactory } from '../form-control.factory';
 export class CreateDynamicFormComponent {
   @Input() formConfig: IFormControl[] = [];
   @Output() emitTextData = new EventEmitter<any>();
+  @Output() emitFormValue = new EventEmitter<any>();
   form: FormGroup = new FormGroup({});
   formControls: { formConfig: IFormControl, control: FormControl }[] = [];
 
@@ -47,6 +49,13 @@ export class CreateDynamicFormComponent {
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
     });
+    this.form.valueChanges
+      .pipe(
+        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
+      )
+      .subscribe(() => {
+        this.emitFormValue.emit(this.form);
+      });
   }
 
   getInputValue(input: any) {

@@ -747,7 +747,8 @@ export class PreviewComponent {
  
       if (Object.keys(this.dynamicAdjustmentFormpayload).length > 0) {
         const adjustmentData = this.dynamicAdjustmentFormpayload;
-        if (adjustmentData?.AdjustmentAmount && adjustmentData?.AdjustmentAmount > 0 && adjustmentData?.AdjustmentRemarks=== '') {
+        const adjustmentAmount = Number(adjustmentData?.AdjustmentAmount) || 0;
+        if ((adjustmentAmount > 0 || adjustmentAmount < 0) && adjustmentData?.AdjustmentRemarks === '') {
           this.snackbarService.error('Please provide adjustment remarks for the entered amount.');
           return;
         }
@@ -877,4 +878,40 @@ export class PreviewComponent {
   closeExpenseSummarySheet() {
     this.bottomSheet.dismiss();
   }
+
+  getFormData(event: any) {
+    const adjustmentAmount = Number(event?.get('AdjustmentAmount')?.value) || 0;
+    this.setAdjustmentAmount(adjustmentAmount);
+  }
+
+  setAdjustmentAmount(adjustmentAmount: number) {
+    const EXPENSE_SUMMARY_ID = "expense-summary";
+    const summary = this.expenseSummary?.find((s: any) => s.id === EXPENSE_SUMMARY_ID);
+    if (!summary) return;
+
+    const getValue = (name: string): number => {
+      const item = summary.items?.find((i: any) => i.name === name);
+      return item ? parseFloat(item.value) || 0 : 0;
+    };
+
+    const setValue = (name: string, value: number) => {
+      const item = summary.items?.find((i: any) => i.name === name);
+      if (item) {
+        item.value = value.toFixed(2);
+      }
+    };
+
+    // Update adjustments
+    setValue('adjustments', adjustmentAmount);
+
+    // Get required values
+    const totalExpense = getValue('totalExpense');
+    const lessAdvance = getValue('lessAdvance');
+    const adjustments = adjustmentAmount;
+
+    // Calculate and update amount payable
+    const amountPayable = totalExpense - lessAdvance + adjustments;
+    setValue('amountPayable', amountPayable);
+  }
+ 
 }

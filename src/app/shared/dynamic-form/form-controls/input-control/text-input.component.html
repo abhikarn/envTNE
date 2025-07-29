@@ -13,9 +13,10 @@
 
   @if (controlConfig.autoComplete) {
   <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" [value]="displayValue"
-    [placeholder]="controlConfig.placeholder || 'Enter text'" [readonly]="controlConfig.readonly" (blur)="onCityAutoCompleteInput()" (change)="onAutoCompleteFocus()" />
-  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" >
-    @for (option of controlConfig.options; track trackByFn($index, option)) {
+    [placeholder]="controlConfig.placeholder || 'Enter text'" [readonly]="controlConfig.readonly"
+    (blur)="onCityAutoCompleteInput()" (focus)="onAutoCompleteFocus()" (input)="onUserTyping($event)" />
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    @for (option of filteredOptions; track trackByFn($index, option)) {
     <mat-option [value]="option">
       {{ option.label }}
     </mat-option>
