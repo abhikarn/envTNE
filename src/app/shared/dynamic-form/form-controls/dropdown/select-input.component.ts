@@ -66,6 +66,7 @@ export class SelectInputComponent implements AfterViewInit {
     this.loadOptions();
     if (this.controlConfig.defaultValue) {
       this.control.setValue(this.controlConfig.defaultValue.Id);
+      this.onSelectBlur();
     }
 
     if (this.controlConfig.disable) {

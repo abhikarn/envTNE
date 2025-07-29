@@ -156,6 +156,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
     });
+    if (this.category?.employeeProfile) {
+      // Populate form with employee profile data if available
+      this.dynamicFormService.populateFormWithData(this.form, this.category.employeeProfile, this.moduleData);
+    }
     this.form.reset();
 
     this.form.valueChanges
@@ -819,6 +823,18 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   onFieldValueChange(control: IFormControl) {
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
+
+    if (control.setValue) {
+      control.setValue.forEach((field: any) => {
+        if (field.config.minDate) {
+          this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
+            if (dateInput.controlConfig.name === field.name) {
+              dateInput.minDate = this.form.get(field.config.minDate)?.value;
+            }
+          });
+        }
+      });
+    }
 
     if (control.setFields) {
       control.setFields.forEach((field: any) => {

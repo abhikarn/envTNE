@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DataService, ExpenseService } from '../../../../tne-api';
+import { DataService, ExpenseService, UserService } from '../../../../tne-api';
 import { TravelService } from '../../../../tne-api';
 import { NewExpenseService } from '../../feature/expense/service/new-expense.service';
 
@@ -14,12 +14,14 @@ export class ServiceRegistryService {
     private dataService: DataService,
     private travelService: TravelService,
     private expenseService: ExpenseService,
-    private newExpenseService: NewExpenseService
+    private newExpenseService: NewExpenseService,
+    private userService: UserService
   ) {
     this.services['DataService'] = this.dataService;
     this.services['TravelService'] = this.travelService;
     this.services['ExpenseService'] = this.expenseService;
     this.services['NewExpenseService'] = this.newExpenseService;
+    this.services['UserService'] = this.userService;
   }
 
   getService(serviceName: string): any {

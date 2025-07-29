@@ -486,7 +486,7 @@ export class DynamicFormService {
         }
       }
     });
-    
+
     return modifiedFormConfig;
   }
 
@@ -653,6 +653,37 @@ export class DynamicFormService {
 
       return isOverlap && otherFieldsMatch;
     }) ?? false;
+  }
+
+  /**
+   * Populates the form with data from the employee profile and module data.
+   * @param form - The FormGroup to populate.
+   * @param employeeProfile - The employee profile containing API service and method details.
+   * @param moduleData - Additional data to be used in the request.
+   */
+  populateFormWithData(
+    form: FormGroup,
+    employeeProfile: any,
+    moduleData: any
+  ): void {
+    if (employeeProfile) {
+      const service = this.serviceRegistry.getService(employeeProfile.apiService);
+      const apiMethod = employeeProfile.apiMethod;
+      let requestBody: any = employeeProfile.requestBody;
+      const output = this.mapOtherControls(moduleData, employeeProfile.otherControls);
+      service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
+        (response: any) => {
+          if (typeof employeeProfile.outputControl === 'object') {
+            // Multiple fields case
+            for (const [outputControl, responsePath] of Object.entries(employeeProfile.outputControl) as [string, string][]) {
+              const value = this.extractValueFromPath(response, responsePath);
+              if (value !== undefined) {
+                form.get(outputControl)?.setValue(value);
+              }
+            }
+          }
+        });
+    }
   }
 
 }
