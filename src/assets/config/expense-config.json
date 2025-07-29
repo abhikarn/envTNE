@@ -8813,6 +8813,32 @@
                         "order": 4
                     },
                     {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "LocalTravelPurpose",
+                        "isExcluded": false,
+                        "label": "Local Travel Purpose",
+                        "placeholder": "Select Travel Purpose",
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataLocalTravelPurpose",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Local Travel Purpose is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 5,
+                        "displayPage": {
+                            "Local Travel Conveyance": true
+                        }
+                    },
+                    {
                         "type": "text",
                         "subType": "text",
                         "name": "OriginPointName",

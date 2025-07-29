@@ -435,6 +435,7 @@ export class DynamicFormService {
   }
 
   getFormConfig(formConfig: IFormControl[], moduleConfig: any): IFormControl[] {
+    console.log(moduleConfig);
     let modifiedFormConfig = [...formConfig]; // Create a copy of the original formConfig
     // handle international data
     if (moduleConfig?.internationalFlag) {
@@ -465,6 +466,27 @@ export class DynamicFormService {
         }
       }
     }
+
+    // handle displayPage controls
+    modifiedFormConfig.forEach((control: IFormControl) => {
+      if (control.displayPage && typeof control.displayPage === 'object') {
+        // If displayPage is an object, filter out controls not relevant to the current page
+        const currentPage = moduleConfig?.page || 'default';
+        if (!control.displayPage[currentPage]) {
+          const index = modifiedFormConfig.indexOf(control);
+          if (index > -1) {
+            modifiedFormConfig.splice(index, 1);
+          }
+        }
+      } else if (control.displayPage === false) {
+        // If displayPage is explicitly false, remove the control
+        const index = modifiedFormConfig.indexOf(control);
+        if (index > -1) {
+          modifiedFormConfig.splice(index, 1);
+        }
+      }
+    });
+    
     return modifiedFormConfig;
   }
 

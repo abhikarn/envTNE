@@ -233,6 +233,7 @@ export class MainExpenseComponent {
 
         if (this.expenseConfig?.pageTitles) {
           this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[this.title] || this.title;
+          this.moduleConfig.page = this.title;
         }
 
         this.categories = []; // reset categories to avoid duplicates
