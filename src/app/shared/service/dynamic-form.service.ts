@@ -554,7 +554,6 @@ export class DynamicFormService {
 
     service[apiMethod](requestBody).subscribe(
       (response: any) => {
-        debugger
         if (typeof caseItem.outputControl === 'object') {
           for (const [outputControl, responsePath] of Object.entries(caseItem.outputControl) as [string, string][]) {
             const extracted = this.extractValueFromPath(response, responsePath);

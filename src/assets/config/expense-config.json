@@ -8829,8 +8829,8 @@
                                 "event": "onInit",
                                 "apiService": "ExpenseService",
                                 "apiMethod": "expenseGetFrequencyTypeReference",
-                                "labelKey": "Value",
-                                "valueKey": "Key"
+                                "labelKey": "ReferenceType",
+                                "valueKey": "ReferenceTypeId"
                             }
                         ],
                         "required": true,
