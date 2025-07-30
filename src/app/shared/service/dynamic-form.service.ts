@@ -533,7 +533,6 @@ export class DynamicFormService {
   }
 
   handleFieldBusinessCase(caseItem: any, form: any, moduleData: any, formConfig: any): void {
-    debugger;
     console.log('Handling field business case:', caseItem, form, moduleData, formConfig);
     const service = this.serviceRegistry.getService(caseItem.apiService);
     const apiMethod = caseItem.apiMethod;
