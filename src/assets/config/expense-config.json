@@ -9675,7 +9675,34 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "displayPage": {
+                            "Travel Expense": true,
+                            "Local Travel Conveyance": false
+                        }
+                    },
+                    {
+                        "type": "radio",
+                        "dataType": "boolean",
+                        "name": "BillableToClient",
+                        "label": "Billable To Client",
+                        "value": false,
+                        "options": [
+                            {
+                                "value": true,
+                                "label": "Yes"
+                            },
+                            {
+                                "value": false,
+                                "label": "No"
+                            }
+                        ],
+                        "required": false,
+                        "order": 8,
+                        "displayPage": {
+                            "Travel Expense": false,
+                            "Local Travel Conveyance": true
+                        }
                     },
                     {
                         "type": "textarea",
@@ -9762,6 +9789,17 @@
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "costcentreWiseExpense",
+                        "isExcluded": true,
+                        "value": null,
+                        "showInUI": false,
+                        "displayPage": {
+                            "Travel Expense": false,
+                            "Local Travel Conveyance": true
+                        }
                     }
                 ],
                 "freezFormControls": [
