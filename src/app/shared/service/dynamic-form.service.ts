@@ -537,7 +537,7 @@ export class DynamicFormService {
       if (typeof requestKey === 'string') { // Ensure requestKey is a string
         let controlValue: any;
         if (caseItem?.isGooglePlace) {
-          controlValue = form.get(controlName)?.value.label;
+          controlValue = form.get(controlName)?.value?.label;
         } else {
           controlValue = form.get(controlName)?.value;
         }
@@ -551,7 +551,12 @@ export class DynamicFormService {
     );
     const output = this.mapOtherControls(moduleData, caseItem.otherControls, caseItem?.landingBoxData);
     requestBody = { ...requestBody, ...queryParams, ...output };
-
+    console.log('API Request Body:', requestBody);
+    // if any value of requestBody is undefined, return
+    if (Object.values(requestBody).some(value => value === undefined)) {
+      console.warn('Request body contains undefined values:', requestBody);
+      return;
+    }
     service[apiMethod](requestBody).subscribe(
       (response: any) => {
         if (typeof caseItem.outputControl === 'object') {
