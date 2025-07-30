@@ -491,6 +491,36 @@
                     "claimTypeId": 53,
                     "travelRequestId": 0
                 }
+            },
+            {
+                "name": "Deputation Claim",
+                "label": "Deputation Claim",
+                "displayPage": {
+                    "Deputation Claim": true
+                },
+                "displayTable": false,
+                "displayAddClearButton": false,
+                "moduleData": {
+                    "travelTypeId": 152,
+                    "requestForId": 152,
+                    "claimTypeId": 53,
+                    "travelRequestId": 0
+                }
+            },
+            {
+                "name": "Bereavement Support Claim",
+                "label": "Bereavement Support Claim",
+                "displayPage": {
+                    "Bereavement Support Claim": true
+                },
+                "displayTable": false,
+                "displayAddClearButton": false,
+                "moduleData": {
+                    "travelTypeId": 152,
+                    "requestForId": 152,
+                    "claimTypeId": 53,
+                    "travelRequestId": 0
+                }
             }
         ],
         "dateExtension": {
@@ -9065,7 +9095,11 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 5
+                        "order": 5,
+                        "displayPage": {
+                            "Travel Expense": true,
+                            "Local Travel Conveyance": false
+                        }
                     },
                     {
                         "type": "text",
@@ -9081,7 +9115,11 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 6,
+                        "displayPage": {
+                            "Travel Expense": true,
+                            "Local Travel Conveyance": false
+                        }
                     },
                     {
                         "type": "text",
@@ -19382,8 +19420,8 @@
                 }
             },
             {
-                "name": "Deputation",
-                "label": "Deputation",
+                "name": "Deputation Claim",
+                "label": "Deputation Claim",
                 "formControls": [
                     {
                         "type": "file",
@@ -19472,7 +19510,8 @@
                             "required": true
                         },
                         "order": 2,
-                        "apiDateLimit": true,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
@@ -19483,7 +19522,15 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "setValue": [
+                            {
+                                "name": "ClaimToDate",
+                                "config": {
+                                    "minDate": "ClaimFromDate"
+                                }
+                            }
+                        ]
                     },
                     {
                         "type": "date",
@@ -19509,7 +19556,8 @@
                             "required": true
                         },
                         "order": 3,
-                        "apiDateLimit": true,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "EntitlementAmountCalculation": {
                             "inputControls": {
                                 "ClaimFromDate": "ClaimFromDate",
@@ -19551,7 +19599,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "travelTypeId"
+                                    "Type": "claimTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -19575,7 +19623,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "travelTypeId"
+                                    "Type": "claimTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -19975,124 +20023,6 @@
                         "order": 18
                     },
                     {
-                        "type": "costcenter",
-                        "dataType": "object",
-                        "name": "costcentreWiseExpense",
-                        "isExcluded": false,
-                        "label": "Cost Centre",
-                        "value": [],
-                        "getControl": "ClaimAmount",
-                        "fields": [
-                            {
-                                "name": "ExpenseRequestCostCentrewiseAmmoutId",
-                                "type": "number",
-                                "value": 0,
-                                "showInUI": false,
-                                "order": 1
-                            },
-                            {
-                                "name": "ExpenseRequestDetailId",
-                                "type": "number",
-                                "value": 0,
-                                "showInUI": false,
-                                "order": 2
-                            },
-                            {
-                                "type": "text",
-                                "subType": "text",
-                                "dataType": "int",
-                                "autoComplete": true,
-                                "name": "CostCentre",
-                                "isExcluded": false,
-                                "label": "Cost Center",
-                                "value": null,
-                                "options": [],
-                                "labelKey": "Display",
-                                "valueKey": "CostCentreId",
-                                "apiService": "DataService",
-                                "apiMethod": "dataGetCityAutocomplete",
-                                "required": true,
-                                "validations": [
-                                    {
-                                        "type": "required",
-                                        "message": "Cost Center is required"
-                                    }
-                                ],
-                                "disable": false,
-                                "readonly": false,
-                                "order": 3,
-                                "showInUI": true
-                            },
-                            {
-                                "name": "CostCentreId",
-                                "type": "text",
-                                "value": 0,
-                                "showInUI": false,
-                                "order": 4
-                            },
-                            {
-                                "name": "AmmoutInPercentage",
-                                "type": "text",
-                                "dataType": "numeric",
-                                "showInUI": true,
-                                "label": "Amount In(%)",
-                                "value": null,
-                                "autoFormat": {
-                                    "patterns": [
-                                        "[^0-9.]",
-                                        "^0+(?=\\d)"
-                                    ],
-                                    "range": {
-                                        "min": 0,
-                                        "max": 2
-                                    }
-                                },
-                                "required": true,
-                                "validations": [
-                                    {
-                                        "type": "required",
-                                        "message": "Required"
-                                    },
-                                    {
-                                        "type": "min",
-                                        "value": 0
-                                    }
-                                ],
-                                "order": 5
-                            },
-                            {
-                                "name": "AmmoutInActual",
-                                "type": "text",
-                                "dataType": "numeric",
-                                "showInUI": true,
-                                "label": "Amount In Actual",
-                                "value": null,
-                                "autoFormat": {
-                                    "patterns": [
-                                        "[^0-9.]",
-                                        "^0+(?=\\d)"
-                                    ],
-                                    "range": {
-                                        "min": 0,
-                                        "max": 10
-                                    }
-                                },
-                                "required": true,
-                                "validations": [
-                                    {
-                                        "type": "required",
-                                        "message": "Required"
-                                    },
-                                    {
-                                        "type": "min",
-                                        "value": 0
-                                    }
-                                ],
-                                "order": 6
-                            }
-                        ]
-                    },
-                    {
                         "type": "hidden",
                         "name": "CityGrade",
                         "isExcluded": true,
@@ -20176,6 +20106,13 @@
                         "isExcluded": true,
                         "value": 0,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "costcentreWiseExpense",
+                        "isExcluded": true,
+                        "value": null,
+                        "showInUI": false
                     }
                 ],
                 "policyViolationManualCheck": [
@@ -20198,10 +20135,11 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
                     "requestBody": {
-                        "ExpenseCategoryId": 2
+                        "ExpenseCategoryId": 48,
+                        "PolicyReferenceId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "travelTypeId",
+                        "ClaimTypeId": "claimTypeId",
                         "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
@@ -20209,8 +20147,7 @@
                         "ClaimFromDate": "ReferenceFromDate",
                         "ClaimToDate": "ReferenceToDate",
                         "CityGrade": "CityGradeId",
-                        "CountryGrade": "CountryGradeId",
-                        "Constraint": "PolicyReferenceId"
+                        "CountryGrade": "CountryGradeId"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -20353,39 +20290,6 @@
                 ],
                 "nestedTables": [
                     {
-                        "name": "costCenter",
-                        "dataKey": "costcentreWiseExpense",
-                        "label": "Cost Center",
-                        "columns": [
-                            {
-                                "name": "__slNo",
-                                "label": "Sl. No",
-                                "visible": true,
-                                "order": 1
-                            },
-                            {
-                                "name": "CostCentre",
-                                "label": "Cost Centre",
-                                "visible": true,
-                                "order": 2
-                            },
-                            {
-                                "type": "number",
-                                "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
-                                "visible": true,
-                                "order": 3
-                            },
-                            {
-                                "type": "number",
-                                "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
-                                "visible": true,
-                                "order": 4
-                            }
-                        ]
-                    },
-                    {
                         "name": "attachment",
                         "label": "Attachments",
                         "dataKey": "attachment",
@@ -20412,7 +20316,7 @@
                     }
                 ],
                 "displayPage": {
-                    "Deputation Expense": true
+                    "Deputation Claim": true
                 }
             },
             {
@@ -20438,8 +20342,8 @@
                 "nestedTables": []
             },
             {
-                "name": "Bereavement Support",
-                "label": "Bereavement Support",
+                "name": "Bereavement Support Claim",
+                "label": "Bereavement Support Claim",
                 "formControls": [
                     {
                         "type": "file",
@@ -20474,7 +20378,8 @@
                         "disable": false,
                         "readonly": false,
                         "order": 2,
-                        "apiDateLimit": true,
+                        "minDate": "today",
+                        "maxDate": "today",
                         "policyEntitlementCheck": true
                     },
                     {
@@ -20798,124 +20703,6 @@
                         "order": 6
                     },
                     {
-                        "type": "costcenter",
-                        "dataType": "object",
-                        "name": "costcentreWiseExpense",
-                        "isExcluded": false,
-                        "label": "Cost Centre",
-                        "value": [],
-                        "getControl": "ClaimAmount",
-                        "fields": [
-                            {
-                                "name": "ExpenseRequestCostCentrewiseAmmoutId",
-                                "type": "number",
-                                "value": 0,
-                                "showInUI": false,
-                                "order": 1
-                            },
-                            {
-                                "name": "ExpenseRequestDetailId",
-                                "type": "number",
-                                "value": 0,
-                                "showInUI": false,
-                                "order": 2
-                            },
-                            {
-                                "type": "text",
-                                "subType": "text",
-                                "dataType": "int",
-                                "autoComplete": true,
-                                "name": "CostCentre",
-                                "isExcluded": false,
-                                "label": "Cost Center",
-                                "value": null,
-                                "options": [],
-                                "labelKey": "Display",
-                                "valueKey": "CostCentreId",
-                                "apiService": "DataService",
-                                "apiMethod": "dataGetCityAutocomplete",
-                                "required": true,
-                                "validations": [
-                                    {
-                                        "type": "required",
-                                        "message": "Cost Center is required"
-                                    }
-                                ],
-                                "disable": false,
-                                "readonly": false,
-                                "order": 3,
-                                "showInUI": true
-                            },
-                            {
-                                "name": "CostCentreId",
-                                "type": "text",
-                                "value": 0,
-                                "showInUI": false,
-                                "order": 4
-                            },
-                            {
-                                "name": "AmmoutInPercentage",
-                                "type": "text",
-                                "dataType": "numeric",
-                                "showInUI": true,
-                                "label": "Amount In(%)",
-                                "value": null,
-                                "autoFormat": {
-                                    "patterns": [
-                                        "[^0-9.]",
-                                        "^0+(?=\\d)"
-                                    ],
-                                    "range": {
-                                        "min": 0,
-                                        "max": 2
-                                    }
-                                },
-                                "required": true,
-                                "validations": [
-                                    {
-                                        "type": "required",
-                                        "message": "Required"
-                                    },
-                                    {
-                                        "type": "min",
-                                        "value": 0
-                                    }
-                                ],
-                                "order": 5
-                            },
-                            {
-                                "name": "AmmoutInActual",
-                                "type": "text",
-                                "dataType": "numeric",
-                                "showInUI": true,
-                                "label": "Amount In Actual",
-                                "value": null,
-                                "autoFormat": {
-                                    "patterns": [
-                                        "[^0-9.]",
-                                        "^0+(?=\\d)"
-                                    ],
-                                    "range": {
-                                        "min": 0,
-                                        "max": 10
-                                    }
-                                },
-                                "required": true,
-                                "validations": [
-                                    {
-                                        "type": "required",
-                                        "message": "Required"
-                                    },
-                                    {
-                                        "type": "min",
-                                        "value": 0
-                                    }
-                                ],
-                                "order": 6
-                            }
-                        ]
-                    },
-                    {
                         "type": "textarea",
                         "dataType": "string",
                         "name": "Remarks",
@@ -20966,6 +20753,13 @@
                                 "EntitlementConversionRate"
                             ]
                         }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "costcentreWiseExpense",
+                        "isExcluded": true,
+                        "value": null,
+                        "showInUI": false
                     }
                 ],
                 "policyViolationManualCheck": [
@@ -20988,13 +20782,13 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
-                        "ExpenseCategoryId": 22,
+                        "ExpenseCategoryId": 40,
                         "CityGradeId": 0,
                         "CountryGradeId": 0,
                         "PolicyReferenceId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "travelTypeId",
+                        "ClaimTypeId": "claimTypeId",
                         "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
@@ -21111,39 +20905,6 @@
                     }
                 ],
                 "nestedTables": [
-                    {
-                        "name": "costCenter",
-                        "dataKey": "costcentreWiseExpense",
-                        "label": "Cost Center",
-                        "columns": [
-                            {
-                                "name": "__slNo",
-                                "label": "Sl. No",
-                                "visible": true,
-                                "order": 1
-                            },
-                            {
-                                "name": "CostCentre",
-                                "label": "Cost Centre",
-                                "visible": true,
-                                "order": 2
-                            },
-                            {
-                                "type": "number",
-                                "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
-                                "visible": true,
-                                "order": 3
-                            },
-                            {
-                                "type": "number",
-                                "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
-                                "visible": true,
-                                "order": 4
-                            }
-                        ]
-                    },
                     {
                         "name": "attachment",
                         "label": "Attachments",
@@ -27315,8 +27076,8 @@
                 ]
             },
             {
-                "name": "Deputation",
-                "label": "Deputation",
+                "name": "Deputation Claim",
+                "label": "Deputation Claim",
                 "data": [],
                 "amount": 0,
                 "expanded": false,

@@ -33,6 +33,8 @@ import { ExpenseRequestModel } from '../model/expenseRequestModel';
 // @ts-ignore
 import { ExpenseRequestParam } from '../model/expenseRequestParam';
 // @ts-ignore
+import { FrequencyTypeReferenceParam } from '../model/frequencyTypeReferenceParam';
+// @ts-ignore
 import { InternationalBaggageOutfitPolicyParam } from '../model/internationalBaggageOutfitPolicyParam';
 // @ts-ignore
 import { MarriageGiftPolicyParam } from '../model/marriageGiftPolicyParam';
@@ -484,24 +486,17 @@ export class ExpenseService extends BaseService {
     }
 
     /**
-     * @param frequencyTypeReferenceParamExpenseCategoryId 
-     * @param frequencyTypeReferenceParamFrequencyTypeId 
-     * @param frequencyTypeReferenceParamUserMasterId 
+     * @param frequencyTypeReferenceParam 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public expenseGetFrequencyTypeReference(frequencyTypeReferenceParamExpenseCategoryId?: number, frequencyTypeReferenceParamFrequencyTypeId?: number, frequencyTypeReferenceParamUserMasterId?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<DataSubmit>;
-    public expenseGetFrequencyTypeReference(frequencyTypeReferenceParamExpenseCategoryId?: number, frequencyTypeReferenceParamFrequencyTypeId?: number, frequencyTypeReferenceParamUserMasterId?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
-    public expenseGetFrequencyTypeReference(frequencyTypeReferenceParamExpenseCategoryId?: number, frequencyTypeReferenceParamFrequencyTypeId?: number, frequencyTypeReferenceParamUserMasterId?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
-    public expenseGetFrequencyTypeReference(frequencyTypeReferenceParamExpenseCategoryId?: number, frequencyTypeReferenceParamFrequencyTypeId?: number, frequencyTypeReferenceParamUserMasterId?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-
-        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>frequencyTypeReferenceParamExpenseCategoryId, 'frequencyTypeReferenceParam.expenseCategoryId');
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>frequencyTypeReferenceParamFrequencyTypeId, 'frequencyTypeReferenceParam.frequencyTypeId');
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>frequencyTypeReferenceParamUserMasterId, 'frequencyTypeReferenceParam.userMasterId');
+    public expenseGetFrequencyTypeReference(frequencyTypeReferenceParam: FrequencyTypeReferenceParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<DataSubmit>;
+    public expenseGetFrequencyTypeReference(frequencyTypeReferenceParam: FrequencyTypeReferenceParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
+    public expenseGetFrequencyTypeReference(frequencyTypeReferenceParam: FrequencyTypeReferenceParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
+    public expenseGetFrequencyTypeReference(frequencyTypeReferenceParam: FrequencyTypeReferenceParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (frequencyTypeReferenceParam === null || frequencyTypeReferenceParam === undefined) {
+            throw new Error('Required parameter frequencyTypeReferenceParam was null or undefined when calling expenseGetFrequencyTypeReference.');
+        }
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -520,6 +515,19 @@ export class ExpenseService extends BaseService {
         const localVarTransferCache: boolean = options?.transferCache ?? true;
 
 
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/xml',
+            'text/xml',
+            'application/x-www-form-urlencoded'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
         let responseType_: 'text' | 'json' | 'blob' = 'json';
         if (localVarHttpHeaderAcceptSelected) {
             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -532,10 +540,10 @@ export class ExpenseService extends BaseService {
         }
 
         let localVarPath = `/api/Expense/GetFrequencyTypeReference`;
-        return this.httpClient.request<DataSubmit>('get', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<DataSubmit>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                params: localVarQueryParameters,
+                body: frequencyTypeReferenceParam,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

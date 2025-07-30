@@ -2753,7 +2753,7 @@
       }
     },
     "/api/Expense/GetFrequencyTypeReference": {
-      "get": {
+      "post": {
         "tags": [
           "Expense"
         ],
@@ -2773,25 +2773,12 @@
         ],
         "parameters": [
           {
-            "name": "frequencyTypeReferenceParam.expenseCategoryId",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "name": "frequencyTypeReferenceParam.frequencyTypeId",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "name": "frequencyTypeReferenceParam.userMasterId",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int64"
+            "name": "frequencyTypeReferenceParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FrequencyTypeReferenceParam"
+            }
           }
         ],
         "responses": {

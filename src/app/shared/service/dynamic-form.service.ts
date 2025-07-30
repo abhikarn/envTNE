@@ -467,24 +467,15 @@ export class DynamicFormService {
       }
     }
 
-    // handle displayPage controls
-    modifiedFormConfig.forEach((control: IFormControl) => {
-      if (control.displayPage && typeof control.displayPage === 'object') {
-        // If displayPage is an object, filter out controls not relevant to the current page
+    // Handle displayPage filtering
+    modifiedFormConfig = modifiedFormConfig.filter(control => {
+      if (typeof control.displayPage === 'object') {
         const currentPage = moduleConfig?.page || 'default';
-        if (!control.displayPage[currentPage]) {
-          const index = modifiedFormConfig.indexOf(control);
-          if (index > -1) {
-            modifiedFormConfig.splice(index, 1);
-          }
-        }
+        return control.displayPage[currentPage] !== false; // keep if true or undefined
       } else if (control.displayPage === false) {
-        // If displayPage is explicitly false, remove the control
-        const index = modifiedFormConfig.indexOf(control);
-        if (index > -1) {
-          modifiedFormConfig.splice(index, 1);
-        }
+        return false; // remove explicitly hidden
       }
+      return true;
     });
 
     return modifiedFormConfig;
@@ -553,7 +544,7 @@ export class DynamicFormService {
     }
     );
     const output = this.mapOtherControls(moduleData, caseItem.otherControls, caseItem?.landingBoxData);
-    requestBody = { ...requestBody,...queryParams, ...output };
+    requestBody = { ...requestBody, ...queryParams, ...output };
 
     service[apiMethod](requestBody).subscribe(
       (response: any) => {
