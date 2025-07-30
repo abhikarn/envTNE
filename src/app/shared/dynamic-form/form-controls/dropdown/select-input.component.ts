@@ -214,4 +214,19 @@ export class SelectInputComponent implements AfterViewInit {
       });
     }
   }
+
+  setReadableValue(event: MatSelectChange) {
+    if (this.controlConfig.getReadableValue) {
+      const readableControl = this.form.get(this.controlConfig.getReadableValue.controlName);
+      if (readableControl) {
+        const selectedOption = this.controlConfig.options?.find((option: any) => option.value === event.value);
+        if (selectedOption) {
+          readableControl.setValue(selectedOption.label || selectedOption.value || selectedOption.Id || '');
+        } else {
+          readableControl.setValue(''); // Clear if no match found
+        }
+      }
+    }
+  }
+  
 }

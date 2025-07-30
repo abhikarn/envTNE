@@ -25,6 +25,7 @@ import { DynamicTableService } from '../service/dynamic-table.service';
 import { TextAutocompleteComponent } from './form-controls/text-autocomplete/text-autocomplete.component';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { debounceTime } from 'rxjs/operators';
+import _moment from 'moment';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -826,6 +827,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     if (control.setValue) {
       control.setValue.forEach((field: any) => {
+        // Handle minDate from another control (like direct copy)
         if (field.config.minDate) {
           this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
             if (dateInput.controlConfig.name === field.name) {
@@ -833,8 +835,39 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             }
           });
         }
+
+        // Handle custom dateRange config like: { dateRange: "Month" }
+        if (field.config.dateRange) {
+          const monthControlValue = this.form.get(field.config.dateRange)?.value;
+
+          if (monthControlValue) {
+            const parsedMonth = _moment(monthControlValue, 'MMM-YYYY');
+
+            if (parsedMonth.isValid()) {
+              const minDate = parsedMonth.startOf('month').toDate();
+              const maxDate = parsedMonth.endOf('month').toDate();
+
+              this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
+                if (dateInput.controlConfig.name === field.name) {
+                  dateInput.minDate = minDate;
+                  dateInput.maxDate = maxDate;
+
+                  // Optional: reset control value if out of new range
+                  const currentVal = dateInput.control.value;
+                  if (currentVal) {
+                    const currentDate = new Date(currentVal);
+                    if (currentDate < minDate || currentDate > maxDate) {
+                      dateInput.control.setValue(null);
+                    }
+                  }
+                }
+              });
+            }
+          }
+        }
       });
     }
+
 
     if (control.setFields) {
       control.setFields.forEach((field: any) => {

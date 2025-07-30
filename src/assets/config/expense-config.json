@@ -8845,7 +8845,18 @@
                         "displayPage": {
                             "Travel Expense": false,
                             "Local Travel Conveyance": true
-                        }
+                        },
+                        "getReadableValue": {
+                            "controlName": "MonthName"
+                        },
+                        "setValue": [
+                            {
+                                "name": "ClaimDate",
+                                "config": {
+                                    "dateRange": "MonthName"
+                                }
+                            }
+                        ]
                     },
                     {
                         "type": "date",
@@ -9777,6 +9788,13 @@
                             "IsViolation": true
                         },
                         "maxLength": 500
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "MonthName",
+                        "isExcluded": false,
+                        "value": "",
+                        "showInUI": false
                     },
                     {
                         "type": "hidden",
