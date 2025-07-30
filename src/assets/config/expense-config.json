@@ -9128,7 +9128,36 @@
                         "value": null,
                         "autoComplete": true,
                         "isGooglePlace": true,
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "inputControls": {
+                                    "OriginPointName": "origin",
+                                    "DestinationPointName": "destination"
+                                },
+                                "outputControl": {
+                                    "KM": "distanceInKm"
+                                },
+                                "otherControls": {},
+                                "requestBody": {},
+                                "event": "onBlur",
+                                "apiService": "NewExpenseService",
+                                "apiMethod": "calculateLocationDistance",
+                                "labelKey": "Value",
+                                "valueKey": "Key",
+                                "isGooglePlace": true
+                            }
+                        ],
                         "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Origin Location is required"
+                            }
+                        ],
                         "displayPage": {
                             "Travel Expense": false,
                             "Local Travel Conveyance": true
@@ -9141,7 +9170,36 @@
                         "value": null,
                         "autoComplete": true,
                         "isGooglePlace": true,
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "inputControls": {
+                                    "OriginPointName": "origin",
+                                    "DestinationPointName": "destination"
+                                },
+                                "outputControl": {
+                                    "KM": "distanceInKm"
+                                },
+                                "otherControls": {},
+                                "requestBody": {},
+                                "event": "onBlur",
+                                "apiService": "NewExpenseService",
+                                "apiMethod": "calculateLocationDistance",
+                                "labelKey": "Value",
+                                "valueKey": "Key",
+                                "isGooglePlace": true
+                            }
+                        ],
                         "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Destination Location is required"
+                            }
+                        ],
                         "displayPage": {
                             "Travel Expense": false,
                             "Local Travel Conveyance": true

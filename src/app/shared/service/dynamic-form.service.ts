@@ -535,7 +535,13 @@ export class DynamicFormService {
     const queryParams: Record<string, any> = { ...caseItem.queryStringParameter };
     Object.entries(caseItem.inputControls).forEach(([controlName, requestKey]) => {
       if (typeof requestKey === 'string') { // Ensure requestKey is a string
-        let controlValue = form.get(controlName)?.value;
+        let controlValue: any;
+        if (caseItem?.isGooglePlace) {
+          controlValue = form.get(controlName)?.value.label;
+        } else {
+          controlValue = form.get(controlName)?.value;
+        }
+        
         if (typeof controlValue === 'object' && controlValue !== null) {
           controlValue = controlValue.value ?? controlValue; // Handle case where controlValue is an object
         }
@@ -548,6 +554,7 @@ export class DynamicFormService {
 
     service[apiMethod](requestBody).subscribe(
       (response: any) => {
+        debugger
         if (typeof caseItem.outputControl === 'object') {
           for (const [outputControl, responsePath] of Object.entries(caseItem.outputControl) as [string, string][]) {
             const extracted = this.extractValueFromPath(response, responsePath);
@@ -571,6 +578,7 @@ export class DynamicFormService {
             } else {
               console.warn(`No array data found at path "${responsePath}" in response.`);
             }
+            form.get(outputControl)?.setValue(extracted);
           }
         } else if (typeof caseItem.outputControl === 'string') {
           // Single field case

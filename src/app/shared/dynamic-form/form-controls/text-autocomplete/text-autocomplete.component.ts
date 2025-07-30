@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 import { CommonModule } from '@angular/common';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -12,8 +13,8 @@ import { GlobalConfigService } from '../../../service/global-config.service';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
 import { SnackbarService } from '../../../service/snackbar.service';
 import { environment } from '../../../../../environment';
+import { DynamicFormService } from '../../../service/dynamic-form.service';
 
-declare const google: any;
 @Component({
   selector: 'lib-text-autocomplete',
   imports: [CommonModule, ReactiveFormsModule,
@@ -28,12 +29,15 @@ export class TextAutocompleteComponent {
 
   @Input() control: FormControl = new FormControl('');
   @Input() controlConfig: IFormControl = { name: '' };
-  @Input() form: any
+  @Input() form: any;
+  @Input() moduleData: any;
+  @Input() formConfig: any;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
     private snackbarService: SnackbarService,
-    private configService: GlobalConfigService
+    private configService: GlobalConfigService,
+    private dynamicFormService: DynamicFormService
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
@@ -100,13 +104,13 @@ export class TextAutocompleteComponent {
         { input: inputValue },
         (predictions: GooglePlacePrediction[] | null, status: string) => {
           if (status === google.maps.places.PlacesServiceStatus.OK && predictions) {
-        this.controlConfig.options = predictions.map((prediction: GooglePlacePrediction) => ({
-          label: prediction.description,
-          value: prediction.place_id,
-          ...prediction
-        }));
+            this.controlConfig.options = predictions.map((prediction: GooglePlacePrediction) => ({
+              label: prediction.description,
+              value: prediction.place_id,
+              ...prediction
+            }));
           } else {
-        this.controlConfig.options = [];
+            this.controlConfig.options = [];
           }
         }
       );
@@ -141,51 +145,44 @@ export class TextAutocompleteComponent {
   }
 
   onOptionSelected(event: any) {
-    const selectedOption = event.option.value;
+    let selectedOption = event.option.value;
 
     if (this.controlConfig.isGooglePlace) {
-      interface GooglePlaceDetailsRequest {
-        placeId: string;
-        fields: string[];
-      }
+      const placeId = selectedOption?.value;
 
-      interface GooglePlaceDetailsResult {
-        formatted_address?: string;
-        geometry?: any;
-        name?: string;
-        [key: string]: any;
-      }
-
-      type GooglePlacesServiceStatus = string;
-
-      interface GooglePlacesService {
-        getDetails(
-          request: GooglePlaceDetailsRequest,
-          callback: (place: GooglePlaceDetailsResult, status: GooglePlacesServiceStatus) => void
-        ): void;
-      }
-
-      const service: GooglePlacesService = new google.maps.places.PlacesService(document.createElement('div'));
+      const service = new google.maps.places.PlacesService(document.createElement('div'));
 
       service.getDetails(
         {
           placeId: selectedOption,
           fields: ['formatted_address', 'geometry', 'name']
         },
-        (place: GooglePlaceDetailsResult, status: GooglePlacesServiceStatus) => {
-          if (status === google.maps.places.PlacesServiceStatus.OK) {
-        this.control.setValue({
-          label: place.formatted_address,
-          value: selectedOption,
-          ...place
-        });
+        (place: google.maps.places.PlaceResult | null, status: google.maps.places.PlacesServiceStatus) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK && place) {
+            this.control.setValue(place.formatted_address || '');
+          } else {
+            console.warn('Place details fetch failed', status);
           }
         }
       );
+
+
+      // Optional: trigger dependent cases
+      if (this.controlConfig.dependentCases) {
+        this.controlConfig.dependentCases.forEach((caseItem: any) => {
+          if (caseItem?.event === 'onBlur') {
+            this.dynamicFormService.handleFieldBusinessCase(caseItem, this.form, this.moduleData, this.formConfig);
+          }
+        });
+      }
+
     } else {
-      this.control.setValue(selectedOption.value);
+      // For normal autocomplete, assign label only
+      this.control.setValue(selectedOption?.label || '');
     }
+    this.controlConfig.options = []; // Clear options after selection
   }
+
 
 
 

@@ -18,7 +18,8 @@
   @case ('autocomplete') {
   <div class="col-md-4">
     <lib-text-autocomplete [controlConfig]="control.formConfig" [control]="control.control"
-      (valueChange)="onFieldValueChange(control.formConfig)" [form]="form">
+      (valueChange)="onFieldValueChange(control.formConfig)" [form]="form" [moduleData]="moduleData"
+      [formConfig]="formControls">
     </lib-text-autocomplete>
   </div>
   }
