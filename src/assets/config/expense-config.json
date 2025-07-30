@@ -461,6 +461,21 @@
                     "claimTypeId": 53,
                     "travelRequestId": 0
                 }
+            },
+            {
+                "name": "Mobile Handset Purchase",
+                "label": "Mobile Handset Purchase",
+                "displayPage": {
+                    "Mobile Handset Purchase": true
+                },
+                "displayTable": false,
+                "displayAddClearButton": false,
+                "moduleData": {
+                    "travelTypeId": 152,
+                    "requestForId": 152,
+                    "claimTypeId": 53,
+                    "travelRequestId": 0
+                }
             }
         ],
         "dateExtension": {
@@ -13530,8 +13545,9 @@
                         "disable": false,
                         "readonly": false,
                         "order": 2,
-                        "apiDateLimit": true,
-                        "policyentitlementCheck": true
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
+                        "policyEntitlementCheck": true
                     },
                     {
                         "type": "text",
@@ -17488,7 +17504,7 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
                     "requestBody": {
-                        "ExpenseCategoryId": 19,
+                        "ExpenseCategoryId": 52,
                         "CityGradeId": 0,
                         "CountryGradeId": 0
                     },
