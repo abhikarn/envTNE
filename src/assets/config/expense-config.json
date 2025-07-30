@@ -425,7 +425,6 @@
                 },
                 "displayTable": false,
                 "displayAddClearButton": false,
-                "international": true,
                 "moduleData": {
                     "travelTypeId": 152,
                     "requestForId": 152,
@@ -441,7 +440,21 @@
                 },
                 "displayTable": false,
                 "displayAddClearButton": false,
-                "international": true,
+                "moduleData": {
+                    "travelTypeId": 152,
+                    "requestForId": 152,
+                    "claimTypeId": 53,
+                    "travelRequestId": 0
+                }
+            },
+            {
+                "name": "Data Card Broadband",
+                "label": "Data Card Broadband",
+                "displayPage": {
+                    "Data Card Broadband": true
+                },
+                "displayTable": false,
+                "displayAddClearButton": false,
                 "moduleData": {
                     "travelTypeId": 152,
                     "requestForId": 152,
@@ -16788,8 +16801,8 @@
                 }
             },
             {
-                "name": "Broadband",
-                "label": "Broadband",
+                "name": "DataCardBroadband",
+                "label": "Data Card Broadband",
                 "formControls": [
                     {
                         "type": "file",
@@ -16810,11 +16823,63 @@
                         "order": 1
                     },
                     {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "FrequencyType",
+                        "isExcluded": true,
+                        "label": "Frequency Type",
+                        "placeholder": "Select Frequency Type",
+                        "value": "",
+                        "defaultValue": {
+                            "Id": 79,
+                            "Display": "Monthly"
+                        },
+                        "options": [],
+                        "labelKey": "",
+                        "valueKey": "",
+                        "apiService": "",
+                        "apiMethod": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Frequency Type is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 9
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "Month",
+                        "isExcluded": true,
+                        "label": "Month",
+                        "placeholder": "Select Month",
+                        "value": "",
+                        "options": [],
+                        "labelKey": "",
+                        "valueKey": "",
+                        "apiService": "",
+                        "apiMethod": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Month is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 9
+                    },
+                    {
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimFromDate",
                         "isExcluded": false,
-                        "label": "Claim From Date",
+                        "label": "Billing From Date",
                         "value": null,
                         "dependentCases": [
                             {
@@ -16896,7 +16961,7 @@
                         "dataType": "datetime",
                         "name": "ClaimToDate",
                         "isExcluded": false,
-                        "label": "Claim To Date",
+                        "label": "Billing To Date",
                         "value": null,
                         "required": true,
                         "validations": [
@@ -16916,6 +16981,7 @@
                         },
                         "order": 3,
                         "apiDateLimit": true,
+                        "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
                                 "ClaimFromDate": "ClaimFromDate",
@@ -16925,59 +16991,29 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "dataType": "string",
-                        "name": "Frequency",
-                        "isExcluded": false,
-                        "label": "Frequency",
-                        "value": "",
-                        "required": true,
-                        "validations": [
+                        },
+                        "setValue": [
                             {
-                                "type": "required",
-                                "message": "Frequency is required"
+                                "name": "BillDate",
+                                "config": {
+                                    "minDate": "ClaimToDate"
+                                }
                             }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 4
+                        ]
                     },
                     {
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
-                        "name": "Month",
+                        "name": "BroadbandNumber",
                         "isExcluded": false,
-                        "label": "Month",
+                        "label": "Broadband Number",
                         "value": "",
                         "required": true,
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Month is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 4
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "dataType": "string",
-                        "name": "MobileNumber",
-                        "isExcluded": false,
-                        "label": "Mobile Number",
-                        "value": "",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Mobile number is required"
+                                "message": "Broadband number is required"
                             }
                         ],
                         "disable": false,
@@ -17009,8 +17045,6 @@
                         "label": "Bill Date",
                         "value": null,
                         "required": false,
-                        "minDate": "01-01-1900",
-                        "maxDate": "today",
                         "order": 8
                     },
                     {
@@ -17210,12 +17244,6 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
-                            },
-                            {
-                                "type": "custom",
-                                "subType": "greaterThanZeroValidator",
-                                "name": "greaterThanZeroValidator",
-                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -17336,124 +17364,6 @@
                         "order": 18
                     },
                     {
-                        "type": "costcenter",
-                        "dataType": "object",
-                        "name": "costcentreWiseExpense",
-                        "isExcluded": false,
-                        "label": "Cost Centre",
-                        "value": [],
-                        "getControl": "ClaimAmount",
-                        "fields": [
-                            {
-                                "name": "ExpenseRequestCostCentrewiseAmmoutId",
-                                "type": "number",
-                                "value": 0,
-                                "showInUI": false,
-                                "order": 1
-                            },
-                            {
-                                "name": "ExpenseRequestDetailId",
-                                "type": "number",
-                                "value": 0,
-                                "showInUI": false,
-                                "order": 2
-                            },
-                            {
-                                "type": "text",
-                                "subType": "text",
-                                "dataType": "int",
-                                "autoComplete": true,
-                                "name": "CostCentre",
-                                "isExcluded": false,
-                                "label": "Cost Center",
-                                "value": null,
-                                "options": [],
-                                "labelKey": "Display",
-                                "valueKey": "CostCentreId",
-                                "apiService": "DataService",
-                                "apiMethod": "dataGetCityAutocomplete",
-                                "required": true,
-                                "validations": [
-                                    {
-                                        "type": "required",
-                                        "message": "Cost Center is required"
-                                    }
-                                ],
-                                "disable": false,
-                                "readonly": false,
-                                "order": 3,
-                                "showInUI": true
-                            },
-                            {
-                                "name": "CostCentreId",
-                                "type": "text",
-                                "value": 0,
-                                "showInUI": false,
-                                "order": 4
-                            },
-                            {
-                                "name": "AmmoutInPercentage",
-                                "type": "text",
-                                "dataType": "numeric",
-                                "showInUI": true,
-                                "label": "Amount In(%)",
-                                "value": null,
-                                "autoFormat": {
-                                    "patterns": [
-                                        "[^0-9.]",
-                                        "^0+(?=\\d)"
-                                    ],
-                                    "range": {
-                                        "min": 0,
-                                        "max": 2
-                                    }
-                                },
-                                "required": true,
-                                "validations": [
-                                    {
-                                        "type": "required",
-                                        "message": "Required"
-                                    },
-                                    {
-                                        "type": "min",
-                                        "value": 0
-                                    }
-                                ],
-                                "order": 5
-                            },
-                            {
-                                "name": "AmmoutInActual",
-                                "type": "text",
-                                "dataType": "numeric",
-                                "showInUI": true,
-                                "label": "Amount In Actual",
-                                "value": null,
-                                "autoFormat": {
-                                    "patterns": [
-                                        "[^0-9.]",
-                                        "^0+(?=\\d)"
-                                    ],
-                                    "range": {
-                                        "min": 0,
-                                        "max": 10
-                                    }
-                                },
-                                "required": true,
-                                "validations": [
-                                    {
-                                        "type": "required",
-                                        "message": "Required"
-                                    },
-                                    {
-                                        "type": "min",
-                                        "value": 0
-                                    }
-                                ],
-                                "order": 6
-                            }
-                        ]
-                    },
-                    {
                         "type": "hidden",
                         "name": "CityGrade",
                         "isExcluded": true,
@@ -17537,8 +17447,27 @@
                         "isExcluded": true,
                         "value": 0,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "costcentreWiseExpense",
+                        "isExcluded": true,
+                        "value": null,
+                        "showInUI": false
                     }
                 ],
+                "employeeProfile": {
+                    "apiService": "UserService",
+                    "apiMethod": "userGetEmployeeProfile",
+                    "requestBody": {},
+                    "otherControls": {
+                        "UserMasterId": "UserMasterId"
+                    },
+                    "inputControls": {},
+                    "outputControl": {
+                        "BroadbandNumber": "ResponseValue.MobileNumber"
+                    }
+                },
                 "policyViolationManualCheck": [
                     {
                         "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
@@ -17559,19 +17488,19 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
                     "requestBody": {
-                        "ExpenseCategoryId": 0
+                        "ExpenseCategoryId": 19,
+                        "CityGradeId": 0,
+                        "CountryGradeId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "travelTypeId",
+                        "ClaimTypeId": "claimTypeId",
                         "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
                         "ClaimFromDate": "ReferenceFromDate",
                         "ClaimToDate": "ReferenceToDate",
-                        "CityGrade": "CityGradeId",
-                        "CountryGrade": "CountryGradeId",
-                        "Constraint": "PolicyReferenceId"
+                        "FrequencyType": "PolicyReferenceId"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -17771,7 +17700,7 @@
                     }
                 ],
                 "displayPage": {
-                    "Broadband Expense": true
+                    "Data Card Broadband": true
                 }
             },
             {

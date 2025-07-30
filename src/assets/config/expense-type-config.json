@@ -21,11 +21,11 @@
         "alt": "Mobile Handset Purchase"
     },
     {
-        "title": "Broadband Expenses",
+        "title": "Data Card Broadband",
         "img": "assets/images/expense-datacard.svg",
         "link": "expense/expense/create-broadband-expense",
         "colorClass": "expense-color5",
-        "alt": "Broadband Expenses"
+        "alt": "Data Card Broadband"
     },
     {
         "title": "Mobile Expense",

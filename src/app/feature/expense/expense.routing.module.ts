@@ -8,7 +8,7 @@ const dynamicExpenseRoutes = [
   { title: 'Travel Expense', path: 'create-expense' },
   { title: 'Local Travel Conveyance', path: 'create-local-travel-conveyance' },
   { title: 'Mobile Handset Purchase', path: 'create-mobile-handset-purchase' },
-  { title: 'Broadband Expense', path: 'create-broadband-expense' },
+  { title: 'Data Card Broadband', path: 'create-broadband-expense' },
   { title: 'Mobile Expense', path: 'create-mobile-expense' },
   { title: 'Marriage Gift Expense', path: 'create-marriage-gift-expense' },
   { title: 'Deputation Expense', path: 'create-deputation-expense' },
