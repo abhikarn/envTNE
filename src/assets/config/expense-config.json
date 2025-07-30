@@ -476,6 +476,21 @@
                     "claimTypeId": 53,
                     "travelRequestId": 0
                 }
+            },
+            {
+                "name": "Marriage Gift",
+                "label": "Marriage Gift",
+                "displayPage": {
+                    "Marriage Gift": true
+                },
+                "displayTable": false,
+                "displayAddClearButton": false,
+                "moduleData": {
+                    "travelTypeId": 152,
+                    "requestForId": 152,
+                    "claimTypeId": 53,
+                    "travelRequestId": 0
+                }
             }
         ],
         "dateExtension": {
@@ -8751,6 +8766,56 @@
                         "disable": false,
                         "oCRRequired": false,
                         "order": 1
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "Month",
+                        "isExcluded": false,
+                        "label": "Month",
+                        "placeholder": "Select Month",
+                        "value": null,
+                        "options": [],
+                        "labelKey": "Value",
+                        "valueKey": "Key",
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {},
+                                "outputControl": {
+                                    "Month": "ResponseValue"
+                                },
+                                "otherControls": {
+                                    "UserMasterId": "UserMasterId"
+                                },
+                                "requestBody": {
+                                    "expenseCategoryId": 4,
+                                    "frequencyTypeId": 1
+                                },
+                                "event": "onInit",
+                                "apiService": "ExpenseService",
+                                "apiMethod": "expenseGetFrequencyTypeReference",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Month is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "displayPage": {
+                            "Travel Expense": false,
+                            "Local Travel Conveyance": true
+                        }
                     },
                     {
                         "type": "date",
@@ -17472,7 +17537,7 @@
                         "showInUI": false
                     }
                 ],
-                "employeeProfile": {
+                "onInitAPI": {
                     "apiService": "UserService",
                     "apiMethod": "userGetEmployeeProfile",
                     "requestBody": {},
@@ -18375,7 +18440,7 @@
                         "showInUI": false
                     }
                 ],
-                "employeeProfile": {
+                "onInitAPI": {
                     "apiService": "UserService",
                     "apiMethod": "userGetEmployeeProfile",
                     "requestBody": {},
@@ -18626,7 +18691,8 @@
                         "disable": false,
                         "readonly": false,
                         "order": 2,
-                        "apiDateLimit": true,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "policyEntitlementCheck": true
                     },
                     {
@@ -19312,7 +19378,7 @@
                     }
                 ],
                 "displayPage": {
-                    "Marriage Gift Expense": true
+                    "Marriage Gift": true
                 }
             },
             {

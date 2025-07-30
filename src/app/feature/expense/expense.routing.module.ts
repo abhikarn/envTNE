@@ -10,7 +10,7 @@ const dynamicExpenseRoutes = [
   { title: 'Mobile Handset Purchase', path: 'create-mobile-handset-purchase' },
   { title: 'Data Card Broadband', path: 'create-broadband-expense' },
   { title: 'Mobile Expense', path: 'create-mobile-expense' },
-  { title: 'Marriage Gift Expense', path: 'create-marriage-gift-expense' },
+  { title: 'Marriage Gift', path: 'create-marriage-gift-expense' },
   { title: 'Deputation Expense', path: 'create-deputation-expense' },
   { title: 'Direct Expense Domestic', path: 'create-direct-expense-domestic' },
   { title: 'Direct Expense International', path: 'create-direct-expense-international' },

@@ -533,6 +533,8 @@ export class DynamicFormService {
   }
 
   handleFieldBusinessCase(caseItem: any, form: any, moduleData: any, formConfig: any): void {
+    debugger;
+    console.log('Handling field business case:', caseItem, form, moduleData, formConfig);
     const service = this.serviceRegistry.getService(caseItem.apiService);
     const apiMethod = caseItem.apiMethod;
     let requestBody: any = caseItem.requestBody;
@@ -552,7 +554,7 @@ export class DynamicFormService {
     }
     );
     const output = this.mapOtherControls(moduleData, caseItem.otherControls, caseItem?.landingBoxData);
-    requestBody = { ...queryParams, ...output };
+    requestBody = { ...requestBody,...queryParams, ...output };
 
     service[apiMethod](requestBody).subscribe(
       (response: any) => {
@@ -663,19 +665,19 @@ export class DynamicFormService {
    */
   populateFormWithData(
     form: FormGroup,
-    employeeProfile: any,
+    onInitAPIDetails: any,
     moduleData: any
   ): void {
-    if (employeeProfile) {
-      const service = this.serviceRegistry.getService(employeeProfile.apiService);
-      const apiMethod = employeeProfile.apiMethod;
-      let requestBody: any = employeeProfile.requestBody;
-      const output = this.mapOtherControls(moduleData, employeeProfile.otherControls);
+    if (onInitAPIDetails) {
+      const service = this.serviceRegistry.getService(onInitAPIDetails.apiService);
+      const apiMethod = onInitAPIDetails.apiMethod;
+      let requestBody: any = onInitAPIDetails.requestBody;
+      const output = this.mapOtherControls(moduleData, onInitAPIDetails.otherControls);
       service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
         (response: any) => {
-          if (typeof employeeProfile.outputControl === 'object') {
+          if (typeof onInitAPIDetails.outputControl === 'object') {
             // Multiple fields case
-            for (const [outputControl, responsePath] of Object.entries(employeeProfile.outputControl) as [string, string][]) {
+            for (const [outputControl, responsePath] of Object.entries(onInitAPIDetails.outputControl) as [string, string][]) {
               const value = this.extractValueFromPath(response, responsePath);
               if (value !== undefined) {
                 form.get(outputControl)?.setValue(value);

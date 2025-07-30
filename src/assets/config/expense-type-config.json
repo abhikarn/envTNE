@@ -39,7 +39,7 @@
         "img": "assets/images/expense-marriage.svg",
         "link": "expense/expense/create-marriage-gift-expense",
         "colorClass": "expense-color7",
-        "alt": "Marriage Gift Expense"
+        "alt": "Marriage Gift"
     },
     {
         "title": "Deputation Expense",

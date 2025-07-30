@@ -73,6 +73,14 @@ export class SelectInputComponent implements AfterViewInit {
       this.control.disable();
     }
 
+    if (this.controlConfig.dependentCases) {
+      this.controlConfig.dependentCases.forEach((caseItem: any) => {
+        if (caseItem?.event == "onInit") {
+          this.dynamicFormService.handleFieldBusinessCase(caseItem, this.form, this.moduleData, this.formConfig);
+        }
+      });
+    }
+
   }
 
   private loadOptions() {
@@ -90,7 +98,7 @@ export class SelectInputComponent implements AfterViewInit {
           (data: any) => {
             const labelKey = this.controlConfig.labelKey || 'label';
             const valueKey = this.controlConfig.valueKey || 'value';
-            this.controlConfig.options = data.ResponseValue.map((item: any) => ({
+            this.controlConfig.options = data?.ResponseValue?.map((item: any) => ({
               label: item[labelKey],
               value: item[valueKey]
             }));

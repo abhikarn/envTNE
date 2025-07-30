@@ -156,9 +156,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.formControls.push({ formConfig: config, control: control });
       this.form.addControl(config.name, control);
     });
-    if (this.category?.employeeProfile) {
-      // Populate form with employee profile data if available
-      this.dynamicFormService.populateFormWithData(this.form, this.category.employeeProfile, this.moduleData);
+    if (this.category?.onInitAPI) {
+      // Populate form with initial API data if available
+      this.dynamicFormService.populateFormWithData(this.form, this.category.onInitAPI, this.moduleData);
     }
     this.form.reset();
 
