@@ -59,7 +59,7 @@
                 </span>
                 }
                 <span data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="More Info"
-                  class="btn btn-showhide p-0"><i (click)="toggleRow(i)" [class.rotate]="expandedRowIndex === i"
+                  class="btn btn-showhide p-0"><i (click)="toggleRow(i)" [class.rotate]="expandedRowIndices.has(i)"
                     class="fa fa-chevron-down"></i></span>
               </div>
               } @else {
@@ -70,7 +70,7 @@
             }
           </tr>
 
-          @if (expandedRowIndex === i) {
+          @if  (expandedRowIndices.has(i)) {
           <tr class="child-le-row p-0">
             <td class="p-0" [attr.colspan]="tableColumns.length + 2">
               <div class="tr-showblock" [ngClass]="{

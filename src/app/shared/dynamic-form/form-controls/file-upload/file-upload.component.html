@@ -34,7 +34,7 @@
       @for (file of selectedFiles; track file; let i = $index) {
       <tr>
      <td>{{ i + 1 }}</td>
-        <td  > <label>Document Name</label> {{ file?.FileName }}</td>
+        <td class="filename-width"  > <label>Document Name</label> {{ file?.FileName }}</td>
         <td data-label="" class="text-lg-start">
           <!-- Preview Action -->
           <a class="me-2" title="Preview" (click)="previewFile(file)">

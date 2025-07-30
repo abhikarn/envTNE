@@ -913,4 +913,13 @@ ul.quick-menu-links li {
 	padding: 13px 13px;
 	height: auto !important;
 }
+.violation-border {
+	background-color: rgb(255, 203, 203) !important;
+}
+.violation-border td {
+	background-color: transparent !important;
+}
+.filename-width {
+	width: 67%;
+}
 }

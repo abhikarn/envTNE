@@ -27,7 +27,7 @@ export class DynamicTableComponent implements OnInit {
   nestedTables: any[] = [];
   expandedRowIndex: number | null = null;
   tableOutFields: { name: string; label: string }[] = [];
-
+  expandedRowIndices = new Set<number>();
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -139,8 +139,17 @@ export class DynamicTableComponent implements OnInit {
     this.editRow.emit(rowData);
   }
 
+  // toggleRow(index: number) {
+  //   this.expandedRowIndex = this.expandedRowIndex === index ? null : index;
+  // }
+
+  
   toggleRow(index: number) {
-    this.expandedRowIndex = this.expandedRowIndex === index ? null : index;
+    if (this.expandedRowIndices.has(index)) {
+      this.expandedRowIndices.delete(index);
+    } else {
+      this.expandedRowIndices.add(index);
+    }
   }
 
   // previewFile(file: any) {

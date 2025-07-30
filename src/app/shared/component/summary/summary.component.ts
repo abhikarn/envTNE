@@ -1,10 +1,9 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-summary',
-  imports: [],
   templateUrl: './summary.component.html',
-  styleUrl: './summary.component.scss'
+  styleUrls: ['./summary.component.scss']
 })
 export class SummaryComponent implements OnChanges {
 
@@ -20,15 +19,16 @@ export class SummaryComponent implements OnChanges {
   }
 
   toggleAccordion(activeId: string): void {
-     
-    this.summaries = this.summaries.map((summary: any) => ({
-      ...summary,
-      isOpen: summary.id === activeId
-    }));
+    // Toggle the accordion open state for the clicked item
+    this.summaries = this.summaries.map((summary: any) => {
+      if (summary.id === activeId) {
+        return { ...summary, isOpen: !summary.isOpen }; // Toggle the current one
+      }
+      return summary; // Keep other summaries' states unchanged
+    });
   }
 
   calculatTotalExpenseAmount() {
-     
     const EXPENSE_SUMMARY_ID = "expense-summary";
     const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
     const PAYABLE_KEYS = [91, 94];
@@ -94,7 +94,6 @@ export class SummaryComponent implements OnChanges {
   }
 
   updateExpenseItem(summary: any, paymentModeId: any, amount: any) {
-     
     const targetItem = summary.items?.find((item: any) => item.paymentModeId === paymentModeId);
     if (targetItem) {
       const currentValue = Number(targetItem.value) || 0;
@@ -132,7 +131,6 @@ export class SummaryComponent implements OnChanges {
   }
 
   setCategoryWiseAmount() {
-     
     const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
     const categoryWiseExpense = this.summaries?.find((s: any) => s.id === CATEGORY_WISE_EXPENSE_ID);
     if (!categoryWiseExpense) return;
@@ -149,7 +147,6 @@ export class SummaryComponent implements OnChanges {
   }
 
   updateTotalAmount(categoryExpense: any) {
-    
     const total = categoryExpense.items
       .filter((item: any) => item.name !== 'Total')
       .reduce((sum: number, item: any) => sum + parseFloat(item.value || '0'), 0);
@@ -161,7 +158,6 @@ export class SummaryComponent implements OnChanges {
   }
 
   calculateCostCenterWiseExpense() {
-     
     const COST_CENTER_WISE_EXPENSE_ID = "cost-center-wise-expense";
     const summary = this.summaries?.find((s: any) => s.id === COST_CENTER_WISE_EXPENSE_ID);
     if (!summary) return;
@@ -197,7 +193,6 @@ export class SummaryComponent implements OnChanges {
 
           const item = summary.items.find((item: any) => item.label === costCenterName);
           if (item) {
-           
             item.value = (Number(item.value) + amount).toFixed(2);
           }
         });
