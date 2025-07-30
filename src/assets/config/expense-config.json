@@ -9122,6 +9122,32 @@
                         }
                     },
                     {
+                        "type": "autocomplete",
+                        "name": "OriginPointName",
+                        "label": "Origin Location",
+                        "value": null,
+                        "autoComplete": true,
+                        "isGooglePlace": true,
+                        "required": true,
+                        "displayPage": {
+                            "Travel Expense": false,
+                            "Local Travel Conveyance": true
+                        }
+                    },
+                    {
+                        "type": "autocomplete",
+                        "name": "DestinationPointName",
+                        "label": "Destination Location",
+                        "value": null,
+                        "autoComplete": true,
+                        "isGooglePlace": true,
+                        "required": true,
+                        "displayPage": {
+                            "Travel Expense": false,
+                            "Local Travel Conveyance": true
+                        }
+                    },
+                    {
                         "type": "text",
                         "subType": "text",
                         "dataType": "int",

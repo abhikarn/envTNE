@@ -60,4 +60,5 @@ export interface IFormControl {
   setNameControl?: string; // For setting control name based on value
   displayPage?: any;
   setValue?: any[];
+  isGooglePlace?: boolean; // For Google Places Autocomplete
 }
