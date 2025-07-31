@@ -1340,6 +1340,17 @@
                         "valueCheck": true
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "policyViolationCheckApi": {
                     "apiService": "TravelService",
                     "apiMethod": "travelValidateTravelTicketPolicy",

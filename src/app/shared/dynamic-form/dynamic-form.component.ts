@@ -237,9 +237,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   async onSubmit() {
-    console.log(this.category);
-    console.log(this.moduleConfig);
-    console.log(this.moduleData)
     console.log('Form submitted:', this.form.value);
 
     if (this.form.invalid) {
@@ -247,6 +244,38 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.dynamicFormService.scrollToFirstInvalidControl('form');
       this.scrollToFirstInvalidControl();
       return;
+    }
+
+    if (this.category.checkValidationOnSubmit?.costCenter) {
+      debugger
+      for (const validation of this.category.checkValidationOnSubmit.costCenter) {
+        if (validation.AmountMustMatchClaimAmount && validation.dependsOn?.length >= 2) {
+          const [claimAmountField, costCenterField] = validation.dependsOn;
+
+          const costCenterData = this.form.value?.[costCenterField] || [];
+          if (costCenterData.length > 0) {
+            const claimAmountRaw = this.form.value?.[claimAmountField];
+            const claimAmount = parseFloat(
+              typeof claimAmountRaw === 'string' ? claimAmountRaw.replace(/,/g, '') : claimAmountRaw
+            ) || 0;
+
+            const totalCostCenterAmount = costCenterData.reduce((sum: number, item: any) => {
+              const rawAmount = item?.AmmoutInActual;
+              const amount = parseFloat(
+                typeof rawAmount === 'string' ? rawAmount.replace(/,/g, '') : rawAmount
+              );
+              return sum + (isNaN(amount) ? 0 : amount);
+            }, 0);
+
+            const isMatch = Math.abs(totalCostCenterAmount - claimAmount) < 0.01;
+
+            if (!isMatch) {
+              this.snackbarService.error(validation.AmountMustMatchClaimAmount, 5000);
+              return;
+            }
+          }
+        }
+      }
     }
 
     // claim restriction check

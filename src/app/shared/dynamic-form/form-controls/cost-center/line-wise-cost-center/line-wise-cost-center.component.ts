@@ -151,6 +151,15 @@ export class LineWiseCostCenterComponent {
       this.snackbarService.error('Total cost center amount exceeds claimed amount');
       return;
     }
+    // Total of AmmoutInPercentage should not exceed 100%
+    const totalPercentage = this.costCenterDetails.reduce((sum: number, detail: any) => {
+      return sum + (parseFloat(detail.AmmoutInPercentage) || 0);
+    }, 0);
+
+    if (totalPercentage + parseFloat(this.costCenterDetailsForm.get('AmmoutInPercentage')?.value || "0") > 100) {
+      this.snackbarService.error('Total cost center percentage exceeds 100%');
+      return;
+    }
 
     this.fields.forEach((field: any) => {
       if (field?.dataType == 'numeric' && this.costCenterDetailsForm.value.hasOwnProperty(field.name)) {
