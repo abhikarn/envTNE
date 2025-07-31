@@ -31,7 +31,7 @@
           <div class="left-container-wider scroll-left-align mar-tmd3">
             @if(!this.travelRequestId) {
             @for (box of expenseConfig?.expenseLandingBox; track $index) {
-            @if (box?.displayPage?.[moduleConfig.pageTitle]) {
+            @if (box?.displayPage?.[moduleConfig.page]) {
             <div class="common-block mb-3">
               <app-dynamic-form [formConfig]="box.formControls" [displayTable]="box.displayTable" [moduleData]="box.moduleData"
                 [existingData]="existingExpenseRequestData" [displayAddClearButton]="box.displayAddClearButton"

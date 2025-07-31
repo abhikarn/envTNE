@@ -1,4 +1,4 @@
-import { Component, DestroyRef, ElementRef, HostListener, inject, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, ElementRef, HostListener, inject, QueryList, TemplateRef, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { CityAutocompleteParam, DataService, ExpenseRequestModel, ExpenseService, FinanceService, TravelService } from '../../../../../tne-api';
@@ -28,7 +28,7 @@ import { environment } from '../../../../environment';
 import { BottomSheetService } from '../../../shared/service/bottom-sheet.service';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-
+import _moment from 'moment';
 
 @Component({
   selector: 'app-main-expense',
@@ -1200,6 +1200,50 @@ export class MainExpenseComponent {
 
   getFormValue(form: any) {
     this.expenseLandingBoxForm = form;
+
+    this.expenseConfig?.expenseLandingBox?.forEach((box: any) => {
+      if (box?.displayPage?.[this.title]) {
+        let categoryIndex = this.categories.findIndex((cat: any) => cat.name === box.altName);
+        if (categoryIndex === -1) return;
+
+        const category = this.categories[categoryIndex];
+
+        box.formControls.forEach((control: any) => {
+          if (control?.setValue) {
+            control.setValue.forEach((field: any) => {
+              if (field?.config?.dateRange) {
+                const monthControlValue = this.expenseLandingBoxForm.get(field.config.dateRange)?.value;
+                if (monthControlValue) {
+                  const parsedMonth = _moment(monthControlValue, 'MMM-YYYY');
+                  if (parsedMonth.isValid()) {
+                    const minDate = parsedMonth.startOf('month').toDate();
+                    const maxDate = parsedMonth.endOf('month').toDate();
+
+                    const updatedFormControls = category.formControls.map((catControl: any) => {
+                      if (catControl.name === field.name) {
+                        return {
+                          ...catControl,
+                          minDate,
+                          maxDate
+                        };
+                      }
+                      return catControl;
+                    });
+
+                    // Update the categories array immutably
+                    this.categories[categoryIndex] = {
+                      ...category,
+                      formControls: updatedFormControls
+                    };
+                  }
+                }
+              }
+            });
+          }
+        });
+      }
+    });
+
 
     const fromDate = this.expenseLandingBoxForm.get('travelDateFrom')?.value;
     const toDate = this.expenseLandingBoxForm.get('travelDateTo')?.value;

@@ -101,7 +101,8 @@
         },
         "expenseLandingBox": [
             {
-                "name": "DirectExpenseDomestic",
+                "name": "Direct Expense Domestic",
+                "altName": "Direct Expense Domestic",
                 "label": "Direct Expense Domestic",
                 "formControls": [
                     {
@@ -259,7 +260,8 @@
                 }
             },
             {
-                "name": "DirectExpenseInternational",
+                "name": "Direct Expense International",
+                "altName": "Direct Expense International",
                 "label": "Direct Expense International",
                 "formControls": [
                     {
@@ -419,12 +421,80 @@
             },
             {
                 "name": "Local Travel Conveyance",
+                "altName": "Local Conveyance During Travel",
                 "label": "Local Travel Conveyance",
-                "displayPage": {
-                    "Local Travel Conveyance": true
-                },
+                "formControls": [
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "Month",
+                        "isExcluded": false,
+                        "label": "Month",
+                        "placeholder": "Select Month",
+                        "value": null,
+                        "options": [],
+                        "labelKey": "Value",
+                        "valueKey": "Key",
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {},
+                                "outputControl": {
+                                    "Month": "ResponseValue"
+                                },
+                                "otherControls": {
+                                    "UserMasterId": "UserMasterId"
+                                },
+                                "requestBody": {
+                                    "expenseCategoryId": 4,
+                                    "frequencyTypeId": 1
+                                },
+                                "event": "onInit",
+                                "apiService": "ExpenseService",
+                                "apiMethod": "expenseGetFrequencyTypeReference",
+                                "labelKey": "ReferenceType",
+                                "valueKey": "ReferenceTypeId"
+                            }
+                        ],
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Month is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "getReadableValue": {
+                            "controlName": "MonthName"
+                        },
+                        "setValue": [
+                            {
+                                "name": "ClaimDate",
+                                "config": {
+                                    "dateRange": "MonthName"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "MonthName",
+                        "isExcluded": false,
+                        "value": "",
+                        "showInUI": false
+                    }
+                ],
                 "displayTable": false,
                 "displayAddClearButton": false,
+                "displayPage": {
+                    "Local Travel Conveyance": true,
+                    "Travel Expense": false
+                },
                 "moduleData": {
                     "travelTypeId": 152,
                     "requestForId": 152,
@@ -8798,67 +8868,6 @@
                         "order": 1
                     },
                     {
-                        "type": "select",
-                        "dataType": "int",
-                        "name": "Month",
-                        "isExcluded": false,
-                        "label": "Month",
-                        "placeholder": "Select Month",
-                        "value": null,
-                        "options": [],
-                        "labelKey": "Value",
-                        "valueKey": "Key",
-                        "dependentCases": [
-                            {
-                                "type": [
-                                    "domestic",
-                                    "international"
-                                ],
-                                "key": "Id",
-                                "inputControls": {},
-                                "outputControl": {
-                                    "Month": "ResponseValue"
-                                },
-                                "otherControls": {
-                                    "UserMasterId": "UserMasterId"
-                                },
-                                "requestBody": {
-                                    "expenseCategoryId": 4,
-                                    "frequencyTypeId": 1
-                                },
-                                "event": "onInit",
-                                "apiService": "ExpenseService",
-                                "apiMethod": "expenseGetFrequencyTypeReference",
-                                "labelKey": "ReferenceType",
-                                "valueKey": "ReferenceTypeId"
-                            }
-                        ],
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Month is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "displayPage": {
-                            "Travel Expense": false,
-                            "Local Travel Conveyance": true
-                        },
-                        "getReadableValue": {
-                            "controlName": "MonthName"
-                        },
-                        "setValue": [
-                            {
-                                "name": "ClaimDate",
-                                "config": {
-                                    "dateRange": "MonthName"
-                                }
-                            }
-                        ]
-                    },
-                    {
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
@@ -8968,8 +8977,8 @@
                         "placeholder": "Select Travel Type",
                         "value": null,
                         "defaultValue": {
-                            "Id": 4,
-                            "Display": "Local Conveyance During Travel"
+                            "Id": 21,
+                            "Display": "Local Travel Conveyance"
                         },
                         "options": [],
                         "labelKey": "Value",
@@ -9791,13 +9800,6 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "MonthName",
-                        "isExcluded": false,
-                        "value": "",
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
                         "name": "CityGrade",
                         "isExcluded": true,
                         "value": 0,
@@ -9916,11 +9918,9 @@
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
-                    "requestBody": {
-                        "ExpenseCategoryId": 4
-                    },
+                    "requestBody": {},
                     "otherControls": {
-                        "ClaimTypeId": "travelTypeId",
+                        "ClaimTypeId": "claimTypeId",
                         "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
@@ -9928,7 +9928,8 @@
                         "ClaimDate": "ReferenceDate",
                         "CityGrade": "CityGradeId",
                         "CountryGrade": "CountryGradeId",
-                        "LocalTravelMode": "PolicyReferenceId"
+                        "LocalTravelMode": "PolicyReferenceId",
+                        "LocalTravelType": "ExpenseCategoryId"
                     },
                     "outputControl": {
                         "EntitlementAmount": "ResponseValue.EntitlementAmount",
