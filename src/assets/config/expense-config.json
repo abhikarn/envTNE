@@ -2808,6 +2808,17 @@
                         "valueCheck": true
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "policyViolationManualCheck": [
                     {
                         "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
@@ -4209,6 +4220,17 @@
                         "showInUI": false
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "policyViolationManualCheck": [
                     {
                         "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
@@ -5559,6 +5581,17 @@
                         "valueCheck": true
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "policyViolationManualCheck": [
                     {
                         "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
@@ -6914,6 +6947,17 @@
                         "valueCheck": true
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "policyViolationManualCheck": [
                     {
                         "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
@@ -8420,6 +8464,17 @@
                         "valueCheck": true
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "policyViolationManualCheck": [
                     {
                         "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
@@ -9928,6 +9983,17 @@
                         "valueCheck": false
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
@@ -11449,6 +11515,17 @@
                         "valueCheck": false
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "expanded": true,
                 "displayTable": true,
                 "displayAddClearButton": true,
@@ -12515,6 +12592,17 @@
                         "international": true
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "policyViolationManualCheck": [
                     {
                         "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
@@ -13457,6 +13545,17 @@
                         "showInUI": false
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "policyViolationCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseValidateInternationalBaggageOutfitPolicy",
@@ -14294,6 +14393,17 @@
                         }
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
@@ -15137,6 +15247,17 @@
                         "valueCheck": true
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
@@ -15726,6 +15847,17 @@
                         "valueCheck": false
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "expanded": true,
                 "displayTable": true,
                 "displayAddClearButton": true,
@@ -16252,6 +16384,17 @@
                         "valueCheck": false
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "expanded": true,
                 "displayTable": true,
                 "displayAddClearButton": true,
@@ -16861,6 +17004,17 @@
                         "order": 13
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
@@ -19368,6 +19522,17 @@
                         }
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "costCenter": [
+                        {
+                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "dependsOn": [
+                                "ClaimAmount",
+                                "costcentreWiseExpense"
+                            ]
+                        }
+                    ]
+                },
                 "policyViolationManualCheck": [
                     {
                         "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
