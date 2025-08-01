@@ -352,7 +352,14 @@ export class MainExpenseComponent {
           if (response) {
             this.expenseRequestId = response.expenseRequestId;
             this.expenseRequestPreviewData = response;
+            const hasMissingFields = this.checkMissingRequiredFields(
+              this.expenseRequestPreviewData.dynamicExpenseDetailModels,
+              this.categories
+            );
 
+            if (!hasMissingFields) {
+              this.enableSubmitButton = true;
+            }
 
             this.populateExistingExpenseData(response);
           }
@@ -399,6 +406,7 @@ export class MainExpenseComponent {
       this.setupExpenseConfigForEditMode(response, this.title);
     } else {
       this.title = 'Travel Expense';
+      this.moduleConfig.page = 'Travel Expense';
       this.setupExpenseConfigForEditMode(response, this.title);
     }
 
@@ -1161,7 +1169,7 @@ export class MainExpenseComponent {
         if (!configCategory) return null;
 
         const requiredFields = configCategory.formControls
-          .filter((control: any) => control.required && !control.isExcluded)
+          .filter((control: any) => control.required && !control.isExcluded && control.displayPage?.[this.title])
           .map((control: any) => control.name);
 
         const missingInItems = expenseCategory.data

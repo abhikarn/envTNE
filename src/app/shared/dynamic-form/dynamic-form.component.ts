@@ -246,8 +246,15 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.scrollToFirstInvalidControl();
       return;
     }
+    // enable all controls before submission
+    this.formControls.forEach(control => {
+      if (control.control.disabled) {
+        control.control.enable({ emitEvent: false });
+      }
+    });
 
     if (this.category.checkValidationOnSubmit?.costCenter) {
+      debugger
       for (const validation of this.category.checkValidationOnSubmit.costCenter) {
         if (validation.AmountMustMatchClaimAmount && validation.dependsOn?.length >= 2) {
           const [claimAmountField, costCenterField] = validation.dependsOn;
@@ -334,13 +341,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
       };
     }
-
-    // enable all controls before submission
-    this.formControls.forEach(control => {
-      if (control.control.disabled) {
-        control.control.enable({ emitEvent: false });
-      }
-    });
 
     this.dynamicFormService.setCalculatedFields(this.form, this.formControls);
 
@@ -742,7 +742,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     this.formControls.forEach((control: any) => {
       // Call with just the control, as onFieldValueChange expects IFormControl
-      this.onFieldValueChange(control.formConfig);
+      this.onFieldValueChange(control.formConfig, false);
     });
 
     // Disable controls based on IsTravelRaiseRequest flag
@@ -857,7 +857,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
   }
 
-  onFieldValueChange(control: IFormControl) {
+  onFieldValueChange(control: IFormControl, skipPolicyViolationCheck?: boolean) {
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
 
@@ -867,7 +867,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       }, 500);
     }
 
-    if (control.policyViolationCheck) {
+    if (control.policyViolationCheck && skipPolicyViolationCheck) {
       setTimeout(() => {
         this.dynamicFormService.validateFieldPolicyViolation(control, this.category, this.form, this.formConfig, this.moduleData);
       }, 500);
