@@ -228,10 +228,7 @@ export class MaterialTableComponent implements OnChanges {
   }
 
   onApprovedAmountChange(row: any) {
-    this.selectionChanged.emit({
-      name: this.categoryName,
-      data: this.processedData
-    });
+    
   }
 
   preventInvalidKeys(event: KeyboardEvent): void {
@@ -276,7 +273,6 @@ export class MaterialTableComponent implements OnChanges {
   }
 
   onAmountBlur(event: Event, row: any, key: string, decimalPrecision: number = 2): void {
-
     const input = event.target as HTMLInputElement;
     let value = input.value;
 
@@ -340,6 +336,11 @@ export class MaterialTableComponent implements OnChanges {
         }
       }
     }
+
+    this.selectionChanged.emit({
+      name: this.categoryName,
+      data: this.processedData
+    });
   }
 
   validateApprovedAmount(row: any): void {

@@ -757,8 +757,13 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   clear() {
     this.isClearing = true;
     this.form.reset();
+    // enable all controls
+    this.form.enable();
+    this.isTravelRaiseRequest = false; // Reset flag after validation
+    this.editIndex = 0;
     this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
       dateInput.timeControl.reset();
+      dateInput.timeControl.enable();
     });
     this.costCenterComponentRef?.setMultipleCostCenterFlag(false);
     if (this.costCenterComponentRef) {
@@ -1108,7 +1113,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         control?.disable({ emitEvent: false });
       }
     });
-    this.isTravelRaiseRequest = false; // Reset flag after validation
   }
 
 }

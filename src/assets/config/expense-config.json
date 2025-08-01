@@ -22713,7 +22713,7 @@
                         ]
                     },
                     {
-                        "name": "FlatOrOwnArrangement",
+                        "name": "Flat Allowance",
                         "label": "Flat or Own Arrangement",
                         "includeIn": [
                             "domestic",
@@ -24686,7 +24686,7 @@
                 ]
             },
             {
-                "name": "FlatOrOwnArrangement",
+                "name": "Flat Allowance",
                 "label": "Flat / Own Arrangement",
                 "data": [],
                 "amount": 0,
