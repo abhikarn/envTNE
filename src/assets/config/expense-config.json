@@ -22798,7 +22798,8 @@
             "submit": {
                 "label": "Submit",
                 "type": "submit",
-                "class": "btn btn-light"
+                "enableClass": "btn btn-primary",
+                "disableClass": "btn btn-light"
             }
         },
         "notifications": {

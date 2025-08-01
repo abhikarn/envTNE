@@ -108,6 +108,7 @@ export class MainExpenseComponent {
   boxModuleData: any;
   title: string = '';
   otherExpenseResponse: any;
+  enableSubmitButton: boolean = false;
 
   constructor(
     private expenseService: ExpenseService,
@@ -685,6 +686,14 @@ export class MainExpenseComponent {
     this.summaryComponent.calculatTotalExpenseAmount();
     this.summaryComponent.calculatCategoryWiseExpense();
     this.summaryComponent.calculateCostCenterWiseExpense();
+    const hasMissingFields = this.checkMissingRequiredFields(
+      this.expenseRequestData.dynamicExpenseDetailModels,
+      this.categories
+    );
+
+    if (!hasMissingFields) {
+      this.enableSubmitButton = true;
+    }
   }
 
   updateCategoryData(updated: { name: string, data: any[] }) {
@@ -1135,7 +1144,7 @@ export class MainExpenseComponent {
   checkMissingRequiredFields(
     dynamicExpenseDetailModels: any[],
     categories: any[],
-    confirmDialogService: any
+    confirmDialogService?: any
   ): boolean {
     const isEmptyValue = (val: any): boolean =>
       val === undefined ||
@@ -1184,12 +1193,15 @@ export class MainExpenseComponent {
         })
         .join('\n\n');
 
-      confirmDialogService.confirm({
-        title: 'Missing Required Fields',
-        message: `Please fill in the following required fields:\n\n${missingFieldsMessage}`,
-        confirmText: 'OK',
-        cancelButton: false
-      }).subscribe();
+      if (confirmDialogService) {
+        confirmDialogService.confirm({
+          title: 'Missing Required Fields',
+          message: `Please fill in the following required fields:\n\n${missingFieldsMessage}`,
+          confirmText: 'OK',
+          cancelButton: false
+        }).subscribe();
+      }
+
 
       return true;
     }
