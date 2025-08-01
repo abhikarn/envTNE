@@ -690,4 +690,18 @@ export class DynamicFormService {
     }
   }
 
+  /**
+     * Formats a numeric value to the configured decimal precision.
+     * @param value The value to format.
+     * @returns The formatted value as a number.
+     */
+  getFormattedValue(value: any): number {
+    const precision = this.configService.getDecimalPrecision?.() ?? 2;
+    const num = parseFloat(value);
+    if (isNaN(num)) {
+      return 0;
+    }
+    return parseFloat(num.toFixed(precision));
+  }
+
 }

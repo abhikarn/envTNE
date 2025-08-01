@@ -855,8 +855,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   onFieldValueChange(control: IFormControl) {
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
-    console.log("----------------------------------------------------------------------", this.form.value);
-
 
     if (control.policyEntitlementCheck) {
       setTimeout(() => {
