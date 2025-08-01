@@ -2752,6 +2752,45 @@
         }
       }
     },
+    "/api/Expense/GetFrequencyTypeReference": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_GetFrequencyTypeReference",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "frequencyTypeReferenceParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FrequencyTypeReferenceParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Dashboard/ApprovalsFinanceExpenseRequest": {
       "post": {
         "tags": [
@@ -5882,6 +5921,23 @@
       "type": "object",
       "properties": {
         "ReferenceId": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "FrequencyTypeReferenceParam": {
+      "type": "object",
+      "properties": {
+        "ExpenseCategoryId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "FrequencyTypeId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "UserMasterId": {
           "format": "int64",
           "type": "integer"
         }

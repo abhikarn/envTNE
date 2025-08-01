@@ -176,7 +176,6 @@
                 <app-add-gst [categoryGST]="categoryGST" [ExpenseRequestDetailId]="row?.ExpenseRequestDetailId"
                     [gstData]="row?.gst" [amount]="row?.ApprovedAmount"></app-add-gst>
                 }
-                @if (mode !== 'finance-approval') {
                 <ng-container *ngFor="let nested of nestedTables">
                     @if (row[nested.dataKey]?.length) {
                     <table mat-table [dataSource]="row[nested.dataKey]" class="sub-table mb-3  nested-padding  grey-table  bg-none">
@@ -199,7 +198,6 @@
                     </table>
                     }
                 </ng-container>
-                }
               
             </div>
         </td>

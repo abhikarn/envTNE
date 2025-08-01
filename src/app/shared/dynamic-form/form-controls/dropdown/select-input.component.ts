@@ -66,10 +66,19 @@ export class SelectInputComponent implements AfterViewInit {
     this.loadOptions();
     if (this.controlConfig.defaultValue) {
       this.control.setValue(this.controlConfig.defaultValue.Id);
+      this.onSelectBlur();
     }
 
     if (this.controlConfig.disable) {
       this.control.disable();
+    }
+
+    if (this.controlConfig.dependentCases) {
+      this.controlConfig.dependentCases.forEach((caseItem: any) => {
+        if (caseItem?.event == "onInit") {
+          this.dynamicFormService.handleFieldBusinessCase(caseItem, this.form, this.moduleData, this.formConfig);
+        }
+      });
     }
 
   }
@@ -89,7 +98,7 @@ export class SelectInputComponent implements AfterViewInit {
           (data: any) => {
             const labelKey = this.controlConfig.labelKey || 'label';
             const valueKey = this.controlConfig.valueKey || 'value';
-            this.controlConfig.options = data.ResponseValue.map((item: any) => ({
+            this.controlConfig.options = data?.ResponseValue?.map((item: any) => ({
               label: item[labelKey],
               value: item[valueKey]
             }));
@@ -205,4 +214,19 @@ export class SelectInputComponent implements AfterViewInit {
       });
     }
   }
+
+  setReadableValue(event: MatSelectChange) {
+    if (this.controlConfig.getReadableValue) {
+      const readableControl = this.form.get(this.controlConfig.getReadableValue.controlName);
+      if (readableControl) {
+        const selectedOption = this.controlConfig.options?.find((option: any) => option.value === event.value);
+        if (selectedOption) {
+          readableControl.setValue(selectedOption.label || selectedOption.value || selectedOption.Id || '');
+        } else {
+          readableControl.setValue(''); // Clear if no match found
+        }
+      }
+    }
+  }
+  
 }

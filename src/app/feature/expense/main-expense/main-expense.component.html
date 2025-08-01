@@ -408,7 +408,7 @@
                   }
                 </div>
                 @if (expenseConfig.actions.submit) {
-                <button type="button" [ngClass]="expenseConfig.actions.submit.class"
+                <button type="button" [ngClass]="enableSubmitButton ? expenseConfig.actions.submit.enableClass : expenseConfig.actions.submit.disableClass"
                   (click)="onAction(expenseConfig.actions.submit.type)">
                   {{ expenseConfig.actions.submit.label }}
                 </button>

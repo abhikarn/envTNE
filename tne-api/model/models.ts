@@ -38,6 +38,7 @@ export * from './filterType';
 export * from './financeSettlementDashboardGetParam';
 export * from './forgotPasswordCustomParam';
 export * from './forgotPasswordParam';
+export * from './frequencyTypeReferenceParam';
 export * from './gradeGetParam';
 export * from './guestHouseListParam';
 export * from './internationalBaggageOutfitPolicyParam';

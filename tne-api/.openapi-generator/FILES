@@ -57,6 +57,7 @@ model/filterType.ts
 model/financeSettlementDashboardGetParam.ts
 model/forgotPasswordCustomParam.ts
 model/forgotPasswordParam.ts
+model/frequencyTypeReferenceParam.ts
 model/gradeGetParam.ts
 model/guestHouseListParam.ts
 model/internationalBaggageOutfitPolicyParam.ts

@@ -1,4 +1,4 @@
-import { Component, DestroyRef, ElementRef, HostListener, inject, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, ElementRef, HostListener, inject, QueryList, TemplateRef, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { CityAutocompleteParam, DataService, ExpenseRequestModel, ExpenseService, FinanceService, TravelService } from '../../../../../tne-api';
@@ -28,7 +28,7 @@ import { environment } from '../../../../environment';
 import { BottomSheetService } from '../../../shared/service/bottom-sheet.service';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-
+import _moment from 'moment';
 
 @Component({
   selector: 'app-main-expense',
@@ -108,6 +108,7 @@ export class MainExpenseComponent {
   boxModuleData: any;
   title: string = '';
   otherExpenseResponse: any;
+  enableSubmitButton: boolean = false;
 
   constructor(
     private expenseService: ExpenseService,
@@ -233,6 +234,7 @@ export class MainExpenseComponent {
 
         if (this.expenseConfig?.pageTitles) {
           this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[this.title] || this.title;
+          this.moduleConfig.page = this.title;
         }
 
         this.categories = []; // reset categories to avoid duplicates
@@ -244,27 +246,6 @@ export class MainExpenseComponent {
           }
         });
       });
-    } else {
-      if (this.expenseClaimTypeDescription == 'Domestic' || this.expenseClaimTypeDescription == 'International') {
-        if(this.travelRequestId) {
-          this.title = "Travel Expense";
-        } else {
-          this.title = `Direct Expense ${this.expenseClaimTypeDescription}`;
-        }
-        
-        if (this.expenseConfig?.pageTitles) {
-          this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[this.title] || this.title;
-        }
-
-        this.categories = []; // reset categories to avoid duplicates
-
-        this.expenseConfig?.category?.forEach((category: any) => {
-          if (category?.displayPage?.[this.title]) {
-            // Add only categories applicable for the current page
-            this.categories.push(category);
-          }
-        });
-      }
     }
 
     if (this.expenseConfig?.request) {
@@ -371,12 +352,34 @@ export class MainExpenseComponent {
           if (response) {
             this.expenseRequestId = response.expenseRequestId;
             this.expenseRequestPreviewData = response;
-                
+            const hasMissingFields = this.checkMissingRequiredFields(
+              this.expenseRequestPreviewData.dynamicExpenseDetailModels,
+              this.categories
+            );
+
+            if (!hasMissingFields) {
+              this.enableSubmitButton = true;
+            }
 
             this.populateExistingExpenseData(response);
           }
         }
       });
+  }
+
+  setupExpenseConfigForEditMode(editResponse: any, title: string = '') {
+    if (this.expenseConfig?.pageTitles) {
+      this.moduleConfig.pageTitle = this.expenseConfig.pageTitles[title] || title;
+    }
+
+    this.categories = []; // reset categories to avoid duplicates
+
+    this.expenseConfig?.category?.forEach((category: any) => {
+      if (category?.displayPage?.[title]) {
+        // Add only categories applicable for the current page
+        this.categories.push(category);
+      }
+    });
   }
 
   // Populate existing expense request data into form structure for editing.
@@ -400,6 +403,11 @@ export class MainExpenseComponent {
           this.moduleConfig.internationalFlag = box.international || false;
         }
       });
+      this.setupExpenseConfigForEditMode(response, this.title);
+    } else {
+      this.title = 'Travel Expense';
+      this.moduleConfig.page = 'Travel Expense';
+      this.setupExpenseConfigForEditMode(response, this.title);
     }
 
     setTimeout(() => {
@@ -686,6 +694,14 @@ export class MainExpenseComponent {
     this.summaryComponent.calculatTotalExpenseAmount();
     this.summaryComponent.calculatCategoryWiseExpense();
     this.summaryComponent.calculateCostCenterWiseExpense();
+    const hasMissingFields = this.checkMissingRequiredFields(
+      this.expenseRequestData.dynamicExpenseDetailModels,
+      this.categories
+    );
+
+    if (!hasMissingFields) {
+      this.enableSubmitButton = true;
+    }
   }
 
   updateCategoryData(updated: { name: string, data: any[] }) {
@@ -1116,7 +1132,7 @@ export class MainExpenseComponent {
       this.justificationForm.markAllAsTouched();
       return false;
     }
-    console.log('valid',this.mainExpenseData)
+    console.log('valid', this.mainExpenseData)
     this.mainExpenseData = {
       ...this.mainExpenseData,
       ...this.boxModuleData,
@@ -1136,7 +1152,7 @@ export class MainExpenseComponent {
   checkMissingRequiredFields(
     dynamicExpenseDetailModels: any[],
     categories: any[],
-    confirmDialogService: any
+    confirmDialogService?: any
   ): boolean {
     const isEmptyValue = (val: any): boolean =>
       val === undefined ||
@@ -1153,7 +1169,7 @@ export class MainExpenseComponent {
         if (!configCategory) return null;
 
         const requiredFields = configCategory.formControls
-          .filter((control: any) => control.required && !control.isExcluded)
+          .filter((control: any) => control.required && !control.isExcluded && control.displayPage?.[this.title])
           .map((control: any) => control.name);
 
         const missingInItems = expenseCategory.data
@@ -1185,12 +1201,15 @@ export class MainExpenseComponent {
         })
         .join('\n\n');
 
-      confirmDialogService.confirm({
-        title: 'Missing Required Fields',
-        message: `Please fill in the following required fields:\n\n${missingFieldsMessage}`,
-        confirmText: 'OK',
-        cancelButton: false
-      }).subscribe();
+      if (confirmDialogService) {
+        confirmDialogService.confirm({
+          title: 'Missing Required Fields',
+          message: `Please fill in the following required fields:\n\n${missingFieldsMessage}`,
+          confirmText: 'OK',
+          cancelButton: false
+        }).subscribe();
+      }
+
 
       return true;
     }
@@ -1201,6 +1220,50 @@ export class MainExpenseComponent {
 
   getFormValue(form: any) {
     this.expenseLandingBoxForm = form;
+
+    // this.expenseConfig?.expenseLandingBox?.forEach((box: any) => {
+    //   if (box?.displayPage?.[this.title]) {
+    //     let categoryIndex = this.categories.findIndex((cat: any) => cat.name === box.altName);
+    //     if (categoryIndex === -1) return;
+
+    //     const category = this.categories[categoryIndex];
+
+    //     box.formControls.forEach((control: any) => {
+    //       if (control?.setValue) {
+    //         control.setValue.forEach((field: any) => {
+    //           if (field?.config?.dateRange) {
+    //             const monthControlValue = this.expenseLandingBoxForm.get(field.config.dateRange)?.value;
+    //             if (monthControlValue) {
+    //               const parsedMonth = _moment(monthControlValue, 'MMM-YYYY');
+    //               if (parsedMonth.isValid()) {
+    //                 const minDate = parsedMonth.startOf('month').toDate();
+    //                 const maxDate = parsedMonth.endOf('month').toDate();
+
+    //                 const updatedFormControls = category.formControls.map((catControl: any) => {
+    //                   if (catControl.name === field.name) {
+    //                     return {
+    //                       ...catControl,
+    //                       minDate,
+    //                       maxDate
+    //                     };
+    //                   }
+    //                   return catControl;
+    //                 });
+
+    //                 // Update the categories array immutably
+    //                 this.categories[categoryIndex] = {
+    //                   ...category,
+    //                   formControls: updatedFormControls
+    //                 };
+    //               }
+    //             }
+    //           }
+    //         });
+    //       }
+    //     });
+    //   }
+    // });
+
 
     const fromDate = this.expenseLandingBoxForm.get('travelDateFrom')?.value;
     const toDate = this.expenseLandingBoxForm.get('travelDateTo')?.value;

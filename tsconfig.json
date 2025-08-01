@@ -3,6 +3,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "types": ["google.maps"],
     "paths": {
       "env-auto-form-builder": [
         "./dist/env-auto-form-builder"

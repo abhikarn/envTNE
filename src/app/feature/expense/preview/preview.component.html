@@ -253,7 +253,7 @@
                               @if (mode == 'finance-approval') {
                                                     
                                     @if(isCreateAdjustmentform) {
-                                    <app-create-dynamic-form [formConfig]="detail.formControls" ></app-create-dynamic-form>
+                                    <app-create-dynamic-form [formConfig]="detail.formControls" (emitFormValue)="getFormData($event)" ></app-create-dynamic-form>
                                     }                                  
                             
                               }

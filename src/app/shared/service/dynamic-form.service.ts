@@ -435,6 +435,7 @@ export class DynamicFormService {
   }
 
   getFormConfig(formConfig: IFormControl[], moduleConfig: any): IFormControl[] {
+    console.log(moduleConfig);
     let modifiedFormConfig = [...formConfig]; // Create a copy of the original formConfig
     // handle international data
     if (moduleConfig?.internationalFlag) {
@@ -465,6 +466,18 @@ export class DynamicFormService {
         }
       }
     }
+
+    // Handle displayPage filtering
+    modifiedFormConfig = modifiedFormConfig.filter(control => {
+      if (typeof control.displayPage === 'object') {
+        const currentPage = moduleConfig?.page || 'default';
+        return control.displayPage[currentPage] !== false; // keep if true or undefined
+      } else if (control.displayPage === false) {
+        return false; // remove explicitly hidden
+      }
+      return true;
+    });
+
     return modifiedFormConfig;
   }
 
@@ -511,6 +524,7 @@ export class DynamicFormService {
   }
 
   handleFieldBusinessCase(caseItem: any, form: any, moduleData: any, formConfig: any): void {
+    console.log('Handling field business case:', caseItem, form, moduleData, formConfig);
     const service = this.serviceRegistry.getService(caseItem.apiService);
     const apiMethod = caseItem.apiMethod;
     let requestBody: any = caseItem.requestBody;
@@ -521,7 +535,13 @@ export class DynamicFormService {
     const queryParams: Record<string, any> = { ...caseItem.queryStringParameter };
     Object.entries(caseItem.inputControls).forEach(([controlName, requestKey]) => {
       if (typeof requestKey === 'string') { // Ensure requestKey is a string
-        let controlValue = form.get(controlName)?.value;
+        let controlValue: any;
+        if (caseItem?.isGooglePlace) {
+          controlValue = form.get(controlName)?.value?.label;
+        } else {
+          controlValue = form.get(controlName)?.value;
+        }
+        
         if (typeof controlValue === 'object' && controlValue !== null) {
           controlValue = controlValue.value ?? controlValue; // Handle case where controlValue is an object
         }
@@ -530,8 +550,13 @@ export class DynamicFormService {
     }
     );
     const output = this.mapOtherControls(moduleData, caseItem.otherControls, caseItem?.landingBoxData);
-    requestBody = { ...queryParams, ...output };
-
+    requestBody = { ...requestBody, ...queryParams, ...output };
+    console.log('API Request Body:', requestBody);
+    // if any value of requestBody is undefined, return
+    if (Object.values(requestBody).some(value => value === undefined)) {
+      console.warn('Request body contains undefined values:', requestBody);
+      return;
+    }
     service[apiMethod](requestBody).subscribe(
       (response: any) => {
         if (typeof caseItem.outputControl === 'object') {
@@ -557,6 +582,7 @@ export class DynamicFormService {
             } else {
               console.warn(`No array data found at path "${responsePath}" in response.`);
             }
+            form.get(outputControl)?.setValue(extracted);
           }
         } else if (typeof caseItem.outputControl === 'string') {
           // Single field case
@@ -631,6 +657,51 @@ export class DynamicFormService {
 
       return isOverlap && otherFieldsMatch;
     }) ?? false;
+  }
+
+  /**
+   * Populates the form with data from the employee profile and module data.
+   * @param form - The FormGroup to populate.
+   * @param employeeProfile - The employee profile containing API service and method details.
+   * @param moduleData - Additional data to be used in the request.
+   */
+  populateFormWithData(
+    form: FormGroup,
+    onInitAPIDetails: any,
+    moduleData: any
+  ): void {
+    if (onInitAPIDetails) {
+      const service = this.serviceRegistry.getService(onInitAPIDetails.apiService);
+      const apiMethod = onInitAPIDetails.apiMethod;
+      let requestBody: any = onInitAPIDetails.requestBody;
+      const output = this.mapOtherControls(moduleData, onInitAPIDetails.otherControls);
+      service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
+        (response: any) => {
+          if (typeof onInitAPIDetails.outputControl === 'object') {
+            // Multiple fields case
+            for (const [outputControl, responsePath] of Object.entries(onInitAPIDetails.outputControl) as [string, string][]) {
+              const value = this.extractValueFromPath(response, responsePath);
+              if (value !== undefined) {
+                form.get(outputControl)?.setValue(value);
+              }
+            }
+          }
+        });
+    }
+  }
+
+  /**
+     * Formats a numeric value to the configured decimal precision.
+     * @param value The value to format.
+     * @returns The formatted value as a number.
+     */
+  getFormattedValue(value: any): number {
+    const precision = this.configService.getDecimalPrecision?.() ?? 2;
+    const num = parseFloat(value);
+    if (isNaN(num)) {
+      return 0;
+    }
+    return parseFloat(num.toFixed(precision));
   }
 
 }
