@@ -76,6 +76,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   isValid = true;
   selectedFiles: any = [];
   isClearing = false;
+  isTravelRaiseRequest: boolean = false;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -247,7 +248,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
 
     if (this.category.checkValidationOnSubmit?.costCenter) {
-      debugger
       for (const validation of this.category.checkValidationOnSubmit.costCenter) {
         if (validation.AmountMustMatchClaimAmount && validation.dependsOn?.length >= 2) {
           const [claimAmountField, costCenterField] = validation.dependsOn;
@@ -271,6 +271,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
             if (!isMatch) {
               this.snackbarService.error(validation.AmountMustMatchClaimAmount, 5000);
+              if (this.editIndex && this.isTravelRaiseRequest) {
+                this.freezeControlsBasedOnConditions();
+              }
               return;
             }
           }
@@ -295,6 +298,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
               .map((restriction: any) => restriction.message || `Claim for ${restriction.name} is restricted.`)
               .join(' ');
             this.snackbarService.error(restrictionMessage, 5000);
+            if (this.editIndex && this.isTravelRaiseRequest) {
+              this.freezeControlsBasedOnConditions();
+            }
             return;
           }
         }
@@ -306,6 +312,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
               claimRestriction.message || `Minimum stay duration of ${claimRestriction.minimumStayduration} days is required.`,
               5000
             );
+            if (this.editIndex && this.isTravelRaiseRequest) {
+              this.freezeControlsBasedOnConditions();
+            }
             return;
           }
         }
@@ -316,6 +325,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
           if (isDuplicate) {
             this.snackbarService.error(`Duplicate claim detected in ${claimRestriction.name}.`, 5000);
+            if (this.editIndex && this.isTravelRaiseRequest) {
+              this.freezeControlsBasedOnConditions();
+            }
             return;
           }
         }
@@ -377,12 +389,18 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       }, 0);
       if (totalPercentage !== 100) {
         this.snackbarService.error('Total percentage of cost centers must equal 100%. Please check your entries.', 5000);
+        if (this.editIndex && this.isTravelRaiseRequest) {
+          this.freezeControlsBasedOnConditions();
+        }
         return;
       }
     }
 
     if (this.category?.noOfEntryCheck && this.existingData?.length === this.category.travelDays) {
       this.snackbarService.error(`You can only add ${this.category.travelDays} entries for this category.`, 5000);
+      if (this.editIndex && this.isTravelRaiseRequest) {
+        this.freezeControlsBasedOnConditions();
+      }
       return;
     }
 
@@ -406,6 +424,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             });
             if (isDuplicate) {
               this.snackbarService.error(`${name} for ${this.datePipe.transform(this.form.value[field], 'yyyy-MM-dd')} has already been claimed.`, 5000);
+              if (this.editIndex && this.isTravelRaiseRequest) {
+                this.freezeControlsBasedOnConditions();
+              }
               return;
             }
           } else {
@@ -419,6 +440,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             });
             if (isDuplicate) {
               this.snackbarService.error(`${name} for ${this.form.value[field]} has already been claimed.`, 5000);
+              if (this.editIndex && this.isTravelRaiseRequest) {
+                this.freezeControlsBasedOnConditions();
+              }
               return;
             }
           }
@@ -442,6 +466,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
           if (isConflict) {
             this.snackbarService.error(`${name} for the date ${this.form.value[checkInField]} - ${this.form.value[checkOutField]} has already been claimed.`, 5000);
+            if (this.editIndex && this.isTravelRaiseRequest) {
+              this.freezeControlsBasedOnConditions();
+            }
             return;
           }
         }
@@ -712,41 +739,16 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         this.form.controls[name].setValue(value);
       }
     });
+
+    this.formControls.forEach((control: any) => {
+      // Call with just the control, as onFieldValueChange expects IFormControl
+      this.onFieldValueChange(control.formConfig);
+    });
+
     // Disable controls based on IsTravelRaiseRequest flag
     if (rowData.row?.IsTravelRaiseRequest) {
-      this.category.freezFormControls?.forEach((controlName: any) => {
-        const control = this.form.get(controlName.name);
-        if (controlName?.valueCheck) {
-          const value = this.form.get(controlName.name)?.value;
-          if (value) {
-            if (controlName?.type === 'number') {
-              if (Number(value) == 0) {
-                control?.enable({ emitEvent: false });
-                this.category.freezFormControls?.forEach((controlName: any) => {
-                  // remove the control name from freezFormControls
-                  this.category.freezFormControls = this.category.freezFormControls.filter((item: any) => item.name !== controlName.name);
-                });
-              } else {
-                control?.disable({ emitEvent: false });
-              }
-            }
-          } else {
-            control?.enable({ emitEvent: false });
-          }
-        } else {
-          // if control is date then i want to disable the time control for that date control
-          if (controlName?.type === 'datetime' && this.dateInputComponentRef) {
-            this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
-              if (dateInput.controlConfig.name === controlName.name && dateInput.timeControl) {
-                dateInput.timeControl.disable({ emitEvent: false });
-              }
-            });
-          }
-          if (control) {
-            control.disable({ emitEvent: false });
-          }
-        }
-      });
+      this.isTravelRaiseRequest = true;
+      this.freezeControlsBasedOnConditions();
     }
     this.dynamicFormService.updateConditionalValidators(this.form, this.formConfig);
     this.scrollToFirstInvalidControl();
@@ -853,112 +855,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   onFieldValueChange(control: IFormControl) {
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
+    console.log("----------------------------------------------------------------------", this.form.value);
 
-    if (control.setValue) {
-      control.setValue.forEach((field: any) => {
-        // Handle minDate from another control (like direct copy)
-        if (field.config.minDate) {
-          this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
-            if (dateInput.controlConfig.name === field.name) {
-              dateInput.minDate = this.form.get(field.config.minDate)?.value;
-            }
-          });
-        }
-
-        // Handle custom dateRange config like: { dateRange: "Month" }
-        if (field.config.dateRange) {
-          const monthControlValue = this.form.get(field.config.dateRange)?.value;
-
-          if (monthControlValue) {
-            const parsedMonth = _moment(monthControlValue, 'MMM-YYYY');
-
-            if (parsedMonth.isValid()) {
-              const minDate = parsedMonth.startOf('month').toDate();
-              const maxDate = parsedMonth.endOf('month').toDate();
-
-              this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
-                if (dateInput.controlConfig.name === field.name) {
-                  dateInput.minDate = minDate;
-                  dateInput.maxDate = maxDate;
-
-                  // Optional: reset control value if out of new range
-                  const currentVal = dateInput.control.value;
-                  if (currentVal) {
-                    const currentDate = new Date(currentVal);
-                    if (currentDate < minDate || currentDate > maxDate) {
-                      dateInput.control.setValue(null);
-                    }
-                  }
-                }
-              });
-            }
-          }
-        }
-      });
-    }
-
-
-    if (control.setFields) {
-      control.setFields.forEach((field: any) => {
-        // Prepare values for formula
-        const checkFormula = field.checkFormula || '';
-        if (checkFormula) {
-          const values: any = {};
-          field.dependsOn?.forEach((dep: string) => {
-            values[dep] = this.form.get(dep)?.value;
-          });
-          const isFormulaValid = this.dynamicFormService.evaluateFormula(checkFormula, values);
-          if (!isFormulaValid)
-            return; // Skip if checkFormula is false
-        }
-        const dependsOn = field.dependsOn || [];
-        const values: any = {};
-        dependsOn.forEach((dep: string) => {
-          values[dep] = this.form.get(dep)?.value;
-        });
-
-        // 1. Calculate the field value
-        const calculatedValue = this.dynamicFormService.evaluateFormula(field.formula, values);
-
-        // 2. Set value
-        this.form.get(field.name)?.setValue(calculatedValue < 0 ? 0 : calculatedValue);
-
-        // 3. Check for setValidations
-        if (field.setValidations && field.setValidations.length > 0) {
-          field.setValidations.forEach((validation: any) => {
-            if (validation.type === 'max') {
-              // Calculate the dynamic max
-              const maxDependsOn = validation.calculateValue.dependsOn || [];
-              const maxValues: any = {};
-              maxDependsOn.forEach((dep: string) => {
-                maxValues[dep] = this.form.get(dep)?.value;
-              });
-
-              const maxValue = this.dynamicFormService.evaluateFormula(
-                validation.calculateValue.formula,
-                maxValues
-              );
-
-              // Update the validator
-              const controlToValidate = this.form.get(field.name);
-              controlToValidate?.setValidators([
-                Validators.max(maxValue)
-              ]);
-              this.formConfig.forEach((config: any) => {
-                if (field.name === config.name) {
-                  config.validations.push({
-                    type: 'max',
-                    value: maxValue,
-                    message: `${field?.label} cannot exceed ${maxValue}.`
-                  })
-                }
-              });
-              controlToValidate?.updateValueAndValidity();
-            }
-          });
-        }
-      });
-    }
 
     if (control.policyEntitlementCheck) {
       setTimeout(() => {
@@ -977,6 +875,113 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     if (control.taxCalculation) {
       this.dynamicFormService.calculateDifferentialAmount(control, this.form);
     }
+
+    setTimeout(() => {
+      if (control.setValue) {
+        control.setValue.forEach((field: any) => {
+          // Handle minDate from another control (like direct copy)
+          if (field.config.minDate) {
+            this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
+              if (dateInput.controlConfig.name === field.name) {
+                dateInput.minDate = this.form.get(field.config.minDate)?.value;
+              }
+            });
+          }
+
+          // Handle custom dateRange config like: { dateRange: "Month" }
+          if (field.config.dateRange) {
+            const monthControlValue = this.form.get(field.config.dateRange)?.value;
+
+            if (monthControlValue) {
+              const parsedMonth = _moment(monthControlValue, 'MMM-YYYY');
+
+              if (parsedMonth.isValid()) {
+                const minDate = parsedMonth.startOf('month').toDate();
+                const maxDate = parsedMonth.endOf('month').toDate();
+
+                this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
+                  if (dateInput.controlConfig.name === field.name) {
+                    dateInput.minDate = minDate;
+                    dateInput.maxDate = maxDate;
+
+                    // Optional: reset control value if out of new range
+                    const currentVal = dateInput.control.value;
+                    if (currentVal) {
+                      const currentDate = new Date(currentVal);
+                      if (currentDate < minDate || currentDate > maxDate) {
+                        dateInput.control.setValue(null);
+                      }
+                    }
+                  }
+                });
+              }
+            }
+          }
+        });
+      }
+
+      if (control.setFields) {
+        control.setFields.forEach((field: any) => {
+          // Prepare values for formula
+          const checkFormula = field.checkFormula || '';
+          if (checkFormula) {
+            const values: any = {};
+            field.dependsOn?.forEach((dep: string) => {
+              values[dep] = this.form.get(dep)?.value;
+            });
+            const isFormulaValid = this.dynamicFormService.evaluateFormula(checkFormula, values);
+            if (!isFormulaValid)
+              return; // Skip if checkFormula is false
+          }
+          const dependsOn = field.dependsOn || [];
+          const values: any = {};
+          dependsOn.forEach((dep: string) => {
+            values[dep] = this.form.get(dep)?.value;
+          });
+
+          // 1. Calculate the field value
+          const calculatedValue = this.dynamicFormService.evaluateFormula(field.formula, values);
+
+          // 2. Set value
+          this.form.get(field.name)?.setValue(calculatedValue < 0 ? 0 : calculatedValue);
+
+          // 3. Check for setValidations
+          if (field.setValidations && field.setValidations.length > 0) {
+            field.setValidations.forEach((validation: any) => {
+              if (validation.type === 'max') {
+                // Calculate the dynamic max
+                const maxDependsOn = validation.calculateValue.dependsOn || [];
+                const maxValues: any = {};
+                maxDependsOn.forEach((dep: string) => {
+                  maxValues[dep] = this.form.get(dep)?.value;
+                });
+
+                const maxValue = this.dynamicFormService.evaluateFormula(
+                  validation.calculateValue.formula,
+                  maxValues
+                );
+
+                // Update the validator
+                const controlToValidate = this.form.get(field.name);
+                controlToValidate?.setValidators([
+                  Validators.max(maxValue)
+                ]);
+                this.formConfig.forEach((config: any) => {
+                  if (field.name === config.name) {
+                    config.validations.push({
+                      type: 'max',
+                      value: maxValue,
+                      message: `${field?.label} cannot exceed ${maxValue}.`
+                    })
+                  }
+                });
+                controlToValidate?.updateValueAndValidity();
+              }
+            });
+          }
+        });
+      }
+    }, 500); // Allow time for async validators to complete
 
   }
 
@@ -1063,6 +1068,49 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         invalidControl.setAttribute('aria-describedby', 'error-message');
       }
     });
+  }
+
+  freezeControlsBasedOnConditions(): void {
+    this.category.freezFormControls?.forEach((controlConfig: any) => {
+      const control = this.form.get(controlConfig.name);
+
+      // If valueCheck is enabled, apply conditional logic based on value and type
+      if (controlConfig?.valueCheck) {
+        const value = control?.value;
+
+        if (value) {
+          if (controlConfig?.type === 'number') {
+            if (Number(value) === 0) {
+              control?.enable({ emitEvent: false });
+
+              // Remove all controls from freezFormControls
+              this.category.freezFormControls = this.category.freezFormControls?.filter(
+                (item: any) => item.name !== controlConfig.name
+              );
+            } else {
+              control?.disable({ emitEvent: false });
+            }
+          }
+        } else {
+          control?.enable({ emitEvent: false });
+        }
+      } else {
+        // Handle datetime controls - disable their associated time control
+        if (controlConfig?.type === 'datetime' && this.dateInputComponentRef) {
+          this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
+            if (
+              dateInput.controlConfig.name === controlConfig.name &&
+              dateInput.timeControl
+            ) {
+              dateInput.timeControl.disable({ emitEvent: false });
+            }
+          });
+        }
+
+        control?.disable({ emitEvent: false });
+      }
+    });
+    this.isTravelRaiseRequest = false; // Reset flag after validation
   }
 
 }

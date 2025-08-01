@@ -1739,6 +1739,16 @@
                         "order": 2,
                         "apiDateLimit": true,
                         "policyEntitlementCheck": true,
+                        "setFields": [
+                            {
+                                "name": "NoOfDays",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
+                                "dependsOn": [
+                                    "CheckInDateTime",
+                                    "CheckOutDateTime"
+                                ]
+                            }
+                        ],
                         "EntitlementAmountCalculation": {
                             "inputControls": {
                                 "CheckInDateTime": "CheckInDateTime",
@@ -1748,17 +1758,7 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        },
-                        "setFields": [
-                            {
-                                "name": "NoOfDays",
-                                "formula": "Math.max(1, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
-                                "dependsOn": [
-                                    "CheckInDateTime",
-                                    "CheckOutDateTime"
-                                ]
-                            }
-                        ]
+                        }
                     },
                     {
                         "type": "date",
@@ -1785,21 +1785,11 @@
                         },
                         "order": 3,
                         "apiDateLimit": true,
-                        "EntitlementAmountCalculation": {
-                            "inputControls": {
-                                "CheckInDateTime": "CheckInDateTime",
-                                "CheckOutDateTime": "CheckOutDateTime",
-                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
-                            },
-                            "outputControl": {
-                                "EntitlementAmount": "EntitlementAmount"
-                            }
-                        },
                         "setFields": [
                             {
                                 "name": "NoOfDays",
                                 "label": "No. of Days",
-                                "formula": "Math.max(1, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -1817,7 +1807,17 @@
                                     }
                                 ]
                             }
-                        ]
+                        ],
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "CheckInDateTime": "CheckInDateTime",
+                                "CheckOutDateTime": "CheckOutDateTime",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        }
                     },
                     {
                         "type": "text",
@@ -7418,7 +7418,7 @@
                         "setFields": [
                             {
                                 "name": "NoOfDays",
-                                "formula": "Math.max(1, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -7465,7 +7465,7 @@
                             {
                                 "name": "NoOfDays",
                                 "label": "No. of Days",
-                                "formula": "Math.max(1, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
