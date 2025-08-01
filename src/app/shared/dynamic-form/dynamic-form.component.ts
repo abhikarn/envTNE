@@ -254,7 +254,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     });
 
     if (this.category.checkValidationOnSubmit?.costCenter) {
-      debugger
       for (const validation of this.category.checkValidationOnSubmit.costCenter) {
         if (validation.AmountMustMatchClaimAmount && validation.dependsOn?.length >= 2) {
           const [claimAmountField, costCenterField] = validation.dependsOn;
