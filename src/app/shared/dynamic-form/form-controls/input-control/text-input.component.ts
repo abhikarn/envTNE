@@ -62,6 +62,14 @@ export class TextInputComponent implements OnInit {
           }
         }
       }
+
+      if(this.controlConfig.dataType == 'numeric' && inputValue !== null && inputValue !== undefined) {
+        // Ensure numeric values are formatted correctly
+        const numericValue = parseFloat(inputValue);
+        if (!isNaN(numericValue)) {
+          this.control.setValue(this.getFormattedValue(numericValue), { emitEvent: false });
+        }
+      }
     });
 
     if (this.controlConfig.disable) {

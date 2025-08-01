@@ -2806,6 +2806,10 @@
                         "type": "number",
                         "name": "ClaimAmount",
                         "valueCheck": true
+                    },
+                    {
+                        "name": "PaymentMode",
+                        "valueCheck": false
                     }
                 ],
                 "checkValidationOnSubmit": {
