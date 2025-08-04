@@ -2270,7 +2270,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -2320,7 +2321,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -2361,7 +2363,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -3737,7 +3740,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -3787,7 +3791,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -5053,7 +5058,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -5103,7 +5109,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -5168,7 +5175,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -6421,7 +6429,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -6471,7 +6480,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -6536,7 +6546,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -7945,7 +7956,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -7995,7 +8007,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -8036,7 +8049,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -12119,7 +12133,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -12201,7 +12216,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -17709,7 +17725,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -17759,7 +17776,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -18613,7 +18631,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -18663,7 +18682,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -20262,7 +20282,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
@@ -20312,7 +20333,8 @@
                                 "dependsOn": [
                                     "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency"
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
                                 ]
                             }
                         ]
