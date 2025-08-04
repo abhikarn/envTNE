@@ -1618,6 +1618,7 @@
             {
                 "name": "Accommodation",
                 "label": "Accommodation",
+                "OCRRequired": false,
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
                     "name": "Accommodation Expense",
