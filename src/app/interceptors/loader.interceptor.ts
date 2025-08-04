@@ -8,7 +8,8 @@ const LOADER_URLS = [
   '/api/expense',
   '/api/claims',
   '/api/reports',
-  '/api/Dashboard'
+  '/api/Dashboard',
+  '/api/Ocr/upload'
   // Add more URLs as needed
 ];
 

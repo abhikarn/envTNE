@@ -401,18 +401,19 @@
                   }
                   }
                   @if (expenseConfig.actions.cancel) {
-                  <button type="button" [ngClass]="expenseConfig.actions.cancel.class"
+                  <button class="me-1" type="button" [ngClass]="expenseConfig.actions.cancel.class"
                     (click)="onAction(expenseConfig.actions.cancel.type);">
                     {{ expenseConfig.actions.cancel.label }}
                   </button>
                   }
+                  @if (expenseConfig.actions.submit) {
+                  <button type="button"
+                    [ngClass]="enableSubmitButton ? expenseConfig.actions.submit.enableClass : expenseConfig.actions.submit.disableClass"
+                    (click)="onAction(expenseConfig.actions.submit.type)">
+                    {{ expenseConfig.actions.submit.label }}
+                  </button>
+                  }
                 </div>
-                @if (expenseConfig.actions.submit) {
-                <button type="button" [ngClass]="enableSubmitButton ? expenseConfig.actions.submit.enableClass : expenseConfig.actions.submit.disableClass"
-                  (click)="onAction(expenseConfig.actions.submit.type)">
-                  {{ expenseConfig.actions.submit.label }}
-                </button>
-                }
               </div>
               }
             </div>
