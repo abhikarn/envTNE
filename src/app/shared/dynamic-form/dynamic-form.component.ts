@@ -394,8 +394,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         return;
       }
     }
-
-    if (this.category?.noOfEntryCheck && this.existingData?.length === this.category.travelDays) {
+    if (this.category?.noOfEntryCheck && this.existingData?.length > this.category.travelDays) {
       this.snackbarService.error(`You can only add ${this.category.travelDays} entries for this category.`, 5000);
       if (this.editIndex && this.isTravelRaiseRequest) {
         this.freezeControlsBasedOnConditions();
