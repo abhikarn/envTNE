@@ -1169,7 +1169,7 @@ export class MainExpenseComponent {
         if (!configCategory) return null;
 
         const requiredFields = configCategory.formControls
-          .filter((control: any) => (!control?.displayPage && control.required))
+          .filter((control: any) => ( !control?.international && !control?.displayPage && control.required))
           .map((control: any) => control.name);
 
         const missingInItems = expenseCategory.data
