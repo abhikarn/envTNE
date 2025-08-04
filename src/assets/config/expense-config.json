@@ -9060,58 +9060,6 @@
                         "label": "Local Travel Type",
                         "placeholder": "Select Travel Type",
                         "value": null,
-                        "options": [],
-                        "labelKey": "Value",
-                        "valueKey": "Key",
-                        "dependentCases": [
-                            {
-                                "type": [
-                                    "domestic",
-                                    "international"
-                                ],
-                                "key": "Id",
-                                "inputControls": {
-                                    "LocalTravelType": "expenseCategoryId"
-                                },
-                                "outputControl": {
-                                    "LocalTravelMode": "ResponseValue"
-                                },
-                                "otherControls": {
-                                    "ClaimTypeId": "claimTypeId",
-                                    "TravelRequestId": "travelRequestId",
-                                    "UserMasterId": "UserMasterId"
-                                },
-                                "requestBody": {},
-                                "event": "onBlur",
-                                "apiService": "DataService",
-                                "apiMethod": "dataUserLocalTravelMode",
-                                "labelKey": "Value",
-                                "valueKey": "Key"
-                            }
-                        ],
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Local Travel Type is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": true,
-                        "order": 3,
-                        "displayPage": {
-                            "Travel Expense": true,
-                            "Local Travel Conveyance": false
-                        }
-                    },
-                    {
-                        "type": "select",
-                        "dataType": "int",
-                        "name": "LocalTravelType",
-                        "isExcluded": false,
-                        "label": "Local Travel Type",
-                        "placeholder": "Select Travel Type",
-                        "value": null,
                         "defaultValue": {
                             "Id": 21,
                             "Display": "Local Travel Conveyance"
