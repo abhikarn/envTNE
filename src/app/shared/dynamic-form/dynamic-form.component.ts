@@ -856,6 +856,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onFieldValueChange(control: IFormControl, skipPolicyViolationCheck?: boolean) {
+    skipPolicyViolationCheck = skipPolicyViolationCheck ?? true;
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
 
@@ -864,7 +865,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         this.dynamicFormService.validateFieldPolicyEntitlement(control, this.category, this.form, this.formConfig, this.moduleData);
       }, 500);
     }
-
+    
     if (control.policyViolationCheck && skipPolicyViolationCheck) {
       setTimeout(() => {
         this.dynamicFormService.validateFieldPolicyViolation(control, this.category, this.form, this.formConfig, this.moduleData);
