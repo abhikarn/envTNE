@@ -193,6 +193,11 @@ export class PreviewComponent {
             });
           })
           this.loadExpenseRequestPreviewData();
+          this.expenseRequestPreviewData?.expenseRequestAdjustment?.forEach((adjustment: any) => {
+            if (adjustment?.expenseRequestId == this.expenseRequestId) {
+              this.setAdjustmentAmount(adjustment?.adjustmentAmountInBaseCurrency || 0);
+            }
+          });
         }
       }
     });
@@ -358,7 +363,7 @@ export class PreviewComponent {
   }
 
   calculatTotalExpenseAmountPreview() {
-     
+
     const EXPENSE_SUMMARY_ID = "expense-summary";
     const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
     const PAYABLE_KEYS = [91, 94];
@@ -434,7 +439,7 @@ export class PreviewComponent {
     }
   }
 
-  calculatCategoryWiseExpensePreview() { 
+  calculatCategoryWiseExpensePreview() {
     const CATEGORY_WISE_EXPENSE_ID = "category-wise-expense";
     let CATEGORY_NAME = '';
 
@@ -492,8 +497,8 @@ export class PreviewComponent {
               typeof request.ApprovedAmountInBaseCurrency === 'number'
             ) {
               // Divide ApprovedAmountInBaseCurrency by AmmoutInPercentage (if AmmoutInPercentage is not zero)
-              costCenter.AmmoutInActual = costCenter.AmmoutInPercentage !== 0 ? (Number(request.ApprovedAmount)*Number(request.ConversionRate)) * (costCenter.AmmoutInPercentage/100.00)
-                  : 0;
+              costCenter.AmmoutInActual = costCenter.AmmoutInPercentage !== 0 ? (Number(request.ApprovedAmount) * Number(request.ConversionRate)) * (costCenter.AmmoutInPercentage / 100.00)
+                : 0;
             }
             uniqueCostCenters.add(costCenter.CostCentre);
           });
@@ -517,7 +522,7 @@ export class PreviewComponent {
             const costCenterName = costCenter.CostCentre;
             const amount = Number(costCenter?.AmmoutInActual) || 0;
             const item = summary.items.find((item: any) => item.label === costCenterName);
-            if (item) { 
+            if (item) {
               item.value = (Number(item.value) + amount).toFixed(2);
             }
           });
@@ -526,18 +531,34 @@ export class PreviewComponent {
     });
   }
 
-  getSelection(category: any) {      
+  getSelection(category: any) {
     this.expenseRequestApprovalDetailType = [];
+    this.syncPreviewData(category);
+    this.syncPreviewConfig(category);
+    this.recalculateExpenseSummary();
+    this.calculatCategoryWiseExpensePreview();
+    this.prepareGstAndApprovalDetails();
+    this.setAdjustmentAmount(
+      Number(
+        this.createDynamicFormComponent?.form?.get('AdjustmentAmount')?.value ||
+        this.dynamicAdjustmentFormpayload?.AdjustmentAmount ||
+        0
+      )
+    );
+  }
+
+  private syncPreviewData(category: any) {
     let dynamicExpenseDetailModels = this.expenseRequestPreviewData?.dynamicExpenseDetailModels || [];
-    dynamicExpenseDetailModels?.forEach((cat: any) => {
-      if (cat?.name == category?.name) {
+    dynamicExpenseDetailModels.forEach((cat: any) => {
+      if (cat?.name === category?.name) {
         cat.data = category?.data || [];
       }
-    })
+    });
+  }
 
-    // Also update the preview config model for summary/category calculations
+  private syncPreviewConfig(category: any) {
     this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((cat: any) => {
-      if (cat?.name == category?.name) {
+      if (cat?.name === category?.name) {
         (cat.data || []).forEach((row: any) => {
           const updatedRow = (category?.data || []).find((r: any) =>
             (r.ExpenseRequestDetailId && row.ExpenseRequestDetailId && r.ExpenseRequestDetailId === row.ExpenseRequestDetailId) ||
@@ -548,80 +569,64 @@ export class PreviewComponent {
             row.ApprovedAmount = updatedRow.ApprovedAmount;
             row.remarks = updatedRow.remarks;
             row.approvedAmountInBaseCurrency = updatedRow.ApprovedAmountInBaseCurrency;
-            // Copy any other fields you want to keep in sync
           }
         });
       }
     });
+  }
 
-    
-
+  private recalculateExpenseSummary() {
     const EXPENSE_SUMMARY_ID = "expense-summary";
     const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
     const PAYABLE_KEYS = [91, 94];
-    let CATEGORY_NAME = '';
 
     const summary = this.expenseSummary?.find((s: any) => s.id === EXPENSE_SUMMARY_ID);
     if (!summary) return;
 
-    // Reset all values to 0.00
+    // Reset values
     summary.items?.forEach((item: any) => {
       item.value = 0.00;
     });
 
-    // Add claim amounts to respective payment modes
-    dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
-      CATEGORY_NAME = expenseRequest.name;
-      expenseRequest.data?.filter((request: any) => request.ClaimStatusId !== 5 && request.selected == true)?.forEach((request: any) => {
-        const { PaymentModeId, ApprovedAmount, selected } = request || {};
-        if (selected) {
-          this.updateExpenseItem(summary, PaymentModeId, ApprovedAmount);
-        }
+    this.expenseRequestPreviewData?.dynamicExpenseDetailModels?.forEach((expenseRequest: any) => {
+      expenseRequest.data?.filter((request: any) => request.ClaimStatusId !== 5 && request.selected)?.forEach((request: any) => {
+        const { PaymentModeId, ApprovedAmountInBaseCurrency, ClaimAmountInBaseCurrency } = request;
+        this.updateExpenseItem(summary, PaymentModeId, ApprovedAmountInBaseCurrency || ClaimAmountInBaseCurrency || 0);
       });
     });
 
-    // Calculate totals
     let totalExpense = 0.00;
     let amountPayable = 0.00;
 
     summary.items?.forEach((item: any) => {
       const value = Number(item.value);
-      if (TOTAL_EXPENSE_KEYS.includes(item.paymentModeId)) {
-        totalExpense += value;
-      }
-      if (PAYABLE_KEYS.includes(item.paymentModeId)) {
-        amountPayable += value;
-      }
-      // Ensure value is in 2 decimal places
+      if (TOTAL_EXPENSE_KEYS.includes(item.paymentModeId)) totalExpense += value;
+      if (PAYABLE_KEYS.includes(item.paymentModeId)) amountPayable += value;
       item.value = value.toFixed(2);
     });
 
-    // Set totalExpense and amountPayable
     summary.items?.forEach((item: any) => {
       if (item.name === 'totalExpense') item.value = totalExpense.toFixed(2);
       if (item.name === 'amountPayable') item.value = amountPayable.toFixed(2);
     });
+  }
 
-    this.calculatCategoryWiseExpensePreview();
-
-    dynamicExpenseDetailModels?.forEach((details: any) => {
+  private prepareGstAndApprovalDetails() {
+    this.expenseRequestPreviewData?.dynamicExpenseDetailModels?.forEach((details: any) => {
       details?.data?.forEach((expense: any) => {
         if (expense?.ClaimStatusId !== 5) {
-          // if (expense?.selected) {
-          if (expense.gst?.length > 0) {
+          if (expense?.gst?.length > 0) {
             expense.gst.forEach((gst: any) => {
               this.expenseRequestGstType.push({
                 ...gst,
                 ExpenseRequestGstTypeId: gst.ExpenseRequestGstId
               });
-            })
+            });
           }
+
           let statusId = expense?.statusId || 0;
-          if (this.mode == 'approval') {
-            statusId = expense?.selected ? 6 : 5
-          }
-          if (this.mode == 'finance-approval') {
-            statusId = expense?.selected ? 6 : 5
+          if (['approval', 'finance-approval'].includes(this.mode)) {
+            statusId = expense?.selected ? 6 : 5;
           }
 
           this.expenseRequestApprovalDetailType.push({
@@ -631,11 +636,9 @@ export class PreviewComponent {
             ApproverRemarks: expense?.remarks || "",
             ActionStatusId: statusId
           });
-          // }
         }
       });
-    })
-    dynamicExpenseDetailModels = [];
+    });
   }
 
   prepareAdjustmentFormPayload() {
@@ -744,10 +747,11 @@ export class PreviewComponent {
       }
 
       this.prepareAdjustmentFormPayload();
- 
+
       if (Object.keys(this.dynamicAdjustmentFormpayload).length > 0) {
         const adjustmentData = this.dynamicAdjustmentFormpayload;
-        if (adjustmentData?.AdjustmentAmount && adjustmentData?.AdjustmentAmount > 0 && adjustmentData?.AdjustmentRemarks=== '') {
+        const adjustmentAmount = Number(adjustmentData?.AdjustmentAmount) || 0;
+        if ((adjustmentAmount > 0 || adjustmentAmount < 0) && adjustmentData?.AdjustmentRemarks === '') {
           this.snackbarService.error('Please provide adjustment remarks for the entered amount.');
           return;
         }
@@ -877,4 +881,40 @@ export class PreviewComponent {
   closeExpenseSummarySheet() {
     this.bottomSheet.dismiss();
   }
+
+  getFormData(event: any) {
+    const adjustmentAmount = Number(event?.get('AdjustmentAmount')?.value) || 0;
+    this.setAdjustmentAmount(adjustmentAmount);
+  }
+
+  setAdjustmentAmount(adjustmentAmount: number) {
+    const EXPENSE_SUMMARY_ID = "expense-summary";
+    const summary = this.expenseSummary?.find((s: any) => s.id === EXPENSE_SUMMARY_ID);
+    if (!summary) return;
+
+    const getValue = (name: string): number => {
+      const item = summary.items?.find((i: any) => i.name === name && [92,93].includes(i.paymentModeId));
+      return item ? parseFloat(item.value) || 0 : 0;
+    };
+
+    const setValue = (name: string, value: number) => {
+      const item = summary.items?.find((i: any) => i.name === name);
+      if (item) {
+        item.value = value.toFixed(2);
+      }
+    };
+
+    // Update adjustments
+    setValue('adjustments', adjustmentAmount);
+
+    // Get required values
+    const totalExpense = getValue('totalExpense');
+    const lessAdvance = getValue('lessAdvance');
+    const adjustments = adjustmentAmount;
+
+    // Calculate and update amount payable
+    const amountPayable = totalExpense - lessAdvance + adjustments;
+    setValue('amountPayable', amountPayable);
+  }
+
 }

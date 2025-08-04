@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 import { CommonModule } from '@angular/common';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -11,6 +12,8 @@ import { IFormControl } from '../../form-control.interface';
 import { GlobalConfigService } from '../../../service/global-config.service';
 import { ServiceRegistryService } from '../../../service/service-registry.service';
 import { SnackbarService } from '../../../service/snackbar.service';
+import { environment } from '../../../../../environment';
+import { DynamicFormService } from '../../../service/dynamic-form.service';
 
 @Component({
   selector: 'lib-text-autocomplete',
@@ -26,14 +29,36 @@ export class TextAutocompleteComponent {
 
   @Input() control: FormControl = new FormControl('');
   @Input() controlConfig: IFormControl = { name: '' };
-  @Input() form: any
+  @Input() form: any;
+  @Input() moduleData: any;
+  @Input() formConfig: any;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
     private snackbarService: SnackbarService,
-    private configService: GlobalConfigService
+    private configService: GlobalConfigService,
+    private dynamicFormService: DynamicFormService
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
+  }
+
+  async ngAfterViewInit() {
+    await this.loadGoogleMapsScript();
+  }
+
+  loadGoogleMapsScript(): Promise<void> {
+    return new Promise((resolve) => {
+      if ((window as any).google) {
+        resolve();
+      } else {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleApiKey}&libraries=places`;
+        script.async = true;
+        script.defer = true;
+        script.onload = () => resolve();
+        document.body.appendChild(script);
+      }
+    });
   }
 
   ngOnInit() {
@@ -49,7 +74,7 @@ export class TextAutocompleteComponent {
     if (typeof value === 'object') return value?.label ?? '';
 
     const matched = this.controlConfig.options?.find(opt => opt.value === value);
-    return matched?.label ?? this.form.get(this.controlConfig?.setNameControl)?.value ?? '' ;
+    return matched?.label ?? this.form.get(this.controlConfig?.setNameControl)?.value ?? '';
   };
 
 
@@ -59,7 +84,38 @@ export class TextAutocompleteComponent {
   }
 
   onInputChange(inputValue: string) {
-    if (this.controlConfig.autoComplete && this.controlConfig.apiService && this.controlConfig.apiMethod) {
+    if (this.controlConfig.isGooglePlace) {
+      interface GooglePlacePrediction {
+        description: string;
+        place_id: string;
+        [key: string]: any;
+      }
+
+      interface GoogleAutocompleteService {
+        getPlacePredictions(
+          request: { input: string },
+          callback: (predictions: GooglePlacePrediction[] | null, status: string) => void
+        ): void;
+      }
+
+      const autocompleteService: GoogleAutocompleteService = new google.maps.places.AutocompleteService();
+
+      autocompleteService.getPlacePredictions(
+        { input: inputValue },
+        (predictions: GooglePlacePrediction[] | null, status: string) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK && predictions) {
+            this.controlConfig.options = predictions.map((prediction: GooglePlacePrediction) => ({
+              label: prediction.description,
+              value: prediction.place_id,
+              ...prediction
+            }));
+          } else {
+            this.controlConfig.options = [];
+          }
+        }
+      );
+
+    } else if (this.controlConfig.autoComplete && this.controlConfig.apiService && this.controlConfig.apiMethod) {
       const service = this.serviceRegistry.getService(this.controlConfig.apiService);
       if (service) {
         const request = { SearchText: inputValue ?? '' };
@@ -89,10 +145,45 @@ export class TextAutocompleteComponent {
   }
 
   onOptionSelected(event: any) {
-    const selectedOption = event.option.value;
-    console.log('Selected option:', selectedOption);
-    this.control.setValue(selectedOption.value);
+    let selectedOption = event.option.value;
+
+    if (this.controlConfig.isGooglePlace) {
+      const placeId = selectedOption?.value;
+
+      const service = new google.maps.places.PlacesService(document.createElement('div'));
+
+      service.getDetails(
+        {
+          placeId: selectedOption,
+          fields: ['formatted_address', 'geometry', 'name']
+        },
+        (place: google.maps.places.PlaceResult | null, status: google.maps.places.PlacesServiceStatus) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK && place) {
+            this.control.setValue(place.formatted_address || '');
+          } else {
+            console.warn('Place details fetch failed', status);
+          }
+        }
+      );
+
+
+      // Optional: trigger dependent cases
+      if (this.controlConfig.dependentCases) {
+        this.controlConfig.dependentCases.forEach((caseItem: any) => {
+          if (caseItem?.event === 'onBlur') {
+            this.dynamicFormService.handleFieldBusinessCase(caseItem, this.form, this.moduleData, this.formConfig);
+          }
+        });
+      }
+
+    } else {
+      // For normal autocomplete, assign label only
+      this.control.setValue(selectedOption?.label || '');
+    }
+    this.controlConfig.options = []; // Clear options after selection
   }
+
+
 
 
   getErrorMessage(): string {

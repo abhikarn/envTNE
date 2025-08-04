@@ -1,15 +1,24 @@
-import { Component, forwardRef, Input, ViewEncapsulation } from '@angular/core';
-import { FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { IFormControl } from '../../form-control.interface';
+import {
+  Component,
+  forwardRef,
+  Input,
+  OnInit,
+  ViewEncapsulation
+} from '@angular/core';
+import {
+  FormControl,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { FunctionWrapperPipe } from '../../../pipes/functionWrapper.pipe';
-import { Observable, of } from 'rxjs';
-import { FormControlFactory } from '../../form-control.factory';
+import { IFormControl } from '../../form-control.interface';
 
 @Component({
   selector: 'lib-radio-input',
+  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -28,7 +37,7 @@ import { FormControlFactory } from '../../form-control.factory';
     },
   ],
 })
-export class RadioInputComponent {
+export class RadioInputComponent implements OnInit {
   @Input() control: FormControl = new FormControl('');
   @Input() controlConfig: IFormControl = { name: '' };
 
@@ -37,8 +46,17 @@ export class RadioInputComponent {
   }
 
   ngOnInit() {
+    // Disable control if configured
     if (this.controlConfig.disable) {
       this.control.disable();
+    }
+
+    // Set default value from config if form control doesn't already have one
+    if (
+      this.controlConfig.value !== undefined &&
+      (this.control.value === null || this.control.value === undefined)
+    ) {
+      this.control.setValue(this.controlConfig.value);
     }
   }
 
@@ -46,7 +64,7 @@ export class RadioInputComponent {
     return item.value;
   }
 
-  getErrorMessage(status: boolean): string {
+  getErrorMessage(): string {
     if (!this.controlConfig?.validations) return '';
 
     for (const validation of this.controlConfig.validations) {
@@ -55,7 +73,6 @@ export class RadioInputComponent {
       }
     }
 
-    return 'Invalid selection'; // Default fallback message
+    return 'Invalid selection';
   }
-
 }

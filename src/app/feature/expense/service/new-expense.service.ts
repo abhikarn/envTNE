@@ -67,4 +67,8 @@ export class NewExpenseService {
     return this.httpClient.post<any>(`${this.basePath}Travel/TravelRequestBookedDetailGet`, request);
   }
 
+  calculateLocationDistance(request: any) {
+    return this.httpClient.post<any>(`${this.basePath}Expense/CalculateLocationDistance`, request);
+  }
+
 }
