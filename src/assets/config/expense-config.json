@@ -566,7 +566,7 @@
             {
                 "name": "Travel Ticket",
                 "label": "Tickets Expense",
-                "OCRRequired": false,
+                "OCRRequired": true,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -618,7 +618,7 @@
                             ]
                         },
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -1650,7 +1650,7 @@
             {
                 "name": "Accommodation",
                 "label": "Accommodation",
-                "OCRRequired": false,
+                "OCRRequired": true,
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
                     "name": "Accommodation Expense",
@@ -1675,7 +1675,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
