@@ -1,5 +1,5 @@
 export const environment = {
-     production: false,
+     production: true,
      apiUrl: 'https://enaviya.co.in/spendmantraMobApi/api/', // Exising API URL
      newApiUrl:'https://enaviya.co.in/SpendMantraapi/api/', // New API URL
      assetsPath:'https://enaviya.co.in/SpendManraAngular', // New API URL
