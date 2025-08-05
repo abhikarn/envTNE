@@ -29,6 +29,8 @@ import { BottomSheetService } from '../../../shared/service/bottom-sheet.service
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import _moment from 'moment';
+import { DynamicFormService } from '../../../shared/service/dynamic-form.service';
+import { MissingFieldsPopupComponent } from '../../../shared/component/missing-fields-popup/missing-fields-popup.component';
 
 @Component({
   selector: 'app-main-expense',
@@ -63,7 +65,6 @@ export class MainExpenseComponent {
   travelClassList: any;
   originControl = new FormControl('');
   cities = [];
-  // filteredCities$: Observable<{ CityMasterId: number; City: string }[]>;
   travelPaymentList: any;
   accomodationTypeList: any;
   baggageTypeList: any;
@@ -127,7 +128,8 @@ export class MainExpenseComponent {
     private utilsService: UtilsService,
     private applicationMessageService: ApplicationMessageService,
     private bottomSheetService: BottomSheetService,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private dynamicFormService: DynamicFormService
   ) {
     this.isMobile = window.innerWidth <= 768;
   }
@@ -354,7 +356,8 @@ export class MainExpenseComponent {
             this.expenseRequestPreviewData = response;
             const hasMissingFields = this.checkMissingRequiredFields(
               this.expenseRequestPreviewData.dynamicExpenseDetailModels,
-              this.categories
+              this.categories,
+              false
             );
 
             if (!hasMissingFields) {
@@ -696,7 +699,8 @@ export class MainExpenseComponent {
     this.summaryComponent.calculateCostCenterWiseExpense();
     const hasMissingFields = this.checkMissingRequiredFields(
       this.expenseRequestData.dynamicExpenseDetailModels,
-      this.categories
+      this.categories,
+      false
     );
 
     if (!hasMissingFields) {
@@ -850,7 +854,7 @@ export class MainExpenseComponent {
     const hasMissingFields = this.checkMissingRequiredFields(
       this.mainExpenseData.dynamicExpenseDetailModels,
       this.categories,
-      this.confirmDialogService
+      true
     );
 
     if (hasMissingFields) return;
@@ -1152,7 +1156,7 @@ export class MainExpenseComponent {
   checkMissingRequiredFields(
     dynamicExpenseDetailModels: any[],
     categories: any[],
-    confirmDialogService?: any
+    displayPopup?: boolean
   ): boolean {
     const isEmptyValue = (val: any): boolean =>
       val === undefined ||
@@ -1167,14 +1171,10 @@ export class MainExpenseComponent {
           (cat: any) => expenseCategory?.data?.length > 0 && cat.name === expenseCategory.name
         );
         if (!configCategory) return null;
-
-        const requiredFields = configCategory.formControls
+        const filteredConfigCategory = this.dynamicFormService.getFormConfig(configCategory.formControls, this.moduleConfig);
+        const requiredFields = filteredConfigCategory
           .filter((control: any) =>
-            control.required &&
-            !control.isExcluded &&
-            (
-              !control.displayPage || control.displayPage[this.title]
-            )
+            control.required && !control.readonly
           )
           .map((control: any) => control.name);
 
@@ -1198,29 +1198,29 @@ export class MainExpenseComponent {
       .filter(Boolean);
 
     if (missingFieldsByCategory.length > 0) {
-      const missingFieldsMessage = missingFieldsByCategory
-        .map((cat: any) => {
-          const itemsText = cat.items
-            .map((item: any) => `Row ${item.index + 1}: ${item.missing.join(', ')}`)
-            .join('\n');
-          return `${cat.categoryName}:\n${itemsText}`;
-        })
-        .join('\n\n');
+      if (displayPopup) {
+        console.log(missingFieldsByCategory);
+        const dialogRef = this.dialog.open(MissingFieldsPopupComponent, {
+          width: '1000px',
+          data: missingFieldsByCategory
+        });
 
-      if (confirmDialogService) {
-        confirmDialogService.confirm({
-          title: 'Missing Required Fields',
-          message: `Please fill in the following required fields:\n\n${missingFieldsMessage}`,
-          confirmText: 'OK',
-          cancelButton: false
-        }).subscribe();
+        dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+          if (confirmed) {
+            console.log('User acknowledged missing fields');
+            // No return here, just log
+          } else {
+            console.log('User cancelled missing fields dialog');
+            // No return here, just log
+          }
+        });
+        return true; // Explicitly return true after opening dialog
+      } else {
+        return true; // Indicate missing fields without showing popup
       }
-
-
-      return true;
+    } else {
+      return false; // No missing fields
     }
-
-    return false;
   }
 
 
