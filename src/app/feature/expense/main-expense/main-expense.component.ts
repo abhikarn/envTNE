@@ -313,21 +313,16 @@ export class MainExpenseComponent {
   setExpenseSummary() {
     this.expenseSummary.forEach((summary: any) => {
       if (summary.id === "category-wise-expense") {
-        summary.items = summary.items.filter((item: any) => {
-          const includesDomestic = item.includeIn.includes("domestic");
-          const includesInternational = item.includeIn.includes("international");
-
-          if (this.moduleConfig.internationalFlag === true) {
-            // Show if item is for international or both
-            return includesInternational;
-          } else {
-            // Show if item is for domestic or both
-            return includesDomestic;
-          }
+        summary.items.forEach((item: any) => {
+          const shouldShow = this.categories.some(
+            (category: any) => category.name === item.name
+          );
+          item.showInUI = shouldShow;
         });
       }
     });
   }
+
 
   // Setup validation rules for justification text field if required.
   setupJustificationForm() {

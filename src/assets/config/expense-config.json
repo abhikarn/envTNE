@@ -525,6 +525,36 @@
                     "claimTypeId": 53,
                     "travelRequestId": 0
                 }
+            },
+            {
+                "name": "Training and Certification",
+                "label": "Training and Certification",
+                "displayPage": {
+                    "Training and Certification": true
+                },
+                "displayTable": false,
+                "displayAddClearButton": false,
+                "moduleData": {
+                    "travelTypeId": 152,
+                    "requestForId": 152,
+                    "claimTypeId": 53,
+                    "travelRequestId": 0
+                }
+            },
+            {
+                "name": "Business Entertainment",
+                "label": "Business Entertainment",
+                "displayPage": {
+                    "Business Entertainment": true
+                },
+                "displayTable": false,
+                "displayAddClearButton": false,
+                "moduleData": {
+                    "travelTypeId": 152,
+                    "requestForId": 152,
+                    "claimTypeId": 53,
+                    "travelRequestId": 0
+                }
             }
         ],
         "dateExtension": {
@@ -10929,7 +10959,7 @@
                     "Travel Expense": true,
                     "Direct Expense Domestic": true,
                     "Direct Expense International": true,
-                    "Business Entertainment Expense": true
+                    "Business Entertainment": true
                 },
                 "showCategoryFor": [
                     51,
@@ -21311,8 +21341,8 @@
                 }
             },
             {
-                "name": "Training & Certification",
-                "label": "Training & Certification",
+                "name": "Training and Certification",
+                "label": "Training and Certification",
                 "formControls": [],
                 "expanded": true,
                 "displayTable": true,
@@ -21321,7 +21351,7 @@
                 "columns": [],
                 "nestedTables": [],
                 "displayPage": {
-                    "Training and Certification Expense": true
+                    "Training and Certification": true
                 }
             },
             {
@@ -22663,51 +22693,60 @@
                     {
                         "name": "totalExpense",
                         "label": "Total Expense",
-                        "value": 0.00
+                        "value": 0.00,
+                        "showInUI": true
                     },
                     {
                         "name": "lessAdvance",
                         "label": "Less Advance",
-                        "value": 0.00
+                        "value": 0.00,
+                        "showInUI": true
                     },
                     {
                         "name": "amountPaidByCompany",
                         "label": "Amount Paid by Company",
                         "paymentModeId": 93,
-                        "value": 0.00
+                        "value": 0.00,
+                        "showInUI": true
                     },
                     {
                         "name": "corporateCreditCard",
                         "label": "Corporate Credit Card",
                         "paymentModeId": 92,
-                        "value": 0.00
+                        "value": 0.00,
+                        "showInUI": true
                     },
                     {
                         "name": "creditCard",
                         "label": "Credit Card",
                         "paymentModeId": 94,
-                        "value": 0.00
+                        "value": 0.00,
+                        "showInUI": true
                     },
                     {
                         "name": "paidByEmployee",
                         "label": "Paid By Employee",
                         "paymentModeId": 91,
-                        "value": 0.00
+                        "value": 0.00,
+                        "showInUI": true
                     },
                     {
                         "name": "advanceReturn",
                         "label": "Advance Return",
-                        "value": 0.00
+                        "value": 0.00,
+                        "showInUI": true
                     },
                     {
                         "name": "adjustments",
                         "label": "Adjustments",
-                        "value": 0.00
+                        "value": 0.00,
+                        "showInUI": true
                     },
                     {
                         "name": "amountPayable",
                         "label": "Amount Payable / Receivable",
-                        "value": 0.00
+                        "value": 0.00,
+                        "showInUI": true
                     }
                 ]
             },
@@ -22720,109 +22759,107 @@
                     {
                         "name": "Travel Ticket",
                         "label": "Tickets Expense",
-                        "includeIn": [
-                            "domestic",
-                            "international"
-                        ]
+                        "showInUI": true
                     },
                     {
                         "name": "Accommodation",
                         "label": "Accommodation Expenses",
-                        "includeIn": [
-                            "domestic",
-                            "international"
-                        ]
+                        "showInUI": true
                     },
                     {
                         "name": "Boarding Expense",
                         "label": "Boarding Expenses",
-                        "includeIn": [
-                            "domestic",
-                            "international"
-                        ]
+                        "showInUI": true
                     },
                     {
                         "name": "Incidental Expenses",
                         "label": "Incidental Expenses",
-                        "includeIn": [
-                            "domestic",
-                            "international"
-                        ]
+                        "showInUI": true
                     },
                     {
                         "name": "Laundry service",
                         "label": "Laundry Service",
-                        "includeIn": [
-                            "domestic",
-                            "international"
-                        ]
+                        "showInUI": true
                     },
                     {
                         "name": "Flat Allowance",
                         "label": "Flat or Own Arrangement",
-                        "includeIn": [
-                            "domestic",
-                            "international"
-                        ]
+                        "showInUI": true
                     },
                     {
                         "name": "Local Conveyance During Travel",
                         "label": "Conveyance During Travel",
-                        "includeIn": [
-                            "domestic",
-                            "international"
-                        ]
+                        "showInUI": true
                     },
                     {
                         "name": "Business Entertainment",
                         "label": "Business Entertainment",
-                        "includeIn": [
-                            "domestic",
-                            "international"
-                        ]
+                        "showInUI": true
                     },
                     {
                         "name": "Other Expenses",
                         "label": "Other Expenses",
-                        "includeIn": [
-                            "domestic",
-                            "international"
-                        ]
+                        "showInUI": true
                     },
                     {
                         "name": "Baggage and Outfit Allowance",
                         "label": "Baggage and Outfit Allowance",
-                        "includeIn": [
-                            "international"
-                        ]
+                        "showInUI": true
                     },
                     {
                         "name": "Transit Allowance",
                         "label": "Transit Allowance",
-                        "includeIn": [
-                            "international"
-                        ]
+                        "showInUI": true
                     },
                     {
                         "name": "Visa",
                         "label": "Visa",
-                        "includeIn": [
-                            "international"
-                        ]
+                        "showInUI": true
                     },
                     {
                         "name": "Travel Insurance",
                         "label": "Travel Insurance",
-                        "includeIn": [
-                            "international"
-                        ]
+                        "showInUI": true
                     },
                     {
                         "name": "Roaming",
                         "label": "Roaming",
-                        "includeIn": [
-                            "international"
-                        ]
+                        "showInUI": true
+                    },
+                    {
+                        "name": "Mobile Handset Purchase",
+                        "label": "Mobile Handset Purchase",
+                        "showInUI": true
+                    },
+                    {
+                        "name": "DataCardBroadband",
+                        "label": "Data Card Broadband",
+                        "showInUI": true
+                    },
+                    {
+                        "name": "Mobile Expense",
+                        "label": "Mobile Expense",
+                        "showInUI": true
+                    },
+                    {
+                        "name": "Marriage Gift",
+                        "label": "Marriage Gift",
+                        "showInUI": true
+                    },
+                    {
+                        "name": "Deputation Claim",
+                        "label": "Deputation Claim",
+                        "showInUI": true
+                    },
+                    {
+                        "name":"Bereavement Support Claim",
+                        "label": "Bereavement Support Claim",
+                        "showInUI": true
+                    },
+                    {
+                        "name": "Training and Certification",
+                        "label": "Training and Certification",
+                        "showInUI": true
                     }
                 ]
             },
