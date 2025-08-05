@@ -219,6 +219,15 @@ export class MainExpenseComponent {
   handleInitialResponses(responses: any) {
     this.expenseConfig = responses.expenseConfig.expenseRequest;
 
+    // set category in order and display only if showInUI true
+    this.expenseConfig.category = this.expenseConfig.category.filter((cat: any) => cat.showInUI).sort((a: any, b: any) => a.order - b.order);
+    // for all controls in category, only sort if they are defined
+    this.expenseConfig.category.forEach((cat: any) => {
+      if (cat.formControls) {
+        cat.formControls = cat.formControls.filter((control: any) => control).sort((a: any, b: any) => a.order - b.order);
+      }
+    });
+
     this.setupExpenseConfig();
     this.setupJustificationForm();
 

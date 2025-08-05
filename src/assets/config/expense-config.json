@@ -619,7 +619,7 @@
                         },
                         "disable": false,
                         "oCRRequired": false,
-                        "order": 11
+                        "order": 1
                     },
                     {
                         "type": "select",
@@ -643,8 +643,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 1,
-                        "policyViolationCheck": true
+                        "policyViolationCheck": true,
+                        "order": 2
                     },
                     {
                         "type": "select",
@@ -670,8 +670,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "policyViolationCheck": true
+                        "policyViolationCheck": true,
+                        "order": 3
                     },
                     {
                         "type": "date",
@@ -713,9 +713,9 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 3,
                         "policyViolationCheck": true,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 4
                     },
                     {
                         "type": "date",
@@ -736,9 +736,9 @@
                         "readonly": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "order": 3,
                         "policyViolationCheck": false,
-                        "apiDateLimit": false
+                        "apiDateLimit": false,
+                        "order": 5
                     },
                     {
                         "type": "date",
@@ -749,9 +749,9 @@
                         "value": null,
                         "disable": false,
                         "readonly": false,
-                        "order": 3,
                         "policyViolationCheck": false,
-                        "showInUI": false
+                        "showInUI": false,
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -771,7 +771,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -791,7 +791,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -816,7 +816,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -841,7 +841,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 5
+                        "order": 10
                     },
                     {
                         "type": "select",
@@ -865,7 +865,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 11
                     },
                     {
                         "type": "select",
@@ -897,7 +897,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 7
+                        "order": 12
                     },
                     {
                         "type": "text",
@@ -956,7 +956,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 8
+                        "order": 13
                     },
                     {
                         "type": "text",
@@ -987,7 +987,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 9
+                        "order": 14
                     },
                     {
                         "type": "costcenter",
@@ -1105,7 +1105,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 15
                     },
                     {
                         "type": "gst",
@@ -1283,7 +1284,8 @@
                             "GSTAmount": "The GST amount should not be greater than the claimed amount.",
                             "validGSTAmount": "Please enter a valid GST amount.",
                             "claimedAmount": "Please enter a claimed amount."
-                        }
+                        },
+                        "order": 16
                     },
                     {
                         "type": "textarea",
@@ -1295,19 +1297,18 @@
                         "required": false,
                         "disable": false,
                         "readonly": false,
-                        "order": 10,
                         "requiredIf": {
                             "IsViolation": true
                         },
-                        "maxLength": 500
+                        "maxLength": 500,
+                        "order": 17
                     },
                     {
                         "type": "hidden",
                         "name": "IsViolation",
                         "isExcluded": true,
                         "value": false,
-                        "showInUI": false,
-                        "order": 12
+                        "showInUI": false
                     },
                     {
                         "type": "hidden",
@@ -1328,8 +1329,7 @@
                                 "ClaimAmount",
                                 "ConversionRate"
                             ]
-                        },
-                        "order": 13
+                        }
                     },
                     {
                         "type": "hidden",
@@ -1643,7 +1643,9 @@
                     52,
                     53,
                     54
-                ]
+                ],
+                "showInUI": true,
+                "order": 1
             },
             {
                 "name": "Accommodation",
@@ -1697,7 +1699,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                        "order": 2
                     },
                     {
                         "type": "date",
@@ -1767,7 +1770,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 2,
                         "apiDateLimit": true,
                         "policyEntitlementCheck": true,
                         "setFields": [
@@ -1789,7 +1791,8 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "order": 3
                     },
                     {
                         "type": "date",
@@ -1814,7 +1817,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 3,
                         "apiDateLimit": true,
                         "setFields": [
                             {
@@ -1848,7 +1850,8 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -1874,7 +1877,8 @@
                                     "OriginalEntitlementAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -1947,7 +1951,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -1966,9 +1970,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5,
                         "policyEntitlementCheck": true,
-                        "international": false
+                        "international": false,
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -1987,9 +1991,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 6,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -2008,10 +2012,10 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 7,
                         "policyEntitlementCheck": true,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -2030,7 +2034,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 10
                     },
                     {
                         "type": "text",
@@ -2047,7 +2051,7 @@
                                 "message": "Bill Number is required"
                             }
                         ],
-                        "order": 7
+                        "order": 11
                     },
                     {
                         "type": "date",
@@ -2059,7 +2063,7 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "order": 8
+                        "order": 12
                     },
                     {
                         "type": "select",
@@ -2083,7 +2087,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 13
                     },
                     {
                         "type": "select",
@@ -2114,7 +2118,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -2164,7 +2168,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 15
                     },
                     {
                         "type": "text",
@@ -2195,7 +2199,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -2205,7 +2208,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 16
                     },
                     {
                         "type": "select",
@@ -2236,7 +2240,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 17
                     },
                     {
                         "type": "text",
@@ -2292,7 +2296,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -2304,7 +2307,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 18
                     },
                     {
                         "type": "text",
@@ -2335,7 +2339,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -2355,7 +2358,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 19
                     },
                     {
                         "type": "text",
@@ -2385,7 +2389,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 16,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -2397,7 +2400,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 20
                     },
                     {
                         "type": "text",
@@ -2416,7 +2420,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 17
+                        "order": 21
                     },
                     {
                         "type": "textarea",
@@ -2426,13 +2430,13 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18,
                         "disable": false,
                         "readonly": false,
                         "requiredIf": {
                             "IsViolation": true
                         },
-                        "maxLength": 500
+                        "maxLength": 500,
+                        "order": 22
                     },
                     {
                         "type": "costcenter",
@@ -2550,7 +2554,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 23
                     },
                     {
                         "type": "gst",
@@ -2728,7 +2733,8 @@
                             "GSTAmount": "The GST amount should not be greater than the claimed amount.",
                             "validGSTAmount": "Please enter a valid GST amount.",
                             "claimedAmount": "Please enter a claimed amount."
-                        }
+                        },
+                        "order": 24
                     },
                     {
                         "type": "hidden",
@@ -3215,7 +3221,9 @@
                     52,
                     53,
                     54
-                ]
+                ],
+                "showInUI": true,
+                "order": 2
             },
             {
                 "name": "Boarding Expense",
@@ -3315,7 +3323,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 2,
                         "apiDateLimit": true,
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
@@ -3327,7 +3334,8 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "order": 2
                     },
                     {
                         "type": "date",
@@ -3352,7 +3360,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 3,
                         "apiDateLimit": true,
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
@@ -3364,7 +3371,8 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "order": 3
                     },
                     {
                         "type": "select",
@@ -3387,7 +3395,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -3460,7 +3469,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -3479,9 +3488,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5,
                         "policyEntitlementCheck": true,
-                        "international": false
+                        "international": false,
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -3500,9 +3509,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 6,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -3521,10 +3530,10 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 7,
                         "policyEntitlementCheck": true,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -3541,7 +3550,7 @@
                                 "message": "Bill Number is required"
                             }
                         ],
-                        "order": 7
+                        "order": 9
                     },
                     {
                         "type": "date",
@@ -3553,7 +3562,7 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "order": 8
+                        "order": 10
                     },
                     {
                         "type": "select",
@@ -3584,7 +3593,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 11
                     },
                     {
                         "type": "text",
@@ -3634,7 +3643,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 12
                     },
                     {
                         "type": "text",
@@ -3665,7 +3674,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -3675,7 +3683,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 13
                     },
                     {
                         "type": "select",
@@ -3706,7 +3715,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -3762,7 +3771,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -3774,7 +3782,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 15
                     },
                     {
                         "type": "text",
@@ -3805,7 +3814,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -3825,7 +3833,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 16
                     },
                     {
                         "type": "select",
@@ -3849,7 +3858,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 17
                     },
                     {
                         "type": "text",
@@ -3868,7 +3877,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 17
+                        "order": 18
                     },
                     {
                         "type": "textarea",
@@ -3878,7 +3887,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 19
                     },
                     {
                         "type": "costcenter",
@@ -3996,7 +4005,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 20
                     },
                     {
                         "type": "gst",
@@ -4174,7 +4184,8 @@
                             "GSTAmount": "The GST amount should not be greater than the claimed amount.",
                             "validGSTAmount": "Please enter a valid GST amount.",
                             "claimedAmount": "Please enter a claimed amount."
-                        }
+                        },
+                        "order": 21
                     },
                     {
                         "type": "hidden",
@@ -4594,7 +4605,9 @@
                     52,
                     53,
                     54
-                ]
+                ],
+                "showInUI": true,
+                "order": 3
             },
             {
                 "name": "Incidental Expenses",
@@ -4647,7 +4660,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                        "order": 2
                     },
                     {
                         "type": "date",
@@ -4665,8 +4679,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 3
                     },
                     {
                         "type": "date",
@@ -4684,8 +4698,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -4758,7 +4772,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -4777,9 +4791,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5,
                         "policyEntitlementCheck": true,
-                        "international": false
+                        "international": false,
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -4798,9 +4812,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 6,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -4819,10 +4833,10 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 7,
                         "policyEntitlementCheck": true,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -4839,7 +4853,7 @@
                                 "message": "Bill Number is required"
                             }
                         ],
-                        "order": 7
+                        "order": 9
                     },
                     {
                         "type": "date",
@@ -4851,7 +4865,7 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "order": 8
+                        "order": 10
                     },
                     {
                         "type": "text",
@@ -4871,7 +4885,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 8
+                        "order": 11
                     },
                     {
                         "type": "select",
@@ -4902,7 +4916,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 12
                     },
                     {
                         "type": "text",
@@ -4952,7 +4966,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 13
                     },
                     {
                         "type": "text",
@@ -4983,7 +4997,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -4993,7 +5006,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 14
                     },
                     {
                         "type": "select",
@@ -5024,7 +5038,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 15
                     },
                     {
                         "type": "text",
@@ -5080,7 +5094,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -5092,7 +5105,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 16
                     },
                     {
                         "type": "text",
@@ -5123,7 +5137,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -5143,7 +5156,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 17
                     },
                     {
                         "type": "select",
@@ -5167,7 +5181,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 18
                     },
                     {
                         "type": "text",
@@ -5197,7 +5211,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 16,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -5209,7 +5222,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 19
                     },
                     {
                         "type": "text",
@@ -5228,7 +5242,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 17
+                        "order": 20
                     },
                     {
                         "type": "textarea",
@@ -5238,7 +5252,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 21
                     },
                     {
                         "type": "costcenter",
@@ -5356,7 +5370,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 22
                     },
                     {
                         "type": "gst",
@@ -5534,7 +5549,8 @@
                             "GSTAmount": "The GST amount should not be greater than the claimed amount.",
                             "validGSTAmount": "Please enter a valid GST amount.",
                             "claimedAmount": "Please enter a claimed amount."
-                        }
+                        },
+                        "order": 23
                     },
                     {
                         "type": "hidden",
@@ -5965,7 +5981,9 @@
                         "duplicateCategoryCheck": true,
                         "message": "If Per Diem is claimed, then Incidental Expenses cannot be claimed."
                     }
-                ]
+                ],
+                "showInUI": true,
+                "order": 4
             },
             {
                 "name": "Laundry service",
@@ -6018,7 +6036,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                        "order": 2
                     },
                     {
                         "type": "date",
@@ -6036,8 +6055,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 3
                     },
                     {
                         "type": "date",
@@ -6055,8 +6074,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -6129,7 +6148,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -6148,9 +6167,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5,
                         "policyEntitlementCheck": true,
-                        "international": false
+                        "international": false,
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -6169,9 +6188,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 6,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -6190,10 +6209,10 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 7,
                         "policyEntitlementCheck": true,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -6210,7 +6229,7 @@
                                 "message": "Bill Number is required"
                             }
                         ],
-                        "order": 7
+                        "order": 9
                     },
                     {
                         "type": "date",
@@ -6222,7 +6241,7 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "order": 8
+                        "order": 10
                     },
                     {
                         "type": "text",
@@ -6242,7 +6261,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 8
+                        "order": 11
                     },
                     {
                         "type": "select",
@@ -6273,7 +6292,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 12
                     },
                     {
                         "type": "text",
@@ -6323,7 +6342,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 13
                     },
                     {
                         "type": "text",
@@ -6354,7 +6373,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -6364,7 +6382,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 14
                     },
                     {
                         "type": "select",
@@ -6395,7 +6414,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 15
                     },
                     {
                         "type": "text",
@@ -6451,7 +6470,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -6463,7 +6481,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 16
                     },
                     {
                         "type": "text",
@@ -6494,7 +6513,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -6514,7 +6532,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 17
                     },
                     {
                         "type": "select",
@@ -6538,7 +6557,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 18
                     },
                     {
                         "type": "text",
@@ -6568,7 +6587,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 16,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -6580,7 +6598,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 19
                     },
                     {
                         "type": "text",
@@ -6599,7 +6618,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 17
+                        "order": 20
                     },
                     {
                         "type": "textarea",
@@ -6609,7 +6628,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 21
                     },
                     {
                         "type": "costcenter",
@@ -6727,7 +6746,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 22
                     },
                     {
                         "type": "gst",
@@ -6905,7 +6925,8 @@
                             "GSTAmount": "The GST amount should not be greater than the claimed amount.",
                             "validGSTAmount": "Please enter a valid GST amount.",
                             "claimedAmount": "Please enter a claimed amount."
-                        }
+                        },
+                        "order": 23
                     },
                     {
                         "type": "hidden",
@@ -7336,7 +7357,9 @@
                         "minimumStayduration": 3,
                         "message": "Laundry service can only be claimed for stays longer than 3 days."
                     }
-                ]
+                ],
+                "showInUI": true,
+                "order": 5
             },
             {
                 "name": "Flat Allowance",
@@ -7393,7 +7416,8 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false
+                        "readonly": false,
+                        "order": 2
                     },
                     {
                         "type": "date",
@@ -7463,7 +7487,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 2,
                         "apiDateLimit": true,
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
@@ -7485,7 +7508,8 @@
                                     "CheckOutDateTime"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 3
                     },
                     {
                         "type": "date",
@@ -7510,7 +7534,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 3,
                         "apiDateLimit": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
@@ -7544,7 +7567,8 @@
                                     }
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -7560,7 +7584,8 @@
                                 "type": "required",
                                 "message": "No. of Days is required"
                             }
-                        ]
+                        ],
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -7633,7 +7658,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -7652,9 +7677,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5,
                         "policyEntitlementCheck": true,
-                        "international": false
+                        "international": false,
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -7673,9 +7698,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 6,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -7694,10 +7719,10 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 7,
                         "policyEntitlementCheck": true,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -7716,7 +7741,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 10
                     },
                     {
                         "type": "text",
@@ -7733,7 +7758,7 @@
                                 "message": "Bill Number is required"
                             }
                         ],
-                        "order": 7
+                        "order": 11
                     },
                     {
                         "type": "date",
@@ -7745,7 +7770,7 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "order": 8
+                        "order": 12
                     },
                     {
                         "type": "select",
@@ -7769,7 +7794,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 13
                     },
                     {
                         "type": "select",
@@ -7800,7 +7825,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -7850,7 +7875,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 15
                     },
                     {
                         "type": "text",
@@ -7881,7 +7906,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -7891,7 +7915,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 16
                     },
                     {
                         "type": "select",
@@ -7922,7 +7947,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 17
                     },
                     {
                         "type": "text",
@@ -7978,7 +8003,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -7990,7 +8014,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 18
                     },
                     {
                         "type": "text",
@@ -8021,7 +8046,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -8041,7 +8065,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 19
                     },
                     {
                         "type": "text",
@@ -8071,7 +8096,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 16,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -8083,7 +8107,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 20
                     },
                     {
                         "type": "text",
@@ -8102,7 +8127,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 17
+                        "order": 21
                     },
                     {
                         "type": "textarea",
@@ -8112,13 +8137,13 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18,
                         "disable": false,
                         "readonly": false,
                         "requiredIf": {
                             "IsViolation": true
                         },
-                        "maxLength": 500
+                        "maxLength": 500,
+                        "order": 22
                     },
                     {
                         "type": "costcenter",
@@ -8236,7 +8261,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 23
                     },
                     {
                         "type": "gst",
@@ -8414,7 +8440,8 @@
                             "GSTAmount": "The GST amount should not be greater than the claimed amount.",
                             "validGSTAmount": "Please enter a valid GST amount.",
                             "claimedAmount": "Please enter a claimed amount."
-                        }
+                        },
+                        "order": 24
                     },
                     {
                         "type": "hidden",
@@ -8907,7 +8934,9 @@
                             "CheckOutDateTime"
                         ]
                     }
-                ]
+                ],
+                "showInUI": true,
+                "order": 6
             },
             {
                 "name": "Local Conveyance During Travel",
@@ -8993,7 +9022,8 @@
                                     "dateRange": "MonthName"
                                 }
                             }
-                        ]
+                        ],
+                        "order": 2
                     },
                     {
                         "type": "date",
@@ -9011,12 +9041,12 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
                         "apiDateLimit": true,
                         "displayPage": {
                             "Travel Expense": true,
                             "Local Travel Conveyance": false
-                        }
+                        },
+                        "order": 3
                     },
                     {
                         "type": "date",
@@ -9034,13 +9064,13 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
                         "displayPage": {
                             "Travel Expense": false,
                             "Local Travel Conveyance": true
-                        }
+                        },
+                        "order": 4
                     },
                     {
                         "type": "select",
@@ -9090,11 +9120,11 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 3,
                         "displayPage": {
                             "Travel Expense": true,
                             "Local Travel Conveyance": false
-                        }
+                        },
+                        "order": 5
                     },
                     {
                         "type": "select",
@@ -9151,11 +9181,11 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 3,
                         "displayPage": {
                             "Travel Expense": false,
                             "Local Travel Conveyance": true
-                        }
+                        },
+                        "order": 6
                     },
                     {
                         "type": "select",
@@ -9206,7 +9236,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 7
                     },
                     {
                         "type": "select",
@@ -9229,11 +9259,11 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 5,
                         "displayPage": {
                             "Travel Expense": false,
                             "Local Travel Conveyance": true
-                        }
+                        },
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -9249,11 +9279,11 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 5,
                         "displayPage": {
                             "Travel Expense": true,
                             "Local Travel Conveyance": false
-                        }
+                        },
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -9269,11 +9299,11 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6,
                         "displayPage": {
                             "Travel Expense": true,
                             "Local Travel Conveyance": false
-                        }
+                        },
+                        "order": 10
                     },
                     {
                         "type": "autocomplete",
@@ -9315,7 +9345,8 @@
                         "displayPage": {
                             "Travel Expense": false,
                             "Local Travel Conveyance": true
-                        }
+                        },
+                        "order": 11
                     },
                     {
                         "type": "autocomplete",
@@ -9357,7 +9388,8 @@
                         "displayPage": {
                             "Travel Expense": false,
                             "Local Travel Conveyance": true
-                        }
+                        },
+                        "order": 12
                     },
                     {
                         "type": "text",
@@ -9406,7 +9438,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 7
+                        "order": 13
                     },
                     {
                         "type": "text",
@@ -9425,8 +9457,8 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 8,
-                        "policyEntitlementCheck": true
+                        "policyEntitlementCheck": true,
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -9446,7 +9478,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 15
                     },
                     {
                         "type": "text",
@@ -9463,7 +9495,7 @@
                                 "message": "Bill Number is required"
                             }
                         ],
-                        "order": 7
+                        "order": 16
                     },
                     {
                         "type": "date",
@@ -9475,7 +9507,7 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "order": 8
+                        "order": 17
                     },
                     {
                         "type": "text",
@@ -9491,7 +9523,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 18
                     },
                     {
                         "type": "select",
@@ -9515,7 +9547,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 10
+                        "order": 19
                     },
                     {
                         "type": "select",
@@ -9546,7 +9578,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 11
+                        "order": 20
                     },
                     {
                         "type": "text",
@@ -9570,7 +9602,7 @@
                         "disable": false,
                         "readonly": true,
                         "showInUI": false,
-                        "order": 12
+                        "order": 21
                     },
                     {
                         "type": "text",
@@ -9594,7 +9626,7 @@
                         "disable": false,
                         "readonly": true,
                         "showInUI": false,
-                        "order": 12
+                        "order": 22
                     },
                     {
                         "type": "text",
@@ -9619,7 +9651,7 @@
                         "disable": false,
                         "readonly": true,
                         "showInUI": false,
-                        "order": 13
+                        "order": 23
                     },
                     {
                         "type": "text",
@@ -9679,7 +9711,7 @@
                                 ]
                             }
                         ],
-                        "order": 12
+                        "order": 24
                     },
                     {
                         "type": "text",
@@ -9738,7 +9770,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 25
                     },
                     {
                         "type": "text",
@@ -9769,7 +9801,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 14
+                        "order": 26
                     },
                     {
                         "type": "costcenter",
@@ -9891,7 +9923,8 @@
                         "displayPage": {
                             "Travel Expense": true,
                             "Local Travel Conveyance": false
-                        }
+                        },
+                        "order": 27
                     },
                     {
                         "type": "radio",
@@ -9910,11 +9943,11 @@
                             }
                         ],
                         "required": false,
-                        "order": 8,
                         "displayPage": {
                             "Travel Expense": false,
                             "Local Travel Conveyance": true
-                        }
+                        },
+                        "order": 28
                     },
                     {
                         "type": "textarea",
@@ -9924,13 +9957,13 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 15,
                         "disable": false,
                         "readonly": false,
                         "requiredIf": {
                             "IsViolation": true
                         },
-                        "maxLength": 500
+                        "maxLength": 500,
+                        "order": 29
                     },
                     {
                         "type": "hidden",
@@ -10322,7 +10355,9 @@
                     52,
                     53,
                     54
-                ]
+                ],
+                "showInUI": true,
+                "order": 7
             },
             {
                 "name": "Business Entertainment",
@@ -10360,8 +10395,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 2
                     },
                     {
                         "type": "text",
@@ -10434,7 +10469,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 3
                     },
                     {
                         "type": "text",
@@ -10453,8 +10488,8 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5,
-                        "international": false
+                        "international": false,
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -10473,9 +10508,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 6,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -10494,10 +10529,10 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 7,
                         "policyEntitlementCheck": true,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -10513,7 +10548,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 5
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -10529,7 +10564,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 5
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -10545,7 +10580,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -10565,7 +10600,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 10
                     },
                     {
                         "type": "text",
@@ -10581,7 +10616,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 11
                     },
                     {
                         "type": "text",
@@ -10598,7 +10633,7 @@
                                 "message": "Bill Number is required"
                             }
                         ],
-                        "order": 7
+                        "order": 12
                     },
                     {
                         "type": "date",
@@ -10610,7 +10645,7 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "order": 8
+                        "order": 13
                     },
                     {
                         "type": "select",
@@ -10634,7 +10669,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 10
+                        "order": 14
                     },
                     {
                         "type": "select",
@@ -10665,7 +10700,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 11
+                        "order": 15
                     },
                     {
                         "type": "text",
@@ -10718,7 +10753,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 16
                     },
                     {
                         "type": "text",
@@ -10749,7 +10784,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 14
+                        "order": 17
                     },
                     {
                         "type": "textarea",
@@ -10759,7 +10794,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 15
+                        "order": 18
                     },
                     {
                         "type": "hidden",
@@ -10966,7 +11001,9 @@
                     52,
                     53,
                     54
-                ]
+                ],
+                "showInUI": true,
+                "order": 8
             },
             {
                 "name": "Other Expenses",
@@ -11004,8 +11041,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 2
                     },
                     {
                         "type": "select",
@@ -11029,8 +11066,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 3,
-                        "international": false
+                        "international": false,
+                        "order": 3
                     },
                     {
                         "type": "select",
@@ -11054,8 +11091,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 3,
-                        "international": true
+                        "international": true,
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -11134,7 +11171,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -11153,8 +11190,8 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5,
-                        "international": false
+                        "international": false,
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -11173,9 +11210,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 6,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -11194,9 +11231,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 7,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -11212,7 +11249,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 5
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -11229,7 +11266,7 @@
                                 "message": "Bill Number is required"
                             }
                         ],
-                        "order": 7
+                        "order": 10
                     },
                     {
                         "type": "date",
@@ -11241,7 +11278,7 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "order": 8
+                        "order": 11
                     },
                     {
                         "type": "select",
@@ -11265,7 +11302,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 10
+                        "order": 12
                     },
                     {
                         "type": "select",
@@ -11296,7 +11333,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 11
+                        "order": 13
                     },
                     {
                         "type": "text",
@@ -11355,7 +11392,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -11386,7 +11423,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 14
+                        "order": 15
                     },
                     {
                         "type": "costcenter",
@@ -11504,7 +11541,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 16
                     },
                     {
                         "type": "textarea",
@@ -11514,13 +11552,13 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 15,
                         "disable": false,
                         "readonly": false,
                         "requiredIf": {
                             "IsViolation": true
                         },
-                        "maxLength": 500
+                        "maxLength": 500,
+                        "order": 17
                     },
                     {
                         "type": "hidden",
@@ -11703,7 +11741,9 @@
                     52,
                     53,
                     54
-                ]
+                ],
+                "showInUI": true,
+                "order": 9
             },
             {
                 "name": "Medical Claim",
@@ -11741,8 +11781,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 2
                     },
                     {
                         "type": "text",
@@ -11815,7 +11855,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 3
                     },
                     {
                         "type": "text",
@@ -11834,9 +11874,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5,
                         "policyEntitlementCheck": true,
-                        "international": false
+                        "international": false,
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -11855,9 +11895,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 6,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -11876,10 +11916,10 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 7,
                         "policyEntitlementCheck": true,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 6
                     },
                     {
                         "type": "select",
@@ -11910,7 +11950,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -11960,7 +12000,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -11991,7 +12031,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -12001,7 +12040,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -12020,7 +12060,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 10
                     },
                     {
                         "type": "text",
@@ -12037,7 +12077,7 @@
                                 "message": "Bill Number is required"
                             }
                         ],
-                        "order": 7
+                        "order": 11
                     },
                     {
                         "type": "date",
@@ -12049,7 +12089,7 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "order": 8
+                        "order": 12
                     },
                     {
                         "type": "select",
@@ -12073,7 +12113,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 13
                     },
                     {
                         "type": "select",
@@ -12104,7 +12144,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -12160,7 +12200,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -12172,7 +12211,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 15
                     },
                     {
                         "type": "text",
@@ -12203,7 +12243,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -12213,7 +12252,8 @@
                                     "ConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 16
                     },
                     {
                         "type": "text",
@@ -12243,7 +12283,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 16,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -12255,7 +12294,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 17
                     },
                     {
                         "type": "text",
@@ -12274,7 +12314,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 17
+                        "order": 18
                     },
                     {
                         "type": "textarea",
@@ -12284,7 +12324,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 19
                     },
                     {
                         "type": "costcenter",
@@ -12402,7 +12442,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 20
                     },
                     {
                         "type": "gst",
@@ -12580,7 +12621,8 @@
                             "GSTAmount": "The GST amount should not be greater than the claimed amount.",
                             "validGSTAmount": "Please enter a valid GST amount.",
                             "claimedAmount": "Please enter a claimed amount."
-                        }
+                        },
+                        "order": 21
                     },
                     {
                         "type": "hidden",
@@ -12995,7 +13037,9 @@
                 ],
                 "displayPage": {
                     "Joining Expense": true
-                }
+                },
+                "showInUI": true,
+                "order": 10
             },
             {
                 "name": "Baggage and Outfit Allowance",
@@ -13033,7 +13077,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
                         "apiDateLimit": true,
                         "policyEntitlementCheck": true,
                         "setFields": [
@@ -13044,7 +13087,8 @@
                                     "Constraint"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 2
                     },
                     {
                         "type": "multi-select",
@@ -13073,7 +13117,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4,
                         "getReadableValue": {
                             "controlName": "ConstraintNames"
                         },
@@ -13089,7 +13132,8 @@
                                     "Constraint"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 3
                     },
                     {
                         "type": "select",
@@ -13120,7 +13164,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -13170,7 +13214,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -13201,7 +13245,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -13211,7 +13254,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 6
                     },
                     {
                         "type": "select",
@@ -13235,7 +13279,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 7
                     },
                     {
                         "type": "select",
@@ -13266,7 +13310,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -13322,7 +13366,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -13353,7 +13397,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -13363,7 +13406,8 @@
                                     "ConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 10
                     },
                     {
                         "type": "textarea",
@@ -13373,7 +13417,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 11
                     },
                     {
                         "type": "costcenter",
@@ -13491,7 +13535,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 12
                     },
                     {
                         "type": "hidden",
@@ -13939,7 +13984,9 @@
                 "showCategoryFor": [
                     52,
                     54
-                ]
+                ],
+                "showInUI": true,
+                "order": 11
             },
             {
                 "name": "Mobile Handset Purchase",
@@ -13977,10 +14024,10 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "policyEntitlementCheck": true
+                        "policyEntitlementCheck": true,
+                        "order": 2
                     },
                     {
                         "type": "text",
@@ -13997,7 +14044,7 @@
                                 "message": "Bill Number is required"
                             }
                         ],
-                        "order": 7
+                        "order": 3
                     },
                     {
                         "type": "date",
@@ -14009,7 +14056,7 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "order": 8
+                        "order": 4
                     },
                     {
                         "type": "select",
@@ -14033,7 +14080,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 5
                     },
                     {
                         "type": "select",
@@ -14064,7 +14111,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -14114,7 +14161,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -14145,7 +14192,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -14155,7 +14201,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 8
                     },
                     {
                         "type": "select",
@@ -14186,7 +14233,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -14242,7 +14289,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14
+                        "order": 10
                     },
                     {
                         "type": "text",
@@ -14273,7 +14320,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -14283,7 +14329,8 @@
                                     "ConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 11
                     },
                     {
                         "type": "textarea",
@@ -14293,7 +14340,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 12
                     },
                     {
                         "type": "costcenter",
@@ -14411,7 +14458,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 13
                     },
                     {
                         "type": "hidden",
@@ -14626,7 +14674,9 @@
                 ],
                 "displayPage": {
                     "Mobile Handset Purchase": true
-                }
+                },
+                "showInUI": true,
+                "order": 12
             },
             {
                 "name": "Transit Allowance",
@@ -14664,8 +14714,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 2
                     },
                     {
                         "type": "select",
@@ -14781,9 +14831,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5,
                         "policyEntitlementCheck": true,
-                        "international": false
+                        "international": false,
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -14802,9 +14852,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 6,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -14823,10 +14873,10 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 7,
                         "policyEntitlementCheck": true,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 7
                     },
                     {
                         "type": "select",
@@ -14850,7 +14900,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 8
                     },
                     {
                         "type": "select",
@@ -14881,7 +14931,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -14931,7 +14981,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 10
                     },
                     {
                         "type": "text",
@@ -14962,7 +15012,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -14972,7 +15021,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 11
                     },
                     {
                         "type": "select",
@@ -15003,7 +15053,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 12
                     },
                     {
                         "type": "text",
@@ -15059,7 +15109,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14
+                        "order": 13
                     },
                     {
                         "type": "text",
@@ -15090,7 +15140,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -15100,7 +15149,8 @@
                                     "ConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 14
                     },
                     {
                         "type": "textarea",
@@ -15110,7 +15160,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 15
                     },
                     {
                         "type": "costcenter",
@@ -15228,7 +15278,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 16
                     },
                     {
                         "type": "hidden",
@@ -15540,7 +15591,9 @@
                 "showCategoryFor": [
                     52,
                     54
-                ]
+                ],
+                "showInUI": true,
+                "order": 13
             },
             {
                 "name": "Visa",
@@ -15578,8 +15631,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 2
                     },
                     {
                         "type": "text",
@@ -15589,7 +15642,7 @@
                         "required": false,
                         "disable": false,
                         "readonly": false,
-                        "order": 5
+                        "order": 3
                     },
                     {
                         "type": "select",
@@ -15613,7 +15666,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 4
                     },
                     {
                         "type": "select",
@@ -15645,7 +15698,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 7
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -15704,7 +15757,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 8
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -15735,7 +15788,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 9
+                        "order": 7
                     },
                     {
                         "type": "costcenter",
@@ -15853,7 +15906,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 8
                     },
                     {
                         "type": "hidden",
@@ -15872,11 +15926,11 @@
                         "required": false,
                         "disable": false,
                         "readonly": false,
-                        "order": 10,
                         "requiredIf": {
                             "IsViolation": true
                         },
-                        "maxLength": 500
+                        "maxLength": 500,
+                        "order": 9
                     },
                     {
                         "type": "hidden",
@@ -15890,8 +15944,7 @@
                                 "ClaimAmount",
                                 "ConversionRate"
                             ]
-                        },
-                        "order": 13
+                        }
                     },
                     {
                         "type": "hidden",
@@ -16075,7 +16128,9 @@
                 "showCategoryFor": [
                     52,
                     54
-                ]
+                ],
+                "showInUI": true,
+                "order": 14
             },
             {
                 "name": "Travel Insurance",
@@ -16113,8 +16168,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 2
                     },
                     {
                         "type": "text",
@@ -16130,7 +16185,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 5
+                        "order": 3
                     },
                     {
                         "type": "select",
@@ -16154,7 +16209,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 4
                     },
                     {
                         "type": "select",
@@ -16186,7 +16241,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 7
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -16245,7 +16300,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 8
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -16276,7 +16331,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 9
+                        "order": 7
                     },
                     {
                         "type": "costcenter",
@@ -16394,7 +16449,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 8
                     },
                     {
                         "type": "hidden",
@@ -16413,11 +16469,11 @@
                         "required": false,
                         "disable": false,
                         "readonly": false,
-                        "order": 10,
                         "requiredIf": {
                             "IsViolation": true
                         },
-                        "maxLength": 500
+                        "maxLength": 500,
+                        "order": 9
                     },
                     {
                         "type": "hidden",
@@ -16431,8 +16487,7 @@
                                 "ClaimAmount",
                                 "ConversionRate"
                             ]
-                        },
-                        "order": 13
+                        }
                     },
                     {
                         "type": "hidden",
@@ -16611,7 +16666,9 @@
                 "showCategoryFor": [
                     52,
                     54
-                ]
+                ],
+                "showInUI": true,
+                "order": 15
             },
             {
                 "name": "Relocation Travel Ticket Claim",
@@ -16649,9 +16706,9 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
                         "apiDateLimit": true,
-                        "policyEntitlementCheck": true
+                        "policyEntitlementCheck": true,
+                        "order": 2
                     },
                     {
                         "type": "date",
@@ -16663,7 +16720,7 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "order": 8
+                        "order": 3
                     },
                     {
                         "type": "select",
@@ -16687,7 +16744,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -16727,7 +16784,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 8
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -16761,7 +16818,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 8
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -16808,7 +16865,7 @@
                         "required": false,
                         "disable": false,
                         "readonly": true,
-                        "order": 8
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -16839,7 +16896,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 9
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -16869,7 +16926,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 8
+                        "order": 9
                     },
                     {
                         "type": "select",
@@ -16901,7 +16958,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 7
+                        "order": 10
                     },
                     {
                         "type": "select",
@@ -16929,7 +16986,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 11
                     },
                     {
                         "type": "costcenter",
@@ -17047,7 +17104,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 12
                     },
                     {
                         "type": "textarea",
@@ -17059,11 +17117,11 @@
                         "required": false,
                         "disable": false,
                         "readonly": false,
-                        "order": 10,
                         "requiredIf": {
                             "IsViolation": true
                         },
-                        "maxLength": 500
+                        "maxLength": 500,
+                        "order": 13
                     },
                     {
                         "type": "hidden",
@@ -17077,8 +17135,7 @@
                                 "TotalCost",
                                 "ConversionRate"
                             ]
-                        },
-                        "order": 13
+                        }
                     }
                 ],
                 "checkValidationOnSubmit": {
@@ -17302,7 +17359,9 @@
                     "Joining Expense": true,
                     "Transfer Expense": true,
                     "Relocation Expense": true
-                }
+                },
+                "showInUI": true,
+                "order": 16
             },
             {
                 "name": "DataCardBroadband",
@@ -17352,7 +17411,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 2
                     },
                     {
                         "type": "select",
@@ -17376,7 +17435,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 3
                     },
                     {
                         "type": "date",
@@ -17446,7 +17505,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 2,
                         "apiDateLimit": true,
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
@@ -17458,7 +17516,8 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "order": 4
                     },
                     {
                         "type": "date",
@@ -17483,7 +17542,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 3,
                         "apiDateLimit": true,
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
@@ -17503,7 +17561,8 @@
                                     "minDate": "ClaimToDate"
                                 }
                             }
-                        ]
+                        ],
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -17522,7 +17581,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -17580,7 +17639,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -17630,7 +17689,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 10
                     },
                     {
                         "type": "text",
@@ -17661,7 +17720,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -17671,7 +17729,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 11
                     },
                     {
                         "type": "select",
@@ -17702,7 +17761,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 12
                     },
                     {
                         "type": "text",
@@ -17752,7 +17811,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -17764,7 +17822,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 13
                     },
                     {
                         "type": "text",
@@ -17795,7 +17854,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -17815,7 +17873,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 14
                     },
                     {
                         "type": "select",
@@ -17839,7 +17898,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 15
                     },
                     {
                         "type": "text",
@@ -17858,7 +17917,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 17
+                        "order": 16
                     },
                     {
                         "type": "textarea",
@@ -17868,7 +17927,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 17
                     },
                     {
                         "type": "hidden",
@@ -18208,7 +18267,9 @@
                 ],
                 "displayPage": {
                     "Data Card Broadband": true
-                }
+                },
+                "showInUI": true,
+                "order": 17
             },
             {
                 "name": "Mobile Expense",
@@ -18258,7 +18319,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 2
                     },
                     {
                         "type": "select",
@@ -18282,7 +18343,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 3
                     },
                     {
                         "type": "date",
@@ -18352,7 +18413,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 2,
                         "apiDateLimit": true,
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
@@ -18364,7 +18424,8 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "order": 4
                     },
                     {
                         "type": "date",
@@ -18389,7 +18450,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 3,
                         "apiDateLimit": true,
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
@@ -18409,7 +18469,8 @@
                                     "minDate": "ClaimToDate"
                                 }
                             }
-                        ]
+                        ],
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -18428,7 +18489,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -18486,7 +18547,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -18536,7 +18597,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 10
                     },
                     {
                         "type": "text",
@@ -18567,7 +18628,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -18577,7 +18637,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 11
                     },
                     {
                         "type": "select",
@@ -18608,7 +18669,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 12
                     },
                     {
                         "type": "text",
@@ -18658,7 +18719,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -18670,7 +18730,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 13
                     },
                     {
                         "type": "text",
@@ -18701,7 +18762,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -18721,7 +18781,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 14
                     },
                     {
                         "type": "select",
@@ -18745,7 +18806,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 15
                     },
                     {
                         "type": "text",
@@ -18764,7 +18825,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 17
+                        "order": 16
                     },
                     {
                         "type": "textarea",
@@ -18774,7 +18835,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 17
                     },
                     {
                         "type": "hidden",
@@ -19081,7 +19142,9 @@
                 ],
                 "displayPage": {
                     "Mobile Expense": true
-                }
+                },
+                "showInUI": true,
+                "order": 18
             },
             {
                 "name": "Marriage Gift",
@@ -19119,10 +19182,10 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "policyEntitlementCheck": true
+                        "policyEntitlementCheck": true,
+                        "order": 2
                     },
                     {
                         "type": "text",
@@ -19138,7 +19201,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 5
+                        "order": 3
                     },
                     {
                         "type": "text",
@@ -19154,7 +19217,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 5
+                        "order": 4
                     },
                     {
                         "type": "select",
@@ -19182,7 +19245,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 5
                     },
                     {
                         "type": "select",
@@ -19213,7 +19276,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -19263,7 +19326,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -19294,7 +19357,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -19304,7 +19366,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 8
                     },
                     {
                         "type": "select",
@@ -19335,7 +19398,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -19391,7 +19454,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14
+                        "order": 10
                     },
                     {
                         "type": "text",
@@ -19422,7 +19485,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
+                        "order": 11,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -19550,7 +19613,8 @@
                                 ],
                                 "order": 6
                             }
-                        ]
+                        ],
+                        "order": 12
                     },
                     {
                         "type": "textarea",
@@ -19560,7 +19624,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 16
+                        "order": 13
                     },
                     {
                         "type": "hidden",
@@ -19819,7 +19883,9 @@
                 ],
                 "displayPage": {
                     "Marriage Gift": true
-                }
+                },
+                "showInUI": true,
+                "order": 19
             },
             {
                 "name": "Deputation Claim",
@@ -19911,7 +19977,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 2,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
                         "policyEntitlementCheck": true,
@@ -19932,7 +19997,8 @@
                                     "minDate": "ClaimFromDate"
                                 }
                             }
-                        ]
+                        ],
+                        "order": 2
                     },
                     {
                         "type": "date",
@@ -19957,7 +20023,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 3,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
                         "EntitlementAmountCalculation": {
@@ -19969,7 +20034,8 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "order": 3
                     },
                     {
                         "type": "text",
@@ -20061,9 +20127,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5,
                         "policyEntitlementCheck": true,
-                        "international": false
+                        "international": false,
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -20082,9 +20148,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 6,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -20103,10 +20169,10 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 7,
                         "policyEntitlementCheck": true,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 7
                     },
                     {
                         "type": "select",
@@ -20137,7 +20203,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -20187,7 +20253,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -20218,7 +20284,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -20228,7 +20293,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 10
                     },
                     {
                         "type": "select",
@@ -20259,7 +20325,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 11
                     },
                     {
                         "type": "text",
@@ -20309,7 +20375,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
@@ -20321,7 +20386,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 12
                     },
                     {
                         "type": "text",
@@ -20352,7 +20418,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -20372,7 +20437,8 @@
                                     "TaxAmount"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 13
                     },
                     {
                         "type": "select",
@@ -20396,7 +20462,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -20415,7 +20481,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 17
+                        "order": 15
                     },
                     {
                         "type": "textarea",
@@ -20425,7 +20491,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 18
+                        "order": 16
                     },
                     {
                         "type": "hidden",
@@ -20722,7 +20788,9 @@
                 ],
                 "displayPage": {
                     "Deputation Claim": true
-                }
+                },
+                "showInUI": true,
+                "order": 20
             },
             {
                 "name": "Car Maintainance",
@@ -20733,7 +20801,9 @@
                 "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
-                "nestedTables": []
+                "nestedTables": [],
+                "showInUI": true,
+                "order": 21
             },
             {
                 "name": "Learning & Fees Expense",
@@ -20744,7 +20814,9 @@
                 "displayAddClearButton": true,
                 "slNoLabel": "Sl. No.",
                 "columns": [],
-                "nestedTables": []
+                "nestedTables": [],
+                "showInUI": true,
+                "order": 22
             },
             {
                 "name": "Bereavement Support Claim",
@@ -20782,10 +20854,10 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
                         "minDate": "today",
                         "maxDate": "today",
-                        "policyEntitlementCheck": true
+                        "policyEntitlementCheck": true,
+                        "order": 2
                     },
                     {
                         "type": "select",
@@ -20813,7 +20885,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 3
                     },
                     {
                         "type": "select",
@@ -20844,7 +20916,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 10
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -20894,7 +20966,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 11
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -20925,7 +20997,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 12,
                         "setFields": [
                             {
                                 "name": "EntitlementAmountInBaseCurrency",
@@ -20935,7 +21006,8 @@
                                     "EntitlementConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 6
                     },
                     {
                         "type": "select",
@@ -20966,7 +21038,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -21022,7 +21094,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -21053,7 +21125,6 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 15,
                         "setFields": [
                             {
                                 "name": "ClaimAmountInBaseCurrency",
@@ -21063,7 +21134,8 @@
                                     "ConversionRate"
                                 ]
                             }
-                        ]
+                        ],
+                        "order": 9
                     },
                     {
                         "type": "date",
@@ -21081,7 +21153,7 @@
                         ],
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "order": 8
+                        "order": 10
                     },
                     {
                         "type": "select",
@@ -21105,7 +21177,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 11
                     },
                     {
                         "type": "textarea",
@@ -21115,7 +21187,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 16
+                        "order": 12
                     },
                     {
                         "type": "hidden",
@@ -21338,7 +21410,9 @@
                 ],
                 "displayPage": {
                     "Bereavement Support Claim": true
-                }
+                },
+                "showInUI": true,
+                "order": 23
             },
             {
                 "name": "Training and Certification",
@@ -21352,7 +21426,9 @@
                 "nestedTables": [],
                 "displayPage": {
                     "Training and Certification": true
-                }
+                },
+                "showInUI": true,
+                "order": 24
             },
             {
                 "name": "Lease & Rent Deposit",
@@ -21368,7 +21444,9 @@
                     "Joining Expense": true,
                     "Transfer Expense": true,
                     "Relocation Expense": true
-                }
+                },
+                "showInUI": true,
+                "order": 25
             },
             {
                 "name": "Vehicle Road Tax",
@@ -21384,7 +21462,9 @@
                     "Joining Expense": true,
                     "Transfer Expense": true,
                     "Relocation Expense": true
-                }
+                },
+                "showInUI": true,
+                "order": 26
             },
             {
                 "name": "School Capitation Fees",
@@ -21400,7 +21480,9 @@
                     "Joining Expense": true,
                     "Transfer Expense": true,
                     "Relocation Expense": true
-                }
+                },
+                "showInUI": true,
+                "order": 27
             },
             {
                 "name": "Roaming",
@@ -21438,8 +21520,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 2
                     },
                     {
                         "type": "text",
@@ -21455,7 +21537,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 5
+                        "order": 3
                     },
                     {
                         "type": "text",
@@ -21471,7 +21553,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 5
+                        "order": 4
                     },
                     {
                         "type": "date",
@@ -21489,8 +21571,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 5
                     },
                     {
                         "type": "select",
@@ -21514,7 +21596,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 10
+                        "order": 6
                     },
                     {
                         "type": "select",
@@ -21545,7 +21627,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 11
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -21604,7 +21686,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -21635,7 +21717,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 14
+                        "order": 9
                     },
                     {
                         "type": "hidden",
@@ -21652,7 +21734,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 15
+                        "order": 10
                     },
                     {
                         "type": "hidden",
@@ -21819,7 +21901,9 @@
                 "showCategoryFor": [
                     52,
                     54
-                ]
+                ],
+                "showInUI": true,
+                "order": 28
             },
             {
                 "name": "Travel Allowance",
@@ -21857,8 +21941,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 2,
-                        "apiDateLimit": true
+                        "apiDateLimit": true,
+                        "order": 2
                     },
                     {
                         "type": "select",
@@ -22011,7 +22095,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 4
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -22030,9 +22114,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 5,
                         "policyEntitlementCheck": true,
-                        "international": false
+                        "international": false,
+                        "order": 8
                     },
                     {
                         "type": "text",
@@ -22051,9 +22135,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 6,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 9
                     },
                     {
                         "type": "text",
@@ -22072,10 +22156,10 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 7,
                         "policyEntitlementCheck": true,
                         "international": true,
-                        "inPayload": false
+                        "inPayload": false,
+                        "order": 10
                     },
                     {
                         "type": "text",
@@ -22091,7 +22175,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 11
                     },
                     {
                         "type": "select",
@@ -22115,7 +22199,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 10
+                        "order": 12
                     },
                     {
                         "type": "select",
@@ -22146,7 +22230,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 11
+                        "order": 13
                     },
                     {
                         "type": "select",
@@ -22170,7 +22254,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 10
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -22199,8 +22283,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 12,
-                        "policyViolationCheck": true
+                        "policyViolationCheck": true,
+                        "order": 15
                     },
                     {
                         "type": "text",
@@ -22229,8 +22313,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 12,
-                        "policyViolationCheck": true
+                        "policyViolationCheck": true,
+                        "order": 16
                     },
                     {
                         "type": "text",
@@ -22259,8 +22343,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 12,
-                        "policyViolationCheck": true
+                        "policyViolationCheck": true,
+                        "order": 17
                     },
                     {
                         "type": "text",
@@ -22319,7 +22403,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 13
+                        "order": 18
                     },
                     {
                         "type": "text",
@@ -22350,7 +22434,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 14
+                        "order": 19
                     },
                     {
                         "type": "textarea",
@@ -22360,7 +22444,7 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
-                        "order": 15
+                        "order": 20
                     },
                     {
                         "type": "hidden",
@@ -22567,7 +22651,9 @@
                 ],
                 "displayPage": {
                     "Sales Force Expense": true
-                }
+                },
+                "showInUI": true,
+                "order": 29
             }
         ],
         "otherDetails": [
