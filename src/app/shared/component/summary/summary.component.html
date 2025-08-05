@@ -18,10 +18,12 @@
         <div class="accordion-body pt-0 px-0 pb-2">
           <ul class="summary-list">
             @for (item of summary.items; track item) {
-              <li>
-                {{ item.label }}
-                <span>{{ item.value || '0.00' }}</span>
-              </li>
+              @if (item.showInUI) {
+                <li>
+                  {{ item.label }}
+                  <span>{{ item.value || '0.00' }}</span>
+                </li>
+              }
             }
           </ul>
         </div>

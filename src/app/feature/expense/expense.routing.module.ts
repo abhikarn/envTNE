@@ -15,12 +15,12 @@ const dynamicExpenseRoutes = [
   { title: 'Direct Expense Domestic', path: 'create-direct-expense-domestic' },
   { title: 'Direct Expense International', path: 'create-direct-expense-international' },
   { title: 'Bereavement Support Claim', path: 'create-bereavement-support-claim' },
-  { title: 'Training and Certification Expense', path: 'create-training-certification-expense' },
+  { title: 'Training and Certification', path: 'create-training-certification-expense' },
   { title: 'Joining Expense', path: 'create-joining-expense' },
   { title: 'Transfer Expense', path: 'create-transfer-expense' },
   { title: 'Relocation Expense', path: 'create-relocation-expense' },
   { title: 'Sales Force Expense', path: 'create-sales-force-expense' },
-  { title: 'Business Entertainment Expense', path: 'create-business-entertainment-expense' },
+  { title: 'Business Entertainment', path: 'create-business-entertainment-expense' },
   { title: 'Other Expense', path: 'create-other-expense' }
 ];
 
