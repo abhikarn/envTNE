@@ -505,8 +505,8 @@
                 "displayTable": false,
                 "displayAddClearButton": false,
                 "moduleData": {
-                    "travelTypeId": 152,
-                    "requestForId": 152,
+                    "travelTypeId": 179,
+                    "requestForId": 179,
                     "claimTypeId": 53,
                     "travelRequestId": 0
                 }
@@ -546,6 +546,21 @@
                 "label": "Business Entertainment",
                 "displayPage": {
                     "Business Entertainment": true
+                },
+                "displayTable": false,
+                "displayAddClearButton": false,
+                "moduleData": {
+                    "travelTypeId": 152,
+                    "requestForId": 152,
+                    "claimTypeId": 53,
+                    "travelRequestId": 0
+                }
+            },
+            {
+                "name": "Other Expense",
+                "label": "Other Expense",
+                "displayPage": {
+                    "Other Expense": true
                 },
                 "displayTable": false,
                 "displayAddClearButton": false,
@@ -10428,7 +10443,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "travelTypeId"
+                                    "Type": "claimTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -10452,7 +10467,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "travelTypeId"
+                                    "Type": "claimTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -11041,7 +11056,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "apiDateLimit": true,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "order": 2
                     },
                     {
@@ -11124,10 +11140,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "travelTypeId"
-                                },
-                                "landingBoxData": {
-                                    "TravelTypeId": 53
+                                    "Type": "claimTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -11151,10 +11164,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "travelTypeId"
-                                },
-                                "landingBoxData": {
-                                    "TravelTypeId": 53
+                                    "Type": "claimTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -17227,9 +17237,7 @@
                                 "order": 7
                             }
                         ],
-                        "notifications": {
-                            
-                        },
+                        "notifications": {},
                         "order": 12
                     },
                     {
@@ -17542,15 +17550,38 @@
                         "type": "select",
                         "dataType": "int",
                         "name": "Month",
-                        "isExcluded": true,
+                        "isExcluded": false,
                         "label": "Month",
                         "placeholder": "Select Month",
-                        "value": "",
+                        "value": null,
                         "options": [],
-                        "labelKey": "",
-                        "valueKey": "",
-                        "apiService": "",
-                        "apiMethod": "",
+                        "labelKey": "Value",
+                        "valueKey": "Key",
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {},
+                                "outputControl": {
+                                    "Month": "ResponseValue"
+                                },
+                                "otherControls": {
+                                    "UserMasterId": "UserMasterId"
+                                },
+                                "requestBody": {
+                                    "expenseCategoryId": 52,
+                                    "frequencyTypeId": 1
+                                },
+                                "event": "onInit",
+                                "apiService": "ExpenseService",
+                                "apiMethod": "expenseGetFrequencyTypeReference",
+                                "labelKey": "ReferenceType",
+                                "valueKey": "ReferenceTypeId"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -17560,6 +17591,12 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "displayPage": {
+                            "Data Card Broadband": true
+                        },
+                        "getReadableValue": {
+                            "controlName": "MonthName"
+                        },
                         "order": 3
                     },
                     {
@@ -18145,6 +18182,13 @@
                         "isExcluded": true,
                         "value": null,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "MonthName",
+                        "isExcluded": false,
+                        "value": "",
+                        "showInUI": false
                     }
                 ],
                 "onInitAPI": {
@@ -18450,15 +18494,38 @@
                         "type": "select",
                         "dataType": "int",
                         "name": "Month",
-                        "isExcluded": true,
+                        "isExcluded": false,
                         "label": "Month",
                         "placeholder": "Select Month",
-                        "value": "",
+                        "value": null,
                         "options": [],
-                        "labelKey": "",
-                        "valueKey": "",
-                        "apiService": "",
-                        "apiMethod": "",
+                        "labelKey": "Value",
+                        "valueKey": "Key",
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {},
+                                "outputControl": {
+                                    "Month": "ResponseValue"
+                                },
+                                "otherControls": {
+                                    "UserMasterId": "UserMasterId"
+                                },
+                                "requestBody": {
+                                    "expenseCategoryId": 19,
+                                    "frequencyTypeId": 1
+                                },
+                                "event": "onInit",
+                                "apiService": "ExpenseService",
+                                "apiMethod": "expenseGetFrequencyTypeReference",
+                                "labelKey": "ReferenceType",
+                                "valueKey": "ReferenceTypeId"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -18468,6 +18535,12 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "displayPage": {
+                            "Mobile Expense": true
+                        },
+                        "getReadableValue": {
+                            "controlName": "MonthName"
+                        },
                         "order": 3
                     },
                     {
@@ -20735,7 +20808,7 @@
                         "PolicyReferenceId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "claimTypeId",
+                        "ClaimTypeId": "travelTypeId",
                         "TravelRequestId": "travelRequestId",
                         "UserMasterId": "UserMasterId"
                     },
@@ -21278,6 +21351,7 @@
                         ],
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "policyEntitlementCheck": true,
                         "order": 10
                     },
                     {
@@ -23063,7 +23137,7 @@
                         "showInUI": true
                     },
                     {
-                        "name":"Bereavement Support Claim",
+                        "name": "Bereavement Support Claim",
                         "label": "Bereavement Support Claim",
                         "showInUI": true
                     },
