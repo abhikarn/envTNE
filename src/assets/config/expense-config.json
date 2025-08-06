@@ -17108,6 +17108,131 @@
                         "order": 12
                     },
                     {
+                        "type": "quotation",
+                        "dataType": "object",
+                        "name": "quotation",
+                        "isExcluded": false,
+                        "label": "Quotation Fromm Other Movers and Packers",
+                        "value": [],
+                        "getControl": "ClaimAmount",
+                        "fields": [
+                            {
+                                "name": "ExpenseRequestQuotationTypeId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 1
+                            },
+                            {
+                                "name": "ExpenseRequestDetailId",
+                                "type": "number",
+                                "value": 0,
+                                "showInUI": false,
+                                "order": 2
+                            },
+                            {
+                                "name": "VendorName",
+                                "label": "Vendor Name",
+                                "placeholder": "Vendor Name",
+                                "type": "text",
+                                "showInUI": true,
+                                "required": true,
+                                "value": null,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    }
+                                ],
+                                "order": 3
+                            },
+                            {
+                                "name": "QuoteNumber",
+                                "label": "Quote Number",
+                                "placeholder": "Quote Number",
+                                "type": "text",
+                                "showInUI": true,
+                                "required": true,
+                                "value": null,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    }
+                                ],
+                                "order": 4
+                            },
+                            {
+                                "name": "Date",
+                                "label": "Date",
+                                "placeholder": "Date",
+                                "type": "date",
+                                "showInUI": true,
+                                "required": true,
+                                "value": null,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    }
+                                ],
+                                "order": 5
+                            },
+                            {
+                                "name": "Amount",
+                                "label": "Amount",
+                                "placeholder": "AMOUNT",
+                                "type": "text",
+                                "dataType": "numeric",
+                                "showInUI": true,
+                                "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^0-9.]",
+                                        "^0+(?=\\d)"
+                                    ],
+                                    "range": {
+                                        "min": 0,
+                                        "max": 10
+                                    }
+                                },
+                                "required": true,
+                                "validations": [
+                                    {
+                                        "type": "required",
+                                        "message": "Required"
+                                    },
+                                    {
+                                        "type": "min",
+                                        "value": 0
+                                    }
+                                ],
+                                "order": 6
+                            },
+                            {
+                                "name": "attachment",
+                                "label": "Attachment",
+                                "placeholder": "Upload Attachment",
+                                "type": "file",
+                                "showInUI": true,
+                                "required": false,
+                                "value": null,
+                                "validations": [
+                                    {
+                                        "type": "fileSize",
+                                        "maxSize": 5,
+                                        "message": "File size must be less than 5MB"
+                                    }
+                                ],
+                                "order": 7
+                            }
+                        ],
+                        "notifications": {
+                            
+                        },
+                        "order": 12
+                    },
+                    {
                         "type": "textarea",
                         "dataType": "string",
                         "name": "Remarks",

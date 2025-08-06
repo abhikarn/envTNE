@@ -74,6 +74,11 @@
     [control]="control.control" [selectedFiles]="selectedFiles" (ocrCompleted)="onOcrCompleted($event)">
   </lib-file-upload>
   }
+  <!-- Handling 'quotation' type controls -->
+  @case ('quotation') {
+  <lib-quotation [controlConfig]="control.formConfig" [control]="control.control">
+  </lib-quotation>
+  }
   <!-- Optional: Default case if control type doesn't match -->
   @default {
   <div>
