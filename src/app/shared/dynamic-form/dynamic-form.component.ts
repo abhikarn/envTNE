@@ -26,6 +26,7 @@ import { TextAutocompleteComponent } from './form-controls/text-autocomplete/tex
 import { distinctUntilChanged } from 'rxjs/operators';
 import { debounceTime } from 'rxjs/operators';
 import _moment from 'moment';
+import { QuotationComponent } from './form-controls/quotation/quotation.component';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -42,7 +43,8 @@ import _moment from 'moment';
     RadioInputComponent,
     GstComponent,
     CostCenterComponent,
-    TextAutocompleteComponent
+    TextAutocompleteComponent,
+    QuotationComponent
   ],
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss'],
@@ -523,7 +525,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           }
         });
       } else {
-        this.form.get('IsViolation')?.setValue(false);
         // Not violated, move to next
         checkNext(index + 1);
       }

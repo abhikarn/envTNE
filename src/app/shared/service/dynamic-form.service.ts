@@ -106,6 +106,8 @@ export class DynamicFormService {
             }
           }
         }
+
+        let matchedControlNameList: string[] = [];
         if (response?.ResponseValue?.ExpensePolicyEntitlementMetaData?.length > 0) {
           const metaDataMap = category.policyEntitlementCheckApi.metaData || {};
 
@@ -116,6 +118,7 @@ export class DynamicFormService {
             );
 
             if (matchedControlName) {
+              matchedControlNameList.push(matchedControlName);
               let value: any;
 
               // Extract value based on DataTypeId or DataType
@@ -162,20 +165,7 @@ export class DynamicFormService {
             }
           });
 
-
-          // IsKmLimitRequired bit value is true
-          const isKmLimitRequired = form.get('IsKmLimitRequired')?.value;
-          if (isKmLimitRequired) {
-            
-          }
-
-          // Add AmountPerKM control if it exists in formControls
-          const amountPerKMControl = formControls.find(c => c.name === 'AmountPerKM');
-          if (amountPerKMControl) {
-            form.addControl('AmountPerKM', amountPerKMControl);
-            amountPerKMControl.showInUI = true;
-          }
-
+          
 
           // disable KM field if MaximumAmount is present
           const kmControl = form.get('KM');
@@ -214,7 +204,70 @@ export class DynamicFormService {
             kmControl.enable();
           }
         }
+        // IsPerKmLimitRequired bit value is true
+        const isPerKmLimitRequired = form.get('IsPerKmLimitRequired')?.value;
+        if (isPerKmLimitRequired) {
+          // Add AmountPerKM control if it exists in formControls
+          const amountPerKMControl = formControls.find(c => c.name === 'AmountPerKM');
+          if (amountPerKMControl) {
+            form.addControl('AmountPerKM', amountPerKMControl);
+            amountPerKMControl.showInUI = true;
+          }
+        } else {
+          // Remove AmountPerKM control if it exists
+          const amountPerKMControl = form.get('AmountPerKM');
+          if (amountPerKMControl) {
+            const control = formControls.find(c => c.name === 'AmountPerKM');
+            if (control) {
+              control.showInUI = false;
+            }
+          }
+        }
+
+        const minimumkmControl = formControls.find(c => c.name === 'MinimumKM' && matchedControlNameList.includes(c.name));
+        if (minimumkmControl) {
+          form.addControl('MinimumKM', minimumkmControl);
+          minimumkmControl.showInUI = true;
+        } else {
+          const minimumkmControl = form.get('MinimumKM');
+          if (minimumkmControl) {
+            const control = formControls.find(c => c.name === 'MinimumKM');
+            if (control) {
+              control.showInUI = false;
+            }
+          }
+        }
+
+        const maximumkmControl = formControls.find(c => c.name === 'MaximumKM' && matchedControlNameList.includes(c.name));
+        if (maximumkmControl) {
+          form.addControl('MaximumKM', maximumkmControl);
+          maximumkmControl.showInUI = true;
+        } else {
+          const maximumkmControl = form.get('MaximumKM');
+          if (maximumkmControl) {
+            const control = formControls.find(c => c.name === 'MaximumKM');
+            if (control) {
+              control.showInUI = false;
+            }
+          }
+        }
+
+        const maximumAmountControl = formControls.find(c => c.name === 'MaximumAmount' && matchedControlNameList.includes(c.name));
+        if (maximumAmountControl) {
+          form.addControl('MaximumAmount', maximumAmountControl);
+          maximumAmountControl.showInUI = true;
+        } else {
+          const maximumAmountControl = form.get('MaximumAmount');
+          if (maximumAmountControl) {
+            const control = formControls.find(c => c.name === 'MaximumAmount');
+            if (control) {
+              control.showInUI = false;
+            }
+          }
+        }
+
         this.updateConditionalValidators(form, formControls);
+        matchedControlNameList = [];
       });
   }
 
@@ -543,7 +596,7 @@ export class DynamicFormService {
         } else {
           controlValue = form.get(controlName)?.value;
         }
-        
+
         if (typeof controlValue === 'object' && controlValue !== null) {
           controlValue = controlValue.value ?? controlValue; // Handle case where controlValue is an object
         }
