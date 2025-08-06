@@ -9251,6 +9251,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "policyEntitlementCheck": true,
                         "order": 7
                     },
                     {
@@ -9697,18 +9698,17 @@
                         "readonly": false,
                         "setFields": [
                             {
-                                "checkIfTrue": "IsPerKmLimitRequired",
                                 "name": "ClaimAmount",
-                                "formula": "AmountPerKM * KM",
+                                "formula": "IsPerKmLimitRequired ? AmountPerKM * KM : 0",
                                 "dependsOn": [
+                                    "IsPerKmLimitRequired",
                                     "AmountPerKM",
                                     "KM"
                                 ]
                             },
                             {
-                                "checkIfTrue": "MinimumKM",
                                 "name": "ClaimAmount",
-                                "formula": "KM < MinimumKM ? 0 : AmountPerKM * KM",
+                                "formula": "MinimumKM && KM < MinimumKM ? 0 : AmountPerKM * KM",
                                 "dependsOn": [
                                     "AmountPerKM",
                                     "KM",
@@ -9716,9 +9716,8 @@
                                 ]
                             },
                             {
-                                "checkIfTrue": "MaximumKM",
                                 "name": "ClaimAmount",
-                                "formula": "KM > MaximumKM ? AmountPerKM * MaximumKM : AmountPerKM * KM",
+                                "formula": "MaximumKM && KM > MaximumKM ? AmountPerKM * MaximumKM : AmountPerKM * KM",
                                 "dependsOn": [
                                     "AmountPerKM",
                                     "KM",
@@ -10045,7 +10044,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "IsKmLimitRequired",
+                        "name": "IsPerKmLimitRequired",
                         "isExcluded": true,
                         "value": false,
                         "showInUI": false
@@ -10140,8 +10139,8 @@
                     },
                     "metaData": {
                         "ClaimAmount": "Maximum Amount",
-                        "MaximumAmount": "Maximum Amount",
-                        "IsKmLimitRequired": "Is Per Km Limit Required",
+                        "MaximumAmount": "Maximum Amount Per Month",
+                        "IsPerKmLimitRequired": "Is Per Km Limit Required",
                         "AmountPerKM": "Amount Per Km",
                         "MinimumKM": "Minimum Km",
                         "MaximumKM": "Maximum Km"

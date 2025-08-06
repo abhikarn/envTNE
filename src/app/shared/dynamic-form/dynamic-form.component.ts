@@ -525,7 +525,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           }
         });
       } else {
-        this.form.get('IsViolation')?.setValue(false);
         // Not violated, move to next
         checkNext(index + 1);
       }

@@ -162,17 +162,7 @@ export class DynamicFormService {
             }
           });
 
-
-          // IsKmLimitRequired bit value is true
-          const isKmLimitRequired = form.get('IsKmLimitRequired')?.value;
-          if (isKmLimitRequired) {
-            // Add AmountPerKM control if it exists in formControls
-            const amountPerKMControl = formControls.find(c => c.name === 'AmountPerKM');
-            if (amountPerKMControl) {
-              form.addControl('AmountPerKM', amountPerKMControl);
-              amountPerKMControl.showInUI = true;
-            }
-          }
+          
 
           // disable KM field if MaximumAmount is present
           const kmControl = form.get('KM');
@@ -211,6 +201,47 @@ export class DynamicFormService {
             kmControl.enable();
           }
         }
+        // IsPerKmLimitRequired bit value is true
+          const isPerKmLimitRequired = form.get('IsPerKmLimitRequired')?.value;
+          if (isPerKmLimitRequired) {
+            // Add AmountPerKM control if it exists in formControls
+            const amountPerKMControl = formControls.find(c => c.name === 'AmountPerKM');
+            if (amountPerKMControl) {
+              form.addControl('AmountPerKM', amountPerKMControl);
+              amountPerKMControl.showInUI = true;
+            }
+          } else {
+            // Remove AmountPerKM control if it exists
+            const amountPerKMControl = form.get('AmountPerKM');
+            if (amountPerKMControl) {
+              form.removeControl('AmountPerKM');
+            }
+          }
+
+          const minimumkmControl = formControls.find(c => c.name === 'MinimumKM');
+          if (minimumkmControl) {
+            form.addControl('MinimumKM', minimumkmControl);
+            minimumkmControl.showInUI = true;
+          } else {
+            form.removeControl('MinimumKM');
+          }
+
+          const maximumkmControl = formControls.find(c => c.name === 'MaximumKM');
+          if (maximumkmControl) {
+            form.addControl('MaximumKM', maximumkmControl);
+            maximumkmControl.showInUI = true;
+          } else {
+            form.removeControl('MaximumKM');
+          }
+
+          const maximumAmountControl = formControls.find(c => c.name === 'MaximumAmount');
+          if (maximumAmountControl) {
+            form.addControl('MaximumAmount', maximumAmountControl);
+            maximumAmountControl.showInUI = true;
+          } else {
+            form.removeControl('MaximumAmount');
+          }
+
         this.updateConditionalValidators(form, formControls);
       });
   }
