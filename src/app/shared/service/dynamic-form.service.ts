@@ -166,16 +166,13 @@ export class DynamicFormService {
           // IsKmLimitRequired bit value is true
           const isKmLimitRequired = form.get('IsKmLimitRequired')?.value;
           if (isKmLimitRequired) {
-            
+            // Add AmountPerKM control if it exists in formControls
+            const amountPerKMControl = formControls.find(c => c.name === 'AmountPerKM');
+            if (amountPerKMControl) {
+              form.addControl('AmountPerKM', amountPerKMControl);
+              amountPerKMControl.showInUI = true;
+            }
           }
-
-          // Add AmountPerKM control if it exists in formControls
-          const amountPerKMControl = formControls.find(c => c.name === 'AmountPerKM');
-          if (amountPerKMControl) {
-            form.addControl('AmountPerKM', amountPerKMControl);
-            amountPerKMControl.showInUI = true;
-          }
-
 
           // disable KM field if MaximumAmount is present
           const kmControl = form.get('KM');
