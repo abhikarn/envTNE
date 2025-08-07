@@ -17573,7 +17573,7 @@
                         "type": "select",
                         "dataType": "int",
                         "name": "FrequencyType",
-                        "isExcluded": true,
+                        "isExcluded": false,
                         "label": "Frequency Type",
                         "placeholder": "Select Frequency Type",
                         "value": "",
@@ -17581,7 +17581,12 @@
                             "Id": 79,
                             "Display": "Monthly"
                         },
-                        "options": [],
+                        "options": [
+                            {
+                                "label": 79,
+                                "value": "Monthly"
+                            }
+                        ],
                         "labelKey": "",
                         "valueKey": "",
                         "apiService": "",
@@ -17595,6 +17600,9 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "getReadableValue": {
+                            "controlName": "FrequencyTypeName"
+                        },
                         "order": 2
                     },
                     {
@@ -17680,27 +17688,6 @@
                                 "requestBody": {},
                                 "apiService": "DataService",
                                 "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
-                            },
-                            {
-                                "type": [
-                                    "domestic"
-                                ],
-                                "isGeneral": true,
-                                "key": "CityMasterId",
-                                "inputControls": {
-                                    "City": "CityId",
-                                    "ClaimFromDate": "ReferenceDate"
-                                },
-                                "outputControl": {
-                                    "CityGrade": "ResponseValue.GradeId",
-                                    "CityGradeId": "ResponseValue.Grade"
-                                },
-                                "event": "dateChange",
-                                "requestBody": {
-                                    "Type": "53"
-                                },
-                                "apiService": "DataService",
-                                "apiMethod": "dataGetCityGrade"
                             }
                         ],
                         "required": true,
@@ -17780,12 +17767,6 @@
                             }
                         },
                         "setValue": [
-                            {
-                                "name": "ClaimFromDate",
-                                "config": {
-                                    "minDate": "ClaimToDate"
-                                }
-                            },
                             {
                                 "name": "BillDate",
                                 "config": {
@@ -18163,14 +18144,6 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "CityGrade",
-                        "isExcluded": true,
-                        "value": 0,
-                        "showInUI": false,
-                        "international": false
-                    },
-                    {
-                        "type": "hidden",
                         "name": "IsBillRequired",
                         "isExcluded": true,
                         "value": false,
@@ -18234,20 +18207,6 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "Country",
-                        "isExcluded": true,
-                        "value": 3,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "CountryGrade",
-                        "isExcluded": true,
-                        "value": 0,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
                         "name": "costcentreWiseExpense",
                         "isExcluded": true,
                         "value": null,
@@ -18256,6 +18215,13 @@
                     {
                         "type": "hidden",
                         "name": "MonthName",
+                        "isExcluded": false,
+                        "value": "",
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "FrequencyTypeName",
                         "isExcluded": false,
                         "value": "",
                         "showInUI": false
@@ -18287,7 +18253,7 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -18305,9 +18271,7 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
                     "requestBody": {
-                        "ExpenseCategoryId": 52,
-                        "CityGradeId": 0,
-                        "CountryGradeId": 0
+                        "ExpenseCategoryId": 52
                     },
                     "otherControls": {
                         "ClaimTypeId": "claimTypeId",
@@ -18382,7 +18346,7 @@
                         "order": 3
                     },
                     {
-                        "name": "Frequency",
+                        "name": "FrequencyTypeName",
                         "label": "Frequency",
                         "visible": true,
                         "position": "in",
@@ -18396,8 +18360,8 @@
                         "order": 4
                     },
                     {
-                        "name": "MobileNumber",
-                        "label": "Mobile Number",
+                        "name": "BroadbandNumber",
+                        "label": "Broadband Number",
                         "visible": true,
                         "position": "in",
                         "order": 4
@@ -18573,7 +18537,7 @@
                         "type": "select",
                         "dataType": "int",
                         "name": "FrequencyType",
-                        "isExcluded": true,
+                        "isExcluded": false,
                         "label": "Frequency Type",
                         "placeholder": "Select Frequency Type",
                         "value": "",
@@ -18581,7 +18545,12 @@
                             "Id": 79,
                             "Display": "Monthly"
                         },
-                        "options": [],
+                        "options": [
+                            {
+                                "label": 79,
+                                "value": "Monthly"
+                            }
+                        ],
                         "labelKey": "",
                         "valueKey": "",
                         "apiService": "",
@@ -18595,6 +18564,9 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "getReadableValue": {
+                            "controlName": "FrequencyTypeName"
+                        },
                         "order": 2
                     },
                     {
@@ -18680,27 +18652,6 @@
                                 "requestBody": {},
                                 "apiService": "DataService",
                                 "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
-                            },
-                            {
-                                "type": [
-                                    "domestic"
-                                ],
-                                "isGeneral": true,
-                                "key": "CityMasterId",
-                                "inputControls": {
-                                    "City": "CityId",
-                                    "ClaimFromDate": "ReferenceDate"
-                                },
-                                "outputControl": {
-                                    "CityGrade": "ResponseValue.GradeId",
-                                    "CityGradeId": "ResponseValue.Grade"
-                                },
-                                "event": "dateChange",
-                                "requestBody": {
-                                    "Type": "53"
-                                },
-                                "apiService": "DataService",
-                                "apiMethod": "dataGetCityGrade"
                             }
                         ],
                         "required": true,
@@ -18780,12 +18731,6 @@
                             }
                         },
                         "setValue": [
-                            {
-                                "name": "ClaimFromDate",
-                                "config": {
-                                    "minDate": "ClaimToDate"
-                                }
-                            },
                             {
                                 "name": "BillDate",
                                 "config": {
@@ -19163,14 +19108,6 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "CityGrade",
-                        "isExcluded": true,
-                        "value": 0,
-                        "showInUI": false,
-                        "international": false
-                    },
-                    {
-                        "type": "hidden",
                         "name": "IsBillRequired",
                         "isExcluded": true,
                         "value": false,
@@ -19234,23 +19171,16 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "Country",
-                        "isExcluded": true,
-                        "value": 3,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "CountryGrade",
-                        "isExcluded": true,
-                        "value": 0,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
                         "name": "costcentreWiseExpense",
                         "isExcluded": true,
                         "value": null,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "FrequencyTypeName",
+                        "isExcluded": false,
+                        "value": "",
                         "showInUI": false
                     }
                 ],
@@ -19268,7 +19198,7 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -19286,9 +19216,7 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
                     "requestBody": {
-                        "ExpenseCategoryId": 19,
-                        "CityGradeId": 0,
-                        "CountryGradeId": 0
+                        "ExpenseCategoryId": 19
                     },
                     "otherControls": {
                         "ClaimTypeId": "claimTypeId",
@@ -19363,7 +19291,7 @@
                         "order": 3
                     },
                     {
-                        "name": "Frequency",
+                        "name": "FrequencyTypeName",
                         "label": "Frequency",
                         "visible": true,
                         "position": "in",
@@ -20052,7 +19980,7 @@
                         "ExpenseCategoryId": 22,
                         "CityGradeId": 0,
                         "CountryGradeId": 0,
-                        "PolicyReferenceId": 0
+                        "PolicyReferenceId": 105
                     },
                     "otherControls": {
                         "ClaimTypeId": "travelTypeId",
