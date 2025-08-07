@@ -66,6 +66,7 @@ export class SelectInputComponent implements AfterViewInit {
     this.loadOptions();
     if (this.controlConfig.defaultValue) {
       this.control.setValue(this.controlConfig.defaultValue.Id);
+      this.setReadableDefaultvalue();
       this.onSelectBlur();
     }
 
@@ -228,5 +229,14 @@ export class SelectInputComponent implements AfterViewInit {
       }
     }
   }
-  
+
+  setReadableDefaultvalue() {
+    if (this.controlConfig.getReadableValue) {
+      const readableControl = this.form.get(this.controlConfig.getReadableValue.controlName);
+      if (readableControl) {
+        readableControl.setValue(this.controlConfig.defaultValue.Display || '');
+      }
+    }
+  }
+
 }

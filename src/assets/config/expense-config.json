@@ -10138,7 +10138,7 @@
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
                     },
                     "metaData": {
-                        "ClaimAmount": "Maximum Amount",
+                        "ClaimAmount": "Maximum Amount Per Month",
                         "MaximumAmount": "Maximum Amount Per Month",
                         "IsPerKmLimitRequired": "Is Per Km Limit Required",
                         "AmountPerKM": "Amount Per Km",
@@ -14021,7 +14021,7 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -14525,6 +14525,27 @@
                                 "EntitlementConversionRate"
                             ]
                         }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "NoOfTimes",
+                        "isExcluded": false,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Frequency",
+                        "isExcluded": false,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Duration",
+                        "isExcluded": false,
+                        "value": 0,
+                        "showInUI": false
                     }
                 ],
                 "checkValidationOnSubmit": {
@@ -14535,6 +14556,16 @@
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
                             ]
+                        }
+                    ],
+                    "policyCheck": [
+                        {
+                            "fieldList": {
+                                "NoOfTimes": "NoOfTimes",
+                                "Frequency": "Frequency",
+                                "Duration": "Duration",
+                                "ClaimDate": "ClaimDate"
+                            }
                         }
                     ]
                 },
@@ -14562,8 +14593,29 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    },
+                    "metaData": {
+                        "NoOfTimes": "No Of Times",
+                        "Frequency": "Frequency",
+                        "Duration": "Duration"
                     }
                 },
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
+                    }
+                ],
                 "expanded": false,
                 "displayTable": true,
                 "displayAddClearButton": true,
@@ -17521,7 +17573,7 @@
                         "type": "select",
                         "dataType": "int",
                         "name": "FrequencyType",
-                        "isExcluded": true,
+                        "isExcluded": false,
                         "label": "Frequency Type",
                         "placeholder": "Select Frequency Type",
                         "value": "",
@@ -17529,7 +17581,12 @@
                             "Id": 79,
                             "Display": "Monthly"
                         },
-                        "options": [],
+                        "options": [
+                            {
+                                "label": 79,
+                                "value": "Monthly"
+                            }
+                        ],
                         "labelKey": "",
                         "valueKey": "",
                         "apiService": "",
@@ -17543,6 +17600,9 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "getReadableValue": {
+                            "controlName": "FrequencyTypeName"
+                        },
                         "order": 2
                     },
                     {
@@ -17596,6 +17656,7 @@
                         "getReadableValue": {
                             "controlName": "MonthName"
                         },
+                        "policyViolationCheck": true,
                         "order": 3
                     },
                     {
@@ -17627,27 +17688,6 @@
                                 "requestBody": {},
                                 "apiService": "DataService",
                                 "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
-                            },
-                            {
-                                "type": [
-                                    "domestic"
-                                ],
-                                "isGeneral": true,
-                                "key": "CityMasterId",
-                                "inputControls": {
-                                    "City": "CityId",
-                                    "ClaimFromDate": "ReferenceDate"
-                                },
-                                "outputControl": {
-                                    "CityGrade": "ResponseValue.GradeId",
-                                    "CityGradeId": "ResponseValue.Grade"
-                                },
-                                "event": "dateChange",
-                                "requestBody": {
-                                    "Type": "53"
-                                },
-                                "apiService": "DataService",
-                                "apiMethod": "dataGetCityGrade"
                             }
                         ],
                         "required": true,
@@ -17666,7 +17706,8 @@
                             "value": null,
                             "required": true
                         },
-                        "apiDateLimit": true,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
@@ -17678,6 +17719,15 @@
                                 "EntitlementAmount": "EntitlementAmount"
                             }
                         },
+                        "setValue": [
+                            {
+                                "name": "ClaimToDate",
+                                "config": {
+                                    "minDate": "ClaimFromDate"
+                                }
+                            }
+                        ],
+                        "policyViolationCheck": true,
                         "order": 4
                     },
                     {
@@ -17703,7 +17753,8 @@
                             "value": null,
                             "required": true
                         },
-                        "apiDateLimit": true,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
@@ -17723,6 +17774,7 @@
                                 }
                             }
                         ],
+                        "policyViolationCheck": true,
                         "order": 5
                     },
                     {
@@ -18092,14 +18144,6 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "CityGrade",
-                        "isExcluded": true,
-                        "value": 0,
-                        "showInUI": false,
-                        "international": false
-                    },
-                    {
-                        "type": "hidden",
                         "name": "IsBillRequired",
                         "isExcluded": true,
                         "value": false,
@@ -18163,20 +18207,6 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "Country",
-                        "isExcluded": true,
-                        "value": 3,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "CountryGrade",
-                        "isExcluded": true,
-                        "value": 0,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
                         "name": "costcentreWiseExpense",
                         "isExcluded": true,
                         "value": null,
@@ -18188,23 +18218,42 @@
                         "isExcluded": false,
                         "value": "",
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "FrequencyTypeName",
+                        "isExcluded": false,
+                        "value": "",
+                        "showInUI": false
                     }
                 ],
                 "onInitAPI": {
-                    "apiService": "UserService",
-                    "apiMethod": "userGetEmployeeProfile",
-                    "requestBody": {},
+                    "apiService": "DataService",
+                    "apiMethod": "dataGetEmployeeExpenseClaimEligibilityBroadbandNumber",
+                    "requestBody": {
+                        "EmployeeExpenseClaimEligibilityId": 0,
+                        "ExpenseCategoryMappingId": 93
+                    },
                     "otherControls": {
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {},
                     "outputControl": {
-                        "BroadbandNumber": "ResponseValue.MobileNumber"
+                        "BroadbandNumber": "ResponseValue[0].BroadbandNumber"
+                    },
+                    "elibigilityCheck": {
+                        "fieldCheck": "BroadbandNumber",
+                        "confirmPopup": {
+                            "title": "Eligibility Check",
+                            "message": "Broadband number is not available. Do you want to proceed?",
+                            "confirmText": "OK",
+                            "cancelButton": false
+                        }
                     }
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -18222,9 +18271,7 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
                     "requestBody": {
-                        "ExpenseCategoryId": 52,
-                        "CityGradeId": 0,
-                        "CountryGradeId": 0
+                        "ExpenseCategoryId": 52
                     },
                     "otherControls": {
                         "ClaimTypeId": "claimTypeId",
@@ -18243,6 +18290,31 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    }
+                },
+                "policyViolationCheckApi": {
+                    "apiService": "ExpenseService",
+                    "apiMethod": "expenseValidateBillingPeriod",
+                    "requestBody": {
+                        "ExpenseCategoryId": 52,
+                        "ExpenseRequestDetailId": 0
+                    },
+                    "otherControls": {
+                        "UserMasterId": "UserMasterId"
+                    },
+                    "inputControls": {
+                        "ClaimFromDate": "BillingFromDate",
+                        "ClaimToDate": "BillingToDate"
+                    },
+                    "outputControl": {
+                        "IsViolation": "ResponseValue.IsPolicyViolation",
+                        "Violation": "ResponseValue.Message"
+                    },
+                    "confirmPopup": {
+                        "title": "Data Card Broadband Policy Violation",
+                        "message": "ResponseValue.Message",
+                        "confirmText": "Ok",
+                        "cancelText": "Cancel"
                     }
                 },
                 "expanded": false,
@@ -18274,7 +18346,7 @@
                         "order": 3
                     },
                     {
-                        "name": "Frequency",
+                        "name": "FrequencyTypeName",
                         "label": "Frequency",
                         "visible": true,
                         "position": "in",
@@ -18288,8 +18360,8 @@
                         "order": 4
                     },
                     {
-                        "name": "MobileNumber",
-                        "label": "Mobile Number",
+                        "name": "BroadbandNumber",
+                        "label": "Broadband Number",
                         "visible": true,
                         "position": "in",
                         "order": 4
@@ -18465,7 +18537,7 @@
                         "type": "select",
                         "dataType": "int",
                         "name": "FrequencyType",
-                        "isExcluded": true,
+                        "isExcluded": false,
                         "label": "Frequency Type",
                         "placeholder": "Select Frequency Type",
                         "value": "",
@@ -18473,7 +18545,12 @@
                             "Id": 79,
                             "Display": "Monthly"
                         },
-                        "options": [],
+                        "options": [
+                            {
+                                "label": 79,
+                                "value": "Monthly"
+                            }
+                        ],
                         "labelKey": "",
                         "valueKey": "",
                         "apiService": "",
@@ -18487,6 +18564,9 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "getReadableValue": {
+                            "controlName": "FrequencyTypeName"
+                        },
                         "order": 2
                     },
                     {
@@ -18540,6 +18620,7 @@
                         "getReadableValue": {
                             "controlName": "MonthName"
                         },
+                        "policyViolationCheck": true,
                         "order": 3
                     },
                     {
@@ -18571,27 +18652,6 @@
                                 "requestBody": {},
                                 "apiService": "DataService",
                                 "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
-                            },
-                            {
-                                "type": [
-                                    "domestic"
-                                ],
-                                "isGeneral": true,
-                                "key": "CityMasterId",
-                                "inputControls": {
-                                    "City": "CityId",
-                                    "ClaimFromDate": "ReferenceDate"
-                                },
-                                "outputControl": {
-                                    "CityGrade": "ResponseValue.GradeId",
-                                    "CityGradeId": "ResponseValue.Grade"
-                                },
-                                "event": "dateChange",
-                                "requestBody": {
-                                    "Type": "53"
-                                },
-                                "apiService": "DataService",
-                                "apiMethod": "dataGetCityGrade"
                             }
                         ],
                         "required": true,
@@ -18610,7 +18670,8 @@
                             "value": null,
                             "required": true
                         },
-                        "apiDateLimit": true,
+                        "minDate": "2020-01-01",
+                        "maxDate": "today",
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
@@ -18622,6 +18683,15 @@
                                 "EntitlementAmount": "EntitlementAmount"
                             }
                         },
+                        "policyViolationCheck": true,
+                        "setValue": [
+                            {
+                                "name": "ClaimToDate",
+                                "config": {
+                                    "minDate": "ClaimFromDate"
+                                }
+                            }
+                        ],
                         "order": 4
                     },
                     {
@@ -18647,7 +18717,8 @@
                             "value": null,
                             "required": true
                         },
-                        "apiDateLimit": true,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
@@ -18667,6 +18738,7 @@
                                 }
                             }
                         ],
+                        "policyViolationCheck": true,
                         "order": 5
                     },
                     {
@@ -19036,14 +19108,6 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "CityGrade",
-                        "isExcluded": true,
-                        "value": 0,
-                        "showInUI": false,
-                        "international": false
-                    },
-                    {
-                        "type": "hidden",
                         "name": "IsBillRequired",
                         "isExcluded": true,
                         "value": false,
@@ -19107,23 +19171,16 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "Country",
-                        "isExcluded": true,
-                        "value": 3,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
-                        "name": "CountryGrade",
-                        "isExcluded": true,
-                        "value": 0,
-                        "showInUI": false
-                    },
-                    {
-                        "type": "hidden",
                         "name": "costcentreWiseExpense",
                         "isExcluded": true,
                         "value": null,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "FrequencyTypeName",
+                        "isExcluded": false,
+                        "value": "",
                         "showInUI": false
                     }
                 ],
@@ -19141,7 +19198,7 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -19159,9 +19216,7 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
                     "requestBody": {
-                        "ExpenseCategoryId": 19,
-                        "CityGradeId": 0,
-                        "CountryGradeId": 0
+                        "ExpenseCategoryId": 19
                     },
                     "otherControls": {
                         "ClaimTypeId": "claimTypeId",
@@ -19180,6 +19235,31 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    }
+                },
+                "policyViolationCheckApi": {
+                    "apiService": "ExpenseService",
+                    "apiMethod": "expenseValidateBillingPeriod",
+                    "requestBody": {
+                        "ExpenseCategoryId": 19,
+                        "ExpenseRequestDetailId": 0
+                    },
+                    "otherControls": {
+                        "UserMasterId": "UserMasterId"
+                    },
+                    "inputControls": {
+                        "ClaimFromDate": "BillingFromDate",
+                        "ClaimToDate": "BillingToDate"
+                    },
+                    "outputControl": {
+                        "IsViolation": "ResponseValue.IsPolicyViolation",
+                        "Violation": "ResponseValue.Message"
+                    },
+                    "confirmPopup": {
+                        "title": "Mobile Expense Policy Violation",
+                        "message": "ResponseValue.Message",
+                        "confirmText": "Ok",
+                        "cancelText": "Cancel"
                     }
                 },
                 "expanded": false,
@@ -19211,7 +19291,7 @@
                         "order": 3
                     },
                     {
-                        "name": "Frequency",
+                        "name": "FrequencyTypeName",
                         "label": "Frequency",
                         "visible": true,
                         "position": "in",
@@ -19367,7 +19447,7 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -19864,6 +19944,27 @@
                                 "EntitlementConversionRate"
                             ]
                         }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "NoOfTimes",
+                        "isExcluded": false,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Frequency",
+                        "isExcluded": false,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Duration",
+                        "isExcluded": false,
+                        "value": 0,
+                        "showInUI": false
                     }
                 ],
                 "checkValidationOnSubmit": {
@@ -19875,11 +19976,21 @@
                                 "costcentreWiseExpense"
                             ]
                         }
+                    ],
+                    "policyCheck": [
+                        {
+                            "fieldList": {
+                                "NoOfTimes": "NoOfTimes",
+                                "Frequency": "Frequency",
+                                "Duration": "Duration",
+                                "ClaimDate": "ClaimDate"
+                            }
+                        }
                     ]
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -19900,7 +20011,7 @@
                         "ExpenseCategoryId": 22,
                         "CityGradeId": 0,
                         "CountryGradeId": 0,
-                        "PolicyReferenceId": 0
+                        "PolicyReferenceId": 105
                     },
                     "otherControls": {
                         "ClaimTypeId": "travelTypeId",
@@ -19917,6 +20028,11 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    },
+                    "metaData": {
+                        "NoOfTimes": "No Of Times",
+                        "Frequency": "Frequency",
+                        "Duration": "Duration"
                     }
                 },
                 "expanded": true,

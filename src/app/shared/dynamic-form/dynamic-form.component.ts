@@ -289,6 +289,49 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       }
     }
 
+    if (this.category.checkValidationOnSubmit?.policyCheck) {
+      for (const policy of this.category.checkValidationOnSubmit.policyCheck) {
+
+        const requiredFields = ['NoOfTimes', 'Frequency', 'Duration', 'ClaimDate'];
+        const dependsOn = policy.dependsOn ?? Object.keys(policy.fieldList ?? {});
+
+        const hasAllFields = requiredFields.every(field => dependsOn.includes(field));
+        if (!hasAllFields) continue;
+
+        // Get policy values from config
+        const frequency = +this.form.get('Frequency')?.value;
+        const noOfTimes = +this.form.get('NoOfTimes')?.value;
+        const duration = +this.form.get('Duration')?.value;
+
+        // last claim date from existing data
+        const categoryData = this.moduleConfig?.categories?.find((cat: any) => cat.name === this.category.name)
+        if (!categoryData) continue;
+
+        const lastClaimDateStr = categoryData.data?.[categoryData.data.length - 1]?.excludedData?.ClaimDate;
+        if (!lastClaimDateStr) continue;
+
+        const lastClaim = new Date(lastClaimDateStr);
+        const now = new Date();
+
+        const diffInMonths = (now.getFullYear() - lastClaim.getFullYear()) * 12 + (now.getMonth() - lastClaim.getMonth());
+
+        if (diffInMonths < frequency * 12) {
+          const lastClaimFormatted = this.datePipe.transform(lastClaim, 'dd-MMM-yyyy');
+          this.snackbarService.error(
+            `${this.category.label} are limited to ${noOfTimes} every ${frequency} years`,
+            5000
+          );
+
+          if (this.editIndex && this.isTravelRaiseRequest) {
+            this.freezeControlsBasedOnConditions();
+          }
+          return;
+        }
+      }
+    }
+
+
+
     // claim restriction check
     if (this.category.claimRestriction && this.category.claimRestriction.length > 0) {
       for (const claimRestriction of this.category.claimRestriction) {
@@ -866,7 +909,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         this.dynamicFormService.validateFieldPolicyEntitlement(control, this.category, this.form, this.formConfig, this.moduleData);
       }, 500);
     }
-    
+
     if (control.policyViolationCheck && skipPolicyViolationCheck) {
       setTimeout(() => {
         this.dynamicFormService.validateFieldPolicyViolation(control, this.category, this.form, this.formConfig, this.moduleData);

@@ -165,13 +165,13 @@ export class DynamicFormService {
             }
           });
 
-          
-
           // disable KM field if MaximumAmount is present
           const kmControl = form.get('KM');
           if (kmControl) {
             const maximumAmountControl = form.get('MaximumAmount');
             if (maximumAmountControl && maximumAmountControl.value) {
+              // setvalue to 0
+              kmControl.setValue(0);
               kmControl.disable();
             } else {
               kmControl.enable();
@@ -217,6 +217,8 @@ export class DynamicFormService {
           // Remove AmountPerKM control if it exists
           const amountPerKMControl = form.get('AmountPerKM');
           if (amountPerKMControl) {
+            //setvalue to 0
+            amountPerKMControl.setValue(0);
             const control = formControls.find(c => c.name === 'AmountPerKM');
             if (control) {
               control.showInUI = false;
@@ -231,6 +233,8 @@ export class DynamicFormService {
         } else {
           const minimumkmControl = form.get('MinimumKM');
           if (minimumkmControl) {
+            //setvalue to 0
+            minimumkmControl.setValue(0);
             const control = formControls.find(c => c.name === 'MinimumKM');
             if (control) {
               control.showInUI = false;
@@ -245,6 +249,8 @@ export class DynamicFormService {
         } else {
           const maximumkmControl = form.get('MaximumKM');
           if (maximumkmControl) {
+            //setvalue to 0
+            maximumkmControl.setValue(0);
             const control = formControls.find(c => c.name === 'MaximumKM');
             if (control) {
               control.showInUI = false;
@@ -259,6 +265,8 @@ export class DynamicFormService {
         } else {
           const maximumAmountControl = form.get('MaximumAmount');
           if (maximumAmountControl) {
+            //setvalue to 0
+            maximumAmountControl.setValue(0);
             const control = formControls.find(c => c.name === 'MaximumAmount');
             if (control) {
               control.showInUI = false;
@@ -342,9 +350,15 @@ export class DynamicFormService {
     return mappedResult;
   }
 
+  // private extractValueFromPath(obj: any, path: string): any {
+  //   return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
+  // }
+
   private extractValueFromPath(obj: any, path: string): any {
-    return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
+    const pathSegments = path.replace(/\[(\d+)\]/g, '.$1').split('.');
+    return pathSegments.reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
   }
+
 
   updateConditionalValidators(form: any, formConfig: any[]): void {
     formConfig.forEach(config => {
@@ -732,12 +746,28 @@ export class DynamicFormService {
       const output = this.mapOtherControls(moduleData, onInitAPIDetails.otherControls);
       service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
         (response: any) => {
-          if (typeof onInitAPIDetails.outputControl === 'object') {
-            // Multiple fields case
-            for (const [outputControl, responsePath] of Object.entries(onInitAPIDetails.outputControl) as [string, string][]) {
-              const value = this.extractValueFromPath(response, responsePath);
-              if (value !== undefined) {
-                form.get(outputControl)?.setValue(value);
+          if (response?.ResponseValue) {
+            if (typeof onInitAPIDetails.outputControl === 'object') {
+              // Multiple fields case
+              for (const [outputControl, responsePath] of Object.entries(onInitAPIDetails.outputControl) as [string, string][]) {
+                const value = this.extractValueFromPath(response, responsePath);
+                if (value !== undefined) {
+                  form.get(outputControl)?.setValue(value);
+                }
+              }
+            }
+
+            if (onInitAPIDetails?.elibigilityCheck) {
+              const { fieldCheck, confirmPopup } = onInitAPIDetails.elibigilityCheck;
+
+              const fieldValue = form.get(fieldCheck)?.value;
+
+              if (!fieldValue) {
+                this.confirmDialogService.confirm(confirmPopup).subscribe((result: boolean) => {
+                  if (result) {
+                    
+                  }
+                });
               }
             }
           }

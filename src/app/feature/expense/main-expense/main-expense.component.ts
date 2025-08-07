@@ -471,7 +471,8 @@ export class MainExpenseComponent {
       this.moduleConfig.categories.push({
         name: cat.name,
         label: cat.label,
-        count: cat.count
+        count: cat.count,
+        data: matchedData?.data || []
       });
     });
   }
