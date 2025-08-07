@@ -61,6 +61,7 @@ model/frequencyTypeReferenceParam.ts
 model/gradeGetParam.ts
 model/guestHouseListParam.ts
 model/internationalBaggageOutfitPolicyParam.ts
+model/lastBillingDateParam.ts
 model/localTravelMode.ts
 model/loginViewModel.ts
 model/marriageGiftPolicyParam.ts
@@ -111,6 +112,7 @@ model/userMasterMetaDataInsertParam.ts
 model/userMasterMetaDataType.ts
 model/validateBackDatedTravelEntryPolicyParam.ts
 model/validateBillingParam.ts
+model/validateBillingPeriodParam.ts
 model/validateExpenseClaimLocalTravelConveyanceParam.ts
 model/validateGuestHouseEligibilityParam.ts
 model/validatePasswordPolicyParam.ts

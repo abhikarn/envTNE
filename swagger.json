@@ -1205,6 +1205,29 @@
         }
       }
     },
+    "/api/Expense/DomesticLocalTravelType": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "operationId": "Data_GetDomesticLocalTravelType",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Data/TravelRequestFor": {
       "post": {
         "tags": [
@@ -2778,6 +2801,84 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/FrequencyTypeReferenceParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Expense/ValidateBillingPeriod": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_ValidateBillingPeriod",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "validateBillingPeriodParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ValidateBillingPeriodParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Expense/GetLastBillingDate": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_GetLastBillingDate",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "lastBillingDateParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LastBillingDateParam"
             }
           }
         ],
@@ -5934,6 +6035,48 @@
           "type": "integer"
         },
         "FrequencyTypeId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "UserMasterId": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "ValidateBillingPeriodParam": {
+      "type": "object",
+      "properties": {
+        "ExpenseCategoryId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "UserMasterId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "BillingFromDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "BillingToDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ExpenseRequestDetailId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ReferenceTypeId": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "LastBillingDateParam": {
+      "type": "object",
+      "properties": {
+        "ExpenseCategoryId": {
           "format": "int64",
           "type": "integer"
         },

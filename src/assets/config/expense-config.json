@@ -17648,6 +17648,7 @@
                         "getReadableValue": {
                             "controlName": "MonthName"
                         },
+                        "policyViolationCheck": true,
                         "order": 3
                     },
                     {
@@ -17718,7 +17719,8 @@
                             "value": null,
                             "required": true
                         },
-                        "apiDateLimit": true,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
@@ -17730,6 +17732,15 @@
                                 "EntitlementAmount": "EntitlementAmount"
                             }
                         },
+                        "setValue": [
+                            {
+                                "name": "ClaimToDate",
+                                "config": {
+                                    "minDate": "ClaimFromDate"
+                                }
+                            }
+                        ],
+                        "policyViolationCheck": true,
                         "order": 4
                     },
                     {
@@ -17755,7 +17766,8 @@
                             "value": null,
                             "required": true
                         },
-                        "apiDateLimit": true,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
@@ -17769,12 +17781,19 @@
                         },
                         "setValue": [
                             {
+                                "name": "ClaimFromDate",
+                                "config": {
+                                    "minDate": "ClaimToDate"
+                                }
+                            },
+                            {
                                 "name": "BillDate",
                                 "config": {
                                     "minDate": "ClaimToDate"
                                 }
                             }
                         ],
+                        "policyViolationCheck": true,
                         "order": 5
                     },
                     {
@@ -18297,6 +18316,31 @@
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
                     }
                 },
+                "policyViolationCheckApi": {
+                    "apiService": "ExpenseService",
+                    "apiMethod": "expenseValidateBillingPeriod",
+                    "requestBody": {
+                        "ExpenseCategoryId": 52,
+                        "ExpenseRequestDetailId": 0
+                    },
+                    "otherControls": {
+                        "UserMasterId": "UserMasterId"
+                    },
+                    "inputControls": {
+                        "ClaimFromDate": "BillingFromDate",
+                        "ClaimToDate": "BillingToDate"
+                    },
+                    "outputControl": {
+                        "IsViolation": "ResponseValue.IsPolicyViolation",
+                        "Violation": "ResponseValue.Message"
+                    },
+                    "confirmPopup": {
+                        "title": "Data Card Broadband Policy Violation",
+                        "message": "ResponseValue.Message",
+                        "confirmText": "Ok",
+                        "cancelText": "Cancel"
+                    }
+                },
                 "expanded": false,
                 "displayTable": true,
                 "displayAddClearButton": true,
@@ -18592,6 +18636,7 @@
                         "getReadableValue": {
                             "controlName": "MonthName"
                         },
+                        "policyViolationCheck": true,
                         "order": 3
                     },
                     {
@@ -18662,7 +18707,8 @@
                             "value": null,
                             "required": true
                         },
-                        "apiDateLimit": true,
+                        "minDate": "2020-01-01",
+                        "maxDate": "today",
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
@@ -18674,6 +18720,15 @@
                                 "EntitlementAmount": "EntitlementAmount"
                             }
                         },
+                        "policyViolationCheck": true,
+                        "setValue": [
+                            {
+                                "name": "ClaimToDate",
+                                "config": {
+                                    "minDate": "ClaimFromDate"
+                                }
+                            }
+                        ],
                         "order": 4
                     },
                     {
@@ -18699,7 +18754,8 @@
                             "value": null,
                             "required": true
                         },
-                        "apiDateLimit": true,
+                        "minDate":"01-01-1900",
+                        "maxDate": "today",
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
@@ -18713,12 +18769,19 @@
                         },
                         "setValue": [
                             {
+                                "name": "ClaimFromDate",
+                                "config": {
+                                    "minDate": "ClaimToDate"
+                                }
+                            },
+                            {
                                 "name": "BillDate",
                                 "config": {
                                     "minDate": "ClaimToDate"
                                 }
                             }
                         ],
+                        "policyViolationCheck": true,
                         "order": 5
                     },
                     {
@@ -19232,6 +19295,31 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    }
+                },
+                "policyViolationCheckApi": {
+                    "apiService": "ExpenseService",
+                    "apiMethod": "expenseValidateBillingPeriod",
+                    "requestBody": {
+                        "ExpenseCategoryId": 19,
+                        "ExpenseRequestDetailId": 0
+                    },
+                    "otherControls": {
+                        "UserMasterId": "UserMasterId"
+                    },
+                    "inputControls": {
+                        "ClaimFromDate": "BillingFromDate",
+                        "ClaimToDate": "BillingToDate"
+                    },
+                    "outputControl": {
+                        "IsViolation": "ResponseValue.IsPolicyViolation",
+                        "Violation": "ResponseValue.Message"
+                    },
+                    "confirmPopup": {
+                        "title": "Mobile Expense Policy Violation",
+                        "message": "ResponseValue.Message",
+                        "confirmText": "Ok",
+                        "cancelText": "Cancel"
                     }
                 },
                 "expanded": false,

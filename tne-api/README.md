@@ -11,12 +11,6 @@ To install the required dependencies and to build the typescript sources run:
 ```console
 npm install
 npm run build
-# Build with base href set to root ('/') for local development
-ng build --base-href=/
-
-# Build with base href set to '/SpendManraAngular/' for production
-ng build --configuration production --base-href=/SpendManraAngular/
-
 ```
 
 ## Publishing
