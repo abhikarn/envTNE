@@ -10138,7 +10138,7 @@
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
                     },
                     "metaData": {
-                        "ClaimAmount": "Maximum Amount",
+                        "ClaimAmount": "Maximum Amount Per Month",
                         "MaximumAmount": "Maximum Amount Per Month",
                         "IsPerKmLimitRequired": "Is Per Km Limit Required",
                         "AmountPerKM": "Amount Per Km",
@@ -14021,7 +14021,7 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -14525,6 +14525,27 @@
                                 "EntitlementConversionRate"
                             ]
                         }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "NoOfTimes",
+                        "isExcluded": false,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Frequency",
+                        "isExcluded": false,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Duration",
+                        "isExcluded": false,
+                        "value": 0,
+                        "showInUI": false
                     }
                 ],
                 "checkValidationOnSubmit": {
@@ -14535,6 +14556,16 @@
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
                             ]
+                        }
+                    ],
+                    "policyCheck": [
+                        {
+                            "fieldList": {
+                                "NoOfTimes": "NoOfTimes",
+                                "Frequency": "Frequency",
+                                "Duration": "Duration",
+                                "ClaimDate": "ClaimDate"
+                            }
                         }
                     ]
                 },
@@ -14562,8 +14593,29 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    },
+                    "metaData": {
+                        "NoOfTimes": "No Of Times",
+                        "Frequency": "Frequency",
+                        "Duration": "Duration"
                     }
                 },
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
+                    }
+                ],
                 "expanded": false,
                 "displayTable": true,
                 "displayAddClearButton": true,
