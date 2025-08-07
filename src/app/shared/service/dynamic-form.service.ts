@@ -505,6 +505,11 @@ export class DynamicFormService {
 
   getFormConfig(formConfig: IFormControl[], moduleConfig: any): IFormControl[] {
     console.log(moduleConfig);
+    // if formconfig and moduleConfig are not present, return empty array
+    if (!formConfig || !Array.isArray(formConfig) || formConfig.length === 0 || !moduleConfig) {
+      return [];
+    }
+    
     let modifiedFormConfig = [...formConfig]; // Create a copy of the original formConfig
     // handle international data
     if (moduleConfig?.internationalFlag) {
