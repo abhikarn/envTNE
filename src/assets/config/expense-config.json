@@ -18717,7 +18717,7 @@
                             "value": null,
                             "required": true
                         },
-                        "minDate":"01-01-1900",
+                        "minDate": "01-01-1900",
                         "maxDate": "today",
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
@@ -19447,7 +19447,7 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -19944,6 +19944,27 @@
                                 "EntitlementConversionRate"
                             ]
                         }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "NoOfTimes",
+                        "isExcluded": false,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Frequency",
+                        "isExcluded": false,
+                        "value": 0,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Duration",
+                        "isExcluded": false,
+                        "value": 0,
+                        "showInUI": false
                     }
                 ],
                 "checkValidationOnSubmit": {
@@ -19955,11 +19976,21 @@
                                 "costcentreWiseExpense"
                             ]
                         }
+                    ],
+                    "policyCheck": [
+                        {
+                            "fieldList": {
+                                "NoOfTimes": "NoOfTimes",
+                                "Frequency": "Frequency",
+                                "Duration": "Duration",
+                                "ClaimDate": "ClaimDate"
+                            }
+                        }
                     ]
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -19997,6 +20028,11 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    },
+                    "metaData": {
+                        "NoOfTimes": "No Of Times",
+                        "Frequency": "Frequency",
+                        "Duration": "Duration"
                     }
                 },
                 "expanded": true,

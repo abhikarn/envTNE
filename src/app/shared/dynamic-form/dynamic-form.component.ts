@@ -288,7 +288,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       }
     }
-    
+
     if (this.category.checkValidationOnSubmit?.policyCheck) {
       for (const policy of this.category.checkValidationOnSubmit.policyCheck) {
 
@@ -318,7 +318,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         if (diffInMonths < frequency * 12) {
           const lastClaimFormatted = this.datePipe.transform(lastClaim, 'dd-MMM-yyyy');
           this.snackbarService.error(
-            `Mobile handset purchases are limited to ${noOfTimes} every ${frequency} years`,
+            `${this.category.label} are limited to ${noOfTimes} every ${frequency} years`,
             5000
           );
 
