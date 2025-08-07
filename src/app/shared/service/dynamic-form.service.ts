@@ -172,6 +172,8 @@ export class DynamicFormService {
           if (kmControl) {
             const maximumAmountControl = form.get('MaximumAmount');
             if (maximumAmountControl && maximumAmountControl.value) {
+              // setvalue to 0
+              kmControl.setValue(0);
               kmControl.disable();
             } else {
               kmControl.enable();
@@ -217,6 +219,8 @@ export class DynamicFormService {
           // Remove AmountPerKM control if it exists
           const amountPerKMControl = form.get('AmountPerKM');
           if (amountPerKMControl) {
+            //setvalue to 0
+            amountPerKMControl.setValue(0);
             const control = formControls.find(c => c.name === 'AmountPerKM');
             if (control) {
               control.showInUI = false;
@@ -231,6 +235,8 @@ export class DynamicFormService {
         } else {
           const minimumkmControl = form.get('MinimumKM');
           if (minimumkmControl) {
+            //setvalue to 0
+            minimumkmControl.setValue(0);
             const control = formControls.find(c => c.name === 'MinimumKM');
             if (control) {
               control.showInUI = false;
@@ -245,6 +251,8 @@ export class DynamicFormService {
         } else {
           const maximumkmControl = form.get('MaximumKM');
           if (maximumkmControl) {
+            //setvalue to 0
+            maximumkmControl.setValue(0);
             const control = formControls.find(c => c.name === 'MaximumKM');
             if (control) {
               control.showInUI = false;
@@ -259,6 +267,8 @@ export class DynamicFormService {
         } else {
           const maximumAmountControl = form.get('MaximumAmount');
           if (maximumAmountControl) {
+            //setvalue to 0
+            maximumAmountControl.setValue(0);
             const control = formControls.find(c => c.name === 'MaximumAmount');
             if (control) {
               control.showInUI = false;
