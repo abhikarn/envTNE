@@ -18262,15 +18262,27 @@
                     }
                 ],
                 "onInitAPI": {
-                    "apiService": "UserService",
-                    "apiMethod": "userGetEmployeeProfile",
-                    "requestBody": {},
+                    "apiService": "DataService",
+                    "apiMethod": "dataGetEmployeeExpenseClaimEligibilityBroadbandNumber",
+                    "requestBody": {
+                        "EmployeeExpenseClaimEligibilityId": 0,
+                        "ExpenseCategoryMappingId": 93
+                    },
                     "otherControls": {
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {},
                     "outputControl": {
-                        "BroadbandNumber": "ResponseValue.MobileNumber"
+                        "BroadbandNumber": "ResponseValue[0].BroadbandNumber"
+                    },
+                    "elibigilityCheck": {
+                        "fieldCheck": "BroadbandNumber",
+                        "confirmPopup": {
+                            "title": "Eligibility Check",
+                            "message": "Broadband number is not available. Do you want to proceed?",
+                            "confirmText": "OK",
+                            "cancelButton": false
+                        }
                     }
                 },
                 "policyViolationManualCheck": [

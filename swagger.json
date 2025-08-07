@@ -1963,6 +1963,45 @@
         }
       }
     },
+    "/api/Data/GetEmployeeExpenseClaimEligibilityBroadbandNumber": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "operationId": "Data_GetEmployeeExpenseClaimEligibilityBroadbandNumber",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "employeeExpenseClaimEligibilityGetParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EmployeeExpenseClaimEligibilityGetParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Document/Upload": {
       "post": {
         "tags": [
@@ -4999,6 +5038,23 @@
       "properties": {
         "Flag": {
           "type": "string"
+        }
+      }
+    },
+    "EmployeeExpenseClaimEligibilityGetParam": {
+      "type": "object",
+      "properties": {
+        "EmployeeExpenseClaimEligibilityId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "UserMasterId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ExpenseCategoryMappingId": {
+          "format": "int64",
+          "type": "integer"
         }
       }
     },

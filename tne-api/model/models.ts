@@ -14,6 +14,7 @@ export * from './documentTyp';
 export * from './ecAirRepriceDataParam';
 export * from './ecAirRepriceParam';
 export * from './eligibilityParam';
+export * from './employeeExpenseClaimEligibilityGetParam';
 export * from './employeePolicyParam';
 export * from './employeeProfileParam';
 export * from './expenseActionParam';
