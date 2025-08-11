@@ -1,5 +1,6 @@
 import { HttpHeaders, HttpParams, HttpParameterCodec } from '@angular/common/http';
 import { Param } from './param';
+import { environment } from '../src/environment';
 
 export interface ConfigurationParameters {
     /**
@@ -71,7 +72,11 @@ export class Configuration {
         this.username = configurationParameters.username;
         this.password = configurationParameters.password;
         this.accessToken = configurationParameters.accessToken;
-        this.basePath = configurationParameters.basePath;
+        if (environment.production) {
+            this.basePath = configurationParameters.basePath || 'https://enaviya.co.in/spendmantraMobApi/';
+        } else {
+            this.basePath = configurationParameters.basePath || 'https://localhost:44301/';
+        }
         this.withCredentials = configurationParameters.withCredentials;
         this.encoder = configurationParameters.encoder;
         if (configurationParameters.encodeParam) {
