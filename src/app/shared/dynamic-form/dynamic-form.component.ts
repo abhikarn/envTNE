@@ -331,6 +331,32 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
 
 
+    if (this.category.checkValidationOnSubmit?.multipleAttachmentValidation) {
+      for (const validation of this.category.checkValidationOnSubmit.multipleAttachmentValidation) {
+        const { requiredDocumentType, dependsOn } = validation;
+
+        // Determine the attachment field name from config (default to "attachment")
+        const fieldName = dependsOn?.[0] || 'attachment';
+        const attachments = this.form.get(fieldName)?.value || [];
+
+        const missingDocuments = requiredDocumentType.filter((doc: any) => {
+          return !attachments.some((att: any) => {
+            // Match by ID if available, otherwise match by name
+            return att?.ReferenceType === doc.id;
+          });
+        });
+
+        if (missingDocuments.length > 0) {
+          const docNames = missingDocuments.map((doc: any) => doc.name).join(', ');
+          this.snackbarService.error(`Missing required documents: ${docNames}`, 5000);
+          if (this.editIndex && this.isTravelRaiseRequest) {
+            this.freezeControlsBasedOnConditions();
+          }
+          return; // stop further processing
+        }
+      }
+    }
+
 
     // claim restriction check
     if (this.category.claimRestriction && this.category.claimRestriction.length > 0) {
@@ -645,37 +671,45 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   prepareFormJson() {
     // Preparing form json
     this.formData.name = this.category.name;
+
     this.formControls.forEach(control => {
-      const type = control.formConfig.type;
-      const fieldName = control.formConfig.name;
+      const { type, name: fieldName, inPayload, isExcluded } = control.formConfig;
       let fieldValue: any;
-      if (control.formConfig.inPayload === false) {
-        fieldValue = null;
+
+      if (inPayload === false) {
+        // Skip adding this field entirely
+        fieldValue = undefined;
       } else {
         fieldValue = this.form.value[fieldName];
       }
 
       control.formConfig.value = fieldValue;
+
       if (!this.formData.data) {
-        this.formData.data = {
-          ReferenceId: 0
-        };
+        this.formData.data = { ReferenceId: 0 };
       } else {
-        this.formData.data.ReferenceId = this.referenceId
+        this.formData.data.ReferenceId = this.referenceId;
       }
+
       if (!this.formData.data?.excludedData) {
         this.formData.data.excludedData = {};
       }
-      if (control.formConfig.isExcluded) {
-        this.formData.data.excludedData[fieldName] = fieldValue ?? null;
-      } else {
-        this.formData.data[fieldName] = fieldValue ?? null;
+
+      // Add only if inPayload is not false
+      if (inPayload !== false) {
+        if (isExcluded) {
+          this.formData.data.excludedData[fieldName] = fieldValue ?? null;
+        } else {
+          this.formData.data[fieldName] = fieldValue ?? null;
+        }
       }
-    })
+    });
+
     this.emitFormData.emit({
       formData: this.formData,
       editIndex: this.editIndex - 1
     });
+
     this.formData = {};
   }
 

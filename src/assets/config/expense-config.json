@@ -21785,6 +21785,7 @@
                         "getReadableValue": {
                             "controlName": "DocumentTypeName"
                         },
+                        "inPayload": false,
                         "order": 0
                     },
                     {
@@ -21808,7 +21809,7 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -21973,6 +21974,8 @@
                         "label": "Bill Date",
                         "value": null,
                         "required": false,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "order": 9
                     },
                     {
@@ -22201,9 +22204,23 @@
                         "name": "DocumentTypeName",
                         "isExcluded": false,
                         "value": null,
-                        "showInUI": false
+                        "showInUI": false,
+                        "inPayload": false
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "multipleAttachmentValidation": [
+                        {
+                            "requiredDocumentType": [
+                                { "id": 174, "name": "Certification Copy" },
+                                { "id": 176, "name": "Other Document" }
+                            ],
+                            "dependsOn": [
+                                "attachment"
+                            ]
+                        }
+                    ]
+                },
                 "expanded": true,
                 "displayTable": true,
                 "displayAddClearButton": true,
