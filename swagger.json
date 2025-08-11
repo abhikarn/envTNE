@@ -2002,6 +2002,107 @@
         }
       }
     },
+    "/api/Data/GetSalesVisitType": {
+      "get": {
+        "tags": [
+          "Data"
+        ],
+        "operationId": "Data_GetSalesVisitType",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Data/CertificationDetails": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "operationId": "Data_CertificationDetails",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Data/CourseDetails": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "operationId": "Data_CourseDetails",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Data/DocumentType": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "operationId": "Data_DocumentType",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Document/Upload": {
       "post": {
         "tags": [
@@ -6404,6 +6505,9 @@
         "ExpenseCategoryId": {
           "format": "int64",
           "type": "integer"
+        },
+        "ExpenseCategoryName": {
+          "type": "string"
         },
         "CreatedDate": {
           "format": "date-time",

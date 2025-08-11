@@ -13,6 +13,7 @@ export interface ExpenseCategoryGroupMapping {
     Id?: number;
     CategoryGroupId?: number;
     ExpenseCategoryId?: number;
+    ExpenseCategoryName?: string;
     CreatedDate?: string;
     ModifiedDate?: string;
     IsActive?: boolean;

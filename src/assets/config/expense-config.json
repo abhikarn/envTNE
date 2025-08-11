@@ -21768,6 +21768,29 @@
                 "label": "Training and Certification",
                 "formControls": [
                     {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "DocumentType",
+                        "isExcluded": false,
+                        "label": "Document Type",
+                        "value": "",
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataDocumentType",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Document Type is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 0
+                    },
+                    {
                         "type": "file",
                         "dataType": "file",
                         "name": "attachment",
@@ -21812,10 +21835,10 @@
                         "placeholder": "Select Course",
                         "value": "",
                         "options": [],
-                        "labelKey": "",
-                        "valueKey": "",
-                        "apiService": "",
-                        "apiMethod": "",
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataCourseDetails",
                         "required": true,
                         "validations": [
                             {
@@ -21831,15 +21854,17 @@
                         "type": "select",
                         "dataType": "int",
                         "name": "Certification",
+                        "dependsOn": "Course",
                         "isExcluded": false,
                         "label": "Certification",
                         "placeholder": "Select Certification",
                         "value": "",
                         "options": [],
-                        "labelKey": "",
-                        "valueKey": "",
-                        "apiService": "",
-                        "apiMethod": "",
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataCertificationDetails",
+                         "payloadKey": "courseId",
                         "required": true,
                         "validations": [
                             {
@@ -21871,23 +21896,35 @@
                         "order": 5
                     },
                     {
-                        "type": "select",
-                        "dataType": "int",
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "",
                         "name": "CourseDuration",
-                        "label": "Course Duration(Month)",
                         "isExcluded": false,
-                        "placeholder": "Select Course Duration",
-                        "value": "",
-                        "options": [],
-                        "labelKey": "",
-                        "valueKey": "",
-                        "apiService": "",
-                        "apiMethod": "",
+                        "label": "Course Duration (Month)",
+                        "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9.]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 2
+                            },
+                            "decimalPrecision": "0"
+                        },
                         "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Course Duration is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Month must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -22002,7 +22039,7 @@
                         "dataType": "numeric",
                         "name": "ClaimAmount",
                         "isExcluded": true,
-                        "label": "Amount",
+                        "label": "Total Cource Fare",
                         "value": null,
                         "dependentCases": [
                             {
@@ -22213,7 +22250,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmount",
-                        "label": "Claimed Amount",
+                        "label": "Total Cource Fare",
                         "visible": true,
                         "position": "in",
                         "decimalPrecision": "2",
@@ -28714,13 +28751,86 @@
                 ]
             },
             {
-                "name": "Training & Certification",
-                "label": "Training & Certification",
+                "name": "Training and Certification",
+                "label": "Training and Certification",
                 "data": [],
                 "amount": 0,
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
-                "columns": [],
+                "columns": [
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "label": "Claim Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 1
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Claimed",
+                        "visible": true,
+                        "position": "in-out",
+                        "order": 2
+                    },
+                    {
+                        "type": "numeric",
+                        "name": "ApprovedAmount",
+                        "label": "Approved Amount",
+                        "visible": true,
+                        "isEditableInApproval": true,
+                        "isEditableInFinanceApproval": true,
+                        "controlType": "input",
+                        "position": "in",
+                        "order": 3
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
+                    },
+                    {
+                        "type": "number",
+                        "name": "ConversionRate",
+                        "label": "Conversion Rate",
+                        "visible": true,
+                        "position": "in",
+                        "order": 5
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Approved(INR)",
+                        "visible": true,
+                        "position": "in",
+                        "order": 6
+                    },
+                    {
+                        "name": "Course",
+                        "label": "Course Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 7
+                    },
+                    {
+                        "name": "Certification",
+                        "label": "Certification",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "name": "Justification",
+                        "label": "Justification",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    }
+
+                ],
                 "nestedTables": []
             },
             {
