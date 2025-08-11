@@ -1,4 +1,4 @@
-<div class="col-md-12 ">
+<div [ngClass]="controlConfig.blockClass ? controlConfig.blockClass : 'col-md-12'">
  <label style="font-size: 11px !important;color: #8F90A6 !important;text-transform: uppercase;" class="common-title fs-6 fw-bold mb-1"> {{ controlConfig.label }}
     @if (controlConfig.required) {
     <span class="required-star">*</span>
@@ -26,7 +26,10 @@
     <thead>
       <tr>
         <th class="thd-w15"><span>Sl No</span></th>
-        <th class="thd-w70"><span>Document</span></th>
+        <th class="thd-w50"><span>Document</span></th>
+        @if (form.value?.DocumentType) {
+          <th class="thd-w15"><span>Document Type</span></th>
+        }
         <th class="thd-w15"><span>Action</span></th>
       </tr>
     </thead>
@@ -35,6 +38,11 @@
       <tr>
      <td>{{ i + 1 }}</td>
         <td class="filename-width"  > <label>Document Name</label> {{ file?.FileName }}</td>
+        @if (form.value?.DocumentType) {
+          <td class="text-lg-start">
+            <label>Document Type</label> {{ file?.DocumentTypeName }}
+          </td>
+        }
         <td data-label="" class="text-lg-start">
           <!-- Preview Action -->
           <a class="me-2" title="Preview" (click)="previewFile(file)">

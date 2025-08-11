@@ -35,5 +35,6 @@ export interface ExpenseRequestModel {
     RelocationExpenseOtherVendorQuoteDetailsType?: Array<RelocationExpenseOtherVendorQuoteDetailsType>;
     DocumentType?: Array<DocumentTyp>;
     ActionBy?: number;
+    ExpenseCategoryGroupId?: number;
 }
 

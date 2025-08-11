@@ -101,6 +101,7 @@
         },
         "expenseLandingBox": [
             {
+                "id": 13,
                 "name": "Direct Expense Domestic",
                 "altName": "Direct Expense Domestic",
                 "label": "Direct Expense Domestic",
@@ -256,10 +257,13 @@
                     "travelTypeId": 53,
                     "requestForId": 53,
                     "claimTypeId": 53,
-                    "travelRequestId": 0
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 13,
+                    "expenseCategoryGroupName": "DED"
                 }
             },
             {
+                "id": 14,
                 "name": "Direct Expense International",
                 "altName": "Direct Expense International",
                 "label": "Direct Expense International",
@@ -416,10 +420,13 @@
                     "travelTypeId": 54,
                     "requestForId": 54,
                     "claimTypeId": 54,
-                    "travelRequestId": 0
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 14,
+                    "expenseCategoryGroupName": "DEI"
                 }
             },
             {
+                "id": 3,
                 "name": "Local Travel Conveyance",
                 "altName": "Local Conveyance During Travel",
                 "label": "Local Travel Conveyance",
@@ -433,7 +440,9 @@
                     "travelTypeId": 152,
                     "requestForId": 152,
                     "claimTypeId": 53,
-                    "travelRequestId": 0
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 3,
+                    "expenseCategoryGroupName": "LTC"
                 }
             },
             {
@@ -448,10 +457,13 @@
                     "travelTypeId": 152,
                     "requestForId": 152,
                     "claimTypeId": 53,
-                    "travelRequestId": 0
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 5,
+                    "expenseCategoryGroupName": "MOE"
                 }
             },
             {
+                "id": 4,
                 "name": "Data Card Broadband",
                 "label": "Data Card Broadband",
                 "displayPage": {
@@ -463,10 +475,13 @@
                     "travelTypeId": 152,
                     "requestForId": 152,
                     "claimTypeId": 53,
-                    "travelRequestId": 0
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 4,
+                    "expenseCategoryGroupName": "DCB"
                 }
             },
             {
+                "id": 12,
                 "name": "Mobile Handset Purchase",
                 "label": "Mobile Handset Purchase",
                 "displayPage": {
@@ -478,10 +493,13 @@
                     "travelTypeId": 152,
                     "requestForId": 152,
                     "claimTypeId": 53,
-                    "travelRequestId": 0
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 12,
+                    "expenseCategoryGroupName": "MHP"
                 }
             },
             {
+                "id": 13,
                 "name": "Marriage Gift",
                 "label": "Marriage Gift",
                 "displayPage": {
@@ -493,10 +511,13 @@
                     "travelTypeId": 152,
                     "requestForId": 152,
                     "claimTypeId": 53,
-                    "travelRequestId": 0
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 13,
+                    "expenseCategoryGroupName": "MGE"
                 }
             },
             {
+                "id": 8,
                 "name": "Deputation Claim",
                 "label": "Deputation Claim",
                 "displayPage": {
@@ -508,10 +529,13 @@
                     "travelTypeId": 179,
                     "requestForId": 179,
                     "claimTypeId": 53,
-                    "travelRequestId": 0
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 8,
+                    "expenseCategoryGroupName": "DEP"
                 }
             },
             {
+                "id": 15,
                 "name": "Bereavement Support Claim",
                 "label": "Bereavement Support Claim",
                 "displayPage": {
@@ -523,10 +547,13 @@
                     "travelTypeId": 152,
                     "requestForId": 152,
                     "claimTypeId": 53,
-                    "travelRequestId": 0
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 15,
+                    "expenseCategoryGroupName": "BSC"
                 }
             },
             {
+                "id": 7,
                 "name": "Training and Certification",
                 "label": "Training and Certification",
                 "displayPage": {
@@ -538,10 +565,13 @@
                     "travelTypeId": 152,
                     "requestForId": 152,
                     "claimTypeId": 53,
-                    "travelRequestId": 0
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 7,
+                    "expenseCategoryGroupName": "TCE"
                 }
             },
             {
+                "id": 9,
                 "name": "Business Entertainment",
                 "label": "Business Entertainment",
                 "displayPage": {
@@ -553,10 +583,13 @@
                     "travelTypeId": 152,
                     "requestForId": 152,
                     "claimTypeId": 53,
-                    "travelRequestId": 0
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 9,
+                    "expenseCategoryGroupName": "BE"
                 }
             },
             {
+                "id": 16,
                 "name": "Other Expense",
                 "label": "Other Expense",
                 "displayPage": {
@@ -568,7 +601,9 @@
                     "travelTypeId": 152,
                     "requestForId": 152,
                     "claimTypeId": 53,
-                    "travelRequestId": 0
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 16,
+                    "expenseCategoryGroupName": "OTE"
                 }
             }
         ],
@@ -21733,6 +21768,27 @@
                 "label": "Training and Certification",
                 "formControls": [
                     {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "DocumentType",
+                        "isExcluded": false,
+                        "label": "Document Type",
+                        "value": "",
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataDocumentType",
+                        "required": false,
+                        "disable": false,
+                        "readonly": false,
+                        "getReadableValue": {
+                            "controlName": "DocumentTypeName"
+                        },
+                        "inPayload": false,
+                        "order": 0
+                    },
+                    {
                         "type": "file",
                         "dataType": "file",
                         "name": "attachment",
@@ -21746,13 +21802,14 @@
                         "required": false,
                         "disable": false,
                         "oCRRequired": false,
+                        "blockClass": "col-md-12",
                         "order": 1
                     },
                     {
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -21777,10 +21834,10 @@
                         "placeholder": "Select Course",
                         "value": "",
                         "options": [],
-                        "labelKey": "",
-                        "valueKey": "",
-                        "apiService": "",
-                        "apiMethod": "",
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataCourseDetails",
                         "required": true,
                         "validations": [
                             {
@@ -21796,15 +21853,17 @@
                         "type": "select",
                         "dataType": "int",
                         "name": "Certification",
+                        "dependsOn": "Course",
                         "isExcluded": false,
                         "label": "Certification",
                         "placeholder": "Select Certification",
                         "value": "",
                         "options": [],
-                        "labelKey": "",
-                        "valueKey": "",
-                        "apiService": "",
-                        "apiMethod": "",
+                        "labelKey": "Name",
+                        "valueKey": "Id",
+                        "apiService": "DataService",
+                        "apiMethod": "dataCertificationDetails",
+                         "payloadKey": "courseId",
                         "required": true,
                         "validations": [
                             {
@@ -21836,23 +21895,35 @@
                         "order": 5
                     },
                     {
-                        "type": "select",
-                        "dataType": "int",
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "",
                         "name": "CourseDuration",
-                        "label": "Course Duration(Month)",
                         "isExcluded": false,
-                        "placeholder": "Select Course Duration",
-                        "value": "",
-                        "options": [],
-                        "labelKey": "",
-                        "valueKey": "",
-                        "apiService": "",
-                        "apiMethod": "",
+                        "label": "Course Duration (Month)",
+                        "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9.]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 2
+                            },
+                            "decimalPrecision": "0"
+                        },
                         "required": true,
                         "validations": [
                             {
                                 "type": "required",
                                 "message": "Course Duration is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Month must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -21903,6 +21974,8 @@
                         "label": "Bill Date",
                         "value": null,
                         "required": false,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "order": 9
                     },
                     {
@@ -21967,7 +22040,7 @@
                         "dataType": "numeric",
                         "name": "ClaimAmount",
                         "isExcluded": true,
-                        "label": "Amount",
+                        "label": "Total Cource Fare",
                         "value": null,
                         "dependentCases": [
                             {
@@ -22125,8 +22198,29 @@
                         "isExcluded": true,
                         "value": null,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "DocumentTypeName",
+                        "isExcluded": false,
+                        "value": null,
+                        "showInUI": false,
+                        "inPayload": false
                     }
                 ],
+                "checkValidationOnSubmit": {
+                    "multipleAttachmentValidation": [
+                        {
+                            "requiredDocumentType": [
+                                { "id": 174, "name": "Certification Copy" },
+                                { "id": 176, "name": "Other Document" }
+                            ],
+                            "dependsOn": [
+                                "attachment"
+                            ]
+                        }
+                    ]
+                },
                 "expanded": true,
                 "displayTable": true,
                 "displayAddClearButton": true,
@@ -22178,7 +22272,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmount",
-                        "label": "Claimed Amount",
+                        "label": "Total Cource Fare",
                         "visible": true,
                         "position": "in",
                         "decimalPrecision": "2",
@@ -28679,13 +28773,86 @@
                 ]
             },
             {
-                "name": "Training & Certification",
-                "label": "Training & Certification",
+                "name": "Training and Certification",
+                "label": "Training and Certification",
                 "data": [],
                 "amount": 0,
                 "expanded": true,
                 "slNoLabel": "Sl. No.",
-                "columns": [],
+                "columns": [
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "label": "Claim Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 1
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Claimed",
+                        "visible": true,
+                        "position": "in-out",
+                        "order": 2
+                    },
+                    {
+                        "type": "numeric",
+                        "name": "ApprovedAmount",
+                        "label": "Approved Amount",
+                        "visible": true,
+                        "isEditableInApproval": true,
+                        "isEditableInFinanceApproval": true,
+                        "controlType": "input",
+                        "position": "in",
+                        "order": 3
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
+                    },
+                    {
+                        "type": "number",
+                        "name": "ConversionRate",
+                        "label": "Conversion Rate",
+                        "visible": true,
+                        "position": "in",
+                        "order": 5
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Approved(INR)",
+                        "visible": true,
+                        "position": "in",
+                        "order": 6
+                    },
+                    {
+                        "name": "Course",
+                        "label": "Course Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 7
+                    },
+                    {
+                        "name": "Certification",
+                        "label": "Certification",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "name": "Justification",
+                        "label": "Justification",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    }
+
+                ],
                 "nestedTables": []
             },
             {

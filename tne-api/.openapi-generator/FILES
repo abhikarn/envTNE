@@ -39,6 +39,10 @@ model/employeeProfileParam.ts
 model/expenseActionParam.ts
 model/expenseBillableCostCentreUpdateParam.ts
 model/expenseCancelParam.ts
+model/expenseCategoryGroup.ts
+model/expenseCategoryGroupMapping.ts
+model/expenseCategoryGroupMappingDeleteParam.ts
+model/expenseCategoryGroupMappingListParam.ts
 model/expensePolicyEntitlementDurationParam.ts
 model/expensePolicyEntitlementParam.ts
 model/expenseRequestApprovalDetailType.ts
@@ -77,6 +81,7 @@ model/resetPasswordParam.ts
 model/searchYatraParam.ts
 model/ticketApiConfigurationParam.ts
 model/ticketOptionsYatraParam.ts
+model/trainingCertificationParam.ts
 model/transactionIdModel.ts
 model/travelApprovalServiceType.ts
 model/travelCancellationServiceType.ts

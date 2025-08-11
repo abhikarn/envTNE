@@ -12,6 +12,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDateFormats, provideNativeDateAdapter } from '@angular/material/core';
 import { GlobalConfigService } from './shared/service/global-config.service';
 import { DateFormatService } from './shared/service/date-format.service';
+import { Configuration } from '../../tne-api';
+import { CustomConfiguration } from '../../tne-api/custom-configuration';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -46,7 +48,8 @@ export const appConfig: ApplicationConfig = {
         console.log('[MAT_DATE_FORMATS] resolved:', format);
         return format;
       }
-    }
+    },
+    { provide: Configuration, useClass: CustomConfiguration}
   ]
 };
 
