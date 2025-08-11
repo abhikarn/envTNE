@@ -117,7 +117,8 @@ export class FileUploadComponent {
             res.ResponseValue
           ) {
             let filterResponse: any = {};
-            filterResponse.ReferenceType = this.controlConfig.referenceType;
+            filterResponse.ReferenceType = this.form.value?.DocumentType ?   this.form.value?.DocumentType : this.controlConfig.referenceType;
+            filterResponse.DocumentTypeName = this.form.value?.DocumentTypeName ?   this.form.value?.DocumentTypeName : '';
             filterResponse.ReferenceId = res.ResponseValue.ReferenceId;
             filterResponse.DocumentId = res.ResponseValue.DocumentId;
             filterResponse.FileName = res.ResponseValue.FileName;

@@ -47,6 +47,8 @@ import { MobileVersionInsertParam } from '../model/mobileVersionInsertParam';
 // @ts-ignore
 import { OrganizationStructureGetParam } from '../model/organizationStructureGetParam';
 // @ts-ignore
+import { TrainingCertificationParam } from '../model/trainingCertificationParam';
+// @ts-ignore
 import { TransactionIdModel } from '../model/transactionIdModel';
 // @ts-ignore
 import { TravelClassViewParam } from '../model/travelClassViewParam';
@@ -121,21 +123,17 @@ export class DataService extends BaseService {
     }
 
     /**
-     * @param courseId 
+     * @param trainingCertificationParam 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public dataCertificationDetails(courseId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<DataSubmit>;
-    public dataCertificationDetails(courseId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
-    public dataCertificationDetails(courseId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
-    public dataCertificationDetails(courseId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (courseId === null || courseId === undefined) {
-            throw new Error('Required parameter courseId was null or undefined when calling dataCertificationDetails.');
+    public dataCertificationDetails(trainingCertificationParam: TrainingCertificationParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<DataSubmit>;
+    public dataCertificationDetails(trainingCertificationParam: TrainingCertificationParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
+    public dataCertificationDetails(trainingCertificationParam: TrainingCertificationParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
+    public dataCertificationDetails(trainingCertificationParam: TrainingCertificationParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (trainingCertificationParam === null || trainingCertificationParam === undefined) {
+            throw new Error('Required parameter trainingCertificationParam was null or undefined when calling dataCertificationDetails.');
         }
-
-        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>courseId, 'courseId');
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -154,6 +152,19 @@ export class DataService extends BaseService {
         const localVarTransferCache: boolean = options?.transferCache ?? true;
 
 
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/xml',
+            'text/xml',
+            'application/x-www-form-urlencoded'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
         let responseType_: 'text' | 'json' | 'blob' = 'json';
         if (localVarHttpHeaderAcceptSelected) {
             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -169,7 +180,7 @@ export class DataService extends BaseService {
         return this.httpClient.request<DataSubmit>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                params: localVarQueryParameters,
+                body: trainingCertificationParam,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

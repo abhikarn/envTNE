@@ -21779,15 +21779,12 @@
                         "valueKey": "KeyDataId",
                         "apiService": "DataService",
                         "apiMethod": "dataDocumentType",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Document Type is required"
-                            }
-                        ],
+                        "required": false,
                         "disable": false,
                         "readonly": false,
+                        "getReadableValue": {
+                            "controlName": "DocumentTypeName"
+                        },
                         "order": 0
                     },
                     {
@@ -21804,6 +21801,7 @@
                         "required": false,
                         "disable": false,
                         "oCRRequired": false,
+                        "blockClass": "col-md-12",
                         "order": 1
                     },
                     {
@@ -22195,6 +22193,13 @@
                         "type": "hidden",
                         "name": "costcentreWiseExpense",
                         "isExcluded": true,
+                        "value": null,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "DocumentTypeName",
+                        "isExcluded": false,
                         "value": null,
                         "showInUI": false
                     }

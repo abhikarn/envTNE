@@ -81,6 +81,7 @@ model/resetPasswordParam.ts
 model/searchYatraParam.ts
 model/ticketApiConfigurationParam.ts
 model/ticketOptionsYatraParam.ts
+model/trainingCertificationParam.ts
 model/transactionIdModel.ts
 model/travelApprovalServiceType.ts
 model/travelCancellationServiceType.ts

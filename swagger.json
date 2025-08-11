@@ -2031,7 +2031,13 @@
           "Data"
         ],
         "operationId": "Data_CertificationDetails",
-        "consumes": [],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
         "produces": [
           "application/json",
           "text/json",
@@ -2040,11 +2046,12 @@
         ],
         "parameters": [
           {
-            "name": "courseId",
-            "in": "query",
+            "name": "trainingCertificationParam",
+            "in": "body",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "schema": {
+              "$ref": "#/definitions/TrainingCertificationParam"
+            }
           }
         ],
         "responses": {
@@ -5356,6 +5363,19 @@
           "type": "integer"
         },
         "ExpenseCategoryMappingId": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "TrainingCertificationParam": {
+      "type": "object",
+      "properties": {
+        "ParentId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "CourseId": {
           "format": "int64",
           "type": "integer"
         }

@@ -61,6 +61,7 @@ export * from './resetPasswordParam';
 export * from './searchYatraParam';
 export * from './ticketApiConfigurationParam';
 export * from './ticketOptionsYatraParam';
+export * from './trainingCertificationParam';
 export * from './transactionIdModel';
 export * from './travelApprovalServiceType';
 export * from './travelCancellationServiceType';
