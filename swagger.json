@@ -2931,6 +2931,208 @@
         }
       }
     },
+    "/api/expense/categorygroups": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_GetExpenseCategoryGroups",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/expense/categorygroups/save": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_SaveExpenseCategoryGroups",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "modal",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExpenseCategoryGroup"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/expense/categorygroupmapping/save": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_SaveExpenseCategoryGroupMapping",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExpenseCategoryGroupMapping"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/expense/category": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_GetCategory",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/expense/categorygroupmapping/delete": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_DeleteExpenseCategoryGroupMapping",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "param",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExpenseCategoryGroupMappingDeleteParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/expense/categorygroupmapping/list": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_GetExpenseCategoryGroupMappings",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "param",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExpenseCategoryGroupMappingListParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Dashboard/ApprovalsFinanceExpenseRequest": {
       "post": {
         "tags": [
@@ -5157,6 +5359,10 @@
         "ActionBy": {
           "format": "int64",
           "type": "integer"
+        },
+        "ExpenseCategoryGroupId": {
+          "format": "int64",
+          "type": "integer"
         }
       }
     },
@@ -6138,6 +6344,114 @@
         },
         "UserMasterId": {
           "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "ExpenseCategoryGroup": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "GroupName": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "CreatedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "IsActive": {
+          "type": "boolean"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "ActionBy": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "TransactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "CommunicationSeenCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ExpenseCategoryGroupMapping": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "CategoryGroupId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ExpenseCategoryId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "CreatedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "IsActive": {
+          "type": "boolean"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "ActionBy": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "TransactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "CommunicationSeenCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ExpenseCategoryGroupMappingDeleteParam": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "ActionBy": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "ExpenseCategoryGroupMappingListParam": {
+      "type": "object",
+      "properties": {
+        "CategoryGroupId": {
+          "format": "int32",
           "type": "integer"
         }
       }
