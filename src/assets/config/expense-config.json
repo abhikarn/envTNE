@@ -21828,7 +21828,7 @@
                     {
                         "type": "select",
                         "dataType": "int",
-                        "name": "CourseName",
+                        "name": "Course",
                         "isExcluded": false,
                         "label": "Course",
                         "placeholder": "Select Course",
@@ -21847,13 +21847,16 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "getReadableValue": {
+                            "controlName": "CourseName"
+                        },
                         "order": 3
                     },
                     {
                         "type": "select",
                         "dataType": "int",
-                        "name": "TrainingName",
-                        "dependsOn": "CourseName",
+                        "name": "Certification",
+                        "dependsOn": "Course",
                         "isExcluded": false,
                         "label": "Certification",
                         "placeholder": "Select Certification",
@@ -21873,6 +21876,9 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "getReadableValue": {
+                            "controlName": "CertificationName"
+                        },
                         "order": 4
                     },
                     {
@@ -22206,6 +22212,20 @@
                         "value": null,
                         "showInUI": false,
                         "inPayload": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "CourseName",
+                        "isExcluded": false,
+                        "value": null,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "CertificationName",
+                        "isExcluded": false,
+                        "value": null,
+                        "showInUI": false
                     }
                 ],
                 "checkValidationOnSubmit": {
