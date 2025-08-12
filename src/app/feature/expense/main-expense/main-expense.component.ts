@@ -392,7 +392,7 @@ export class MainExpenseComponent {
   // Populate existing expense request data into form structure for editing.
   populateExistingExpenseData(response: any) {
     if (response?.travelRequestId == 0) {
-      const editBox = this.expenseConfig?.expenseLandingBox?.find((b:any) => b?.id == response?.expenseCategoryGroupId);
+      const editBox = this.expenseConfig?.expenseLandingBox?.find((b: any) => b?.id == response?.expenseCategoryGroupId);
       this.title = editBox.label;
 
       this.otherExpenseResponse = response;
@@ -1325,6 +1325,17 @@ export class MainExpenseComponent {
         });
       }
     });
+  }
+
+  get hasAnyViolation(): boolean {
+    return this.expenseRequestData?.dynamicExpenseDetailModels?.some((expenseRequest: any) =>
+      expenseRequest.data?.some((data: any) =>
+        data?.IsViolation ||
+        data?.excludedData?.IsViolation ||
+        data?.IsOCRRestrictedKeyword ||
+        data?.excludedData?.IsOCRRestrictedKeyword
+      )
+    ) ?? false;
   }
 
 }
