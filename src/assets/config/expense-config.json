@@ -22269,7 +22269,7 @@
                         "order": 3
                     },
                     {
-                        "name": "TrainingName",
+                        "name": "CertificationName",
                         "label": "Certification",
                         "visible": true,
                         "position": "in",
@@ -28858,7 +28858,7 @@
                         "order": 7
                     },
                     {
-                        "name": "TrainingName",
+                        "name": "CertificationName",
                         "label": "Certification",
                         "visible": true,
                         "position": "out",
