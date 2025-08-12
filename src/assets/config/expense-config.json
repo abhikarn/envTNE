@@ -605,6 +605,24 @@
                     "expenseCategoryGroupId": 16,
                     "expenseCategoryGroupName": "OTE"
                 }
+            },
+            {
+                "id": 17,
+                "name": "Relocation Expense",
+                "label": "Relocation Expense",
+                "displayPage": {
+                    "Relocation Expense": true
+                },
+                "displayTable": false,
+                "displayAddClearButton": false,
+                "moduleData": {
+                    "travelTypeId": 177,
+                    "requestForId": 177,
+                    "claimTypeId": 177,
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 17,
+                    "expenseCategoryGroupName": "RLE"
+                }
             }
         ],
         "dateExtension": {
@@ -22427,6 +22445,7 @@
                         "readonly": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "policyEntitlementCheck": true,
                         "order": 2
                     },
                     {
@@ -22850,6 +22869,48 @@
                         "showInUI": false
                     }
                 ],
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
+                    }
+                ],
+                "policyEntitlementCheckApi": {
+                    "apiService": "ExpenseService",
+                    "apiMethod": "expenseGetExpensePolicyEntitlement",
+                    "requestBody": {
+                        "ExpenseCategoryId": 64,
+                        "CityGradeId": 0,
+                        "CountryGradeId": 0,
+                        "PolicyReferenceId": 0,
+                        "TravelRequestId": 0
+                    },
+                    "otherControls": {
+                        "ClaimTypeId": "claimTypeId",
+                        "UserMasterId": "UserMasterId"
+                    },
+                    "inputControls": {
+                        "ClaimDate": "ReferenceDate"
+                    },
+                    "outputControl": {
+                        "EntitlementCurrency": "ResponseValue.CurrencyId",
+                        "EntitlementAmount": "ResponseValue.EntitlementAmount",
+                        "OriginalEntitlementAmount": "ResponseValue.EntitlementAmount",
+                        "IsBillRequired": "ResponseValue.IsBillRequired",
+                        "IsActual": "ResponseValue.IsActual",
+                        "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    }
+                },
                 "expanded": true,
                 "displayTable": true,
                 "displayAddClearButton": true,
@@ -22982,6 +23043,7 @@
                         "readonly": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "policyEntitlementCheck": true,
                         "order": 2
                     },
                     {
@@ -23362,6 +23424,48 @@
                         "showInUI": false
                     }
                 ],
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
+                    }
+                ],
+                "policyEntitlementCheckApi": {
+                    "apiService": "ExpenseService",
+                    "apiMethod": "expenseGetExpensePolicyEntitlement",
+                    "requestBody": {
+                        "ExpenseCategoryId": 65,
+                        "CityGradeId": 0,
+                        "CountryGradeId": 0,
+                        "PolicyReferenceId": 0,
+                        "TravelRequestId": 0
+                    },
+                    "otherControls": {
+                        "ClaimTypeId": "claimTypeId",
+                        "UserMasterId": "UserMasterId"
+                    },
+                    "inputControls": {
+                        "ClaimDate": "ReferenceDate"
+                    },
+                    "outputControl": {
+                        "EntitlementCurrency": "ResponseValue.CurrencyId",
+                        "EntitlementAmount": "ResponseValue.EntitlementAmount",
+                        "OriginalEntitlementAmount": "ResponseValue.EntitlementAmount",
+                        "IsBillRequired": "ResponseValue.IsBillRequired",
+                        "IsActual": "ResponseValue.IsActual",
+                        "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    }
+                },
                 "expanded": true,
                 "displayTable": true,
                 "displayAddClearButton": true,
@@ -23510,6 +23614,7 @@
                         "readonly": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "policyEntitlementCheck": true,
                         "order": 2
                     },
                     {
@@ -23937,6 +24042,48 @@
                         "showInUI": false
                     }
                 ],
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
+                    }
+                ],
+                "policyEntitlementCheckApi": {
+                    "apiService": "ExpenseService",
+                    "apiMethod": "expenseGetExpensePolicyEntitlement",
+                    "requestBody": {
+                        "ExpenseCategoryId": 65,
+                        "CityGradeId": 0,
+                        "CountryGradeId": 0,
+                        "PolicyReferenceId": 0,
+                        "TravelRequestId": 0
+                    },
+                    "otherControls": {
+                        "ClaimTypeId": "claimTypeId",
+                        "UserMasterId": "UserMasterId"
+                    },
+                    "inputControls": {
+                        "ClaimDate": "ReferenceDate"
+                    },
+                    "outputControl": {
+                        "EntitlementCurrency": "ResponseValue.CurrencyId",
+                        "EntitlementAmount": "ResponseValue.EntitlementAmount",
+                        "OriginalEntitlementAmount": "ResponseValue.EntitlementAmount",
+                        "IsBillRequired": "ResponseValue.IsBillRequired",
+                        "IsActual": "ResponseValue.IsActual",
+                        "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    }
+                },
                 "expanded": true,
                 "displayTable": true,
                 "displayAddClearButton": true,
