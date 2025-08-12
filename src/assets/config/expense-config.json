@@ -21533,7 +21533,7 @@
                     {
                         "type": "select",
                         "dataType": "int",
-                        "name": "BereavementRelation",
+                        "name": "Relationship",
                         "isExcluded": false,
                         "label": "Bereavement Relation",
                         "placeholder": "Select Bereavement Relation",
@@ -21553,7 +21553,7 @@
                         "disable": false,
                         "readonly": false,
                         "getReadableValue": {
-                            "controlName": "BereavementRelationName"
+                            "controlName": "RelationshipName"
                         },
                         "order": 11
                     },
@@ -21618,7 +21618,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "BereavementRelationName",
+                        "name": "RelationshipName",
                         "isExcluded": false,
                         "value": "",
                         "showInUI": false
@@ -21695,7 +21695,7 @@
                         "order": 3
                     },
                     {
-                        "name": "BereavementRelation",
+                        "name": "RelationshipName",
                         "label": "Relationship",
                         "visible": true,
                         "position": "in",
@@ -30468,8 +30468,8 @@
                 "nestedTables": []
             },
             {
-                "name": "Bereavement Support",
-                "label": "Bereavement Support",
+                "name": "Bereavement Support Claim",
+                "label": "Bereavement Support Claim",
                 "data": [],
                 "amount": 0,
                 "expanded": true,
@@ -30534,7 +30534,7 @@
                         "order": 8
                     },
                     {
-                        "name": "BereavementRelation",
+                        "name": "RelationshipName",
                         "label": "Relationship",
                         "visible": true,
                         "position": "out",
@@ -30547,41 +30547,7 @@
                         "position": "out"
                     }
                 ],
-                "nestedTables": [
-                    {
-                        "name": "costCenter",
-                        "dataKey": "costcentreWiseExpense",
-                        "label": "Cost Center",
-                        "columns": [
-                            {
-                                "name": "__slNo",
-                                "label": "Sl. No",
-                                "visible": true,
-                                "order": 1
-                            },
-                            {
-                                "name": "CostCentre",
-                                "label": "Cost Centre",
-                                "visible": true,
-                                "order": 2
-                            },
-                            {
-                                "type": "number",
-                                "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
-                                "visible": true,
-                                "order": 3
-                            },
-                            {
-                                "type": "number",
-                                "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
-                                "visible": true,
-                                "order": 4
-                            }
-                        ]
-                    }
-                ]
+                "nestedTables": []
             },
             {
                 "name": "Training and Certification",
