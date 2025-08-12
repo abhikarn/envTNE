@@ -285,8 +285,11 @@
                     <ng-template mat-tab-label>
                       <span>{{detail.label}}</span>
                     </ng-template>
+                    
+                    @if (hasAnyViolation) {
                     @for (expenseRequest of expenseRequestData?.dynamicExpenseDetailModels; track $index) {
                     @for (data of expenseRequest.data; track $index) {
+                    
                     @if (data?.IsViolation || data?.excludedData?.IsViolation) {
                     <ul class="policy-vio-list mb-0">
                       <li>
@@ -295,11 +298,11 @@
                       </li>
                     </ul>
                     }
+                    
                     @if (data?.IsOCRRestrictedKeyword || data?.excludedData?.IsOCRRestrictedKeyword) {
                     <ul class="ocr-vio-list list-unstyled mb-0">
                       <li>
-                        <span class="fa-pv"><i class="fa fa-exclamation-triangle text-amber"
-                            aria-hidden="true"></i></span>
+                        <span class="fa-pv"><i class="fa fa-exclamation-triangle text-amber" aria-hidden="true"></i></span>
                         Expense item contains a restricted keyword as identified by OCR validation.
                       </li>
                     </ul>
@@ -307,13 +310,16 @@
                     }
                     }
                     }
+                    @else {
+                    <p>No policy violations found.</p>
+                    }
+                    }
+
                     @case ("Approvaldetails") {
                     <ng-template mat-tab-label>
                       <span>{{detail.label}}</span>
                     </ng-template>
-                    <ng-template matTabContent>
-
-                    </ng-template>
+                    <p>No approval details found.</p>
                     }
                     @case ("LogDetails") {
                     <ng-template mat-tab-label>

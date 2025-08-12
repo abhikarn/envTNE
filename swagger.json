@@ -2110,6 +2110,29 @@
         }
       }
     },
+    "/api/Data/TrainingCertificationDocumentType": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "operationId": "Data_TrainingCertificationDocumentType",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Document/Upload": {
       "post": {
         "tags": [

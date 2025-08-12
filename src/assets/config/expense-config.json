@@ -21778,7 +21778,7 @@
                         "labelKey": "KeyData",
                         "valueKey": "KeyDataId",
                         "apiService": "DataService",
-                        "apiMethod": "dataDocumentType",
+                        "apiMethod": "dataTrainingCertificationDocumentType",
                         "required": false,
                         "disable": false,
                         "readonly": false,
@@ -21828,7 +21828,7 @@
                     {
                         "type": "select",
                         "dataType": "int",
-                        "name": "Course",
+                        "name": "CourseName",
                         "isExcluded": false,
                         "label": "Course",
                         "placeholder": "Select Course",
@@ -21852,8 +21852,8 @@
                     {
                         "type": "select",
                         "dataType": "int",
-                        "name": "Certification",
-                        "dependsOn": "Course",
+                        "name": "TrainingName",
+                        "dependsOn": "CourseName",
                         "isExcluded": false,
                         "label": "Certification",
                         "placeholder": "Select Certification",
@@ -22242,14 +22242,14 @@
                         "order": 2
                     },
                     {
-                        "name": "Course",
+                        "name": "CourseName",
                         "label": "Course",
                         "visible": true,
                         "position": "in",
                         "order": 3
                     },
                     {
-                        "name": "Certification",
+                        "name": "TrainingName",
                         "label": "Certification",
                         "visible": true,
                         "position": "in",
@@ -28831,14 +28831,14 @@
                         "order": 6
                     },
                     {
-                        "name": "Course",
+                        "name": "CourseName",
                         "label": "Course Name",
                         "visible": true,
                         "position": "out",
                         "order": 7
                     },
                     {
-                        "name": "Certification",
+                        "name": "TrainingName",
                         "label": "Certification",
                         "visible": true,
                         "position": "out",
