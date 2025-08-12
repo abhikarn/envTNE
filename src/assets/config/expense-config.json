@@ -21190,7 +21190,7 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -21314,6 +21314,15 @@
                         ],
                         "disable": false,
                         "readonly": true,
+                        "setFields": [
+                            {
+                                "name": "ClaimAmount",
+                                "formula": "EntitlementAmount",
+                                "dependsOn": [
+                                    "EntitlementAmount"
+                                ]
+                            }
+                        ],
                         "order": 5
                     },
                     {
@@ -21441,7 +21450,7 @@
                             }
                         ],
                         "disable": false,
-                        "readonly": false,
+                        "readonly": true,
                         "order": 8
                     },
                     {
@@ -21508,7 +21517,7 @@
                         "type": "select",
                         "dataType": "int",
                         "name": "BereavementRelation",
-                        "isExcluded": true,
+                        "isExcluded": false,
                         "label": "Bereavement Relation",
                         "placeholder": "Select Bereavement Relation",
                         "value": "",
@@ -21526,6 +21535,9 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "getReadableValue": {
+                            "controlName": "BereavementRelationName"
+                        },
                         "order": 11
                     },
                     {
@@ -21585,6 +21597,13 @@
                         "name": "costcentreWiseExpense",
                         "isExcluded": true,
                         "value": null,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "BereavementRelationName",
+                        "isExcluded": false,
+                        "value": "",
                         "showInUI": false
                     }
                 ],
