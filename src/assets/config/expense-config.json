@@ -464,7 +464,7 @@
             },
             {
                 "id": 4,
-                "name": "Data Card Broadband",
+                "name": "DataCardBroadband",
                 "label": "Data Card Broadband",
                 "displayPage": {
                     "Data Card Broadband": true
@@ -17635,8 +17635,8 @@
                         },
                         "options": [
                             {
-                                "label": 79,
-                                "value": "Monthly"
+                                "label": "Monthly",
+                                "value": 79
                             }
                         ],
                         "labelKey": "",
@@ -18599,8 +18599,8 @@
                         },
                         "options": [
                             {
-                                "label": 79,
-                                "value": "Monthly"
+                                "label": "Monthly",
+                                "value": 79
                             }
                         ],
                         "labelKey": "",
@@ -29906,7 +29906,7 @@
                 ]
             },
             {
-                "name": "Data Card Broadband",
+                "name": "DataCardBroadband",
                 "label": "Data Card Broadband",
                 "data": [],
                 "amount": 0,
