@@ -315,7 +315,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
         const diffInMonths = (now.getFullYear() - lastClaim.getFullYear()) * 12 + (now.getMonth() - lastClaim.getMonth());
 
-        if (diffInMonths < frequency * 12) {
+        if (diffInMonths < frequency * 12 && !this.editIndex) {
           const lastClaimFormatted = this.datePipe.transform(lastClaim, 'dd-MMM-yyyy');
           this.snackbarService.error(
             `${this.category.label} are limited to ${noOfTimes} every ${frequency} years`,
