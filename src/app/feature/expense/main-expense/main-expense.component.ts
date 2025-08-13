@@ -897,6 +897,7 @@ export class MainExpenseComponent {
 
   openModal() {
     const data = {
+      TravelRequestId: this.travelRequestId,
       TravelDateFrom: this.travelRequestPreview?.travelDateFromExtended,
       TravelDateTo: this.travelRequestPreview?.travelDateToExtended,
       remarks: this.travelRequestPreview?.travelRequestDateExtensionRemarks
@@ -919,6 +920,7 @@ export class MainExpenseComponent {
   }
 
   private handleResult(result: any) {
+    debugger
     if (!result) return;
 
     result.TravelRequestId = this.travelRequestId;

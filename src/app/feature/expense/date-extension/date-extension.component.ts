@@ -7,6 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { MatTimepickerModule } from '@angular/material/timepicker';
 
 @Component({
   selector: 'app-date-extension',
@@ -18,7 +19,8 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bott
     MatButtonModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatInputModule
+    MatInputModule,
+    MatTimepickerModule
   ],
   templateUrl: './date-extension.component.html',
   styleUrl: './date-extension.component.scss',
@@ -50,8 +52,8 @@ export class DateExtensionComponent {
   onSubmit() {
     if (this.travelForm.valid) {
       const formValue = this.travelForm.value;
-      const TravelDateFrom = this.mergeDateTime(formValue.travelFromDate, formValue.travelFromTime);
-      const TravelDateTo = this.mergeDateTime(formValue.travelToDate, formValue.travelToTime);
+      const TravelDateFrom = this.mergeDateTime(formValue.travelFromDate, this.extractTime(formValue.travelFromDate));
+      const TravelDateTo = this.mergeDateTime(formValue.travelToDate, this.extractTime(formValue.travelToDate));
 
       const result = {
         TravelDateFrom,
@@ -91,16 +93,19 @@ export class DateExtensionComponent {
 
   private mergeDateTime(date: Date, time: string): string {
     if (!date || !time) return '';
-
     const [hours, minutes] = time.split(':').map(Number);
-    const mergedDate = new Date(date);
-    mergedDate.setHours(hours, minutes, 0, 0);
 
-    const tzOffset = -mergedDate.getTimezoneOffset();
-    const offsetHours = Math.floor(tzOffset / 60);
-    const offsetMinutes = tzOffset % 60;
-    const tzSign = offsetHours >= 0 ? '+' : '-';
-
-    return `${mergedDate.getFullYear()}-${this.padZero(mergedDate.getMonth() + 1)}-${this.padZero(mergedDate.getDate())}T${this.padZero(mergedDate.getHours())}:${this.padZero(mergedDate.getMinutes())}:00${tzSign}${this.padZero(Math.abs(offsetHours))}:${this.padZero(Math.abs(offsetMinutes))}`;
+    return new Date(
+      Date.UTC(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        hours,
+        minutes,
+        0,
+        0
+      )
+    ).toISOString(); // stays exactly as selected in Z format
   }
+
 }
