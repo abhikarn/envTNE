@@ -499,7 +499,7 @@
                 }
             },
             {
-                "id": 13,
+                "id": 6,
                 "name": "Marriage Gift",
                 "label": "Marriage Gift",
                 "displayPage": {
@@ -512,7 +512,7 @@
                     "requestForId": 152,
                     "claimTypeId": 53,
                     "travelRequestId": 0,
-                    "expenseCategoryGroupId": 13,
+                    "expenseCategoryGroupId": 6,
                     "expenseCategoryGroupName": "MGE"
                 }
             },
@@ -17660,7 +17660,7 @@
                     {
                         "type": "select",
                         "dataType": "int",
-                        "name": "Month",
+                        "name": "ReferenceTypeId",
                         "isExcluded": false,
                         "label": "Month",
                         "placeholder": "Select Month",
@@ -17677,7 +17677,7 @@
                                 "key": "Id",
                                 "inputControls": {},
                                 "outputControl": {
-                                    "Month": "ResponseValue"
+                                    "ReferenceTypeId": "ResponseValue"
                                 },
                                 "otherControls": {
                                     "UserMasterId": "UserMasterId"
@@ -18624,7 +18624,7 @@
                     {
                         "type": "select",
                         "dataType": "int",
-                        "name": "Month",
+                        "name": "ReferenceTypeId",
                         "isExcluded": false,
                         "label": "Month",
                         "placeholder": "Select Month",
@@ -18641,7 +18641,7 @@
                                 "key": "Id",
                                 "inputControls": {},
                                 "outputControl": {
-                                    "Month": "ResponseValue"
+                                    "ReferenceTypeId": "ResponseValue"
                                 },
                                 "otherControls": {
                                     "UserMasterId": "UserMasterId"
@@ -19252,7 +19252,7 @@
                     },
                     "inputControls": {},
                     "outputControl": {
-                        "MobileNumber": "ResponseValue.MobileNumber"
+                        "ReferenceNumber": "ResponseValue.MobileNumber"
                     }
                 },
                 "policyViolationManualCheck": [
