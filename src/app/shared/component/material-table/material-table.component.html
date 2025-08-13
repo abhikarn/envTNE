@@ -172,7 +172,7 @@
                     </ng-container>
                 </div>
 
-                @if (mode === 'finance-approval') {
+                @if (mode === 'finance-approval' && categoryGST) {
                 <app-add-gst [categoryGST]="categoryGST" [ExpenseRequestDetailId]="row?.ExpenseRequestDetailId"
                     [gstData]="row?.gst" [amount]="row?.ApprovedAmount"></app-add-gst>
                 }
