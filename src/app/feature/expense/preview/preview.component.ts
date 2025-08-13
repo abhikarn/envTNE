@@ -169,6 +169,7 @@ export class PreviewComponent {
           }
           this.expenseRequestId = response?.expenseRequestId;
           this.expenseRequestPreviewData = response;
+          this.setExpenseSummary();
           this.billableControl.setValue(response?.billableCostcentre || 0);
           this.expenseRequestPreviewData?.dynamicExpenseDetailModels?.forEach((details: any) => {
 
@@ -200,6 +201,19 @@ export class PreviewComponent {
             }
           });
         }
+      }
+    });
+  }
+
+  setExpenseSummary() {
+    this.expenseSummary.forEach((summary: any) => {
+      if (summary.id === "category-wise-expense") {
+        summary.items.forEach((item: any) => {
+          const shouldShow = this.expenseRequestPreviewData.dynamicExpenseDetailModels.some(
+            (category: any) => category.name === item.name
+          );
+          item.showInUI = shouldShow;
+        });
       }
     });
   }

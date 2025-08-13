@@ -103,7 +103,7 @@
                                  @if(loadData) {
                                  @for (category of expenseRequestPreviewConfig?.dynamicExpenseDetailModels; track
                                  category) {
-                                 @if (category?.data?.length > 0) {
+                                 @if (category?.data?.length > 0 && category?.showInUI) {
                                  <app-expansion-panel [title]="category.label" [expanded]="category.expanded"
                                     [amount]="category.amount">
                                     @if(category.columns) {
