@@ -25399,7 +25399,13 @@
                 "Laundry service": "Claimed amount is greater than Entitled amount.",
                 "Boarding Expense": "Claimed amount is greater than Entitled amount.",
                 "Flat Allowance": "Claimed amount is greater than Entitled amount.",
-                "Baggage and Outfit Allowance": "Claimed amount is greater than Entitled amount."
+                "Baggage and Outfit Allowance": "Claimed amount is greater than Entitled amount.",
+                "Mobile Handset Purchase": "Claimed amount is greater than Entitled amount.",
+                "DataCardBroadband": "Claimed amount is greater than Entitled amount.",
+                "Mobile Expense": "Claimed amount is greater than Entitled amount.",
+                "Marriage Gift": "Claimed amount is greater than Entitled amount.",
+                "Business Entertainment": "Claimed amount is greater than Entitled amount.",
+                "Roaming": "Claimed amount is greater than Entitled amount." 
             },
             {
                 "name": "Approvaldetails",
