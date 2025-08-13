@@ -17706,7 +17706,7 @@
                             "Data Card Broadband": true
                         },
                         "getReadableValue": {
-                            "controlName": "MonthName"
+                            "controlName": "Reference"
                         },
                         "policyViolationCheck": true,
                         "order": 3
@@ -17714,7 +17714,7 @@
                     {
                         "type": "date",
                         "dataType": "datetime",
-                        "name": "ClaimFromDate",
+                        "name": "BillingFromDate",
                         "isExcluded": false,
                         "label": "Billing From Date",
                         "value": null,
@@ -17728,7 +17728,7 @@
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
-                                    "ClaimFromDate": "ReferenceDate"
+                                    "BillingFromDate": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "ConversionRate": "ResponseValue.Value"
@@ -17746,14 +17746,14 @@
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Claim From Date Time is required"
+                                "message": "Billing From Date Time is required"
                             }
                         ],
                         "disable": false,
                         "readonly": false,
                         "time": {
                             "type": "time",
-                            "name": "ClaimFromTime",
+                            "name": "BillingFromTime",
                             "label": "time",
                             "value": null,
                             "required": true
@@ -17763,8 +17763,8 @@
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
-                                "ClaimFromDate": "ClaimFromDate",
-                                "ClaimToDate": "ClaimToDate",
+                                "BillingFromDate": "BillingFromDate",
+                                "BillingToDate": "BillingToDate",
                                 "OriginalEntitlementAmount": "OriginalEntitlementAmount"
                             },
                             "outputControl": {
@@ -17773,9 +17773,9 @@
                         },
                         "setValue": [
                             {
-                                "name": "ClaimToDate",
+                                "name": "BillingToDate",
                                 "config": {
-                                    "minDate": "ClaimFromDate"
+                                    "minDate": "BillingFromDate"
                                 }
                             }
                         ],
@@ -17785,7 +17785,7 @@
                     {
                         "type": "date",
                         "dataType": "datetime",
-                        "name": "ClaimToDate",
+                        "name": "BillingToDate",
                         "isExcluded": false,
                         "label": "Billing To Date",
                         "value": null,
@@ -17793,14 +17793,14 @@
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Claim To Date Time is required"
+                                "message": "Billing To Date Time is required"
                             }
                         ],
                         "disable": false,
                         "readonly": false,
                         "time": {
                             "type": "time",
-                            "name": "ClaimToTime",
+                            "name": "BillingToTime",
                             "label": "time",
                             "value": null,
                             "required": true
@@ -17810,8 +17810,8 @@
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
-                                "ClaimFromDate": "ClaimFromDate",
-                                "ClaimToDate": "ClaimToDate",
+                                "BillingFromDate": "BillingFromDate",
+                                "BillingToDate": "BillingToDate",
                                 "OriginalEntitlementAmount": "OriginalEntitlementAmount"
                             },
                             "outputControl": {
@@ -17822,7 +17822,7 @@
                             {
                                 "name": "BillDate",
                                 "config": {
-                                    "minDate": "ClaimToDate"
+                                    "minDate": "BillingToDate"
                                 }
                             }
                         ],
@@ -17923,7 +17923,7 @@
                                 "key": "Id",
                                 "inputControls": {
                                     "EntitlementCurrency": "CurrencyId",
-                                    "ClaimFromDate": "ReferenceDate"
+                                    "BillingFromDate": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "EntitlementConversionRate": "ResponseValue.Value"
@@ -18045,7 +18045,7 @@
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
-                                    "ClaimFromDate": "ReferenceDate"
+                                    "BillingFromDate": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "ConversionRate": "ResponseValue.Value"
@@ -18266,7 +18266,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "MonthName",
+                        "name": "Reference",
                         "isExcluded": false,
                         "value": "",
                         "showInUI": false
@@ -18331,8 +18331,8 @@
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
-                        "ClaimFromDate": "ReferenceFromDate",
-                        "ClaimToDate": "ReferenceToDate",
+                        "BillingFromDate": "ReferenceFromDate",
+                        "BillingToDate": "ReferenceToDate",
                         "FrequencyType": "PolicyReferenceId"
                     },
                     "outputControl": {
@@ -18355,8 +18355,8 @@
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
-                        "ClaimFromDate": "BillingFromDate",
-                        "ClaimToDate": "BillingToDate"
+                        "BillingFromDate": "BillingFromDate",
+                        "BillingToDate": "BillingToDate"
                     },
                     "outputControl": {
                         "IsViolation": "ResponseValue.IsPolicyViolation",
@@ -18383,16 +18383,16 @@
                     },
                     {
                         "type": "datetime",
-                        "name": "ClaimFromDate",
-                        "label": "Claim From Date",
+                        "name": "BillingFromDate",
+                        "label": "Billing From Date",
                         "visible": true,
                         "position": "in",
                         "order": 2
                     },
                     {
                         "type": "datetime",
-                        "name": "ClaimToDate",
-                        "label": "ClaimToDate",
+                        "name": "BillingToDate",
+                        "label": "Billing To Date",
                         "visible": true,
                         "position": "in",
                         "order": 3
@@ -18405,14 +18405,14 @@
                         "order": 4
                     },
                     {
-                        "name": "Month",
+                        "name": "Reference",
                         "label": "Month",
                         "visible": true,
                         "position": "in",
                         "order": 4
                     },
                     {
-                        "name": "BroadbandNumber",
+                        "name": "ReferenceNumber",
                         "label": "Broadband Number",
                         "visible": true,
                         "position": "in",
@@ -18670,7 +18670,7 @@
                             "Mobile Expense": true
                         },
                         "getReadableValue": {
-                            "controlName": "MonthName"
+                            "controlName": "Reference"
                         },
                         "policyViolationCheck": true,
                         "order": 3
@@ -18678,7 +18678,7 @@
                     {
                         "type": "date",
                         "dataType": "datetime",
-                        "name": "ClaimFromDate",
+                        "name": "BillingFromDate",
                         "isExcluded": false,
                         "label": "Billing From Date",
                         "value": null,
@@ -18692,7 +18692,7 @@
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
-                                    "ClaimFromDate": "ReferenceDate"
+                                    "BillingFromDate": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "ConversionRate": "ResponseValue.Value"
@@ -18710,14 +18710,14 @@
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Claim From Date Time is required"
+                                "message": "Billing From Date Time is required"
                             }
                         ],
                         "disable": false,
                         "readonly": false,
                         "time": {
                             "type": "time",
-                            "name": "ClaimFromTime",
+                            "name": "BillingFromTime",
                             "label": "time",
                             "value": null,
                             "required": true
@@ -18727,8 +18727,8 @@
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
-                                "ClaimFromDate": "ClaimFromDate",
-                                "ClaimToDate": "ClaimToDate",
+                                "BillingFromDate": "BillingFromDate",
+                                "BillingToDate": "BillingToDate",
                                 "OriginalEntitlementAmount": "OriginalEntitlementAmount"
                             },
                             "outputControl": {
@@ -18738,9 +18738,9 @@
                         "policyViolationCheck": true,
                         "setValue": [
                             {
-                                "name": "ClaimToDate",
+                                "name": "BillingToDate",
                                 "config": {
-                                    "minDate": "ClaimFromDate"
+                                    "minDate": "BillingFromDate"
                                 }
                             }
                         ],
@@ -18749,7 +18749,7 @@
                     {
                         "type": "date",
                         "dataType": "datetime",
-                        "name": "ClaimToDate",
+                        "name": "BillingToDate",
                         "isExcluded": false,
                         "label": "Billing To Date",
                         "value": null,
@@ -18757,14 +18757,14 @@
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Claim To Date Time is required"
+                                "message": "Billing To Date Time is required"
                             }
                         ],
                         "disable": false,
                         "readonly": false,
                         "time": {
                             "type": "time",
-                            "name": "ClaimToTime",
+                            "name": "BillingToTime",
                             "label": "time",
                             "value": null,
                             "required": true
@@ -18774,8 +18774,8 @@
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
-                                "ClaimFromDate": "ClaimFromDate",
-                                "ClaimToDate": "ClaimToDate",
+                                "BillingFromDate": "BillingFromDate",
+                                "BillingToDate": "BillingToDate",
                                 "OriginalEntitlementAmount": "OriginalEntitlementAmount"
                             },
                             "outputControl": {
@@ -18786,7 +18786,7 @@
                             {
                                 "name": "BillDate",
                                 "config": {
-                                    "minDate": "ClaimToDate"
+                                    "minDate": "BillingToDate"
                                 }
                             }
                         ],
@@ -18797,7 +18797,7 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
-                        "name": "MobileNumber",
+                        "name": "ReferenceNumber",
                         "isExcluded": false,
                         "label": "Mobile Number",
                         "value": "",
@@ -18887,7 +18887,7 @@
                                 "key": "Id",
                                 "inputControls": {
                                     "EntitlementCurrency": "CurrencyId",
-                                    "ClaimFromDate": "ReferenceDate"
+                                    "BillingFromDate": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "EntitlementConversionRate": "ResponseValue.Value"
@@ -19009,7 +19009,7 @@
                                 "key": "Id",
                                 "inputControls": {
                                     "Currency": "CurrencyId",
-                                    "ClaimFromDate": "ReferenceDate"
+                                    "BillingFromDate": "ReferenceDate"
                                 },
                                 "outputControl": {
                                     "ConversionRate": "ResponseValue.Value"
@@ -19234,6 +19234,13 @@
                         "isExcluded": false,
                         "value": "",
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Reference",
+                        "isExcluded": false,
+                        "value": "",
+                        "showInUI": false
                     }
                 ],
                 "onInitAPI": {
@@ -19276,8 +19283,8 @@
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
-                        "ClaimFromDate": "ReferenceFromDate",
-                        "ClaimToDate": "ReferenceToDate",
+                        "BillingFromDate": "ReferenceFromDate",
+                        "BillingToDate": "ReferenceToDate",
                         "FrequencyType": "PolicyReferenceId"
                     },
                     "outputControl": {
@@ -19300,8 +19307,8 @@
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
-                        "ClaimFromDate": "BillingFromDate",
-                        "ClaimToDate": "BillingToDate"
+                        "BillingFromDate": "BillingFromDate",
+                        "BillingToDate": "BillingToDate"
                     },
                     "outputControl": {
                         "IsViolation": "ResponseValue.IsPolicyViolation",
@@ -19328,16 +19335,16 @@
                     },
                     {
                         "type": "datetime",
-                        "name": "ClaimFromDate",
-                        "label": "Claim From Date",
+                        "name": "BillingFromDate",
+                        "label": "Billing From Date",
                         "visible": true,
                         "position": "in",
                         "order": 2
                     },
                     {
                         "type": "datetime",
-                        "name": "ClaimToDate",
-                        "label": "ClaimToDate",
+                        "name": "BillingToDate",
+                        "label": "Billing To Date",
                         "visible": true,
                         "position": "in",
                         "order": 3
@@ -19350,14 +19357,14 @@
                         "order": 4
                     },
                     {
-                        "name": "Month",
+                        "name": "Reference",
                         "label": "Month",
                         "visible": true,
                         "position": "in",
                         "order": 4
                     },
                     {
-                        "name": "MobileNumber",
+                        "name": "ReferenceNumber",
                         "label": "Mobile Number",
                         "visible": true,
                         "position": "in",
@@ -19535,7 +19542,7 @@
                     {
                         "type": "text",
                         "subType": "text",
-                        "name": "NameOfSpouse",
+                        "name": "SpouseName",
                         "label": "Name Of Spouse",
                         "required": true,
                         "validations": [
@@ -20115,7 +20122,7 @@
                         "order": 3
                     },
                     {
-                        "name": "NameOfSpouse",
+                        "name": "SpouseName",
                         "label": "Name Of Spouse",
                         "visible": true,
                         "position": "in",
@@ -29893,8 +29900,8 @@
                 ]
             },
             {
-                "name": "Broadband",
-                "label": "Broadband",
+                "name": "Data Card Broadband",
+                "label": "Data Card Broadband",
                 "data": [],
                 "amount": 0,
                 "expanded": false,
@@ -29902,7 +29909,7 @@
                 "columns": [
                     {
                         "type": "date",
-                        "name": "ClaimFromDate",
+                        "name": "BillingFromDate",
                         "label": "From Date",
                         "visible": true,
                         "position": "in",
@@ -29910,14 +29917,14 @@
                     },
                     {
                         "type": "date",
-                        "name": "ClaimToDate",
+                        "name": "BillingToDate",
                         "label": "To Date",
                         "visible": true,
                         "position": "in",
                         "order": 2
                     },
                     {
-                        "name": "Frequency",
+                        "name": "FrequencyTypeName",
                         "label": "Frequency",
                         "visible": true,
                         "position": "in",
@@ -29981,14 +29988,14 @@
                         "order": 10
                     },
                     {
-                        "name": "Month",
+                        "name": "Reference",
                         "label": "Month",
                         "visible": true,
                         "position": "out",
                         "order": 11
                     },
                     {
-                        "name": "MobileNumber",
+                        "name": "ReferenceNumber",
                         "label": "Mobile Number",
                         "visible": true,
                         "position": "out",
@@ -30039,8 +30046,8 @@
                 ]
             },
             {
-                "name": "Mobile",
-                "label": "Mobile",
+                "name": "Mobile Expense",
+                "label": "Mobile Expense",
                 "data": [],
                 "amount": 0,
                 "expanded": false,
@@ -30048,7 +30055,7 @@
                 "columns": [
                     {
                         "type": "date",
-                        "name": "ClaimFromDate",
+                        "name": "BillingFromDate",
                         "label": "From Date",
                         "visible": true,
                         "position": "in",
@@ -30056,14 +30063,14 @@
                     },
                     {
                         "type": "date",
-                        "name": "ClaimToDate",
+                        "name": "BillingToDate",
                         "label": "To Date",
                         "visible": true,
                         "position": "in",
                         "order": 2
                     },
                     {
-                        "name": "Frequency",
+                        "name": "FrequencyTypeName",
                         "label": "Frequency",
                         "visible": true,
                         "position": "in",
@@ -30127,14 +30134,14 @@
                         "order": 10
                     },
                     {
-                        "name": "Month",
+                        "name": "Reference",
                         "label": "Month",
                         "visible": true,
                         "position": "out",
                         "order": 11
                     },
                     {
-                        "name": "MobileNumber",
+                        "name": "ReferenceNumber",
                         "label": "Mobile Number",
                         "visible": true,
                         "position": "out",
@@ -30250,7 +30257,7 @@
                         "order": 8
                     },
                     {
-                        "name": "NameOfSpouse",
+                        "name": "SpouseName",
                         "label": "Spouse name",
                         "visible": true,
                         "position": "out",
