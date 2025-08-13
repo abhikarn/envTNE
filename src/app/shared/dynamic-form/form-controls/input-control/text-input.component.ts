@@ -68,6 +68,19 @@ export class TextInputComponent implements OnInit {
       this.control.disable();
     }
 
+    if (this.controlConfig.autoFormat && this.controlConfig.readonly) {
+      const currentValue = this.control.value;
+      if (currentValue !== null && currentValue !== undefined && currentValue !== '') {
+        this.control.setValue(this.getFormattedValue(currentValue), { emitEvent: false });
+      }
+
+      this.control.valueChanges.subscribe(value => {
+        if (value !== null && value !== undefined && value !== '') {
+          this.control.setValue(this.getFormattedValue(value), { emitEvent: false });
+        }
+      });
+    }
+
     if (this.controlConfig.autoComplete) {
       this.control.valueChanges.subscribe(inputValue => {
         this.validateSameOriginAndDestination();

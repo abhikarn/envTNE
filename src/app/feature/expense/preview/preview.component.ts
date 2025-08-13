@@ -76,6 +76,7 @@ export class PreviewComponent {
   isCreateAdjustmentform: boolean = false;
   dynamicAdjustmentFormpayload: any = {};
   transactionId: any;
+  title: string = 'Expense Preview';
 
   constructor(
     private route: ActivatedRoute,
@@ -272,10 +273,12 @@ export class PreviewComponent {
     if (segment == 'approval') {
       this.mode = 'approval';
       this.pageTitle = 'Travel Expense Request Approval'
+      this.title = 'Expense Approval';
     }
     if (segment == 'finance-approval') {
       this.mode = 'finance-approval';
       this.pageTitle = 'Travel Expense Request Finance Approval';
+      this.title = 'Expense Finance Approval';
       this.billableControl.valueChanges
         .pipe(
           debounceTime(300),
