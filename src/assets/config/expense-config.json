@@ -17833,7 +17833,7 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
-                        "name": "BroadbandNumber",
+                        "name": "ReferenceNumber",
                         "isExcluded": false,
                         "label": "Broadband Number",
                         "value": "",
@@ -18291,10 +18291,10 @@
                     },
                     "inputControls": {},
                     "outputControl": {
-                        "BroadbandNumber": "ResponseValue[0].BroadbandNumber"
+                        "ReferenceNumber": "ResponseValue[0].BroadbandNumber"
                     },
                     "elibigilityCheck": {
-                        "fieldCheck": "BroadbandNumber",
+                        "fieldCheck": "ReferenceNumber",
                         "confirmPopup": {
                             "title": "Eligibility Check",
                             "message": "Broadband number is not available. Do you want to proceed?",
