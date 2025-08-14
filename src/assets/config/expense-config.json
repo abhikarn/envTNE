@@ -3295,7 +3295,7 @@
                 "order": 2
             },
             {
-                "name": "PerDiem",
+                "name": "Boarding Expense",
                 "label": "Per Diem",
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
@@ -27010,12 +27010,12 @@
                         "showInUI": true
                     },
                     {
-                        "name": "PerDiem",
+                        "name": "Boarding Expense",
                         "label": "Per Diem",
                         "showInUI": true
                     },
                     {
-                        "name": "Boarding Expense",
+                        "name": "PerDiem",
                         "label": "Boarding Expenses",
                         "showInUI": false
                     },
@@ -28056,7 +28056,7 @@
                 "showInUI": true
             },
             {
-                "name": "PerDiem",
+                "name": "Boarding Expense",
                 "label": "Per Diem",
                 "data": [],
                 "amount": 0,
@@ -28401,7 +28401,7 @@
                 "showInUI": true
             },
             {
-                "name": "Boarding Expense",
+                "name": "PerDiem",
                 "label": "Boarding",
                 "data": [],
                 "amount": 0,
