@@ -101,7 +101,7 @@ export class DynamicTableService {
           return data;
         })
       );
-  
+      
       return updatedDataArray;
     }
 }

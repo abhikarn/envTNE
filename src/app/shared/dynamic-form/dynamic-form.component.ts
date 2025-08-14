@@ -706,7 +706,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   addDataToDynamicTable() {
-
     let tableData = this.form;
     // Preparing Data for Dynamic table
     this.formControls.forEach(control => {

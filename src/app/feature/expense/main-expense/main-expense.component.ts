@@ -495,7 +495,7 @@ export class MainExpenseComponent {
 
           category.formControls.forEach((control: any) => {
             const fieldName = control.name;
-            const fieldValue = entry[fieldName];
+            const fieldValue = entry[fieldName] ?? control.value;
             control.value = fieldValue;
 
             if (control.isExcluded) {
