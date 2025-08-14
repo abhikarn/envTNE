@@ -1104,6 +1104,8 @@ export class MainExpenseComponent {
       BillableCostCentreId: this.costcenterId,
       Remarks: this.justificationForm.get(this.expenseConfig.justification.controlName)?.value,
       ActionBy: this.userMasterId,
+      expenseCategoryGroupId: 1,
+      expenseCategoryGroupName: "TRE",
       dynamicExpenseDetailModels: this.utilsService.simplifyObject(requestData)
     };
 
