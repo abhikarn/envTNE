@@ -920,7 +920,6 @@ export class MainExpenseComponent {
   }
 
   private handleResult(result: any) {
-    debugger
     if (!result) return;
 
     result.TravelRequestId = this.travelRequestId;
