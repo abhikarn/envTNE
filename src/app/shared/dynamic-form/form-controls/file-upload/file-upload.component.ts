@@ -235,7 +235,9 @@ export class FileUploadComponent {
                   if (this.form.controls[key]) {
                     const controlConfig = this.formConfig?.find?.((c: any) => c.name === key);
                     if (controlConfig) {
-                      controlConfig.readonly = true;
+                      if(key!=="TravelMode"){
+                        controlConfig.readonly = true;
+                      }
                       // Do NOT disable the control, just set readonly flag
                       // if (controlConfig.type === 'date') {
                       //   this.form.get(key)?.disable({ emitEvent: false });
