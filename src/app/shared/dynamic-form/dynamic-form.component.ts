@@ -929,6 +929,12 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
 
+    if (control.conditionBasedDisplayFieldsCheck) {
+      setTimeout(() => {
+        this.dynamicFormService.checkConditionBasedDisplayFields(control, this.category, this.form, this.formConfig, this.moduleData);
+      }, 500);
+    }
+
     if (control.policyEntitlementCheck) {
       setTimeout(() => {
         this.dynamicFormService.validateFieldPolicyEntitlement(control, this.category, this.form, this.formConfig, this.moduleData);

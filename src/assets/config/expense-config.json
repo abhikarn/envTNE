@@ -18338,19 +18338,20 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
-                        "label": "Processing Date",
+                        "isExcluded": true,
+                        "label": "Claim Date",
                         "value": "",
                         "required": true,
                         "validations": [
                             {
                                 "type": "required",
-                                "message": "Processing Date is required"
+                                "message": "Claim Date is required"
                             }
                         ],
                         "disable": false,
                         "readonly": false,
-                        "apiDateLimit": true,
+                        "mindate": "01-01-1900",
+                        "maxDate": "today",
                         "policyEntitlementCheck": true,
                         "order": 2
                     },
@@ -18388,7 +18389,28 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "conditionBasedDisplayFieldsCheck": true,
                         "order": 4
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "autoComplete": false,
+                        "name": "VendorName",
+                        "isExcluded": false,
+                        "label": "Vendor Name",
+                        "value": null,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Vendor Name is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 5
                     },
                     {
                         "type": "text",
@@ -18428,7 +18450,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 5
+                        "order": 6
                     },
                     {
                         "type": "text",
@@ -18462,7 +18484,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 6
+                        "order": 7
                     },
                     {
                         "type": "text",
@@ -18509,7 +18531,83 @@
                         "required": false,
                         "disable": false,
                         "readonly": true,
-                        "order": 7
+                        "order": 8
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "BillNumber",
+                        "isExcluded": false,
+                        "label": "Bill Number",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Bill Number is required"
+                            }
+                        ],
+                        "order": 9
+                    },
+                    {
+                        "type": "date",
+                        "dataType": "datetime",
+                        "name": "BillDate",
+                        "isExcluded": false,
+                        "label": "Bill Date",
+                        "value": null,
+                        "required": false,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
+                        "order": 10
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "numeric",
+                        "name": "Amount",
+                        "isExcluded": true,
+                        "label": "Amount(Quote Price)",
+                        "value": null,
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "autoFormat": {
+                                    "decimal": ".00"
+                                },
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
+                            }
+                        ],
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9.]",
+                                "^0+(?=\\d)"
+                            ],
+                            "range": {
+                                "min": 0,
+                                "max": 10
+                            },
+                            "decimalPrecision": "2"
+                        },
+                        "required": false,
+                        "disable": false,
+                        "readonly": true,
+                        "order": 11
                     },
                     {
                         "type": "text",
@@ -18540,7 +18638,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 8
+                        "order": 12
                     },
                     {
                         "type": "text",
@@ -18570,7 +18668,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 9
+                        "order": 13
                     },
                     {
                         "type": "select",
@@ -18602,7 +18700,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 10
+                        "order": 14
                     },
                     {
                         "type": "select",
@@ -18630,7 +18728,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "order": 11
+                        "order": 15
                     },
                     {
                         "type": "costcenter",
@@ -18749,7 +18847,7 @@
                                 "order": 6
                             }
                         ],
-                        "order": 12
+                        "order": 16
                     },
                     {
                         "type": "quotation",
@@ -18872,7 +18970,7 @@
                             }
                         ],
                         "notifications": {},
-                        "order": 12
+                        "order": 17
                     },
                     {
                         "type": "textarea",
@@ -18888,7 +18986,7 @@
                             "IsViolation": true
                         },
                         "maxLength": 500,
-                        "order": 13
+                        "order": 18
                     },
                     {
                         "type": "hidden",
@@ -18903,6 +19001,44 @@
                                 "ConversionRate"
                             ]
                         }
+                    }
+                ],
+                "conditionBasedDisplayFields": [
+                    {
+                        "formula": "TransportationMode == 107",
+                        "dependsOn": [
+                            "TransportationMode"
+                        ],
+                        "showFields": [
+                            "VendorName",
+                            "Amount",
+                            "BillDate",
+                            "BillNumber"
+                        ],
+                        "hideFields": [
+                            "FuelCost",
+                            "TollCost",
+                            "TotalCost",
+                            "TotalDistance"
+                        ]
+                    },
+                    {
+                        "formula": "TransportationMode == 108",
+                        "dependsOn": [
+                            "TransportationMode"
+                        ],
+                        "showFields": [
+                            "FuelCost",
+                            "TollCost",
+                            "TotalCost",
+                            "TotalDistance"
+                        ],
+                        "hideFields": [
+                            "VendorName",
+                            "Amount",
+                            "BillDate",
+                            "BillNumber"
+                        ]
                     }
                 ],
                 "checkValidationOnSubmit": {
