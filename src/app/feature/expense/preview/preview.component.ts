@@ -753,6 +753,12 @@ export class PreviewComponent {
         return;
       }
 
+      console.log(this.expenseRequestPreviewData)
+      const isValid = this.validateCostCentreAllocations(this.expenseRequestPreviewData?.dynamicExpenseDetailModels);
+      if (!isValid) {
+        return; // block further API call
+      }
+
       if (this.billableControl.invalid) {
         this.billableControl.markAsTouched();
         return;
@@ -910,7 +916,7 @@ export class PreviewComponent {
     if (!summary) return;
 
     const getValue = (name: string): number => {
-      const item = summary.items?.find((i: any) => i.name === name && [92,93].includes(i.paymentModeId));
+      const item = summary.items?.find((i: any) => i.name === name && [92, 93].includes(i.paymentModeId));
       return item ? parseFloat(item.value) || 0 : 0;
     };
 
@@ -933,5 +939,43 @@ export class PreviewComponent {
     const amountPayable = totalExpense - lessAdvance + adjustments;
     setValue('amountPayable', amountPayable);
   }
+
+  validateCostCentreAllocations(models: any[]): boolean {
+    for (const category of models || []) {
+      if (category?.data?.length > 0) {
+        for (const item of category.data) {
+          if (item?.costcentreWiseExpense?.length > 0) {
+
+            // Ensure numbers
+            const totalAmountInActual = item.costcentreWiseExpense.reduce(
+              (sum: number, cc: any) => sum + Number(cc.AmmoutInActual ?? cc.AmountInActual ?? 0),
+              0
+            );
+
+            if (totalAmountInActual !== Number(item.ApprovedAmount)) {
+              this.snackbarService.error(
+                `Expense ID ${item.ExpenseRequestDetailId}: Total Amount In Actual (${totalAmountInActual}) does not match Approved Amount (${item.ApprovedAmount}).`
+              );
+              return false;
+            }
+
+            const totalAmountInPercentage = item.costcentreWiseExpense.reduce(
+              (sum: number, cc: any) => sum + Number(cc.AmmoutInPercentage ?? cc.AmountInPercentage ?? 0),
+              0
+            );
+
+            if (totalAmountInPercentage !== 100) {
+              this.snackbarService.error(
+                `Expense ID ${item.ExpenseRequestDetailId}: Total Amount In Percentage (${totalAmountInPercentage}) is not equal to 100.`
+              );
+              return false;
+            }
+          }
+        }
+      }
+    }
+    return true; // everything passed
+  }
+
 
 }

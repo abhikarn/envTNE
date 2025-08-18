@@ -189,7 +189,10 @@ export class LineWiseCostCenterComponent {
       this.costCenterDetailsForm.value.ExpenseRequestDetailId = this.ExpenseRequestDetailId;
       let requestBody = {
         Id: this.costCenterDetailsForm.value.ExpenseRequestCostCentrewiseAmmoutId,
-        ...this.costCenterDetailsForm.value,
+        AmountInPercentage: this.costCenterDetailsForm.value.AmmoutInPercentage,
+        AmountInActual: this.costCenterDetailsForm.value.AmmoutInActual,
+        CostCentreId: this.costCenterDetailsForm.value.CostCentreId,
+        ExpenseRequestDetailId: this.ExpenseRequestDetailId
       }
       this.expenseService.expenseExpenseRequestCostCentrewiseAmountIu(requestBody).pipe(take(1)).subscribe({
         next: (res: any) => {
