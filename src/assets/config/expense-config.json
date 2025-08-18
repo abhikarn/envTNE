@@ -3050,50 +3050,48 @@
                         "order": 6
                     },
                     {
-                        "type": "date",
-                        "name": "BillDate",
-                        "label": "Bill Date",
+                        "name": "PaymentMode",
+                        "label": "Payment Type",
                         "visible": true,
                         "position": "in",
-                        "order": 7
-                    },
-                    {
-                        "type": "string",
-                        "name": "BillNumber",
-                        "label": "Bill Number",
-                        "visible": true,
-                        "position": "in-out",
-                        "order": 8
+                        "order": 9
                     },
                     {
                         "type": "number",
                         "name": "ClaimAmount",
-                        "label": "Claimed Amount",
+                        "label": "Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
-                        "order": 9
+                        "order": 10
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 11
                     },
                     {
                         "name": "__actions",
                         "label": "Actions",
                         "visible": true,
                         "position": "in",
-                        "order": 10
+                        "order": 12
                     },
                     {
                         "name": "NoOfDays",
                         "label": "No. of Days",
                         "visible": true,
                         "position": "out",
-                        "order": 8
+                        "order": 13
                     },
                     {
                         "name": "CountryGradeId",
                         "label": "Country Grade",
                         "visible": true,
                         "position": "out",
-                        "order": 10,
+                        "order": 14,
                         "international": true
                     },
                     {
@@ -3101,7 +3099,7 @@
                         "label": "City Grade",
                         "visible": true,
                         "position": "out",
-                        "order": 11,
+                        "order": 15,
                         "international": false
                     },
                     {
@@ -3109,14 +3107,7 @@
                         "label": "Bill Number",
                         "visible": true,
                         "position": "out",
-                        "order": 12
-                    },
-                    {
-                        "name": "ClaimAmount",
-                        "label": "Claim Amount",
-                        "visible": true,
-                        "position": "out",
-                        "order": 11
+                        "order": 17
                     },
                     {
                         "type": "number",
@@ -3124,14 +3115,14 @@
                         "label": "ClaimAmountInBaseCurrency",
                         "visible": true,
                         "position": "out",
-                        "order": 12
+                        "order": 19
                     },
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
                         "visible": true,
                         "position": "out",
-                        "order": 13
+                        "order": 20
                     },
                     {
                         "type": "number",
@@ -3139,7 +3130,7 @@
                         "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
-                        "order": 14
+                        "order": 21
                     },
                     {
                         "type": "number",
@@ -3147,7 +3138,7 @@
                         "label": "Entitlement Amount",
                         "visible": true,
                         "position": "out",
-                        "order": 15
+                        "order": 22
                     },
                     {
                         "label": "Differential Amount",
@@ -3155,14 +3146,14 @@
                         "type": "number",
                         "visible": true,
                         "position": "out",
-                        "order": 16
+                        "order": 23
                     },
                     {
                         "name": "Justification",
                         "label": "Justification",
                         "visible": true,
                         "position": "out",
-                        "order": 17
+                        "order": 24
                     },
                     {
                         "name": "TaxAmount",
@@ -3170,7 +3161,7 @@
                         "type": "number",
                         "visible": true,
                         "position": "out",
-                        "order": 18
+                        "order": 25
                     }
                 ],
                 "nestedTables": [
@@ -4514,8 +4505,15 @@
                         "name": "ClaimAmount",
                         "label": "Claimed Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
+                        "order": 8
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
                         "order": 8
                     },
                     {
@@ -5918,8 +5916,15 @@
                         "name": "ClaimAmount",
                         "label": "Claimed Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
+                        "order": 8
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
                         "order": 8
                     },
                     {
@@ -7304,8 +7309,15 @@
                         "name": "ClaimAmount",
                         "label": "Claimed Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
+                        "order": 8
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
                         "order": 8
                     },
                     {
@@ -8688,8 +8700,15 @@
                         "name": "ClaimAmount",
                         "label": "Claimed Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
+                        "order": 8
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
                         "order": 8
                     },
                     {
@@ -10216,7 +10235,7 @@
                         "name": "BillNumber",
                         "label": "Bill Number",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "order": 8
                     },
                     {
@@ -10224,8 +10243,15 @@
                         "name": "ClaimAmount",
                         "label": "Claimed Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
+                        "order": 9
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
                         "order": 9
                     },
                     {
@@ -11792,9 +11818,16 @@
                         "name": "ClaimAmount",
                         "label": "Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
                         "order": 8
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 9
                     },
                     {
                         "name": "__actions",
@@ -12438,27 +12471,20 @@
                         "order": 4
                     },
                     {
-                        "name": "Currency",
-                        "label": "Currency",
-                        "visible": true,
-                        "position": "in",
-                        "order": 5
-                    },
-                    {
                         "type": "number",
                         "name": "ClaimAmount",
                         "label": "Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
-                        "order": 6
+                        "order": 5
                     },
                     {
-                        "name": "ConversionRate",
-                        "label": "Conversion Rate",
+                        "name": "Currency",
+                        "label": "Currency",
                         "visible": true,
                         "position": "in",
-                        "order": 7
+                        "order": 6
                     },
                     {
                         "name": "__actions",
@@ -13250,9 +13276,16 @@
                         "name": "ClaimAmount",
                         "label": "Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
                         "order": 6
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 7
                     },
                     {
                         "name": "__actions",
@@ -14371,7 +14404,7 @@
                         "name": "BillNumber",
                         "label": "Bill Number",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "order": 8
                     },
                     {
@@ -14379,8 +14412,15 @@
                         "name": "ClaimAmount",
                         "label": "Claimed Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
+                        "order": 9
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
                         "order": 9
                     },
                     {
@@ -15368,8 +15408,15 @@
                         "name": "ClaimAmount",
                         "label": "Claimed Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
+                        "order": 9
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
                         "order": 9
                     },
                     {
@@ -17079,9 +17126,16 @@
                         "name": "ClaimAmount",
                         "label": "Claimed Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
-                        "order": 9
+                        "order": 6
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 7
                     },
                     {
                         "name": "__actions",
@@ -20113,8 +20167,15 @@
                         "name": "ClaimAmount",
                         "label": "Claimed Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
+                        "order": 8
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
                         "order": 8
                     },
                     {
@@ -21065,8 +21126,15 @@
                         "name": "ClaimAmount",
                         "label": "Claimed Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
+                        "order": 8
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
                         "order": 8
                     },
                     {
@@ -22731,8 +22799,15 @@
                         "name": "ClaimAmount",
                         "label": "Claimed Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
+                        "order": 8
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
                         "order": 8
                     },
                     {
@@ -27008,8 +27083,15 @@
                         "name": "ClaimAmount",
                         "label": "Amount",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "decimalPrecision": "2",
+                        "order": 8
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
                         "order": 8
                     },
                     {
