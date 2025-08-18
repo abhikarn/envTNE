@@ -1,13 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { IFormControl } from '../../form-control.interface';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SnackbarService } from '../../../service/snackbar.service';
 import { GlobalConfigService } from '../../../service/global-config.service';
 import { FormControlFactory } from '../../form-control.factory';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'lib-quotation',
-  imports: [],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './quotation.component.html',
   styleUrl: './quotation.component.scss'
 })
@@ -115,5 +119,10 @@ export class QuotationComponent {
       }
       this.quotationDetailsForm.get(field.name)?.setValue(inputValue, { emitEvent: false });
     }
+
+    if(field.type == "file") {
+      
+    }
+
   }
 }

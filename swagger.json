@@ -3264,6 +3264,84 @@
         }
       }
     },
+    "/api/Expense/ExpenseRequestCostCentrewiseAmountIu": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_ExpenseRequestCostCentrewiseAmountIu",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "costCentrewiseAmountInsertParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExpenseRequestCostCentrewiseAmountInsertParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
+    "/api/Expense/ExpenseRequestCostCentrewiseAmountDelete": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_ExpenseRequestCostCentrewiseAmountDelete",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "centrewiseAmountRemoveParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExpenseRequestCostCentrewiseAmountRemoveParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Dashboard/ApprovalsFinanceExpenseRequest": {
       "post": {
         "tags": [
@@ -6598,6 +6676,178 @@
       "type": "object",
       "properties": {
         "CategoryGroupId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ExpenseRequestCostCentrewiseAmountInsertParam": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ExpenseRequestDetailId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "CostCentreId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "AmountInPercentage": {
+          "format": "double",
+          "type": "number"
+        },
+        "AmountInActual": {
+          "format": "double",
+          "type": "number"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "IsEdit": {
+          "type": "boolean"
+        },
+        "IsView": {
+          "type": "boolean"
+        },
+        "IsViewLog": {
+          "type": "boolean"
+        },
+        "IsRemove": {
+          "type": "boolean"
+        },
+        "IsMakeActive": {
+          "type": "boolean"
+        },
+        "IsMapping": {
+          "type": "boolean"
+        },
+        "TransactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "CreatedById": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "CreatedBy": {
+          "type": "string"
+        },
+        "ModifiedById": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ModifiedBy": {
+          "type": "string"
+        },
+        "CreatedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "CreatedDateString": {
+          "type": "string",
+          "readOnly": true
+        },
+        "ModifiedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ModifiedDateString": {
+          "type": "string",
+          "readOnly": true
+        },
+        "IsActive": {
+          "type": "boolean"
+        },
+        "ActionBy": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "CommunicationSeenCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ExpenseRequestCostCentrewiseAmountRemoveParam": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ExpenseRequestDetailId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "IsEdit": {
+          "type": "boolean"
+        },
+        "IsView": {
+          "type": "boolean"
+        },
+        "IsViewLog": {
+          "type": "boolean"
+        },
+        "IsRemove": {
+          "type": "boolean"
+        },
+        "IsMakeActive": {
+          "type": "boolean"
+        },
+        "IsMapping": {
+          "type": "boolean"
+        },
+        "TransactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "CreatedById": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "CreatedBy": {
+          "type": "string"
+        },
+        "ModifiedById": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ModifiedBy": {
+          "type": "string"
+        },
+        "CreatedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "CreatedDateString": {
+          "type": "string",
+          "readOnly": true
+        },
+        "ModifiedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ModifiedDateString": {
+          "type": "string",
+          "readOnly": true
+        },
+        "IsActive": {
+          "type": "boolean"
+        },
+        "ActionBy": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "CommunicationSeenCount": {
           "format": "int32",
           "type": "integer"
         }

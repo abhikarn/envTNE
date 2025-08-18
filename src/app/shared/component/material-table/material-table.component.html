@@ -181,7 +181,7 @@
                 }
                 @if (costcentreWiseExpense) {
                 <app-line-wise-cost-center [costcentreWiseExpense]="costcentreWiseExpense"
-                    [ExpenseRequestDetailId]="row?.ExpenseRequestDetailId"
+                    [ExpenseRequestDetailId]="row?.ExpenseRequestDetailId" [amount]="row?.ApprovedAmount"
                     [costCenterData]="row?.costcentreWiseExpense"></app-line-wise-cost-center>
                 }
                 }

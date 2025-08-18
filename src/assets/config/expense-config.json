@@ -617,9 +617,9 @@
                 "displayTable": false,
                 "displayAddClearButton": false,
                 "moduleData": {
-                    "travelTypeId": 177,
-                    "requestForId": 177,
-                    "claimTypeId": 177,
+                    "travelTypeId": 152,
+                    "requestForId": 152,
+                    "claimTypeId": 152,
                     "travelRequestId": 0,
                     "expenseCategoryGroupId": 17,
                     "expenseCategoryGroupName": "RLE"
@@ -18769,7 +18769,7 @@
                         "type": "select",
                         "dataType": "int",
                         "name": "TransportationMode",
-                        "isExcluded": true,
+                        "isExcluded": false,
                         "label": "Transportation Mode",
                         "placeholder": "Select Transportation Mode",
                         "value": "",
@@ -18808,6 +18808,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "showInUI": true,
                         "order": 5
                     },
                     {
@@ -18839,7 +18840,7 @@
                         "setFields": [
                             {
                                 "name": "TotalCost",
-                                "formula": "FuelCost + TollCost",
+                                "formula": "Number(FuelCost) && Number(TollCost) ? Number(FuelCost) + Number(TollCost) : 0",
                                 "dependsOn": [
                                     "FuelCost",
                                     "TollCost"
@@ -18848,6 +18849,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "showInUI": true,
                         "order": 6
                     },
                     {
@@ -18873,7 +18875,7 @@
                         "setFields": [
                             {
                                 "name": "TotalCost",
-                                "formula": "FuelCost + TollCost",
+                                "formula": "Number(FuelCost) && Number(TollCost) ? Number(FuelCost) + Number(TollCost) : 0",
                                 "dependsOn": [
                                     "FuelCost",
                                     "TollCost"
@@ -18882,6 +18884,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "showInUI": true,
                         "order": 7
                     },
                     {
@@ -18929,6 +18932,7 @@
                         "required": false,
                         "disable": false,
                         "readonly": true,
+                        "showInUI": true,
                         "order": 8
                     },
                     {
@@ -18946,6 +18950,9 @@
                                 "message": "Bill Number is required"
                             }
                         ],
+                        "disable": false,
+                        "readonly": false,
+                        "showInUI": true,
                         "order": 9
                     },
                     {
@@ -18958,6 +18965,9 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "disable": false,
+                        "readonly": false,
+                        "showInUI": true,
                         "order": 10
                     },
                     {
@@ -19004,7 +19014,8 @@
                         },
                         "required": false,
                         "disable": false,
-                        "readonly": true,
+                        "readonly": false,
+                        "showInUI": true,
                         "order": 11
                     },
                     {
@@ -19036,6 +19047,7 @@
                         ],
                         "disable": false,
                         "readonly": true,
+                        "showInUI": true,
                         "order": 12
                     },
                     {
@@ -19066,6 +19078,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "showInUI": true,
                         "order": 13
                     },
                     {
@@ -19350,20 +19363,20 @@
                                 "order": 6
                             },
                             {
-                                "name": "attachment",
-                                "label": "Attachment",
-                                "placeholder": "Upload Attachment",
                                 "type": "file",
-                                "showInUI": true,
+                                "dataType": "file",
+                                "name": "attachment",
+                                "isExcluded": false,
+                                "label": "Upload Your Bill",
+                                "value": [],
+                                "multiple": true,
+                                "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
+                                "referenceType": 123,
+                                "maxSizeMB": 15,
                                 "required": false,
-                                "value": null,
-                                "validations": [
-                                    {
-                                        "type": "fileSize",
-                                        "maxSize": 5,
-                                        "message": "File size must be less than 5MB"
-                                    }
-                                ],
+                                "disable": false,
+                                "oCRRequired": true,
+                                "showInUI": true,
                                 "order": 7
                             }
                         ],

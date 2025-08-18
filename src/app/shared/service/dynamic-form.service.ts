@@ -796,10 +796,10 @@ export class DynamicFormService {
 
   checkConditionBasedDisplayFields(control: IFormControl, category: any, form: FormGroup, formConfig: IFormControl[], moduleData: any): void {
     debugger;
-    if (!control.conditionBasedDisplayFields || control.conditionBasedDisplayFields.length === 0) return;
+    if (!category.conditionBasedDisplayFields || category.conditionBasedDisplayFields.length === 0) return;
 
-    if (control.conditionBasedDisplayFields) {
-      control.conditionBasedDisplayFields.forEach((field: any) => {
+    if (category.conditionBasedDisplayFields) {
+      category.conditionBasedDisplayFields.forEach((field: any) => {
         const { formula, dependsOn, showFields, hideFields } = field;
 
         // if formula is met , show/hide fields using showInUI
@@ -818,12 +818,15 @@ export class DynamicFormService {
             const control = formConfig.find(ctrl => ctrl.name === field);
             if (control) {
               control.showInUI = true;
+              form.get(field)?.enable();
             }
           });
           hideFields.forEach((field: string) => {
             const control = formConfig.find(ctrl => ctrl.name === field);
             if (control) {
               control.showInUI = false;
+              // set null value and disable control
+              form.get(field)?.disable();
             }
           });
         }
