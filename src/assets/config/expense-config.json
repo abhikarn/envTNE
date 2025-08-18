@@ -1728,6 +1728,28 @@
                 "name": "Accommodation",
                 "label": "Accommodation",
                 "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
                     "name": "Accommodation Expense",
@@ -4737,6 +4759,29 @@
             {
                 "name": "Boarding Expense",
                 "label": "Boarding",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
                     "name": "Boarding Expense",
@@ -4761,7 +4806,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -6136,6 +6181,29 @@
             {
                 "name": "Incidental Expenses",
                 "label": "Incidental",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
                     "name": "Incidental Expense",
@@ -6160,7 +6228,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -7527,6 +7595,29 @@
             {
                 "name": "Laundry service",
                 "label": "Laundry",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
                     "name": "Laundry Expense",
@@ -7551,7 +7642,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -8918,6 +9009,29 @@
             {
                 "name": "Flat Allowance",
                 "label": "Flat / Own Arrangement",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
                     "name": "Flat Allowance",
@@ -8942,7 +9056,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -10509,6 +10623,29 @@
             {
                 "name": "Local Conveyance During Travel",
                 "label": "Conveyance During Travel",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -10528,7 +10665,7 @@
                             ]
                         },
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -11944,6 +12081,29 @@
             {
                 "name": "Business Entertainment",
                 "label": "Business Entertainment",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -11958,7 +12118,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -12591,6 +12751,29 @@
             {
                 "name": "Other Expenses",
                 "label": "Other Expense",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -12605,7 +12788,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -13341,6 +13524,29 @@
             {
                 "name": "Medical Claim",
                 "label": "Medical Claim",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -13355,7 +13561,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -14644,6 +14850,29 @@
             {
                 "name": "Baggage and Outfit Allowance",
                 "label": "Baggage and Outfit Allowance",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -14658,7 +14887,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -15606,6 +15835,29 @@
             {
                 "name": "Mobile Handset Purchase",
                 "label": "Mobile Handset Purchase",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -15620,7 +15872,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -16348,6 +16600,29 @@
             {
                 "name": "Transit Allowance",
                 "label": "Transit Allowance",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -16362,7 +16637,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -17280,6 +17555,29 @@
             {
                 "name": "Visa",
                 "label": "Visa",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -17294,7 +17592,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -17825,6 +18123,29 @@
             {
                 "name": "Travel Insurance",
                 "label": "Travel Insurance",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -17839,7 +18160,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -18371,6 +18692,29 @@
             {
                 "name": "Relocation Travel Ticket Claim",
                 "label": "Transportation Claim",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -18385,7 +18729,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -19323,6 +19667,29 @@
             {
                 "name": "DataCardBroadband",
                 "label": "Data Card Broadband",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -19339,7 +19706,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -20294,6 +20661,29 @@
             {
                 "name": "Mobile Expense",
                 "label": "Mobile Expense",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -20310,7 +20700,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -21220,6 +21610,29 @@
             {
                 "name": "Marriage Gift",
                 "label": "Marriage Gift",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -21234,7 +21647,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -21997,6 +22410,29 @@
             {
                 "name": "Deputation Claim",
                 "label": "Deputation Claim",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -22013,7 +22449,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -22935,6 +23371,29 @@
             {
                 "name": "Bereavement Support Claim",
                 "label": "Bereavement Support Claim",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -22949,7 +23408,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -23551,6 +24010,29 @@
             {
                 "name": "Training and Certification",
                 "label": "Training and Certification",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "select",
@@ -23586,7 +24068,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "blockClass": "col-md-12",
                         "order": 1
                     },
@@ -24158,6 +24640,29 @@
             {
                 "name": "Lease & Rent Deposit",
                 "label": "Lease & Rent Deposit",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -24756,6 +25261,29 @@
             {
                 "name": "Vehicle Road Tax",
                 "label": "Vehicle Road Tax",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -25327,6 +25855,29 @@
             {
                 "name": "School Capitation Fees",
                 "label": "School Capitation Fees",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -25961,6 +26512,29 @@
             {
                 "name": "Roaming",
                 "label": "Roaming",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -25975,7 +26549,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
@@ -26390,6 +26964,29 @@
             {
                 "name": "Travel Allowance",
                 "label": "Travel Allowance",
+                "OCRRequired": true,
+                "duplicateCheckFields": [
+                    {
+                        "name": "ClaimAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillAmount",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillDate",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "BillNumber",
+                        "isRequired": true
+                    },
+                    {
+                        "name": "VendorName",
+                        "isRequired": true
+                    }
+                ],
                 "formControls": [
                     {
                         "type": "file",
@@ -26404,7 +27001,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": false,
+                        "oCRRequired": true,
                         "order": 1
                     },
                     {
