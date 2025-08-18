@@ -495,7 +495,7 @@ export class MainExpenseComponent {
 
           category.formControls.forEach((control: any) => {
             const fieldName = control.name;
-            const fieldValue = entry[fieldName];
+            const fieldValue = entry[fieldName] ?? control.value;
             control.value = fieldValue;
 
             if (control.isExcluded) {
@@ -857,8 +857,6 @@ export class MainExpenseComponent {
       if (!isValid) return;
     }
 
-    console.log("Main Expense Data: ", this.mainExpenseData);
-
     const hasMissingFields = this.checkMissingRequiredFields(
       this.mainExpenseData.dynamicExpenseDetailModels,
       this.categories,
@@ -866,6 +864,29 @@ export class MainExpenseComponent {
     );
 
     if (hasMissingFields) return;
+
+    // Start:Removing unused fields from Payload using flag inPayload
+    const categoryMap = new Map(
+      this.categories.map((cat: any) => [cat.name, cat])
+    );
+
+    this.mainExpenseData.dynamicExpenseDetailModels.forEach((item: any) => {
+      const matchedCategory: any = categoryMap.get(item.name);
+
+      if (!matchedCategory || !Array.isArray(matchedCategory.formControls) || !Array.isArray(item.data)) return;
+
+      matchedCategory.formControls
+        .filter((control: any) => control.inPayload === false)
+        .forEach((control: any) => {
+          item.data.forEach((data: any) => {
+            delete data[control.name];
+          });
+        });
+    });
+    // End:Removing unused fields from Payload using flag inPayload
+
+    console.log("Main Expense Data: ", this.mainExpenseData);
+    
 
     this.confirmDialogService
       .confirm({
@@ -897,6 +918,7 @@ export class MainExpenseComponent {
 
   openModal() {
     const data = {
+      TravelRequestId: this.travelRequestId,
       TravelDateFrom: this.travelRequestPreview?.travelDateFromExtended,
       TravelDateTo: this.travelRequestPreview?.travelDateToExtended,
       remarks: this.travelRequestPreview?.travelRequestDateExtensionRemarks
@@ -1103,6 +1125,8 @@ export class MainExpenseComponent {
       BillableCostCentreId: this.costcenterId,
       Remarks: this.justificationForm.get(this.expenseConfig.justification.controlName)?.value,
       ActionBy: this.userMasterId,
+      expenseCategoryGroupId: 1,
+      expenseCategoryGroupName: "TRE",
       dynamicExpenseDetailModels: this.utilsService.simplifyObject(requestData)
     };
 

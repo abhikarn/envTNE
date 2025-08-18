@@ -1,95 +1,101 @@
-   <div class="modal-dialog  modal-md">
-       <div class="modal-content">
+<div class="modal-dialog  modal-md">
+    <div class="modal-content">
 
 
-           <div class="modal-header">
+        <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-               Date Extension
+                Date Extension
             </h5>
-            
-             <button mat-button (click)="onClose()"> <i class="fa fa-times text-white fs-6"></i></button>
-         </div>
 
-
- 
-
-<div mat-dialog-content class="modal-content">
-    <form [formGroup]="travelForm" class="row">
-
-        <!-- Travel From Date Time -->
-       <div class="col-lg-6 col-md-6 col-sm-6">
-            <mat-form-field appearance="fill">
-                <mat-label>Travel From Date</mat-label>
-                   <div class="input-group">
-                <input matInput [matDatepicker]="fromDatePicker" formControlName="travelFromDate" required>
-                <mat-datepicker-toggle matIconSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #fromDatePicker></mat-datepicker>
-
-                <span class="  date-picker-icon align-top-t10">
-                                                                     <img src="images/date-icon.svg" alt="Time">
-                                                                     </span>
-                                                                     </div>
-            </mat-form-field>
-        </div>
-
-      <div class="col-lg-6 col-md-6 col-sm-6">
-            <mat-form-field appearance="fill">
-                
-                <mat-label>Travel From Time</mat-label>
-                  <div class="input-group"> 
-                <input matInput type="time" formControlName="travelFromTime" required>
-                
-                <span class="  date-picker-icon align-top-t10">
-                                                                     <img src="images/time-icon.svg" alt="Time">
-                                                                     </span>
-                                                                     </div>
-            </mat-form-field>
-        </div>
-
-        <!-- Travel To Date Time -->
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <mat-form-field appearance="fill">
-                <mat-label>Travel To Date</mat-label>
-                  <div class="input-group">
-                <input matInput [matDatepicker]="toDatePicker" formControlName="travelToDate" required>
-                <mat-datepicker-toggle matIconSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #toDatePicker></mat-datepicker>
-                <span class="  date-picker-icon align-top-t10">
-                                                                     <img src="images/date-icon.svg" alt="Calendar">
-                                                                     </span>
-                                                                     </div>
-            </mat-form-field>
+            <button mat-button (click)="onClose()"> <i class="fa fa-times text-white fs-6"></i></button>
         </div>
 
 
-       <div class="col-lg-6 col-md-6 col-sm-6">
-            <mat-form-field appearance="fill">
-                
-                <mat-label>Travel To Time</mat-label>
-                  <div class="input-group"> 
-                <input matInput type="time" formControlName="travelToTime" required>
-                
-                <span class="  date-picker-icon align-top-t10">
-                                                                     <img src="images/time-icon.svg" alt="Calendar">
-                                                                     </span>
-                                                                     </div>
-            </mat-form-field>
+
+
+        <div mat-dialog-content class="modal-content">
+            <form [formGroup]="travelForm" class="row">
+
+                <!-- Travel From Date Time -->
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Travel From Date</mat-label>
+                        <div class="input-group">
+                            <input matInput [matDatepicker]="fromDatePicker" formControlName="travelFromDate"
+                                (click)="fromDatePicker.open()" required>
+                            <mat-datepicker-toggle matIconSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #fromDatePicker></mat-datepicker>
+
+                            <span class="  date-picker-icon align-top-t10">
+                                <img src="images/date-icon.svg" alt="Time">
+                            </span>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <mat-form-field appearance="fill">
+
+                        <mat-label>Travel From Time</mat-label>
+                        <div class="input-group">
+                            <input matInput [matTimepicker]="fromTimepicker" (click)="fromTimepicker.open()"
+                                formControlName="travelFromDate" required>
+                            <mat-timepicker #fromTimepicker></mat-timepicker>
+                            <span class="  date-picker-icon align-top-t10">
+                                <img src="images/time-icon.svg" alt="Time">
+                            </span>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <!-- Travel To Date Time -->
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Travel To Date</mat-label>
+                        <div class="input-group">
+                            <input matInput [matDatepicker]="toDatePicker" formControlName="travelToDate"
+                                (click)="toDatePicker.open()" required>
+                            <mat-datepicker-toggle matIconSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #toDatePicker></mat-datepicker>
+                            <span class="  date-picker-icon align-top-t10">
+                                <img src="images/date-icon.svg" alt="Calendar">
+                            </span>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <mat-form-field appearance="fill">
+
+                        <mat-label>Travel To Time</mat-label>
+                        <div class="input-group">
+                            <input matInput [matTimepicker]="toTimepicker" (click)="toTimepicker.open()" type="time"
+                                formControlName="travelToDate" required>
+                            <mat-timepicker #toTimepicker></mat-timepicker>
+                            <span class="  date-picker-icon align-top-t10">
+                                <img src="images/time-icon.svg" alt="Calendar">
+                            </span>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <!-- Remarks -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Remarks</mat-label>
+                        <textarea matInput formControlName="remarks" maxlength="500" required></textarea>
+                    </mat-form-field>
+                </div>
+            </form>
         </div>
-     <div class="col-md-12">
-        <!-- Remarks -->
-        <mat-form-field appearance="fill">
-            <mat-label>Remarks</mat-label>
-            <textarea matInput formControlName="remarks" maxlength="500" required></textarea>
-        </mat-form-field>
+
+        <div mat-dialog-actions align="end">
+
+            <button class="btn btn-dark me-md-1" mat-raised-button color="primary" (click)="onSubmit()"
+                [disabled]="travelForm.invalid">
+                Submit
+            </button>
+        </div>
+
+    </div>
 </div>
-    </form>
-</div>
-
-<div mat-dialog-actions align="end">
-   
-    <button class="btn btn-dark me-md-1" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="travelForm.invalid">
-        Submit
-    </button>
-</div>
-
-</div></div>

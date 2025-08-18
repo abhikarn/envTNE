@@ -29,6 +29,7 @@ export class LineWiseCostCenterComponent {
   @Input() amount: any;
   @Input() ExpenseRequestDetailId: any = 0;
   @Input() costCenterData: any = [];
+  @Input() costcentreWiseExpense: any = [];
   costCenterDetailsForm: FormGroup;
   costCenterDetails: any = [];
   fields: any;
@@ -55,6 +56,11 @@ export class LineWiseCostCenterComponent {
     if (this.controlConfig?.fields) {
       this.fields = this.controlConfig.fields || [];
       this.notifications = this.controlConfig.notifications;
+    }
+
+    if (this.costcentreWiseExpense?.fields) {
+      this.fields = this.costcentreWiseExpense.fields || [];
+      this.notifications = this.costcentreWiseExpense.notifications;
     }
 
     // Apply global decimalPrecision to fields lacking explicit setting

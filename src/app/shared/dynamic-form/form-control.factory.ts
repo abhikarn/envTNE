@@ -59,7 +59,6 @@ export class FormControlFactory {
       }
       return validatorFn;
     }).filter((v): v is ValidatorFn => !!v); // Remove null values;
-
     const control = new FormControl(config?.value, validators.length ? Validators.compose(validators) : null);
     return control;
   }

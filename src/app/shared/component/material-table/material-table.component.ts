@@ -14,6 +14,7 @@ import { ConfirmDialogService } from '../../service/confirm-dialog.service';
 import { GlobalConfigService } from '../../service/global-config.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { LineWiseCostCenterComponent } from '../../dynamic-form/form-controls/cost-center/line-wise-cost-center/line-wise-cost-center.component';
 
 @Component({
   selector: 'app-material-table',
@@ -27,7 +28,8 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
     AddGstComponent,
     GlobalDatePipe,
     MatDialogModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    LineWiseCostCenterComponent
   ],
   templateUrl: './material-table.component.html',
   styleUrl: './material-table.component.scss',
@@ -43,6 +45,7 @@ export class MaterialTableComponent implements OnChanges {
   @Input() nestedTables: any[] = [];
   @Input() mode: 'preview' | 'approval' | 'finance-approval' = 'preview';
   @Input() categoryGST: any;
+  @Input() costcentreWiseExpense: any;
   @Output() selectionChanged = new EventEmitter<any>();
   @Output() emitExpenseRequestDetailId = new EventEmitter<any>();
   selectAll: boolean = false;

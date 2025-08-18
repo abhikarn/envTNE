@@ -509,7 +509,7 @@ export class DynamicFormService {
     if (!formConfig || !Array.isArray(formConfig) || formConfig.length === 0 || !moduleConfig) {
       return [];
     }
-    
+
     let modifiedFormConfig = [...formConfig]; // Create a copy of the original formConfig
     // handle international data
     if (moduleConfig?.internationalFlag) {
@@ -770,7 +770,7 @@ export class DynamicFormService {
               if (!fieldValue) {
                 this.confirmDialogService.confirm(confirmPopup).subscribe((result: boolean) => {
                   if (result) {
-                    
+
                   }
                 });
               }
@@ -794,4 +794,42 @@ export class DynamicFormService {
     return parseFloat(num.toFixed(precision));
   }
 
+  checkConditionBasedDisplayFields(control: IFormControl, category: any, form: FormGroup, formConfig: IFormControl[], moduleData: any): void {
+    debugger;
+    if (!control.conditionBasedDisplayFields || control.conditionBasedDisplayFields.length === 0) return;
+
+    if (control.conditionBasedDisplayFields) {
+      control.conditionBasedDisplayFields.forEach((field: any) => {
+        const { formula, dependsOn, showFields, hideFields } = field;
+
+        // if formula is met , show/hide fields using showInUI
+        const values: Record<string, any> = {};
+        dependsOn.forEach((dep: string) => {
+          const depControl = form.get(dep);
+          if (depControl) {
+            values[dep] = depControl.value;
+          }
+        });
+
+        // Evaluate the formula with the collected values
+        const isFormulaMet = this.evaluateFormula(formula, values);
+        if (isFormulaMet) {
+          showFields.forEach((field: string) => {
+            const control = formConfig.find(ctrl => ctrl.name === field);
+            if (control) {
+              control.showInUI = true;
+            }
+          });
+          hideFields.forEach((field: string) => {
+            const control = formConfig.find(ctrl => ctrl.name === field);
+            if (control) {
+              control.showInUI = false;
+            }
+          });
+        }
+      });
+    }
+  }
+
 }
+
