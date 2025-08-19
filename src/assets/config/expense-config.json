@@ -18690,7 +18690,7 @@
                 "order": 15
             },
             {
-                "name": "Relocation Travel Ticket Claim",
+                "name": "Transport Claim",
                 "label": "Transportation Claim",
                 "OCRRequired": true,
                 "duplicateCheckFields": [
@@ -18816,9 +18816,9 @@
                         "subType": "text",
                         "dataType": "numeric",
                         "name": "FuelCost",
-                        "isExcluded": true,
+                        "isExcluded": false,
                         "label": "Fuel Cost",
-                        "value": null,
+                        "value": 0,
                         "autoFormat": {
                             "patterns": [
                                 "[^0-9.]",
@@ -18839,7 +18839,7 @@
                         ],
                         "setFields": [
                             {
-                                "name": "TotalCost",
+                                "name": "ClaimAmount",
                                 "formula": "Number(FuelCost) && Number(TollCost) ? Number(FuelCost) + Number(TollCost) : 0",
                                 "dependsOn": [
                                     "FuelCost",
@@ -18857,9 +18857,9 @@
                         "subType": "text",
                         "dataType": "numeric",
                         "name": "TollCost",
-                        "isExcluded": true,
+                        "isExcluded": false,
                         "label": "Toll Cost",
-                        "value": null,
+                        "value": 0,
                         "autoFormat": {
                             "patterns": [
                                 "[^0-9.]",
@@ -18874,7 +18874,7 @@
                         "required": false,
                         "setFields": [
                             {
-                                "name": "TotalCost",
+                                "name": "ClaimAmount",
                                 "formula": "Number(FuelCost) && Number(TollCost) ? Number(FuelCost) + Number(TollCost) : 0",
                                 "dependsOn": [
                                     "FuelCost",
@@ -18886,54 +18886,6 @@
                         "readonly": false,
                         "showInUI": true,
                         "order": 7
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "dataType": "numeric",
-                        "name": "TotalCost",
-                        "isExcluded": true,
-                        "label": "Total Cost",
-                        "value": null,
-                        "dependentCases": [
-                            {
-                                "type": [
-                                    "domestic",
-                                    "international"
-                                ],
-                                "key": "Id",
-                                "inputControls": {
-                                    "Currency": "CurrencyId",
-                                    "ClaimDate": "ReferenceDate"
-                                },
-                                "outputControl": {
-                                    "ConversionRate": "ResponseValue.Value"
-                                },
-                                "autoFormat": {
-                                    "decimal": ".00"
-                                },
-                                "event": "onBlur",
-                                "requestBody": {},
-                                "apiService": "DataService",
-                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
-                            }
-                        ],
-                        "autoFormat": {
-                            "patterns": [
-                                "[^0-9.]",
-                                "^0+(?=\\d)"
-                            ],
-                            "range": {
-                                "min": 0,
-                                "max": 10
-                            },
-                            "decimalPrecision": "2"
-                        },
-                        "required": false,
-                        "disable": false,
-                        "readonly": true,
-                        "showInUI": true,
-                        "order": 8
                     },
                     {
                         "type": "text",
@@ -18974,9 +18926,9 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "numeric",
-                        "name": "Amount",
+                        "name": "ClaimAmount",
                         "isExcluded": true,
-                        "label": "Amount(Quote Price)",
+                        "label": "Claimed Amount",
                         "value": null,
                         "dependentCases": [
                             {
@@ -19012,7 +18964,13 @@
                             },
                             "decimalPrecision": "2"
                         },
-                        "required": false,
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Claimed Amount is required"
+                            }
+                        ],
                         "disable": false,
                         "readonly": false,
                         "showInUI": true,
@@ -19055,9 +19013,9 @@
                         "subType": "text",
                         "dataType": "numeric",
                         "name": "TotalDistance",
-                        "isExcluded": true,
+                        "isExcluded": false,
                         "label": "Total Distance(Km)",
-                        "value": null,
+                        "value": 0,
                         "autoFormat": {
                             "patterns": [
                                 "[^0-9.]",
@@ -19368,7 +19326,7 @@
                                 "name": "attachment",
                                 "isExcluded": false,
                                 "label": "Upload Your Bill",
-                                "value": [],
+                                "value": null,
                                 "multiple": true,
                                 "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
                                 "referenceType": 123,
@@ -19381,6 +19339,7 @@
                             }
                         ],
                         "notifications": {},
+                        "showInUI": true,
                         "order": 17
                     },
                     {
@@ -19406,12 +19365,19 @@
                         "value": 0,
                         "showInUI": false,
                         "calculate": {
-                            "formula": "TotalCost * ConversionRate",
+                            "formula": "ClaimAmount * ConversionRate",
                             "dependsOn": [
-                                "TotalCost",
+                                "ClaimAmount",
                                 "ConversionRate"
                             ]
                         }
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsEdit",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
                 ],
                 "conditionBasedDisplayFields": [
@@ -19422,14 +19388,13 @@
                         ],
                         "showFields": [
                             "VendorName",
-                            "Amount",
                             "BillDate",
-                            "BillNumber"
+                            "BillNumber",
+                            "quotation"
                         ],
                         "hideFields": [
                             "FuelCost",
                             "TollCost",
-                            "TotalCost",
                             "TotalDistance"
                         ]
                     },
@@ -19441,14 +19406,13 @@
                         "showFields": [
                             "FuelCost",
                             "TollCost",
-                            "TotalCost",
                             "TotalDistance"
                         ],
                         "hideFields": [
                             "VendorName",
-                            "Amount",
                             "BillDate",
-                            "BillNumber"
+                            "BillNumber",
+                            "quotation"
                         ]
                     }
                 ],
@@ -19467,7 +19431,7 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
-                        "ExpenseCategoryId": 34,
+                        "ExpenseCategoryId": 24,
                         "CityGradeId": 0,
                         "CountryGradeId": 0,
                         "PolicyReferenceId": 0
@@ -19525,19 +19489,19 @@
                         "order": 4
                     },
                     {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Claim Amount",
+                        "visible": true,
+                        "position": "in",
+                        "decimalPrecision": "2",
+                        "order": 5
+                    },
+                    {
                         "name": "Currency",
                         "label": "Currency",
                         "visible": true,
                         "position": "in",
-                        "order": 5
-                    },
-                    {
-                        "type": "number",
-                        "name": "TotalCost",
-                        "label": "Amount",
-                        "visible": true,
-                        "position": "in",
-                        "decimalPrecision": "2",
                         "order": 6
                     },
                     {
@@ -19558,7 +19522,7 @@
                         "name": "TransportationMode",
                         "label": "Transportation Mode",
                         "visible": true,
-                        "position": "in",
+                        "position": "out",
                         "order": 9
                     },
                     {
@@ -19567,7 +19531,29 @@
                         "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
-                        "order": 11
+                        "order": 10
+                    },
+                    {
+                        "name": "VendorName",
+                        "label": "Vendor Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
                     },
                     {
                         "type": "number",
@@ -19584,14 +19570,6 @@
                         "visible": true,
                         "position": "out",
                         "order": 11
-                    },
-                    {
-                        "type": "number",
-                        "name": "TotalCost",
-                        "label": "Total Cost",
-                        "visible": true,
-                        "position": "out",
-                        "order": 12
                     },
                     {
                         "type": "number",
@@ -19640,6 +19618,51 @@
                                 "label": "Ammout In Actual",
                                 "visible": true,
                                 "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "quotation",
+                        "label": "Quotation",
+                        "dataKey": "quotation",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "VendorName",
+                                "label": "Vendor Name",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "name": "QuoteNumber",
+                                "label": "Quote Number",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "name": "Date",
+                                "label": "Date",
+                                "visible": true,
+                                "order": 4
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true,
+                                "order": 5
+                            },
+                            {
+                                "type": "file",
+                                "name": "attachment",
+                                "label": "Attachment",
+                                "visible": true,
+                                "order": 6
                             }
                         ]
                     },
@@ -28056,6 +28079,11 @@
                         "name": "Training and Certification",
                         "label": "Training and Certification",
                         "showInUI": true
+                    },
+                    {
+                        "name": "Transport Claim",
+                        "label": "Transportation Claim",
+                        "showInUI": true
                     }
                 ]
             },
@@ -32731,7 +32759,7 @@
                 "showInUI": true
             },
             {
-                "name": "Relocation Travel Ticket Claim",
+                "name": "Transport Claim",
                 "label": "Transportation Claim",
                 "data": [],
                 "amount": 0,
@@ -32799,6 +32827,27 @@
                         "type": "date",
                         "name": "RelocationDate",
                         "label": "Relocation Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "name": "VendorName",
+                        "label": "Vendor Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "name": "Bill Number",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "name": "Bill Date",
+                        "label": "Bill Date",
                         "visible": true,
                         "position": "out",
                         "order": 8

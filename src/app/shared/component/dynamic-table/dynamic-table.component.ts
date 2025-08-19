@@ -109,6 +109,7 @@ export class DynamicTableComponent implements OnInit {
   formatValue(columnName: string, value: any): string {
     if (value === null || value === undefined) return '-';
     if (typeof value === 'object' && 'label' in value) return value.label;
+    if (typeof value === 'object' && 'FileName' in value) return value.FileName;
 
     // Only treat as date if column type is 'date' or 'datetime'
     const column = this.categoryConfig?.columns?.find((col: any) => col.name === columnName);
@@ -122,6 +123,14 @@ export class DynamicTableComponent implements OnInit {
     if (isDateTimeType && this.isDate(value)) {
       const format = this.configService.dateTimeFormat || 'dd-MMM-yyyy HH:mm';
       return this.formatDateUsingFormat(value, format);
+    }
+    
+    const isNumberType = column && (column.type === 'number');
+    if (isNumberType) {
+      if(value == 'NaN') {
+        value = 0; 
+      }
+      return parseFloat(value || 0).toFixed(column.decimalPrecision || this.configService.getDecimalPrecision());
     }
 
     return value;

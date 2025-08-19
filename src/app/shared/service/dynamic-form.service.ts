@@ -795,7 +795,6 @@ export class DynamicFormService {
   }
 
   checkConditionBasedDisplayFields(control: IFormControl, category: any, form: FormGroup, formConfig: IFormControl[], moduleData: any): void {
-    debugger;
     if (!category.conditionBasedDisplayFields || category.conditionBasedDisplayFields.length === 0) return;
 
     if (category.conditionBasedDisplayFields) {
@@ -825,6 +824,7 @@ export class DynamicFormService {
             const control = formConfig.find(ctrl => ctrl.name === field);
             if (control) {
               control.showInUI = false;
+              control.required = false;
               // set null value and disable control
               form.get(field)?.disable();
             }

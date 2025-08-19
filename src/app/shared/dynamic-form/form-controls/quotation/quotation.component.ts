@@ -5,6 +5,8 @@ import { SnackbarService } from '../../../service/snackbar.service';
 import { GlobalConfigService } from '../../../service/global-config.service';
 import { FormControlFactory } from '../../form-control.factory';
 import { CommonModule } from '@angular/common';
+import { DocumentService } from '../../../../../../tne-api';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'lib-quotation',
@@ -23,11 +25,13 @@ export class QuotationComponent {
   quotationDetails: any = [];
   fields: any;
   notifications: any;
+  fileName: string = '';
 
   constructor(
     private fb: FormBuilder,
     private snackbarService: SnackbarService,
-    private globalConfig: GlobalConfigService
+    private globalConfig: GlobalConfigService,
+    private documentService: DocumentService
   ) {
     this.quotationDetailsForm = this.fb.group({});
   }
@@ -66,7 +70,6 @@ export class QuotationComponent {
   }
 
   addQuotationRow(): void {
-
     if (this.quotationDetailsForm.invalid) {
       this.quotationDetailsForm.markAllAsTouched();
       return;
@@ -74,6 +77,7 @@ export class QuotationComponent {
 
     const newRow = this.quotationDetailsForm.value;
     this.quotationDetails.push(newRow);
+    this.control.setValue(this.quotationDetails);
     this.quotationDetailsForm.reset();
     this.snackbarService.success('Quotation row added successfully');
     this.initQuotationDetailsForm();
@@ -83,7 +87,8 @@ export class QuotationComponent {
     if (this.control && this.quotationDetails.length > 0) {
       this.quotationDetails.splice(index, 1);
     }
-    this.snackbarService.success('Quotation row removed successfully');}
+    this.snackbarService.success('Quotation row removed successfully');
+  }
 
   getValidationMessage(errors: any, fieldName: string): string {
     if (!errors) return '';
@@ -120,9 +125,74 @@ export class QuotationComponent {
       this.quotationDetailsForm.get(field.name)?.setValue(inputValue, { emitEvent: false });
     }
 
-    if(field.type == "file") {
-      
+    if (field.type == "file") {
+      this.onFileSelected(event, field);
     }
 
   }
+
+  onFileSelected(event: any, field: any) {
+    const input = event.target as HTMLInputElement;
+    const maxSizeBytes = (field.maxSizeMB ?? 20) * 1024 * 1024;
+    if (input.files && input.files.length > 0) {
+      const newFiles = Array.from(input.files);
+      newFiles.forEach((file: any) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64 = (reader.result as string).split(',')[1];
+          const lastDotIndex = file.name.lastIndexOf('.');
+          const fileName = lastDotIndex !== -1 ? file.name.substring(0, lastDotIndex) : file.name;
+          this.fileName = file.name; // Store the file name for display
+          const fileExtension = lastDotIndex !== -1 ? file.name.substring(lastDotIndex) : '';
+          const payload = {
+            ImageString: base64,
+            FileName: fileName,
+            FileExtension: fileExtension
+          };
+          if (file.size > maxSizeBytes) {
+            this.snackbarService.error(`File "${file.name}" exceeds the ${field.maxSizeMB} MB limit.`);
+            return;
+          } else {
+
+            this.uploadFile(payload, field);
+            console.log('Prepared File Payload:', payload);
+
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+    input.value = '';
+  }
+
+  uploadFile(payload: any, field: any) {
+    if (payload) {
+      this.documentService.documentDocumentWebUpload(payload).pipe(take(1)).subscribe({
+        next: (res: any) => {
+          if (
+            res &&
+            res.ResponseValue
+          ) {
+            let filterResponse: any = {};
+            filterResponse.ReferenceType = this.quotationDetailsForm.value?.DocumentType ? this.quotationDetailsForm.value?.DocumentType : field.referenceType;
+            filterResponse.DocumentTypeName = this.quotationDetailsForm.value?.DocumentTypeName ? this.quotationDetailsForm.value?.DocumentTypeName : '';
+            filterResponse.ReferenceId = res.ResponseValue.ReferenceId;
+            filterResponse.DocumentId = res.ResponseValue.DocumentId;
+            filterResponse.FileName = res.ResponseValue.FileName;
+            filterResponse.Location = res.ResponseValue.Location;
+            filterResponse.Guid = res.ResponseValue.Guid;
+
+            this.quotationDetailsForm.get(field.name)?.setValue(filterResponse, { emitEvent: false });
+          } else {
+            this.snackbarService.error('File upload failed or response is invalid.');
+          }
+        },
+        error: (err: any) => {
+          this.snackbarService.error('File upload failed.');
+          console.log(err)
+        }
+      })
+    }
+  }
+
 }

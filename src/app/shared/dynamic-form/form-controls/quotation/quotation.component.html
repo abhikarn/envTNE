@@ -25,9 +25,21 @@
                                     <td>
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
                                             <div class="trl-req-head"> <label> {{field.label}} </label></div>
-                                            <input [type]="field.type" [formControlName]="field.name"
-                                                (blur)="onBlur(field)" (input)="onInput($event, field)"
+                                            <!-- For non-file fields -->
+                                            <input *ngIf="field.type !== 'file'" [type]="field.type"
+                                                [formControlName]="field.name" (blur)="onBlur(field)"
+                                                (input)="onInput($event, field)"
                                                 class="form-control chm-forminput teGst gsttxt" />
+
+                                            <!-- For file upload -->
+                                            <input *ngIf="field.type === 'file'" type="file"
+                                                [attr.accept]="field.accept" [multiple]="field.multiple"
+                                                (change)="onFileSelected($event, field)"
+                                                class="form-control chm-forminput teGst gsttxt" />
+                                            <span *ngIf="field.type === 'file'" class="ml-2">
+                                                {{ fileName || 'No file chosen' }}
+                                            </span>
+
                                             <span class="validate-error-message teGst"
                                                 *ngIf="quotationDetailsForm.get(field.name)?.errors && quotationDetailsForm.get(field.name)?.touched">
                                                 {{
@@ -48,13 +60,17 @@
                                     </td>
                                 </tr>
                                 @if (quotationDetails?.length > 0) {
-                                @for (gst of quotationDetails; track $index) {
+                                @for (quotation of quotationDetails; track $index) {
                                 <tr>
                                     @for (field of fields; track $index) {
                                     @if (field.showInUI) {
                                     <td style="padding: 7px 10px;">
                                         <div class="trl-req-head"> <label> {{field.label}} </label> </div>
-                                        {{gst[field.name]}}
+                                        @if(field.type !== 'file') {
+                                            {{quotation[field.name]}}
+                                        } @else {
+                                            {{quotation[field.name]?.FileName}}
+                                        }
                                     </td>
                                     }
                                     }
