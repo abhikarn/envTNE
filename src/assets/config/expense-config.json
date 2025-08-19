@@ -18793,6 +18793,96 @@
                     {
                         "type": "text",
                         "subType": "text",
+                        "dataType": "int",
+                        "autoComplete": true,
+                        "name": "PickupLocationId",
+                        "isExcluded": false,
+                        "label": "Pickup City",
+                        "value": null,
+                        "options": [],
+                        "labelKey": "City",
+                        "valueKey": "CityMasterId",
+                        "apiService": "NewExpenseService",
+                        "apiMethod": "getMasterNameById",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Origin is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 4
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "PickupLocationAddress",
+                        "isExcluded": false,
+                        "label": "Pickup Address",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Pickup Address is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "showInUI": true,
+                        "order": 4
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "int",
+                        "autoComplete": true,
+                        "name": "DestinationLocationId",
+                        "isExcluded": false,
+                        "label": "Destination City",
+                        "value": null,
+                        "options": [],
+                        "labelKey": "City",
+                        "valueKey": "CityMasterId",
+                        "apiService": "NewExpenseService",
+                        "apiMethod": "getMasterNameById",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Destination is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "order": 4
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "DestinationLocationAddress",
+                        "isExcluded": false,
+                        "label": "Destination Address",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Destination Address is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "showInUI": true,
+                        "order": 4
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
                         "dataType": "string",
                         "autoComplete": false,
                         "name": "VendorName",
@@ -18900,6 +18990,26 @@
                             {
                                 "type": "required",
                                 "message": "Bill Number is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": false,
+                        "showInUI": true,
+                        "order": 9
+                    },
+                    {
+                        "type": "text",
+                        "subType": "text",
+                        "dataType": "string",
+                        "name": "QuotationNumber",
+                        "isExcluded": false,
+                        "label": "Quotation Number",
+                        "value": "",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Quotation Number is required"
                             }
                         ],
                         "disable": false,
@@ -19228,7 +19338,7 @@
                         "getControl": "ClaimAmount",
                         "fields": [
                             {
-                                "name": "ExpenseRequestQuotationTypeId",
+                                "name": "RelocationExpenseOtherVendorQuoteDetailsTypeId",
                                 "type": "number",
                                 "value": 0,
                                 "showInUI": false,
@@ -19274,9 +19384,9 @@
                                 "order": 4
                             },
                             {
-                                "name": "Date",
-                                "label": "Date",
-                                "placeholder": "Date",
+                                "name": "QuoteDate",
+                                "label": "Quote Date",
+                                "placeholder": "Quote Date",
                                 "type": "date",
                                 "showInUI": true,
                                 "required": true,
@@ -19292,7 +19402,7 @@
                             {
                                 "name": "Amount",
                                 "label": "Amount",
-                                "placeholder": "AMOUNT",
+                                "placeholder": "Amount",
                                 "type": "text",
                                 "dataType": "numeric",
                                 "showInUI": true,
@@ -19329,7 +19439,7 @@
                                 "value": null,
                                 "multiple": true,
                                 "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
-                                "referenceType": 123,
+                                "referenceType": 168,
                                 "maxSizeMB": 15,
                                 "required": false,
                                 "disable": false,
@@ -19390,6 +19500,7 @@
                             "VendorName",
                             "BillDate",
                             "BillNumber",
+                            "QuotationNumber",
                             "quotation"
                         ],
                         "hideFields": [
@@ -19412,6 +19523,7 @@
                             "VendorName",
                             "BillDate",
                             "BillNumber",
+                            "QuotationNumber",
                             "quotation"
                         ]
                     }
@@ -19534,6 +19646,34 @@
                         "order": 10
                     },
                     {
+                        "name": "PickupLocationId",
+                        "label": "Pickup City",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "PickupLocationAddress",
+                        "label": "Pickup Address",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "DestinationLocationId",
+                        "label": "Destination City",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "DestinationLocationAddress",
+                        "label": "Destination Address",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
                         "name": "VendorName",
                         "label": "Vendor Name",
                         "visible": true,
@@ -19645,8 +19785,9 @@
                                 "order": 3
                             },
                             {
-                                "name": "Date",
-                                "label": "Date",
+                                "type": "date",
+                                "name": "QuoteDate",
+                                "label": "Quote Date",
                                 "visible": true,
                                 "order": 4
                             },
@@ -32848,6 +32989,13 @@
                     {
                         "name": "Bill Date",
                         "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "name": "QuotationNumber",
+                        "label": "Quotation Number",
                         "visible": true,
                         "position": "out",
                         "order": 8

@@ -52,6 +52,7 @@ import { QuotationComponent } from './form-controls/quotation/quotation.componen
 })
 
 export class DynamicFormComponent implements OnInit, OnChanges {
+  @ViewChild(QuotationComponent) quotationComponentRef!: QuotationComponent;
   @ViewChild(CostCenterComponent) costCenterComponentRef!: CostCenterComponent;
   @ViewChild(GstComponent) gstComponentRef!: GstComponent;
   @ViewChildren(DateInputComponent) dateInputComponentRef!: QueryList<DateInputComponent>;
@@ -760,6 +761,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.gstComponentRef.setCompanyGSTFlag(true);
       this.gstComponentRef.gstData = rowData.row?.gst;
     }
+    if (rowData.row?.quotation?.length > 0) {
+      this.quotationComponentRef.quotationData = rowData.row?.quotation;
+    }
     this.selectedFiles = rowData.row?.attachment;
     this.editIndex = rowData.index;
     this.referenceId = rowData.row.ReferenceId || 0;
@@ -839,6 +843,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.gstComponentRef?.setCompanyGSTFlag(false);
     if (this.gstComponentRef) {
       this.gstComponentRef.gstData = [];
+    }
+    if (this.quotationComponentRef) {
+      this.quotationComponentRef.quotationData = [];
     }
     this.selectedFiles = [];
     this.formControls?.forEach((control: any) => {

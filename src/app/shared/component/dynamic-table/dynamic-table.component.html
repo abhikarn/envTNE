@@ -145,7 +145,11 @@
                               </span>
                             </div>
                             } @else {
+                            @if(col.type !== 'file') {
                             {{ formatValue(col.name, nestedRow[col.name]) }}
+                            } @else if (col.type === 'file') {
+                              <a style="text-decoration: underline; cursor: pointer;color: blue;" (click)="previewFile(nestedRow[col.name])">{{ formatValue(col.name, nestedRow[col.name]) }}</a>
+                            }
                             }
                           </td>
                           }
