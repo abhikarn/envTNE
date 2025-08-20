@@ -617,8 +617,8 @@
                 "displayTable": false,
                 "displayAddClearButton": false,
                 "moduleData": {
-                    "travelTypeId": 152,
-                    "requestForId": 152,
+                    "travelTypeId": 177,
+                    "requestForId": 177,
                     "claimTypeId": 53,
                     "travelRequestId": 0,
                     "expenseCategoryGroupId": 17,
@@ -15004,7 +15004,7 @@
             {
                 "name": "Medical Claim",
                 "label": "Medical Claim",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -15041,7 +15041,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -15060,7 +15060,8 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "apiDateLimit": true,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "order": 2
                     },
                     {
@@ -15093,7 +15094,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "travelTypeId"
+                                    "Type": "claimTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -15117,7 +15118,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "travelTypeId"
+                                    "Type": "claimTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -15988,6 +15989,14 @@
                         "value": 0,
                         "showInUI": false,
                         "international": true
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsEdit",
+                        "isExcluded": false,
+                        "value": false,
+                        "showInUI": false,
+                        "inPayload": false
                     }
                 ],
                 "checkValidationOnSubmit": {
@@ -16021,7 +16030,7 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
-                        "ExpenseCategoryId": 0,
+                        "ExpenseCategoryId": 60,
                         "PolicyReferenceId": 0
                     },
                     "otherControls": {
@@ -16322,7 +16331,8 @@
                     }
                 ],
                 "displayPage": {
-                    "Joining Expense": true
+                    "Joining Expense": true,
+                    "Relocation Expense": true
                 },
                 "showInUI": true,
                 "order": 10
@@ -20172,7 +20182,7 @@
             {
                 "name": "Transport Claim",
                 "label": "Transportation Claim",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -20209,7 +20219,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -27473,7 +27483,7 @@
                         "TravelRequestId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "claimTypeId",
+                        "ClaimTypeId": "travelTypeId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -27739,6 +27749,7 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "policyEntitlementCheck": true,
                         "order": 5
                     },
                     {
@@ -28132,18 +28143,18 @@
                     "apiService": "ExpenseService",
                     "apiMethod": "expenseGetExpensePolicyEntitlement",
                     "requestBody": {
-                        "ExpenseCategoryId": 65,
+                        "ExpenseCategoryId": 66,
                         "CityGradeId": 0,
                         "CountryGradeId": 0,
-                        "PolicyReferenceId": 0,
                         "TravelRequestId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "claimTypeId",
+                        "ClaimTypeId": "travelTypeId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
-                        "ClaimDate": "ReferenceDate"
+                        "ClaimDate": "ReferenceDate",
+                        "NoOfChild": "PolicyReferenceId"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -29522,7 +29533,7 @@
             {
                 "name": "Relocation Travel Ticket",
                 "label": "Tickets Expense",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -29574,7 +29585,7 @@
                             ]
                         },
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -30610,7 +30621,7 @@
             {
                 "name": "Relocation Accommodation",
                 "label": "Accommodation",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -30657,7 +30668,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -30752,7 +30763,8 @@
                             "value": null,
                             "required": true
                         },
-                        "apiDateLimit": true,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "policyEntitlementCheck": true,
                         "setFields": [
                             {
@@ -30799,7 +30811,8 @@
                             "value": null,
                             "required": true
                         },
-                        "apiDateLimit": true,
+                        "minDate": "01-01-1900",
+                        "maxDate": "today",
                         "setFields": [
                             {
                                 "name": "NoOfDays",
@@ -30892,7 +30905,7 @@
                                     "CityGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "travelTypeId"
+                                    "Type": "claimTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -30916,7 +30929,7 @@
                                     "CountryGradeId": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
-                                    "Type": "travelTypeId"
+                                    "Type": "claimTypeId"
                                 },
                                 "event": "autoComplete",
                                 "requestBody": {},
@@ -32204,7 +32217,7 @@
             {
                 "name": "Relocation Local Conveyance",
                 "label": "Local Conveyance",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -32246,7 +32259,7 @@
                             ]
                         },
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -33659,6 +33672,7 @@
             {
                 "name": "Relocation Daily Allowance",
                 "label": "Daily Allowance",
+                "OCRRequired": false,   
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
                     "name": "Relocation Daily Allowance",
