@@ -18889,7 +18889,10 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
-                        "required": true,
+                        "required": false,
+                        "requiredIf": {
+                            "TransportationMode": 107
+                        },
                         "validations": [
                             {
                                 "type": "required",
@@ -18920,7 +18923,10 @@
                             },
                             "decimalPrecision": "2"
                         },
-                        "required": true,
+                        "required": false,
+                        "requiredIf": {
+                            "TransportationMode": 108
+                        },
                         "validations": [
                             {
                                 "type": "required",
@@ -18962,6 +18968,15 @@
                             "decimalPrecision": "2"
                         },
                         "required": false,
+                        "requiredIf": {
+                            "TransportationMode": 108
+                        },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Toll Cost is required"
+                            }
+                        ],
                         "setFields": [
                             {
                                 "name": "ClaimAmount",
@@ -18985,7 +19000,10 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
-                        "required": true,
+                        "required": false,
+                        "requiredIf": {
+                            "TransportationMode": 107
+                        },
                         "validations": [
                             {
                                 "type": "required",
@@ -19005,7 +19023,10 @@
                         "isExcluded": false,
                         "label": "Quotation Number",
                         "value": "",
-                        "required": true,
+                        "required": false,
+                        "requiredIf": {
+                            "TransportationMode": 107
+                        },
                         "validations": [
                             {
                                 "type": "required",
@@ -19025,6 +19046,15 @@
                         "label": "Bill Date",
                         "value": null,
                         "required": false,
+                        "requiredIf": {
+                            "TransportationMode": 107
+                        },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Bill Date is required"
+                            }
+                        ],
                         "minDate": "01-01-1900",
                         "maxDate": "today",
                         "disable": false,
@@ -19443,7 +19473,6 @@
                                 "maxSizeMB": 15,
                                 "required": false,
                                 "disable": false,
-                                "oCRRequired": true,
                                 "showInUI": true,
                                 "order": 7
                             }
@@ -24951,7 +24980,7 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
-                        "name": "Registration Number",
+                        "name": "RegistrationNumber",
                         "isExcluded": false,
                         "label": "Registration Number",
                         "value": "",
@@ -25243,9 +25272,9 @@
                     {
                         "type": "textarea",
                         "dataType": "string",
-                        "name": "Justification",
+                        "name": "Remarks",
                         "isExcluded": false,
-                        "label": "Justification",
+                        "label": "Remarks",
                         "value": "",
                         "required": false,
                         "order": 14
@@ -25394,6 +25423,28 @@
                         "order": 6
                     },
                     {
+                        "name": "PaymentMode",
+                        "label": "Payment Mode",
+                        "visible": true,
+                        "position": "in",
+                        "order": 7
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Claim Amount",
+                        "visible": true,
+                        "position": "in",
+                        "order": 7
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 7
+                    },
+                    {
                         "name": "__actions",
                         "label": "Actions",
                         "visible": true,
@@ -25528,7 +25579,16 @@
                         "label": "Completion Month",
                         "placeholder": "Select Completion Month",
                         "value": "",
-                        "options": [],
+                        "options": [
+                            {
+                                "label": "Less than 6 Months",
+                                "value": 129
+                            },
+                            {
+                                "label": "Greater than 6 Months",
+                                "value": 130
+                            }
+                        ],
                         "labelKey": "",
                         "valueKey": "",
                         "apiService": "",
@@ -25821,9 +25881,9 @@
                     {
                         "type": "textarea",
                         "dataType": "string",
-                        "name": "Justification",
+                        "name": "Remarks",
                         "isExcluded": false,
-                        "label": "Justification",
+                        "label": "Remarks",
                         "value": "",
                         "required": false,
                         "order": 12
@@ -25966,11 +26026,19 @@
                     },
                     {
                         "type": "number",
-                        "name": "ClaimedAmount",
-                        "label": "Claimed Amount",
+                        "name": "ClaimAmount",
+                        "label": "Claim Amount",
                         "visible": true,
                         "position": "in",
                         "order": 6
+                    },
+                    {
+                        "type": "select",
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 7
                     },
                     {
                         "type": "actions",
@@ -26140,7 +26208,16 @@
                         "label": "No Of Child",
                         "placeholder": "Select No Of Child",
                         "value": "",
-                        "options": [],
+                        "options": [
+                            {
+                                "label": "1",
+                                "value": 1
+                            },
+                            {
+                                "label": "2",
+                                "value": 2
+                            }
+                        ],
                         "labelKey": "",
                         "valueKey": "",
                         "apiService": "",
@@ -26462,9 +26539,9 @@
                     {
                         "type": "textarea",
                         "dataType": "string",
-                        "name": "Justification",
+                        "name": "Remarks",
                         "isExcluded": false,
-                        "label": "Justification",
+                        "label": "Remarks",
                         "value": "",
                         "required": false,
                         "order": 15
@@ -26583,7 +26660,7 @@
                     },
                     {
                         "type": "date",
-                        "name": "Bill Date",
+                        "name": "BillDate",
                         "label": "Bill Date",
                         "visible": true,
                         "position": "in",
@@ -26607,11 +26684,19 @@
                     },
                     {
                         "type": "number",
-                        "name": "ClaimedAmount",
-                        "label": "Claimed Amount",
+                        "name": "ClaimAmount",
+                        "label": "Claim Amount",
                         "visible": true,
                         "position": "in",
                         "order": 6
+                    },
+                    {
+                        "type": "select",
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 7
                     },
                     {
                         "type": "actions",
@@ -26670,8 +26755,8 @@
                         "order": 12
                     },
                     {
-                        "name": "Justification",
-                        "label": "Justification",
+                        "name": "Remarks",
+                        "label": "Remarks",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -33065,6 +33150,52 @@
                                 "label": "Ammout In Actual",
                                 "visible": true,
                                 "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "quotation",
+                        "dataKey": "quotation",
+                        "label": "Quotation",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "vendorName",
+                                "label": "Vendor Name",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "name": "quoteNumber",
+                                "label": "Quote Number",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "date",
+                                "name": "quoteDate",
+                                "label": "Quote Date",
+                                "visible": true,
+                                "order": 4
+                            },
+                            {
+                                "type": "number",
+                                "name": "amount",
+                                "label": "Amount",
+                                "visible": true,
+                                "order": 5
+                            },
+                            {
+                                "type": "file",
+                                "name": "attachment",
+                                "label": "Attachment",
+                                "visible": true,
+                                "order": 6
                             }
                         ]
                     }
