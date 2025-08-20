@@ -331,6 +331,23 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       }
     }
 
+    if (this.category.checkValidationOnSubmit?.quotationCheck) {
+      for (const validation of this.category.checkValidationOnSubmit.quotationCheck) {
+        const { minimumNumberOfQuotation } = validation;
+
+        const quotationCount = this.form.get('quotation')?.value?.length || 0;
+        if (quotationCount < minimumNumberOfQuotation) {
+          this.snackbarService.error(
+            `At least ${minimumNumberOfQuotation} quotations are required.`,
+            5000
+          );
+          if (this.editIndex && this.isTravelRaiseRequest) {
+            this.freezeControlsBasedOnConditions();
+          }
+          return;
+        }
+      }
+    }
 
     if (this.category.checkValidationOnSubmit?.multipleAttachmentValidation) {
       for (const validation of this.category.checkValidationOnSubmit.multipleAttachmentValidation) {

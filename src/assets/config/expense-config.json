@@ -19167,7 +19167,10 @@
                             },
                             "decimalPrecision": "0"
                         },
-                        "required": true,
+                        "required": false,
+                        "requiredIf": {
+                            "TransportationMode": 108
+                        }, 
                         "validations": [
                             {
                                 "type": "required",
@@ -19565,6 +19568,14 @@
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
                             ]
+                        }
+                    ],
+                    "quotationCheck": [
+                        {
+                            "fieldList": {
+                                "Quotation": "Quotation"
+                            },
+                            "minimumNumberOfQuotation": 1
                         }
                     ]
                 },
