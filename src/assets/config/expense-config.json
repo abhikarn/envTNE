@@ -35335,7 +35335,7 @@
                     },
                     {
                         "name": "Relocation Travel Ticket",
-                        "label": "Relocation Tickets Expense",
+                        "label": "Tickets Expense",
                         "showInUI": true
                     },
                     {
@@ -35345,7 +35345,7 @@
                     },
                     {
                         "name": "Relocation Accommodation",
-                        "label": "Relocation Accommodation",
+                        "label": "Accommodation",
                         "showInUI": true
                     },
                     {
@@ -35365,7 +35365,7 @@
                     },
                     {
                         "name": "Relocation Daily Allowance",
-                        "label": "Relocation Daily Allowance",
+                        "label": "Daily Allowance",
                         "showInUI": true
                     },
                     {
@@ -35466,6 +35466,21 @@
                     {
                         "name": "Transport Claim",
                         "label": "Transportation Claim",
+                        "showInUI": true
+                    },
+                    {
+                        "name": "Lease & Rent Deposit",
+                        "label": "Lease & Rent Deposit",
+                        "showInUI": true
+                    },
+                    {
+                        "name": "Vehicle Road Tax",
+                        "label": "Vehicle Road Tax",
+                        "showInUI": true
+                    },
+                    {
+                        "name": "School Capitation Fees",
+                        "label": "School Capitation Fees",
                         "showInUI": true
                     }
                 ]
