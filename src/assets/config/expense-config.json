@@ -15048,7 +15048,7 @@
                         "type": "date",
                         "dataType": "datetime",
                         "name": "ClaimDate",
-                        "isExcluded": false,
+                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": "",
                         "required": true,
@@ -15599,9 +15599,9 @@
                     {
                         "type": "textarea",
                         "dataType": "string",
-                        "name": "Justification",
+                        "name": "Remarks",
                         "isExcluded": false,
-                        "label": "Justification",
+                        "label": "Remarks",
                         "value": "",
                         "required": false,
                         "order": 19
@@ -16039,7 +16039,7 @@
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
-                        "CheckInDateTime": "ReferenceDate",
+                        "ClaimDate": "ReferenceDate",
                         "CityGrade": "CityGradeId",
                         "CountryGrade": "CountryGradeId"
                     },
@@ -26837,6 +26837,13 @@
                         "value": false,
                         "showInUI": false,
                         "inPayload": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsActual",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
                 ],
                 "policyViolationManualCheck": [
@@ -26866,7 +26873,7 @@
                         "TravelRequestId": 0
                     },
                     "otherControls": {
-                        "ClaimTypeId": "claimTypeId",
+                        "ClaimTypeId": "travelTypeId",
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
@@ -27089,20 +27096,11 @@
                         "label": "Completion Month",
                         "placeholder": "Select Completion Month",
                         "value": "",
-                        "options": [
-                            {
-                                "label": "Less than 6 Months",
-                                "value": 129
-                            },
-                            {
-                                "label": "Greater than 6 Months",
-                                "value": 130
-                            }
-                        ],
-                        "labelKey": "",
-                        "valueKey": "",
-                        "apiService": "",
-                        "apiMethod": "",
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetCompletionMonth",
                         "required": true,
                         "validations": [
                             {
@@ -27454,6 +27452,13 @@
                         "value": false,
                         "showInUI": false,
                         "inPayload": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsActual",
+                        "isExcluded": true,
+                        "value": false,
+                        "showInUI": false
                     }
                 ],
                 "policyViolationManualCheck": [
@@ -32307,10 +32312,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "displayPage": {
-                            "Travel Expense": false,
-                            "Local Travel Conveyance": true
-                        },
                         "getReadableValue": {
                             "controlName": "MonthName"
                         },
@@ -32340,90 +32341,9 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "apiDateLimit": true,
-                        "displayPage": {
-                            "Travel Expense": true,
-                            "Local Travel Conveyance": false
-                        },
-                        "order": 3
-                    },
-                    {
-                        "type": "date",
-                        "dataType": "datetime",
-                        "name": "ClaimDate",
-                        "isExcluded": true,
-                        "label": "Claim Date",
-                        "value": "",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Claim Date is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
-                        "displayPage": {
-                            "Travel Expense": false,
-                            "Local Travel Conveyance": true
-                        },
                         "order": 4
-                    },
-                    {
-                        "type": "select",
-                        "dataType": "int",
-                        "name": "LocalTravelType",
-                        "isExcluded": false,
-                        "label": "Local Travel Type",
-                        "placeholder": "Select Travel Type",
-                        "value": null,
-                        "options": [],
-                        "labelKey": "Value",
-                        "valueKey": "Key",
-                        "apiService": "DataService",
-                        "apiMethod": "dataGetLocalTravelType",
-                        "dependentCases": [
-                            {
-                                "type": [
-                                    "domestic",
-                                    "international"
-                                ],
-                                "key": "Id",
-                                "inputControls": {
-                                    "LocalTravelType": "expenseCategoryId"
-                                },
-                                "outputControl": {
-                                    "LocalTravelMode": "ResponseValue"
-                                },
-                                "otherControls": {
-                                    "ClaimTypeId": "travelTypeId",
-                                    "TravelRequestId": "travelRequestId",
-                                    "UserMasterId": "UserMasterId"
-                                },
-                                "requestBody": {},
-                                "event": "onBlur",
-                                "apiService": "DataService",
-                                "apiMethod": "dataUserLocalTravelMode",
-                                "labelKey": "Value",
-                                "valueKey": "Key"
-                            }
-                        ],
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Local Travel Type is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "displayPage": {
-                            "Travel Expense": true,
-                            "Local Travel Conveyance": false
-                        },
-                        "order": 5
                     },
                     {
                         "type": "select",
@@ -32566,46 +32486,6 @@
                         "order": 8
                     },
                     {
-                        "type": "text",
-                        "subType": "text",
-                        "name": "OriginPointName",
-                        "label": "Origin Point Name",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Origin Point Name is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "displayPage": {
-                            "Travel Expense": true,
-                            "Local Travel Conveyance": false
-                        },
-                        "order": 9
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
-                        "name": "DestinationPointName",
-                        "label": "Destination Point Name",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Destination Point Name is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "displayPage": {
-                            "Travel Expense": true,
-                            "Local Travel Conveyance": false
-                        },
-                        "order": 10
-                    },
-                    {
                         "type": "autocomplete",
                         "name": "OriginPointName",
                         "label": "Origin Location",
@@ -32642,10 +32522,6 @@
                                 "message": "Origin Location is required"
                             }
                         ],
-                        "displayPage": {
-                            "Travel Expense": false,
-                            "Local Travel Conveyance": true
-                        },
                         "order": 11
                     },
                     {
@@ -32685,10 +32561,6 @@
                                 "message": "Destination Location is required"
                             }
                         ],
-                        "displayPage": {
-                            "Travel Expense": false,
-                            "Local Travel Conveyance": true
-                        },
                         "order": 12
                     },
                     {
@@ -33666,13 +33538,13 @@
                     53,
                     54
                 ],
-                "showInUI": true,
+                "showInUI": false,
                 "order": 7
             },
             {
                 "name": "Relocation Daily Allowance",
                 "label": "Daily Allowance",
-                "OCRRequired": false,   
+                "OCRRequired": false,
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
                     "name": "Relocation Daily Allowance",
@@ -35155,7 +35027,10 @@
                 "name": "PolicyViolations",
                 "label": "Policy Violations",
                 "Travel Ticket": "You Are Not Eligible To Travel in the selected Mode and Class.",
+                "Relocation Travel Ticket": "You Are Not Eligible To Travel in the selected Mode and Class.",
                 "Accommodation": "Claimed amount is greater than Entitled amount.",
+                "Relocation Accommodation": "Claimed amount is greater than Entitled amount.",
+                "Relocation Daily Allowance": "Claimed amount is greater than Entitled amount.",
                 "Local Conveyance During Travel": "Claimed amount is greater than Entitled amount.",
                 "Incidental Expenses": "Claimed amount is greater than Entitled amount.",
                 "Laundry service": "Claimed amount is greater than Entitled amount.",
@@ -35495,6 +35370,11 @@
                     {
                         "name": "School Capitation Fees",
                         "label": "School Capitation Fees",
+                        "showInUI": true
+                    },
+                    {
+                        "name": "Medical Claim",
+                        "label": "Medical Claim",
                         "showInUI": true
                     }
                 ]
@@ -41054,8 +40934,8 @@
                         "order": 14
                     },
                     {
-                        "name": "Justification",
-                        "label": "Justification",
+                        "name": "Remarks",
+                        "label": "Remarks",
                         "visible": true,
                         "position": "out",
                         "order": 15
@@ -42009,7 +41889,7 @@
                 "label": "Transportation Claim",
                 "data": [],
                 "amount": 0,
-                "expanded": true,
+                "expanded": false,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -42982,7 +42862,7 @@
                 "label": "Lease & Rent Deposit",
                 "data": [],
                 "amount": 0,
-                "expanded": true,
+                "expanded": false,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -43034,6 +42914,68 @@
                         "visible": true,
                         "position": "in",
                         "order": 6
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement Amount",
+                        "visible": true,
+                        "position": "out",
+                        "order": 7
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementConversionRate",
+                        "label": "Entitlement Conversion Rate",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "type": "select",
+                        "name": "EntitlementCurrency",
+                        "label": "Entitlement Currency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "RegistrationNumber",
+                        "label": "Registration Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 11
+                    },
+                    {
+                        "type": "date",
+                        "name": "LeaseStartDate",
+                        "label": "Lease Start Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 12
+                    },
+                    {
+                        "type": "date",
+                        "name": "LeaseEndDate",
+                        "label": "Lease End Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 12
+                    },
+                    {
+                        "name": "Remarks",
+                        "label": "Remarks",
+                        "visible": true,
+                        "position": "in",
+                        "order": 13
                     }
                 ],
                 "gst": null,
@@ -43045,7 +42987,7 @@
                 "label": "Vehicle Road Tax",
                 "data": [],
                 "amount": 0,
-                "expanded": true,
+                "expanded": false,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -43100,15 +43042,147 @@
                     },
                     {
                         "type": "number",
-                        "name": "ClaimAmountInBaseCurrency",
-                        "label": "Approved(INR)",
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement Amount",
+                        "visible": true,
+                        "position": "out",
+                        "order": 7
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementConversionRate",
+                        "label": "Entitlement Conversion Rate",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "type": "select",
+                        "name": "EntitlementCurrency",
+                        "label": "Entitlement Currency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "CompletionMonth",
+                        "label": "Completion Month",
+                        "visible": true,
+                        "position": "out",
+                        "order": 11
+                    },
+                    {
+                        "type": "date",
+                        "name": "RelocationDate",
+                        "label": "Relocation Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 12
+                    },
+                    {
+                        "name": "Remarks",
+                        "label": "Remarks",
                         "visible": true,
                         "position": "in",
-                        "order": 7
+                        "order": 13
                     }
                 ],
                 "gst": null,
-                "nestedTables": [],
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gst",
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
+                    }
+                ],
                 "showInUI": true
             },
             {
@@ -43116,11 +43190,208 @@
                 "label": "School Capitation Fees",
                 "data": [],
                 "amount": 0,
-                "expanded": true,
+                "expanded": false,
                 "slNoLabel": "Sl. No.",
-                "columns": [],
+                "columns": [
+                    {
+                        "type": "date",
+                        "name": "ClaimDate",
+                        "label": "Claim Date",
+                        "visible": true,
+                        "position": "in",
+                        "order": 1
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmount",
+                        "label": "Claimed",
+                        "visible": true,
+                        "position": "in-out",
+                        "order": 2
+                    },
+                    {
+                        "type": "numeric",
+                        "name": "ApprovedAmount",
+                        "label": "Approved Amount",
+                        "visible": true,
+                        "isEditableInApproval": true,
+                        "isEditableInFinanceApproval": true,
+                        "controlType": "input",
+                        "position": "in",
+                        "order": 3
+                    },
+                    {
+                        "name": "Currency",
+                        "label": "Currency",
+                        "visible": true,
+                        "position": "in",
+                        "order": 4
+                    },
+                    {
+                        "type": "number",
+                        "name": "ConversionRate",
+                        "label": "Conversion Rate",
+                        "visible": true,
+                        "position": "in",
+                        "order": 5
+                    },
+                    {
+                        "type": "number",
+                        "name": "ClaimAmountInBaseCurrency",
+                        "label": "Approved(INR)",
+                        "visible": true,
+                        "position": "in",
+                        "order": 6
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement Amount",
+                        "visible": true,
+                        "position": "out",
+                        "order": 7
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "type": "number",
+                        "name": "EntitlementConversionRate",
+                        "label": "Entitlement Conversion Rate",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "type": "select",
+                        "name": "EntitlementCurrency",
+                        "label": "Entitlement Currency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "SchoolName",
+                        "label": "School Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 11
+                    },
+                    {
+                        "name": "SchoolAddress",
+                        "label": "School Address",
+                        "visible": true,
+                        "position": "out",
+                        "order": 12
+                    },
+                    {
+                        "name": "NoOfChild",
+                        "label": "No Of Child",
+                        "visible": true,
+                        "position": "out",
+                        "order": 13
+                    },
+                    {
+                        "name": "Remarks",
+                        "label": "Remarks",
+                        "visible": true,
+                        "position": "in",
+                        "order": 14
+                    }
+                ],
                 "gst": null,
-                "nestedTables": [],
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Centre",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Ammout In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Ammout In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gst",
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
+                    }
+                ],
                 "showInUI": true
             },
             {

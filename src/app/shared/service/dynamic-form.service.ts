@@ -159,9 +159,9 @@ export class DynamicFormService {
 
           fieldsToRemove.forEach(field => {
             form.removeControl(field);
-            const control = formControls.find(c => c.formConfig?.name === field);
+            const control = formControls.find(c => c?.name === field);
             if (control) {
-              control.formConfig.showInUI = false;
+              control.showInUI = false;
             }
           });
 
