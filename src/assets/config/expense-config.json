@@ -624,6 +624,42 @@
                     "expenseCategoryGroupId": 17,
                     "expenseCategoryGroupName": "RLE"
                 }
+            },
+            {
+                "id": 18,
+                "name": "Transfer Expense",
+                "label": "Transfer Expense",
+                "displayPage": {
+                    "Transfer Expense": true
+                },
+                "displayTable": false,
+                "displayAddClearButton": false,
+                "moduleData": {
+                    "travelTypeId": 177,
+                    "requestForId": 177,
+                    "claimTypeId": 53,
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 18,
+                    "expenseCategoryGroupName": "TFE"
+                }
+            },
+            {
+                "id": 19,
+                "name": "Joining Expense",
+                "label": "Joining Expense",
+                "displayPage": {
+                    "Joining Expense": true
+                },
+                "displayTable": false,
+                "displayAddClearButton": false,
+                "moduleData": {
+                    "travelTypeId": 176,
+                    "requestForId": 176,
+                    "claimTypeId": 53,
+                    "travelRequestId": 0,
+                    "expenseCategoryGroupId": 19,
+                    "expenseCategoryGroupName": "JOE"
+                }
             }
         ],
         "dateExtension": {
@@ -1710,9 +1746,7 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense Domestic": true,
-                    "Direct Expense International": true,
-                    "Joining Expense": true,
-                    "Transfer Expense": true
+                    "Direct Expense International": true
                 },
                 "showCategoryFor": [
                     51,
@@ -3308,9 +3342,7 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense Domestic": true,
-                    "Direct Expense International": true,
-                    "Joining Expense": true,
-                    "Transfer Expense": true
+                    "Direct Expense International": true
                 },
                 "showCategoryFor": [
                     51,
@@ -4735,9 +4767,7 @@
                 ],
                 "displayPage": {
                     "Travel Expense": true,
-                    "Direct Expense": true,
-                    "Joining Expense": true,
-                    "Transfer Expense": true
+                    "Direct Expense": true
                 },
                 "showCategoryFor": [
                     51,
@@ -6163,9 +6193,7 @@
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense Domestic": true,
-                    "Direct Expense International": true,
-                    "Joining Expense": true,
-                    "Transfer Expense": true
+                    "Direct Expense International": true
                 },
                 "showCategoryFor": [
                     51,
@@ -6374,7 +6402,9 @@
                             }
                         },
                         "displayPage": {
-                            "Relocation Expense": true
+                            "Relocation Expense": true,
+                            "Transfer Expense": true,
+                            "Joining Expense": true
                         }
                     },
                     {
@@ -12070,8 +12100,6 @@
                     "Travel Expense": true,
                     "Direct Expense Domestic": true,
                     "Direct Expense International": true,
-                    "Joining Expense": true,
-                    "Transfer Expense": true,
                     "Relocation Expense": false
                 },
                 "showCategoryFor": [
@@ -16331,8 +16359,8 @@
                     }
                 ],
                 "displayPage": {
-                    "Joining Expense": true,
-                    "Relocation Expense": true
+                    "Relocation Expense": true,
+                    "Joining Expense": true
                 },
                 "showInUI": true,
                 "order": 10
@@ -21365,8 +21393,6 @@
                     }
                 ],
                 "displayPage": {
-                    "Joining Expense": true,
-                    "Transfer Expense": true,
                     "Relocation Expense": true
                 },
                 "showInUI": true,
@@ -26996,9 +27022,9 @@
                 ],
                 "nestedTables": [],
                 "displayPage": {
-                    "Joining Expense": true,
+                    "Relocation Expense": true,
                     "Transfer Expense": true,
-                    "Relocation Expense": true
+                    "Joining Expense": true
                 },
                 "showInUI": true,
                 "order": 25
@@ -27613,9 +27639,9 @@
                 ],
                 "nestedTables": [],
                 "displayPage": {
-                    "Joining Expense": true,
+                    "Relocation Expense": true,
                     "Transfer Expense": true,
-                    "Relocation Expense": true
+                    "Joining Expense": true
                 },
                 "showInUI": true,
                 "order": 26
@@ -28296,9 +28322,9 @@
                 ],
                 "nestedTables": [],
                 "displayPage": {
-                    "Joining Expense": true,
+                    "Relocation Expense": true,
                     "Transfer Expense": true,
-                    "Relocation Expense": true
+                    "Joining Expense": true
                 },
                 "showInUI": true,
                 "order": 27
@@ -30612,7 +30638,9 @@
                     }
                 ],
                 "displayPage": {
-                    "Relocation Expense": true
+                    "Relocation Expense": true,
+                    "Transfer Expense": true,
+                    "Joining Expense": true
                 },
                 "showCategoryFor": [
                     51,
@@ -32208,7 +32236,9 @@
                     }
                 ],
                 "displayPage": {
-                    "Relocation Expense": true
+                    "Relocation Expense": true,
+                    "Transfer Expense": true,
+                    "Joining Expense": true
                 },
                 "showCategoryFor": [
                     51,
@@ -33530,7 +33560,9 @@
                     }
                 ],
                 "displayPage": {
-                    "Relocation Expense": true
+                    "Relocation Expense": true,
+                    "Transfer Expense": true,
+                    "Joining Expense": true
                 },
                 "showCategoryFor": [
                     51,
@@ -33740,7 +33772,9 @@
                             }
                         },
                         "displayPage": {
-                            "Relocation Expense": true
+                            "Relocation Expense": true,
+                            "Transfer Expense": true,
+                            "Joining Expense": true
                         }
                     },
                     {
@@ -35010,7 +35044,9 @@
                     }
                 ],
                 "displayPage": {
-                    "Relocation Expense": true
+                    "Relocation Expense": true,
+                    "Transfer Expense": true,
+                    "Joining Expense": true
                 },
                 "showCategoryFor": [
                     51,
