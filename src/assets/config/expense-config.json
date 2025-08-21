@@ -21393,7 +21393,9 @@
                     }
                 ],
                 "displayPage": {
-                    "Relocation Expense": true
+                    "Relocation Expense": true,
+                    "Transfer Expense": true,
+                    "Joining Expense": true
                 },
                 "showInUI": true,
                 "order": 16
@@ -26959,7 +26961,7 @@
                         "order": 5
                     },
                     {
-                        "name": "Registration Number",
+                        "name": "RegistrationNumber",
                         "label": "Registration Number",
                         "visible": true,
                         "position": "in",
@@ -35197,7 +35199,7 @@
                         "name": "lessAdvance",
                         "label": "Less Advance",
                         "value": 0.00,
-                        "showInUI": true
+                        "showInUI": false
                     },
                     {
                         "name": "amountPaidByCompany",
@@ -35231,7 +35233,7 @@
                         "name": "advanceReturn",
                         "label": "Advance Return",
                         "value": 0.00,
-                        "showInUI": true
+                        "showInUI": false
                     },
                     {
                         "name": "adjustments",
