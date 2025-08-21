@@ -3015,7 +3015,7 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -4454,7 +4454,7 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -5885,7 +5885,7 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -7368,7 +7368,7 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -8776,7 +8776,7 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -10190,7 +10190,7 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -11757,7 +11757,7 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -13355,7 +13355,7 @@
                 "policyViolationManualCheck": [
                     {
                         "checkIfTrue": "MaximumAmount",
-                        "formula": "ClaimAmountInBaseCurrency > MaximumAmount",
+                        "formula": "Number(ClaimAmountInBaseCurrency) > Number(MaximumAmount)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "MaximumAmount": "MaximumAmount"
@@ -13369,7 +13369,7 @@
                     },
                     {
                         "checkIfTrue": "MinimumKM",
-                        "formula": "KM < MinimumKM",
+                        "formula": "Number(KM) < Number(MinimumKM)",
                         "controls": {
                             "KM": "KM",
                             "MinimumKM": "MinimumKM"
@@ -13383,7 +13383,7 @@
                     },
                     {
                         "checkIfTrue": "MaximumKM",
-                        "formula": "KM > MaximumKM",
+                        "formula": "Number(KM) > Number(MaximumKM)",
                         "controls": {
                             "KM": "KM",
                             "MaximumKM": "MaximumKM"
@@ -16022,7 +16022,7 @@
                         "type": "hidden",
                         "name": "IsEdit",
                         "isExcluded": false,
-                        "value": false,
+                        "value": true,
                         "showInUI": false,
                         "inPayload": false
                     }
@@ -16040,7 +16040,7 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -17102,7 +17102,7 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -17978,7 +17978,7 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -21036,7 +21036,7 @@
                         "type": "hidden",
                         "name": "IsEdit",
                         "isExcluded": false,
-                        "value": false,
+                        "value": true,
                         "showInUI": false,
                         "inPayload": false
                     }
@@ -24867,7 +24867,7 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -25570,7 +25570,7 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -26862,7 +26862,7 @@
                         "type": "hidden",
                         "name": "IsEdit",
                         "isExcluded": false,
-                        "value": false,
+                        "value": true,
                         "showInUI": false,
                         "inPayload": false
                     },
@@ -26876,7 +26876,7 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -27477,7 +27477,7 @@
                         "type": "hidden",
                         "name": "IsEdit",
                         "isExcluded": false,
-                        "value": false,
+                        "value": true,
                         "showInUI": false,
                         "inPayload": false
                     },
@@ -27491,7 +27491,7 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -28151,14 +28151,14 @@
                         "type": "hidden",
                         "name": "IsEdit",
                         "isExcluded": false,
-                        "value": false,
+                        "value": true,
                         "showInUI": false,
                         "inPayload": false
                     }
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -31913,7 +31913,7 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -33345,7 +33345,7 @@
                 "policyViolationManualCheck": [
                     {
                         "checkIfTrue": "MaximumAmount",
-                        "formula": "ClaimAmountInBaseCurrency > MaximumAmount",
+                        "formula": "Number(ClaimAmountInBaseCurrency) > Number(MaximumAmount)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "MaximumAmount": "MaximumAmount"
@@ -33359,7 +33359,7 @@
                     },
                     {
                         "checkIfTrue": "MinimumKM",
-                        "formula": "KM < MinimumKM",
+                        "formula": "Number(KM) < Number(MinimumKM)",
                         "controls": {
                             "KM": "KM",
                             "MinimumKM": "MinimumKM"
@@ -33373,7 +33373,7 @@
                     },
                     {
                         "checkIfTrue": "MaximumKM",
-                        "formula": "KM > MaximumKM",
+                        "formula": "Number(KM) > Number(MaximumKM)",
                         "controls": {
                             "KM": "KM",
                             "MaximumKM": "MaximumKM"
@@ -34726,7 +34726,7 @@
                         "type": "hidden",
                         "name": "IsEdit",
                         "isExcluded": false,
-                        "value": false,
+                        "value": true,
                         "showInUI": false,
                         "inPayload": false
                     }
@@ -34740,7 +34740,7 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && ClaimAmountInBaseCurrency > EntitlementAmountInBaseCurrency",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -35080,7 +35080,12 @@
                 "Mobile Expense": "Claimed amount is greater than Entitled amount.",
                 "Marriage Gift": "Claimed amount is greater than Entitled amount.",
                 "Business Entertainment": "Claimed amount is greater than Entitled amount.",
-                "Roaming": "Claimed amount is greater than Entitled amount."
+                "Roaming": "Claimed amount is greater than Entitled amount.",
+                "Medical Claim": "Claimed amount is greater than Entitled amount.",
+                "Transport Claim": "Claimed amount is greater than Entitled amount.",
+                "Lease & Rent Deposit": "Claimed amount is greater than Entitled amount.",
+                "Vehicle Road Tax": "Claimed amount is greater than Entitled amount.",
+                "School Capitation Fees": "Claimed amount is greater than Entitled amount."
             },
             {
                 "name": "Approvaldetails",
