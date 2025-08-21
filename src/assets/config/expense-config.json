@@ -35338,6 +35338,7 @@
                 "name": "City",
                 "value": "",
                 "isLink": false,
+                "showInUI": true,
                 "order": 1
             },
             {
@@ -35345,6 +35346,7 @@
                 "name": "Department",
                 "isLink": false,
                 "value": "",
+                "showInUI": true,
                 "order": 2
             },
             {
@@ -35352,6 +35354,7 @@
                 "name": "Designation",
                 "isLink": false,
                 "value": "",
+                "showInUI": true,
                 "order": 3
             },
             {
@@ -35359,6 +35362,7 @@
                 "name": "Grade",
                 "isLink": false,
                 "value": "",
+                "showInUI": true,
                 "order": 4
             },
             {
@@ -35370,13 +35374,15 @@
                 "controlType": "autocomplete",
                 "apiUrl": "/api/Data/CostCentreAutocomplete",
                 "displayKey": "Display",
-                "valueKey": "CostCentreId"
+                "valueKey": "CostCentreId",
+                "showInUI": true
             },
             {
                 "label": "Default Cost Centre",
                 "name": "costCentre",
                 "isLink": false,
                 "value": "NA",
+                "showInUI": true,
                 "order": 5
             },
             {
@@ -35384,6 +35390,10 @@
                 "name": "travelRequestNumber",
                 "isLink": true,
                 "value": "",
+                "displayFormula": {
+                    "formula": "travelRequestId !== 0"
+                },
+                "showInUI": true,
                 "order": 7
             },
             {
@@ -35391,6 +35401,10 @@
                 "name": "travelDateFromActualString",
                 "isLink": false,
                 "value": "",
+                "displayFormula": {
+                    "formula": "travelRequestId !== 0"
+                },
+                "showInUI": true,
                 "order": 8
             },
             {
@@ -35398,6 +35412,10 @@
                 "name": "travelDateToActualString",
                 "isLink": false,
                 "value": "",
+                "displayFormula": {
+                    "formula": "travelRequestId !== 0"
+                },
+                "showInUI": true,
                 "order": 9
             },
             {
@@ -35405,6 +35423,10 @@
                 "name": "purpose",
                 "isLink": false,
                 "value": "",
+                "displayFormula": {
+                    "formula": "travelRequestId !== 0"
+                },
+                "showInUI": true,
                 "order": 10
             }
         ],

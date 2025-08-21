@@ -28,6 +28,7 @@ import { CreateDynamicFormComponent } from '../../../shared/dynamic-form/create-
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatTooltip } from '@angular/material/tooltip';
 import { A } from '@angular/cdk/keycodes';
+import { DynamicFormService } from '../../../shared/service/dynamic-form.service';
 
 @Component({
   selector: 'app-preview',
@@ -91,7 +92,8 @@ export class PreviewComponent {
     private router: Router,
     private dataService: DataService,
     private bottomSheet: MatBottomSheet,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private dynamicFormService: DynamicFormService
   ) {
 
   }
@@ -255,6 +257,10 @@ export class PreviewComponent {
       this.requestDetails?.forEach((config: any) => {
         const prop = config.name;
         if (requestDeatilData && requestDeatilData.hasOwnProperty(prop)) {
+          if (config.displayFormula && config.displayFormula.formula) {
+            // Evaluate the formula to determine if it should be shown
+            config.showInUI = this.dynamicFormService.evaluateFormula(config.displayFormula.formula, requestDeatilData);
+          }
           config.value = requestDeatilData[prop];
         }
       });
