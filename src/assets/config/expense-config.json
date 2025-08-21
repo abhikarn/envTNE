@@ -33690,32 +33690,6 @@
                         }
                     },
                     {
-                        "type": "select",
-                        "dataType": "int",
-                        "name": "Constraint",
-                        "isExcluded": false,
-                        "label": "Constraint",
-                        "placeholder": "Select Per Diem Type",
-                        "value": null,
-                        "options": [],
-                        "labelKey": "KeyData",
-                        "valueKey": "KeyDataId",
-                        "apiService": "DataService",
-                        "apiMethod": "dataGetMealType",
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Per Diem Type is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "displayPage": {
-                            "Relocation Expense": false
-                        }
-                    },
-                    {
                         "type": "text",
                         "subType": "text",
                         "dataType": "int",
@@ -33742,7 +33716,7 @@
                                 },
                                 "outputControl": {
                                     "CityGrade": "ResponseValue.GradeId",
-                                    "CityGradeId": "ResponseValue.Grade"
+                                    "CityGradeName": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
                                     "Type": "claimTypeId"
@@ -33764,9 +33738,9 @@
                                 },
                                 "outputControl": {
                                     "Country": "ResponseValue.CountryId",
-                                    "CountryId": "ResponseValue.Country",
+                                    "CountryName": "ResponseValue.Country",
                                     "CountryGrade": "ResponseValue.GradeId",
-                                    "CountryGradeId": "ResponseValue.Grade"
+                                    "CountryGradeName": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
                                     "Type": "claimTypeId"
@@ -33792,7 +33766,7 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
-                        "name": "CityGradeId",
+                        "name": "CityGradeName",
                         "isExcluded": true,
                         "label": "City Grade",
                         "value": "",
@@ -33834,7 +33808,7 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
-                        "name": "CountryGradeId",
+                        "name": "CountryGradeName",
                         "isExcluded": true,
                         "label": "Country Grade",
                         "value": "",
@@ -34667,7 +34641,7 @@
                     {
                         "type": "datetime",
                         "name": "ClaimDate",
-                        "label": "Claim From Date",
+                        "label": "Claim Date",
                         "visible": true,
                         "position": "in",
                         "order": 2
@@ -34726,7 +34700,7 @@
                         "order": 9
                     },
                     {
-                        "name": "CountryGradeId",
+                        "name": "CountryGradeName",
                         "label": "Country Grade",
                         "visible": true,
                         "position": "out",
@@ -34734,19 +34708,12 @@
                         "international": true
                     },
                     {
-                        "name": "CityGradeId",
+                        "name": "CityGradeName",
                         "label": "City Grade",
                         "visible": true,
                         "position": "out",
                         "order": 11,
                         "international": false
-                    },
-                    {
-                        "name": "Constraint",
-                        "label": "Constraint",
-                        "visible": true,
-                        "position": "out",
-                        "order": 12
                     },
                     {
                         "type": "number",
@@ -38140,13 +38107,6 @@
                         "position": "out",
                         "international": true,
                         "order": 11
-                    },
-                    {
-                        "name": "Constraint",
-                        "label": "Constraint",
-                        "visible": true,
-                        "position": "out",
-                        "order": 12
                     },
                     {
                         "type": "number",

@@ -590,6 +590,14 @@ export class DynamicFormService {
             category.columns.splice(index, 1);
           }
         }
+      } else {
+        if (column.international === true) {
+          // remove column if international is true
+          const index = category.columns.indexOf(column);
+          if (index > -1) {
+            category.columns.splice(index, 1);
+          }
+        }
       }
     });
 

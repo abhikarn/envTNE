@@ -155,18 +155,21 @@ export class PreviewComponent {
       next: (response: any) => {
 
         if (response) {
-          if ([52, 54].includes(response?.claimTypeId)) {
-            this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((config: any) => {
-              config.columns?.forEach((column: any) => {
-                if (column.international == true) {
-                  column.visible = true;
-                }
+          
+          this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((config: any) => {
+            config.columns?.forEach((column: any) => {
+              if ([52, 54].includes(response?.claimTypeId)) {
                 if (column.international == false) {
                   column.visible = false;
                 }
-              });
+              } else {
+                if (column.international == true) {
+                  column.visible = false;
+                }
+              }
             });
-          }
+          });
+          
           this.expenseRequestId = response?.expenseRequestId;
           this.expenseRequestPreviewData = response;
           this.setExpenseSummary();
