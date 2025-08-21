@@ -159,9 +159,9 @@ export class DynamicFormService {
 
           fieldsToRemove.forEach(field => {
             form.removeControl(field);
-            const control = formControls.find(c => c.formConfig?.name === field);
+            const control = formControls.find(c => c?.name === field);
             if (control) {
-              control.formConfig.showInUI = false;
+              control.showInUI = false;
             }
           });
 
@@ -590,6 +590,14 @@ export class DynamicFormService {
             category.columns.splice(index, 1);
           }
         }
+      } else {
+        if (column.international === true) {
+          // remove column if international is true
+          const index = category.columns.indexOf(column);
+          if (index > -1) {
+            category.columns.splice(index, 1);
+          }
+        }
       }
     });
 
@@ -795,11 +803,10 @@ export class DynamicFormService {
   }
 
   checkConditionBasedDisplayFields(control: IFormControl, category: any, form: FormGroup, formConfig: IFormControl[], moduleData: any): void {
-    debugger;
-    if (!control.conditionBasedDisplayFields || control.conditionBasedDisplayFields.length === 0) return;
+    if (!category.conditionBasedDisplayFields || category.conditionBasedDisplayFields.length === 0) return;
 
-    if (control.conditionBasedDisplayFields) {
-      control.conditionBasedDisplayFields.forEach((field: any) => {
+    if (category.conditionBasedDisplayFields) {
+      category.conditionBasedDisplayFields.forEach((field: any) => {
         const { formula, dependsOn, showFields, hideFields } = field;
 
         // if formula is met , show/hide fields using showInUI
@@ -818,12 +825,16 @@ export class DynamicFormService {
             const control = formConfig.find(ctrl => ctrl.name === field);
             if (control) {
               control.showInUI = true;
+              form.get(field)?.enable();
             }
           });
           hideFields.forEach((field: string) => {
             const control = formConfig.find(ctrl => ctrl.name === field);
             if (control) {
               control.showInUI = false;
+              control.required = false;
+              // set null value and disable control
+              form.get(field)?.disable();
             }
           });
         }

@@ -52,6 +52,7 @@ import { QuotationComponent } from './form-controls/quotation/quotation.componen
 })
 
 export class DynamicFormComponent implements OnInit, OnChanges {
+  @ViewChild(QuotationComponent) quotationComponentRef!: QuotationComponent;
   @ViewChild(CostCenterComponent) costCenterComponentRef!: CostCenterComponent;
   @ViewChild(GstComponent) gstComponentRef!: GstComponent;
   @ViewChildren(DateInputComponent) dateInputComponentRef!: QueryList<DateInputComponent>;
@@ -147,7 +148,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log(this.moduleData);
     this.category = this.dynamicFormService.getCategoryConfig(this.category, this.moduleConfig);
     this.formControls = []; // Reset to avoid duplication
     this.form = new FormGroup({});
@@ -330,6 +330,23 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       }
     }
 
+    if (this.category.checkValidationOnSubmit?.quotationCheck) {
+      for (const validation of this.category.checkValidationOnSubmit.quotationCheck) {
+        const { minimumNumberOfQuotation } = validation;
+
+        const quotationCount = this.form.get('quotation')?.value?.length || 0;
+        if (quotationCount < minimumNumberOfQuotation) {
+          this.snackbarService.error(
+            `At least ${minimumNumberOfQuotation} quotations are required.`,
+            5000
+          );
+          if (this.editIndex && this.isTravelRaiseRequest) {
+            this.freezeControlsBasedOnConditions();
+          }
+          return;
+        }
+      }
+    }
 
     if (this.category.checkValidationOnSubmit?.multipleAttachmentValidation) {
       for (const validation of this.category.checkValidationOnSubmit.multipleAttachmentValidation) {
@@ -676,7 +693,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       const fieldName = control.formConfig.name;
       let fieldValue: any;
       if (control.formConfig.inPayload === false) {
-        fieldValue = null;
+        fieldValue = control.formConfig.value;
+        this.form.get(fieldName)?.setValue(fieldValue);
       } else {
         fieldValue = this.form.value[fieldName];
       }
@@ -692,10 +710,12 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       if (!this.formData.data?.excludedData) {
         this.formData.data.excludedData = {};
       }
-      if (control.formConfig.isExcluded) {
-        this.formData.data.excludedData[fieldName] = fieldValue ?? null;
-      } else {
-        this.formData.data[fieldName] = fieldValue ?? null;
+      if (control.formConfig.inPayload !== false) {
+        if (control.formConfig.isExcluded) {
+          this.formData.data.excludedData[fieldName] = fieldValue != undefined ? fieldValue : null;
+        } else {
+          this.formData.data[fieldName] = fieldValue != undefined ? fieldValue : null;
+        }
       }
     })
     this.emitFormData.emit({
@@ -759,6 +779,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     if (rowData.row?.gst?.length > 0) {
       this.gstComponentRef.setCompanyGSTFlag(true);
       this.gstComponentRef.gstData = rowData.row?.gst;
+    }
+    if (rowData.row?.quotation?.length > 0) {
+      this.quotationComponentRef.quotationData = rowData.row?.quotation;
     }
     this.selectedFiles = rowData.row?.attachment;
     this.editIndex = rowData.index;
@@ -839,6 +862,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.gstComponentRef?.setCompanyGSTFlag(false);
     if (this.gstComponentRef) {
       this.gstComponentRef.gstData = [];
+    }
+    if (this.quotationComponentRef) {
+      this.quotationComponentRef.quotationData = [];
     }
     this.selectedFiles = [];
     this.formControls?.forEach((control: any) => {

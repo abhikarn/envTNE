@@ -181,7 +181,7 @@
                 }
                 @if (costcentreWiseExpense) {
                 <app-line-wise-cost-center [costcentreWiseExpense]="costcentreWiseExpense"
-                    [ExpenseRequestDetailId]="row?.ExpenseRequestDetailId"
+                    [ExpenseRequestDetailId]="row?.ExpenseRequestDetailId" [amount]="row?.ApprovedAmount"
                     [costCenterData]="row?.costcentreWiseExpense"></app-line-wise-cost-center>
                 }
                 }
@@ -198,7 +198,18 @@
                                     {{ i + 1 }}
                                 </ng-container>
                                 <ng-template #normalCell>
-                                    {{ entry[col.name] }}
+                                    @if(col?.type == 'file') {
+                                        <a style="text-decoration: underline; cursor: pointer;color: blue;" (click)="previewFile(entry[col.name])">{{
+                                            entry[col.name].FileName }}</a>
+                                    } @else if(col?.type == 'date') {
+                                        {{ entry[col.name] | globalDate }}
+                                    } @else if(col?.type == 'datetime') {
+                                        {{ entry[col.name] | globalDate }}
+                                    } @else if(col?.type == 'number') {
+                                        {{ (+entry[col.name]).toFixed(col?.decimalPrecision || 2) }}
+                                    } @else {
+                                        {{ entry[col.name] }}
+                                    }
                                 </ng-template>
                             </td>
                         </ng-container>

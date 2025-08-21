@@ -7,8 +7,8 @@ import { CommonModule } from '@angular/common';
 import { FormControlFactory } from '../../../form-control.factory';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { debounceTime, switchMap } from 'rxjs/operators';
-import { DataService } from '../../../../../../../tne-api';
+import { debounceTime, switchMap, take } from 'rxjs/operators';
+import { DataService, ExpenseService } from '../../../../../../../tne-api';
 
 @Component({
   selector: 'app-line-wise-cost-center',
@@ -40,7 +40,8 @@ export class LineWiseCostCenterComponent {
     private fb: FormBuilder,
     private snackbarService: SnackbarService,
     private globalConfig: GlobalConfigService,
-    private dataService: DataService
+    private dataService: DataService,
+    private expenseService: ExpenseService
   ) {
     this.costCenterDetailsForm = this.fb.group({});
   }
@@ -148,6 +149,10 @@ export class LineWiseCostCenterComponent {
       amount = parseFloat(this.form.get(`${this.controlConfig.getControl}`)?.value || "0");
     }
 
+    if (this.costcentreWiseExpense?.getControl) {
+      amount = parseFloat(this.amount || 0)
+    }
+
     // Sum of All AmountInActual should not exceed Claimed Amount
     const totalAmount = this.costCenterDetails.reduce((sum: number, detail: any) => {
       return sum + (parseFloat(detail.AmmoutInActual) || 0);
@@ -182,7 +187,18 @@ export class LineWiseCostCenterComponent {
     } else {
       console.log(this.costCenterDetailsForm.value);
       this.costCenterDetailsForm.value.ExpenseRequestDetailId = this.ExpenseRequestDetailId;
-      this.snackbarService.success('Cost center added successfully');
+      let requestBody = {
+        Id: this.costCenterDetailsForm.value.ExpenseRequestCostCentrewiseAmmoutId,
+        AmountInPercentage: this.costCenterDetailsForm.value.AmmoutInPercentage,
+        AmountInActual: this.costCenterDetailsForm.value.AmmoutInActual,
+        CostCentreId: this.costCenterDetailsForm.value.CostCentreId,
+        ExpenseRequestDetailId: this.ExpenseRequestDetailId
+      }
+      this.expenseService.expenseExpenseRequestCostCentrewiseAmountIu(requestBody).pipe(take(1)).subscribe({
+        next: (res: any) => {
+          this.snackbarService.success(res?.ResponseValue?.Message);
+        }
+      });
     }
     this.initCostCenterDetailsForm();
   }
@@ -190,6 +206,20 @@ export class LineWiseCostCenterComponent {
   removeCostCenterRow(index: number) {
     if (this.control && this.costCenterDetails.length > 0) {
       this.costCenterDetails.splice(index, 1);
+    }
+    if (!this.control) {
+      console.log(this.costCenterDetails[index]);
+      this.expenseService.expenseExpenseRequestCostCentrewiseAmountDelete(
+        {
+          Id: this.costCenterDetails[index]?.ExpenseRequestCostCentrewiseAmmoutId || 0,
+          ExpenseRequestDetailId: this.costCenterDetails[index]?.ExpenseRequestDetailId || 0
+        }
+      ).pipe(take(1)).subscribe({
+        next: (res: any) => {
+          this.snackbarService.success(res?.ResponseValue?.Message);
+          this.costCenterDetails.splice(index, 1);
+        }
+      })
     }
   }
 
@@ -217,7 +247,7 @@ export class LineWiseCostCenterComponent {
   }
 
   onInput(event: any, field: any) {
-    
+
     if (field?.autoFormat?.range) {
       const inputValue = event.target.value.toString();
       if (inputValue.length > field.autoFormat.range.max) {
@@ -231,6 +261,11 @@ export class LineWiseCostCenterComponent {
     if (this.controlConfig?.getControl) {
       amount = parseFloat(this.form.get(`${this.controlConfig.getControl}`)?.value || "0");
     }
+
+    if (this.costcentreWiseExpense?.getControl) {
+      amount = parseFloat(this.amount || 0)
+    }
+
     if (!(amount > 0)) {
       this.snackbarService.error('Please enter a Claimed amount');
       this.costCenterDetailsForm.get(field.name)?.setValue('', { emitEvent: false });

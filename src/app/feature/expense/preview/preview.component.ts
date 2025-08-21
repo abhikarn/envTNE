@@ -28,6 +28,7 @@ import { CreateDynamicFormComponent } from '../../../shared/dynamic-form/create-
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatTooltip } from '@angular/material/tooltip';
 import { A } from '@angular/cdk/keycodes';
+import { DynamicFormService } from '../../../shared/service/dynamic-form.service';
 
 @Component({
   selector: 'app-preview',
@@ -91,7 +92,8 @@ export class PreviewComponent {
     private router: Router,
     private dataService: DataService,
     private bottomSheet: MatBottomSheet,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private dynamicFormService: DynamicFormService
   ) {
 
   }
@@ -155,18 +157,21 @@ export class PreviewComponent {
       next: (response: any) => {
 
         if (response) {
-          if ([52, 54].includes(response?.claimTypeId)) {
-            this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((config: any) => {
-              config.columns?.forEach((column: any) => {
-                if (column.international == true) {
-                  column.visible = true;
-                }
+          
+          this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((config: any) => {
+            config.columns?.forEach((column: any) => {
+              if ([52, 54].includes(response?.claimTypeId)) {
                 if (column.international == false) {
                   column.visible = false;
                 }
-              });
+              } else {
+                if (column.international == true) {
+                  column.visible = false;
+                }
+              }
             });
-          }
+          });
+          
           this.expenseRequestId = response?.expenseRequestId;
           this.expenseRequestPreviewData = response;
           this.setExpenseSummary();
@@ -252,6 +257,10 @@ export class PreviewComponent {
       this.requestDetails?.forEach((config: any) => {
         const prop = config.name;
         if (requestDeatilData && requestDeatilData.hasOwnProperty(prop)) {
+          if (config.displayFormula && config.displayFormula.formula) {
+            // Evaluate the formula to determine if it should be shown
+            config.showInUI = this.dynamicFormService.evaluateFormula(config.displayFormula.formula, requestDeatilData);
+          }
           config.value = requestDeatilData[prop];
         }
       });
@@ -753,6 +762,12 @@ export class PreviewComponent {
         return;
       }
 
+      console.log(this.expenseRequestPreviewData)
+      const isValid = this.validateCostCentreAllocations(this.expenseRequestPreviewData?.dynamicExpenseDetailModels);
+      if (!isValid) {
+        return; // block further API call
+      }
+
       if (this.billableControl.invalid) {
         this.billableControl.markAsTouched();
         return;
@@ -910,7 +925,7 @@ export class PreviewComponent {
     if (!summary) return;
 
     const getValue = (name: string): number => {
-      const item = summary.items?.find((i: any) => i.name === name && [92,93].includes(i.paymentModeId));
+      const item = summary.items?.find((i: any) => i.name === name && [92, 93].includes(i.paymentModeId));
       return item ? parseFloat(item.value) || 0 : 0;
     };
 
@@ -933,5 +948,43 @@ export class PreviewComponent {
     const amountPayable = totalExpense - lessAdvance + adjustments;
     setValue('amountPayable', amountPayable);
   }
+
+  validateCostCentreAllocations(models: any[]): boolean {
+    for (const category of models || []) {
+      if (category?.data?.length > 0) {
+        for (const item of category.data) {
+          if (item?.costcentreWiseExpense?.length > 0) {
+
+            // Ensure numbers
+            const totalAmountInActual = item.costcentreWiseExpense.reduce(
+              (sum: number, cc: any) => sum + Number(cc.AmmoutInActual ?? cc.AmountInActual ?? 0),
+              0
+            );
+
+            if (totalAmountInActual !== Number(item.ApprovedAmount)) {
+              this.snackbarService.error(
+                `Expense ID ${item.ExpenseRequestDetailId}: Total Amount In Actual (${totalAmountInActual}) does not match Approved Amount (${item.ApprovedAmount}).`
+              );
+              return false;
+            }
+
+            const totalAmountInPercentage = item.costcentreWiseExpense.reduce(
+              (sum: number, cc: any) => sum + Number(cc.AmmoutInPercentage ?? cc.AmountInPercentage ?? 0),
+              0
+            );
+
+            if (totalAmountInPercentage !== 100) {
+              this.snackbarService.error(
+                `Expense ID ${item.ExpenseRequestDetailId}: Total Amount In Percentage (${totalAmountInPercentage}) is not equal to 100.`
+              );
+              return false;
+            }
+          }
+        }
+      }
+    }
+    return true; // everything passed
+  }
+
 
 }
