@@ -33611,91 +33611,6 @@
                         "dataType": "datetime",
                         "name": "ClaimDate",
                         "isExcluded": true,
-                        "label": "Claim From Date",
-                        "value": null,
-                        "dependentCases": [
-                            {
-                                "type": [
-                                    "domestic",
-                                    "international"
-                                ],
-                                "isGeneral": true,
-                                "key": "Id",
-                                "inputControls": {
-                                    "Currency": "CurrencyId",
-                                    "ClaimDate": "ReferenceDate"
-                                },
-                                "outputControl": {
-                                    "ConversionRate": "ResponseValue.Value"
-                                },
-                                "autoFormat": {
-                                    "decimal": ".00"
-                                },
-                                "event": "dateChange",
-                                "requestBody": {},
-                                "apiService": "DataService",
-                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency"
-                            },
-                            {
-                                "type": [
-                                    "domestic"
-                                ],
-                                "isGeneral": true,
-                                "key": "CityMasterId",
-                                "inputControls": {
-                                    "City": "CityId",
-                                    "ClaimDate": "ReferenceDate"
-                                },
-                                "outputControl": {
-                                    "CityGrade": "ResponseValue.GradeId",
-                                    "CityGradeId": "ResponseValue.Grade"
-                                },
-                                "event": "dateChange",
-                                "requestBody": {
-                                    "Type": "53"
-                                },
-                                "apiService": "DataService",
-                                "apiMethod": "dataGetCityGrade"
-                            }
-                        ],
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Claim From Date Time is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "time": {
-                            "type": "time",
-                            "name": "ClaimFromTime",
-                            "label": "time",
-                            "value": null,
-                            "required": true
-                        },
-                        "order": 2,
-                        "apiDateLimit": true,
-                        "policyEntitlementCheck": true,
-                        "EntitlementAmountCalculation": {
-                            "inputControls": {
-                                "ClaimDate": "ClaimDate",
-                                "ClaimToDate": "ClaimToDate",
-                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
-                            },
-                            "outputControl": {
-                                "EntitlementAmount": "EntitlementAmount"
-                            }
-                        },
-                        "displayPage": {
-                            "Relocation Expense": false
-                        }
-                    },
-                    {
-                        "type": "date",
-                        "dataType": "datetime",
-                        "name": "ClaimDate",
-                        "isExcluded": true,
                         "label": "Claim Date",
                         "value": null,
                         "dependentCases": [
@@ -33772,50 +33687,6 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        },
-                        "displayPage": {
-                            "Relocation Expense": true,
-                            "Transfer Expense": true,
-                            "Joining Expense": true
-                        }
-                    },
-                    {
-                        "type": "date",
-                        "dataType": "datetime",
-                        "name": "ClaimToDate",
-                        "isExcluded": false,
-                        "label": "Claim To Date",
-                        "value": null,
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Claim To Date Time is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "time": {
-                            "type": "time",
-                            "name": "ClaimToTime",
-                            "label": "time",
-                            "value": null,
-                            "required": true
-                        },
-                        "order": 3,
-                        "apiDateLimit": true,
-                        "EntitlementAmountCalculation": {
-                            "inputControls": {
-                                "ClaimDate": "ClaimDate",
-                                "ClaimToDate": "ClaimToDate",
-                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
-                            },
-                            "outputControl": {
-                                "EntitlementAmount": "EntitlementAmount"
-                            }
-                        },
-                        "displayPage": {
-                            "Relocation Expense": false
                         }
                     },
                     {
@@ -34802,14 +34673,6 @@
                         "order": 2
                     },
                     {
-                        "type": "datetime",
-                        "name": "ClaimToDate",
-                        "label": "ClaimToDate",
-                        "visible": true,
-                        "position": "in",
-                        "order": 3
-                    },
-                    {
                         "name": "City",
                         "label": "City",
                         "visible": true,
@@ -34888,7 +34751,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -38204,14 +38067,6 @@
                         "visible": true,
                         "position": "in",
                         "order": 1
-                    },
-                    {
-                        "type": "date",
-                        "name": "ClaimToDate",
-                        "label": "To Date",
-                        "visible": true,
-                        "position": "in",
-                        "order": 2
                     },
                     {
                         "type": "number",
