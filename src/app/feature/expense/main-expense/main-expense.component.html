@@ -35,7 +35,8 @@
             <div class="common-block mb-3">
               <app-dynamic-form [formConfig]="box.formControls" [displayTable]="box.displayTable" [moduleData]="box.moduleData"
                 [existingData]="existingExpenseRequestData" [displayAddClearButton]="box.displayAddClearButton"
-                (emitFormValue)="getFormValue($event)" (emitDateInputComponentValue)="getDateInputComponentValue($event)">
+                (emitFormValue)="getFormValue($event)" (emitDateInputComponentValue)="getDateInputComponentValue($event)"
+                [moduleConfig]="moduleConfig">
               </app-dynamic-form>
             </div>
             }
