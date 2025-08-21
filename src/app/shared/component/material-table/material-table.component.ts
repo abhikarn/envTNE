@@ -15,6 +15,7 @@ import { GlobalConfigService } from '../../service/global-config.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { LineWiseCostCenterComponent } from '../../dynamic-form/form-controls/cost-center/line-wise-cost-center/line-wise-cost-center.component';
+import { environment } from '../../../../environment';
 
 @Component({
   selector: 'app-material-table',
@@ -403,5 +404,14 @@ export class MaterialTableComponent implements OnChanges {
       classes['ocr-riestricted-row'] = true;
     }
     return classes;
+  }
+
+  previewFile(file: any) {
+    const extension = file.FileName.split('.').pop()?.toLowerCase();
+    const baseName = file.FileName.replace(/\.[^/.]+$/, '');
+    const fileUrl = `${environment.documentBaseUrl}/${baseName}-${file.Guid}.${extension}`;
+    if (fileUrl) {
+      window.open(fileUrl, '_blank');
+    }
   }
 }
