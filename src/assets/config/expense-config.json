@@ -35259,6 +35259,11 @@
                         "showInUI": true
                     },
                     {
+                        "name": "Medical Claim",
+                        "label": "Medical Claim",
+                        "showInUI": true
+                    },
+                    {
                         "name": "Transport Claim",
                         "label": "Transportation Claim",
                         "showInUI": true
@@ -35276,11 +35281,6 @@
                     {
                         "name": "School Capitation Fees",
                         "label": "School Capitation Fees",
-                        "showInUI": true
-                    },
-                    {
-                        "name": "Medical Claim",
-                        "label": "Medical Claim",
                         "showInUI": true
                     }
                 ]
