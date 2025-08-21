@@ -671,7 +671,7 @@
             {
                 "name": "Travel Ticket",
                 "label": "Tickets Expense",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -723,7 +723,7 @@
                             ]
                         },
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -1760,7 +1760,7 @@
             {
                 "name": "Accommodation",
                 "label": "Accommodation",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -1807,7 +1807,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -3380,7 +3380,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -4787,7 +4787,7 @@
             {
                 "name": "Boarding Expense",
                 "label": "Boarding",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -4834,7 +4834,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -7691,7 +7691,7 @@
             {
                 "name": "Incidental Expenses",
                 "label": "Incidental",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -7738,7 +7738,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -9105,7 +9105,7 @@
             {
                 "name": "Laundry service",
                 "label": "Laundry",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -9152,7 +9152,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -10519,7 +10519,7 @@
             {
                 "name": "Flat Allowance",
                 "label": "Flat / Own Arrangement",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -10566,7 +10566,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -12131,7 +12131,7 @@
             {
                 "name": "Local Conveyance During Travel",
                 "label": "Conveyance During Travel",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -12173,7 +12173,7 @@
                             ]
                         },
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -13589,7 +13589,7 @@
             {
                 "name": "Business Entertainment",
                 "label": "Business Entertainment",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -13626,7 +13626,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -14259,7 +14259,7 @@
             {
                 "name": "Other Expenses",
                 "label": "Other Expense",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -14296,7 +14296,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -16368,7 +16368,7 @@
             {
                 "name": "Baggage and Outfit Allowance",
                 "label": "Baggage and Outfit Allowance",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -16405,7 +16405,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -17353,7 +17353,7 @@
             {
                 "name": "Mobile Handset Purchase",
                 "label": "Mobile Handset Purchase",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -17390,7 +17390,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -18118,7 +18118,7 @@
             {
                 "name": "Transit Allowance",
                 "label": "Transit Allowance",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -18155,7 +18155,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -19073,7 +19073,7 @@
             {
                 "name": "Visa",
                 "label": "Visa",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -19110,7 +19110,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -19641,7 +19641,7 @@
             {
                 "name": "Travel Insurance",
                 "label": "Travel Insurance",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -19678,7 +19678,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -21403,7 +21403,7 @@
             {
                 "name": "DataCardBroadband",
                 "label": "Data Card Broadband",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -21442,7 +21442,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -22397,7 +22397,7 @@
             {
                 "name": "Mobile Expense",
                 "label": "Mobile Expense",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -22436,7 +22436,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -23346,7 +23346,7 @@
             {
                 "name": "Marriage Gift",
                 "label": "Marriage Gift",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -23383,7 +23383,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -24146,7 +24146,7 @@
             {
                 "name": "Deputation Claim",
                 "label": "Deputation Claim",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -24185,7 +24185,7 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -25107,7 +25107,7 @@
             {
                 "name": "Bereavement Support Claim",
                 "label": "Bereavement Support Claim",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -25144,7 +25144,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -25746,7 +25746,7 @@
             {
                 "name": "Training and Certification",
                 "label": "Training and Certification",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -25804,7 +25804,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "blockClass": "col-md-12",
                         "order": 1
                     },
@@ -26376,7 +26376,7 @@
             {
                 "name": "Lease & Rent Deposit",
                 "label": "Lease & Rent Deposit",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -26413,7 +26413,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "blockClass": "col-md-12",
                         "order": 1
                     },
@@ -27034,7 +27034,7 @@
             {
                 "name": "Vehicle Road Tax",
                 "label": "Vehicle Road Tax",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -27071,7 +27071,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "blockClass": "col-md-12",
                         "order": 1
                     },
@@ -27651,7 +27651,7 @@
             {
                 "name": "School Capitation Fees",
                 "label": "School Capitation Fees",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -27688,7 +27688,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "blockClass": "col-md-12",
                         "order": 1
                     },
@@ -28334,7 +28334,7 @@
             {
                 "name": "Roaming",
                 "label": "Roaming",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -28371,7 +28371,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
@@ -28786,7 +28786,7 @@
             {
                 "name": "Travel Allowance",
                 "label": "Travel Allowance",
-                "OCRRequired": true,
+                "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
                         "name": "ClaimAmount",
@@ -28823,7 +28823,7 @@
                         "maxSizeMB": 15,
                         "required": false,
                         "disable": false,
-                        "oCRRequired": true,
+                        "oCRRequired": false,
                         "order": 1
                     },
                     {
