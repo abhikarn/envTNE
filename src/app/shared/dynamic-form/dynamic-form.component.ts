@@ -602,6 +602,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         // Show confirmation dialog
         this.confirmDialogService.confirm(currentCheck.confirmPopup).subscribe((confirmed: boolean) => {
           if (confirmed) {
+            this.form.get('Violation')?.setValue(currentCheck.confirmPopup.message);
             // Proceed to next violation check
             checkNext(index + 1);
           } else {

@@ -2914,6 +2914,13 @@
                     },
                     {
                         "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
                         "dataType": "numeric",
                         "name": "ClaimAmountInBaseCurrency",
                         "isExcluded": true,
@@ -4380,6 +4387,13 @@
                     },
                     {
                         "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
                         "name": "ClaimAmountInBaseCurrency",
                         "isExcluded": true,
                         "value": 0,
@@ -5810,6 +5824,13 @@
                         "name": "IsViolation",
                         "isExcluded": true,
                         "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
                         "showInUI": false
                     },
                     {
@@ -7301,6 +7322,13 @@
                     },
                     {
                         "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
                         "name": "ClaimAmountInBaseCurrency",
                         "isExcluded": true,
                         "value": 0,
@@ -8695,6 +8723,13 @@
                         "name": "IsViolation",
                         "isExcluded": true,
                         "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
                         "showInUI": false
                     },
                     {
@@ -10109,6 +10144,13 @@
                         "name": "IsViolation",
                         "isExcluded": true,
                         "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
                         "showInUI": false
                     },
                     {
@@ -11662,6 +11704,13 @@
                         "name": "IsViolation",
                         "isExcluded": true,
                         "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
                         "showInUI": false
                     },
                     {
@@ -13362,7 +13411,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than Maximum amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than Maximum amount.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -13376,7 +13425,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "KM is less than minimum KM. Do you want to proceed?",
+                            "message": "KM is less than minimum KM.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -13390,7 +13439,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "KM is greater than maximum KM. Do you want to proceed?",
+                            "message": "KM is greater than maximum KM.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -15977,6 +16026,13 @@
                     },
                     {
                         "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
                         "name": "ClaimAmountInBaseCurrency",
                         "isExcluded": true,
                         "value": 0,
@@ -16911,6 +16967,13 @@
                         "name": "IsViolation",
                         "isExcluded": true,
                         "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
                         "showInUI": false
                     },
                     {
@@ -17876,6 +17939,13 @@
                     },
                     {
                         "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
                         "name": "ClaimAmountInBaseCurrency",
                         "isExcluded": true,
                         "value": 0,
@@ -18775,6 +18845,13 @@
                         "name": "IsViolation",
                         "isExcluded": true,
                         "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
                         "showInUI": false
                     },
                     {
@@ -22055,6 +22132,13 @@
                     },
                     {
                         "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
                         "name": "ClaimAmountInBaseCurrency",
                         "isExcluded": true,
                         "value": 0,
@@ -23045,6 +23129,13 @@
                         "name": "IsViolation",
                         "isExcluded": true,
                         "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
                         "showInUI": false
                     },
                     {
@@ -24813,6 +24904,13 @@
                         "name": "IsViolation",
                         "isExcluded": true,
                         "value": false,
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
                         "showInUI": false
                     },
                     {
@@ -31812,6 +31910,13 @@
                     },
                     {
                         "type": "hidden",
+                        "name": "Violation",
+                        "isExcluded": true,
+                        "value": "",
+                        "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
                         "dataType": "numeric",
                         "name": "ClaimAmountInBaseCurrency",
                         "isExcluded": true,
@@ -34894,28 +34999,94 @@
             {
                 "name": "PolicyViolations",
                 "label": "Policy Violations",
-                "Travel Ticket": "You Are Not Eligible To Travel in the selected Mode and Class.",
-                "Relocation Travel Ticket": "You Are Not Eligible To Travel in the selected Mode and Class.",
-                "Accommodation": "Claimed amount is greater than Entitled amount.",
-                "Relocation Accommodation": "Claimed amount is greater than Entitled amount.",
-                "Relocation Daily Allowance": "Claimed amount is greater than Entitled amount.",
-                "Local Conveyance During Travel": "Claimed amount is greater than Entitled amount.",
-                "Incidental Expenses": "Claimed amount is greater than Entitled amount.",
-                "Laundry service": "Claimed amount is greater than Entitled amount.",
-                "Boarding Expense": "Claimed amount is greater than Entitled amount.",
-                "Flat Allowance": "Claimed amount is greater than Entitled amount.",
-                "Baggage and Outfit Allowance": "Claimed amount is greater than Entitled amount.",
-                "Mobile Handset Purchase": "Claimed amount is greater than Entitled amount.",
-                "DataCardBroadband": "Claimed amount is greater than Entitled amount.",
-                "Mobile Expense": "Claimed amount is greater than Entitled amount.",
-                "Marriage Gift": "Claimed amount is greater than Entitled amount.",
-                "Business Entertainment": "Claimed amount is greater than Entitled amount.",
-                "Roaming": "Claimed amount is greater than Entitled amount.",
-                "Medical Claim": "Claimed amount is greater than Entitled amount.",
-                "Transport Claim": "Claimed amount is greater than Entitled amount.",
-                "Lease & Rent Deposit": "Claimed amount is greater than Entitled amount.",
-                "Vehicle Road Tax": "Claimed amount is greater than Entitled amount.",
-                "School Capitation Fees": "Claimed amount is greater than Entitled amount."
+                "Travel Ticket": {
+                    "label": "Travel Ticket",
+                    "message": "You Are Not Eligible To Travel in the selected Mode and Class."
+                },
+                "Relocation Travel Ticket": {
+                    "label": "Travel Ticket",
+                    "message": "You Are Not Eligible To Travel in the selected Mode and Class."
+                },
+                "Accommodation": {
+                    "label": "Accommodation",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Relocation Accommodation": {
+                    "label": "Accommodation",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Relocation Daily Allowance": {
+                    "label": "Daily Allowance",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Local Conveyance During Travel": {
+                    "label": "Local Conveyance During Travel",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Incidental Expenses": {
+                    "label": "Incidental Expenses",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Laundry service": {
+                    "label": "Laundry service",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Boarding Expense": {
+                    "label": "Boarding Expense",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Flat Allowance": {
+                    "label": "Flat Allowance",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Baggage and Outfit Allowance": {
+                    "label": "Baggage and Outfit Allowance",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Mobile Handset Purchase": {
+                    "label": "Mobile Handset Purchase",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "DataCardBroadband": {
+                    "label": "DataCardBroadband",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Mobile Expense": {
+                    "label": "Mobile Expense",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Marriage Gift": {
+                    "label": "Marriage Gift",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Business Entertainment": {
+                    "label": "Business Entertainment",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Roaming": {
+                    "label": "Roaming",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Medical Claim": {
+                    "label": "Medical Claim",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Transport Claim": {
+                    "label": "Transport Claim",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Lease & Rent Deposit": {
+                    "label": "Lease & Rent Deposit",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Vehicle Road Tax": {
+                    "label": "Vehicle Road Tax",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "School Capitation Fees": {
+                    "label": "School Capitation Fees",
+                    "message": "Claimed amount is greater than Entitled amount."
+                }
             },
             {
                 "name": "Approvaldetails",
