@@ -997,4 +997,42 @@ export class PreviewComponent {
     ) ?? false;
   }
 
+  getStatusColor(status: string): string {
+    const statusColors: { [key: string]: string } = {
+      APPROVED: '#d7f1e6',
+      BOOKED: '#D5F0B1',
+      'Budget Verification': '#d7f1e6',
+      CANCELLED: '#FBC5C5',
+      CLOSE: '#E4E4EB',
+      COMPLETED: '#d7f1e6',
+      CREATED: '#d7f1e6',
+      DISBURSED: '#D5F0B1',
+      DRAFT: '#C7E8ED',
+      ERROR: '#fad7d7',
+      MIGRATED: '#E4E4EB',
+      'NOT REQUIRED': '#fad7d7',
+      'OPTION SUBMITTED': '#d7f1e6',
+      PENDING: '#fad7d7',
+      'Pending Approver For Cancellation': '#dee9ff',
+      'PENDING FOR APPROVAL': '#dee9ff',
+      'PENDING FOR APPROVALS': '#dee9ff',
+      'PENDING FOR BOOKING': '#dee9ff',
+      'PENDING FOR CANCELLATION': '#dee9ff',
+      'PENDING FOR DISBURSEMENT': '#dee9ff',
+      'PENDING FOR OPTION': '#dee9ff',
+      'PENDING FOR OPTIONS': '#dee9ff',
+      'PENDING FOR PREFERENCE': '#dee9ff',
+      POSTED: '#d7f1e6',
+      PROCESSED: '#d7f1e6',
+      REGRET: '#AAAAAA',
+      REJECTED: '#fad7d7',
+      REMOVED: '#fad7d7',
+      'SEEK CLARIFICATION': '#fbedc7',
+      START: '#dee9ff'
+    };
+
+    return statusColors[status] || '#FFFFFF'; // fallback white
+  }
+
+
 }

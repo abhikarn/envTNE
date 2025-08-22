@@ -192,19 +192,10 @@
                                        @for (column of detail?.table.columns; track $index) {
                                        @if (column?.name === 'actionStatus') {
                                        <td [attr.data-label]="column?.label">
-                                          @if (approvalTransaction [column?.name] == 'APPROVED') {
-                                          <span class="space-wrap">{{ approvalTransaction [column?.name] }} </span>
-                                          } @else if (approvalTransaction [column?.name] == 'REJECTED') {
-                                          <span class="space-wrap">{{ approvalTransaction [column?.name] }} </span>
-                                          } @else if (approvalTransaction [column?.name] == 'PENDING') {
-                                          <span class="space-wrap">{{ approvalTransaction [column?.name] }} </span>
-                                          } @else if (approvalTransaction [column?.name] == 'SKIPPED') {
-                                          <span class="space-wrap">{{ approvalTransaction [column?.name] }} </span>
-                                          } @else if (approvalTransaction [column?.name] == 'CANCELLED') {
-                                          <span class="space-wrap">{{ approvalTransaction [column?.name] }} </span>
-                                          } @else {
-                                          <span class="space-wrap">{{ approvalTransaction [column?.name] }} </span>
-                                          }
+                                          <span class="space-wrap"
+                                             [ngStyle]="{ 'background-color': getStatusColor(approvalTransaction[column?.name]), 'padding': '4px 8px', 'border-radius': '4px' }">
+                                             {{ approvalTransaction[column?.name] }}
+                                          </span>
                                        </td>
                                        } @else {
                                        <td [attr.data-label]="column?.label"> <span class="space-wrap"> {{
