@@ -286,9 +286,6 @@
                     <ng-template mat-tab-label>
                       <span>{{detail.label}}</span>
                     </ng-template>
-                    <ul class="policy-vio-list   mb-0">
-                                                <li class="text-center"> No Data Available</li> 
-                                                   </ul>
                     @if (hasAnyViolation) {
                     @for (expenseRequest of expenseRequestData?.dynamicExpenseDetailModels; track $index) {
                     @for (data of expenseRequest.data; track $index) {
@@ -314,7 +311,9 @@
                     }
                     }
                     @else {
-                    <p>No policy violations found.</p>
+                    <ul class="policy-vio-list   mb-0">
+                      <li class="text-center"> No Data Available</li>
+                    </ul>
                     }
                     }
 
@@ -366,11 +365,12 @@
                           </td>
                         </tr>
                         }
-                         } @else {
-    <tr>
-      <td colspan="4" class="text-center">No data available</td>
-    </tr>
-  }
+                        }
+                      </tbody>
+                      <tbody *ngIf="!(expenseRequestData?.expenseRequestLog?.length)">
+                        <tr class="text-center">
+                          <td class="text-center" colspan="4">No Data Available</td>
+                        </tr>
                       </tbody>
                     </table>
                     }

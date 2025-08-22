@@ -139,6 +139,7 @@
                               <ng-template mat-tab-label>
                                  <span>{{detail.label}}</span>
                               </ng-template>
+                              @if (hasAnyViolation) {
                               @for (expenseRequest of expenseRequestPreviewData?.dynamicExpenseDetailModels; track
                               $index) {
                               @for (data of expenseRequest.data; track $index) {
@@ -163,6 +164,13 @@
                               }
                               }
                               }
+                              @else {
+                              <ul class="policy-vio-list   mb-0">
+                                 <li class="text-center"> No Data Available</li>
+                              </ul>
+                              }
+                              }
+                              
                               @case ("Approvaldetails") {
                               <ng-template mat-tab-label>
                                  <span>{{detail.label}}</span>
@@ -182,12 +190,35 @@
                                     <tr>
                                        <!-- <td>{{ $index + 1 }}</td> Serial Number -->
                                        @for (column of detail?.table.columns; track $index) {
+                                       @if (column?.name === 'actionStatus') {
+                                       <td [attr.data-label]="column?.label">
+                                          @if (approvalTransaction [column?.name] == 'APPROVED') {
+                                          <span class="space-wrap">{{ approvalTransaction [column?.name] }} </span>
+                                          } @else if (approvalTransaction [column?.name] == 'REJECTED') {
+                                          <span class="space-wrap">{{ approvalTransaction [column?.name] }} </span>
+                                          } @else if (approvalTransaction [column?.name] == 'PENDING') {
+                                          <span class="space-wrap">{{ approvalTransaction [column?.name] }} </span>
+                                          } @else if (approvalTransaction [column?.name] == 'SKIPPED') {
+                                          <span class="space-wrap">{{ approvalTransaction [column?.name] }} </span>
+                                          } @else if (approvalTransaction [column?.name] == 'CANCELLED') {
+                                          <span class="space-wrap">{{ approvalTransaction [column?.name] }} </span>
+                                          } @else {
+                                          <span class="space-wrap">{{ approvalTransaction [column?.name] }} </span>
+                                          }
+                                       </td>
+                                       } @else {
                                        <td [attr.data-label]="column?.label"> <span class="space-wrap"> {{
                                              approvalTransaction [column?.name] }} </span>
                                        </td>
                                        }
+                                       }
                                     </tr>
                                     }
+                                 </tbody>
+                                 <tbody *ngIf="!(expenseRequestPreviewData?.expenseApprovalTransaction?.length)">
+                                    <tr class="text-center">
+                                       <td class="text-center" [attr.colspan]="detail?.table.columns.length">No Data Available</td>
+                                    </tr>
                                  </tbody>
                               </table>
                               }
@@ -220,6 +251,11 @@
                                        </td>
                                     </tr>
                                     }
+                                 </tbody>
+                                 <tbody *ngIf="!(expenseRequestPreviewData?.expenseRequestLog?.length)">
+                                    <tr class="text-center">
+                                       <td class="text-center" colspan="4">No Data Available</td>
+                                    </tr>
                                  </tbody>
                               </table>
                               }

@@ -157,7 +157,7 @@ export class PreviewComponent {
       next: (response: any) => {
 
         if (response) {
-          
+
           this.expenseRequestPreviewConfig?.dynamicExpenseDetailModels?.forEach((config: any) => {
             config.columns?.forEach((column: any) => {
               if ([52, 54].includes(response?.claimTypeId)) {
@@ -171,7 +171,7 @@ export class PreviewComponent {
               }
             });
           });
-          
+
           this.expenseRequestId = response?.expenseRequestId;
           this.expenseRequestPreviewData = response;
           this.setExpenseSummary();
@@ -986,5 +986,15 @@ export class PreviewComponent {
     return true; // everything passed
   }
 
+  get hasAnyViolation(): boolean {
+    return this.expenseRequestPreviewData?.dynamicExpenseDetailModels?.some((expenseRequest: any) =>
+      expenseRequest.data?.some((data: any) =>
+        data?.IsViolation ||
+        data?.excludedData?.IsViolation ||
+        data?.IsOCRRestrictedKeyword ||
+        data?.excludedData?.IsOCRRestrictedKeyword
+      )
+    ) ?? false;
+  }
 
 }
