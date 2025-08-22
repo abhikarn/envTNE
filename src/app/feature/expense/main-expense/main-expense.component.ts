@@ -396,14 +396,6 @@ export class MainExpenseComponent {
       this.title = editBox.label;
 
       this.otherExpenseResponse = response;
-      if (response?.claimTypeId == 53) {
-        this.title = "Direct Expense Domestic";
-        this.moduleConfig.pageTitle = "Direct Expense Domestic";
-      }
-      if (response?.claimTypeId == 54) {
-        this.title = "Direct Expense International";
-        this.moduleConfig.pageTitle = "Direct Expense International";
-      }
       this.expenseConfig?.expenseLandingBox?.forEach((box: any) => {
         if (box?.displayPage?.[this.title]) {
           box.moduleData = { ...box.moduleData, UserMasterId: this.userMasterId };
