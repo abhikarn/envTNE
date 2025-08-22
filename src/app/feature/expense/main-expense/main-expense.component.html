@@ -286,7 +286,9 @@
                     <ng-template mat-tab-label>
                       <span>{{detail.label}}</span>
                     </ng-template>
-                    
+                    <ul class="policy-vio-list   mb-0">
+                                                <li class="text-center"> No Data Available</li> 
+                                                   </ul>
                     @if (hasAnyViolation) {
                     @for (expenseRequest of expenseRequestData?.dynamicExpenseDetailModels; track $index) {
                     @for (data of expenseRequest.data; track $index) {
@@ -320,7 +322,20 @@
                     <ng-template mat-tab-label>
                       <span>{{detail.label}}</span>
                     </ng-template>
-                    <p>No approval details found.</p>
+                     <table class="table mt-2 color-table mobile-card-view-table">
+                      <thead>
+                        <tr>
+                          <th>Action Date</th>
+                          <th>Status</th>
+                          <th>Approver Name</th>
+                          <th>Remarks</th>
+                          </tr>
+                        </thead>
+                        <tbody>  
+                          <tr class="text-center"><td class="text-center" colspan="4">No Data Available</td>  
+                          </tr><!--container-->
+                        </tbody>
+                      </table>
                     }
                     @case ("LogDetails") {
                     <ng-template mat-tab-label>
@@ -337,6 +352,7 @@
                         </tr>
                       </thead>
                       <tbody>
+                         @if (expenseRequestData?.expenseRequestLog?.length > 0) {
                         @for (log of expenseRequestData?.expenseRequestLog; track $index) {
                         <tr>
                           <td data-label="Date"><span>{{log?.actionDatetimeString}}</span></td>
@@ -350,6 +366,11 @@
                           </td>
                         </tr>
                         }
+                         } @else {
+    <tr>
+      <td colspan="4" class="text-center">No data available</td>
+    </tr>
+  }
                       </tbody>
                     </table>
                     }
