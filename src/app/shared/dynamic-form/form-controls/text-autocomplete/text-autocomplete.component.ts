@@ -32,6 +32,7 @@ export class TextAutocompleteComponent {
   @Input() form: any;
   @Input() moduleData: any;
   @Input() formConfig: any;
+  displayValue: any;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -71,10 +72,13 @@ export class TextAutocompleteComponent {
   }
 
   displayFn = (value: any): string => {
-    if (typeof value === 'object') return value?.label ?? '';
+    if (typeof value === 'object') {
+      this.displayValue = value.label ?? '';
+      return value?.label ?? '';
+    }
 
     const matched = this.controlConfig.options?.find(opt => opt.value === value);
-    return matched?.label ?? this.form.get(this.controlConfig?.setNameControl)?.value ?? '';
+    return matched?.label ?? this.form.get(this.controlConfig?.setNameControl)?.value ?? this.displayValue;
   };
 
 
@@ -178,7 +182,7 @@ export class TextAutocompleteComponent {
 
     } else {
       // For normal autocomplete, assign label only
-      this.control.setValue(selectedOption?.label || '');
+      this.control.setValue(selectedOption?.value || 0, { emitEvent: false });
     }
     this.controlConfig.options = []; // Clear options after selection
   }
