@@ -27,6 +27,8 @@ import { distinctUntilChanged } from 'rxjs/operators';
 import { debounceTime } from 'rxjs/operators';
 import _moment from 'moment';
 import { QuotationComponent } from './form-controls/quotation/quotation.component';
+import { ExpenseService } from '../../../../tne-api';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -88,7 +90,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     private snackbarService: SnackbarService,
     private dynamicFormService: DynamicFormService,
     private dynamicTableService: DynamicTableService,
-    private datePipe: DatePipe // inject DatePipe
+    private datePipe: DatePipe, // inject DatePipe
+    private expenseService: ExpenseService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -374,6 +377,34 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       }
     }
 
+    if (this.category.checkValidationOnSubmit?.userLeaveDate && this.category.checkValidationOnSubmit.userLeaveDate.validate) {
+      const { FromDate, ToDate } = this.category.checkValidationOnSubmit.userLeaveDate;
+      const requestBody = {
+        UserMasterId: this.moduleData?.UserMasterId ?? 0,
+        FromDate: this.form.value?.[FromDate],
+        ToDate: this.form.value?.[ToDate],
+        TravelRequestId: this.moduleData?.travelRequestId ?? 0
+      };
+
+      try {
+        const response: any = await firstValueFrom(
+          this.expenseService.expenseValidateUserLeaveDateForDuration(requestBody)
+        );
+
+        const leaveInfo = response?.ResponseValue;
+        if (leaveInfo?.IsLeaveTaken) {
+          this.snackbarService.error(leaveInfo.Message, 5000);
+          if (this.editIndex && this.isTravelRaiseRequest) {
+            this.freezeControlsBasedOnConditions();
+          }
+          return; // Now it will stop onSubmit
+        }
+      } catch (err) {
+        this.snackbarService.error("Failed to validate leave date. Please try again.", 5000);
+        console.error(err);
+        return; // Also stop if API fails
+      }
+    }
 
     // claim restriction check
     if (this.category.claimRestriction && this.category.claimRestriction.length > 0) {
@@ -602,6 +633,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         // Show confirmation dialog
         this.confirmDialogService.confirm(currentCheck.confirmPopup).subscribe((confirmed: boolean) => {
           if (confirmed) {
+            this.form.get('Violation')?.setValue(currentCheck.confirmPopup.message);
             // Proceed to next violation check
             checkNext(index + 1);
           } else {

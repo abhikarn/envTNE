@@ -15,6 +15,8 @@ export interface ExpenseCategoryGroup {
     Description?: string;
     CreatedDate?: string;
     ModifiedDate?: string;
+    IsApplicableBackDateLimitDays?: boolean;
+    BackDateLimitDays?: number;
     IsActive?: boolean;
     Status?: string;
     ActionBy?: number;

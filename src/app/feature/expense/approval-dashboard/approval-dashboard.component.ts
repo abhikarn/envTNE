@@ -7,7 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IFormControl } from '../../../shared/dynamic-form/form-control.interface';
 import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
 import { HttpClient } from '@angular/common/http';
@@ -29,6 +29,8 @@ import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 import { AuthService } from '../../../shared/service/auth.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BulkApproveModalComponent } from '../../../shared/component/bulk-approve-modal/bulk-approve-modal.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 interface ColumnConfig {
   key: string;
@@ -42,6 +44,7 @@ export const ELEMENT_DATA: any[] = [];
   selector: 'app-dashboard',
   imports: [
     CommonModule,
+    FormsModule,
     MatTabsModule,
     MatBadgeModule,
     MatDatepickerModule,
@@ -56,7 +59,8 @@ export const ELEMENT_DATA: any[] = [];
     MatIconModule,
     MatButtonModule,
     RouterModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCheckboxModule
   ],
   templateUrl: './approval-dashboard.component.html',
   styleUrl: './approval-dashboard.component.scss',
@@ -87,6 +91,7 @@ export class ApprovalDashboardComponent implements OnInit {
 
   lastPageSize: number = 5;
   lastPageIndex: number = 0;
+  selectAll: boolean = false;
 
   constructor(
     private expenseService: ExpenseService,
@@ -197,7 +202,7 @@ export class ApprovalDashboardComponent implements OnInit {
   loadDisplayedColumns(): void {
     this.http.get(`assets/config/expense-config.json`).subscribe((config: any) => {
       this.expenseDashboardConfig = config;
-      const tableDetail = config.dashboard?.expenseStatement.tableDetail || [];
+      const tableDetail = config.dashboard?.expenseStatement.approverTableDetail || [];
       this.displayedColumns = tableDetail.map((col: any) => ({
         key: col.key,
         label: col.label,
@@ -256,4 +261,32 @@ export class ApprovalDashboardComponent implements OnInit {
     const data: Blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
     FileSaver.saveAs(data, 'ExpenseRequestData.xlsx');
   }
+
+  toggleSelectAll(checked: boolean): void {
+      if (this.dataSource && this.dataSource.data) {
+        this.dataSource.data.forEach((element: any) => {
+          element.selected = checked;
+        });
+      }
+      if (this.mobileDisplayData) {
+        this.mobileDisplayData.forEach((element: any) => {
+          element.selected = checked;
+        });
+      }
+    }
+    
+    // bulk approve
+    bulkApprove(): void {
+      const selectedRequests = this.dataSource.data.filter((item: any) => item.selected);
+      if (selectedRequests.length === 0) {
+        this.snackbarService.error('No requests selected for approval', 3000);
+        return;
+      }
+  
+      this.dialog.open(BulkApproveModalComponent, {
+        width: '1000px',
+        data: { selectedRequests },
+        panelClass: 'custom-modal-panel'
+      });
+    }
 }

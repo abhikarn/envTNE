@@ -1,0 +1,23 @@
+app-bulk-approve-modal{
+.modal-body {
+    padding: 16px;
+    background: white;
+}
+
+.attachment-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.attachment-table th,
+.attachment-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.modal-dialog {
+    margin: inherit;
+}
+.close-dialouge{ background: transparent; border: none;;}
+
+}
