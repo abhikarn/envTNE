@@ -36,6 +36,7 @@ model/eligibilityParam.ts
 model/employeeExpenseClaimEligibilityGetParam.ts
 model/employeePolicyParam.ts
 model/employeeProfileParam.ts
+model/expenseActionBulkApprovalParam.ts
 model/expenseActionParam.ts
 model/expenseBillableCostCentreUpdateParam.ts
 model/expenseCancelParam.ts
@@ -57,6 +58,7 @@ model/expenseRequestGstGetParam.ts
 model/expenseRequestGstInsertParam.ts
 model/expenseRequestGstRemoveParam.ts
 model/expenseRequestGstType.ts
+model/expenseRequestIdType.ts
 model/expenseRequestMetaDataType.ts
 model/expenseRequestModel.ts
 model/expenseRequestParam.ts

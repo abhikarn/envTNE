@@ -19,6 +19,7 @@ import { ExpenseRequestDetailMetaDataType } from './expenseRequestDetailMetaData
 export interface ExpenseRequestModel { 
     ExpenseRequestId?: number;
     RequestForId?: number;
+    ClaimTypeId?: number;
     RequesterId?: number;
     TravelRequestId?: number;
     RequestDate?: string;

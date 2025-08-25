@@ -841,6 +841,8 @@
                         "readonly": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "policyViolationCheck": false,
                         "apiDateLimit": false,
                         "order": 5
@@ -2195,6 +2197,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 12
                     },
                     {
@@ -3722,6 +3726,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 8
                     },
                     {
@@ -4484,7 +4490,7 @@
                 ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
-                    "apiMethod": "expenseGetExpensePolicyEntitlement",
+                    "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
                     "requestBody": {
                         "ExpenseCategoryId": 2
                     },
@@ -5158,6 +5164,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 10
                     },
                     {
@@ -6657,6 +6665,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 8
                     },
                     {
@@ -7995,6 +8005,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 10
                     },
                     {
@@ -9416,6 +9428,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 10
                     },
                     {
@@ -10990,6 +11004,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 12
                     },
                     {
@@ -12770,6 +12786,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 17
                     },
                     {
@@ -13944,6 +13962,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 13
                     },
                     {
@@ -14596,6 +14616,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 11
                     },
                     {
@@ -15446,6 +15468,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 12
                     },
                     {
@@ -17504,6 +17528,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 4
                     },
                     {
@@ -20652,6 +20678,8 @@
                         ],
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "disable": false,
                         "readonly": false,
                         "showInUI": true,
@@ -26083,6 +26111,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 9
                     },
                     {
@@ -27910,6 +27940,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 7
                     },
                     {
@@ -29835,6 +29867,8 @@
                         "readonly": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "policyViolationCheck": false,
                         "apiDateLimit": false,
                         "order": 5
@@ -31191,6 +31225,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 12
                     },
                     {
@@ -32816,6 +32852,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 17
                     },
                     {
@@ -33958,6 +33996,8 @@
                         "required": false,
                         "minDate": "01-01-1900",
                         "maxDate": "today",
+                        "IsBackDateRestricted": false,
+                        "BackDateLimitDays": 0,
                         "order": 8
                     },
                     {
@@ -43720,6 +43760,74 @@
         "expenseStatement": {
             "name": "Expense Statement",
             "tableDetail": [
+                {
+                    "key": "slNo",
+                    "label": "Sl.No",
+                    "sortable": false,
+                    "order": 1
+                },
+                {
+                    "key": "Requester",
+                    "label": "Requester",
+                    "sortable": true,
+                    "order": 2
+                },
+                {
+                    "key": "RequestNumber",
+                    "label": "Request Number",
+                    "sortable": true,
+                    "order": 3
+                },
+                {
+                    "key": "RequestDate",
+                    "label": "Request Date",
+                    "sortable": true,
+                    "order": 4
+                },
+                {
+                    "key": "ExpenseClaimTypeDescription",
+                    "label": "Expense Type",
+                    "sortable": true,
+                    "order": 5
+                },
+                {
+                    "key": "TravelRequestNumber",
+                    "label": "Linked Request",
+                    "sortable": true,
+                    "order": 6
+                },
+                {
+                    "key": "ApprovedAmount",
+                    "label": "Amount",
+                    "sortable": true,
+                    "order": 7
+                },
+                {
+                    "key": "PolicyViolationCount",
+                    "label": "Policy Violation",
+                    "sortable": true,
+                    "order": 8
+                },
+                {
+                    "key": "ClaimStatus",
+                    "label": "Status",
+                    "sortable": true,
+                    "order": 9
+                },
+                {
+                    "key": "action",
+                    "label": "Action",
+                    "sortable": false,
+                    "order": 10
+                }
+            ],
+            "approverTableDetail": [
+                {
+                    "key": "select",
+                    "label": "Select",
+                    "sortable": false,
+                    "order": 0
+                },
                 {
                     "key": "slNo",
                     "label": "Sl.No",

@@ -16,6 +16,8 @@ export interface ExpenseCategoryGroupMapping {
     ExpenseCategoryName?: string;
     CreatedDate?: string;
     ModifiedDate?: string;
+    IsApplicableBackDateLimitDays?: boolean;
+    BackDateLimitDays?: number;
     IsActive?: boolean;
     Status?: string;
     ActionBy?: number;

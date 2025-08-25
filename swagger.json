@@ -3365,6 +3365,45 @@
         }
       }
     },
+    "/api/Expense/ExpenseRequestBulkApprovals": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_ExpenseRequestBulkApprovals",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "expenseActionBulkApprovalParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExpenseActionBulkApprovalParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Dashboard/ApprovalsFinanceExpenseRequest": {
       "post": {
         "tags": [
@@ -5530,6 +5569,10 @@
           "format": "int64",
           "type": "integer"
         },
+        "ClaimTypeId": {
+          "format": "int64",
+          "type": "integer"
+        },
         "RequesterId": {
           "format": "int64",
           "type": "integer"
@@ -6614,6 +6657,13 @@
           "format": "date-time",
           "type": "string"
         },
+        "IsApplicableBackDateLimitDays": {
+          "type": "boolean"
+        },
+        "BackDateLimitDays": {
+          "format": "int32",
+          "type": "integer"
+        },
         "IsActive": {
           "type": "boolean"
         },
@@ -6660,6 +6710,13 @@
         "ModifiedDate": {
           "format": "date-time",
           "type": "string"
+        },
+        "IsApplicableBackDateLimitDays": {
+          "type": "boolean"
+        },
+        "BackDateLimitDays": {
+          "format": "int32",
+          "type": "integer"
         },
         "IsActive": {
           "type": "boolean"
@@ -6872,6 +6929,75 @@
         },
         "CommunicationSeenCount": {
           "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ExpenseActionBulkApprovalParam": {
+      "type": "object",
+      "properties": {
+        "ExpenseRequestIdType": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExpenseRequestIdType"
+          }
+        },
+        "Remarks": {
+          "type": "string"
+        },
+        "AdjustmentRemarks": {
+          "type": "string"
+        },
+        "ApprovalAction": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "AdjustmentAmount": {
+          "format": "double",
+          "type": "number"
+        },
+        "AdjustmentCurrencyId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ExpenseRequestApprovalDetailType": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExpenseRequestApprovalDetailType"
+          }
+        },
+        "ExpenseRequestGstType": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExpenseRequestGstType"
+          }
+        },
+        "IsActive": {
+          "type": "boolean"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "ActionBy": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "TransactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "CommunicationSeenCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ExpenseRequestIdType": {
+      "type": "object",
+      "properties": {
+        "RequestId": {
+          "format": "int64",
           "type": "integer"
         }
       }

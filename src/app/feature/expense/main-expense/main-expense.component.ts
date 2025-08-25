@@ -238,7 +238,6 @@ export class MainExpenseComponent {
 
   // Setup initial dynamic form control based on expenseConfig request object.
   setupExpenseConfig() {
-
     if (!this.editMode) {
       this.route.data.subscribe(data => {
         this.title = data['title'];
@@ -254,6 +253,14 @@ export class MainExpenseComponent {
           if (category?.displayPage?.[this.title]) {
             // Add only categories applicable for the current page
             this.categories.push(category);
+          }
+        });
+      });
+
+      this.categories.forEach((category: any) => {
+        category.formControls.forEach((control: any) => {
+          if (control?.IsBackDateRestricted) {
+            control.minDate = new Date(new Date().setDate(new Date().getDate() - control?.BackDateLimitDays));
           }
         });
       });
@@ -311,6 +318,9 @@ export class MainExpenseComponent {
           if (!control?.maxDate) {
             control.maxDate = this.travelRequestPreview?.travelDateTo;
           }
+        }
+        if (control?.IsBackDateRestricted) {
+          control.minDate = new Date(new Date().setDate(new Date().getDate() - control?.BackDateLimitDays));
         }
       })
     });

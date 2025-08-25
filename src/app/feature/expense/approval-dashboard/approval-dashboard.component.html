@@ -806,12 +806,16 @@
                                                         </th>
                                                     </ng-container>
                                                     <ng-template #notsortable>
+                                                        <mat-checkbox *ngIf="column.key === 'select'" [(ngModel)]="selectAll" (change)="toggleSelectAll($event.checked)"></mat-checkbox>
                                                         <th mat-header-cell *matHeaderCellDef>
                                                             {{ column.label }}
                                                         </th>
                                                     </ng-template>
                                                     <!-- Data Cell -->
                                                     <td [attr.data-label]="column.label" mat-cell *matCellDef="let element; let i = index">
+                                                        <ng-container *ngIf="column.key === 'select'">
+                                                            <mat-checkbox [(ngModel)]="element.selected"></mat-checkbox>
+                                                        </ng-container>
                                                         <ng-container *ngIf="column.key === 'slNo'; else columnContent">
                                                             {{ i + 1 }}
                                                         </ng-container>
@@ -1020,7 +1024,7 @@
 
 
                                     </div>
-
+                                    <button mat-button color="primary" (click)="bulkApprove()">Bulk Approve</button>
                                 </div>
                             </div>
                         </div>
