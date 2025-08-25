@@ -1494,7 +1494,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "TravelDate",
+                        "ToDate": "TravelDate"
+                    }
                 },
                 "policyViolationCheckApi": {
                     "apiService": "TravelService",
@@ -3022,7 +3027,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "CheckInDateTime",
+                        "ToDate": "CheckOutDateTime"
+                    }
                 },
                 "policyViolationManualCheck": [
                     {
@@ -5910,7 +5920,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimToDate"
+                    }
                 },
                 "policyViolationManualCheck": [
                     {
@@ -8819,7 +8834,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimToDate"
+                    }
                 },
                 "policyViolationManualCheck": [
                     {
@@ -10242,7 +10262,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimToDate"
+                    }
                 },
                 "policyViolationManualCheck": [
                     {
@@ -11818,7 +11843,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "CheckInDateTime",
+                        "ToDate": "CheckOutDateTime"
+                    }
                 },
                 "policyViolationManualCheck": [
                     {
@@ -13385,7 +13415,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimDate"
+                    }
                 },
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
@@ -14983,7 +15018,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimDate"
+                    }
                 },
                 "expanded": true,
                 "displayTable": true,
@@ -16116,7 +16156,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimDate"
+                    }
                 },
                 "policyViolationManualCheck": [
                     {
@@ -17118,7 +17163,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimDate"
+                    }
                 },
                 "policyViolationCheckApi": {
                     "apiService": "ExpenseService",
@@ -18039,7 +18089,12 @@
                                 "ClaimDate": "ClaimDate"
                             }
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimDate"
+                    }
                 },
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
@@ -18955,7 +19010,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimDate"
+                    }
                 },
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
@@ -19595,7 +19655,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimDate"
+                    }
                 },
                 "expanded": true,
                 "displayTable": true,
@@ -20165,7 +20230,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimDate"
+                    }
                 },
                 "expanded": true,
                 "displayTable": true,
@@ -21201,7 +21271,12 @@
                             },
                             "minimumNumberOfQuotation": 1
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimDate"
+                    }
                 },
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
@@ -24048,7 +24123,12 @@
                                 "ClaimDate": "ClaimDate"
                             }
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimDate"
+                    }
                 },
                 "policyViolationManualCheck": [
                     {
@@ -26376,7 +26456,12 @@
                                 "attachment"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimDate"
+                    }
                 },
                 "expanded": true,
                 "displayTable": true,
@@ -30520,7 +30605,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "TravelDate",
+                        "ToDate": "TravelDate"
+                    }
                 },
                 "policyViolationCheckApi": {
                     "apiService": "TravelService",
@@ -32050,7 +32140,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "CheckInDateTime",
+                        "ToDate": "CheckOutDateTime"
+                    }
                 },
                 "policyViolationManualCheck": [
                     {
@@ -33451,7 +33546,12 @@
                                 "costcentreWiseExpense"
                             ]
                         }
-                    ]
+                    ],
+                    "userLeaveDate": {
+                        "validate": true,
+                        "FromDate": "ClaimDate",
+                        "ToDate": "ClaimDate"
+                    }
                 },
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
