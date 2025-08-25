@@ -1483,6 +1483,14 @@
                         "type": "number",
                         "name": "ClaimAmount",
                         "valueCheck": true
+                    },
+                    {
+                        "name": "Origin",
+                        "valueCheck": false
+                    },
+                    {
+                        "name": "Destination",
+                        "valueCheck": false
                     }
                 ],
                 "checkValidationOnSubmit": {
