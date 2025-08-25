@@ -53,10 +53,10 @@ export class BulkApproveModalComponent {
       ExpenseRequestIdType: this.bulkApproveData.map(approval => ({
         RequestId: approval.ExpenseRequestId
       })),
-      Remarks: this.remarks
+      Remarks: this.remarks,
+      ActionBy: Number(localStorage.getItem('userMasterId')) || 0
     };
     console.log(requestBody);
-    debugger
     this.expenseService.expenseExpenseRequestBulkApprovals(requestBody).subscribe({
       next: (response: any) => {
         // Handle successful approval
