@@ -1939,6 +1939,14 @@
                                 "EntitlementAmount": "EntitlementAmount"
                             }
                         },
+                        "setValue": [
+                            {
+                                "name": "CheckOutDateTime",
+                                "config": {
+                                    "minDate": "CheckInDateTime"
+                                }
+                            }
+                        ],
                         "order": 3
                     },
                     {
@@ -6429,7 +6437,15 @@
                         },
                         "displayPage": {
                             "Relocation Expense": false
-                        }
+                        },
+                        "setValue": [
+                            {
+                                "name": "ClaimToDate",
+                                "config": {
+                                    "minDate": "ClaimDate"
+                                }
+                            }
+                        ]
                     },
                     {
                         "type": "date",
@@ -7903,6 +7919,14 @@
                         "disable": false,
                         "readonly": false,
                         "apiDateLimit": true,
+                        "setValue": [
+                            {
+                                "name": "ClaimToDate",
+                                "config": {
+                                    "minDate": "ClaimDate"
+                                }
+                            }
+                        ],
                         "order": 3
                     },
                     {
@@ -9331,6 +9355,14 @@
                         "disable": false,
                         "readonly": false,
                         "apiDateLimit": true,
+                        "setValue": [
+                            {
+                                "name": "ClaimToDate",
+                                "config": {
+                                    "minDate": "ClaimDate"
+                                }
+                            }
+                        ],
                         "order": 3
                     },
                     {
@@ -10834,6 +10866,14 @@
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
                                 ]
+                            }
+                        ],
+                        "setValue": [
+                            {
+                                "name": "CheckOutDateTime",
+                                "config": {
+                                    "minDate": "CheckInDateTime"
+                                }
                             }
                         ],
                         "order": 3
@@ -31103,6 +31143,14 @@
                                 "EntitlementAmount": "EntitlementAmount"
                             }
                         },
+                        "setValue": [
+                            {
+                                "name": "CheckOutDateTime",
+                                "config": {
+                                    "minDate": "CheckInDateTime"
+                                }
+                            }
+                        ],
                         "order": 3
                     },
                     {
