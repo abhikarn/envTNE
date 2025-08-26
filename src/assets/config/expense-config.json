@@ -3481,7 +3481,6 @@
                             "required": true
                         },
                         "apiDateLimit": true,
-                        "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
                                 "ClaimDate": "ClaimDate",
@@ -3500,6 +3499,7 @@
                                 }
                             }
                         ],
+                        "policyEntitlementCheck": true,
                         "order": 2
                     },
                     {
@@ -3536,6 +3536,7 @@
                                 "EntitlementAmount": "EntitlementAmount"
                             }
                         },
+                        "policyEntitlementCheck": true,
                         "order": 3
                     },
                     {
@@ -3591,6 +3592,7 @@
                         },
                         "showInUI": true,
                         "createControl": true,
+                        "policyEntitlementCheck": true,
                         "order": 4
                     },
                     {
@@ -3624,6 +3626,7 @@
                         },
                         "showInUI": false,
                         "createControl": false,
+                        "policyEntitlementCheck": true,
                         "order": 4
                     },
                     {
