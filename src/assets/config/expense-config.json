@@ -12749,7 +12749,10 @@
                                 "apiMethod": "calculateLocationDistance",
                                 "labelKey": "Value",
                                 "valueKey": "Key",
-                                "isGooglePlace": true
+                                "isGooglePlace": true,
+                                "config": {
+                                    "decimalPrecision": 2
+                                }
                             }
                         ],
                         "required": true,
@@ -12792,7 +12795,10 @@
                                 "apiMethod": "calculateLocationDistance",
                                 "labelKey": "Value",
                                 "valueKey": "Key",
-                                "isGooglePlace": true
+                                "isGooglePlace": true,
+                                "config": {
+                                    "decimalPrecision": 2
+                                }
                             }
                         ],
                         "required": true,
@@ -40009,7 +40015,7 @@
                         "order": 13
                     },
                     {
-                        "name": "Distance",
+                        "name": "KM",
                         "label": "Distance(KM)",
                         "visible": true,
                         "position": "out",
@@ -40366,7 +40372,7 @@
                         "order": 13
                     },
                     {
-                        "name": "Distance",
+                        "name": "KM",
                         "label": "Distance(KM)",
                         "visible": true,
                         "position": "out",

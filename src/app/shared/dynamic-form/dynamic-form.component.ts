@@ -709,9 +709,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   setAutoCompleteFields() {
     // Logic for autocomplete field like city to save the object value for display purpose
     this.formControls.forEach(control => {
-      let { name, autoComplete } = control.formConfig;
+      let { name, autoComplete, isGooglePlace } = control.formConfig;
       if (autoComplete && name in this.form.value) {
-        let selected = this.form.value[name];
+        let selected = isGooglePlace ? this.form.value[name].label : this.form.value[name];
         if (selected && typeof selected == "object") {
           if (!control.formConfig.options) {
             control.formConfig.options = [];
@@ -725,6 +725,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   prepareFormJson() {
+    console.log('Preparing form JSON for submission...', this.form.value);
     // Preparing form json
     this.formData.name = this.category.name;
     this.formControls.forEach(control => {
