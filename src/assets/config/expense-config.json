@@ -3586,8 +3586,11 @@
                         "getReadableValue": {
                             "controlName": "ConstraintNames"
                         },
-                        "showInUI": false,
-                        "createControl": false,
+                        "setCustomObject": {
+                            "controlName": "ConstraintType"
+                        },
+                        "showInUI": true,
+                        "createControl": true,
                         "order": 4
                     },
                     {
@@ -3619,6 +3622,8 @@
                         "setCustomObject": {
                             "controlName": "ConstraintType"
                         },
+                        "showInUI": false,
+                        "createControl": false,
                         "order": 4
                     },
                     {

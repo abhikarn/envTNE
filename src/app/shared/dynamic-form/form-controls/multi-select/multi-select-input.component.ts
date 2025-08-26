@@ -118,6 +118,11 @@ export class MultiSelectInputComponent implements OnInit, OnDestroy {
 
   toggleSelectAll() {
     this.allSelected = !this.allSelected;
+    if(this.controlConfig.setCustomObject) {
+      this.form.get(this.controlConfig.setCustomObject.controlName)?.setValue(
+        this.allSelected ? this.allOptions.map(o => ({ key: o.label, value: o.value })).join(', ') : []
+      );
+    }
     this.control.setValue(this.allSelected ? this.allOptions.map(o => o.value) : []);
     this.form.get(this.controlConfig.getReadableValue.controlName)?.setValue(
       this.allSelected ? this.allOptions.map(o => o.label).join(', ') : []
@@ -125,6 +130,14 @@ export class MultiSelectInputComponent implements OnInit, OnDestroy {
   }
 
   isSelected(value: any): boolean {
+    if(this.controlConfig.setCustomObject) {
+      this.form.get(this.controlConfig.setCustomObject.controlName)?.setValue(
+        this.control.value?.map((v: any) => ({
+          key: this.allOptions.find(o => o.value === v)?.label,
+          value: v
+        })) || []
+      );
+    }
     this.form.get(this.controlConfig.getReadableValue.controlName)?.setValue(
       this.control.value?.map((v: any) => this.allOptions.find(o => o.value === v)?.label).join(', ') || []
     );
