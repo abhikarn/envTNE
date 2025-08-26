@@ -3052,7 +3052,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -3578,7 +3578,37 @@
                         "order": 4,
                         "getReadableValue": {
                             "controlName": "ConstraintNames"
-                        }
+                        },
+                        "showInUI": false,
+                        "createControl": false
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "Constraint",
+                        "isExcluded": false,
+                        "label": "Constraint",
+                        "placeholder": "Select Constraint",
+                        "value": null,
+                        "defaultValue": {
+                            "Id": 15,
+                            "Display": "Per Diem"
+                        },
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetMealType",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Constraint is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -4068,6 +4098,9 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
+                        "requiredIf": {
+                            "IsViolation": true
+                        },
                         "order": 18
                     },
                     {
@@ -4478,7 +4511,7 @@
                         "type": "hidden",
                         "name": "IsEdit",
                         "isExcluded": false,
-                        "value": false,
+                        "value": true,
                         "showInUI": false,
                         "inPayload": false
                     }
@@ -4500,7 +4533,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -4518,10 +4551,11 @@
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
-                        "ClaimDate": "ReferenceDate",
+                        "ClaimDate": "ReferenceFromDate",
+                        "ClaimToDate": "ReferenceToDate",
                         "CityGrade": "CityGradeId",
                         "CountryGrade": "CountryGradeId",
-                        "AccommodationType": "PolicyReferenceId"
+                        "Constraint": "PolicyReferenceId"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -5945,7 +5979,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -7437,7 +7471,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -8859,7 +8893,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -10287,7 +10321,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -11868,7 +11902,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -16181,7 +16215,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -17255,7 +17289,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -18145,7 +18179,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -22332,7 +22366,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -23321,7 +23355,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -24148,7 +24182,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -25089,7 +25123,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -25792,7 +25826,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -27105,7 +27139,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -27720,7 +27754,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -28389,7 +28423,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -32165,7 +32199,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -34846,7 +34880,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -35180,7 +35214,7 @@
                     "message": "Claimed amount is greater than Entitled amount."
                 },
                 "Boarding Expense": {
-                    "label": "Boarding Expense",
+                    "label": "Per Diem",
                     "message": "Claimed amount is greater than Entitled amount."
                 },
                 "Flat Allowance": {

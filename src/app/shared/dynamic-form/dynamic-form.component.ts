@@ -159,9 +159,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       if (config.dataType === 'numeric') {
         this.setupAutoFormat(config, this.configService);
       }
-      const control = FormControlFactory.createControl(config);
-      this.formControls.push({ formConfig: config, control: control });
-      this.form.addControl(config.name, control);
+      if (config.createControl !== false) {
+        const control = FormControlFactory.createControl(config);
+        this.formControls.push({ formConfig: config, control: control });
+        this.form.addControl(config.name, control);
+      }
     });
     if (this.category?.onInitAPI) {
       // Populate form with initial API data if available
@@ -630,6 +632,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
       if (isViolation) {
         this.form.get('IsViolation')?.setValue(true);
+        this.dynamicFormService.updateConditionalValidators(this.form, this.formConfig);
         // Show confirmation dialog
         this.confirmDialogService.confirm(currentCheck.confirmPopup).subscribe((confirmed: boolean) => {
           if (confirmed) {
@@ -652,6 +655,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   proceedWithSubmission() {
+    if (this.form.invalid) {
+      this.dynamicFormService.scrollToFirstInvalidControl('.dynamic-form');
+      return;
+    }
     this.setAutoCompleteFields();
     this.prepareFormJson();
     this.addDataToDynamicTable();
@@ -848,6 +855,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
         // If the value is an object with `.value`, extract it
         this.form.controls[name].setValue(typeof value === 'object' && value !== null ? value.value : value);
+        if (control.formConfig.defaultValue) {
+          this.form.controls[name].setValue(control.formConfig.defaultValue?.Id);
+        }
       } else if (type === 'date') {
         this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
           if (dateInput.timeControl && dateInput.controlConfig.name === name) {
