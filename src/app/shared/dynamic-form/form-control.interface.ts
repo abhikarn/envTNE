@@ -63,4 +63,5 @@ export interface IFormControl {
   isGooglePlace?: boolean; // For Google Places Autocomplete
   conditionBasedDisplayFieldsCheck?: boolean;
   createControl?: boolean;
+  setCustomObject?: any;
 }

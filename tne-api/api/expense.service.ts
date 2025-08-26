@@ -35,6 +35,8 @@ import { ExpenseCategoryGroupMappingDeleteParam } from '../model/expenseCategory
 // @ts-ignore
 import { ExpenseCategoryGroupMappingListParam } from '../model/expenseCategoryGroupMappingListParam';
 // @ts-ignore
+import { ExpensePolicyEntitlementBoardingParam } from '../model/expensePolicyEntitlementBoardingParam';
+// @ts-ignore
 import { ExpensePolicyEntitlementDurationParam } from '../model/expensePolicyEntitlementDurationParam';
 // @ts-ignore
 import { ExpensePolicyEntitlementParam } from '../model/expensePolicyEntitlementParam';
@@ -871,6 +873,75 @@ export class ExpenseService extends BaseService {
             {
                 context: localVarHttpContext,
                 body: expensePolicyEntitlementParam,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                transferCache: localVarTransferCache,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param expensePolicyEntitlementBoardingParam 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public expenseGetExpensePolicyEntitlementBoarding(expensePolicyEntitlementBoardingParam: ExpensePolicyEntitlementBoardingParam, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<DataSubmit>;
+    public expenseGetExpensePolicyEntitlementBoarding(expensePolicyEntitlementBoardingParam: ExpensePolicyEntitlementBoardingParam, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataSubmit>>;
+    public expenseGetExpensePolicyEntitlementBoarding(expensePolicyEntitlementBoardingParam: ExpensePolicyEntitlementBoardingParam, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataSubmit>>;
+    public expenseGetExpensePolicyEntitlementBoarding(expensePolicyEntitlementBoardingParam: ExpensePolicyEntitlementBoardingParam, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/json' | 'application/xml' | 'text/xml', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (expensePolicyEntitlementBoardingParam === null || expensePolicyEntitlementBoardingParam === undefined) {
+            throw new Error('Required parameter expensePolicyEntitlementBoardingParam was null or undefined when calling expenseGetExpensePolicyEntitlementBoarding.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json',
+            'text/json',
+            'application/xml',
+            'text/xml'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/xml',
+            'text/xml',
+            'application/x-www-form-urlencoded'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/api/Expense/GetExpensePolicyEntitlementBoarding`;
+        return this.httpClient.request<DataSubmit>('post', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: expensePolicyEntitlementBoardingParam,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

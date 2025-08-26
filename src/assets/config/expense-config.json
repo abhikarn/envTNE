@@ -3616,6 +3616,9 @@
                         ],
                         "disable": false,
                         "readonly": true,
+                        "setCustomObject": {
+                            "controlName": "ConstraintType"
+                        },
                         "order": 4
                     },
                     {
@@ -4522,6 +4525,13 @@
                         "value": true,
                         "showInUI": false,
                         "inPayload": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "ConstraintType",
+                        "isExcluded": false,
+                        "value": "",
+                        "showInUI": false
                     }
                 ],
                 "freezFormControls": [
@@ -4549,7 +4559,7 @@
                 ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
-                    "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
+                    "apiMethod": "expenseGetExpensePolicyEntitlementBoarding",
                     "requestBody": {
                         "ExpenseCategoryId": 2
                     },
@@ -4563,7 +4573,7 @@
                         "ClaimToDate": "ReferenceToDate",
                         "CityGrade": "CityGradeId",
                         "CountryGrade": "CountryGradeId",
-                        "Constraint": "PolicyReferenceId"
+                        "ConstraintType": "ConstraintType"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
