@@ -43429,7 +43429,7 @@
             {
                 "label": "Reject",
                 "type": "reject",
-                "class": "btn btn-outline-secondary me-lg-2 ",
+                "class": "btn btn-danger me-lg-2 ",
                 "confirmPopup": {
                     "message": "Are you sure you want to reject the claim?",
                     "confirmText": "Yes, Reject",
@@ -43440,7 +43440,7 @@
             {
                 "label": "Approve",
                 "type": "approve",
-                "class": "btn btn-dark  me-lg-2 ",
+                "class": "btn btn-success  me-lg-2 ",
                 "confirmPopup": {
                     "message": "Are you sure you want to approve the claim?",
                     "confirmText": "Yes, Approve",

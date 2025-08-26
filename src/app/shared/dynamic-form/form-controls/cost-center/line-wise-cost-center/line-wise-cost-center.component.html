@@ -1,28 +1,16 @@
-<form [formGroup]="costCenterDetailsForm">
+ <form [formGroup]="costCenterDetailsForm">
     <div class="col-md-12">
         <div class="gst-wrapper">
             <div class="gst-hold-body" id="showDiv">
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="tblTeGST" class="table mt-2 mb-3  remove-th-mobile    grey-table table-cust tbl-sml">
-                            <thead>
-                                <tr>
-                                    @for (field of fields; track $index) {
-                                    @if (field.showInUI) {
-                                    <th class="thd-w10">
-                                        <span>{{field.label}}</span>
-                                    </th>
-                                    }
-                                    }
-                                    <th class="thd-w5"><span>Action</span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
+   <div class="bg-white p-3 mb-3 rounded-3 mb-4">
+                           
+                                 <div class="row">
                                     @for (field of fields; track $index) {
                                     @if (field.showInUI) {
                                     @if(!field.autoComplete) {
-                                    <td>
+                                      <div class="col-md-4">
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
                                             <div class="trl-req-head"> <label> {{field.label}} </label> </div>
                                             <input [type]="field.type" [formControlName]="field.name"
@@ -36,10 +24,10 @@
                                                 }}
                                             </span>
                                         </div>
-                                    </td>
+                                     </div>
                                     }
                                     @if(field.autoComplete) {
-                                    <td>
+                                     <div class="col-md-4">
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
                                             <div class="trl-req-head"> <label> {{field.label}} </label> </div>
                                             <input matInput [formControlName]="field.name" [matAutocomplete]="auto"
@@ -59,38 +47,43 @@
                                                 }}
                                             </span>
                                         </div>
-                                    </td>
+                                     </div>
                                     }
                                     }
                                     }
-                                    <td>
+                                       <div class="col-md-12 text-end">
                                         <button type="button" id="btnAddGstTe"
-                                             class="btn btn-primary my-2 px-0" data-bs-toggle="tooltip"
+                                             class="btn btn-outline-secondary my-2 px-0" data-bs-toggle="tooltip"
                                             data-bs-placement="top" data-bs-title="Add" (click)="addCostCenterRow()">
                                             
-                                            Add  
+                                          <i class="fa fa-plus"></i>   Add  
                                         </button>
 
-
+</div>
                                         
 
-
-                                    </td>
-                                </tr>
-
+ 
                                 @if (costCenterDetails?.length > 0) {
+                                    
+                                  <div class="col-md-12 bg-light p-3 rounded-3">
+   <div class="row">
                                 @for (gst of costCenterDetails; track $index) {
-                                <tr>
+                              
                                     @for (field of fields; track $index) {
                                     @if (field.showInUI) {
 
-                                    <td style="padding: 7px 10px;">
+                                     <div class="col-md-4">
+                                           <div class="form-group chm-formgroup new-form-grp mt-0 mb-3">
                                         <div class="trl-req-head"> <label> {{field.label}} </label> </div>
                                         {{gst[field.name]}}
-                                    </td>
+                                    </div>
+                                    </div>
                                     }
                                     }
-                                    <td>
+
+                                     <div class="col-md-12 text-end"
+                                            style="border-top: 1px solid #eee;padding-top: 7px;">
+                                  
                                         <a type="button" id="btnAddGstTe" class="bg-transparent border-0 px-0 my-2 "
                                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add"
                                             (click)="removeCostCenterRow($index)">
@@ -102,12 +95,34 @@
                                                     fill="#E53535"></path>
                                             </svg>
                                         </a>
-                                    </td>
+                                      </div>
+                                 
+                                }
+
+                                   </div>
+                            </div>
+                                }
+                             
+
+
+                        <!-- <table id="tblTeGST" class="table mt-2 mb-3  remove-th-mobile    grey-table table-cust tbl-sml"> -->
+                            <!-- <thead>
+                                <tr>
+                                    @for (field of fields; track $index) {
+                                    @if (field.showInUI) {
+                                    <th class="thd-w10">
+                                        <span>{{field.label}}</span>
+                                    </th>
+                                    }
+                                    }
+                                    <th class="thd-w5"><span>Action</span></th>
                                 </tr>
-                                }
-                                }
-                            </tbody>
-                        </table>
+                            </thead> -->
+                         
+                        <!-- </table> -->
+
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>

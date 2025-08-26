@@ -3,11 +3,11 @@
     <!-- Approval Mode: Checkbox Column -->
     @if (mode === 'approval' || mode === 'finance-approval') {
     <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
+        <th class="checkbox-new" mat-header-cell *matHeaderCellDef>
             <input *ngIf="hasSelectableRows" type="checkbox" [(ngModel)]="selectAll" [checked]="selectAll"
                 (change)="toggleSelectAll()" />
         </th>
-        <td class="text-center" mat-cell *matCellDef="let row">
+        <td class="text-center checkbox-new" mat-cell *matCellDef="let row">
             <input *ngIf="row.ClaimStatusId !== 5" type="checkbox" [(ngModel)]="row.selected"
                 (change)="onRowSelectionChange(row)" />
         </td>
@@ -22,6 +22,8 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row" style="padding: 7px 0;">
+
+
             <div class="icons-new">
                 <span style="width: 22px;">
                     <div [matTooltip]="'GL Code: ' + row?.GLCode" matTooltipPosition="above"
