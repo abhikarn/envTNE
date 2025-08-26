@@ -3480,7 +3480,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 2,
                         "apiDateLimit": true,
                         "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
@@ -3492,7 +3491,16 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "setValue": [
+                            {
+                                "name": "ClaimToDate",
+                                "config": {
+                                    "minDate": "ClaimDate"
+                                }
+                            }
+                        ],
+                        "order": 2
                     },
                     {
                         "type": "date",
@@ -3517,7 +3525,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 3,
                         "apiDateLimit": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
@@ -3528,7 +3535,8 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "order": 3
                     },
                     {
                         "type": "select",
@@ -3575,12 +3583,12 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 4,
                         "getReadableValue": {
                             "controlName": "ConstraintNames"
                         },
                         "showInUI": false,
-                        "createControl": false
+                        "createControl": false,
+                        "order": 4
                     },
                     {
                         "type": "select",
@@ -13427,14 +13435,6 @@
                         "valueCheck": false
                     },
                     {
-                        "name": "OriginPointName",
-                        "valueCheck": false
-                    },
-                    {
-                        "name": "DestinationPointName",
-                        "valueCheck": false
-                    },
-                    {
                         "name": "PaymentMode",
                         "valueCheck": false
                     },
@@ -13575,20 +13575,6 @@
                         "order": 4
                     },
                     {
-                        "name": "OriginPointName",
-                        "label": "Origin Point Name",
-                        "visible": true,
-                        "position": "in",
-                        "order": 5
-                    },
-                    {
-                        "name": "DestinationPointName",
-                        "label": "Destination Point Name",
-                        "visible": true,
-                        "position": "in",
-                        "order": 6
-                    },
-                    {
                         "name": "City",
                         "label": "City",
                         "visible": true,
@@ -13623,6 +13609,20 @@
                         "label": "Actions",
                         "visible": true,
                         "position": "in",
+                        "order": 10
+                    },
+                    {
+                        "name": "OriginPointName",
+                        "label": "Origin Point Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "DestinationPointName",
+                        "label": "Destination Point Name",
+                        "visible": true,
+                        "position": "out",
                         "order": 10
                     },
                     {
@@ -35276,18 +35276,18 @@
                 "table": {
                     "columns": [
                         {
+                            "name": "actionTakenBy",
+                            "label": "Approver Name",
+                            "order": 1
+                        },
+                        {
                             "name": "actionTakenOnString",
                             "label": "Action Date",
-                            "order": 1
+                            "order": 2
                         },
                         {
                             "name": "actionStatus",
                             "label": "Status",
-                            "order": 2
-                        },
-                        {
-                            "name": "actionTakenBy",
-                            "label": "Approver Name",
                             "order": 3
                         },
                         {
@@ -39864,20 +39864,6 @@
                         "order": 3
                     },
                     {
-                        "name": "OriginPointName",
-                        "label": "Origin",
-                        "visible": true,
-                        "position": "in",
-                        "order": 4
-                    },
-                    {
-                        "name": "DestinationPointName",
-                        "label": "Destination",
-                        "visible": true,
-                        "position": "in",
-                        "order": 5
-                    },
-                    {
                         "type": "number",
                         "name": "ClaimAmount",
                         "label": "Claimed",
@@ -39940,6 +39926,20 @@
                         "visible": true,
                         "position": "out",
                         "international": true,
+                        "order": 13
+                    },
+                    {
+                        "name": "OriginPointName",
+                        "label": "Origin",
+                        "visible": true,
+                        "position": "out",
+                        "order": 13
+                    },
+                    {
+                        "name": "DestinationPointName",
+                        "label": "Destination",
+                        "visible": true,
+                        "position": "out",
                         "order": 13
                     },
                     {
