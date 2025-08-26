@@ -64,4 +64,5 @@ export interface IFormControl {
   conditionBasedDisplayFieldsCheck?: boolean;
   createControl?: boolean;
   setCustomObject?: any;
+  dateTimeValidation?: any;
 }

@@ -1023,6 +1023,18 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
 
     setTimeout(() => {
+      if(control.dateTimeValidation) {
+        const fromDate = this.form.get(control.dateTimeValidation.fromDate)?.value;
+        const toDate = this.form.get(control.dateTimeValidation.toDate)?.value;
+
+       // if fromdate > toDate
+       if (fromDate && toDate && fromDate > toDate) {
+         this.form.get(control.dateTimeValidation.toDate)?.setErrors({ invalid: true });
+       } else {
+         this.form.get(control.dateTimeValidation.toDate)?.setErrors(null);
+       }
+      }
+
       if (control.setValue) {
         control.setValue.forEach((field: any) => {
           // Handle minDate from another control (like direct copy)

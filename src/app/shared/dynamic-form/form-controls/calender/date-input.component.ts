@@ -158,6 +158,7 @@ export class DateInputComponent {
 
     const localIso = date.format('YYYY-MM-DDTHH:mm:ss');
     this.control.setValue(localIso, { emitEvent: false });
+    this.valueChange.emit({ event: { value: localIso }, control: this.controlConfig });
   }
 
   getErrorMessage(): string {

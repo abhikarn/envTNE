@@ -1947,6 +1947,10 @@
                                 }
                             }
                         ],
+                        "dateTimeValidation": {
+                            "fromDate": "CheckInDateTime",
+                            "toDate": "CheckOutDateTime"
+                        },
                         "order": 3
                     },
                     {
@@ -2005,6 +2009,10 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
+                        },
+                        "dateTimeValidation": {
+                            "fromDate": "CheckInDateTime",
+                            "toDate": "CheckOutDateTime"
                         },
                         "order": 4
                     },
@@ -3507,6 +3515,10 @@
                                 }
                             }
                         ],
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        },
                         "policyEntitlementCheck": true,
                         "order": 2
                     },
@@ -3543,6 +3555,10 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
+                        },
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
                         },
                         "policyEntitlementCheck": true,
                         "order": 3
@@ -6445,7 +6461,11 @@
                                     "minDate": "ClaimDate"
                                 }
                             }
-                        ]
+                        ],
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        }
                     },
                     {
                         "type": "date",
@@ -6572,6 +6592,10 @@
                         },
                         "displayPage": {
                             "Relocation Expense": false
+                        },
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
                         }
                     },
                     {
@@ -7927,6 +7951,10 @@
                                 }
                             }
                         ],
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        },
                         "order": 3
                     },
                     {
@@ -7946,6 +7974,10 @@
                         "disable": false,
                         "readonly": false,
                         "apiDateLimit": true,
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        },
                         "order": 4
                     },
                     {
@@ -9363,6 +9395,10 @@
                                 }
                             }
                         ],
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        },
                         "order": 3
                     },
                     {
@@ -9382,6 +9418,10 @@
                         "disable": false,
                         "readonly": false,
                         "apiDateLimit": true,
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        },
                         "order": 4
                     },
                     {
@@ -10876,6 +10916,10 @@
                                 }
                             }
                         ],
+                        "dateTimeValidation": {
+                            "fromDate": "CheckInDateTime",
+                            "toDate": "CheckOutDateTime"
+                        },
                         "order": 3
                     },
                     {
@@ -10935,6 +10979,10 @@
                                 ]
                             }
                         ],
+                        "dateTimeValidation": {
+                            "fromDate": "CheckInDateTime",
+                            "toDate": "CheckOutDateTime"
+                        },
                         "order": 4
                     },
                     {
@@ -12439,6 +12487,10 @@
                                 }
                             }
                         ],
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        },
                         "order": 2
                     },
                     {
@@ -12461,6 +12513,10 @@
                         "displayPage": {
                             "Travel Expense": true,
                             "Local Travel Conveyance": false
+                        },
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
                         },
                         "order": 3
                     },
@@ -24582,6 +24638,10 @@
                                 }
                             }
                         ],
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimFromDate",
+                            "toDate": "ClaimToDate"
+                        },
                         "order": 2
                     },
                     {
@@ -24618,6 +24678,10 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
+                        },
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimFromDate",
+                            "toDate": "ClaimToDate"
                         },
                         "order": 3
                     },
