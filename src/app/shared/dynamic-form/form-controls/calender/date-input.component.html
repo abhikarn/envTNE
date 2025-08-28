@@ -8,7 +8,7 @@
       </mat-label>
 
       <div class="input-group">
-        <input matInput [matDatepicker]="picker" [formControl]="control" (dateChange)="onDateSelect($event)"
+        <input matInput [matDatepicker]="picker" [formControl]="control"  placeholder="Select" (dateChange)="onDateSelect($event)"
           [min]="minDate" [max]="maxDate" (click)="picker.open()" readonly>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>

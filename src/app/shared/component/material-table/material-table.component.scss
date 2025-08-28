@@ -156,4 +156,39 @@ app-material-table {
 ::ng-deep tr.ocr-riestricted-row {
   background-color: #f5da89 !important;
 }
+
+ 
+ /* Custom Checkbox */
+  .checkbox-new input[type="checkbox"] {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 18px;
+	height: 18px;
+	border: 2px solid #2D7DC4;
+	border-radius: 5px;
+	background-color: #ffffff;
+	cursor: pointer;
+	position: relative;
+	transition: all 0.3s ease;
+}
+/* Checked state */
+ .checkbox-new input[type="checkbox"]:checked {
+	background-color: #2D7DC4;
+	border-color: #2D7DC4;
+}
+/* Tick mark */
+  .checkbox-new input[type="checkbox"]:checked::after {
+	content: "";
+	position: absolute;
+	left: 4px;
+	top: 0px;
+	width: 6px;
+	height: 12px;
+	border: solid #fff;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+}
+
+
+
 }

@@ -8,7 +8,7 @@
     <!-- @if (controlConfig.icon) {
     <mat-icon matPrefix>{{ controlConfig.icon }}</mat-icon>
     } -->
-    <mat-select [formControl]="control" placeholder="{{controlConfig.placeholder || 'Select an option'}}"
+    <mat-select [formControl]="control" placeholder="Select"
       (mousedown)="onMatSelectClick($event);" (openedChange)="onSelectOpenedChange($event)" [disabled]="isMobile"
       (selectionChange)="setReadableValue($event);onReadonlySelection($event);onSelectionChange($event)">
       @if (!!controlConfig.defaultValue) {

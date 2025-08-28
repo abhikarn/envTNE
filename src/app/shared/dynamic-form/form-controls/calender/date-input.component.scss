@@ -165,4 +165,6 @@ mat-form-field.ng-pristine.ng-untouched .mdc-line-ripple::before {
 mat-form-field.ng-touched.ng-invalid .mdc-line-ripple::before {
   border-bottom-color: var(--mdc-filled-text-field-error-active-indicator-color, var(--mat-sys-error)) !important;
 }
-
+.mdc-text-field__input::placeholder {
+	opacity: 1;
+}

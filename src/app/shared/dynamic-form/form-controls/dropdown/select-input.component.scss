@@ -25,6 +25,12 @@ lib-select-input {
 		margin-bottom: 5px;
 	}
 
+	.mat-form-field-hide-placeholder .mat-mdc-select-placeholder {
+	 
+	-webkit-text-fill-color: inherit!important;
+ 
+}
+
 	.mat-mdc-form-field-infix {
 		min-height: var(--mat-form-field-container-height, 56px);
 		padding-top: var(--mat-form-field-filled-with-label-container-padding-top, 0) !important;
