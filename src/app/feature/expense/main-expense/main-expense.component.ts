@@ -288,6 +288,15 @@ export class MainExpenseComponent {
         this.moduleConfig.page = box.name;
         this.moduleConfig[box.name] = box;
         this.moduleConfig.internationalFlag = box.international || false;
+        // if (box.category) {
+        //   const catMap = new Map(box.category?.map((cat: any) => [cat.name, cat.label]));
+
+        //   this.categories?.forEach((category: any) => {
+        //     if (catMap.has(category.name)) {
+        //       category.label = catMap.get(category.name);
+        //     }
+        //   });
+        // }
       }
     });
     this.setCurrencyDropdown();
@@ -336,6 +345,7 @@ export class MainExpenseComponent {
           const shouldShow = this.categories.some(
             (category: any) => category.name === item.name
           );
+          // item.label = shouldShow ? this.categories.find((cat: any) => cat.name === item.name)?.label : '';
           item.showInUI = shouldShow;
         });
       }
@@ -416,6 +426,20 @@ export class MainExpenseComponent {
         }
       });
       this.setupExpenseConfigForEditMode(response, this.title);
+
+      // this.expenseConfig?.expenseLandingBox?.forEach((box: any) => {
+      //   if (box?.displayPage?.[this.title]) {
+      //     if (box.category) {
+      //       const catMap = new Map(box.category?.map((cat: any) => [cat.name, cat.label]));
+
+      //       this.categories?.forEach((category: any) => {
+      //         if (catMap.has(category.name)) {
+      //           category.label = catMap.get(category.name);
+      //         }
+      //       });
+      //     }
+      //   }
+      // });
     } else {
       this.title = 'Travel Expense';
       this.moduleConfig.page = 'Travel Expense';
@@ -888,7 +912,7 @@ export class MainExpenseComponent {
     // End:Removing unused fields from Payload using flag inPayload
 
     console.log("Main Expense Data: ", this.mainExpenseData);
-    
+
 
     this.confirmDialogService
       .confirm({

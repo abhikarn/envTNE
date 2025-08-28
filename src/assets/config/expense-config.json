@@ -436,6 +436,12 @@
                     "Local Travel Conveyance": true,
                     "Travel Expense": false
                 },
+                "category": [
+                    {
+                        "name": "Local Conveyance During Travel",
+                        "label": "Local Travel Conveyance"
+                    }
+                ],
                 "moduleData": {
                     "travelTypeId": 152,
                     "requestForId": 152,
