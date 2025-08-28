@@ -436,6 +436,12 @@
                     "Local Travel Conveyance": true,
                     "Travel Expense": false
                 },
+                "category": [
+                    {
+                        "name": "Local Conveyance During Travel",
+                        "label": "Local Travel Conveyance"
+                    }
+                ],
                 "moduleData": {
                     "travelTypeId": 152,
                     "requestForId": 152,
@@ -1939,6 +1945,18 @@
                                 "EntitlementAmount": "EntitlementAmount"
                             }
                         },
+                        "setValue": [
+                            {
+                                "name": "CheckOutDateTime",
+                                "config": {
+                                    "minDate": "CheckInDateTime"
+                                }
+                            }
+                        ],
+                        "dateTimeValidation": {
+                            "fromDate": "CheckInDateTime",
+                            "toDate": "CheckOutDateTime"
+                        },
                         "order": 3
                     },
                     {
@@ -1997,6 +2015,10 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
+                        },
+                        "dateTimeValidation": {
+                            "fromDate": "CheckInDateTime",
+                            "toDate": "CheckOutDateTime"
                         },
                         "order": 4
                     },
@@ -3052,7 +3074,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -3480,9 +3502,7 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 2,
                         "apiDateLimit": true,
-                        "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
                                 "ClaimDate": "ClaimDate",
@@ -3492,7 +3512,21 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "setValue": [
+                            {
+                                "name": "ClaimToDate",
+                                "config": {
+                                    "minDate": "ClaimDate"
+                                }
+                            }
+                        ],
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        },
+                        "policyEntitlementCheck": true,
+                        "order": 2
                     },
                     {
                         "type": "date",
@@ -3517,7 +3551,6 @@
                             "value": null,
                             "required": true
                         },
-                        "order": 3,
                         "apiDateLimit": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
@@ -3528,7 +3561,13 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
-                        }
+                        },
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        },
+                        "policyEntitlementCheck": true,
+                        "order": 3
                     },
                     {
                         "type": "select",
@@ -3575,10 +3614,50 @@
                         ],
                         "disable": false,
                         "readonly": true,
-                        "order": 4,
                         "getReadableValue": {
                             "controlName": "ConstraintNames"
-                        }
+                        },
+                        "setCustomObject": {
+                            "controlName": "ConstraintType"
+                        },
+                        "showInUI": true,
+                        "createControl": true,
+                        "policyEntitlementCheck": true,
+                        "order": 4
+                    },
+                    {
+                        "type": "select",
+                        "dataType": "int",
+                        "name": "Constraint",
+                        "isExcluded": false,
+                        "label": "Constraint",
+                        "placeholder": "Select Constraint",
+                        "value": null,
+                        "defaultValue": {
+                            "Id": 15,
+                            "Display": "Per Diem"
+                        },
+                        "options": [],
+                        "labelKey": "KeyData",
+                        "valueKey": "KeyDataId",
+                        "apiService": "DataService",
+                        "apiMethod": "dataGetMealType",
+                        "required": true,
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Constraint is required"
+                            }
+                        ],
+                        "disable": false,
+                        "readonly": true,
+                        "setCustomObject": {
+                            "controlName": "ConstraintType"
+                        },
+                        "showInUI": false,
+                        "createControl": false,
+                        "policyEntitlementCheck": true,
+                        "order": 4
                     },
                     {
                         "type": "text",
@@ -4068,6 +4147,9 @@
                         "label": "Justification",
                         "value": "",
                         "required": false,
+                        "requiredIf": {
+                            "IsViolation": true
+                        },
                         "order": 18
                     },
                     {
@@ -4478,9 +4560,16 @@
                         "type": "hidden",
                         "name": "IsEdit",
                         "isExcluded": false,
-                        "value": false,
+                        "value": true,
                         "showInUI": false,
                         "inPayload": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "ConstraintType",
+                        "isExcluded": false,
+                        "value": "",
+                        "showInUI": false
                     }
                 ],
                 "freezFormControls": [
@@ -4500,7 +4589,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -4508,7 +4597,7 @@
                 ],
                 "policyEntitlementCheckApi": {
                     "apiService": "ExpenseService",
-                    "apiMethod": "expenseGetExpensePolicyEntitlementPerDiem",
+                    "apiMethod": "expenseGetExpensePolicyEntitlementBoarding",
                     "requestBody": {
                         "ExpenseCategoryId": 2
                     },
@@ -4518,10 +4607,11 @@
                         "UserMasterId": "UserMasterId"
                     },
                     "inputControls": {
-                        "ClaimDate": "ReferenceDate",
+                        "ClaimDate": "ReferenceFromDate",
+                        "ClaimToDate": "ReferenceToDate",
                         "CityGrade": "CityGradeId",
                         "CountryGrade": "CountryGradeId",
-                        "AccommodationType": "PolicyReferenceId"
+                        "ConstraintType": "ConstraintType"
                     },
                     "outputControl": {
                         "EntitlementCurrency": "ResponseValue.CurrencyId",
@@ -5945,7 +6035,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -6369,6 +6459,18 @@
                         },
                         "displayPage": {
                             "Relocation Expense": false
+                        },
+                        "setValue": [
+                            {
+                                "name": "ClaimToDate",
+                                "config": {
+                                    "minDate": "ClaimDate"
+                                }
+                            }
+                        ],
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
                         }
                     },
                     {
@@ -6496,6 +6598,10 @@
                         },
                         "displayPage": {
                             "Relocation Expense": false
+                        },
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
                         }
                     },
                     {
@@ -7437,7 +7543,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -7843,6 +7949,18 @@
                         "disable": false,
                         "readonly": false,
                         "apiDateLimit": true,
+                        "setValue": [
+                            {
+                                "name": "ClaimToDate",
+                                "config": {
+                                    "minDate": "ClaimDate"
+                                }
+                            }
+                        ],
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        },
                         "order": 3
                     },
                     {
@@ -7862,6 +7980,10 @@
                         "disable": false,
                         "readonly": false,
                         "apiDateLimit": true,
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        },
                         "order": 4
                     },
                     {
@@ -8859,7 +8981,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -9271,6 +9393,18 @@
                         "disable": false,
                         "readonly": false,
                         "apiDateLimit": true,
+                        "setValue": [
+                            {
+                                "name": "ClaimToDate",
+                                "config": {
+                                    "minDate": "ClaimDate"
+                                }
+                            }
+                        ],
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        },
                         "order": 3
                     },
                     {
@@ -9290,6 +9424,10 @@
                         "disable": false,
                         "readonly": false,
                         "apiDateLimit": true,
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        },
                         "order": 4
                     },
                     {
@@ -10287,7 +10425,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -10776,6 +10914,18 @@
                                 ]
                             }
                         ],
+                        "setValue": [
+                            {
+                                "name": "CheckOutDateTime",
+                                "config": {
+                                    "minDate": "CheckInDateTime"
+                                }
+                            }
+                        ],
+                        "dateTimeValidation": {
+                            "fromDate": "CheckInDateTime",
+                            "toDate": "CheckOutDateTime"
+                        },
                         "order": 3
                     },
                     {
@@ -10835,6 +10985,10 @@
                                 ]
                             }
                         ],
+                        "dateTimeValidation": {
+                            "fromDate": "CheckInDateTime",
+                            "toDate": "CheckOutDateTime"
+                        },
                         "order": 4
                     },
                     {
@@ -11868,7 +12022,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -12339,6 +12493,10 @@
                                 }
                             }
                         ],
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
+                        },
                         "order": 2
                     },
                     {
@@ -12361,6 +12519,10 @@
                         "displayPage": {
                             "Travel Expense": true,
                             "Local Travel Conveyance": false
+                        },
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimDate",
+                            "toDate": "ClaimToDate"
                         },
                         "order": 3
                     },
@@ -12649,7 +12811,10 @@
                                 "apiMethod": "calculateLocationDistance",
                                 "labelKey": "Value",
                                 "valueKey": "Key",
-                                "isGooglePlace": true
+                                "isGooglePlace": true,
+                                "config": {
+                                    "decimalPrecision": 2
+                                }
                             }
                         ],
                         "required": true,
@@ -12692,7 +12857,10 @@
                                 "apiMethod": "calculateLocationDistance",
                                 "labelKey": "Value",
                                 "valueKey": "Key",
-                                "isGooglePlace": true
+                                "isGooglePlace": true,
+                                "config": {
+                                    "decimalPrecision": 2
+                                }
                             }
                         ],
                         "required": true,
@@ -13393,14 +13561,6 @@
                         "valueCheck": false
                     },
                     {
-                        "name": "OriginPointName",
-                        "valueCheck": false
-                    },
-                    {
-                        "name": "DestinationPointName",
-                        "valueCheck": false
-                    },
-                    {
                         "name": "PaymentMode",
                         "valueCheck": false
                     },
@@ -13541,20 +13701,6 @@
                         "order": 4
                     },
                     {
-                        "name": "OriginPointName",
-                        "label": "Origin Point Name",
-                        "visible": true,
-                        "position": "in",
-                        "order": 5
-                    },
-                    {
-                        "name": "DestinationPointName",
-                        "label": "Destination Point Name",
-                        "visible": true,
-                        "position": "in",
-                        "order": 6
-                    },
-                    {
                         "name": "City",
                         "label": "City",
                         "visible": true,
@@ -13589,6 +13735,20 @@
                         "label": "Actions",
                         "visible": true,
                         "position": "in",
+                        "order": 10
+                    },
+                    {
+                        "name": "OriginPointName",
+                        "label": "Origin Point Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "DestinationPointName",
+                        "label": "Destination Point Name",
+                        "visible": true,
+                        "position": "out",
                         "order": 10
                     },
                     {
@@ -16181,7 +16341,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -17255,7 +17415,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -18145,7 +18305,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -22332,7 +22492,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -23321,7 +23481,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -24148,7 +24308,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -24484,6 +24644,10 @@
                                 }
                             }
                         ],
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimFromDate",
+                            "toDate": "ClaimToDate"
+                        },
                         "order": 2
                     },
                     {
@@ -24520,6 +24684,10 @@
                             "outputControl": {
                                 "EntitlementAmount": "EntitlementAmount"
                             }
+                        },
+                        "dateTimeValidation": {
+                            "fromDate": "ClaimFromDate",
+                            "toDate": "ClaimToDate"
                         },
                         "order": 3
                     },
@@ -25089,7 +25257,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -25792,7 +25960,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -27105,7 +27273,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -27720,7 +27888,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -28389,7 +28557,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -31051,6 +31219,14 @@
                                 "EntitlementAmount": "EntitlementAmount"
                             }
                         },
+                        "setValue": [
+                            {
+                                "name": "CheckOutDateTime",
+                                "config": {
+                                    "minDate": "CheckInDateTime"
+                                }
+                            }
+                        ],
                         "order": 3
                     },
                     {
@@ -32165,7 +32341,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -34846,7 +35022,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "Claimed amount is greater than entitlement amount. Do you want to proceed?",
+                            "message": "Claimed amount is greater than entitlement amount. ",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -35180,7 +35356,7 @@
                     "message": "Claimed amount is greater than Entitled amount."
                 },
                 "Boarding Expense": {
-                    "label": "Boarding Expense",
+                    "label": "Per Diem",
                     "message": "Claimed amount is greater than Entitled amount."
                 },
                 "Flat Allowance": {
@@ -35242,18 +35418,18 @@
                 "table": {
                     "columns": [
                         {
+                            "name": "actionTakenBy",
+                            "label": "Approver Name",
+                            "order": 1
+                        },
+                        {
                             "name": "actionTakenOnString",
                             "label": "Action Date",
-                            "order": 1
+                            "order": 2
                         },
                         {
                             "name": "actionStatus",
                             "label": "Status",
-                            "order": 2
-                        },
-                        {
-                            "name": "actionTakenBy",
-                            "label": "Approver Name",
                             "order": 3
                         },
                         {
@@ -39830,20 +40006,6 @@
                         "order": 3
                     },
                     {
-                        "name": "OriginPointName",
-                        "label": "Origin",
-                        "visible": true,
-                        "position": "in",
-                        "order": 4
-                    },
-                    {
-                        "name": "DestinationPointName",
-                        "label": "Destination",
-                        "visible": true,
-                        "position": "in",
-                        "order": 5
-                    },
-                    {
                         "type": "number",
                         "name": "ClaimAmount",
                         "label": "Claimed",
@@ -39909,7 +40071,21 @@
                         "order": 13
                     },
                     {
-                        "name": "Distance",
+                        "name": "OriginPointName",
+                        "label": "Origin",
+                        "visible": true,
+                        "position": "out",
+                        "order": 13
+                    },
+                    {
+                        "name": "DestinationPointName",
+                        "label": "Destination",
+                        "visible": true,
+                        "position": "out",
+                        "order": 13
+                    },
+                    {
+                        "name": "KM",
                         "label": "Distance(KM)",
                         "visible": true,
                         "position": "out",
@@ -40266,7 +40442,7 @@
                         "order": 13
                     },
                     {
-                        "name": "Distance",
+                        "name": "KM",
                         "label": "Distance(KM)",
                         "visible": true,
                         "position": "out",

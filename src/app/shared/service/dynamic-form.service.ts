@@ -664,7 +664,14 @@ export class DynamicFormService {
             } else {
               console.warn(`No array data found at path "${responsePath}" in response.`);
             }
-            form.get(outputControl)?.setValue(extracted);
+            
+            if(caseItem.config) {
+              if(caseItem.config.decimalPrecision) {
+                form.get(outputControl)?.setValue(extracted?.toFixed(caseItem.config.decimalPrecision) ?? extracted);
+              }
+            } else {
+              form.get(outputControl)?.setValue(extracted);
+            }
           }
         } else if (typeof caseItem.outputControl === 'string') {
           // Single field case

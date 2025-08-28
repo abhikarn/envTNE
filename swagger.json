@@ -3404,6 +3404,45 @@
         }
       }
     },
+    "/api/Expense/GetExpensePolicyEntitlementBoarding": {
+      "post": {
+        "tags": [
+          "Expense"
+        ],
+        "operationId": "Expense_GetExpensePolicyEntitlementBoarding",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "expensePolicyEntitlementBoardingParam",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExpensePolicyEntitlementBoardingParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DataSubmit"
+            }
+          }
+        }
+      }
+    },
     "/api/Dashboard/ApprovalsFinanceExpenseRequest": {
       "post": {
         "tags": [
@@ -6997,6 +7036,86 @@
       "type": "object",
       "properties": {
         "RequestId": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "ExpensePolicyEntitlementBoardingParam": {
+      "type": "object",
+      "properties": {
+        "ClaimTypeId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "TravelRequestId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "UserMasterId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ExpenseCategoryId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ReferenceFromDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ReferenceToDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "CityGradeId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "CountryGradeId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ExpenseRequestMetaDataType": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExpenseRequestMetaDataType"
+          }
+        },
+        "ConstraintType": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ConstraintType"
+          }
+        },
+        "IsActive": {
+          "type": "boolean"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "ActionBy": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "TransactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "CommunicationSeenCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "ConstraintType": {
+      "type": "object",
+      "properties": {
+        "Key": {
+          "type": "string"
+        },
+        "Value": {
           "format": "int64",
           "type": "integer"
         }

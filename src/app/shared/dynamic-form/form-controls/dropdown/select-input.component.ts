@@ -66,6 +66,9 @@ export class SelectInputComponent implements AfterViewInit {
     this.loadOptions();
     if (this.controlConfig.defaultValue) {
       this.control.setValue(this.controlConfig.defaultValue.Id);
+      if (this.controlConfig.setCustomObject) {
+        this.setCustomObjectValue(this.controlConfig.defaultValue);
+      }
       this.setReadableDefaultvalue();
       this.onSelectBlur();
     }
@@ -156,6 +159,7 @@ export class SelectInputComponent implements AfterViewInit {
 
   // Only open bottom sheet on mobile, and prevent mat-select from opening
   onMatSelectClick(event: Event) {
+    this.setCustomObjectValue(event);
     if (this.isMobile) {
       event.preventDefault();
       event.stopPropagation();
@@ -239,4 +243,23 @@ export class SelectInputComponent implements AfterViewInit {
     }
   }
 
+  setCustomObjectValue(event: any) {
+    if (this.controlConfig.setCustomObject) {
+      const customControl = this.form.get(this.controlConfig.setCustomObject.controlName);
+      if (customControl) {
+        if (this.controlConfig.defaultValue) {
+          customControl.setValue({
+            Key: this.controlConfig.defaultValue.Display,
+            Value: this.controlConfig.defaultValue.Id
+          });
+        } else {
+          customControl.setValue({
+            Key: event.value,
+            Value: event.label
+          });
+        }
+      }
+
+    }
+  }
 }

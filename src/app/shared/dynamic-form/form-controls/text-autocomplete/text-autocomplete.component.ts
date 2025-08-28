@@ -73,7 +73,7 @@ export class TextAutocompleteComponent {
 
   displayFn = (value: any): string => {
     if (typeof value === 'object') {
-      this.displayValue = value.label ?? '';
+      this.displayValue = value?.label ?? '';
       return value?.label ?? '';
     }
 

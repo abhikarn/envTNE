@@ -159,9 +159,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       if (config.dataType === 'numeric') {
         this.setupAutoFormat(config, this.configService);
       }
-      const control = FormControlFactory.createControl(config);
-      this.formControls.push({ formConfig: config, control: control });
-      this.form.addControl(config.name, control);
+      if (config.createControl !== false) {
+        const control = FormControlFactory.createControl(config);
+        this.formControls.push({ formConfig: config, control: control });
+        this.form.addControl(config.name, control);
+      }
     });
     if (this.category?.onInitAPI) {
       // Populate form with initial API data if available
@@ -630,6 +632,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
       if (isViolation) {
         this.form.get('IsViolation')?.setValue(true);
+        this.dynamicFormService.updateConditionalValidators(this.form, this.formConfig);
         // Show confirmation dialog
         this.confirmDialogService.confirm(currentCheck.confirmPopup).subscribe((confirmed: boolean) => {
           if (confirmed) {
@@ -652,6 +655,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   proceedWithSubmission() {
+    if (this.form.invalid) {
+      this.dynamicFormService.scrollToFirstInvalidControl('.dynamic-form');
+      return;
+    }
     this.setAutoCompleteFields();
     this.prepareFormJson();
     this.addDataToDynamicTable();
@@ -702,9 +709,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   setAutoCompleteFields() {
     // Logic for autocomplete field like city to save the object value for display purpose
     this.formControls.forEach(control => {
-      let { name, autoComplete } = control.formConfig;
+      let { name, autoComplete, isGooglePlace } = control.formConfig;
       if (autoComplete && name in this.form.value) {
-        let selected = this.form.value[name];
+        let selected = isGooglePlace ? this.form.value[name].label : this.form.value[name];
         if (selected && typeof selected == "object") {
           if (!control.formConfig.options) {
             control.formConfig.options = [];
@@ -718,6 +725,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   prepareFormJson() {
+    console.log('Preparing form JSON for submission...', this.form.value);
     // Preparing form json
     this.formData.name = this.category.name;
     this.formControls.forEach(control => {
@@ -848,6 +856,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
         // If the value is an object with `.value`, extract it
         this.form.controls[name].setValue(typeof value === 'object' && value !== null ? value.value : value);
+        if (control.formConfig.defaultValue) {
+          this.form.controls[name].setValue(control.formConfig.defaultValue?.Id);
+        }
       } else if (type === 'date') {
         this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
           if (dateInput.timeControl && dateInput.controlConfig.name === name) {
@@ -1012,6 +1023,18 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
 
     setTimeout(() => {
+      if(control.dateTimeValidation) {
+        const fromDate = this.form.get(control.dateTimeValidation.fromDate)?.value;
+        const toDate = this.form.get(control.dateTimeValidation.toDate)?.value;
+
+       // if fromdate > toDate
+       if (fromDate && toDate && fromDate > toDate) {
+         this.form.get(control.dateTimeValidation.toDate)?.setErrors({ invalid: true });
+       } else {
+         this.form.get(control.dateTimeValidation.toDate)?.setErrors(null);
+       }
+      }
+
       if (control.setValue) {
         control.setValue.forEach((field: any) => {
           // Handle minDate from another control (like direct copy)

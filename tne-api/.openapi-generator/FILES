@@ -22,6 +22,7 @@ model/authenticationGetParam.ts
 model/autoCompleteSearchTextParam.ts
 model/cityAutocompleteParam.ts
 model/cityListType.ts
+model/constraintType.ts
 model/conversionRateAgainstBaseCurrencyParam.ts
 model/conversionRateParam.ts
 model/countryCodeParam.ts
@@ -44,6 +45,7 @@ model/expenseCategoryGroup.ts
 model/expenseCategoryGroupMapping.ts
 model/expenseCategoryGroupMappingDeleteParam.ts
 model/expenseCategoryGroupMappingListParam.ts
+model/expensePolicyEntitlementBoardingParam.ts
 model/expensePolicyEntitlementDurationParam.ts
 model/expensePolicyEntitlementParam.ts
 model/expenseRequestApprovalDetailType.ts
