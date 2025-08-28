@@ -45,6 +45,7 @@ model/expenseCategoryGroup.ts
 model/expenseCategoryGroupMapping.ts
 model/expenseCategoryGroupMappingDeleteParam.ts
 model/expenseCategoryGroupMappingListParam.ts
+model/expenseFormFieldRestrictGetParam.ts
 model/expensePolicyEntitlementBoardingParam.ts
 model/expensePolicyEntitlementDurationParam.ts
 model/expensePolicyEntitlementParam.ts
