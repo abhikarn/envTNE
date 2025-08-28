@@ -234,6 +234,11 @@ export class MainExpenseComponent {
     if (this.transactionId) {
       this.loadExistingExpenseRequest();
     }
+    this.expenseService.expenseGetExpenseFormFieldRestrict({
+      ExpenseCategoryId: 0
+    }).subscribe((response: any) => {
+      this.moduleConfig.formFieldRestrictions = response?.ResponseValue || [];
+    });
   }
 
   // Setup initial dynamic form control based on expenseConfig request object.
