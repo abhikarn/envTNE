@@ -2000,8 +2000,7 @@
                                             "dependsOn": [
                                                 "NoOfDays"
                                             ]
-                                        },
-                                        "message": "No of Days should not be greater than `NoOfDays + 1`"
+                                        }
                                     }
                                 ]
                             }

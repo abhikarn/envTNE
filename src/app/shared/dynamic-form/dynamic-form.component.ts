@@ -1023,16 +1023,16 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
 
     setTimeout(() => {
-      if(control.dateTimeValidation) {
+      if (control.dateTimeValidation) {
         const fromDate = this.form.get(control.dateTimeValidation.fromDate)?.value;
         const toDate = this.form.get(control.dateTimeValidation.toDate)?.value;
 
-       // if fromdate > toDate
-       if (fromDate && toDate && fromDate > toDate) {
-         this.form.get(control.dateTimeValidation.toDate)?.setErrors({ invalid: true });
-       } else {
-         this.form.get(control.dateTimeValidation.toDate)?.setErrors(null);
-       }
+        // if fromdate > toDate
+        if (fromDate && toDate && fromDate > toDate) {
+          this.form.get(control.dateTimeValidation.toDate)?.setErrors({ invalid: true });
+        } else {
+          this.form.get(control.dateTimeValidation.toDate)?.setErrors(null);
+        }
       }
 
       if (control.setValue) {
@@ -1080,37 +1080,36 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
       if (control.setFields) {
         control.setFields.forEach((field: any) => {
-          // Prepare values for formula
-          const checkFormula = field.checkFormula || '';
-          if (checkFormula) {
+          // Step 1: Skip if checkFormula fails
+          if (field.checkFormula) {
             const values: any = {};
             field.dependsOn?.forEach((dep: string) => {
               values[dep] = this.form.get(dep)?.value;
             });
-            const isFormulaValid = this.dynamicFormService.evaluateFormula(checkFormula, values);
-            if (!isFormulaValid)
-              return; // Skip if checkFormula is false
+
+            const isFormulaValid = this.dynamicFormService.evaluateFormula(field.checkFormula, values);
+            if (!isFormulaValid) return;
           }
-          const dependsOn = field.dependsOn || [];
+
+          // Step 2: Calculate new value
           const values: any = {};
-          dependsOn.forEach((dep: string) => {
+          field.dependsOn?.forEach((dep: string) => {
             values[dep] = this.form.get(dep)?.value;
           });
 
-          // 1. Calculate the field value
           const calculatedValue = this.dynamicFormService.evaluateFormula(field.formula, values);
+          const controlToValidate = this.form.get(field.name);
+          controlToValidate?.setValue(Math.max(0, calculatedValue));
 
-          // 2. Set value
-          this.form.get(field.name)?.setValue(calculatedValue < 0 ? 0 : calculatedValue);
+          // Step 3: Handle dynamic validations
+          if (field.setValidations?.length) {
+            let dynamicValidators: any[] = [];
 
-          // 3. Check for setValidations
-          if (field.setValidations && field.setValidations.length > 0) {
             field.setValidations.forEach((validation: any) => {
               if (validation.type === 'max') {
-                // Calculate the dynamic max
-                const maxDependsOn = validation.calculateValue.dependsOn || [];
+                // Calculate dynamic max
                 const maxValues: any = {};
-                maxDependsOn.forEach((dep: string) => {
+                validation.calculateValue.dependsOn?.forEach((dep: string) => {
                   maxValues[dep] = this.form.get(dep)?.value;
                 });
 
@@ -1119,26 +1118,34 @@ export class DynamicFormComponent implements OnInit, OnChanges {
                   maxValues
                 );
 
-                // Update the validator
-                const controlToValidate = this.form.get(field.name);
-                controlToValidate?.setValidators([
-                  Validators.max(maxValue)
-                ]);
-                this.formConfig.forEach((config: any) => {
-                  if (field.name === config.name) {
-                    config.validations.push({
-                      type: 'max',
-                      value: maxValue,
-                      message: `${field?.label} cannot exceed ${maxValue}.`
-                    })
+                dynamicValidators.push(Validators.max(maxValue));
+
+                // 🔄 Replace old "max" config instead of appending
+                const fieldConfig = this.formConfig.find((cfg: any) => cfg.name === field.name);
+                if (fieldConfig) {
+                  if (!Array.isArray(fieldConfig.validations)) {
+                    fieldConfig.validations = [];
                   }
-                });
-                controlToValidate?.updateValueAndValidity();
+                  fieldConfig.validations = fieldConfig.validations.filter((v: any) => v.type !== 'max');
+                  fieldConfig.validations.push({
+                    type: 'max',
+                    value: maxValue,
+                    message: `${field?.label} cannot exceed ${maxValue}.`
+                  });
+                }
               }
             });
+
+            // Step 4: Apply dynamic + static validators fresh each time
+            const staticValidators = field.staticValidators || []; // keep required/minLength etc. from config
+            controlToValidate?.setValidators([...staticValidators, ...dynamicValidators]);
+
+            // Important: force re-run validation
+            controlToValidate?.updateValueAndValidity({ emitEvent: false });
           }
         });
       }
+
     }, 500); // Allow time for async validators to complete
 
   }
