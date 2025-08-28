@@ -1120,7 +1120,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
                 dynamicValidators.push(Validators.max(maxValue));
 
-                // 🔄 Replace old "max" config instead of appending
+                // Replace old "max" config instead of appending
                 const fieldConfig = this.formConfig.find((cfg: any) => cfg.name === field.name);
                 if (fieldConfig) {
                   if (!Array.isArray(fieldConfig.validations)) {
