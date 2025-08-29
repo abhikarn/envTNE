@@ -19210,6 +19210,22 @@
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
                     }
                 },
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. ",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
+                    }
+                ],
                 "expanded": true,
                 "displayTable": true,
                 "displayAddClearButton": true,
@@ -35408,6 +35424,10 @@
                 },
                 "School Capitation Fees": {
                     "label": "School Capitation Fees",
+                    "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Transit Allowance": {
+                    "label": "Transit Allowance",
                     "message": "Claimed amount is greater than Entitled amount."
                 }
             },

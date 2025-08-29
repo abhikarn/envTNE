@@ -75,7 +75,7 @@ export class MultiSelectInputComponent implements OnInit, OnDestroy {
   }
 
   loadOptions() {
-    if(this.controlConfig.options && this.controlConfig.options.length > 0) {
+    if (this.controlConfig.options && this.controlConfig.options.length > 0) {
       this.allOptions = this.controlConfig.options;
       this.filteredOptions = [...this.allOptions];
       this.updateAllSelectedState();
@@ -118,7 +118,7 @@ export class MultiSelectInputComponent implements OnInit, OnDestroy {
 
   toggleSelectAll() {
     this.allSelected = !this.allSelected;
-    if(this.controlConfig.setCustomObject) {
+    if (this.controlConfig.setCustomObject) {
       this.form.get(this.controlConfig.setCustomObject.controlName)?.setValue(
         this.allSelected ? this.allOptions.map(o => ({ key: o.label, value: o.value })).join(', ') : []
       );
@@ -130,18 +130,23 @@ export class MultiSelectInputComponent implements OnInit, OnDestroy {
   }
 
   isSelected(value: any): boolean {
-    if(this.controlConfig.setCustomObject) {
+    const rawValue = this.control.value;
+    const values: any[] = Array.isArray(rawValue) ? rawValue : rawValue != null ? [rawValue] : [];
+
+    if (this.controlConfig.setCustomObject) {
       this.form.get(this.controlConfig.setCustomObject.controlName)?.setValue(
-        this.control.value?.map((v: any) => ({
+        values.map(v => ({
           key: this.allOptions.find(o => o.value === v)?.label,
           value: v
-        })) || []
+        }))
       );
     }
+
     this.form.get(this.controlConfig.getReadableValue.controlName)?.setValue(
-      this.control.value?.map((v: any) => this.allOptions.find(o => o.value === v)?.label).join(', ') || []
+      values.map(v => this.allOptions.find(o => o.value === v)?.label).join(', ')
     );
-    return this.control.value?.includes(value);
+
+    return values.includes(value);
   }
 
   updateAllSelectedState() {
