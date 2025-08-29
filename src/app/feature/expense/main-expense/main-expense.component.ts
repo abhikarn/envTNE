@@ -661,7 +661,7 @@ export class MainExpenseComponent {
         }
 
         const preview = response;
-        this.travelRequestPreview = { ...preview, UserMasterId: this.userMasterId };
+        this.travelRequestPreview = { ...preview, UserMasterId: this.userMasterId, claimTypeId: preview?.travelTypeId };
 
         this.travelDetails?.data?.forEach((config: any) => {
           const prop = config.name;
