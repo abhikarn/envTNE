@@ -188,7 +188,8 @@ export class DateInputComponent {
       newDate.setHours(old.hour(), old.minute(), old.second(), old.millisecond());
     }
     if (newDate) {
-      this.control.setValue(_moment.utc(newDate).toISOString());
+      const localIso = _moment(newDate).format('YYYY-MM-DDTHH:mm:ss');
+      this.control.setValue(localIso, { emitEvent: false });
     }
     this.valueChange.emit({ event, control: this.controlConfig });
     if (this.controlConfig.dependentCases?.length > 0) {
