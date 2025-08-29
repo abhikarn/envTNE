@@ -503,7 +503,7 @@ export class DynamicFormService {
     }
   }
 
-  getFormConfig(formConfig: IFormControl[], moduleConfig: any): IFormControl[] {
+  getFormConfig(formConfig: IFormControl[], moduleConfig: any, categoryName?: any): IFormControl[] {
     console.log(moduleConfig);
     // if formconfig and moduleConfig are not present, return empty array
     if (!formConfig || !Array.isArray(formConfig) || formConfig.length === 0 || !moduleConfig) {
@@ -552,6 +552,28 @@ export class DynamicFormService {
       return true;
     });
 
+    if (moduleConfig?.internationalFlag) {
+      const filterCategory = moduleConfig.formFieldRestrictions?.find((r: any) => r.ExpenseCategory === categoryName && r.ClaimTypeId === 54);
+      if (filterCategory) {
+        if (filterCategory.RuleType === "BackDatedRestrictionDays") {
+          const controlConfig: any = modifiedFormConfig?.find(control => control.name == filterCategory.FieldName);
+          if(controlConfig) {
+            controlConfig.minDate = new Date(new Date().setDate(new Date().getDate() - Number(filterCategory.RuleValue)));
+          }
+        }
+      }
+    } else {
+      const filterCategory = moduleConfig.formFieldRestrictions?.find((r: any) => r.ExpenseCategory === categoryName && r.ClaimTypeId === 53);
+      if (filterCategory) {
+        if (filterCategory.RuleType === "BackDatedRestrictionDays") {
+          const controlConfig: any = modifiedFormConfig?.find(control => control.name == filterCategory.FieldName);
+          if(controlConfig) {
+            controlConfig.minDate = new Date(new Date().setDate(new Date().getDate() - Number(filterCategory.RuleValue)));
+          }
+        }
+      }
+    }
+    
     return modifiedFormConfig;
   }
 

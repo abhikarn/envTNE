@@ -154,7 +154,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.category = this.dynamicFormService.getCategoryConfig(this.category, this.moduleConfig);
     this.formControls = []; // Reset to avoid duplication
     this.form = new FormGroup({});
-    this.formConfig = this.dynamicFormService.getFormConfig(this.formConfig, this.moduleConfig);
+    this.formConfig = this.dynamicFormService.getFormConfig(this.formConfig, this.moduleConfig, this.category?.name);
     this.formConfig.forEach(config => {
       if (config.dataType === 'numeric') {
         this.setupAutoFormat(config, this.configService);

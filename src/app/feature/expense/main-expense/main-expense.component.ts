@@ -234,6 +234,11 @@ export class MainExpenseComponent {
     if (this.transactionId) {
       this.loadExistingExpenseRequest();
     }
+    this.expenseService.expenseGetExpenseFormFieldRestrict({
+      ExpenseCategoryId: 0
+    }).subscribe((response: any) => {
+      this.moduleConfig.formFieldRestrictions = response?.ResponseValue || [];
+    });
   }
 
   // Setup initial dynamic form control based on expenseConfig request object.
@@ -582,22 +587,25 @@ export class MainExpenseComponent {
 
     const isWithoutCurrency = [52, 54].includes(this.travelRequestPreview?.travelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId) || [52, 54].includes(this.boxModuleData?.claimTypeId);
 
-    const defaultCurrency = {
-      Id: 1,
-      Code: "INR",
-      Name: "Indian Rupee",
-      Alias: "Indian Rupee",
-      IsBaseCurrency: true,
-      Display: "Indian Rupee : INR"
-    };
+    this.dataService.dataGetCurrencyView().subscribe((response: any) => {
+      let defaultCurrency: any = {};
+      if (response?.ResponseValue?.length > 0) {
+        let currencyList = response?.ResponseValue;
+        currencyList?.forEach((currency: any) => {
+          if (currency?.IsBaseCurrency) {
+            defaultCurrency = currency;
+          }
+        })
+      }
 
-    this.categories?.forEach((category: any) =>
-      category.formControls?.forEach((control: any) => {
-        if (control?.name === 'Currency' || control?.name === 'EntitlementCurrency') {
-          control.defaultValue = isWithoutCurrency ? null : defaultCurrency;
-        }
-      })
-    );
+      this.categories?.forEach((category: any) =>
+        category.formControls?.forEach((control: any) => {
+          if (control?.name === 'Currency' || control?.name === 'EntitlementCurrency') {
+            control.defaultValue = isWithoutCurrency ? null : defaultCurrency;
+          }
+        })
+      );
+    });
   }
 
 

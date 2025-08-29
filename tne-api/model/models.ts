@@ -26,6 +26,7 @@ export * from './expenseCategoryGroup';
 export * from './expenseCategoryGroupMapping';
 export * from './expenseCategoryGroupMappingDeleteParam';
 export * from './expenseCategoryGroupMappingListParam';
+export * from './expenseFormFieldRestrictGetParam';
 export * from './expensePolicyEntitlementBoardingParam';
 export * from './expensePolicyEntitlementDurationParam';
 export * from './expensePolicyEntitlementParam';
