@@ -383,6 +383,8 @@ export class MainExpenseComponent {
           if (response) {
             this.expenseRequestId = response.expenseRequestId;
             this.expenseRequestPreviewData = response;
+            this.mainExpenseData.BillableCostCentreId = response?.billableCostcentreId; 
+            this.billableControl.setValue(response?.billableCostcentre);
             const hasMissingFields = this.checkMissingRequiredFields(
               this.expenseRequestPreviewData.dynamicExpenseDetailModels,
               this.categories,
@@ -677,8 +679,9 @@ export class MainExpenseComponent {
         this.travelDetails?.data?.sort((a: any, b: any) => a.order - b.order);
 
         const meta = this.travelRequestPreview.travelRequestMetaData || [];
-        this.costcenterId = meta.find((d: any) => d.TravelRequestMetaId === 4)?.IntegerValue;
-        this.purpose = meta.find((d: any) => d.TravelRequestMetaId === 1)?.IntegerValueReference;
+        this.costcenterId = meta.find((d: any) => d.fieldName === "DefaultCostcenter")?.integerValue;
+        this.mainExpenseData.BillableCostCentreId = meta.find((d: any) => d.fieldName === "OtherCostcenter")?.integerValue;
+        this.purpose = meta.find((d: any) => d.fieldName === "Purpose of Travel")?.integerValueReference;
         const internationalFlag = [52, 54].includes(this.travelRequestPreview?.travelTypeId) || [52, 54].includes(this.expenseRequestData?.claimTypeId);
         this.moduleConfig.internationalFlag = internationalFlag;
         this.setupCategories();
@@ -1156,7 +1159,6 @@ export class MainExpenseComponent {
       RequestDate: new Date().toISOString(),
       Purpose: this.purpose,
       CostCentreId: this.costcenterId,
-      BillableCostCentreId: this.costcenterId,
       Remarks: this.justificationForm.get(this.expenseConfig.justification.controlName)?.value,
       ActionBy: this.userMasterId,
       expenseCategoryGroupId: 1,
