@@ -4568,7 +4568,8 @@
                         "name": "ConstraintType",
                         "isExcluded": false,
                         "value": "",
-                        "showInUI": false
+                        "showInUI": false,
+                        "inPayload": false
                     }
                 ],
                 "freezFormControls": [
