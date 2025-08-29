@@ -4568,7 +4568,8 @@
                         "name": "ConstraintType",
                         "isExcluded": false,
                         "value": "",
-                        "showInUI": false
+                        "showInUI": false,
+                        "inPayload": false
                     }
                 ],
                 "freezFormControls": [
@@ -12225,6 +12226,7 @@
                         "order": 17
                     },
                     {
+                        "name": "TaxAmount",
                         "label": "Tax Amount",
                         "type": "number",
                         "visible": true,
@@ -19210,6 +19212,22 @@
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
                     }
                 },
+                "policyViolationManualCheck": [
+                    {
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "controls": {
+                            "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
+                            "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
+                            "IsActual": "IsActual"
+                        },
+                        "confirmPopup": {
+                            "title": "Policy Violation",
+                            "message": "Claimed amount is greater than entitlement amount. ",
+                            "confirmButtonText": "Yes",
+                            "cancelButtonText": "No"
+                        }
+                    }
+                ],
                 "expanded": true,
                 "displayTable": true,
                 "displayAddClearButton": true,
@@ -35409,6 +35427,10 @@
                 "School Capitation Fees": {
                     "label": "School Capitation Fees",
                     "message": "Claimed amount is greater than Entitled amount."
+                },
+                "Transit Allowance": {
+                    "label": "Transit Allowance",
+                    "message": "Claimed amount is greater than Entitled amount."
                 }
             },
             {
@@ -42053,7 +42075,7 @@
                 "label": "Visa",
                 "data": [],
                 "amount": 0,
-                "expanded": true,
+                "expanded": false,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -42158,7 +42180,7 @@
                 "label": "Travel Insurance",
                 "data": [],
                 "amount": 0,
-                "expanded": true,
+                "expanded": false,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -42777,7 +42799,7 @@
                 "label": "Marriage Gift",
                 "data": [],
                 "amount": 0,
-                "expanded": true,
+                "expanded": false,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -43068,7 +43090,7 @@
                 "label": "Bereavement Support Claim",
                 "data": [],
                 "amount": 0,
-                "expanded": true,
+                "expanded": false,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -43152,7 +43174,7 @@
                 "label": "Training and Certification",
                 "data": [],
                 "amount": 0,
-                "expanded": true,
+                "expanded": false,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -43773,7 +43795,7 @@
                 "label": "Roaming",
                 "data": [],
                 "amount": 0,
-                "expanded": true,
+                "expanded": false,
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
@@ -43856,8 +43878,8 @@
                         "order": 10
                     },
                     {
-                        "name": "Justification",
-                        "label": "Justification",
+                        "name": "Remarks",
+                        "label": "Remarks",
                         "visible": true,
                         "position": "out",
                         "order": 11

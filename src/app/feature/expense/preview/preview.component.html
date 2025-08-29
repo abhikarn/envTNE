@@ -148,7 +148,7 @@
                                  <li>
                                     <span class="fa-pv"><i class="fa fa-exclamation-triangle"
                                           aria-hidden="true"></i></span>
-                                    {{expenseRequest.name}}: {{detail[expenseRequest.name]}}
+                                    {{detail[expenseRequest.name]?.label}}: {{data?.Violation || data?.excludedData?.Violation}}
                                  </li>
                               </ul>
                               }
