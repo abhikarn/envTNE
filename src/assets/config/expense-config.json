@@ -12226,6 +12226,7 @@
                         "order": 17
                     },
                     {
+                        "name": "TaxAmount",
                         "label": "Tax Amount",
                         "type": "number",
                         "visible": true,
