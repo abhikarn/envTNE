@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <table
-                        class="table mt-0 mb-0  remove-th-mobile remove-th-mobilet grey-table table-cust tbl-sml attachment-table ">
+                        class="table mt-0 mb-0  remove-th-mobile tr-height remove-th-mobilet grey-table table-cust tbl-sml attachment-table ">
                         <thead>
                             <tr>
                                 <th>Sl.No</th>
@@ -38,13 +38,19 @@
                         No remarks available.
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 mt-3">
                     <div class="form-group">
-                        <label for="remarks">Remarks</label>
+                        <label  for="remarks">Remarks</label>
                         <textarea [(ngModel)]="remarks" id="remarks" class="form-control" rows="3"></textarea>
                     </div>
+                        <div class="text-end mt-3">
+                           
                     <button class="btn btn-primary" (click)="approve()">Approve</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+   
