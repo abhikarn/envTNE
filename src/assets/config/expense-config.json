@@ -16996,15 +16996,6 @@
                         "readonly": false,
                         "apiDateLimit": true,
                         "policyEntitlementCheck": true,
-                        "setFields": [
-                            {
-                                "name": "Constraint",
-                                "formula": "Constraint = []",
-                                "dependsOn": [
-                                    "Constraint"
-                                ]
-                            }
-                        ],
                         "order": 2
                     },
                     {
