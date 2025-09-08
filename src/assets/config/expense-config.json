@@ -43934,7 +43934,7 @@
             {
                 "label": "Seek Clarification",
                 "type": "seekClarification",
-                "class": "btn btn-outline-secondary me-lg-2 ",
+                "class": "btn btn-info me-lg-2 ",
                 "confirmPopup": {
                     "message": "Are you sure you want to Seek Clarification the claim?",
                     "confirmText": "Yes, SeekClarification",

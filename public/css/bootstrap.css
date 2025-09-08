@@ -2923,20 +2923,19 @@ textarea.form-control-lg {
     --bs-btn-disabled-border-color: #198754;
 }
 .btn-info {
-    --bs-btn-color: #000;
-    --bs-btn-bg: #0dcaf0;
-    --bs-btn-border-color: #0dcaf0;
-    --bs-btn-hover-color: #000;
-    --bs-btn-hover-bg: #31d2f2;
-    --bs-btn-hover-border-color: #25cff2;
-    --bs-btn-focus-shadow-rgb: 11,172,204;
-    --bs-btn-active-color: #000;
-    --bs-btn-active-bg: #3dd5f3;
-    --bs-btn-active-border-color: #25cff2;
-    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #000;
-    --bs-btn-disabled-bg: #0dcaf0;
-    --bs-btn-disabled-border-color: #0dcaf0;
+	--bs-btn-color: #fff;
+	--bs-btn-bg: #c66a28;
+	--bs-btn-border-color: #c66a28;
+	--bs-btn-hover-color: #ffffff;
+	--bs-btn-hover-bg: #d7722b;
+	--bs-btn-hover-border-color: #d7722b;
+	--bs-btn-focus-shadow-rgb: 11,172,204;
+	--bs-btn-active-color: #fff;
+	--bs-btn-active-border-color: #b55d1d;
+	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	--bs-btn-disabled-color: #000;
+	--bs-btn-disabled-bg: #b55d1d;
+	--bs-btn-disabled-border-color: #b55d1d;
 }
 .btn-warning {
     --bs-btn-color: #000;
@@ -2973,20 +2972,19 @@ textarea.form-control-lg {
 }
 
 .btn-info {
-	--bs-btn-color: #000;
-	--bs-btn-bg: #0dcaf0;
-	--bs-btn-border-color: #0dcaf0;
-	--bs-btn-hover-color: #000;
-	--bs-btn-hover-bg: #31d2f2;
-	--bs-btn-hover-border-color: #25cff2;
+	--bs-btn-color: #fff;
+	--bs-btn-bg: #c66a28;
+	--bs-btn-border-color: #c66a28;
+	--bs-btn-hover-color: #ffffff;
+	--bs-btn-hover-bg: #d7722b;
+	--bs-btn-hover-border-color: #d7722b;
 	--bs-btn-focus-shadow-rgb: 11,172,204;
-	--bs-btn-active-color: #000;
-	--bs-btn-active-bg: #3dd5f3;
-	--bs-btn-active-border-color: #25cff2;
+	--bs-btn-active-color: #fff;
+	--bs-btn-active-border-color: #b55d1d;
 	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 	--bs-btn-disabled-color: #000;
-	--bs-btn-disabled-bg: #0dcaf0;
-	--bs-btn-disabled-border-color: #0dcaf0;
+	--bs-btn-disabled-bg: #b55d1d;
+	--bs-btn-disabled-border-color: #b55d1d;
 }
 
 .btn-dark {
