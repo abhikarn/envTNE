@@ -7998,11 +7998,12 @@
                 ],
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
-                    "name": "Incidental Expense",
+                    "name": "Incidental Expenses",
                     "fields": [
                         "ClaimDate",
                         "ClaimToDate"
-                    ]
+                    ],
+                    "skipTimeCheck": true
                 },
                 "formControls": [
                     {
