@@ -93,9 +93,11 @@ app-material-table {
     pointer-events: none;
     cursor: default;
   }
-
+app-material-table .violation-row {
+	border: 1px solid #dda4a4;
+}
   .violation-row  td {
-    background-color: #ffe5e5 !important;
+   border-bottom: 1px solid #dda4a4 !important;
   }
 
   .ocr-riestricted-row td {

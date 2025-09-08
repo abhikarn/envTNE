@@ -13,7 +13,7 @@
                                       <div class="col-md-4">
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
                                             <div class="trl-req-head"> <label> {{field.label}} </label> </div>
-                                            <input [type]="field.type" [formControlName]="field.name"
+                                            <input placeholder="Type" [type]="field.type" [formControlName]="field.name"
                                                 (blur)="onBlur(field)" (input)="onInput($event, field)"
                                                 class="form-control chm-forminput teGst gsttxt" />
                                             <span class="validate-error-message teGst"
@@ -30,7 +30,7 @@
                                      <div class="col-md-4">
                                         <div class="form-group chm-formgroup new-form-grp mt-0">
                                             <div class="trl-req-head"> <label> {{field.label}} </label> </div>
-                                            <input matInput [formControlName]="field.name" [matAutocomplete]="auto"
+                                            <input placeholder="Type" matInput [formControlName]="field.name" [matAutocomplete]="auto"
                                                 class="form-control chm-forminput teGst gsttxt">
                                             <mat-autocomplete #auto="matAutocomplete"
                                                 (optionSelected)="onOptionSelected($event, field)">
