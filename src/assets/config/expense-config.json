@@ -1001,6 +1001,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "TravelDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -2401,6 +2424,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "CheckInDateTime": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -3968,6 +4014,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -5418,6 +5487,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -6940,6 +7032,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -7883,11 +7998,12 @@
                 ],
                 "noOfEntryCheck": true,
                 "duplicateEntryCheck": {
-                    "name": "Incidental Expense",
+                    "name": "Incidental Expenses",
                     "fields": [
                         "ClaimDate",
                         "ClaimToDate"
-                    ]
+                    ],
+                    "skipTimeCheck": true
                 },
                 "formControls": [
                     {
@@ -8316,6 +8432,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -9760,6 +9899,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -11361,6 +11523,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "CheckInDateTime": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -13057,6 +13242,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -14214,6 +14422,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -14868,6 +15099,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -15725,6 +15979,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -16720,15 +16997,6 @@
                         "readonly": false,
                         "apiDateLimit": true,
                         "policyEntitlementCheck": true,
-                        "setFields": [
-                            {
-                                "name": "Constraint",
-                                "formula": "Constraint = []",
-                                "dependsOn": [
-                                    "Constraint"
-                                ]
-                            }
-                        ],
                         "order": 2
                     },
                     {
@@ -16942,6 +17210,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -17917,6 +18208,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -18824,6 +19138,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -19535,6 +19872,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -20114,6 +20474,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -21081,6 +21464,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -22206,6 +22612,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "BillingFromDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -23207,6 +23636,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "BillingFromDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -23988,6 +24440,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -24987,6 +25462,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimFromDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -25746,6 +26244,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -26433,6 +26954,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -27097,6 +27641,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -27712,6 +28279,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -28388,6 +28978,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -28896,6 +29509,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -29530,6 +30166,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -30299,6 +30958,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "TravelDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -31686,6 +32368,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "CheckInDateTime": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -33212,6 +33917,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {
@@ -34443,6 +35171,29 @@
                             "Display": "Indian Rupee : INR"
                         },
                         "options": [],
+                        "dependentCases": [
+                            {
+                                "type": [
+                                    "domestic",
+                                    "international"
+                                ],
+                                "key": "Id",
+                                "inputControls": {
+                                    "Currency": "CurrencyId",
+                                    "ClaimDate": "ReferenceDate"
+                                },
+                                "outputControl": {
+                                    "ConversionRate": "ResponseValue.Value"
+                                },
+                                "otherControls": {},
+                                "event": "onBlur",
+                                "requestBody": {},
+                                "apiService": "DataService",
+                                "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
+                                "labelKey": "Value",
+                                "valueKey": "Key"
+                            }
+                        ],
                         "required": true,
                         "validations": [
                             {

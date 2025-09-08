@@ -580,7 +580,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             const existingCheckIn = new Date(row[checkInField]);
             const existingCheckOut = new Date(row[checkOutField]);
 
-            return newCheckIn < existingCheckOut && newCheckOut > existingCheckIn;
+            return newCheckIn <= existingCheckOut && newCheckOut >= existingCheckIn;
           });
 
           if (isConflict) {
@@ -884,7 +884,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.freezeControlsBasedOnConditions();
     }
     this.dynamicFormService.updateConditionalValidators(this.form, this.formConfig);
-    this.scrollToFirstInvalidControl();
   }
 
   clear() {
