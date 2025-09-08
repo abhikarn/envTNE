@@ -19,5 +19,12 @@ app-bulk-approve-modal{
     margin: inherit;
 }
 .close-dialouge{ background: transparent; border: none;;}
+app-bulk-approve-modal .attachment-table tr:last-child td {
+	border: none;
+}
+}
 
+ .mat-mdc-dialog-panel {
+	max-width: none !important;
+	min-width: none !important;
 }
