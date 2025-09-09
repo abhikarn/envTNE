@@ -378,6 +378,31 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       }
     }
+    
+    if (
+      this.existingData?.length > 0 &&
+      this.category.checkValidationOnSubmit?.duplicateConstraint?.validate
+    ) {
+      const { ClaimDate, Constraint } = this.category.checkValidationOnSubmit.duplicateConstraint;
+
+      const checkDate = this.form.value?.[ClaimDate];
+      const selectedConstraints: any[] = this.form.value?.[Constraint] || [];
+
+      for (const data of this.existingData) {
+        if (data[ClaimDate] === checkDate) {
+          for (const cnst of selectedConstraints) {
+            if (data[Constraint]?.includes(cnst)) {
+              this.snackbarService.error(
+                `You can not add duplicate constraint for same day`,
+                5000
+              );
+              return; // Exit completely after showing error
+            }
+          }
+        }
+      }
+    }
+
 
     if (this.category.checkValidationOnSubmit?.userLeaveDate && this.category.checkValidationOnSubmit.userLeaveDate.validate) {
       const { FromDate, ToDate } = this.category.checkValidationOnSubmit.userLeaveDate;
@@ -751,11 +776,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         this.formData.data.excludedData = {};
       }
       // if (control.formConfig.inPayload !== false) {
-        if (control.formConfig.isExcluded) {
-          this.formData.data.excludedData[fieldName] = fieldValue != undefined ? fieldValue : null;
-        } else {
-          this.formData.data[fieldName] = fieldValue != undefined ? fieldValue : null;
-        }
+      if (control.formConfig.isExcluded) {
+        this.formData.data.excludedData[fieldName] = fieldValue != undefined ? fieldValue : null;
+      } else {
+        this.formData.data[fieldName] = fieldValue != undefined ? fieldValue : null;
+      }
       // }
     })
     this.emitFormData.emit({

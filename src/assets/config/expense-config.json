@@ -17628,6 +17628,11 @@
                         "validate": true,
                         "FromDate": "ClaimDate",
                         "ToDate": "ClaimDate"
+                    },
+                    "duplicateConstraint": {
+                        "validate":true,
+                        "ClaimDate": "ClaimDate",
+                        "Constraint": "Constraint"
                     }
                 },
                 "policyViolationCheckApi": {
