@@ -5043,11 +5043,12 @@ button.dropbtn {
         padding-bottom: 0;
     }
  
-    ul.summary-list li span {
-        color: #2A5EE3;
-        font-weight: 400;
-        white-space: nowrap;
-    }
+ul.summary-list li span {
+	color: #2A5EE3;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
     .add-receipt-hold {
     color: #2567de;
     text-decoration: none;
@@ -10145,7 +10146,7 @@ body.sidebar-mini.sidebar-collapse .left-container-wider {
         }
         .trl-preview-wrapper .trl-readview-item .trl-req-head label {
             font-size: 10px;
-            color: #8F90A6;
+            color: #808197;
             font-weight: 600;
             line-height: 16px;
             margin: 0;
@@ -13067,8 +13068,18 @@ width: 157px;
 	white-space: nowrap;
 	cursor: text;
 	font-size: 10px !important;
-	color: #8F90A6 !important;
+	color: #808197 !important;
 	font-weight: 700 !important;
 	text-transform: uppercase;
 	text-align: left !important;
+}
+ .autocomplete-field .mdc-text-field__input {
+	padding-left: 22px;
+} 
+
+.fixed-last-coloumn thead tr th:last-child, .fixed-last-coloumn tbody tr td:last-child {
+	position: sticky;
+	right: 0;
+}.child-le-row td {
+	background-color: transparent !important;
 }

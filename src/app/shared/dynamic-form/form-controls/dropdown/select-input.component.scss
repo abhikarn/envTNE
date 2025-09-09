@@ -9,7 +9,7 @@ lib-select-input {
 		white-space: nowrap;
 		cursor: text;
 		font-size: 10px !important;
-		color: #8F90A6 !important;
+		color: #808197 !important;
 		font-weight: 700 !important;
 		padding: 0;
 		margin: 0 0 5px 0;
@@ -66,9 +66,10 @@ lib-select-input {
 	}
 
 	.mat-mdc-select-placeholder {
-		color: #212529 !important;
+		color: #b3b3b3 !important;
 		font-size: 0.9rem !important;
 	}
+	
 
 	.mat-mdc-text-field-wrapper:hover .mat-mdc-form-field-focus-overlay {
 		opacity: 0 !important;

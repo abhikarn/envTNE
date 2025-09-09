@@ -1002,12 +1002,21 @@
                                           <ng-template #columnContent>
                                              <ng-container
                                                 *ngIf="column.key === 'PolicyViolationCount'; else requestDateColumn">
-                                                <mat-icon
+
+                                                <span class="fw-bold"
+                                                   [ngClass]="element[column.key] > 0 ? 'text-red' : 'text-green'"
+                                                   [matTooltip]="element[column.key] > 0 ? 'Policy Violation' : 'No Policy Violation'">
+                                                   {{ element[column.key] > 0 ? 'Yes' : 'No' }}
+                                                </span>
+
+
+
+                                                <!-- <mat-icon
                                                    [ngClass]="element[column.key] > 0 ? 'violation-icon-red' : 'violation-icon-green'"
                                                    [matTooltip]="element[column.key] > 0 ? 'Policy Violation' : 'No Policy Violation'">
                                                    {{ element[column.key] > 0 ?
                                                    'cancel' : 'check_circle' }}
-                                                </mat-icon>
+                                                </mat-icon> -->
                                              </ng-container>
                                              <ng-template #requestDateColumn>
                                                 <ng-container *ngIf="column.key === 'RequestDate'; else actionColumn">
@@ -1122,19 +1131,21 @@
                                           </ng-template>
                                        </td>
                                     </ng-container>
-                                    
+
                                     <!-- Filter Row Column Definitions -->
-                                    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.key + '_filter'">
+                                    <ng-container *ngFor="let column of displayedColumns"
+                                       [matColumnDef]="column.key + '_filter'">
                                        <td mat-header-cell *matHeaderCellDef class="filter-cell">
                                           <mat-form-field appearance="outline">
-                                             <input matInput (keyup)="applyFilter($event, column.key)" placeholder="Search" />
+                                             <input matInput (keyup)="applyFilter($event, column.key)"
+                                                placeholder="Search" />
                                           </mat-form-field>
                                        </td>
                                     </ng-container>
 
                                     <!-- Header Row (Single) -->
                                     <tr mat-header-row *matHeaderRowDef="columnKeys"></tr>
-                                    
+
                                     <!-- Filter Row (As Header Row) -->
                                     <tr mat-header-row *matHeaderRowDef="filterColumnKeys" class="filter-row">
                                     </tr>

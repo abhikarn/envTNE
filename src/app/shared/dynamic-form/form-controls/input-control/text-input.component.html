@@ -12,9 +12,12 @@
   } -->
 
   @if (controlConfig.autoComplete) {
+    <div class="autocomplete-field">
   <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" [value]="displayValue"
-    [placeholder]="controlConfig.placeholder || 'Type'" [readonly]="controlConfig.readonly"
+    [placeholder]="'Enter the ' + (controlConfig.label ?? 'Type')"  [readonly]="controlConfig.readonly"
     (blur)="onCityAutoCompleteInput()" (focus)="onAutoCompleteFocus()" (input)="onUserTyping($event)" />
+    <span class="auto-select-icon "><img src="images/search-icon.svg" alt="search"></span>
+    </div>
   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
     @for (option of filteredOptions; track trackByFn($index, option)) {
     <mat-option [value]="option">
@@ -25,7 +28,7 @@
   }
   @else {
   @if (controlConfig.type == 'password') {
-  <input [type]="passwordVisible ? 'text' : 'password'" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Type'"
+  <input [type]="passwordVisible ? 'text' : 'password'" matInput [formControl]="control" [placeholder]="'Enter the ' + (controlConfig.label ?? 'Type')" 
     (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" />
     @if(controlConfig.passwordVisibility) {
     <button mat-icon-button matSuffix (click)="passwordVisible = !passwordVisible" [attr.aria-label]="'Hide password'"
@@ -35,11 +38,11 @@
     }      
   }
   @else if (controlConfig.type == 'email') {
-  <input [type]="controlConfig.type" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Type'"
+  <input [type]="controlConfig.type" matInput [formControl]="control" [placeholder]="'Enter the ' + (controlConfig.label ?? 'Type')" 
     (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" />          
   }
   @else{
-  <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Type'"
+  <input type="text" matInput [formControl]="control"     [placeholder]="'Enter the ' + (controlConfig.label ?? 'Type')" 
     (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" />
   }
   <!-- <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'"
@@ -56,7 +59,7 @@
 @else if (controlConfig.subType == 'number') {
 <mat-form-field appearance="fill">
   <mat-label>{{controlConfig.label}}</mat-label>
-  <input type="number" matInput [formControl]="control" [readonly]="controlConfig.readonly" />
+  <input type="number"    [placeholder]="'Enter the ' + (controlConfig.label ?? 'Type')"  matInput [formControl]="control" [readonly]="controlConfig.readonly" />
   @if (control.invalid && control.touched) {
   <mat-error>
     {{ getErrorMessage | fnWrap : control.invalid && control.touched }}

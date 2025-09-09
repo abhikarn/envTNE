@@ -5,7 +5,7 @@
     <ng-container matColumnDef="select">
         <th class="checkbox-new" mat-header-cell *matHeaderCellDef>
             <input *ngIf="hasSelectableRows" type="checkbox" [(ngModel)]="selectAll" [checked]="selectAll"
-                (change)="toggleSelectAll()" />
+                (change)="toggleSelectAll()"  style="position: relative;top: 3px;" />
         </th>
         <td class="text-center checkbox-new" mat-cell *matCellDef="let row">
             <input *ngIf="row.ClaimStatusId !== 5" type="checkbox" [(ngModel)]="row.selected"

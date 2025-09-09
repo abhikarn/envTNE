@@ -13,18 +13,29 @@
     transform: rotate(180deg);
 }
 
+ 
 .violation-bg {
-    background-color: rgba(209, 126, 126, 0.1);
+	/* background-color: rgba(209, 126, 126, 0.1); */
+	border-left: 2px solid rgb(232, 159, 159);
+	border-radius: 0;
+	border-right: 2px solid rgb(232, 159, 159);
+	border-bottom: 2px solid rgb(232, 159, 159);
 }
-
 .ocr-restricted-bg{
     background-color: rgb(253 209 81 / 10%) !important;
 }
 
 .violation-border td  {
-    border-top: 2px solid rgb(232 159 159);
-    border-bottom: 2px solid rgb(232 159 159);
+ border-top: 2px solid rgb(232, 159, 159);
+	border-bottom: 2px solid rgb(232, 159, 159);
+     
 }
+.violation-border.show-hide-active td {
+	border-bottom: none !important;
+}
+ 
+ 
+
 .violation-border td:first-child {
     border-left: 2px solid rgb(232 159 159);
     

@@ -36,7 +36,7 @@
       </mat-label>
 
       <div class="input-group">
-        <input matInput [matTimepicker]="timepicker" [formControl]="timeControl" [min]="controlConfig.time.min"
+        <input placeholder="Select" matInput [matTimepicker]="timepicker" [formControl]="timeControl" [min]="controlConfig.time.min"
           [max]="controlConfig.time.max" (click)="timepicker.open()">
         <mat-timepicker #timepicker />
         <mat-timepicker-toggle [for]="timepicker" matSuffix />

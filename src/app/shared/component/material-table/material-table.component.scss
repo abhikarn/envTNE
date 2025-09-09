@@ -164,28 +164,28 @@ app-material-table .violation-row {
   .checkbox-new input[type="checkbox"] {
 	appearance: none;
 	-webkit-appearance: none;
-	width: 18px;
-	height: 18px;
-	border: 2px solid #2D7DC4;
-	border-radius: 5px;
+	width: 16px;
+	height: 16px;
+	border: 1px solid #3c5ada;
+	border-radius: 1px;
 	background-color: #ffffff;
 	cursor: pointer;
 	position: relative;
 	transition: all 0.3s ease;
 }
 /* Checked state */
- .checkbox-new input[type="checkbox"]:checked {
-	background-color: #2D7DC4;
-	border-color: #2D7DC4;
+  .checkbox-new input[type="checkbox"]:checked {
+	background-color: #3c5ada;
+	border-color: #3c5ada;
 }
 /* Tick mark */
   .checkbox-new input[type="checkbox"]:checked::after {
 	content: "";
 	position: absolute;
 	left: 4px;
-	top: 0px;
+	top: 1px;
 	width: 6px;
-	height: 12px;
+	height: 10px;
 	border: solid #fff;
 	border-width: 0 2px 2px 0;
 	transform: rotate(45deg);

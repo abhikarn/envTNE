@@ -1929,34 +1929,59 @@ progress {
   -webkit-overflow-scrolling: touch;
 }
 
+/* Webkit browsers (Chrome, Edge, Safari) */
+.table-responsive::-webkit-scrollbar {
+  height: 8px; /* scrollbar height */
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #f1f1f1; /* track color (light background) */
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background-color: #dddddd; /* scrollbar thumb color (light gray) */
+  border-radius: 4px;
+}
+
+.table-responsive {
+  scrollbar-color: #dddddd #f1f1f1; /* thumb color | track color */
+  scrollbar-width: thin; /* makes it smaller */
+}
+
 @media (max-width: 575.98px) {
   .table-responsive-sm {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    height: 8px; /* scrollbar height */
   }
 }
 @media (max-width: 767.98px) {
   .table-responsive-md {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    height: 8px; /* scrollbar height */
   }
 }
 @media (max-width: 991.98px) {
   .table-responsive-lg {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    height: 8px; /* scrollbar height */
   }
 }
 @media (max-width: 1199.98px) {
   .table-responsive-xl {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    height: 8px; /* scrollbar height */
   }
 }
 @media (max-width: 1399.98px) {
   .table-responsive-xxl {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    height: 8px; /* scrollbar height */
   }
 }
 .form-label {
@@ -2028,12 +2053,12 @@ progress {
   height: 1.5em;
 }
 .form-control::-moz-placeholder {
-  color: #6c757d;
+  color: #b3b3b3;
   opacity: 1;
 }
 .form-control::placeholder {
-  color: #6c757d;
-  opacity: 1;
+	color: #b3b3b3;
+	opacity: 1;
 }
 .form-control:disabled {
   background-color: #e9ecef;

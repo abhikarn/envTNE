@@ -33,8 +33,9 @@ app-preview {
 	background: transparent !important;
 }
 .policy-tab .mat-mdc-tab-body-wrapper .mat-mdc-tab-body:last-child {padding: 10px;}
-.mat-mdc-table td input.form-control {
+ .mat-mdc-table td input.form-control {
 	border-bottom: 1px solid #BABAC4;
+	font-size: 11px;
 }
 
 	// .common-tab .mat-mdc-tab-header {
@@ -108,6 +109,7 @@ flex-grow: 0;
 
 .mat-mdc-row {
 	height: auto !important;
+	vertical-align: middle;
 	 
 }.mat-expansion-indicator svg {
 	width: 41px!important;

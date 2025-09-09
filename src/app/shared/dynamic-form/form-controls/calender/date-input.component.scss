@@ -34,14 +34,19 @@
 }.mat-datepicker-toggle {
  
 	display: none;
-}.date-picker-icon {
+} 
+
+
+.date-picker-icon {
 	position: absolute;
-	right: 0;
-	top: 0;
+	right: -5px;
+	top: -6px;
 	bottom: 0;
 	margin: auto;
 	height: 19px;
-}.mat-mdc-dialog-surface {
+}
+
+.mat-mdc-dialog-surface {
  
 	border-radius: 10px!important;
 	 
@@ -167,4 +172,5 @@ mat-form-field.ng-touched.ng-invalid .mdc-line-ripple::before {
 }
 .mdc-text-field__input::placeholder {
 	opacity: 1;
+	color: #b3b3b3  !important;
 }
