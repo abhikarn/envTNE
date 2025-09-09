@@ -750,13 +750,13 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       if (!this.formData.data?.excludedData) {
         this.formData.data.excludedData = {};
       }
-      if (control.formConfig.inPayload !== false) {
+      // if (control.formConfig.inPayload !== false) {
         if (control.formConfig.isExcluded) {
           this.formData.data.excludedData[fieldName] = fieldValue != undefined ? fieldValue : null;
         } else {
           this.formData.data[fieldName] = fieldValue != undefined ? fieldValue : null;
         }
-      }
+      // }
     })
     this.emitFormData.emit({
       formData: this.formData,
