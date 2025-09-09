@@ -1,18 +1,19 @@
- <form [formGroup]="gstDetailsForm">
+<form [formGroup]="gstDetailsForm">
     <div class="col-md-12">
         <div class="gst-wrapper">
             <div class="gst-hold-body" id="showDiv">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="bg-white p-3 mb-3 rounded-3">
-                           <div class="row">
-                               @for (field of fields; track $index) {
+                            <div class="row">
+                                @for (field of fields; track $index) {
                                 @if (field.showInUI) {
                                 <div class="col-md-4">
                                     <div class="form-group chm-formgroup new-form-grp mt-0">
                                         <div class="trl-req-head"> <label> {{field.label}} </label></div>
-                                        <input placeholder="Type" [type]="field.type" [formControlName]="field.name"
-                                            (blur)="onBlur(field)" (input)="onInput($event, field)"
+                                        <input [placeholder]="'Enter the ' + (field.label || 'Type')"
+                                            [type]="field.type" [formControlName]="field.name" (blur)="onBlur(field)"
+                                            (input)="onInput($event, field)"
                                             class="form-control chm-forminput teGst gsttxt" />
                                         <span class="validate-error-message teGst"
                                             *ngIf="gstDetailsForm.get(field.name)?.errors && gstDetailsForm.get(field.name)?.touched">
@@ -34,25 +35,34 @@
                                 </div>
 
                                 <div class="col-md-4"></div>
-                               @if (gstDetails?.length > 0) {
-                                <div class="col-md-12 bg-light p-3 rounded-3">
+                                @if (gstDetails?.length > 0) {
 
-                                    <div class="row">
-                                        @for (gst of gstDetails; track $index) {
+                                @for (gst of gstDetails; track $index) {
+
+                                <div class="col-md-12 bg-light px-3 mb-2 py-0 rounded-3">
+
+                                       <div class="row  "> 
 
                                         @for (field of fields; track $index) {
                                         @if (field.showInUI) {
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group chm-formgroup new-form-grp mt-0 mb-1">
-                                                <div class="trl-req-head"> <label> {{field.label}} </label> </div>
-                                                {{gst[field.name]}}
+                                                <div class="trl-preview-wrapper">
+                                                    <div class="trl-readview-item">
+                                                        <div class="trl-req-head"> <label> {{field.label}} </label>
+                                                        </div>
+
+
+                                                        <div class="trl-req-detail"> <span> {{gst[field.name]}} </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
                                         }
                                         }
-                                        <div class="col-md-12 text-end"
-                                            style="border-top: 1px solid #eee;padding-top: 7px;">
+                                        <div class="col-md-3 text-end">
                                             <a type="button" id="btnAddGstTe" class="bg-transparent border-0 px-0 my-2 "
                                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add"
                                                 (click)="removeGstRow($index)">
@@ -65,11 +75,14 @@
                                             </a>
                                         </div>
 
-                                        }
 
                                     </div>
 
                                 </div>
+
+                                }
+
+
 
 
                                 }

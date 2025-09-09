@@ -210,11 +210,12 @@ app-dashboard {
  
 	opacity: 1!important;
 	 
-}.mat-sort-header-ascending .mat-sort-header-arrow::after {
+}  
+th[aria-sort="ascending"] .mat-sort-header-arrow::after {
 	content: inherit;
 	display: none;
 }
- .mat-sort-header-descending .mat-sort-header-arrow::before {
+ th[aria-sort="descending"] .mat-sort-header-arrow::before {
 	content: inherit;
 	display: none;
 
