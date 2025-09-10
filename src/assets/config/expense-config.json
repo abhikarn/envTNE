@@ -44894,13 +44894,6 @@
             ],
             "approverTableDetail": [
                 {
-                    "key": "select",
-                    "label": "Select",
-                    "sortable": false,
-                    "showSearch": false,
-                    "order": 0
-                },
-                {
                     "key": "slNo",
                     "label": "Sl.No",
                     "sortable": false,
