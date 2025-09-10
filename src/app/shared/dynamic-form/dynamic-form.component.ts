@@ -250,7 +250,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       this.dynamicFormService.scrollToFirstInvalidControl('form');
-      this.scrollToFirstInvalidControl();
+      // this.scrollToFirstInvalidControl();
       return;
     }
     // enable all controls before submission
@@ -909,6 +909,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.freezeControlsBasedOnConditions();
     }
     this.dynamicFormService.updateConditionalValidators(this.form, this.formConfig);
+    this.dynamicFormService.scrollToFirstControl('form');
   }
 
   clear() {
