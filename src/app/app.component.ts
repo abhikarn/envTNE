@@ -13,6 +13,7 @@ import { CoreModule } from '../core/core.module';
 import { filter } from 'rxjs';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { MobileNavComponent } from '../core/components/mobile-nav/mobile-nav.component';
+import { PlatformService } from './shared/service/platform.service';
 
 @Component({
   selector: 'app-root',
@@ -24,20 +25,52 @@ export class AppComponent implements OnInit {
   title = 'envTNE';
   isAuthenticated = false;
 
-  constructor(private translate: TranslateService, private authService: AuthService, private router: Router) {
+  constructor(
+    private translate: TranslateService, 
+    private authService: AuthService, 
+    private router: Router,
+    private platformService: PlatformService
+  ) {
     this.translate.setDefaultLang('en');
     const browserLang = navigator.language.split('-')[0];
     this.translate.use(browserLang.match(/en/) ? browserLang : 'en');
   }
 
   ngOnInit(): void {
+    // Handle deep link first
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-      this.gettoken(event.urlAfterRedirects); // Use actual navigated URL
+      this.handleDeepLink(event.urlAfterRedirects)
     });
-  } 
+  }
 
-  gettoken(url: string) {    
-    
+  private handleDeepLink(url: string): void {
+    const queryParams = new URLSearchParams(window.location.search);
+    const accessToken = queryParams.get('accessToken');
+    const callbackUrl = queryParams.get('callbackUrl');
+    const platform = queryParams.get('platform');
+
+    if (accessToken && callbackUrl && platform) {
+      // Send to your backend for validation
+      this.authService.validatePeopleStrongSession({ accessToken, callbackUrl, platform })
+        .subscribe({
+          next: () => {
+            this.isAuthenticated = true;
+            this.platformService.setPlatform(platform === 'Mobile')
+            this.router.navigate(['/expense/expense/dashboard']);
+          },
+          error: () => {
+            this.authService.Logout();
+            this.router.navigate(['/account']);
+          }
+        });
+    } else {
+      // Fallback to normal local token validation
+      this.gettoken(url);
+    }
+  }
+
+
+  gettoken(url: string) {
     const token = this.authService.getToken();
     const currentUrl = url;
 
