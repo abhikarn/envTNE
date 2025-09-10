@@ -31,6 +31,7 @@ import { AuthService } from '../../../shared/service/auth.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BulkApproveModalComponent } from '../../../shared/component/bulk-approve-modal/bulk-approve-modal.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { OneClickApproveComponent } from '../../../shared/component/one-click-approve/one-click-approve.component';
 
 interface ColumnConfig {
   key: string;
@@ -288,6 +289,20 @@ export class ApprovalDashboardComponent implements OnInit {
       this.dialog.open(BulkApproveModalComponent, {
         width: '1000px',
         data: { selectedRequests },
+        panelClass: 'custom-modal-panel'
+      });
+    }
+
+    oneClickApprove(id: number) {
+      const selectedRequest = this.dataSource.data.filter((item: any) => item.ExpenseRequestId == id);
+      if (selectedRequest.length === 0) {
+        this.snackbarService.error('Something went wrong, Please try again!', 3000);
+        return;
+      }
+
+       this.dialog.open(OneClickApproveComponent, {
+        width: '1000px',
+        data: { selectedRequest },
         panelClass: 'custom-modal-panel'
       });
     }
