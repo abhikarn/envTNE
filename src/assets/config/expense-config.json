@@ -44825,128 +44825,142 @@
                     "key": "slNo",
                     "label": "Sl.No",
                     "sortable": false,
+                    "showSearch": false,
                     "order": 1
                 },
                 {
                     "key": "Requester",
                     "label": "Requester",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 2
                 },
                 {
                     "key": "RequestNumber",
                     "label": "Request Number",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 3
                 },
                 {
                     "key": "RequestDate",
                     "label": "Request Date",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 4
                 },
                 {
                     "key": "ExpenseClaimTypeDescription",
                     "label": "Expense Type",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 5
                 },
                 {
                     "key": "TravelRequestNumber",
                     "label": "Linked Request",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 6
                 },
                 {
                     "key": "ApprovedAmount",
                     "label": "Amount",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 7
                 },
                 {
                     "key": "PolicyViolationCount",
                     "label": "Policy Violation",
                     "sortable": true,
+                    "showSearch": false,
                     "order": 8
                 },
                 {
                     "key": "ClaimStatus",
                     "label": "Status",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 9
                 },
                 {
                     "key": "action",
                     "label": "Action",
                     "sortable": false,
+                    "showSearch": false,
                     "order": 10
                 }
             ],
             "approverTableDetail": [
                 {
-                    "key": "select",
-                    "label": "Select",
-                    "sortable": false,
-                    "order": 0
-                },
-                {
                     "key": "slNo",
                     "label": "Sl.No",
                     "sortable": false,
+                    "showSearch": false,
                     "order": 1
                 },
                 {
                     "key": "Requester",
                     "label": "Requester",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 2
                 },
                 {
                     "key": "RequestNumber",
                     "label": "Request Number",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 3
                 },
                 {
                     "key": "RequestDate",
                     "label": "Request Date",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 4
                 },
                 {
                     "key": "ExpenseClaimTypeDescription",
                     "label": "Expense Type",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 5
                 },
                 {
                     "key": "TravelRequestNumber",
                     "label": "Linked Request",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 6
                 },
                 {
                     "key": "ApprovedAmount",
                     "label": "Amount",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 7
                 },
                 {
                     "key": "PolicyViolationCount",
                     "label": "Policy Violation",
                     "sortable": true,
+                    "showSearch": false,
                     "order": 8
                 },
                 {
                     "key": "ClaimStatus",
                     "label": "Status",
                     "sortable": true,
+                    "showSearch": true,
                     "order": 9
                 },
                 {
                     "key": "action",
                     "label": "Action",
                     "sortable": false,
+                    "showSearch": false,
                     "order": 10
                 }
             ]

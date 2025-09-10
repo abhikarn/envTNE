@@ -814,10 +814,8 @@
                                                     </ng-template>
                                                     <!-- Data Cell -->
                                                     <td [attr.data-label]="column.label" mat-cell *matCellDef="let element; let i = index">
-                                                        <ng-container *ngIf="column.key === 'select'">
-                                                            <mat-checkbox [(ngModel)]="element.selected"></mat-checkbox>
-                                                        </ng-container>
                                                         <ng-container *ngIf="column.key === 'slNo'; else columnContent">
+                                                            <mat-checkbox [(ngModel)]="element.selected"></mat-checkbox>
                                                             {{ i + 1 }}
                                                         </ng-container>
                                                         <ng-template #columnContent>
@@ -846,80 +844,62 @@
                                                                     'dd-MMM-yyyy' }}
                                                                 </ng-container>
                                                                 <ng-template #actionColumn>
-                                                                    <ng-container
-                                                                        *ngIf="column.key === 'action'; else defaultColumn">
-                                                                        <div class="TBL-actions">
-                                                                            <ul class="action-icons">
-                                                                                <li>
-                                                                                    <a href="javascript:void()"
-                                                                                        class="btn-icon-action btn-icon-edit ExpenseApprove"
-                                                                                        data-expenserequestid="74"
-                                                                                        data-bs-toggle="modal"
-                                                                                        data-bs-target="#modal-expenseApprove">
-                                                                                        <span data-bs-toggle="tooltip"
-                                                                                            matTooltip="One Click Approve"   matTooltipPosition="above"
-                                                                                            class="fa-hand-pointer fa-regular"
-                                                                                            data-bs-original-title="One Click Approve"
-                                                                                            aria-label="One Click Approve"></span>
-                                                                                    </a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a [routerLink]="['/expense/expense/approval',element.TransactionId]"
-                                                                                        class="btn-icon-action btn-icon-edit"><span
-                                                                                            data-bs-toggle="tooltip"
-                                                                                            matTooltip="Approve"   matTooltipPosition="above"
-                                                                                            class="fa-square-check fa-regular"
-                                                                                            data-bs-original-title="Approve"
-                                                                                            aria-label="Approve"></span>
-                                                                                    </a>
-                                                                                </li>
-                                                                                <li><a href="javascript:void()"
-                                                                                        class="btn-icon-action btn-icon-cancel expenseaction"
-                                                                                        data-bs-toggle="modal"
-                                                                                        data-bs-target="#modal-expenseReject"
-                                                                                        data-expenserequestid="74"><span
-                                                                                            data-bs-toggle="tooltip"
-                                                                                            matTooltip="Reject"   matTooltipPosition="above"
-                                                                                            class="fa-xmark fa-solid"
-                                                                                            data-bs-original-title="Reject"
-                                                                                            aria-label="Reject"></span></a>
-                                                                                </li>
-                                                                                <li><a href="javascript:void()"
-                                                                                        class="btn-icon-action btn-icon-view expenseaction"
-                                                                                        data-bs-toggle="modal"
-                                                                                        data-bs-target="#modal-expenseseekclarication"
-                                                                                        data-expenserequestid="74">
-                                                                                        <span data-bs-toggle="tooltip"
-                                                                                            matTooltip="Seek Clarification"   matTooltipPosition="above"
-                                                                                            class="fa-rotate-right fa-solid"
-                                                                                            data-bs-original-title="Seek Clarification"
-                                                                                            aria-label="Seek Clarification"></span></a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a [routerLink]="['/expense/expense/preview',element.TransactionId]"
-                                                                                        class="btn-icon-action btn-icon-view">
-                                                                                        <span data-bs-toggle="tooltip"
-                                                                                            class="fa-eye fa-regular"
-                                                                                            aria-label="View"
-                                                                                            matTooltip="View"></span>
-                                                                                    </a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a href="javascript:void()"
-                                                                                        class="btn-icon-action btn-icon-view p-relative"
-                                                                                        id="communicationThread">
-                                                                                        <span data-toggle="tooltip"
-                                                                                            title="Communication"
-                                                                                            class="fa-comment-dots fa-regular"></span>
-                                                                                        <div
-                                                                                            class="communication-count">
-                                                                                            <span
-                                                                                                [id]="'CommCount' + element.requestType + element.requestId">0</span>
-                                                                                        </div>
-                                                                                    </a>
-                                                                                </li>
-                                                                            </ul>
+                                                                    <ng-container *ngIf="column.key === 'action'; else defaultColumn">
+                                                                        <div class="icons-new">
+                                                                            <div class="dropdown" style="padding: 5px;">
+                                                                                <button class="p-0 btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                                                    aria-expanded="false">
+                                                                                    <i class="fa-solid fs-6 fa-ellipsis-vertical"></i>
+                                                                                </button>
+                                                                    
+                                                                                <ul class="dropdown-menu threedots-dd" aria-labelledby="dropdownMenuButton">
+                                                                                    <li>
+                                                                                        <a href="javascript:void()" class="btn-icon-action btn-icon-edit ExpenseApprove"
+                                                                                            data-expenserequestid="74" data-bs-toggle="modal" data-bs-target="#modal-expenseApprove">
+                                                                                            <span data-bs-toggle="tooltip" matTooltip="One Click Approve" matTooltipPosition="above"
+                                                                                                class="fa-hand-pointer fa-regular" data-bs-original-title="One Click Approve"
+                                                                                                aria-label="One Click Approve"></span>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a [routerLink]="['/expense/expense/approval',element.TransactionId]"
+                                                                                            class="btn-icon-action btn-icon-edit"><span data-bs-toggle="tooltip" matTooltip="Approve"
+                                                                                                matTooltipPosition="above" class="fa-square-check fa-regular"
+                                                                                                data-bs-original-title="Approve" aria-label="Approve"></span>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                    <li><a href="javascript:void()" class="btn-icon-action btn-icon-cancel expenseaction"
+                                                                                            data-bs-toggle="modal" data-bs-target="#modal-expenseReject" data-expenserequestid="74"><span
+                                                                                                data-bs-toggle="tooltip" matTooltip="Reject" matTooltipPosition="above"
+                                                                                                class="fa-xmark fa-solid" data-bs-original-title="Reject" aria-label="Reject"></span></a>
+                                                                                    </li>
+                                                                                    <li><a href="javascript:void()" class="btn-icon-action btn-icon-view expenseaction"
+                                                                                            data-bs-toggle="modal" data-bs-target="#modal-expenseseekclarication"
+                                                                                            data-expenserequestid="74">
+                                                                                            <span data-bs-toggle="tooltip" matTooltip="Seek Clarification" matTooltipPosition="above"
+                                                                                                class="fa-rotate-right fa-solid" data-bs-original-title="Seek Clarification"
+                                                                                                aria-label="Seek Clarification"></span></a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a [routerLink]="['/expense/expense/preview',element.TransactionId]"
+                                                                                            class="btn-icon-action btn-icon-view">
+                                                                                            <span data-bs-toggle="tooltip" class="fa-eye fa-regular" aria-label="View"
+                                                                                                matTooltip="View"></span>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a href="javascript:void()" class="btn-icon-action btn-icon-view p-relative"
+                                                                                            id="communicationThread">
+                                                                                            <span data-toggle="tooltip" title="Communication" class="fa-comment-dots fa-regular"></span>
+                                                                                            <div class="communication-count">
+                                                                                                <span [id]="'CommCount' + element.requestType + element.requestId">0</span>
+                                                                                            </div>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
                                                                         </div>
+                                                                    
                                                                     </ng-container>
                                                                     <ng-template #defaultColumn>
                                                                         @if (column.key === 'ClaimStatus') {
@@ -994,14 +974,22 @@
                                                     </td>
                                                 </ng-container>
                                                 <!-- Filter Row Column Definitions -->
-                                                <ng-container *ngFor="let column of displayedColumns"
-                                                    [matColumnDef]="column.key + '_filter'">
-                                                    <td mat-header-cell *matHeaderCellDef class="filter-cell">
+                                                <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.key + '_filter'">
+                                                    @if (column.showSearch) {
+                                                    <!-- Filter Header Cell -->
+                                                    <th mat-header-cell *matHeaderCellDef class="filter-cell">
                                                         <mat-form-field appearance="outline">
-                                                            <input matInput (keyup)="applyFilter($event, column.key)"
-                                                                placeholder="Search" />
+                                                            <input matInput (keyup)="applyFilter($event, column.key)" placeholder="Search" />
                                                         </mat-form-field>
-                                                    </td>
+                                                    </th>
+                                                
+                                                    <!-- Dummy Data Cell (required for table to work) -->
+                                                    <td mat-cell *matCellDef="let element"></td>
+                                                    } @else {
+                                                    <!-- Still need something, even if no filter -->
+                                                    <th mat-header-cell *matHeaderCellDef></th>
+                                                    <td mat-cell *matCellDef="let element"></td>
+                                                    }
                                                 </ng-container>
                                                 <!-- Header Row (Single) -->
                                                 <tr mat-header-row *matHeaderRowDef="columnKeys">

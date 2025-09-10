@@ -36,6 +36,7 @@ interface ColumnConfig {
   key: string;
   label: string;
   sortable: boolean;
+  showSearch: boolean;
 }
 
 export const ELEMENT_DATA: any[] = [];
@@ -207,6 +208,7 @@ export class ApprovalDashboardComponent implements OnInit {
         key: col.key,
         label: col.label,
         sortable: col.sortable,
+        showSearch: col.showSearch
       }));
       this.columnKeys = this.displayedColumns.map(col => col.key);
       this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');
