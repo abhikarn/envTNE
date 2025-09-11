@@ -1026,37 +1026,40 @@
                                                 <ng-template #actionColumn>
                                                    <ng-container *ngIf="column.key === 'action'; else defaultColumn">
                                                       <div class="icons-new">
-                                                         <div class="dropdown" style="padding: 5px;">
+                                                         <div class="dropdown" data-bs-display="static" style="padding: 5px;">
                                                             <button class="p-0 btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                                aria-expanded="false">
                                                                <i class="fa-solid fs-6 fa-ellipsis-vertical"></i>
                                                             </button>
                                                    
-                                                            <ul class="dropdown-menu threedots-dd" aria-labelledby="dropdownMenuButton">
+                                                            <ul class="dropdown-menu   dropdown-menu-end threedots-dd" aria-labelledby="dropdownMenuButton">
                                                                <li *ngIf="element.IsEdit">
                                                                   <a [routerLink]="['/expense/expense/edit-expense', element.ExpenseClaimTypeDescription,element.TransactionId]"
                                                                      class="btn-icon-action btn-icon-view">
-                                                                     <span data-bs-toggle="tooltip" class="fa fa-pencil" aria-label="Edit" matTooltip="Edit"></span>
+                                                                     <span   class="fa fa-pencil" aria-label="Edit"  ></span>
+                                                                     <h6>Edit</h6>
                                                                   </a>
                                                                </li>
                                                                <li *ngIf="element.IsPreview">
                                                                   <a [routerLink]="['/expense/expense/preview',element.TransactionId]"
                                                                      class="btn-icon-action btn-icon-view">
-                                                                     <span data-bs-toggle="tooltip" class="fa-eye fa-regular" aria-label="View" matTooltip="View"></span>
+                                                                     <span   class="fa-eye fa-regular" aria-label="View" ></span>
+                                                                        <h6>View</h6>
                                                                   </a>
                                                                </li>
                                                                <li>
                                                                   <a href="#" class="btn-icon-action btn-icon-view">
-                                                                     <span data-bs-toggle="tooltip" class="fa-regular fa-file-pdf" aria-label="PDF"
-                                                                        matTooltip="PDF"></span>
+                                                                     <span   class="fa-regular fa-file-pdf" aria-label="PDF"></span>
+                                                                         <h6>PDF</h6>
                                                                   </a>
                                                                </li>
                                                                <li>
                                                                   <a href="#" class="btn-icon-action btn-icon-view p-relative" [attr.requestid]="element.TransactionId"
                                                                      [attr.requesttype]="element.ExpenseRequestType" id="communicationThread">
-                                                                     <span data-toggle="tooltip" title="Communication" class="fa-comment-dots fa-regular"></span>
+                                                                     <span   title="Communication" class="fa-comment-dots fa-regular"></span>
+                                                                     <h6> Comments</h6>
                                                                      <div class="communication-count">
-                                                                        <span [id]="'CommCount' + element.requestType + element.requestId">0</span>
+                                                                       - <span [id]="'CommCount' + element.requestType + element.requestId">0</span>
                                                                      </div>
                                                                   </a>
                                                                </li>
@@ -1136,7 +1139,7 @@
                                        <!-- Filter Header Cell -->
                                        <th mat-header-cell *matHeaderCellDef class="filter-cell">
                                           <mat-form-field appearance="outline">
-                                             <input matInput (keyup)="applyFilter($event, column.key)" placeholder="Search" />
+                                             <input class="table-search" matInput (keyup)="applyFilter($event, column.key)" placeholder="Search" />
                                           </mat-form-field>
                                        </th>
                                     

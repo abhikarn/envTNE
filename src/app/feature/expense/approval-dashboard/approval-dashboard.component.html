@@ -846,53 +846,64 @@
                                                                 <ng-template #actionColumn>
                                                                     <ng-container *ngIf="column.key === 'action'; else defaultColumn">
                                                                         <div class="icons-new">
-                                                                            <div class="dropdown" style="padding: 5px;">
+                                                                            <div class="dropdown" data-bs-display="static" style="padding: 5px;">
                                                                                 <button class="p-0 btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                                                     aria-expanded="false">
                                                                                     <i class="fa-solid fs-6 fa-ellipsis-vertical"></i>
                                                                                 </button>
                                                                     
-                                                                                <ul class="dropdown-menu threedots-dd" aria-labelledby="dropdownMenuButton">
+                                                                                <ul class="dropdown-menu  dropdown-menu-end  threedots-dd" aria-labelledby="dropdownMenuButton">
                                                                                     <li>
                                                                                         <a href="javascript:void()" class="btn-icon-action btn-icon-edit ExpenseApprove"
                                                                                             data-expenserequestid="74" data-bs-toggle="modal" data-bs-target="#modal-expenseApprove">
-                                                                                            <span data-bs-toggle="tooltip" matTooltip="One Click Approve" matTooltipPosition="above"
-                                                                                                class="fa-hand-pointer fa-regular" data-bs-original-title="One Click Approve"
+                                                                                            <span  
+                                                                                                class="fa-hand-pointer fa-regular"  
                                                                                                 aria-label="One Click Approve"></span>
+                                                                                                <h6>One Click Approve</h6>
                                                                                         </a>
                                                                                     </li>
                                                                                     <li>
                                                                                         <a [routerLink]="['/expense/expense/approval',element.TransactionId]"
-                                                                                            class="btn-icon-action btn-icon-edit"><span data-bs-toggle="tooltip" matTooltip="Approve"
-                                                                                                matTooltipPosition="above" class="fa-square-check fa-regular"
+                                                                                            class="btn-icon-action btn-icon-edit"><span   class="fa-square-check fa-regular"
                                                                                                 data-bs-original-title="Approve" aria-label="Approve"></span>
+                                                                                                <h6>  Approve</h6>
                                                                                         </a>
                                                                                     </li>
                                                                                     <li><a href="javascript:void()" class="btn-icon-action btn-icon-cancel expenseaction"
-                                                                                            data-bs-toggle="modal" data-bs-target="#modal-expenseReject" data-expenserequestid="74"><span
-                                                                                                data-bs-toggle="tooltip" matTooltip="Reject" matTooltipPosition="above"
-                                                                                                class="fa-xmark fa-solid" data-bs-original-title="Reject" aria-label="Reject"></span></a>
+                                                                                            data-bs-toggle="modal" data-bs-target="#modal-expenseReject" data-expenserequestid="74">
+                                                                                            <span
+                                                                                               
+                                                                                                class="fa-xmark fa-solid" data-bs-original-title="Reject" aria-label="Reject"></span>
+                                                                                                 <h6>  Reject</h6>
+                                                                                            
+                                                                                            
+                                                                                            </a>
                                                                                     </li>
                                                                                     <li><a href="javascript:void()" class="btn-icon-action btn-icon-view expenseaction"
                                                                                             data-bs-toggle="modal" data-bs-target="#modal-expenseseekclarication"
                                                                                             data-expenserequestid="74">
-                                                                                            <span data-bs-toggle="tooltip" matTooltip="Seek Clarification" matTooltipPosition="above"
+                                                                                            <span  
                                                                                                 class="fa-rotate-right fa-solid" data-bs-original-title="Seek Clarification"
-                                                                                                aria-label="Seek Clarification"></span></a>
+                                                                                                aria-label="Seek Clarification"></span>
+                                                                                             <h6>  Seek Clarification</h6>
+                                                                                            </a>
                                                                                     </li>
                                                                                     <li>
                                                                                         <a [routerLink]="['/expense/expense/preview',element.TransactionId]"
                                                                                             class="btn-icon-action btn-icon-view">
-                                                                                            <span data-bs-toggle="tooltip" class="fa-eye fa-regular" aria-label="View"
-                                                                                                matTooltip="View"></span>
+                                                                                            <span   class="fa-eye fa-regular" aria-label="View"
+                                                                                                ></span>
+                                                                                                    <h6>  View </h6>
                                                                                         </a>
                                                                                     </li>
                                                                                     <li>
                                                                                         <a href="javascript:void()" class="btn-icon-action btn-icon-view p-relative"
                                                                                             id="communicationThread">
-                                                                                            <span data-toggle="tooltip" title="Communication" class="fa-comment-dots fa-regular"></span>
+                                                                                            <span   title="Communication" class="fa-comment-dots fa-regular"></span>
+                                                                                             <h6> Comments</h6>
                                                                                             <div class="communication-count">
-                                                                                                <span [id]="'CommCount' + element.requestType + element.requestId">0</span>
+                                                                                               - <span [id]="'CommCount' + element.requestType + element.requestId">0</span>
+
                                                                                             </div>
                                                                                         </a>
                                                                                     </li>
