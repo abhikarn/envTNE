@@ -15,10 +15,10 @@
     <div class="autocomplete-field">
   <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" [value]="displayValue"
     [placeholder]="'Enter the ' + (controlConfig.label ?? 'Type')"  [readonly]="controlConfig.readonly"
-    (blur)="onCityAutoCompleteInput()" (focus)="onAutoCompleteFocus()" (input)="onUserTyping($event)" />
+    (blur)="onBlurAutocomplete()" (focus)="onAutoCompleteFocus()" (input)="onUserTyping($event)" />
     <span class="auto-select-icon "><img src="images/search-icon.svg" alt="search"></span>
     </div>
-  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onCityAutoCompleteInput($event)">
     @for (option of filteredOptions; track trackByFn($index, option)) {
     <mat-option [value]="option">
       {{ option.label }}
