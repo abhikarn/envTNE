@@ -192,7 +192,9 @@ min-width: 153px;
 		display: none;
 	}
 
-
+.mat-timepicker-toggle svg {
+    display: none;
+}
 
 	.more-item .mdc-line-ripple::before,
 	.more-item .mdc-line-ripple::after {
@@ -221,10 +223,12 @@ min-width: 153px;
 	}
 }
 
-
+.mdc-text-field--filled.mdc-text-field--disabled {
+    background-color: transparent;
+}
 
 .mdc-text-field {
-		padding: 0 0 !important;
+		padding: 0 0 !important;    overflow: inherit;
 	}
 
 	.mdc-floating-label {
@@ -241,7 +245,7 @@ min-width: 153px;
 		width: 100%;
 		text-align: left !important;
 		position: relative !important;
-	    display: inline !important;
+	       display: block !important;
 	}
 
 	.mat-mdc-form-field {
@@ -256,7 +260,7 @@ min-width: 153px;
 	}
 
 	.mdc-text-field--filled .mdc-floating-label--float-above {
-		transform: translateY(-50%) !important;
+		transform: inherit !important;
 	}
 
 	
