@@ -200,6 +200,31 @@ app-material-table .violation-row {
 	transform: rotate(45deg);
 }
 
+.violation-bg {
+	/* background-color: rgba(209, 126, 126, 0.1); */
+	border-left: 2px solid rgb(232, 159, 159);
+	border-radius: 0;
+	border-right: 2px solid rgb(232, 159, 159);
+	border-bottom: 2px solid rgb(232, 159, 159);
+}
+
+.violation-border td  {
+ border-top: 2px solid rgb(232, 159, 159);
+	border-bottom: 2px solid rgb(232, 159, 159);
+     
+}
+.violation-border.show-hide-active td {
+	border-bottom: none !important;
+}
+ 
+.violation-border td:first-child {
+    border-left: 2px solid rgb(232 159 159);
+    
+}
+.violation-border td:last-child  {
+    border-right: 2px solid rgb(232 159 159);
+    
+}
 
 
 }

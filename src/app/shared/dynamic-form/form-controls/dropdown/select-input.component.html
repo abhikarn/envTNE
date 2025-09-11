@@ -1,5 +1,5 @@
 <div class="form-group chm-formgroup">
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" [ngClass]="!!controlConfig.defaultValue ? 'read-only-line read-only-arrow' : ''">
     <mat-label>{{ controlConfig.label }}
       @if (controlConfig.required) {
       <span class="required-star">*</span>

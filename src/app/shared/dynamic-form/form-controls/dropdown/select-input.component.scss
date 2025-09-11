@@ -138,4 +138,17 @@ lib-select-input {
 
 		font-size: 0.9rem !important;
 	}
+
+	.read-only-line {
+		.mdc-line-ripple {
+			display: none !important;
+		}
+	}
+
+	.read-only-arrow {
+		.mat-mdc-select-trigger::after {
+			display: none;
+		}		
+	}
+				
 }

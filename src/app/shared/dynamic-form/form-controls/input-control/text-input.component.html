@@ -1,6 +1,6 @@
 @if (!!controlConfig) {
 @if (controlConfig.subType == 'text') {
-<mat-form-field appearance="fill">
+<mat-form-field appearance="fill" [ngClass]="!!controlConfig.readonly ? 'read-only-line' : ''">
   <mat-label>{{controlConfig.label}}
     @if (controlConfig.required) {
     <span class="required-star">*</span>

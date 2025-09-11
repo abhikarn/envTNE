@@ -938,8 +938,8 @@ export class MainExpenseComponent {
             .pipe(take(1))
             .subscribe({
               next: (response) => {
-                this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference);
                 this.router.navigate(['/expense/expense/dashboard']);
+                this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference, 10000);
               },
               error: (err) => {
                 console.error(err);

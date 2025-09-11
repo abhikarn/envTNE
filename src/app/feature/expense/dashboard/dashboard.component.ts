@@ -35,6 +35,7 @@ interface ColumnConfig {
   key: string;
   label: string;
   sortable: boolean;
+  showSearch: boolean;
 }
 
 export const ELEMENT_DATA: any[] = [];
@@ -184,6 +185,7 @@ export class DashboardComponent implements OnInit {
           key: col.key,
           label: col.label,
           sortable: col.sortable,
+          showSearch: col.showSearch,
           order: col.order ? col.order : 0
         };
       }).sort((a: any, b: any) => a.order - b.order);
