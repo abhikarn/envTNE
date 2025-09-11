@@ -81,7 +81,9 @@ app-dashboard {
 .mat-paginator-icon {
   color: #007bff;
 }
-
+.mdc-data-table__cell {
+	overflow: inherit;
+}
 .mat-paginator-navigation-previous,
 .mat-paginator-navigation-next,
 .mat-paginator-navigation-first,
