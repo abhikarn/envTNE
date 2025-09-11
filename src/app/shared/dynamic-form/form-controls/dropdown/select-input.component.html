@@ -1,5 +1,5 @@
 <div class="form-group chm-formgroup">
-  <mat-form-field appearance="fill" [ngClass]="!!controlConfig.defaultValue ? 'read-only-line read-only-arrow' : ''">
+  <mat-form-field appearance="fill" [ngClass]="!!controlConfig.readonly ? 'read-only-line read-only-arrow no-pointer' : ''">
     <mat-label>{{ controlConfig.label }}
       @if (controlConfig.required) {
       <span class="required-star">*</span>
@@ -8,7 +8,7 @@
     <!-- @if (controlConfig.icon) {
     <mat-icon matPrefix>{{ controlConfig.icon }}</mat-icon>
     } -->
-    <mat-select [formControl]="control" placeholder="Select"
+    <mat-select [formControl]="control" [placeholder]="controlConfig.readonly ? '' : 'Select'"
       (mousedown)="onMatSelectClick($event);" (openedChange)="onSelectOpenedChange($event)" [disabled]="isMobile"
       (selectionChange)="setReadableValue($event);onReadonlySelection($event);onSelectionChange($event)">
       @if (!!controlConfig.defaultValue) {
