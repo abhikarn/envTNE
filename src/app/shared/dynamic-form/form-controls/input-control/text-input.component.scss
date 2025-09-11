@@ -1,7 +1,11 @@
 lib-text-input {
-    .read-only-line {
+	.read-only-line {
 		.mdc-line-ripple {
 			display: none !important;
 		}
+	}
+
+	.no-pointer {
+		pointer-events: none !important;
 	}
 }

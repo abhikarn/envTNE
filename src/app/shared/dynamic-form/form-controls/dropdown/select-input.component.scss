@@ -150,5 +150,9 @@ lib-select-input {
 			display: none;
 		}		
 	}
+	
+	.no-pointer {
+		pointer-events: none;
+	}
 				
 }

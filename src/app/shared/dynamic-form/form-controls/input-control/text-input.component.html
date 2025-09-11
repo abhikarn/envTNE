@@ -1,6 +1,6 @@
 @if (!!controlConfig) {
 @if (controlConfig.subType == 'text') {
-<mat-form-field appearance="fill" [ngClass]="!!controlConfig.readonly ? 'read-only-line' : ''">
+<mat-form-field appearance="fill" [ngClass]="!!controlConfig.readonly ? 'read-only-line no-pointer' : ''">
   <mat-label>{{controlConfig.label}}
     @if (controlConfig.required) {
     <span class="required-star">*</span>
@@ -15,10 +15,10 @@
     <div class="autocomplete-field">
   <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" [value]="displayValue"
     [placeholder]="'Enter the ' + (controlConfig.label ?? 'Type')"  [readonly]="controlConfig.readonly"
-    (blur)="onCityAutoCompleteInput()" (focus)="onAutoCompleteFocus()" (input)="onUserTyping($event)" />
+    (blur)="onBlurAutocomplete()" (focus)="onAutoCompleteFocus()" (input)="onUserTyping($event)" />
     <span class="auto-select-icon "><img src="images/search-icon.svg" alt="search"></span>
     </div>
-  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onCityAutoCompleteInput($event)">
     @for (option of filteredOptions; track trackByFn($index, option)) {
     <mat-option [value]="option">
       {{ option.label }}
@@ -43,7 +43,7 @@
   }
   @else{
   <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.readonly ? '' : 'Enter the ' + (controlConfig.label ?? 'Type')"
-    (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" />
+    (blur)="!controlConfig.readonly && onBlur()" (input)="onInput($event)" [readonly]="!!controlConfig.readonly"/>
   }
   <!-- <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'"
     (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" /> -->

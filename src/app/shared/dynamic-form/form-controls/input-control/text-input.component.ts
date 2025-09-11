@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocomplete, MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { IFormControl } from '../../form-control.interface';
@@ -13,6 +13,7 @@ import { ServiceRegistryService } from '../../../service/service-registry.servic
 import { SnackbarService } from '../../../service/snackbar.service';
 import { MatIconModule } from '@angular/material/icon';
 import { GlobalConfigService } from '../../../service/global-config.service';
+import { NewExpenseService } from '../../../../feature/expense/service/new-expense.service';
 
 @Component({
   selector: 'lib-text-input',
@@ -40,12 +41,16 @@ export class TextInputComponent implements OnInit {
   constructor(
     private serviceRegistry: ServiceRegistryService,
     private snackbarService: SnackbarService,
-    private configService: GlobalConfigService
+    private configService: GlobalConfigService,
+    private newExpenseService: NewExpenseService
   ) {
     this.getErrorMessage = this.getErrorMessage.bind(this);
   }
 
   ngOnInit() {
+    if(this.controlConfig.defaultValue) {
+      this.control.setValue(this.controlConfig.defaultValue);
+    }
     this.control.valueChanges.subscribe(inputValue => {
       if (inputValue) {
         this.valueChange.emit({
@@ -139,30 +144,29 @@ export class TextInputComponent implements OnInit {
     }
   }
 
-  onCityAutoCompleteInput() {
-    setTimeout(() => {
-      let value = this.control.value;
-      // Only validate if options are present
-      if (
-        (this.controlConfig.name === 'Origin' || this.controlConfig.name === 'Destination') &&
-        this.controlConfig.autoComplete &&
-        Array.isArray(this.controlConfig.options) &&
-        this.controlConfig.options.length > 0 // <-- Only validate if options exist
-      ) {
-        const isValid = typeof value === 'object' && value !== null &&
-          this.controlConfig.options.some(
-            (option: any) => option.value === value.value
-          );
-        setTimeout(() => {
-          // Only show error if user typed something (not empty/null/undefined)
-          if (!isValid && value && value !== '') {
+  onBlurAutocomplete() {
+    let value = this.control.value;
+    if(typeof value === 'string'){
+      this.control.setValue(null);
+    }
+  }
+
+  onCityAutoCompleteInput(event: any | MatAutocompleteSelectedEvent) {
+    let value = this.control.value;
+    
+    if (typeof value === 'object') {
+      const requestBody = [{ id: value?.value || 0, name: '', masterName: 'City' }];
+
+      this.newExpenseService.getMasterNameById(requestBody).pipe(take(1)).subscribe({
+        next: (response: any[]) => {
+          if (response && response.length == 0) {
             this.control.setValue(null);
             this.snackbarService.error(`Please select a valid city from the list for ${this.controlConfig.label}.`);
             return;
           }
-        }, 500);
-      }
-    }, 500);
+        }
+      });
+    }
   }
 
   onBlur() {
