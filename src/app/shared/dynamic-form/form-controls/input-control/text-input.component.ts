@@ -48,6 +48,9 @@ export class TextInputComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.controlConfig.defaultValue) {
+      this.control.setValue(this.controlConfig.defaultValue);
+    }
     this.control.valueChanges.subscribe(inputValue => {
       if (inputValue) {
         this.valueChange.emit({

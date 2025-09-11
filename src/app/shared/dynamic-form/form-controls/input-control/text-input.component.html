@@ -43,7 +43,7 @@
   }
   @else{
   <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.readonly ? '' : 'Enter the ' + (controlConfig.label ?? 'Type')"
-    (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" />
+    (blur)="!controlConfig.readonly && onBlur()" (input)="onInput($event)" [readonly]="!!controlConfig.readonly"/>
   }
   <!-- <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'"
     (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" /> -->
