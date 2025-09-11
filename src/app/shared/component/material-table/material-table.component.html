@@ -1,3 +1,4 @@
+<div class="table-responsive">
 <table mat-table [dataSource]="processedData" multiTemplateDataRows
     class="table bor-light  mobile-card-view-normaltable responsive    color-table d-table table-cust tbl-sml">
     <!-- Approval Mode: Checkbox Column -->
@@ -20,7 +21,7 @@
     </ng-container>
     <!-- Common Action Icons -->
     <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef></th>
+        <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let row" style="padding: 7px 0;">
 
 
@@ -246,3 +247,4 @@
         </td>
     </ng-container>
 </table>
+</div>
