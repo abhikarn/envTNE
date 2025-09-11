@@ -28,6 +28,17 @@ export class DynamicFormService {
     }
   }
 
+  scrollToFirstControl(querySelector: string): void {
+    // find all inputs, selects, textareas inside the form
+    const formControls: NodeListOf<HTMLElement> =
+      document.querySelectorAll(`${querySelector} input, ${querySelector} select, ${querySelector} textarea`);
+
+    if (formControls.length > 0) {
+      const firstControl = formControls[0];
+      firstControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstControl.focus?.(); // optional
+    }
+  }
 
   setCalculatedFields(form: any, formControls: any[]): void {
     formControls.forEach(control => {

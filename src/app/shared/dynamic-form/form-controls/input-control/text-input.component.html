@@ -42,7 +42,7 @@
     (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" />          
   }
   @else{
-  <input type="text" matInput [formControl]="control"     [placeholder]="'Enter the ' + (controlConfig.label ?? 'Type')" 
+  <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.readonly ? '' : 'Enter the ' + (controlConfig.label ?? 'Type')"
     (blur)="onBlur()" (input)="onInput($event)" [readonly]="controlConfig.readonly" />
   }
   <!-- <input type="text" matInput [formControl]="control" [placeholder]="controlConfig.placeholder || 'Enter text'"
@@ -59,7 +59,7 @@
 @else if (controlConfig.subType == 'number') {
 <mat-form-field appearance="fill">
   <mat-label>{{controlConfig.label}}</mat-label>
-  <input type="number"    [placeholder]="'Enter the ' + (controlConfig.label ?? 'Type')"  matInput [formControl]="control" [readonly]="controlConfig.readonly" />
+  <input type="number" [placeholder]="controlConfig.readonly ? '' : 'Enter the ' + (controlConfig.label ?? 'Type')" matInput [formControl]="control" [readonly]="controlConfig.readonly" />
   @if (control.invalid && control.touched) {
   <mat-error>
     {{ getErrorMessage | fnWrap : control.invalid && control.touched }}

@@ -1,12 +1,46 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, of, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private http: HttpClient
+  ) { }
+
+  // Called from AppComponent (after reading query params)
+  validatePeopleStrongSession(payload: any): Observable<any> {
+    console.log('Mock validation called with:', payload);
+
+    // Simulate backend behavior
+    if (payload.accessToken.startsWith('mock')) {
+      // Pretend token is valid and return fake Envaiya JWT
+      const fakeTokenData = {
+        token: {
+          jwtTokenModel: {
+            jwtToken: 'fake-envaiya-jwt-token-123',
+            expireDateTime: new Date().getTime() + 60 * 60 * 1000 // 1 hour expiry
+          },
+          userMasterId: 101,
+          displayName: 'John Doe',
+          displayCode: 'JD'
+        }
+      };
+
+      // Store locally
+      localStorage.setItem('userData', JSON.stringify(fakeTokenData));
+
+      return of(fakeTokenData);
+    } else {
+      // Simulate invalid/expired token
+      return throwError(() => new Error('Invalid PeopleStrong token'));
+    }
+  }
 
   getToken(): any | null {
     const userData = localStorage.getItem('userData');
@@ -73,7 +107,7 @@ export class AuthService {
     }
     return "";
   }
- 
+
   Logout(): void {
     localStorage.removeItem('userData');
     this.router.navigate(['/account']); // Adjust route as needed
