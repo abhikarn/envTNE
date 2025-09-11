@@ -604,6 +604,7 @@ export class MainExpenseComponent {
         category.formControls?.forEach((control: any) => {
           if (control?.name === 'Currency' || control?.name === 'EntitlementCurrency') {
             control.defaultValue = isWithoutCurrency ? null : defaultCurrency;
+            control.readonly = !isWithoutCurrency;
           }
         })
       );
