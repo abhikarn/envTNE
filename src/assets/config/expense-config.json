@@ -13640,6 +13640,7 @@
                         "name": "BillableToClient",
                         "label": "Billable To Client",
                         "value": false,
+                        "defaultValue": false,
                         "options": [
                             {
                                 "value": true,
