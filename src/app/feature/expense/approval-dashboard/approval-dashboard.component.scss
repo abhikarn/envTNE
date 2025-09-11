@@ -125,7 +125,11 @@ app-dashboard {
 	justify-content: space-between!important;
  
 }
- 
+ .filter-cell .mat-mdc-form-field-flex {
+	background: transparent;
+	border-bottom: 1px solid #cacaca;
+	border-radius: 0;
+}
 .mat-mdc-paginator-page-size {
  
 	order: 2;
