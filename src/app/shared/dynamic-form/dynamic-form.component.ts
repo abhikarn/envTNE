@@ -248,9 +248,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     console.log('Form submitted:', this.form.value);
 
     if (this.form.invalid) {
+      this.scrollToFirstInvalidControl();
       this.form.markAllAsTouched();
       this.dynamicFormService.scrollToFirstInvalidControl('form');
-      // this.scrollToFirstInvalidControl();
       return;
     }
     // enable all controls before submission

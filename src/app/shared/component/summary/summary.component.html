@@ -1,33 +1,29 @@
- <div class="accordion accordion-flush mobile-acc-color preview-standard-view" id="accordionFlushExample">
+<div class="accordion accordion-flush mobile-acc-color preview-standard-view" id="accordionFlushExample">
   @for (summary of summaries; track summary) {
-    <div class="accordion-item mb-2">
-      <h2 class="accordion-header" [id]="'heading-' + summary.id">
-        <button
-          class="accordion-button"
-          type="button"
-          [class.collapsed]="!summary.isOpen"
-          (click)="toggleAccordion(summary.id)">
-          {{ summary.title }}
-        </button>
-      </h2>
-      <div
-        [id]="'collapse-' + summary.id"
-        class="accordion-collapse collapse"
-        [class.show]="summary.isOpen"
-        [attr.aria-labelledby]="'heading-' + summary.id">
-        <div class="accordion-body pt-0 px-0 pb-2">
-          <ul class="summary-list">
-            @for (item of summary.items; track item) {
-              @if (item.showInUI) {
-                <li>
-                  {{ item.label }}
-                  <span>{{ item.value || '0.00' }}</span>
-                </li>
-              }
-            }
-          </ul>
-        </div>
+  @if(summary?.items?.length !== 0) {
+  <div class="accordion-item mb-2">
+    <h2 class="accordion-header" [id]="'heading-' + summary.id">
+      <button class="accordion-button" type="button" [class.collapsed]="!summary.isOpen"
+        (click)="toggleAccordion(summary.id)">
+        {{ summary.title }}
+      </button>
+    </h2>
+    <div [id]="'collapse-' + summary.id" class="accordion-collapse collapse" [class.show]="summary.isOpen"
+      [attr.aria-labelledby]="'heading-' + summary.id">
+      <div class="accordion-body pt-0 px-0 pb-2">
+        <ul class="summary-list">
+          @for (item of summary.items; track item) {
+          @if (item.showInUI) {
+          <li>
+            {{ item.label }}
+            <span>{{ item.value || '0.00' }}</span>
+          </li>
+          }
+          }
+        </ul>
       </div>
     </div>
+  </div>
+  }
   }
 </div>
