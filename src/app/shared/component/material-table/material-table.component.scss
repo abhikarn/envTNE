@@ -97,8 +97,17 @@ app-material-table .violation-row {
 	border: 1px solid #dda4a4;
 }
   .violation-row  td {
-   border-bottom: 1px solid #dda4a4 !important;
+ border-top: 2px solid #dda4a4 !important;
   }
+
+    .violation-row  td:first-child{
+ border-left: 2px solid #dda4a4 !important;
+  }
+  
+    .violation-row  td:last-child{
+ border-right: 2px solid #dda4a4 !important;
+  }
+
 
   .ocr-riestricted-row td {
   background-color: #f9f0d5 !important;
