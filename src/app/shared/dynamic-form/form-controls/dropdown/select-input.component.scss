@@ -140,6 +140,10 @@ lib-select-input {
 	}
 
 	.read-only-line {
+		.mat-mdc-floating-label.mdc-floating-label {
+			pointer-events: none !important;
+		}
+
 		.mdc-line-ripple {
 			display: none !important;
 		}
