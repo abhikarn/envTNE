@@ -1616,7 +1616,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
@@ -3205,7 +3205,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 9
                     },
@@ -3273,7 +3273,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "out",
                         "order": 20
                     },
@@ -4749,7 +4749,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
@@ -6220,7 +6220,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
@@ -7753,7 +7753,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
@@ -9224,7 +9224,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
@@ -10693,7 +10693,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
@@ -12389,7 +12389,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "out",
                         "order": 13
                     },
@@ -13933,7 +13933,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
@@ -14652,7 +14652,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 4
                     },
@@ -15506,7 +15506,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 4
                     },
@@ -16781,7 +16781,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "out",
                         "order": 13
                     },
@@ -17810,7 +17810,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "out",
                         "order": 13
                     },
@@ -18687,7 +18687,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 5
                     },
@@ -19680,7 +19680,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "out",
                         "order": 13
                     },
@@ -20261,7 +20261,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 4
                     },
@@ -20859,7 +20859,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 4
                     },
@@ -21950,7 +21950,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 4
                     },
@@ -23088,7 +23088,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
@@ -24102,7 +24102,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
@@ -24903,7 +24903,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 5
                     },
@@ -25890,7 +25890,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
@@ -26600,7 +26600,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 5
                     },
@@ -27269,7 +27269,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 5
                     },
@@ -29792,7 +29792,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 5
                     },
@@ -30595,7 +30595,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
@@ -31600,7 +31600,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
@@ -33184,7 +33184,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 9
                     },
@@ -33252,7 +33252,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "out",
                         "order": 20
                     },
@@ -34653,7 +34653,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
@@ -35908,7 +35908,7 @@
                     {
                         "name": "PaymentMode",
                         "label": "Payment Type",
-                        "visible": true,
+                        "visible": false,
                         "position": "in",
                         "order": 7
                     },
