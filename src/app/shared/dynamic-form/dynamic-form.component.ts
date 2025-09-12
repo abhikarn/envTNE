@@ -690,6 +690,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.clear();
     }, 500);
+    const action = this.editIndex ? 'updated' : 'added';
+    this.snackbarService.success(`Expense item ${action} successfully`, 3000);
   }
 
 
