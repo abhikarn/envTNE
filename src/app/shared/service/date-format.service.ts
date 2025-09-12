@@ -8,14 +8,19 @@ export class DateFormatService {
 
   get formats(): MatDateFormats {
     const format = this.cfg.dateFormat || 'dd-MMM-yyyy';
-     console.log('[DateFormatService] using format:', format); // Debug
+    console.log('[DateFormatService] using format:', format); // Debug
     return {
-      parse: { dateInput: format },
+      parse: {
+        dateInput: 'YYYY-MM-DD',
+        timeInput: 'HH:mm',
+      },
       display: {
-        dateInput: format,
-        monthYearLabel: 'MMM yyyy',
-        dateA11yLabel: format,
-        monthYearA11yLabel: 'MMMM yyyy',
+        dateInput: 'DD/MM/YYYY',
+        timeInput: 'HH:mm',
+        timeOptionLabel: 'HH:mm',
+        monthYearLabel: 'MMM YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
       }
     };
   }

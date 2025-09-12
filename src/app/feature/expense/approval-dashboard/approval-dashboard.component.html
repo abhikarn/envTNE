@@ -845,7 +845,65 @@
                                                                 </ng-container>
                                                                 <ng-template #actionColumn>
                                                                     <ng-container *ngIf="column.key === 'action'; else defaultColumn">
-                                                                        <div class="icons-new">
+                                                                        <div *ngIf="isMobile" class="TBL-actions">
+                                                                            <ul class="action-icons">
+                                                                                <li>
+                                                                                    <a href="javascript:void()"
+                                                                                        class="btn-icon-action btn-icon-edit ExpenseApprove"
+                                                                                        data-expenserequestid="74"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#modal-expenseApprove">
+                                                                                        <span data-bs-toggle="tooltip"
+                                                                                            matTooltip="One Click Approve"   matTooltipPosition="above"
+                                                                                            class="fa-hand-pointer fa-regular"
+                                                                                            data-bs-original-title="One Click Approve"
+                                                                                            aria-label="One Click Approve"></span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a [routerLink]="['/expense/expense/approval',element.TransactionId]"
+                                                                                        class="btn-icon-action btn-icon-edit"><span
+                                                                                            data-bs-toggle="tooltip"
+                                                                                            matTooltip="Approve"   matTooltipPosition="above"
+                                                                                            class="fa-square-check fa-regular"
+                                                                                            data-bs-original-title="Approve"
+                                                                                            aria-label="Approve"></span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li><a href="javascript:void()"
+                                                                                        class="btn-icon-action btn-icon-cancel expenseaction"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#modal-expenseReject"
+                                                                                        data-expenserequestid="74"><span
+                                                                                            data-bs-toggle="tooltip"
+                                                                                            matTooltip="Reject"   matTooltipPosition="above"
+                                                                                            class="fa-xmark fa-solid"
+                                                                                            data-bs-original-title="Reject"
+                                                                                            aria-label="Reject"></span></a>
+                                                                                </li>
+                                                                                <li><a href="javascript:void()"
+                                                                                        class="btn-icon-action btn-icon-view expenseaction"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#modal-expenseseekclarication"
+                                                                                        data-expenserequestid="74">
+                                                                                        <span data-bs-toggle="tooltip"
+                                                                                            matTooltip="Seek Clarification"   matTooltipPosition="above"
+                                                                                            class="fa-rotate-right fa-solid"
+                                                                                            data-bs-original-title="Seek Clarification"
+                                                                                            aria-label="Seek Clarification"></span></a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a [routerLink]="['/expense/expense/preview',element.TransactionId]"
+                                                                                        class="btn-icon-action btn-icon-view">
+                                                                                        <span data-bs-toggle="tooltip"
+                                                                                            class="fa-eye fa-regular"
+                                                                                            aria-label="View"
+                                                                                            matTooltip="View"></span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div *ngIf="!isMobile" class="icons-new">
                                                                             <div class="dropdown" data-bs-display="static" style="padding: 5px;">
                                                                                 <button class="p-0 btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                                                     aria-expanded="false">

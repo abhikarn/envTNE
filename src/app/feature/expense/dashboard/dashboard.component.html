@@ -1025,7 +1025,33 @@
                                                 </ng-container>
                                                 <ng-template #actionColumn>
                                                    <ng-container *ngIf="column.key === 'action'; else defaultColumn">
-                                                      <div class="icons-new">
+                                                      <div *ngIf="isMobile" class="TBL-actions">
+                                                         <ul class="action-icons">
+                                                            <li *ngIf="element.IsEdit">
+                                                               <a [routerLink]="['/expense/expense/edit-expense', element.ExpenseClaimTypeDescription,element.TransactionId]"
+                                                                  class="btn-icon-action btn-icon-view">
+                                                                  <span data-bs-toggle="tooltip" class="fa fa-pencil"
+                                                                     aria-label="Edit" matTooltip="Edit"></span>
+                                                               </a>
+                                                            </li>
+                                                            <li *ngIf="element.IsPreview">
+                                                               <a [routerLink]="['/expense/expense/preview',element.TransactionId]"
+                                                                  class="btn-icon-action btn-icon-view">
+                                                                  <span data-bs-toggle="tooltip"
+                                                                     class="fa-eye fa-regular" aria-label="View"
+                                                                     matTooltip="View"></span>
+                                                               </a>
+                                                            </li>
+                                                            <li>
+                                                               <a href="#" class="btn-icon-action btn-icon-view">
+                                                                  <span data-bs-toggle="tooltip"
+                                                                     class="fa-regular fa-file-pdf" aria-label="PDF"
+                                                                     matTooltip="PDF"></span>
+                                                               </a>
+                                                            </li>
+                                                         </ul>
+                                                      </div>
+                                                      <div *ngIf="!isMobile" class="icons-new">
                                                          <div class="dropdown" data-bs-display="static" style="padding: 5px;">
                                                             <button class="p-0 btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                                                aria-expanded="false">
@@ -1051,16 +1077,6 @@
                                                                   <a href="#" class="btn-icon-action btn-icon-view">
                                                                      <span   class="fa-regular fa-file-pdf" aria-label="PDF"></span>
                                                                          <h6>PDF</h6>
-                                                                  </a>
-                                                               </li>
-                                                               <li>
-                                                                  <a href="#" class="btn-icon-action btn-icon-view p-relative" [attr.requestid]="element.TransactionId"
-                                                                     [attr.requesttype]="element.ExpenseRequestType" id="communicationThread">
-                                                                     <span   title="Communication" class="fa-comment-dots fa-regular"></span>
-                                                                     <h6> Comments </h6>
-                                                                     <div class="communication-count">
-                                                                        - <span [id]="'CommCount' + element.requestType + element.requestId">0</span>
-                                                                     </div>
                                                                   </a>
                                                                </li>
                                                             </ul>
