@@ -13640,6 +13640,7 @@
                         "name": "BillableToClient",
                         "label": "Billable To Client",
                         "value": false,
+                        "defaultValue": false,
                         "options": [
                             {
                                 "value": true,
@@ -13837,7 +13838,6 @@
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
                     },
                     "metaData": {
-                        "ClaimAmount": "Maximum Amount Per Month",
                         "MaximumAmount": "Maximum Amount Per Month",
                         "IsPerKmLimitRequired": "Is Per Km Limit Required",
                         "AmountPerKM": "Amount Per Km",
@@ -34543,7 +34543,6 @@
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
                     },
                     "metaData": {
-                        "ClaimAmount": "Maximum Amount Per Month",
                         "MaximumAmount": "Maximum Amount Per Month",
                         "IsPerKmLimitRequired": "Is Per Km Limit Required",
                         "AmountPerKM": "Amount Per Km",

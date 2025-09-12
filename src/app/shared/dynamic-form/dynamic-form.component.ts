@@ -248,9 +248,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     console.log('Form submitted:', this.form.value);
 
     if (this.form.invalid) {
+      this.scrollToFirstInvalidControl();
       this.form.markAllAsTouched();
       this.dynamicFormService.scrollToFirstInvalidControl('form');
-      // this.scrollToFirstInvalidControl();
       return;
     }
     // enable all controls before submission
@@ -378,7 +378,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       }
     }
-    
+
     if (
       this.existingData?.length > 0 &&
       this.category.checkValidationOnSubmit?.duplicateConstraint?.validate
@@ -935,6 +935,14 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.quotationComponentRef.quotationData = [];
     }
     this.selectedFiles = [];
+    this.formControls?.forEach((control: any) => {
+      if (control.formConfig.type == 'radio') {
+        const defaultVal = control.formConfig?.defaultValue ?? control.formConfig?.value;
+        if (defaultVal !== undefined) {
+          control.control.setValue(defaultVal, { emitEvent: false });
+        }
+      }
+    });
     this.formControls?.forEach((control: any) => {
       if (control.formConfig?.defaultValue) {
         control.control.setValue(control.formConfig.defaultValue?.Id, { emitEvent: false });
