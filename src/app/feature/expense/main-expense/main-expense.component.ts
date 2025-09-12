@@ -962,11 +962,15 @@ export class MainExpenseComponent {
       remarks: this.travelRequestPreview?.travelRequestDateExtensionRemarks
     };
 
-    if (window.innerWidth <= 768) { // Use bottom sheet for mobile
-      this.bottomSheetService.openBottomSheet(DateExtensionComponent, data).subscribe(result => {
-        this.handleResult(result);
-      });
-    } else { // Use dialog for larger screens
+    // Bottom sheet disabled for now:
+    // MatTimepicker has inconsistent behavior inside bottom sheet
+    // Using normal dialog for all devices until the issue is fixed.
+    
+    // if (window.innerWidth <= 768) { // Use bottom sheet for mobile
+    //   this.bottomSheetService.openBottomSheet(DateExtensionComponent, data).subscribe(result => {
+    //     this.handleResult(result);
+    //   });
+    // } else { // Use dialog for larger screens
       const dialogRef = this.dialog.open(DateExtensionComponent, {
         maxWidth: '1000px',
         data
@@ -975,7 +979,7 @@ export class MainExpenseComponent {
       dialogRef.afterClosed().subscribe(result => {
         this.handleResult(result);
       });
-    }
+    // }
   }
 
   private handleResult(result: any) {
