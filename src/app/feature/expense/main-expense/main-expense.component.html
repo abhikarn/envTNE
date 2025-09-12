@@ -55,7 +55,7 @@
                   <div class="col-md-4">
                     @if (expenseConfig?.request) {
                     <div class="form-group chm-formgroup new-form-grp mb-0 no-hintspace">
-                      <label>{{this.expenseConfig.request.label}} </label>
+                      <label class="d-block">{{this.expenseConfig.request.label}} </label>
                       <!-- Desktop/Tablet: Regular mat-select in mat-form-field -->
                       <ng-container *ngIf="!isMobile; else mobileSelect">
                         <mat-form-field appearance="fill" class="w-100">
@@ -496,7 +496,7 @@
               <div [formGroup]="justificationForm" class="row mt-3">
                 <div class="col-md-12">
                   <div class="form-group chm-formgroup mb-2">
-                    <label>{{ expenseConfig.justification.label }}</label>
+                    <label class="d-block">{{ expenseConfig.justification.label }}</label>
                     <textarea [formControlName]="expenseConfig.justification.controlName"
                       [attr.maxLength]="expenseConfig.justification.maxLength"
                       class="form-control chm-formtextarea max-tr-md mar-align-0" rows="3"></textarea>

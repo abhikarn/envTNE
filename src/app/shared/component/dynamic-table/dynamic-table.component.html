@@ -26,15 +26,15 @@
               } @else if (col.name === '__actions') {
               <div class="icons-new">
                 <div class="dropdown" style="padding: 5px;">
-                    <button class="p-0 btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                    <button class="p-0  w-auto h-auto" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                       aria-expanded="false">
                       <i class="fa-solid fs-6 fa-ellipsis-vertical"></i>
                     </button>
                 
                     <ul class="dropdown-menu threedots-dd" aria-labelledby="dropdownMenuButton">
                       @if (row?.PaymentMode) {
-                      <li>
-                        <svg viewBox="0 0 24 24" width="18px" height="18px" xmlns="http://www.w3.org/2000/svg">
+                      <li class="d-flex align-items-start">
+                        <svg class="mr-2" viewBox="0 0 24 24" width="18px" height="18px" xmlns="http://www.w3.org/2000/svg">
                           <path d="M3.5 10H20.5" stroke="#323232" stroke-width="2" stroke-linecap="round"></path>
                           <path d="M6 14H8" stroke="#323232" stroke-width="2" stroke-linecap="round"></path>
                           <path d="M11 14H13" stroke="#323232" stroke-width="2" stroke-linecap="round"></path>
@@ -42,13 +42,15 @@
                             d="M3 9C3 7.11438 3 6.17157 3.58579 5.58579C4.17157 5 5.11438 5 7 5H12H17C18.8856 5 19.8284 5 20.4142 5.58579C21 6.17157 21 7.11438 21 9V12V15C21 16.8856 21 17.8284 20.4142 18.4142C19.8284 19 18.8856 19 17 19H12H7C5.11438 19 4.17157 19 3.58579 18.4142C3 17.8284 3 16.8856 3 15V12V9Z"
                             stroke="#323232" stroke-width="2" stroke-linejoin="round"></path>
                         </svg>
-                        <span> Payment Type: {{ row?.PaymentMode?.label || 'NA' }} </span>
+                        <h6> <label  class="d-block" style="font-size: 11px;color: #808197;"> Payment Type: </label> {{ row?.PaymentMode?.label || 'NA' }} </h6>
                       </li>
                       }
                       @if (row?.IsEdit) {
                       <li>
                         <a (click)="edit(row, i+1)" class="btn-icon-action btn-icon-view">
-                          <span class="fa fa-pencil" aria-label="Edit"></span>
+                          <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6589 3.20592C12.762 3.10284 12.9018 3.04492 13.0476 3.04492C13.1934 3.04492 13.3332 3.10284 13.4363 3.20592C13.5394 3.30901 13.5973 3.44883 13.5973 3.59462C13.5973 3.7404 13.5394 3.88022 13.4363 3.98331L8.29802 9.12158L7.26151 9.38071L7.52064 8.34419L12.6589 3.20592ZM13.0476 1.79492C12.5703 1.79492 12.1125 1.98453 11.775 2.32204L6.51435 7.58272C6.43425 7.66282 6.37742 7.76318 6.34995 7.87308L5.79619 10.0881C5.74295 10.3011 5.80535 10.5264 5.96059 10.6816C6.11583 10.8369 6.34113 10.8993 6.55412 10.846L8.76914 10.2923C8.87903 10.2648 8.9794 10.208 9.0595 10.1279L14.3202 4.86719C14.6577 4.52968 14.8473 4.07192 14.8473 3.59462C14.8473 3.11731 14.6577 2.65955 14.3202 2.32204C13.9827 1.98453 13.5249 1.79492 13.0476 1.79492ZM4.18759 2.96962C3.7281 2.96962 3.28743 3.15215 2.96252 3.47706C2.63761 3.80197 2.45508 4.24264 2.45508 4.70213V12.4547C2.45508 12.9142 2.63761 13.3549 2.96252 13.6798C3.28743 14.0047 3.7281 14.1872 4.18759 14.1872H11.9402C12.3997 14.1872 12.8403 14.0047 13.1652 13.6798C13.4902 13.3549 13.6727 12.9142 13.6727 12.4547V8.57843C13.6727 8.23325 13.3929 7.95343 13.0477 7.95343C12.7025 7.95343 12.4227 8.23325 12.4227 8.57843V12.4547C12.4227 12.5827 12.3719 12.7054 12.2814 12.7959C12.1909 12.8864 12.0681 12.9372 11.9402 12.9372H4.18759C4.05962 12.9372 3.93689 12.8864 3.8464 12.7959C3.75591 12.7054 3.70508 12.5827 3.70508 12.4547V4.70213C3.70508 4.57416 3.75591 4.45143 3.8464 4.36095C3.93689 4.27046 4.05962 4.21962 4.18759 4.21962H8.06388C8.40906 4.21962 8.68888 3.9398 8.68888 3.59462C8.68888 3.24944 8.40906 2.96962 8.06388 2.96962H4.18759Z" fill="#031842"></path>
+                                                                              </svg>
                           <h6>Edit</h6>
                         </a>
                       </li>

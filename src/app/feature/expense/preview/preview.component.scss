@@ -90,7 +90,7 @@ flex-grow: 0;
 	margin: 0 0 10px 0 !important;
 	background: #ffffff;
 	border-radius: var(--mat-expansion-container-shape, 5px);
-	box-shadow: none !important;
+	box-shadow: none !important;    overflow: inherit !important;
 }.mat-expansion-panel-header {
  
 	padding: 0 15px;
