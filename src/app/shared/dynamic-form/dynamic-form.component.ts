@@ -1245,28 +1245,33 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   private scrollToFirstInvalidControl(): void {
-    // Wait for the next animation frame to ensure DOM updates
     requestAnimationFrame(() => {
-      // Broader selector to include various invalid controls
-      const invalidControl = document.querySelector(
-        '.ng-invalid[formcontrolname], .ng-invalid[ng-reflect-name], .ng-invalid input'
-      ) as HTMLElement | null;
+      let invalidControl = document.querySelector('.ng-invalid') as HTMLElement | null;
 
       if (invalidControl) {
-        // Scroll to the element
-        invalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-        // Focus the control only if it's focusable
-        if (invalidControl.tabIndex >= 0 || invalidControl.tagName.match(/INPUT|TEXTAREA|SELECT/)) {
-          invalidControl.focus();
+        // If it's a custom component like <lib-file-upload>, scroll inside it
+        if (invalidControl.tagName.includes('-')) {
+          const inner = invalidControl.querySelector('input, textarea, select, .upload-container');
+          if (inner) {
+            invalidControl = inner as HTMLElement;
+          }
         }
 
-        // Optional: Announce to screen readers
-        invalidControl.setAttribute('aria-live', 'polite');
-        invalidControl.setAttribute('aria-describedby', 'error-message');
+        // Scroll to the element
+        const yOffset = -60; // adjust for sticky header
+        const y = invalidControl.getBoundingClientRect().top + window.scrollY + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+
+        // Focus if input-like
+        setTimeout(() => {
+          if (invalidControl?.tagName.match(/INPUT|TEXTAREA|SELECT/)) {
+            invalidControl.focus({ preventScroll: true });
+          }
+        }, 300);
       }
     });
   }
+
 
   freezeControlsBasedOnConditions(): void {
     this.category.freezFormControls?.forEach((controlConfig: any) => {
