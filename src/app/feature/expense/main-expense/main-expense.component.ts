@@ -573,7 +573,9 @@ export class MainExpenseComponent {
 
       return clonedData;
     });
-
+    setTimeout(() => {
+      this.setCurrencyDropdown();
+    }, 100);
   }
 
   onTabChangeIfAllowed(event: any) {
@@ -602,7 +604,7 @@ export class MainExpenseComponent {
 
       this.categories?.forEach((category: any) =>
         category.formControls?.forEach((control: any) => {
-          if (control?.name === 'Currency' || control?.name === 'EntitlementCurrency') {
+          if (control?.name === 'Currency') {
             control.defaultValue = isWithoutCurrency ? null : defaultCurrency;
             control.readonly = !isWithoutCurrency;
           }

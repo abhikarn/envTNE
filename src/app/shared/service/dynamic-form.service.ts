@@ -29,15 +29,33 @@ export class DynamicFormService {
   }
 
   scrollToFirstControl(querySelector: string): void {
-    // find all inputs, selects, textareas inside the form
-    const formControls: NodeListOf<HTMLElement> =
-      document.querySelectorAll(`${querySelector} input, ${querySelector} select, ${querySelector} textarea`);
+    requestAnimationFrame(() => {
+      let firstControl = document.querySelector('.ng-valid') as HTMLElement | null;
 
-    if (formControls.length > 0) {
-      const firstControl = formControls[0];
-      firstControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      firstControl.focus?.(); // optional
-    }
+      if (firstControl) {
+        // Handle custom components (like file upload or datepickers)
+        if (firstControl.tagName.includes('-')) {
+          const inner = firstControl.querySelector('input, textarea, select, .upload-container');
+          if (inner) {
+            firstControl = inner as HTMLElement;
+          }
+        }
+
+        // Calculate offset (adjust -60 if you have sticky header/toolbar)
+        const yOffset = -60;
+        const y = firstControl.getBoundingClientRect().top + window.scrollY + yOffset;
+
+        // Scroll window instead of using scrollIntoView
+        window.scrollTo({ top: y, behavior: 'smooth' });
+
+        // Focus after scroll
+        setTimeout(() => {
+          if (firstControl?.tagName.match(/INPUT|TEXTAREA|SELECT/)) {
+            firstControl.focus({ preventScroll: true });
+          }
+        }, 300);
+      }
+    });
   }
 
   setCalculatedFields(form: any, formControls: any[]): void {
@@ -297,6 +315,7 @@ export class DynamicFormService {
     const service = this.serviceRegistry.getService(category.policyViolationCheckApi.apiService);
     const apiMethod = category.policyViolationCheckApi.apiMethod;
     let requestBody: any = category.policyViolationCheckApi.requestBody;
+    let mandatoryFieldsToCheck = category.policyViolationCheckApi.mandatoryFieldsToCheck || {};
 
     Object.entries(category.policyViolationCheckApi.inputControls).forEach(([controlName, requestKey]) => {
       if (typeof requestKey === 'string') { // Ensure requestKey is a string
@@ -307,9 +326,13 @@ export class DynamicFormService {
 
     const output = this.mapOtherControls(moduleData, category.policyViolationCheckApi.otherControls);
     // if any value null in request body then don't proceed and show error
-    const hasNullValue = Object.values(requestBody).some(value => value === null || value === undefined || value === '');
+    const hasNullValue = Object.values(mandatoryFieldsToCheck).some(fieldKey => {
+      const value = requestBody[fieldKey as string];
+      return value === null || value === undefined || value === '';
+    });
+
     if (hasNullValue) {
-      return;
+      return; // stop if mandatory fields are missing
     }
     service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
       (response: any) => {
@@ -572,7 +595,7 @@ export class DynamicFormService {
       if (filterCategory) {
         if (filterCategory.RuleType === "BackDatedRestrictionDays") {
           const controlConfig: any = modifiedFormConfig?.find(control => control.name == filterCategory.FieldName);
-          if(controlConfig) {
+          if (controlConfig) {
             controlConfig.minDate = new Date(new Date().setDate(new Date().getDate() - Number(filterCategory.RuleValue)));
           }
         }
@@ -582,13 +605,13 @@ export class DynamicFormService {
       if (filterCategory) {
         if (filterCategory.RuleType === "BackDatedRestrictionDays") {
           const controlConfig: any = modifiedFormConfig?.find(control => control.name == filterCategory.FieldName);
-          if(controlConfig) {
+          if (controlConfig) {
             controlConfig.minDate = new Date(new Date().setDate(new Date().getDate() - Number(filterCategory.RuleValue)));
           }
         }
       }
     }
-    
+
     return modifiedFormConfig;
   }
 
@@ -701,11 +724,9 @@ export class DynamicFormService {
             } else {
               console.warn(`No array data found at path "${responsePath}" in response.`);
             }
-            
-            if(caseItem.config) {
-              if(caseItem.config.decimalPrecision) {
-                form.get(outputControl)?.setValue(extracted?.toFixed(caseItem.config.decimalPrecision) ?? extracted);
-              }
+
+            if (caseItem.config.decimalPrecision) {
+              form.get(outputControl)?.setValue(extracted?.toFixed(caseItem.config.decimalPrecision) ?? extracted);
             } else {
               form.get(outputControl)?.setValue(
                 extracted ?? caseItem.config?.defaultValue ?? ''

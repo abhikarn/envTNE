@@ -915,6 +915,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   clear() {
+    this.dynamicFormService.scrollToFirstControl('form');
     this.isClearing = true;
     this.form.reset();
     // enable all controls
@@ -938,18 +939,19 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
     this.selectedFiles = [];
     this.formControls?.forEach((control: any) => {
-      if (control.formConfig.type == 'radio') {
-        const defaultVal = control.formConfig?.defaultValue ?? control.formConfig?.value;
-        if (defaultVal !== undefined) {
+      const defaultVal = control.formConfig?.defaultValue;
+
+      if (defaultVal !== undefined && defaultVal !== null) {
+        // If it's an object with Id, pick Id
+        if (typeof defaultVal === 'object' && 'Id' in defaultVal) {
+          control.control.setValue(defaultVal.Id, { emitEvent: false });
+        } else {
+          // Direct value (number/string/boolean)
           control.control.setValue(defaultVal, { emitEvent: false });
         }
       }
     });
-    this.formControls?.forEach((control: any) => {
-      if (control.formConfig?.defaultValue) {
-        control.control.setValue(control.formConfig.defaultValue?.Id, { emitEvent: false });
-      }
-    });
+
     setTimeout(() => {
       this.isClearing = false;
     }, 500);
@@ -1032,6 +1034,13 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     skipPolicyViolationCheck = skipPolicyViolationCheck ?? true;
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
+
+    // Avoid duplicate triggers for the same value
+    const currentValue = this.form.get(control.name)?.value;
+    const serialized = JSON.stringify(currentValue ?? null);
+
+    if (control['lastProcessedValue'] === serialized) return;
+    control['lastProcessedValue'] = serialized;
 
     if (control.conditionBasedDisplayFieldsCheck) {
       setTimeout(() => {

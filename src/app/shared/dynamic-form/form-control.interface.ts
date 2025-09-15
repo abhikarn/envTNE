@@ -65,4 +65,5 @@ export interface IFormControl {
   createControl?: boolean;
   setCustomObject?: any;
   dateTimeValidation?: any;
+  lastProcessedValue?: any;
 }
