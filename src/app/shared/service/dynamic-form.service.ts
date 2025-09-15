@@ -29,15 +29,33 @@ export class DynamicFormService {
   }
 
   scrollToFirstControl(querySelector: string): void {
-    // find all inputs, selects, textareas inside the form
-    const formControls: NodeListOf<HTMLElement> =
-      document.querySelectorAll(`${querySelector} input, ${querySelector} select, ${querySelector} textarea`);
+    requestAnimationFrame(() => {
+      let firstControl = document.querySelector('.ng-valid') as HTMLElement | null;
 
-    if (formControls.length > 0) {
-      const firstControl = formControls[0];
-      firstControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      firstControl.focus?.(); // optional
-    }
+      if (firstControl) {
+        // Handle custom components (like file upload or datepickers)
+        if (firstControl.tagName.includes('-')) {
+          const inner = firstControl.querySelector('input, textarea, select, .upload-container');
+          if (inner) {
+            firstControl = inner as HTMLElement;
+          }
+        }
+
+        // Calculate offset (adjust -60 if you have sticky header/toolbar)
+        const yOffset = -60;
+        const y = firstControl.getBoundingClientRect().top + window.scrollY + yOffset;
+
+        // Scroll window instead of using scrollIntoView
+        window.scrollTo({ top: y, behavior: 'smooth' });
+
+        // Focus after scroll
+        setTimeout(() => {
+          if (firstControl?.tagName.match(/INPUT|TEXTAREA|SELECT/)) {
+            firstControl.focus({ preventScroll: true });
+          }
+        }, 300);
+      }
+    });
   }
 
   setCalculatedFields(form: any, formControls: any[]): void {
@@ -577,7 +595,7 @@ export class DynamicFormService {
       if (filterCategory) {
         if (filterCategory.RuleType === "BackDatedRestrictionDays") {
           const controlConfig: any = modifiedFormConfig?.find(control => control.name == filterCategory.FieldName);
-          if(controlConfig) {
+          if (controlConfig) {
             controlConfig.minDate = new Date(new Date().setDate(new Date().getDate() - Number(filterCategory.RuleValue)));
           }
         }
@@ -587,13 +605,13 @@ export class DynamicFormService {
       if (filterCategory) {
         if (filterCategory.RuleType === "BackDatedRestrictionDays") {
           const controlConfig: any = modifiedFormConfig?.find(control => control.name == filterCategory.FieldName);
-          if(controlConfig) {
+          if (controlConfig) {
             controlConfig.minDate = new Date(new Date().setDate(new Date().getDate() - Number(filterCategory.RuleValue)));
           }
         }
       }
     }
-    
+
     return modifiedFormConfig;
   }
 
@@ -706,7 +724,7 @@ export class DynamicFormService {
             } else {
               console.warn(`No array data found at path "${responsePath}" in response.`);
             }
-            
+
             if (caseItem.config.decimalPrecision) {
               form.get(outputControl)?.setValue(extracted?.toFixed(caseItem.config.decimalPrecision) ?? extracted);
             } else {

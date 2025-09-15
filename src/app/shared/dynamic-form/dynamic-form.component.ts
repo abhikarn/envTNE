@@ -915,6 +915,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   clear() {
+    this.dynamicFormService.scrollToFirstControl('form');
     this.isClearing = true;
     this.form.reset();
     // enable all controls
