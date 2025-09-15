@@ -176,7 +176,9 @@ export class SelectInputComponent implements AfterViewInit {
     const tpl = this.requestBottomSheetTpl;
     if (this.bottomSheet && tpl) {
       this.bottomSheet.open(tpl, {
-        panelClass: 'expense-bottom-sheet'
+        panelClass: 'expense-bottom-sheet',
+        autoFocus: false,
+        restoreFocus: false
       });
     }
   }

@@ -1021,7 +1021,10 @@
                                 "apiService": "DataService",
                                 "apiMethod": "dataGetConversionRateAgainstBaseCurrency",
                                 "labelKey": "Value",
-                                "valueKey": "Key"
+                                "valueKey": "Key",
+                                "config": {
+                                    "defaultValue": "1"
+                                }
                             }
                         ],
                         "required": true,
