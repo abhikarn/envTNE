@@ -938,18 +938,19 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     }
     this.selectedFiles = [];
     this.formControls?.forEach((control: any) => {
-      if (control.formConfig.type == 'radio') {
-        const defaultVal = control.formConfig?.defaultValue ?? control.formConfig?.value;
-        if (defaultVal !== undefined) {
+      const defaultVal = control.formConfig?.defaultValue;
+
+      if (defaultVal !== undefined && defaultVal !== null) {
+        // If it's an object with Id, pick Id
+        if (typeof defaultVal === 'object' && 'Id' in defaultVal) {
+          control.control.setValue(defaultVal.Id, { emitEvent: false });
+        } else {
+          // Direct value (number/string/boolean)
           control.control.setValue(defaultVal, { emitEvent: false });
         }
       }
     });
-    this.formControls?.forEach((control: any) => {
-      if (control.formConfig?.defaultValue) {
-        control.control.setValue(control.formConfig.defaultValue?.Id, { emitEvent: false });
-      }
-    });
+
     setTimeout(() => {
       this.isClearing = false;
     }, 500);

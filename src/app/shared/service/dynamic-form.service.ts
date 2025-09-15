@@ -707,10 +707,8 @@ export class DynamicFormService {
               console.warn(`No array data found at path "${responsePath}" in response.`);
             }
             
-            if(caseItem.config) {
-              if(caseItem.config.decimalPrecision) {
-                form.get(outputControl)?.setValue(extracted?.toFixed(caseItem.config.decimalPrecision) ?? extracted);
-              }
+            if (caseItem.config.decimalPrecision) {
+              form.get(outputControl)?.setValue(extracted?.toFixed(caseItem.config.decimalPrecision) ?? extracted);
             } else {
               form.get(outputControl)?.setValue(
                 extracted ?? caseItem.config?.defaultValue ?? ''
