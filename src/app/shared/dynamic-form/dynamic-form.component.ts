@@ -1033,6 +1033,13 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     // Prevent auto-calculation on clear/reset
     if (this.isClearing) return;
 
+    // Avoid duplicate triggers for the same value
+    const currentValue = this.form.get(control.name)?.value;
+    const serialized = JSON.stringify(currentValue ?? null);
+
+    if (control['lastProcessedValue'] === serialized) return;
+    control['lastProcessedValue'] = serialized;
+
     if (control.conditionBasedDisplayFieldsCheck) {
       setTimeout(() => {
         this.dynamicFormService.checkConditionBasedDisplayFields(control, this.category, this.form, this.formConfig, this.moduleData);
