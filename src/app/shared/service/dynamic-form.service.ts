@@ -703,7 +703,9 @@ export class DynamicFormService {
                 form.get(outputControl)?.setValue(extracted?.toFixed(caseItem.config.decimalPrecision) ?? extracted);
               }
             } else {
-              form.get(outputControl)?.setValue(extracted);
+              form.get(outputControl)?.setValue(
+                extracted ?? caseItem.config?.defaultValue ?? ''
+              );
             }
           }
         } else if (typeof caseItem.outputControl === 'string') {
