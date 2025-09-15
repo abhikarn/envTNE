@@ -306,7 +306,11 @@ export class DynamicFormService {
     });
 
     const output = this.mapOtherControls(moduleData, category.policyViolationCheckApi.otherControls);
-
+    // if any value null in request body then don't proceed and show error
+    const hasNullValue = Object.values(requestBody).some(value => value === null || value === undefined || value === '');
+    if (hasNullValue) {
+      return;
+    }
     service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
       (response: any) => {
         if (typeof category.policyViolationCheckApi.outputControl === 'object') {
