@@ -297,6 +297,7 @@ export class DynamicFormService {
     const service = this.serviceRegistry.getService(category.policyViolationCheckApi.apiService);
     const apiMethod = category.policyViolationCheckApi.apiMethod;
     let requestBody: any = category.policyViolationCheckApi.requestBody;
+    let mandatoryFieldsToCheck = category.policyViolationCheckApi.mandatoryFieldsToCheck || {};
 
     Object.entries(category.policyViolationCheckApi.inputControls).forEach(([controlName, requestKey]) => {
       if (typeof requestKey === 'string') { // Ensure requestKey is a string
@@ -307,9 +308,13 @@ export class DynamicFormService {
 
     const output = this.mapOtherControls(moduleData, category.policyViolationCheckApi.otherControls);
     // if any value null in request body then don't proceed and show error
-    const hasNullValue = Object.values(requestBody).some(value => value === null || value === undefined || value === '');
+    const hasNullValue = Object.values(mandatoryFieldsToCheck).some(fieldKey => {
+      const value = requestBody[fieldKey as string];
+      return value === null || value === undefined || value === '';
+    });
+
     if (hasNullValue) {
-      return;
+      return; // stop if mandatory fields are missing
     }
     service?.[apiMethod]?.({ ...requestBody, ...output }).subscribe(
       (response: any) => {

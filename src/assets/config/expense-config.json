@@ -1566,6 +1566,11 @@
                         "message": "ResponseValue.Message",
                         "confirmText": "Ok",
                         "cancelText": "Cancel"
+                    },
+                    "mandatoryFieldsToCheck": {
+                        "TravelMode": "TravelModeId",
+                        "AvailedClass": "TravelClassId",
+                        "TravelDate": "ReferenceDate"
                     }
                 },
                 "expanded": true,
