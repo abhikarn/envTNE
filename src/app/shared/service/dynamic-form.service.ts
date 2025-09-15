@@ -42,7 +42,7 @@ export class DynamicFormService {
         }
 
         // Calculate offset (adjust -60 if you have sticky header/toolbar)
-        const yOffset = -60;
+        const yOffset = +220;
         const y = firstControl.getBoundingClientRect().top + window.scrollY + yOffset;
 
         // Scroll window instead of using scrollIntoView
