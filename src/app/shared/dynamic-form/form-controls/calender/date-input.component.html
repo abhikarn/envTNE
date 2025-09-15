@@ -12,7 +12,7 @@
           [min]="minDate" [max]="maxDate" (click)="picker.open()" readonly>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-        <span class="date-picker-icon align-top-t10">
+        <span class="date-picker-icon align-top-t10" (click)="picker.open()">
           <img src="images/date-icon.svg" alt="Calendar">
         </span>
       </div>
