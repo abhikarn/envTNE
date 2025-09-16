@@ -269,9 +269,12 @@ export class DashboardComponent implements OnInit {
     this.columnFilterValues = {};
 
     this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
-      return Object.values(data).some(value =>
-        String(value).toLowerCase().includes(filter)
-      );
+      return this.displayedColumns
+        .filter(col => col.showSearch) // only include searchable columns
+        .some(col => {
+          const value = data[col.key];
+          return value != null && String(value).toLowerCase().includes(filter);
+        });
     };
     this.dataSource.filter = filterValue;
 
