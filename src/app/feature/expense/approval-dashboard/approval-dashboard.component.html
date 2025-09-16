@@ -802,7 +802,7 @@
                                                     </th>
                                                     <ng-container *ngIf="column.sortable; else notsortable">
                                                         <th mat-header-cell *matHeaderCellDef
-                                                            [mat-sort-header]="column.key">
+                                                            [mat-sort-header]="column.key" [disableClear]="true">
                                                             {{ column.label }}
                                                         </th>
                                                     </ng-container>

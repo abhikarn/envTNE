@@ -337,4 +337,14 @@ app-dashboard {
       background-color: transparent !important;
     }
   }
+
+    .mat-sort-header-container .mat-sort-header-arrow {
+      opacity: 0 !important; // hide by default
+      display: none !important;
+    }
+  
+    .mat-sort-header-sorted .mat-sort-header-arrow {
+      opacity: 1 !important; // show only for active sorted column
+      display: inline-block !important;
+    }
 }
