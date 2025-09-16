@@ -41,6 +41,7 @@ interface ColumnConfig {
   showSearch: boolean;
   type?: string;
   decimalPrecision?: number;
+  class?: string;
 }
 
 export const ELEMENT_DATA: any[] = [];
@@ -220,6 +221,7 @@ export class ApprovalDashboardComponent implements OnInit {
         showSearch: col.showSearch,
         type: col.type,
         decimalPrecision: col.decimalPrecision ?? globalDecimalPrecision,
+        class: col.class ?? ''
       }));
       this.columnKeys = this.displayedColumns.map(col => col.key);
       this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');

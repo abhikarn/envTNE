@@ -39,6 +39,7 @@ interface ColumnConfig {
   showSearch: boolean;
   type?: string;
   decimalPrecision?: number;
+  class?: string;
 }
 
 export const ELEMENT_DATA: any[] = [];
@@ -196,6 +197,7 @@ export class DashboardComponent implements OnInit {
           showSearch: col.showSearch,
           type: col.type,
           decimalPrecision: col.decimalPrecision ?? globalDecimalPrecision,
+          class: col.class ?? '',
           order: col.order ? col.order : 0
         };
       }).sort((a: any, b: any) => a.order - b.order);

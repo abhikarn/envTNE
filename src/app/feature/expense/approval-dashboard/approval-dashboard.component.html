@@ -796,12 +796,12 @@
                                                 <ng-container *ngFor="let column of displayedColumns"
                                                     [matColumnDef]="column.key">
                                                     <!-- Header Cell -->
-                                                    <th mat-header-cell *matHeaderCellDef
+                                                    <th mat-header-cell *matHeaderCellDef [ngClass]="column.class"
                                                         [mat-sort-header]="column.sortable ? column.key : ''">
                                                         {{ column.label }}
                                                     </th>
                                                     <ng-container *ngIf="column.sortable; else notsortable">
-                                                        <th mat-header-cell *matHeaderCellDef
+                                                        <th mat-header-cell *matHeaderCellDef [ngClass]="column.class"
                                                             [mat-sort-header]="column.key" [disableClear]="true">
                                                             {{ column.label }}
                                                         </th>
@@ -813,7 +813,7 @@
                                                         </th>
                                                     </ng-template>
                                                     <!-- Data Cell -->
-                                                    <td [attr.data-label]="column.label" mat-cell *matCellDef="let element; let i = index">
+                                                    <td [attr.data-label]="column.label" mat-cell *matCellDef="let element; let i = index" [ngClass]="column.class">
                                                         <ng-container *ngIf="column.key === 'slNo'; else columnContent">
                                                             <mat-checkbox [(ngModel)]="element.selected"></mat-checkbox>
                                                             {{ isMobile ? (i + 1) : (paginator.pageIndex * paginator.pageSize) + (i + 1) }}

@@ -44911,6 +44911,7 @@
                     "decimalPrecision": 2,
                     "sortable": true,
                     "showSearch": true,
+                    "class": "text-end",
                     "order": 7
                 },
                 {
@@ -44918,6 +44919,7 @@
                     "label": "Policy Violation",
                     "sortable": true,
                     "showSearch": false,
+                    "class": "text-center",
                     "order": 8
                 },
                 {
@@ -44985,6 +44987,7 @@
                     "decimalPrecision": 2,
                     "sortable": true,
                     "showSearch": true,
+                    "class": "text-end",
                     "order": 7
                 },
                 {
@@ -44992,6 +44995,7 @@
                     "label": "Policy Violation",
                     "sortable": true,
                     "showSearch": false,
+                    "class": "text-center",
                     "order": 8
                 },
                 {
