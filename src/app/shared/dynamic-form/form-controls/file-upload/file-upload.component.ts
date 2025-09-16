@@ -72,32 +72,48 @@ export class FileUploadComponent {
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     const maxSizeBytes = (this.controlConfig.maxSizeMB ?? 20) * 1024 * 1024;
+
+    // Allowed extensions from config
+    const allowedExtensions = (this.controlConfig.accept || '')
+      .split(',')
+      .map((ext: string) => ext.trim().toLowerCase());
+
     if (input.files && input.files.length > 0) {
       const newFiles = Array.from(input.files);
-      newFiles.forEach((file: any) => {
+
+      newFiles.forEach((file: File) => {
+        const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
+
+        // Reject if extension not allowed
+        if (allowedExtensions.length > 0 && !allowedExtensions.includes(fileExtension)) {
+          this.snackbarService.error(`File type "${fileExtension}" is not allowed.`);
+          return;
+        }
+
+        // Reject if file size exceeds limit
+        if (file.size > maxSizeBytes) {
+          this.snackbarService.error(`File "${file.name}" exceeds the ${this.controlConfig.maxSizeMB} MB limit.`);
+          return;
+        }
+
         const reader = new FileReader();
         reader.onload = () => {
           const base64 = (reader.result as string).split(',')[1];
           const lastDotIndex = file.name.lastIndexOf('.');
           const fileName = lastDotIndex !== -1 ? file.name.substring(0, lastDotIndex) : file.name;
-          const fileExtension = lastDotIndex !== -1 ? file.name.substring(lastDotIndex) : '';
+          const fileExt = lastDotIndex !== -1 ? file.name.substring(lastDotIndex) : '';
+
           const payload = {
             ImageString: base64,
             FileName: fileName,
-            FileExtension: fileExtension
+            FileExtension: fileExt
           };
-          if (file.size > maxSizeBytes) {
-            this.snackbarService.error(`File "${file.name}" exceeds the ${this.controlConfig.maxSizeMB} MB limit.`);
-            return;
+
+          if (this.controlConfig.oCRRequired) {
+            this.uploadOcrFile(file, payload);
           } else {
-            if (this.controlConfig.oCRRequired) {
-              // Only call OCR, do not upload file yet
-              this.uploadOcrFile(file || null, payload);
-            } else {
-              // As-is: upload file immediately
-              this.uploadFile(payload);
-              console.log('Prepared File Payload:', payload);
-            }
+            this.uploadFile(payload);
+            console.log('Prepared File Payload:', payload);
           }
         };
         reader.readAsDataURL(file);
@@ -117,8 +133,8 @@ export class FileUploadComponent {
             res.ResponseValue
           ) {
             let filterResponse: any = {};
-            filterResponse.ReferenceType = this.form.value?.DocumentType ?   this.form.value?.DocumentType : this.controlConfig.referenceType;
-            filterResponse.DocumentTypeName = this.form.value?.DocumentTypeName ?   this.form.value?.DocumentTypeName : '';
+            filterResponse.ReferenceType = this.form.value?.DocumentType ? this.form.value?.DocumentType : this.controlConfig.referenceType;
+            filterResponse.DocumentTypeName = this.form.value?.DocumentTypeName ? this.form.value?.DocumentTypeName : '';
             filterResponse.ReferenceId = res.ResponseValue.ReferenceId;
             filterResponse.DocumentId = res.ResponseValue.DocumentId;
             filterResponse.FileName = res.ResponseValue.FileName;
@@ -153,7 +169,7 @@ export class FileUploadComponent {
   }
 
   downloadFile(file: any) {
-    
+
     const extension = file.FileName.split('.').pop()?.toLowerCase();
     const baseName = file.FileName.replace(/\.[^/.]+$/, '');
     const fileNameWithGuid = `${baseName}-${file.Guid}.${extension}`;
@@ -166,7 +182,7 @@ export class FileUploadComponent {
 
     // Subscribe to the observable to actually make the HTTP request and handle the download
     this.newexpenseService?.documentDownload(data).pipe(take(1)).subscribe({
-      next: (blob: Blob) => {        
+      next: (blob: Blob) => {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
@@ -235,7 +251,7 @@ export class FileUploadComponent {
                   if (this.form.controls[key]) {
                     const controlConfig = this.formConfig?.find?.((c: any) => c.name === key);
                     if (controlConfig) {
-                      if(key!=="TravelMode"){
+                      if (key !== "TravelMode") {
                         controlConfig.readonly = true;
                       }
                       // Do NOT disable the control, just set readonly flag
