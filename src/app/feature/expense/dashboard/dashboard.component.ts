@@ -241,20 +241,75 @@ export class DashboardComponent implements OnInit {
     this.updateMobileDisplayData();
   }
 
+  private normalizeValueForFilter(col: ColumnConfig, rawValue: any): string {
+    if (rawValue == null) return '';
+
+    // Numbers
+    if (col.type === 'number') {
+      const precision = col.decimalPrecision ?? 2;
+      return Number(rawValue)
+        .toFixed(precision)
+        .replace(/,/g, ''); // ensure no commas
+    }
+
+    // Dates (normalize to dd-MMM-yyyy, and replace separators with spaces)
+    if (col.key.toLowerCase().includes('date')) {
+      const dateObj = new Date(rawValue);
+      if (!isNaN(dateObj.getTime())) {
+        return dateObj
+          .toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+          })
+          .toLowerCase()
+          .replace(/[-/]/g, ' '); // "08-mar-2024" → "08 mar 2024"
+      }
+    }
+
+    // Default (string/text)
+    return String(rawValue).toLowerCase();
+  }
+
+  private buildFilterPredicate(columnFilters: { [key: string]: string }, globalFilter?: string) {
+    return (data: any): boolean => {
+      const colsToSearch = this.displayedColumns.filter(col => col.showSearch);
+
+      // Column-wise filtering
+      const matchesColumnFilters = Object.keys(columnFilters).every(colKey => {
+        const searchVal = columnFilters[colKey]?.trim().toLowerCase().replace(/[-/,]/g, ' ');
+        if (!searchVal) return true;
+
+        const columnDef = colsToSearch.find(c => c.key === colKey);
+        if (!columnDef) return true;
+
+        const normalizedValue = this.normalizeValueForFilter(columnDef, data[colKey]);
+        return normalizedValue.includes(searchVal);
+      });
+
+      if (!matchesColumnFilters) return false;
+
+      // Global filtering
+      if (globalFilter) {
+        return colsToSearch.some(col => {
+          const normalizedValue = this.normalizeValueForFilter(col, data[col.key]);
+          return normalizedValue.includes(globalFilter);
+        });
+      }
+
+      return true;
+    };
+  }
+
   applyFilter(event: Event, column: string) {
-    ;
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    let filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    filterValue = filterValue.replace(/[-/]/g, ' ');
+    filterValue = filterValue.replace(/[,/]/g, '');
     this.columnFilterValues[column] = filterValue;
 
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
-      const filters = JSON.parse(filter);
-      return Object.keys(filters).every(col =>
-        (data[col] ?? '').toString().toLowerCase().includes(filters[col])
-      );
-    };
-    this.dataSource.filter = JSON.stringify(this.columnFilterValues);
+    this.dataSource.filterPredicate = this.buildFilterPredicate(this.columnFilterValues);
+    this.dataSource.filter = JSON.stringify(this.columnFilterValues); // still needed for Angular Material
 
-    // For mobile
     this.dataSourceMobile.filterPredicate = this.dataSource.filterPredicate;
     this.dataSourceMobile.filter = JSON.stringify(this.columnFilterValues);
 
@@ -265,19 +320,14 @@ export class DashboardComponent implements OnInit {
   }
 
   applyGlobalFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    let filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    filterValue = filterValue.replace(/[-/]/g, ' ');
+    filterValue = filterValue.replace(/[,/]/g, '');
 
     // Clear column filters when global filter is used
     this.columnFilterValues = {};
 
-    this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
-      return this.displayedColumns
-        .filter(col => col.showSearch) // only include searchable columns
-        .some(col => {
-          const value = data[col.key];
-          return value != null && String(value).toLowerCase().includes(filter);
-        });
-    };
+    this.dataSource.filterPredicate = this.buildFilterPredicate({}, filterValue);
     this.dataSource.filter = filterValue;
 
     this.dataSourceMobile.filterPredicate = this.dataSource.filterPredicate;
