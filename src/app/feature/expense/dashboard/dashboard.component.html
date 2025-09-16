@@ -997,7 +997,7 @@
                                        <td [attr.data-label]="column.label" mat-cell
                                           *matCellDef="let element; let i = index">
                                           <ng-container *ngIf="column.key === 'slNo'; else columnContent">
-                                             <span class="text-center d-block"> {{ i + 1 }}</span>
+                                             <span class="text-center d-block">{{ isMobile ? (i + 1) : (paginator.pageIndex * paginator.pageSize) + (i + 1) }}</span>
                                           </ng-container>
                                           <ng-template #columnContent>
                                              <ng-container
