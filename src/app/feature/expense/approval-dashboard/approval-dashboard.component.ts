@@ -32,12 +32,15 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BulkApproveModalComponent } from '../../../shared/component/bulk-approve-modal/bulk-approve-modal.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { OneClickApproveComponent } from '../../../shared/component/one-click-approve/one-click-approve.component';
+import { GlobalConfigService } from '../../../shared/service/global-config.service';
 
 interface ColumnConfig {
   key: string;
   label: string;
   sortable: boolean;
   showSearch: boolean;
+  type?: string;
+  decimalPrecision?: number;
 }
 
 export const ELEMENT_DATA: any[] = [];
@@ -105,7 +108,9 @@ export class ApprovalDashboardComponent implements OnInit {
     private confirmDialogService: ConfirmDialogService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private configService: GlobalConfigService
+    
   ) {
 
   }
@@ -205,11 +210,16 @@ export class ApprovalDashboardComponent implements OnInit {
     this.http.get(`assets/config/expense-config.json`).subscribe((config: any) => {
       this.expenseDashboardConfig = config;
       const tableDetail = config.dashboard?.expenseStatement.approverTableDetail || [];
+      const globalDecimalPrecision = this.configService.getDecimalPrecision
+        ? this.configService.getDecimalPrecision()
+        : 2;
       this.displayedColumns = tableDetail.map((col: any) => ({
         key: col.key,
         label: col.label,
         sortable: col.sortable,
-        showSearch: col.showSearch
+        showSearch: col.showSearch,
+        type: col.type,
+        decimalPrecision: col.decimalPrecision ?? globalDecimalPrecision,
       }));
       this.columnKeys = this.displayedColumns.map(col => col.key);
       this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');

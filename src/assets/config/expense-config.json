@@ -44906,7 +44906,9 @@
                 },
                 {
                     "key": "ApprovedAmount",
+                    "type": "number",
                     "label": "Amount",
+                    "decimalPrecision": 2,
                     "sortable": true,
                     "showSearch": true,
                     "order": 7
@@ -44978,7 +44980,9 @@
                 },
                 {
                     "key": "ApprovedAmount",
+                    "type": "number",
                     "label": "Amount",
+                    "decimalPrecision": 2,
                     "sortable": true,
                     "showSearch": true,
                     "order": 7

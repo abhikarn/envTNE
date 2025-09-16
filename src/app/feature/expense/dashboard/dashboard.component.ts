@@ -30,12 +30,15 @@ import * as FileSaver from 'file-saver';
 import { AuthService } from '../../../shared/service/auth.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { environment } from '../../../../environment';
+import { GlobalConfigService } from '../../../shared/service/global-config.service';
 
 interface ColumnConfig {
   key: string;
   label: string;
   sortable: boolean;
   showSearch: boolean;
+  type?: string;
+  decimalPrecision?: number;
 }
 
 export const ELEMENT_DATA: any[] = [];
@@ -98,7 +101,8 @@ export class DashboardComponent implements OnInit {
     private confirmDialogService: ConfirmDialogService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private configService: GlobalConfigService
   ) {
 
   }
@@ -177,6 +181,10 @@ export class DashboardComponent implements OnInit {
       this.expenseDashboardConfig = config;
       const tableDetail = config.dashboard?.expenseStatement.tableDetail || [];
 
+      const globalDecimalPrecision = this.configService.getDecimalPrecision
+        ? this.configService.getDecimalPrecision()
+        : 2;
+
       this.displayedColumns = tableDetail.map((col: any) => {
         // Normalize 'are order' to 'order' if present
         // const orderValue = col['order'] ?? col['are order'] ?? null;
@@ -186,6 +194,8 @@ export class DashboardComponent implements OnInit {
           label: col.label,
           sortable: col.sortable,
           showSearch: col.showSearch,
+          type: col.type,
+          decimalPrecision: col.decimalPrecision ?? globalDecimalPrecision,
           order: col.order ? col.order : 0
         };
       }).sort((a: any, b: any) => a.order - b.order);

@@ -1140,7 +1140,11 @@
                                                       {{ element[column.key] }}
                                                       }
                                                       } @else {
+                                                      @if (column.type === 'number' && column.decimalPrecision) {
+                                                      {{ element[column.key] | number:'1.' + column.decimalPrecision + '-' + column.decimalPrecision }}
+                                                      } @else {
                                                       {{ element[column.key] }}
+                                                      }
                                                       }
                                                    </ng-template>
                                                 </ng-template>
