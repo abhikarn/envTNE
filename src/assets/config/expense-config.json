@@ -44993,7 +44993,7 @@
                 {
                     "key": "PolicyViolationCount",
                     "label": "Policy Violation",
-                    "sortable": true,
+                    "sortable": false,
                     "showSearch": false,
                     "class": "text-center",
                     "order": 8
