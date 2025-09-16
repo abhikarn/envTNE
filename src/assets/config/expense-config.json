@@ -36620,14 +36620,6 @@
                 "order": 1
             },
             {
-                "iconClass": "fa-user-gear",
-                "label": "Pending",
-                "name": "Pending",
-                "value": "",
-                "isLink": false,
-                "order": 3
-            },
-            {
                 "iconClass": "fa-pencil",
                 "label": "Status",
                 "name": "claimStatus",
@@ -37699,6 +37691,7 @@
                         "international": true
                     },
                     {
+                        "type": "number",
                         "name": "EntitlementAmountInBaseCurrency",
                         "label": "Entitlement Amount in Base Currency",
                         "visible": true,
@@ -38062,6 +38055,7 @@
                         "international": true
                     },
                     {
+                        "type": "number",
                         "name": "EntitlementAmountInBaseCurrency",
                         "label": "Entitlement Amount in Base Currency",
                         "visible": true,
@@ -39789,6 +39783,7 @@
                         "order": 10
                     },
                     {
+                        "type": "number",
                         "name": "EntitlementAmountInBaseCurrency",
                         "label": "Entitlement Amount in Base Currency",
                         "visible": true,
@@ -40156,6 +40151,7 @@
                         "order": 10
                     },
                     {
+                        "type": "number",
                         "name": "EntitlementAmountInBaseCurrency",
                         "label": "Entitlement Amount in Base Currency",
                         "visible": true,
@@ -40538,6 +40534,7 @@
                         "order": 13
                     },
                     {
+                        "type": "number",
                         "name": "EntitlementAmountInBaseCurrency",
                         "label": "Entitlement Amount in Base Currency",
                         "visible": true,
@@ -41618,21 +41615,21 @@
                         "order": 13
                     },
                     {
-                        "name": "Number Of Clients",
+                        "name": "NumberOfClients",
                         "label": "Number of Clients",
                         "visible": true,
                         "position": "out",
                         "order": 14
                     },
                     {
-                        "name": "Name Of The Client/Organization",
+                        "name": "NameOfTheClientOrOrganization",
                         "label": "Name of the Client/Organization",
                         "visible": true,
                         "position": "out",
                         "order": 15
                     },
                     {
-                        "name": "Bill Number",
+                        "name": "BillNumber",
                         "label": "Bill Number",
                         "visible": true,
                         "position": "out",
@@ -41640,7 +41637,7 @@
                     },
                     {
                         "type": "date",
-                        "name": "Bill Date",
+                        "name": "BillDate",
                         "label": "Bill Date",
                         "visible": true,
                         "position": "out",
@@ -41655,7 +41652,7 @@
                         "order": 13
                     },
                     {
-                        "name": "Justification",
+                        "name": "Remarks",
                         "label": "Justification",
                         "visible": true,
                         "position": "out",
@@ -42113,6 +42110,7 @@
                         "order": 12
                     },
                     {
+                        "type": "number",
                         "name": "EntitlementAmountInBaseCurrency",
                         "label": "Entitlement Amount in Base Currency",
                         "visible": true,
@@ -42441,6 +42439,7 @@
                         "order": 8
                     },
                     {
+                        "type": "number",
                         "name": "EntitlementAmountInBaseCurrency",
                         "label": "Entitlement Amount in Base Currency",
                         "visible": true,
@@ -42558,6 +42557,7 @@
                         "order": 8
                     },
                     {
+                        "type": "number",
                         "name": "EntitlementAmountInBaseCurrency",
                         "label": "Entitlement Amount in Base Currency",
                         "visible": true,
@@ -42817,6 +42817,7 @@
                         "international": true
                     },
                     {
+                        "type": "number",
                         "name": "EntitlementAmountInBaseCurrency",
                         "label": "Entitlement Amount in Base Currency",
                         "visible": true,
@@ -43158,14 +43159,14 @@
                         "order": 8
                     },
                     {
-                        "name": "Bill Number",
+                        "name": "BillNumber",
                         "label": "Bill Number",
                         "visible": true,
                         "position": "out",
                         "order": 8
                     },
                     {
-                        "name": "Bill Date",
+                        "name": "BillDate",
                         "label": "Bill Date",
                         "visible": true,
                         "position": "out",
