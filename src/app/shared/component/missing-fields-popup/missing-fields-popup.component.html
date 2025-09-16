@@ -1,44 +1,33 @@
 <div class="modal-dialog  modal-md w-100">
     <div class="modal-content">
-
-                <div class="modal-header">
+        <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-               Missing Fields Summary
+                Missing Fields Summary
             </h5>
-  <button class="modal-close"  mat-dialog-close><i class="fa fa-times text-white fs-6"></i></button>
-           
+            <button class="modal-close" mat-dialog-close><i class="fa fa-times text-white fs-6"></i></button>
+
         </div>
+        <mat-dialog-content class="popup-content">
+            <div *ngFor="let category of data" class="category-section">
+                <h6 class="common-title fw-bold mb-0"> {{ category.categoryName }}</h6>
+                <table mat-table [dataSource]="category.items"
+                    class="mat-elevation-z2  table mt-2 mb-4 grey-table tr-height table-cust tbl-sml">
+                    <!-- Index Column -->
+                    <ng-container matColumnDef="index">
+                        <th class="thd-w10" mat-header-cell *matHeaderCellDef> Index </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.index + 1 }} </td>
+                    </ng-container>
 
+                    <!-- Missing Fields Column -->
+                    <ng-container matColumnDef="missing">
+                        <th class="thd-w90" mat-header-cell *matHeaderCellDef> Missing Fields </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.missing.join(', ') }} </td>
+                    </ng-container>
 
-
- 
-<mat-dialog-content class="popup-content">
-    <div *ngFor="let category of data" class="category-section">
-       <h6 class="common-title fw-bold mb-0"> {{ category.categoryName }}</h6>
-
- 
-
-
-        <table mat-table [dataSource]="category.items" class="mat-elevation-z2  table mt-2 mb-4 grey-table tr-height table-cust tbl-sml">
-            <!-- Index Column -->
-            <ng-container matColumnDef="index">
-                <th class="thd-w10" mat-header-cell *matHeaderCellDef> Index </th>
-                <td mat-cell *matCellDef="let element"> {{ element.index }} </td>
-            </ng-container>
-
-            <!-- Missing Fields Column -->
-            <ng-container matColumnDef="missing">
-                <th class="thd-w90" mat-header-cell *matHeaderCellDef> Missing Fields </th>
-                <td mat-cell *matCellDef="let element"> {{ element.missing.join(', ') }} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
- 
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </mat-dialog-content>
     </div>
-</mat-dialog-content>
-
- 
-
-   </div>   </div>
+</div>

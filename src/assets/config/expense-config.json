@@ -37716,6 +37716,7 @@
                         "position": "out"
                     },
                     {
+                        "type": "number",
                         "name": "TaxAmount",
                         "label": "Tax Amount",
                         "visible": true,
@@ -38080,6 +38081,7 @@
                         "position": "out"
                     },
                     {
+                        "type": "number",
                         "name": "TaxAmount",
                         "label": "Tax Amount",
                         "visible": true,
@@ -39799,6 +39801,7 @@
                         "order": 12
                     },
                     {
+                        "type": "number",
                         "name": "TaxAmount",
                         "label": "Tax Amount",
                         "visible": true,
@@ -40167,6 +40170,7 @@
                         "order": 12
                     },
                     {
+                        "type": "number",
                         "name": "TaxAmount",
                         "label": "Tax Amount",
                         "visible": true,
@@ -40557,6 +40561,7 @@
                         "order": 16
                     },
                     {
+                        "type": "number",
                         "name": "TaxAmount",
                         "label": "Tax Amount",
                         "visible": true,
@@ -42132,6 +42137,7 @@
                         "order": 15
                     },
                     {
+                        "type": "number",
                         "name": "TaxAmount",
                         "label": "Tax Amount",
                         "visible": true,

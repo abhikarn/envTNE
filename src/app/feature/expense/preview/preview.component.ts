@@ -212,7 +212,7 @@ export class PreviewComponent {
   }
 
   setExpenseSummary() {
-    this.expenseSummary.forEach((summary: any) => {
+    this.expenseSummary?.forEach((summary: any) => {
       if (summary.id === "category-wise-expense") {
         summary.items.forEach((item: any) => {
           const shouldShow = this.expenseRequestPreviewData.dynamicExpenseDetailModels.some(
