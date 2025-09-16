@@ -412,7 +412,7 @@
                            <h6 class="text-dark">Expense Bill Details</h6>
                            <label>Total:</label>
                            <span>
-                             {{ $any(summaryComponent)?.totalExpense != null ? ($any(summaryComponent)?.totalExpense | number:'1.2-2') : '0.00' }}
+                             {{ totalExpense != null ? (totalExpense | number:'1.2-2') : '0.00' }}
                            </span>
                         </div>
                         <div class="exp-view">
@@ -491,7 +491,7 @@
                         <h6 class="text-dark">Expense Bill Details</h6>
                         <label>Total:</label>
                         <span>
-                          {{ $any(summaryComponent)?.totalExpense != null ? ($any(summaryComponent)?.totalExpense | number:'1.2-2') : '0.00' }}
+                          {{ totalExpense != null ? (totalExpense | number:'1.2-2') : '0.00' }}
                         </span>
                      </div>
                      <div class="exp-view">
