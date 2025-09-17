@@ -116,7 +116,7 @@ export class TextInputComponent implements OnInit {
 
   onInput(event: any) {
     if (this.controlConfig.autoFormat) {
-      if (this.controlConfig.subType == 'number') {
+      if (this.controlConfig.dataType == 'numeric') {
         let inputValue = (event.target.value).toString();
         // Correctly apply the pattern as a RegExp
         const pattern = this.controlConfig.autoFormat?.patterns[0];
@@ -142,7 +142,7 @@ export class TextInputComponent implements OnInit {
 
         // Set value without formatting to .00 etc. (formatting will be done onBlur)
         this.control.setValue(formattedValue);
-      } else if (this.controlConfig.subType == 'text') {
+      } else if (this.controlConfig.dataType == 'string') {
         let inputValue = (event.target.value).toString();
         const pattern = this.controlConfig.autoFormat?.patterns[0];
         if (pattern) {
@@ -183,7 +183,7 @@ export class TextInputComponent implements OnInit {
 
   onBlur() {
     let value = this.control.value;
-    if (this.controlConfig.subType === 'number') {
+    if (this.controlConfig.dataType === 'numeric') {
       // Handle empty or null input: set to 0 with precision
       if (value === null || value === undefined || value === '') {
         this.control.setValue(this.getFormattedValue(0));
@@ -199,7 +199,7 @@ export class TextInputComponent implements OnInit {
           this.control.setValue(formatted);
         }
       }
-    } else if (this.controlConfig.subType === 'text') {
+    } else if (this.controlConfig.dataType === 'string') {
       const maxLength = this.controlConfig.autoFormat.range?.max ?? 100;
       let trimmedValue = value?.trim().slice(0, maxLength);
 
