@@ -46,7 +46,7 @@
 
                 {{ data.type | titlecase }}
             </h4>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" (click)="close()"></button>
         </div>
         <div class="toast-body"> {{ data.message }} </div>
     </div>
