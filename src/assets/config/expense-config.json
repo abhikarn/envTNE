@@ -875,6 +875,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -895,6 +903,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -2243,6 +2259,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -3859,6 +3883,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -5334,6 +5366,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -6881,6 +6921,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -8263,6 +8311,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -8295,6 +8351,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -9732,6 +9796,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -9764,6 +9836,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -11354,6 +11434,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -13162,6 +13250,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -13181,6 +13277,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -14377,6 +14481,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -15054,6 +15166,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -15916,6 +16036,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -15935,6 +16063,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -17655,7 +17791,7 @@
                         "ToDate": "ClaimDate"
                     },
                     "duplicateConstraint": {
-                        "validate":true,
+                        "validate": true,
                         "ClaimDate": "ClaimDate",
                         "Constraint": "Constraint"
                     }
@@ -18049,6 +18185,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -21180,6 +21324,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": false,
                         "requiredIf": {
                             "TransportationMode": 107
@@ -21291,6 +21443,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": false,
                         "requiredIf": {
                             "TransportationMode": 107
@@ -21708,6 +21868,14 @@
                                 "showInUI": true,
                                 "required": true,
                                 "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^A-Za-z0-9 ]"
+                                    ],
+                                    "range": {
+                                        "max": 50
+                                    }
+                                },
                                 "validations": [
                                     {
                                         "type": "required",
@@ -22483,6 +22651,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -23509,6 +23685,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -26926,6 +27110,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -28831,6 +29023,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -30875,6 +31075,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -30895,6 +31103,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -32222,6 +32438,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -33860,6 +34084,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -33879,6 +34111,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -35050,6 +35290,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -38021,7 +38269,6 @@
                         "visible": true,
                         "position": "in"
                     },
-                    {},
                     {
                         "name": "BillNumber",
                         "label": "Bill Number",
