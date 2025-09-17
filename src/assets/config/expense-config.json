@@ -1544,7 +1544,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -1975,7 +1975,7 @@
                         "setFields": [
                             {
                                 "name": "NoOfDays",
-                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -2034,7 +2034,7 @@
                             {
                                 "name": "NoOfDays",
                                 "label": "No. of Days",
-                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -3130,7 +3130,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -6158,7 +6158,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -9179,7 +9179,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -10664,7 +10664,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -11169,7 +11169,7 @@
                         "setFields": [
                             {
                                 "name": "NoOfDays",
-                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -11228,7 +11228,7 @@
                             {
                                 "name": "NoOfDays",
                                 "label": "No. of Days",
-                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -12294,7 +12294,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -13913,7 +13913,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -15577,7 +15577,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -16756,7 +16756,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -17778,7 +17778,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -18731,7 +18731,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -19686,7 +19686,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -20370,7 +20370,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -20968,7 +20968,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -22048,7 +22048,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -24988,7 +24988,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -31733,7 +31733,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -32160,7 +32160,7 @@
                         "setFields": [
                             {
                                 "name": "NoOfDays",
-                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -32216,7 +32216,7 @@
                             {
                                 "name": "NoOfDays",
                                 "label": "No. of Days",
-                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -33309,7 +33309,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -34754,7 +34754,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
