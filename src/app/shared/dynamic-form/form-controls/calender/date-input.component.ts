@@ -217,7 +217,7 @@ export class DateInputComponent {
         if (typeof requestKey === 'string') { // Ensure requestKey is a string
           const controlValue = this.form.get(controlName)?.value;
           if (!controlValue) {
-            this.snackbarService.error(`Please Select a ${controlName}.`);
+            // this.snackbarService.error(`Please Select a ${controlName}.`);
             shouldMakeApiCall = false;
           } else {
             requestBody[requestKey] = controlValue[dependentCase.key] ?? controlValue; // Extract Id if it's an object

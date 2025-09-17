@@ -493,7 +493,7 @@ export class DynamicFormService {
             controlValue = controlValue.value ?? controlValue; // Handle case where controlValue is an object
           }
           if (!controlValue) {
-            this.snackbarService.error(`Please Select a ${controlName}.`);
+            // this.snackbarService.error(`Please Select a ${controlName}.`);
             shouldMakeApiCall = false;
           } else {
             requestBody[requestKey] = controlValue[businessCaseData.key] ?? controlValue; // Extract Id if it's an object
