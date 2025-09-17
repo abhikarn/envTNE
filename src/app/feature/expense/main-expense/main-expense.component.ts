@@ -880,7 +880,7 @@ export class MainExpenseComponent {
       this.applicationMessageService.getApplicationMessage({ Flag: 'ExpenseSubmitConfirm' })
         .subscribe((data: any) => {
           this.expenseConfirmMessage = data?.ResponseValue?.Message;
-          this.createExpenseRequest();
+          this.createExpenseRequest(type);
         });
     } else {
       this.router.navigate(['expense/expense/landing']);
@@ -888,7 +888,7 @@ export class MainExpenseComponent {
   }
 
   // Prepare and submit the main expense request after confirmation.
-  createExpenseRequest() {
+  createExpenseRequest(type: string) {
     if (this.moduleConfig.pageTitle === 'Travel Expense') {
       const isValid = this.validateAndPrepareMainExpenseDataForTravelExpense();
       if (!isValid) return;
@@ -896,14 +896,16 @@ export class MainExpenseComponent {
       const isValid = this.validateAndPrepareMainExpenseDataForOtherExpenses();
       if (!isValid) return;
     }
+    
+    if (type === 'submit') {
+      const hasMissingFields = this.checkMissingRequiredFields(
+        this.mainExpenseData.dynamicExpenseDetailModels,
+        this.categories,
+        true
+      );
 
-    const hasMissingFields = this.checkMissingRequiredFields(
-      this.mainExpenseData.dynamicExpenseDetailModels,
-      this.categories,
-      true
-    );
-
-    if (hasMissingFields) return;
+      if (hasMissingFields) return;
+    }
 
     // Start:Removing unused fields from Payload using flag inPayload
     const categoryMap = new Map(
