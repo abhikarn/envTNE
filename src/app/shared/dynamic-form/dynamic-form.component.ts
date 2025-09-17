@@ -66,6 +66,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() moduleConfig: any;
   @Input() displayTable: boolean = false;
   @Input() displayAddClearButton: boolean = true;
+  @Input() formDisabled: boolean = false;
   @Output() emitFormData = new EventEmitter<any>();
   @Output() emitFormValue = new EventEmitter<any>();
   @Output() emitTextData = new EventEmitter<any>();
@@ -180,6 +181,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         this.emitDateInputComponentValue.emit(this.dateInputComponentRef || []);
       });
 
+      if(this.formDisabled) {
+        this.form.disable();
+      } else {
+        this.form.enable();
+      }
   }
 
   setupAutoFormat(config: any, configService: GlobalConfigService): void {
