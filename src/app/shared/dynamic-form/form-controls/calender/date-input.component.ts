@@ -156,7 +156,7 @@ export class DateInputComponent {
       millisecond: 0
     });
 
-    const localIso = date.format('YYYY-MM-DDTHH:mm:ss');
+    const localIso = date.format('YYYY-MM-DDTHH:mm');
     this.control.setValue(localIso, { emitEvent: false });
     this.valueChange.emit({ event: { value: localIso }, control: this.controlConfig });
   }
@@ -188,7 +188,7 @@ export class DateInputComponent {
       newDate.setHours(old.hour(), old.minute(), old.second(), old.millisecond());
     }
     if (newDate) {
-      const localIso = _moment(newDate).format('YYYY-MM-DDTHH:mm:ss');
+      const localIso = _moment(newDate).format('YYYY-MM-DDTHH:mm');
       this.control.setValue(localIso, { emitEvent: false });
     }
     this.valueChange.emit({ event, control: this.controlConfig });
