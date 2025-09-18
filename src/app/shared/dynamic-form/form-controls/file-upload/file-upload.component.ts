@@ -348,4 +348,11 @@ export class FileUploadComponent {
       input.click();
     }
   }
+
+  getAcceptString(): string {
+    if (Array.isArray(this.controlConfig.accept)) {
+      return this.controlConfig.accept.join(', ');
+    }
+    return this.controlConfig.accept || '';
+  }
 }

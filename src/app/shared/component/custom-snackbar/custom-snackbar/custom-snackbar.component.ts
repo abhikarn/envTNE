@@ -1,18 +1,21 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 import { NgClass, TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-custom-snackbar',
   imports: [NgClass, TitleCasePipe],
   templateUrl: './custom-snackbar.component.html',
-  styleUrl: './custom-snackbar.component.scss',
+  styleUrls: ['./custom-snackbar.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  
+
 })
 export class CustomSnackbarComponent {
-   
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: { message: string; type: string }) {}
+
+  constructor(
+    @Inject(MAT_SNACK_BAR_DATA) public data: { message: string; type: string },
+    private snackBarRef: MatSnackBarRef<CustomSnackbarComponent>
+  ) { }
 
   get toastClass(): string {
     switch (this.data.type) {
@@ -28,4 +31,9 @@ export class CustomSnackbarComponent {
         return 'toast-green';
     }
   }
+
+  close() {
+    this.snackBarRef.dismiss();
+  }
+
 }

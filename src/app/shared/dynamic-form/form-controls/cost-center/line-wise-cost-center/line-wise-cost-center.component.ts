@@ -159,7 +159,7 @@ export class LineWiseCostCenterComponent {
     }, 0);
 
     if (totalAmount + parseFloat(this.costCenterDetailsForm.get('AmmoutInActual')?.value || "0") > amount) {
-      this.snackbarService.error('Total cost center amount exceeds claimed amount');
+      this.snackbarService.error('Sum of all cost center amounts cannot be more than the claimed amount.');
       return;
     }
     // Total of AmmoutInPercentage should not exceed 100%

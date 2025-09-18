@@ -48,7 +48,7 @@ export class TextInputComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.controlConfig.defaultValue) {
+    if (this.controlConfig.defaultValue) {
       this.control.setValue(this.controlConfig.defaultValue);
     }
     this.control.valueChanges.subscribe(inputValue => {
@@ -116,44 +116,56 @@ export class TextInputComponent implements OnInit {
 
   onInput(event: any) {
     if (this.controlConfig.autoFormat) {
-      let inputValue = (event.target.value).toString();
-      // Correctly apply the pattern as a RegExp
-      const pattern = this.controlConfig.autoFormat?.patterns[0];
-      if (pattern) {
-        inputValue = inputValue.replace(new RegExp(pattern, 'g'), '');
+      if (this.controlConfig.dataType == 'numeric') {
+        let inputValue = (event.target.value).toString();
+        // Correctly apply the pattern as a RegExp
+        const pattern = this.controlConfig.autoFormat?.patterns[0];
+        if (pattern) {
+          inputValue = inputValue.replace(new RegExp(pattern, 'g'), '');
+        }
+
+        // Prevent more than one decimal point
+        const parts = inputValue.split('.');
+        if (parts.length > 2) {
+          inputValue = parts[0] + '.' + parts.slice(1).join('');
+        }
+
+        // Limit integer and decimal part lengths
+        const [integerPart, decimalPart] = inputValue.split('.');
+        let maxLength = this.controlConfig.autoFormat.range?.max ?? 10;
+        let decimalPrecision = Number(this.controlConfig.autoFormat.decimalPrecision ?? 2);
+
+        let formattedValue = integerPart ? integerPart.slice(0, maxLength) : '';
+        if (decimalPart !== undefined) {
+          formattedValue += '.' + decimalPart.slice(0, decimalPrecision);
+        }
+
+        // Set value without formatting to .00 etc. (formatting will be done onBlur)
+        this.control.setValue(formattedValue);
+      } else if (this.controlConfig.dataType == 'string') {
+        let inputValue = (event.target.value).toString();
+        const pattern = this.controlConfig.autoFormat?.patterns[0];
+        if (pattern) {
+          // Remove disallowed characters
+          inputValue = inputValue.replace(new RegExp(pattern, 'g'), '');
+        }
+        const maxLength = this.controlConfig.autoFormat.range?.max ?? 100;
+        inputValue = inputValue.slice(0, maxLength);
+        this.control.setValue(inputValue);
       }
-
-      // Prevent more than one decimal point
-      const parts = inputValue.split('.');
-      if (parts.length > 2) {
-        inputValue = parts[0] + '.' + parts.slice(1).join('');
-      }
-
-      // Limit integer and decimal part lengths
-      const [integerPart, decimalPart] = inputValue.split('.');
-      let maxLength = this.controlConfig.autoFormat.range?.max ?? 10;
-      let decimalPrecision = Number(this.controlConfig.autoFormat.decimalPrecision ?? 2);
-
-      let formattedValue = integerPart ? integerPart.slice(0, maxLength) : '';
-      if (decimalPart !== undefined) {
-        formattedValue += '.' + decimalPart.slice(0, decimalPrecision);
-      }
-
-      // Set value without formatting to .00 etc. (formatting will be done onBlur)
-      this.control.setValue(formattedValue);
     }
   }
 
   onBlurAutocomplete() {
     let value = this.control.value;
-    if(typeof value === 'string'){
+    if (typeof value === 'string') {
       this.control.setValue(null);
     }
   }
 
   onCityAutoCompleteInput(event: any | MatAutocompleteSelectedEvent) {
     let value = this.control.value;
-    
+
     if (typeof value === 'object') {
       const requestBody = [{ id: value?.value || 0, name: '', masterName: 'City' }];
 
@@ -171,21 +183,33 @@ export class TextInputComponent implements OnInit {
 
   onBlur() {
     let value = this.control.value;
-
-    // Handle empty or null input: set to 0 with precision
-    if (value === null || value === undefined || value === '') {
-      this.control.setValue(this.getFormattedValue(0));
-      return;
-    }
-
-    // Format value to required decimal precision on blur
-    if (this.controlConfig.autoFormat) {
-      // Only format if value is a valid number
-      const numericValue = parseFloat(value);
-      if (!isNaN(numericValue)) {
-        const formatted = this.getFormattedValue(numericValue);
-        this.control.setValue(formatted);
+    if (this.controlConfig.dataType === 'numeric') {
+      // Handle empty or null input: set to 0 with precision
+      if (value === null || value === undefined || value === '') {
+        this.control.setValue(this.getFormattedValue(0));
+        return;
       }
+
+      // Format value to required decimal precision on blur
+      if (this.controlConfig.autoFormat) {
+        // Only format if value is a valid number
+        const numericValue = parseFloat(value);
+        if (!isNaN(numericValue)) {
+          const formatted = this.getFormattedValue(numericValue);
+          this.control.setValue(formatted);
+        }
+      }
+    } else if (this.controlConfig.dataType === 'string') {
+      const maxLength = this.controlConfig.autoFormat.range?.max ?? 100;
+      let trimmedValue = value?.trim().slice(0, maxLength);
+
+      // Apply regex sanitization again just in case
+      const pattern = this.controlConfig.autoFormat?.patterns[0];
+      if (pattern) {
+        trimmedValue = trimmedValue?.replace(new RegExp(pattern, 'g'), '');
+      }
+
+      this.control.setValue(trimmedValue, { emitEvent: false });
     }
 
     // Handle dependent cases if any

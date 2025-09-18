@@ -82,7 +82,7 @@
                 },
                 {
                     "isEnabled": false,
-                    "label": "Billable Cost Centre",
+                    "label": "Billable Cost Center",
                     "name": "billableCostcentre",
                     "isLink": false,
                     "value": "NA",
@@ -875,6 +875,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -895,6 +903,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -1133,7 +1149,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -1528,7 +1544,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -1689,21 +1705,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -1959,7 +1975,7 @@
                         "setFields": [
                             {
                                 "name": "NoOfDays",
-                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -2018,7 +2034,7 @@
                             {
                                 "name": "NoOfDays",
                                 "label": "No. of Days",
-                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -2243,6 +2259,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -2669,7 +2693,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -3106,7 +3130,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -3339,21 +3363,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -3859,6 +3883,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -4237,7 +4269,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -4868,21 +4900,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -5334,6 +5366,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -5712,7 +5752,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -6118,7 +6158,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -6332,21 +6372,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -6881,6 +6921,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -7256,7 +7304,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -7865,21 +7913,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -8263,6 +8311,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -8295,6 +8351,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -8703,7 +8767,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -9115,7 +9179,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -9329,21 +9393,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -9732,6 +9796,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -9764,6 +9836,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -10172,7 +10252,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -10584,7 +10664,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -10798,21 +10878,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -11089,7 +11169,7 @@
                         "setFields": [
                             {
                                 "name": "NoOfDays",
-                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -11148,7 +11228,7 @@
                             {
                                 "name": "NoOfDays",
                                 "label": "No. of Days",
-                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -11354,6 +11434,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -11780,7 +11868,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -12206,7 +12294,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -12455,21 +12543,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -13162,6 +13250,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -13181,6 +13277,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -13524,7 +13628,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -13809,7 +13913,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -14026,21 +14130,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -14377,6 +14481,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -15054,6 +15166,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -15250,7 +15370,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -15457,7 +15577,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -15916,6 +16036,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -15935,6 +16063,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -16222,7 +16358,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -16620,7 +16756,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -16847,21 +16983,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -17381,7 +17517,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -17642,7 +17778,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -17655,7 +17791,7 @@
                         "ToDate": "ClaimDate"
                     },
                     "duplicateConstraint": {
-                        "validate":true,
+                        "validate": true,
                         "ClaimDate": "ClaimDate",
                         "Constraint": "Constraint"
                     }
@@ -17860,21 +17996,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -18049,6 +18185,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -18385,7 +18529,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -18587,7 +18731,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -19316,7 +19460,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -19542,7 +19686,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -19730,21 +19874,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -20033,7 +20177,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -20226,7 +20370,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -20326,21 +20470,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -20635,7 +20779,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -20824,7 +20968,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -20924,21 +21068,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -21180,6 +21324,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": false,
                         "requiredIf": {
                             "TransportationMode": 107
@@ -21291,6 +21443,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": false,
                         "requiredIf": {
                             "TransportationMode": 107
@@ -21563,7 +21723,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -21708,6 +21868,14 @@
                                 "showInUI": true,
                                 "required": true,
                                 "value": null,
+                                "autoFormat": {
+                                    "patterns": [
+                                        "[^A-Za-z0-9 ]"
+                                    ],
+                                    "range": {
+                                        "max": 50
+                                    }
+                                },
                                 "validations": [
                                     {
                                         "type": "required",
@@ -21880,7 +22048,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -22103,21 +22271,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -22483,6 +22651,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -23177,21 +23353,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -23509,6 +23685,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -24613,7 +24797,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -24804,7 +24988,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -24987,21 +25171,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -26926,6 +27110,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -28831,6 +29023,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -30875,6 +31075,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -30895,6 +31103,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -31130,7 +31346,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -31517,7 +31733,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -31673,21 +31889,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -31944,7 +32160,7 @@
                         "setFields": [
                             {
                                 "name": "NoOfDays",
-                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -32000,7 +32216,7 @@
                             {
                                 "name": "NoOfDays",
                                 "label": "No. of Days",
-                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24)) + 1",
+                                "formula": "Math.max(0, (CheckOutDateTime - CheckInDateTime) / (1000 * 60 * 60 * 24))",
                                 "dependsOn": [
                                     "CheckInDateTime",
                                     "CheckOutDateTime"
@@ -32222,6 +32438,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -32648,7 +32872,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -33085,7 +33309,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -33318,21 +33542,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -33860,6 +34084,14 @@
                         "isExcluded": false,
                         "label": "Vendor Name",
                         "value": null,
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -33879,6 +34111,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -34222,7 +34462,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -34514,7 +34754,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "The total cost centre allocation must match the claim amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -34731,21 +34971,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -35050,6 +35290,14 @@
                         "isExcluded": false,
                         "label": "Bill Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z0-9 ]"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -35425,7 +35673,7 @@
                         "dataType": "object",
                         "name": "costcentreWiseExpense",
                         "isExcluded": false,
-                        "label": "Cost Centre",
+                        "label": "Cost Center",
                         "value": [],
                         "getControl": "ClaimAmount",
                         "fields": [
@@ -36012,21 +36260,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -36671,7 +36919,7 @@
                 "order": 4
             },
             {
-                "label": "Billable Cost Centre",
+                "label": "Billable Cost Center",
                 "name": "billableCostcentre",
                 "isLink": false,
                 "value": "NA",
@@ -36683,7 +36931,7 @@
                 "showInUI": true
             },
             {
-                "label": "Default Cost Centre",
+                "label": "Default Cost Center",
                 "name": "costCentre",
                 "isLink": false,
                 "value": "NA",
@@ -36958,7 +37206,7 @@
                 },
                 "costcentreWiseExpense": {
                     "name": "costcentreWiseExpense",
-                    "label": "Cost Centre",
+                    "label": "Cost Center",
                     "value": [],
                     "getControl": "ClaimAmount",
                     "fields": [
@@ -37085,21 +37333,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -37382,7 +37630,7 @@
                 },
                 "costcentreWiseExpense": {
                     "name": "costcentreWiseExpense",
-                    "label": "Cost Centre",
+                    "label": "Cost Center",
                     "value": [],
                     "getControl": "ClaimAmount",
                     "fields": [
@@ -37509,21 +37757,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -37874,21 +38122,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -38021,7 +38269,6 @@
                         "visible": true,
                         "position": "in"
                     },
-                    {},
                     {
                         "name": "BillNumber",
                         "label": "Bill Number",
@@ -38239,21 +38486,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -38584,21 +38831,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -38930,21 +39177,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -39275,21 +39522,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -39605,21 +39852,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -39974,21 +40221,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -40343,21 +40590,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -40720,21 +40967,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -41077,21 +41324,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -41434,21 +41681,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -41815,21 +42062,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -42296,21 +42543,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -42473,21 +42720,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -42579,7 +42826,7 @@
                 "gst": null,
                 "costcentreWiseExpense": {
                     "name": "costcentreWiseExpense",
-                    "label": "Cost Centre",
+                    "label": "Cost Center",
                     "value": [],
                     "getControl": "ClaimAmount",
                     "fields": [
@@ -42706,21 +42953,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -42851,21 +43098,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -42956,21 +43203,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -43061,21 +43308,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -43233,21 +43480,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -43427,21 +43674,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -43575,21 +43822,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -43692,21 +43939,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -43842,21 +44089,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -44310,21 +44557,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -44519,21 +44766,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
@@ -44704,21 +44951,21 @@
                             },
                             {
                                 "name": "CostCentre",
-                                "label": "Cost Centre",
+                                "label": "Cost Center",
                                 "visible": true,
                                 "order": 2
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInPercentage",
-                                "label": "Ammout In Percentage",
+                                "label": "Amount In Percentage",
                                 "visible": true,
                                 "order": 3
                             },
                             {
                                 "type": "number",
                                 "name": "AmmoutInActual",
-                                "label": "Ammout In Actual",
+                                "label": "Amount In Actual",
                                 "visible": true,
                                 "order": 4
                             }
