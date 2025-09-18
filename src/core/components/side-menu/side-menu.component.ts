@@ -44,6 +44,9 @@ export class SideMenuComponent {
 
   Logout(): void {
     localStorage.removeItem('userData');
+    localStorage.removeItem('sessionId');
+    localStorage.removeItem('userMasterId');
+    localStorage.removeItem('token');
     this.router.navigate(['/account']); // Adjust route as needed
   }
 

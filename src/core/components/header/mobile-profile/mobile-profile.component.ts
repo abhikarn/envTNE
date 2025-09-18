@@ -20,6 +20,9 @@ export class MobileProfileComponent {
 
   logout() {
     localStorage.removeItem('userData');
+    localStorage.removeItem('sessionId');
+    localStorage.removeItem('userMasterId');
+    localStorage.removeItem('token');
     this.bottomSheetRef.dismiss();
     this.router.navigate(['/account']);
   }

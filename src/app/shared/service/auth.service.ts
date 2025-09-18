@@ -42,6 +42,14 @@ export class AuthService {
     }
   }
 
+  setToken(token: any): void {
+    localStorage.setItem('userData', JSON.stringify({ token }));
+  }
+
+  setUserMasterId(userMasterId: number): void {
+    localStorage.setItem('userMasterId', userMasterId.toString());
+  }
+
   getToken(): any | null {
     const userData = localStorage.getItem('userData');
     if (userData) {
@@ -110,6 +118,9 @@ export class AuthService {
 
   Logout(): void {
     localStorage.removeItem('userData');
+    localStorage.removeItem('sessionId');
+    localStorage.removeItem('userMasterId');
+    localStorage.removeItem('token');
     this.router.navigate(['/account']); // Adjust route as needed
   }
 }
