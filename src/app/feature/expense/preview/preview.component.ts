@@ -53,6 +53,7 @@ import { DynamicFormService } from '../../../shared/service/dynamic-form.service
 export class PreviewComponent {
   @ViewChild(CreateDynamicFormComponent) createDynamicFormComponent!: CreateDynamicFormComponent;
   @ViewChild(SummaryComponent) summaryComponent: any;
+  @ViewChildren(MaterialTableComponent) materialTableComponents!: QueryList<MaterialTableComponent>;
   expenseRequestPreviewData: any;
   expenseRequestPreviewConfig: any;
   loadData = false;
@@ -78,6 +79,7 @@ export class PreviewComponent {
   dynamicAdjustmentFormpayload: any = {};
   transactionId: any;
   title: string = 'Expense Preview';
+  totalExpense: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -97,7 +99,6 @@ export class PreviewComponent {
   ) {
 
   }
-  @ViewChildren(MaterialTableComponent) materialTableComponents!: QueryList<MaterialTableComponent>;
 
   openDetailsDialog(id: number): void {
 
@@ -211,7 +212,7 @@ export class PreviewComponent {
   }
 
   setExpenseSummary() {
-    this.expenseSummary.forEach((summary: any) => {
+    this.expenseSummary?.forEach((summary: any) => {
       if (summary.id === "category-wise-expense") {
         summary.items.forEach((item: any) => {
           const shouldShow = this.expenseRequestPreviewData.dynamicExpenseDetailModels.some(
@@ -450,6 +451,7 @@ export class PreviewComponent {
     });
 
     // Set totalExpense and amountPayable
+    this.totalExpense = totalExpense;
     summary.items?.forEach((item: any) => {
       if (item.name === 'totalExpense') item.value = totalExpense.toFixed(2);
       if (item.name === 'amountPayable') item.value = amountPayable.toFixed(2);

@@ -32,12 +32,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BulkApproveModalComponent } from '../../../shared/component/bulk-approve-modal/bulk-approve-modal.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { OneClickApproveComponent } from '../../../shared/component/one-click-approve/one-click-approve.component';
+import { GlobalConfigService } from '../../../shared/service/global-config.service';
 
 interface ColumnConfig {
   key: string;
   label: string;
   sortable: boolean;
   showSearch: boolean;
+  type?: string;
+  decimalPrecision?: number;
+  class?: string;
 }
 
 export const ELEMENT_DATA: any[] = [];
@@ -94,6 +98,7 @@ export class ApprovalDashboardComponent implements OnInit {
   lastPageSize: number = 5;
   lastPageIndex: number = 0;
   selectAll: boolean = false;
+  columnFilterValues: { [key: string]: string } = {}; // Track filter values per column
 
   constructor(
     private expenseService: ExpenseService,
@@ -105,7 +110,9 @@ export class ApprovalDashboardComponent implements OnInit {
     private confirmDialogService: ConfirmDialogService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private configService: GlobalConfigService
+    
   ) {
 
   }
@@ -205,11 +212,17 @@ export class ApprovalDashboardComponent implements OnInit {
     this.http.get(`assets/config/expense-config.json`).subscribe((config: any) => {
       this.expenseDashboardConfig = config;
       const tableDetail = config.dashboard?.expenseStatement.approverTableDetail || [];
+      const globalDecimalPrecision = this.configService.getDecimalPrecision
+        ? this.configService.getDecimalPrecision()
+        : 2;
       this.displayedColumns = tableDetail.map((col: any) => ({
         key: col.key,
         label: col.label,
         sortable: col.sortable,
-        showSearch: col.showSearch
+        showSearch: col.showSearch,
+        type: col.type,
+        decimalPrecision: col.decimalPrecision ?? globalDecimalPrecision,
+        class: col.class ?? ''
       }));
       this.columnKeys = this.displayedColumns.map(col => col.key);
       this.filterColumnKeys = this.displayedColumns.map(col => col.key + '_filter');
@@ -221,22 +234,102 @@ export class ApprovalDashboardComponent implements OnInit {
   //   this.dataSource.sort = this.sort;
   // }
 
-  applyFilter(event: Event, column: string) {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
-      return (data[column] ?? '').toString().toLowerCase().includes(filter);
+   private normalizeValueForFilter(col: ColumnConfig, rawValue: any): string {
+    if (rawValue == null) return '';
+
+    // Numbers
+    if (col.type === 'number') {
+      const precision = col.decimalPrecision ?? 2;
+      return Number(rawValue)
+        .toFixed(precision)
+        .replace(/,/g, ''); // ensure no commas
+    }
+
+    // Dates (normalize to dd-MMM-yyyy, and replace separators with spaces)
+    if (col.key.toLowerCase().includes('date')) {
+      const dateObj = new Date(rawValue);
+      if (!isNaN(dateObj.getTime())) {
+        return dateObj
+          .toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+          })
+          .toLowerCase()
+          .replace(/[-/]/g, ' '); // "08-mar-2024" → "08 mar 2024"
+      }
+    }
+
+    // Default (string/text)
+    return String(rawValue).toLowerCase();
+  }
+
+  private buildFilterPredicate(columnFilters: { [key: string]: string }, globalFilter?: string) {
+    return (data: any): boolean => {
+      const colsToSearch = this.displayedColumns.filter(col => col.showSearch);
+
+      // Column-wise filtering
+      const matchesColumnFilters = Object.keys(columnFilters).every(colKey => {
+        const searchVal = columnFilters[colKey]?.trim().toLowerCase().replace(/[-/,]/g, ' ');
+        if (!searchVal) return true;
+
+        const columnDef = colsToSearch.find(c => c.key === colKey);
+        if (!columnDef) return true;
+
+        const normalizedValue = this.normalizeValueForFilter(columnDef, data[colKey]);
+        return normalizedValue.includes(searchVal);
+      });
+
+      if (!matchesColumnFilters) return false;
+
+      // Global filtering
+      if (globalFilter) {
+        return colsToSearch.some(col => {
+          const normalizedValue = this.normalizeValueForFilter(col, data[col.key]);
+          return normalizedValue.includes(globalFilter);
+        });
+      }
+
+      return true;
     };
-    this.dataSource.filter = filterValue;
+  }
+
+  applyFilter(event: Event, column: string) {
+    let filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    filterValue = filterValue.replace(/[-/]/g, ' ');
+    filterValue = filterValue.replace(/[,/]/g, '');
+    this.columnFilterValues[column] = filterValue;
+
+    this.dataSource.filterPredicate = this.buildFilterPredicate(this.columnFilterValues);
+    this.dataSource.filter = JSON.stringify(this.columnFilterValues); // still needed for Angular Material
+
+    this.dataSourceMobile.filterPredicate = this.dataSource.filterPredicate;
+    this.dataSourceMobile.filter = JSON.stringify(this.columnFilterValues);
+
+    if (this.isMobile) {
+      this.mobileCurrentPage = 1;
+      this.updateMobileDisplayData();
+    }
   }
 
   applyGlobalFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
-      return Object.values(data).some(value =>
-        String(value).toLowerCase().includes(filter)
-      );
-    };
+    let filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    filterValue = filterValue.replace(/[-/]/g, ' ');
+    filterValue = filterValue.replace(/[,/]/g, '');
+
+    // Clear column filters when global filter is used
+    this.columnFilterValues = {};
+
+    this.dataSource.filterPredicate = this.buildFilterPredicate({}, filterValue);
+    this.dataSource.filter = filterValue;
+
+    this.dataSourceMobile.filterPredicate = this.dataSource.filterPredicate;
+    this.dataSourceMobile.filter = filterValue;
+
+    if (this.isMobile) {
+      this.mobileCurrentPage = 1;
+      this.updateMobileDisplayData();
+    }
   }
 
   exportExcel(): void {

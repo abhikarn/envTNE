@@ -105,7 +105,7 @@ export class MaterialTableComponent implements OnChanges {
         });
       }
     });
-    this.nestedTables.forEach((nestedTable: any) => {
+    this.nestedTables?.forEach((nestedTable: any) => {
       nestedTable.columns.forEach((column: any) => {
         if (column.type === 'number') {
           this.processedData.forEach((row: any) => {

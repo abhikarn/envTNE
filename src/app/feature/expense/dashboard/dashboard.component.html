@@ -984,20 +984,20 @@
                                        {{ column.label }}
                                        </th> -->
                                        <ng-container *ngIf="column.sortable; else noSortHeader">
-                                          <th mat-header-cell *matHeaderCellDef mat-sort-header="{{ column.key }}">
+                                          <th mat-header-cell *matHeaderCellDef mat-sort-header="{{ column.key }}" [disableClear]="true" [ngClass]="column.class">
                                              {{ column.label }}
                                           </th>
                                        </ng-container>
                                        <ng-template #noSortHeader>
-                                          <th mat-header-cell *matHeaderCellDef>
+                                          <th mat-header-cell *matHeaderCellDef [ngClass]="column.class">
                                              {{ column.label }}
                                           </th>
                                        </ng-template>
                                        <!-- Data Cell -->
-                                       <td [attr.data-label]="column.label" mat-cell
+                                       <td [attr.data-label]="column.label" mat-cell [ngClass]="column.class"
                                           *matCellDef="let element; let i = index">
                                           <ng-container *ngIf="column.key === 'slNo'; else columnContent">
-                                             <span class="text-center d-block"> {{ i + 1 }}</span>
+                                             <span class="text-center d-block">{{ isMobile ? (i + 1) : (paginator.pageIndex * paginator.pageSize) + (i + 1) }}</span>
                                           </ng-container>
                                           <ng-template #columnContent>
                                              <ng-container
@@ -1140,7 +1140,11 @@
                                                       {{ element[column.key] }}
                                                       }
                                                       } @else {
+                                                      @if (column.type === 'number' && column.decimalPrecision) {
+                                                      {{ element[column.key] | number:'1.' + column.decimalPrecision + '-' + column.decimalPrecision }}
+                                                      } @else {
                                                       {{ element[column.key] }}
+                                                      }
                                                       }
                                                    </ng-template>
                                                 </ng-template>

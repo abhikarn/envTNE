@@ -796,27 +796,37 @@
                                                 <ng-container *ngFor="let column of displayedColumns"
                                                     [matColumnDef]="column.key">
                                                     <!-- Header Cell -->
-                                                    <th mat-header-cell *matHeaderCellDef
-                                                        [mat-sort-header]="column.sortable ? column.key : ''">
+                                                    <!-- <th mat-header-cell *matHeaderCellDef [ngClass]="column.class" [mat-sort-header]="column.sortable ? column.key : ''">
+                                                        <ng-container *ngIf="column.key === 'slNo'">
+                                                            <mat-checkbox [(ngModel)]="selectAll" (change)="toggleSelectAll($event.checked)"></mat-checkbox>
+                                                        </ng-container>
                                                         {{ column.label }}
-                                                    </th>
+                                                    </th> -->
                                                     <ng-container *ngIf="column.sortable; else notsortable">
-                                                        <th mat-header-cell *matHeaderCellDef
-                                                            [mat-sort-header]="column.key">
+                                                        <th mat-header-cell *matHeaderCellDef [ngClass]="column.class"
+                                                            [mat-sort-header]="column.key" [disableClear]="true">
                                                             {{ column.label }}
                                                         </th>
                                                     </ng-container>
                                                     <ng-template #notsortable>
-                                                        <mat-checkbox *ngIf="column.key === 'select'" [(ngModel)]="selectAll" (change)="toggleSelectAll($event.checked)"></mat-checkbox>
                                                         <th mat-header-cell *matHeaderCellDef>
-                                                            {{ column.label }}
+                                                            <!-- Checkbox for Select All -->
+                                                            <ng-container *ngIf="column.key === 'slNo'">
+                                                                <span style="display: flex; align-items: center; gap: 6px;">
+                                                                    <mat-checkbox [(ngModel)]="selectAll" (change)="toggleSelectAll($event.checked)"></mat-checkbox>
+                                                                    <span>{{ column.label }}</span>
+                                                                </span>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="column.key !== 'slNo'">
+                                                                {{ column.label }}
+                                                            </ng-container>
                                                         </th>
                                                     </ng-template>
                                                     <!-- Data Cell -->
-                                                    <td [attr.data-label]="column.label" mat-cell *matCellDef="let element; let i = index">
+                                                    <td [attr.data-label]="column.label" mat-cell *matCellDef="let element; let i = index" [ngClass]="column.class">
                                                         <ng-container *ngIf="column.key === 'slNo'; else columnContent">
                                                             <mat-checkbox [(ngModel)]="element.selected"></mat-checkbox>
-                                                            {{ i + 1 }}
+                                                            {{ isMobile ? (i + 1) : (paginator.pageIndex * paginator.pageSize) + (i + 1) }}
                                                         </ng-container>
                                                         <ng-template #columnContent>
                                                             <ng-container
@@ -1034,7 +1044,11 @@
                                                                         {{ element[column.key] }}
                                                                         }
                                                                         } @else {
+                                                                        @if (column.type === 'number' && column.decimalPrecision) {
+                                                                        {{ element[column.key] | number:'1.' + column.decimalPrecision + '-' + column.decimalPrecision }}
+                                                                        } @else {
                                                                         {{ element[column.key] }}
+                                                                        }
                                                                         }
                                                                     </ng-template>
                                                                 </ng-template>
