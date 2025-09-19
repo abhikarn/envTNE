@@ -149,7 +149,7 @@ export class TextInputComponent implements OnInit {
           // Remove disallowed characters
           inputValue = inputValue.replace(new RegExp(pattern, 'g'), '');
         }
-        const maxLength = this.controlConfig.autoFormat.range?.max ?? 100;
+        const maxLength = this.controlConfig?.autoFormat?.range?.max ?? 100;
         inputValue = inputValue.slice(0, maxLength);
         this.control.setValue(inputValue);
       }
@@ -200,7 +200,7 @@ export class TextInputComponent implements OnInit {
         }
       }
     } else if (this.controlConfig.dataType === 'string') {
-      const maxLength = this.controlConfig.autoFormat.range?.max ?? 100;
+      const maxLength = this.controlConfig?.autoFormat?.range?.max ?? 100;
       let trimmedValue = value?.trim().slice(0, maxLength);
 
       // Apply regex sanitization again just in case

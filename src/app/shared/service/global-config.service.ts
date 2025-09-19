@@ -52,7 +52,7 @@ export class GlobalConfigService {
   }
 
   get dateTimeFormat(): string {
-    return this.config.dateFormat ? `${this.config.dateFormat} HH:mm:ss` : 'dd-MMM-yyyy HH:mm';
+    return this.config.dateFormat ? `${this.config.dateFormat} HH:mm` : 'dd-MMM-yyyy HH:mm';
   }
 
   /**

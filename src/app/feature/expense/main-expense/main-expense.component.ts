@@ -651,9 +651,9 @@ export class MainExpenseComponent {
           this.updateCategoryCounts();
           this.expenseRequestData = response;
           this.updateCategoryCounts();
-          this.setCurrencyDropdown();
 
           setTimeout(() => {
+            this.setCurrencyDropdown();
             this.summaryComponent.calculatTotalExpenseAmount();
             this.summaryComponent.calculatCategoryWiseExpense();
             this.summaryComponent.calculateCostCenterWiseExpense();
