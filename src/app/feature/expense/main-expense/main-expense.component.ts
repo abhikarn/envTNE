@@ -1004,6 +1004,8 @@ export class MainExpenseComponent {
             .pipe(take(1))
             .subscribe({
               next: () => {
+                this.initializeBasicFields();
+                this.loadInitialData();
                 this.getTravelRequestPreview();
                 this.snackbarService.success('Record Updated Successfully.');
               }

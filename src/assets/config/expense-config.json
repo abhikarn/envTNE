@@ -714,6 +714,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -877,7 +878,7 @@
                         "value": null,
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -1866,6 +1867,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -2261,7 +2263,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -2547,6 +2549,14 @@
                         "readonly": false,
                         "setFields": [
                             {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
+                            {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
                                 "dependsOn": [
@@ -2618,6 +2628,7 @@
                         "isExcluded": true,
                         "label": "Tax Amount",
                         "value": 0,
+                        "defaultValue": "0.00",
                         "autoFormat": {
                             "patterns": [
                                 "[^0-9.]",
@@ -3501,6 +3512,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -3885,7 +3897,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -4143,19 +4155,29 @@
                                 "message": "Amount must be greater than zero"
                             }
                         ],
+                        "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
+                            {
+                                "name": "DifferentialAmount",
+                                "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "dependsOn": [
+                                    "IsTaxIncluded",
+                                    "ClaimAmountInBaseCurrency",
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
+                                ]
+                            }
+                        ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
-                        "taxCalculation": {
-                            "IsTaxExclusive": true,
-                            "inputControls": {
-                                "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                                "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                            },
-                            "outputControl": {
-                                "DifferentialAmount": "DifferentialAmount"
-                            }
-                        }
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -5066,6 +5088,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -5368,7 +5391,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -5629,6 +5652,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -6510,6 +6541,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -6923,7 +6955,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -7181,19 +7213,29 @@
                                 "message": "Amount must be greater than zero"
                             }
                         ],
+                        "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
+                            {
+                                "name": "DifferentialAmount",
+                                "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "dependsOn": [
+                                    "IsTaxIncluded",
+                                    "ClaimAmountInBaseCurrency",
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
+                                ]
+                            }
+                        ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
-                        "taxCalculation": {
-                            "IsTaxExclusive": true,
-                            "inputControls": {
-                                "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                                "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                            },
-                            "outputControl": {
-                                "DifferentialAmount": "DifferentialAmount"
-                            }
-                        }
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -8076,6 +8118,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -8313,7 +8356,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -8602,6 +8645,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -9561,6 +9612,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -9798,7 +9850,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -10087,6 +10139,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -11046,6 +11106,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -11436,7 +11497,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -11721,6 +11782,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -12714,6 +12783,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -13279,7 +13349,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -14224,6 +14294,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -14483,7 +14554,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -14927,6 +14998,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -15168,7 +15240,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -15738,6 +15810,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -16065,7 +16138,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -16227,6 +16300,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -17129,6 +17210,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -18146,6 +18228,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -18187,7 +18270,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -18957,6 +19040,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -19964,6 +20048,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -20560,6 +20645,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -21157,6 +21243,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -21445,7 +21532,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -21953,6 +22040,7 @@
                                 "name": "attachment",
                                 "isExcluded": false,
                                 "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                                 "value": null,
                                 "multiple": true,
                                 "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -22404,6 +22492,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -22653,7 +22742,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -22904,6 +22993,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -23438,6 +23535,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -23687,7 +23785,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -23938,6 +24036,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -24427,6 +24533,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -25256,6 +25363,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -25768,6 +25876,14 @@
                         "readonly": false,
                         "setFields": [
                             {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
+                            {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
                                 "dependsOn": [
@@ -26257,6 +26373,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -26941,6 +27058,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -27112,7 +27230,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -27588,6 +27706,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -28270,6 +28389,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -28911,6 +29031,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -29025,7 +29146,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -29628,6 +29749,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -30103,6 +30225,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -30913,6 +31036,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -31077,7 +31201,7 @@
                         "value": null,
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -32050,6 +32174,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -32440,7 +32565,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -32725,6 +32850,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -33695,6 +33828,7 @@
                         "name": "attachment",
                         "isExcluded": false,
                         "label": "Upload Your Bill",
+                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                         "value": [],
                         "multiple": true,
                         "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -34113,7 +34247,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -35292,7 +35426,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -35550,19 +35684,29 @@
                                 "message": "Amount must be greater than zero"
                             }
                         ],
+                        "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
+                            {
+                                "name": "DifferentialAmount",
+                                "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "dependsOn": [
+                                    "IsTaxIncluded",
+                                    "ClaimAmountInBaseCurrency",
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
+                                ]
+                            }
+                        ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
-                        "taxCalculation": {
-                            "IsTaxExclusive": true,
-                            "inputControls": {
-                                "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                                "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                            },
-                            "outputControl": {
-                                "DifferentialAmount": "DifferentialAmount"
-                            }
-                        }
+                        "order": 14
                     },
                     {
                         "type": "text",

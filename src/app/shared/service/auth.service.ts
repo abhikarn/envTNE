@@ -121,6 +121,7 @@ export class AuthService {
     localStorage.removeItem('sessionId');
     localStorage.removeItem('userMasterId');
     localStorage.removeItem('token');
+    localStorage.removeItem('loginType');
     this.router.navigate(['/account']); // Adjust route as needed
   }
 }

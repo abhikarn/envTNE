@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogData } from '../component/confirm-dialog/confirm-dialog.component';
 import { Observable } from 'rxjs';
 
@@ -7,15 +7,23 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ConfirmDialogService {
+  private dialogRef?: MatDialogRef<ConfirmDialogComponent>;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
   confirm(data: ConfirmDialogData): Observable<boolean> {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    this.dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data
     });
 
-    return dialogRef.afterClosed();
+    return this.dialogRef.afterClosed();
+  }
+
+  close(): void {
+    if (this.dialogRef) {
+      this.dialogRef.close();
+      this.dialogRef = undefined;
+    }
   }
 }

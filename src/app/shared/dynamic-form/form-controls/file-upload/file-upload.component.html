@@ -17,7 +17,7 @@
       File</label>
     <input type="file" [id]="controlConfig.name" [multiple]="controlConfig.multiple" (change)="onFileSelected($event)"
       [accept]="controlConfig.accept" [disabled]="controlConfig.disable" class="d-none d-md-block d-lg-block" />
-    <small> ({{ getAcceptString() }} (max upload {{ controlConfig.maxSizeMB }}MB)) </small>
+    <small> {{controlConfig.helpText}} (Max size: {{controlConfig.maxSizeMB}} MB)</small>
   </div>
   <!-- Table to Display Selected Files -->
   @if (selectedFiles?.length > 0) {

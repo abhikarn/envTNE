@@ -349,10 +349,4 @@ export class FileUploadComponent {
     }
   }
 
-  getAcceptString(): string {
-    if (Array.isArray(this.controlConfig.accept)) {
-      return this.controlConfig.accept.join(', ');
-    }
-    return this.controlConfig.accept || '';
-  }
 }
