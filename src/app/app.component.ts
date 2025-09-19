@@ -15,6 +15,8 @@ import { LoaderComponent } from './shared/loader/loader.component';
 import { MobileNavComponent } from '../core/components/mobile-nav/mobile-nav.component';
 import { PlatformService } from './shared/service/platform.service';
 import { NewExpenseService } from './feature/expense/service/new-expense.service';
+import { SessionTimeoutService } from './shared/service/session-timeout.service';
+import { ConfirmDialogService } from './shared/service/confirm-dialog.service';
 
 @Component({
   selector: 'app-root',
@@ -25,13 +27,17 @@ import { NewExpenseService } from './feature/expense/service/new-expense.service
 export class AppComponent implements OnInit {
   title = 'envTNE';
   isAuthenticated = false;
+  showIdleWarning = false;
+  private idleStarted = false;
 
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
     private router: Router,
     private platformService: PlatformService,
-    private newExpenseService: NewExpenseService
+    private newExpenseService: NewExpenseService,
+    private sessionTimeoutService: SessionTimeoutService,
+    private confirmDialogService: ConfirmDialogService
   ) {
     this.translate.setDefaultLang('en');
     const browserLang = navigator.language.split('-')[0];
@@ -43,6 +49,110 @@ export class AppComponent implements OnInit {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       this.readTokenForSSO(event.urlAfterRedirects);
     });
+    // If user is already logged-in on initial load (token in localStorage), start idle watcher
+    const token = this.authService.getToken();
+    if (token && token.jwtTokenModel?.expireDateTime) {
+      const expireTime = new Date(token.jwtTokenModel.expireDateTime).getTime();
+      if (Date.now() < expireTime) {
+        this.onAuthenticated();
+      }
+    }
+  }
+
+  private onAuthenticated() {
+    console.log('AppComponent: onAuthenticated() called, starting idle watcher');
+    this.isAuthenticated = true;
+    if (!this.idleStarted) {
+      this.startIdleWatcherIfNeeded();
+      this.idleStarted = true;
+    }
+  }
+
+
+  // Example: call this after you set isAuthenticated true in your login/deep-link success paths
+  private startIdleWatcherIfNeeded() {
+    // allow quick test with ?sessionTimeoutTest=1
+    const urlParams = new URLSearchParams(window.location.search);
+    const isTest = urlParams.get('sessionTimeoutTest') === '1';
+
+    if (isTest) {
+      console.log('Idle watcher: TEST mode enabled (short timers)');
+      // test: idle after ~10s, warning 5s
+      this.sessionTimeoutService.startWatching(
+        2,
+        1,
+        () => this.showWarning(),
+        () => this.handleTimeout()
+      );
+    } else {
+      // production: 20 minutes idle, 2 minutes warning
+      this.sessionTimeoutService.startWatching(
+        20,
+        2,
+        () => this.showWarning(),
+        () => this.handleTimeout()
+      );
+    }
+  }
+
+  private showWarning() {
+    console.log('AppComponent: show idle warning');
+    this.showIdleWarning = true;
+    this.confirmDialogService.confirm(
+      {
+        title: 'Session Timeout',
+        message: 'You have been idle for a while. Do you want to stay logged in?',
+        confirmText: 'Stay Logged In',
+        cancelText: 'Logout'
+      }
+    ).subscribe((result) => {
+      if (result) {
+        this.stayLoggedIn();
+      } else {
+        this.logout();
+      }
+    });
+  }
+
+  stayLoggedIn() {
+    console.log('AppComponent: stayLoggedIn clicked');
+    this.showIdleWarning = false;
+    this.confirmDialogService.close(); // close the confirmation dialog
+    this.sessionTimeoutService.resetTimer(); // reset timers
+  }
+
+  logout() {
+    console.log('AppComponent: logout triggered');
+    this.showIdleWarning = false;
+    this.confirmDialogService.close(); // close the confirmation dialog
+    this.sessionTimeoutService.stopWatching();
+    this.isAuthenticated = false;
+
+    // Clear local session
+    localStorage.removeItem('userData');
+    localStorage.removeItem('sessionId');
+    localStorage.removeItem('userMasterId');
+    localStorage.removeItem('token');
+    localStorage.removeItem('loginType');
+
+    const loginType = localStorage.getItem('loginType');
+
+    if (loginType === 'SSO') {
+      // SSO users: redirect to SSO Entry point
+      window.location.href = 'https://s2demo.peoplestrong.com/oneweb/#/home';
+
+    } else if (loginType === 'DeepLink') {
+      // deep link users: redirect to deep link entry
+      window.location.href = 'https://your-deeplink-entry.example.com';
+    } else {
+      // regular users
+      this.router.navigate(['/account']);
+    }
+  }
+
+  private handleTimeout() {
+    console.log('AppComponent: idle timeout reached, logging out');
+    this.logout();
   }
 
   readTokenForSSO(url: string) {
@@ -81,7 +191,9 @@ export class AppComponent implements OnInit {
                   return;
                 }
                 this.isAuthenticated = true;
+                this.onAuthenticated();
                 console.log('LoginComponent: GetUserData response', userDataResponse);
+                localStorage.setItem('loginType', 'SSO');
                 localStorage.setItem('sessionId', decoded.jti);
                 localStorage.setItem('userData', JSON.stringify(userDataResponse));
                 localStorage.setItem('userMasterId', userDataResponse.token.userMasterId);
@@ -120,6 +232,8 @@ export class AppComponent implements OnInit {
         .subscribe({
           next: () => {
             this.isAuthenticated = true;
+            localStorage.setItem('loginType', 'DeepLink');
+            this.onAuthenticated();
             this.platformService.setPlatform(platform === 'Mobile')
             this.router.navigate(['/expense/expense/dashboard']);
           },
@@ -148,6 +262,7 @@ export class AppComponent implements OnInit {
 
       if (currentTime < expireTime) {
         this.isAuthenticated = true;
+        this.onAuthenticated();
         // Redirect to dashboard if authenticated and on /account
         if (currentUrl.toLowerCase() === '/account') {
           this.router.navigate(['/expense/expense/dashboard']);
