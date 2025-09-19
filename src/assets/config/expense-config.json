@@ -2547,6 +2547,14 @@
                         "readonly": false,
                         "setFields": [
                             {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
+                            {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
                                 "dependsOn": [
@@ -2618,6 +2626,7 @@
                         "isExcluded": true,
                         "label": "Tax Amount",
                         "value": 0,
+                        "defaultValue": "0.00",
                         "autoFormat": {
                             "patterns": [
                                 "[^0-9.]",
@@ -4143,19 +4152,29 @@
                                 "message": "Amount must be greater than zero"
                             }
                         ],
+                        "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
+                            {
+                                "name": "DifferentialAmount",
+                                "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "dependsOn": [
+                                    "IsTaxIncluded",
+                                    "ClaimAmountInBaseCurrency",
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
+                                ]
+                            }
+                        ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
-                        "taxCalculation": {
-                            "IsTaxExclusive": true,
-                            "inputControls": {
-                                "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                                "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                            },
-                            "outputControl": {
-                                "DifferentialAmount": "DifferentialAmount"
-                            }
-                        }
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -5629,6 +5648,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -7181,19 +7208,29 @@
                                 "message": "Amount must be greater than zero"
                             }
                         ],
+                        "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
+                            {
+                                "name": "DifferentialAmount",
+                                "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "dependsOn": [
+                                    "IsTaxIncluded",
+                                    "ClaimAmountInBaseCurrency",
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
+                                ]
+                            }
+                        ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
-                        "taxCalculation": {
-                            "IsTaxExclusive": true,
-                            "inputControls": {
-                                "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                                "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                            },
-                            "outputControl": {
-                                "DifferentialAmount": "DifferentialAmount"
-                            }
-                        }
+                        "order": 14
                     },
                     {
                         "type": "text",
@@ -8602,6 +8639,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -10087,6 +10132,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -11721,6 +11774,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -16227,6 +16288,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -22905,6 +22974,14 @@
                         "readonly": false,
                         "setFields": [
                             {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
+                            {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
                                 "dependsOn": [
@@ -23938,6 +24015,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -25767,6 +25852,14 @@
                         "disable": false,
                         "readonly": false,
                         "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
                             {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
@@ -32726,6 +32819,14 @@
                         "readonly": false,
                         "setFields": [
                             {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
+                            {
                                 "name": "DifferentialAmount",
                                 "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
                                 "dependsOn": [
@@ -35550,19 +35651,29 @@
                                 "message": "Amount must be greater than zero"
                             }
                         ],
+                        "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            },
+                            {
+                                "name": "DifferentialAmount",
+                                "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "dependsOn": [
+                                    "IsTaxIncluded",
+                                    "ClaimAmountInBaseCurrency",
+                                    "EntitlementAmountInBaseCurrency",
+                                    "TaxAmount"
+                                ]
+                            }
+                        ],
                         "disable": false,
                         "readonly": false,
-                        "order": 14,
-                        "taxCalculation": {
-                            "IsTaxExclusive": true,
-                            "inputControls": {
-                                "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
-                                "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency"
-                            },
-                            "outputControl": {
-                                "DifferentialAmount": "DifferentialAmount"
-                            }
-                        }
+                        "order": 14
                     },
                     {
                         "type": "text",
