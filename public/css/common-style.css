@@ -1070,7 +1070,7 @@ ul.header-notify-hold {
 	position: fixed;
 	width: 96%;
 	height:50px;
-	z-index: 9;
+	 z-index: 2; 
 	background-color: #fff;
 	box-shadow: 0px 11px 11px -7px rgba(0, 0, 0, 0.04);
 	top: 38px;
@@ -4628,7 +4628,7 @@ button.dropbtn {
     position: fixed !important;
     height: 100vh;
     top: 38px !important;
-    z-index: 2;
+    z-index: 3;
     padding-top: 33px !important;
     }
     .content-wrapper,
