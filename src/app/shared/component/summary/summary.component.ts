@@ -24,8 +24,9 @@ export class SummaryComponent implements OnChanges {
       if (summary.id === activeId) {
         return { ...summary, isOpen: !summary.isOpen }; // Toggle the current one
       }
-      return summary; // Keep other summaries' states unchanged
-    });
+        // Close all other accordions
+    return { ...summary, isOpen: false };
+  });
   }
 
   calculatTotalExpenseAmount() {

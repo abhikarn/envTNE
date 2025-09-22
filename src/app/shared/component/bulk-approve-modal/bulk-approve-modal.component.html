@@ -16,8 +16,8 @@
                                 <th>Sl.No</th>
                                 <th>Requestor Name</th>
                                 <th>Requester Number</th>
-                                <th>Request Date</th>
-                                <th>Approved Amount</th>
+                                <th class="text-end">Request Date</th>
+                                <th class="text-end">Approved Amount</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -25,12 +25,12 @@
                                 <td data-label="Sl.No">{{ i + 1 }}</td>
                                 <td data-label="Requestor Name">{{ approval?.Requester }}</td>
                                 <td data-label="Requester Number">{{ approval?.RequestNumber }}</td>
-                                <td data-label="Request Date">{{ approval?.RequestDateString }}</td>
-                                <td data-label="Approved Amount">{{ approval?.ApprovedAmount | decimalFormat }}</td>
+                                <td data-label="Request Date" class="text-end">{{ approval?.RequestDateString }}</td>
+                                <td data-label="Approved Amount" class="text-end">{{ approval?.ApprovedAmount | decimalFormat }}</td>
                             </tr>
                             <tr>
-                                <td colspan="4" class="text-right"><strong>Total Approved Amount:</strong></td>
-                                <td data-label="Approved Amount">{{ totalApprovedAmount | decimalFormat }}</td>
+                                <td colspan="4" class="text-end"><strong>Total Approved Amount:</strong></td>
+                                <td data-label="Approved Amount" class="text-end">{{ totalApprovedAmount | decimalFormat }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -43,7 +43,7 @@
                 <div class="col-md-12 mt-3">
                     <div class="form-group">
                         <label  for="remarks">Remarks</label>
-                        <textarea [(ngModel)]="remarks" id="remarks" class="form-control" rows="3"></textarea>
+                        <textarea [(ngModel)]="remarks" id="remarks" class="form-control chm-formtextarea" rows="3"></textarea>
                     </div>
                         <div class="text-end mt-3">
                            
