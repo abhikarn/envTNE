@@ -1,5 +1,10 @@
 ﻿ 
 @media (max-width: 1199px) {
+ .right-container-scroll {
+ 
+	max-height: 390px;
+ 
+}
  
 }
 

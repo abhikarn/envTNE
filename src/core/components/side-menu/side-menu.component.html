@@ -98,7 +98,7 @@
                <div class="uname-dp-text">{{displayName}}</div>
             </a>
             @if (profileMenuVisible) {
-            <div id="profileMenu" class="profile-menu">
+            <div id="profileMenu" class="profile-menu" [class.open-upward]="openUpward">
                <div class="mb-2">{{displayName}}</div>
                <ul class="side-pro-menu ps-0 list-unstyled mb-0">
                   <li>
