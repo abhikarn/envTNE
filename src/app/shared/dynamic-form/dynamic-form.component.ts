@@ -690,14 +690,14 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.dynamicFormService.scrollToFirstInvalidControl('.dynamic-form');
       return;
     }
+    const action = this.editIndex ? 'Updated' : 'Added';
+    this.snackbarService.success(`Expense Item ${action} Successfully`, 3000);
     this.setAutoCompleteFields();
     this.prepareFormJson();
     this.addDataToDynamicTable();
     setTimeout(() => {
       this.clear();
     }, 500);
-    const action = this.editIndex ? 'updated' : 'added';
-    this.snackbarService.success(`Expense item ${action} successfully`, 3000);
   }
 
 
