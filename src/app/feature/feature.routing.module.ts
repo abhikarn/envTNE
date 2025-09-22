@@ -15,6 +15,10 @@ export const routes: Routes = [
         {
           path: 'reports',
           loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule)
+        },
+        {
+          path: 'master',
+          loadChildren: () => import('./master/master.module').then(m => m.MasterModule)
         }
       ]
     },
