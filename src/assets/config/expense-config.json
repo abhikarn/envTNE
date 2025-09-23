@@ -2594,6 +2594,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -4204,6 +4210,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -5698,6 +5710,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -7262,6 +7280,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -8691,6 +8715,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -10185,6 +10215,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -11828,6 +11864,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -13687,6 +13729,12 @@
                             {
                                 "type": "required",
                                 "message": "Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -14739,6 +14787,12 @@
                             {
                                 "type": "required",
                                 "message": "Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -15431,6 +15485,12 @@
                             {
                                 "type": "required",
                                 "message": "Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -16346,6 +16406,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -17568,6 +17634,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -18581,6 +18653,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -19513,6 +19591,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -20251,6 +20335,12 @@
                             {
                                 "type": "required",
                                 "message": "Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -20854,6 +20944,12 @@
                             {
                                 "type": "required",
                                 "message": "Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -21681,6 +21777,12 @@
                             {
                                 "type": "required",
                                 "message": "Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -23039,6 +23141,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -24082,6 +24190,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -24883,6 +24997,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -25921,6 +26041,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -26700,6 +26826,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -27422,6 +27554,12 @@
                             {
                                 "type": "required",
                                 "message": "Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -28108,6 +28246,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -28748,6 +28892,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -29457,6 +29607,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -29992,6 +30148,12 @@
                             {
                                 "type": "required",
                                 "message": "Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -30764,6 +30926,12 @@
                             {
                                 "type": "required",
                                 "message": "Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -31459,6 +31627,12 @@
                             {
                                 "type": "required",
                                 "message": "Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -32896,6 +33070,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -34585,6 +34765,12 @@
                             {
                                 "type": "required",
                                 "message": "Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -35733,6 +35919,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Conversion Rate is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Claimed Conversion Rate must be greater than zero"
                             }
                         ],
                         "disable": false,
