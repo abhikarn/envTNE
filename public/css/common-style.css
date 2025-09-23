@@ -9629,9 +9629,8 @@ ul.summary-list li span {
 	height: 100%;
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
-	padding: 13px 13px 13px;
-}   
-
+	padding: 13px 13px 100px;
+}
 body.sidebar-mini.sidebar-collapse .left-container-wider {
         min-width: 75% !important;
         width: 75% !important;
@@ -12830,7 +12829,14 @@ body.sidebar-mini.sidebar-collapse .left-container-wider {
 	box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 	width: 225px;
 	color: #000;
-}.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover a.menu-item {
+}
+.profile-menu.open-upward{
+top: auto;
+    bottom: 0; 
+
+}
+
+.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover a.menu-item {
 	color: #000000 !important;
 }.side-pro-menu li:last-child {
 	margin-bottom: 0;

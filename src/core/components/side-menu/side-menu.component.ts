@@ -13,6 +13,7 @@ export class SideMenuComponent {
   displayCode: string = '';
   displayName: string = '';
   profileMenuVisible = false;
+  openUpward = false;
 
   constructor(
     private router: Router,
@@ -40,6 +41,24 @@ export class SideMenuComponent {
 
   toggleProfileMenu(): void {
     this.profileMenuVisible = !this.profileMenuVisible;
+
+if (this.profileMenuVisible) {
+    setTimeout(() => {
+      const toggleBtn = document.getElementById('profileToggle');
+      const menu = document.getElementById('profileMenu');
+
+      if (toggleBtn && menu) {
+        const btnRect = toggleBtn.getBoundingClientRect();
+        const menuHeight = menu.offsetHeight;
+        const spaceBelow = window.innerHeight - btnRect.bottom;
+
+        this.openUpward = spaceBelow < menuHeight; // true if not enough space below
+      }
+    });
+  }
+
+
+
   }
 
   Logout(): void {
