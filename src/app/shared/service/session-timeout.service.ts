@@ -22,7 +22,6 @@ export class SessionTimeoutService {
     const warningMs = warningMinutes * 60 * 1000;
     const preWarningMs = Math.max(1000, idleMs - warningMs);
 
-    console.log('SessionTimeoutService: starting', { idleMs, warningMs, preWarningMs });
 
     this.ngZone.runOutsideAngular(() => {
       const activity$ = merge(
@@ -37,22 +36,18 @@ export class SessionTimeoutService {
         .pipe(
           switchMap(() => {
             if (this.warningActive) {
-              console.log('SessionTimeoutService: ignoring activity during warning phase');
               return timer(999999999); // fake never-ending timer
             }
-            console.log('SessionTimeoutService: activity detected, reset idle timer');
             return timer(preWarningMs);
           })
         )
         .subscribe(() => {
           this.ngZone.run(() => {
-            console.log('SessionTimeoutService: warning triggered');
             this.warningActive = true;
             onWarning();
 
             const warnSub = timer(warningMs).subscribe(() => {
               this.ngZone.run(() => {
-                console.log('SessionTimeoutService: timeout reached');
                 this.warningActive = false;
                 onTimeout();
               });
@@ -67,7 +62,6 @@ export class SessionTimeoutService {
   }
 
   resetTimer() {
-    console.log('SessionTimeoutService: reset timer');
     this.warningActive = false; // exit warning mode
     this.userAction$.next();
   }

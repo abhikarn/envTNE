@@ -153,23 +153,23 @@
                   <div id="recent-req-tabs" class="custom-wrapper-general">
                      <div class="position-relative">
                         <ul class="nav nav-tabs line-tab mb-lg-4 mb-md-4 mb-sm-3 mb-3" id="linetab" role="tablist">
-                           <li class="nav-item" role="presentation">
+                           <!-- <li class="nav-item" role="presentation">
                               <button class="nav-link active requesttab" id="travel-req-tab" data-bs-toggle="tab"
                                  data-bs-target="#travel-req" type="button" role="tab" aria-controls="travel-req"
                                  aria-selected="true">Travel Request - 42
                               </button>
-                           </li>
+                           </li> -->
                            <li class="nav-item" role="presentation">
-                              <button class="nav-link requesttab" id="expense-state-tab" data-bs-toggle="tab"
+                              <button class="nav-link show active requesttab" id="expense-state-tab" data-bs-toggle="tab"
                                  data-bs-target="#expense-state" type="button" role="tab" aria-controls="expense-state"
-                                 aria-selected="false">
+                                 aria-selected="true">
                                  {{expenseDashboardConfig?.dashboard?.expenseStatement.name}}
                                  - {{this.expenseRequesData.length}} </button>
                            </li>
                         </ul>
                      </div>
                      <div class="tab-content common-tab-content" id="linetabcontent">
-                        <div id="travel-req" role="tabpanel" aria-labelledby="travel-req-tab"
+                        <!-- <div id="travel-req" role="tabpanel" aria-labelledby="travel-req-tab"
                            class="tab-pane fade show active pt-0  position-relative">
                            <div class="table-responsive">
                               <div class="row">
@@ -941,9 +941,9 @@
                                  </div>
                               </div>
                            </div>
-                        </div>
+                        </div> -->
                         <div id="expense-state" role="tabpanel" aria-labelledby="expense-state-tab"
-                           class="tab-pane fade pt-0 position-relative">
+                           class="tab-pane fade show active pt-0 position-relative">
                            <div class="datatable-right">
                               <div class="dt-buttons">
                                  <button class="btn btn-outline-secondary me-2 py-1 fw-normal  px-3 btn-sm export-btn"
