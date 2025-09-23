@@ -158,31 +158,14 @@ export class AppComponent implements OnInit {
   readTokenForSSO(url: string) {
     console.log('AppComponent initialized with SSO URL:', url);
     const queryParams = new URLSearchParams(window.location.search);
-    let tokenStr = queryParams.get('token');
+    let sessionId = queryParams.get('token');
 
-    // If no token in query params, check localStorage
-    if (!tokenStr) {
-      tokenStr = localStorage.getItem('token');
-    }
+    console.log('SSO Token:', sessionId);
 
-    console.log('SSO Token:', tokenStr);
-
-    if (tokenStr) {
+    if (sessionId) {
       try {
-        const payload = tokenStr.split('.')[1]; // JWT structure
-        const decoded = JSON.parse(atob(payload));
-        console.log('Decoded JWT Payload:', decoded);
-
-        // Save token if it's new
-        localStorage.setItem('token', tokenStr);
-
-        if (decoded.exp) {
-          const expireTime = decoded.exp * 1000;
-          const currentTime = new Date().getTime();
-
-          if (currentTime < expireTime) {
-            this.newExpenseService.GetUserData({
-              sessionId: decoded.jti, // use token's jti as session
+         this.newExpenseService.GetUserData({
+              sessionId: sessionId, // use token's jti as session
             }).subscribe({
               next: (userDataResponse: any) => {
                 if (!userDataResponse || !userDataResponse.token) {
@@ -192,24 +175,16 @@ export class AppComponent implements OnInit {
                 }
                 this.isAuthenticated = true;
                 this.onAuthenticated();
-                console.log('LoginComponent: GetUserData response', userDataResponse);
                 localStorage.setItem('loginType', 'SSO');
-                localStorage.setItem('sessionId', decoded.jti);
+                localStorage.setItem('sessionId', sessionId);
                 localStorage.setItem('userData', JSON.stringify(userDataResponse));
                 localStorage.setItem('userMasterId', userDataResponse.token.userMasterId);
                 this.authService.setToken(userDataResponse.token);
                 this.authService.setUserMasterId(userDataResponse.token.userMasterId);
-                setTimeout(() => {
-                  this.router.navigate(['/expense/expense/dashboard']);
-                }, 3000);
+                this.router.navigate(['/expense/expense/dashboard']);
               }
             });
-          } else {
-            this.isAuthenticated = false;
-            alert('Session expired. Please log in again.');
-            this.authService.Logout();
-          }
-        }
+
       } catch (e) {
         console.error('Error decoding token:', e);
       }
