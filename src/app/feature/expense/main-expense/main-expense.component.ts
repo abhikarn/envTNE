@@ -608,6 +608,9 @@ export class MainExpenseComponent {
             control.defaultValue = isWithoutCurrency ? null : defaultCurrency;
             control.readonly = !isWithoutCurrency;
           }
+          if (control?.name === 'EntitlementCurrency') {
+            control.defaultValue = isWithoutCurrency ? null : defaultCurrency;
+          }
         })
       );
     });

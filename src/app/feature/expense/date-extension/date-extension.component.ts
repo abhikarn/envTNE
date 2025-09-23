@@ -29,6 +29,7 @@ import { MatTimepickerModule } from '@angular/material/timepicker';
 export class DateExtensionComponent {
   travelForm: FormGroup;
   data: any;
+  today: Date = new Date();
 
   constructor(
     @Optional() private dialogRef: MatDialogRef<DateExtensionComponent>,

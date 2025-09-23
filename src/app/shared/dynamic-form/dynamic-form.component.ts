@@ -259,6 +259,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.dynamicFormService.scrollToFirstInvalidControl('form');
       return;
     }
+    this.form.get('IsViolation')?.setValue(false);
+    this.dynamicFormService.updateConditionalValidators(this.form, this.formConfig);
     // enable all controls before submission
     this.formControls.forEach(control => {
       if (control.control.disabled) {
