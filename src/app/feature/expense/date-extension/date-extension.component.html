@@ -22,7 +22,7 @@
                         <mat-label>Travel From Date</mat-label>
                         <div class="input-group">
                             <input matInput [matDatepicker]="fromDatePicker" formControlName="travelFromDate"
-                                (click)="fromDatePicker.open()" required>
+                                (click)="fromDatePicker.open()" [max]="today" required>
                             <mat-datepicker-toggle matIconSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
                             <mat-datepicker #fromDatePicker></mat-datepicker>
 
@@ -54,7 +54,7 @@
                         <mat-label>Travel To Date</mat-label>
                         <div class="input-group">
                             <input matInput [matDatepicker]="toDatePicker" formControlName="travelToDate"
-                                (click)="toDatePicker.open()" required>
+                                (click)="toDatePicker.open()" [max]="today" required>
                             <mat-datepicker-toggle matIconSuffix [for]="toDatePicker"></mat-datepicker-toggle>
                             <mat-datepicker #toDatePicker></mat-datepicker>
                             <span class="  date-picker-icon align-top-t10">
