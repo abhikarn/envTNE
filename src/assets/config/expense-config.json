@@ -906,7 +906,7 @@
                         "value": null,
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -8396,7 +8396,7 @@
                         "value": null,
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -9890,7 +9890,7 @@
                         "value": null,
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -13322,7 +13322,7 @@
                         "value": null,
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -16111,7 +16111,7 @@
                         "value": "",
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -21413,7 +21413,7 @@
                         "value": null,
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -21957,7 +21957,7 @@
                                 "value": null,
                                 "autoFormat": {
                                     "patterns": [
-                                        "[^A-Za-z0-9 ]"
+                                        "^[^A-Za-z0-9]+"
                                     ],
                                     "range": {
                                         "max": 50
@@ -31229,7 +31229,7 @@
                         "value": null,
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50
@@ -34220,7 +34220,7 @@
                         "value": null,
                         "autoFormat": {
                             "patterns": [
-                                "[^A-Za-z0-9 ]"
+                                "^[^A-Za-z0-9]+"
                             ],
                             "range": {
                                 "max": 50

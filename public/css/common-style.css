@@ -4498,7 +4498,7 @@ button.dropbtn {
     padding: 10px 11px;
     width: 100%;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     }.sidebar-menu > li.active > a {
 	opacity: 1;
 }
