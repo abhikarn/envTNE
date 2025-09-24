@@ -898,34 +898,6 @@
                     {
                         "type": "text",
                         "subType": "text",
-                        "dataType": "string",
-                        "autoComplete": false,
-                        "name": "VendorName",
-                        "isExcluded": false,
-                        "label": "Vendor Name",
-                        "value": null,
-                        "autoFormat": {
-                            "patterns": [
-                                "^[^A-Za-z0-9]+"
-                            ],
-                            "range": {
-                                "max": 50
-                            }
-                        },
-                        "required": true,
-                        "validations": [
-                            {
-                                "type": "required",
-                                "message": "Vendor Name is required"
-                            }
-                        ],
-                        "disable": false,
-                        "readonly": false,
-                        "order": 8
-                    },
-                    {
-                        "type": "text",
-                        "subType": "text",
                         "dataType": "int",
                         "autoComplete": true,
                         "name": "Origin",
@@ -45507,7 +45479,7 @@
                 {
                     "key": "PolicyViolationCount",
                     "label": "Policy Violation",
-                    "sortable": true,
+                    "sortable": false,
                     "showSearch": false,
                     "class": "text-center",
                     "order": 8
