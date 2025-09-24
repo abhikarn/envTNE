@@ -1,3 +1,12 @@
+ 	        body.sidebar-mini .left-container-wider {
+        min-width:63% !important;
+        width: 63% !important;
+        }
+
+                body.sidebar-mini .left-container-wider .expense-tab-sec .mdc-tab {
+	min-width: 115px!important;
+}
+
  app-main-expense {
 	#mat-tab-group-2-label-3 {
 	display: none;
@@ -10,6 +19,7 @@
 	.mr-10 {
 		margin-right: 10px;
 	}
+
 
 	#expenseCategories .mat-mdc-tab-header {
 	 
@@ -372,7 +382,6 @@ min-width: 153px;
 		font-size: 0.9rem !important;
 
 	}
-
 
 	div.mat-mdc-autocomplete-panel {
 		position: relative !important;

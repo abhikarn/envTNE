@@ -9635,14 +9635,7 @@ body.sidebar-mini.sidebar-collapse .left-container-wider {
         min-width: 75% !important;
         width: 75% !important;
         }
-        body.sidebar-mini .left-container-wider {
-        min-width:63% !important;
-        width: 63% !important;
-        }
 
-                body.sidebar-mini .left-container-wider .expense-tab-sec .mdc-tab {
-	min-width: 115px!important;
-}
 
         h5.heading-h5-sub {
         color: #2d83c8;

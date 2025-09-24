@@ -1,4 +1,11 @@
 app-preview {
+
+	.mat-mdc-tab-body.mat-mdc-tab-body-active {
+     
+    z-index: 0;
+   
+}
+
     .adjustemnt-container {
         width: 100%;
         margin: 10px 0;
