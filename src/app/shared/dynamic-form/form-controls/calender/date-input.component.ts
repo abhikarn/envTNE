@@ -19,15 +19,15 @@ import { CommonModule } from '@angular/common';
 export const CUSTOM_DATE_FORMATS = {
   parse: {
     dateInput: 'DD-MMM-YYYY',
-    timeInput: 'HH:mm',
+    timeInput: 'HH:mm:ss',
   },
   display: {
     dateInput: 'DD-MMM-YYYY',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'DD-MMM-YYYY',
     monthYearA11yLabel: 'MMMM YYYY',
-    timeInput: 'HH:mm',
-    timeOptionLabel: 'HH:mm',
+    timeInput: 'HH:mm:ss',
+    timeOptionLabel: 'HH:mm:ss',
   },
 };
 
@@ -92,7 +92,7 @@ export class DateInputComponent {
     // Pre-fill time control from existing datetime
     if (this.controlConfig.time) {
       const initial = this.control.value ? _moment(this.control.value) : _moment();
-      this.pendingTime = initial.format('HH:mm');
+      this.pendingTime = initial.format('HH:mm:ss');
       this.timeControl.setValue(this.pendingTime, { emitEvent: false });
     }
   }
@@ -138,7 +138,7 @@ export class DateInputComponent {
 
     this.pendingTime = typeof timeValue === 'string' && timeValue.includes(':')
       ? timeValue
-      : _moment(timeValue, 'HH:mm').format('HH:mm');
+      : _moment(timeValue, 'HH:mm:ss').format('HH:mm:ss');
 
     if (this.control.value) {
       const dateMoment = _moment(this.control.value);
@@ -156,7 +156,7 @@ export class DateInputComponent {
       millisecond: 0
     });
 
-    const localIso = date.format('YYYY-MM-DDTHH:mm');
+    const localIso = date.format('YYYY-MM-DDT:ss');
     this.control.setValue(localIso, { emitEvent: false });
     this.valueChange.emit({ event: { value: localIso }, control: this.controlConfig });
   }
@@ -188,7 +188,7 @@ export class DateInputComponent {
       newDate.setHours(old.hour(), old.minute(), old.second(), old.millisecond());
     }
     if (newDate) {
-      const localIso = _moment(newDate).format('YYYY-MM-DDTHH:mm');
+      const localIso = _moment(newDate).format('YYYY-MM-DDTHH:mm:ss');
       this.control.setValue(localIso, { emitEvent: false });
     }
     this.valueChange.emit({ event, control: this.controlConfig });
