@@ -3134,11 +3134,13 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual"
+                            "IsActual": "IsActual",
+                            "IsTaxIncluded": "IsTaxIncluded",
+                            "TaxAmount": "TaxAmount"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -4700,11 +4702,13 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual"
+                            "IsActual": "IsActual",
+                            "IsTaxIncluded": "IsTaxIncluded",
+                            "TaxAmount": "TaxAmount"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -6194,11 +6198,13 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual"
+                            "IsActual": "IsActual",
+                            "IsTaxIncluded": "IsTaxIncluded",
+                            "TaxAmount": "TaxAmount"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -7752,11 +7758,13 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual"
+                            "IsActual": "IsActual",
+                            "IsTaxIncluded": "IsTaxIncluded",
+                            "TaxAmount": "TaxAmount"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -9247,11 +9255,13 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual"
+                            "IsActual": "IsActual",
+                            "IsTaxIncluded": "IsTaxIncluded",
+                            "TaxAmount": "TaxAmount"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -10747,11 +10757,13 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual"
+                            "IsActual": "IsActual",
+                            "IsTaxIncluded": "IsTaxIncluded",
+                            "TaxAmount": "TaxAmount"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -12392,11 +12404,13 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual"
+                            "IsActual": "IsActual",
+                            "IsTaxIncluded": "IsTaxIncluded",
+                            "TaxAmount": "TaxAmount"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -16890,11 +16904,13 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual"
+                            "IsActual": "IsActual",
+                            "IsTaxIncluded": "IsTaxIncluded",
+                            "TaxAmount": "TaxAmount"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -23317,11 +23333,13 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual"
+                            "IsActual": "IsActual",
+                            "IsTaxIncluded": "IsTaxIncluded",
+                            "TaxAmount": "TaxAmount"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -24354,11 +24372,13 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual"
+                            "IsActual": "IsActual",
+                            "IsTaxIncluded": "IsTaxIncluded",
+                            "TaxAmount": "TaxAmount"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -26201,11 +26221,13 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual"
+                            "IsActual": "IsActual",
+                            "IsTaxIncluded": "IsTaxIncluded",
+                            "TaxAmount": "TaxAmount"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -33609,11 +33631,13 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual"
+                            "IsActual": "IsActual",
+                            "IsTaxIncluded": "IsTaxIncluded",
+                            "TaxAmount": "TaxAmount"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -36384,11 +36408,13 @@
                 ],
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
+                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual"
+                            "IsActual": "IsActual",
+                            "IsTaxIncluded": "IsTaxIncluded",
+                            "TaxAmount": "TaxAmount"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
