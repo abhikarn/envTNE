@@ -121,7 +121,7 @@ export class DynamicTableComponent implements OnInit {
 
     const isDateTimeType = column && (column.type === 'datetime');
     if (isDateTimeType && this.isDate(value)) {
-      const format = this.configService.dateTimeFormat || 'dd-MMM-yyyy HH:mm:ss';
+      const format = this.configService.dateTimeFormat || 'dd-MMM-yyyy HH:mm';
       return this.formatDateUsingFormat(value, format);
     }
     

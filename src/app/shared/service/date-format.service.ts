@@ -12,12 +12,12 @@ export class DateFormatService {
     return {
       parse: {
         dateInput: 'YYYY-MM-DD',
-        timeInput: 'HH:mm:ss',
+        timeInput: 'HH:mm',
       },
       display: {
         dateInput: 'DD/MM/YYYY',
-        timeInput: 'HH:mm:ss',
-        timeOptionLabel: 'HH:mm:ss',
+        timeInput: 'HH:mm',
+        timeOptionLabel: 'HH:mm',
         monthYearLabel: 'MMM YYYY',
         dateA11yLabel: 'LL',
         monthYearA11yLabel: 'MMMM YYYY',
