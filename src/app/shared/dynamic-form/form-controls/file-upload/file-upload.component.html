@@ -19,6 +19,15 @@
       [accept]="controlConfig.accept" [disabled]="controlConfig.disable" class="d-none d-md-block d-lg-block" />
     <small> {{controlConfig.helpText}} (Max size: {{controlConfig.maxSizeMB}} MB)</small>
   </div>
+
+  <!-- <div class="mt-2 d-flex align-items-center">
+    <input type="text" #linkInput class="form-control me-2"
+      placeholder="Paste document link (OneDrive, Google Drive, SharePoint...)" />
+    <button type="button" class="btn btn-outline-primary btn-sm"
+      (click)="addLink(linkInput.value); linkInput.value=''">Add Link</button>
+  </div> -->
+
+
   <!-- Table to Display Selected Files -->
   @if (selectedFiles?.length > 0) {
   <table id="tblLtcDocument"
@@ -39,7 +48,9 @@
       @for (file of selectedFiles; track file; let i = $index) {
       <tr>
      <td>{{ i + 1 }}</td>
-        <td class="filename-width"  > <label>Document Name</label> {{ file?.FileName }}</td>
+        <td class="filename-width"  > <label>Document Name</label> {{ file?.FileName }} 
+          <!-- <span *ngIf="file?.IsLink" class="badge bg-info ms-1">Link</span> -->
+        </td>
         @if (form.value?.DocumentType) {
           <td class="text-lg-start">
             <label>Document Type</label> {{ file?.DocumentTypeName }}
