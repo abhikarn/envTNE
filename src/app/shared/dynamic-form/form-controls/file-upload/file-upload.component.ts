@@ -166,6 +166,10 @@ export class FileUploadComponent {
     if (fileUrl) {
       window.open(fileUrl, '_blank');
     }
+    if (file.IsLink) {
+      window.open(file.Location, '_blank');
+      return;
+    }
   }
 
   downloadFile(file: any) {
@@ -196,6 +200,12 @@ export class FileUploadComponent {
         this.snackbarService.error('Error downloading file');
       }
     });
+
+    if (file.IsLink) {
+      window.open(file.Location, '_blank');
+      return;
+    }
+
   }
 
   uploadOcrFile(file: File, payload?: any) {
@@ -347,6 +357,43 @@ export class FileUploadComponent {
     if (input) {
       input.click();
     }
+  }
+
+  addLink(link: string) {
+    if (!link) {
+      this.snackbarService.error('Please enter a link.');
+      return;
+    }
+
+    // Basic URL validation
+    try {
+      new URL(link);
+    } catch {
+      this.snackbarService.error('Invalid URL format.');
+      return;
+    }
+
+    // Optional: restrict allowed domains
+    const allowedDomains = ['onedrive.live.com', 'sharepoint.com', 'drive.google.com', 'outlook.office.com'];
+    const urlHost = new URL(link).hostname;
+    if (!allowedDomains.some(domain => urlHost.includes(domain))) {
+      this.snackbarService.error('Unsupported link provider.');
+      return;
+    }
+
+    const linkPayload = {
+      ReferenceType: this.form.value?.DocumentType || this.controlConfig.referenceType,
+      DocumentTypeName: this.form.value?.DocumentTypeName || '',
+      FileName: 'Link Attachment',
+      Location: link,
+      IsLink: true,
+      Guid: null
+    };
+
+    this.selectedFiles.push(linkPayload);
+    this.control.setValue(this.selectedFiles);
+
+    this.snackbarService.success('Link attached successfully.');
   }
 
 }
