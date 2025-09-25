@@ -3288,7 +3288,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 19
@@ -4859,7 +4859,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -6348,7 +6348,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -7908,7 +7908,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -9405,7 +9405,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -10828,7 +10828,7 @@
                         "order": 3
                     },
                     {
-                        "type": "text",
+                        "type": "date",
                         "name": "ClaimToDate",
                         "label": "Claim To Date",
                         "visible": true,
@@ -10907,7 +10907,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -12574,7 +12574,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 12
@@ -17052,7 +17052,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 12
@@ -18088,7 +18088,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 12
@@ -19980,7 +19980,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 12
@@ -23497,7 +23497,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -24536,7 +24536,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -26364,7 +26364,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -33785,7 +33785,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
-                        "label": "ClaimAmountInBaseCurrency",
+                        "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 19
@@ -37275,7 +37275,7 @@
             {
                 "label": "Linked Request",
                 "name": "travelRequestNumber",
-                "isLink": true,
+                "isLink": false,
                 "value": "",
                 "displayFormula": {
                     "formula": "travelRequestId !== 0"
