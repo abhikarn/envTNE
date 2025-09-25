@@ -212,7 +212,8 @@
                       <mat-form-field class="more-item" appearance="fill" (click)="$event.stopPropagation()"
                         (mousedown)="$event.stopPropagation()">
                         <mat-select class="more-item-select" placeholder="More" [value]="selectedExtraCategory"
-                          (selectionChange)="onExtraCategorySelect($event.value)" panelClass="custom-more-select-panel">
+                          (selectionChange)="onExtraCategorySelect($event.value)" panelClass="custom-more-select-panel"
+                          [disabled]="!travelRequestId && expenseConfig?.request?.displayPage[moduleConfig.pageTitle]">
                           <mat-option *ngFor="let cat of categories.slice(5)" [value]="cat">
                             {{cat.label}} <span style="font-weight: bold;">{{cat.count}}</span>
                           </mat-option>
