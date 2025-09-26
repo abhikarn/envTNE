@@ -1,7 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, Renderer2, Inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../app/shared/service/auth.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-side-menu',
@@ -17,7 +18,9 @@ export class SideMenuComponent {
 
   constructor(
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private document: Document
   ) { }
 
   @HostListener('document:click', ['$event'])
@@ -33,29 +36,36 @@ export class SideMenuComponent {
   }
 
   toggleSideBar(): void {
-    const body = document.querySelector('body');
-    if (body) {
-      body.classList.toggle('sidebar-collapse');
+    const body = this.document.body;
+    console.log(body.classList)
+    if (body.classList.contains('sidebar-collapse')) {
+      setTimeout(() => {
+        this.renderer.removeClass(body, 'sidebar-collapse');
+      }, 50);
+    } else {
+      setTimeout(() => {
+        this.renderer.addClass(body, 'sidebar-collapse');
+      }, 50);
     }
   }
 
   toggleProfileMenu(): void {
     this.profileMenuVisible = !this.profileMenuVisible;
 
-if (this.profileMenuVisible) {
-    setTimeout(() => {
-      const toggleBtn = document.getElementById('profileToggle');
-      const menu = document.getElementById('profileMenu');
+    if (this.profileMenuVisible) {
+      setTimeout(() => {
+        const toggleBtn = document.getElementById('profileToggle');
+        const menu = document.getElementById('profileMenu');
 
-      if (toggleBtn && menu) {
-        const btnRect = toggleBtn.getBoundingClientRect();
-        const menuHeight = menu.offsetHeight;
-        const spaceBelow = window.innerHeight - btnRect.bottom;
+        if (toggleBtn && menu) {
+          const btnRect = toggleBtn.getBoundingClientRect();
+          const menuHeight = menu.offsetHeight;
+          const spaceBelow = window.innerHeight - btnRect.bottom;
 
-        this.openUpward = spaceBelow < menuHeight; // true if not enough space below
-      }
-    });
-  }
+          this.openUpward = spaceBelow < menuHeight; // true if not enough space below
+        }
+      });
+    }
 
 
 
