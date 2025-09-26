@@ -268,7 +268,7 @@ export class DashboardComponent implements OnInit {
     }
 
     // Default (string/text)
-    return String(rawValue).toLowerCase();
+    return String(rawValue).toLowerCase().replace(/[-/|,]/g, ' ');
   }
 
   private buildFilterPredicate(columnFilters: { [key: string]: string }, globalFilter?: string) {
@@ -277,23 +277,26 @@ export class DashboardComponent implements OnInit {
 
       // Column-wise filtering
       const matchesColumnFilters = Object.keys(columnFilters).every(colKey => {
-        const searchVal = columnFilters[colKey]?.trim().toLowerCase().replace(/[-/,]/g, ' ');
+        const searchVal = columnFilters[colKey]?.trim().toLowerCase().replace(/[-/|,]/g, ' ');
         if (!searchVal) return true;
 
         const columnDef = colsToSearch.find(c => c.key === colKey);
         if (!columnDef) return true;
 
         const normalizedValue = this.normalizeValueForFilter(columnDef, data[colKey]);
-        return normalizedValue.includes(searchVal);
+        const nv = normalizedValue.replace(/\s+/g, '');
+        const sv = searchVal.replace(/\s+/g, '');
+        return nv.includes(sv);
       });
 
       if (!matchesColumnFilters) return false;
-
       // Global filtering
       if (globalFilter) {
         return colsToSearch.some(col => {
           const normalizedValue = this.normalizeValueForFilter(col, data[col.key]);
-          return normalizedValue.includes(globalFilter);
+          const nv = normalizedValue.replace(/\s+/g, '');
+          const sv = globalFilter.replace(/\s+/g, '');
+          return nv.includes(sv);
         });
       }
 
@@ -321,8 +324,8 @@ export class DashboardComponent implements OnInit {
 
   applyGlobalFilter(event: Event): void {
     let filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    filterValue = filterValue.replace(/[-/]/g, ' ');
-    filterValue = filterValue.replace(/[,/]/g, '');
+    filterValue = filterValue.replace(/[-/|,]/g, '');
+    filterValue = filterValue.replace(/\s+/g, '');
 
     // Clear column filters when global filter is used
     this.columnFilterValues = {};
