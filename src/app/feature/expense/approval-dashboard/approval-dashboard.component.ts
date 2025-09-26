@@ -112,7 +112,7 @@ export class ApprovalDashboardComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private configService: GlobalConfigService
-    
+
   ) {
 
   }
@@ -203,7 +203,7 @@ export class ApprovalDashboardComponent implements OnInit {
   }
 
   onLoadMore() {
-    
+
     this.mobileCurrentPage++;
     this.updateMobileDisplayData();
   }
@@ -234,18 +234,29 @@ export class ApprovalDashboardComponent implements OnInit {
   //   this.dataSource.sort = this.sort;
   // }
 
-   private normalizeValueForFilter(col: ColumnConfig, rawValue: any): string {
+  // Centralized normalization for both data and search inputs
+  private normalizeValue(col: ColumnConfig, rawValue: any): string {
     if (rawValue == null) return '';
 
-    // Numbers
+    let value = String(rawValue).toLowerCase();
+
+    // Normalize separators
+    value = value.replace(/[-/]/g, ' ');    // replace - and / with space
+    value = value.replace(/[,]/g, '');      // remove commas
+    value = value.replace(/\s*\|\s*/g, ' '); // replace " | " or "|" with space
+
+    // Collapse multiple spaces and trim
+    value = value.replace(/\s+/g, ' ').trim();
+
+    // Special case: Numbers
     if (col.type === 'number') {
       const precision = col.decimalPrecision ?? 2;
-      return Number(rawValue)
+      return Number(value)
         .toFixed(precision)
-        .replace(/,/g, ''); // ensure no commas
+        .replace(/,/g, '');
     }
 
-    // Dates (normalize to dd-MMM-yyyy, and replace separators with spaces)
+    // Special case: Dates (normalize to dd MMM yyyy)
     if (col.key.toLowerCase().includes('date')) {
       const dateObj = new Date(rawValue);
       if (!isNaN(dateObj.getTime())) {
@@ -256,28 +267,33 @@ export class ApprovalDashboardComponent implements OnInit {
             year: 'numeric'
           })
           .toLowerCase()
-          .replace(/[-/]/g, ' '); // "08-mar-2024" → "08 mar 2024"
+          .replace(/[-/]/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
       }
     }
 
-    // Default (string/text)
-    return String(rawValue).toLowerCase();
+    return value;
   }
 
+  // Filter predicate (handles column + global)
   private buildFilterPredicate(columnFilters: { [key: string]: string }, globalFilter?: string) {
     return (data: any): boolean => {
       const colsToSearch = this.displayedColumns.filter(col => col.showSearch);
 
       // Column-wise filtering
       const matchesColumnFilters = Object.keys(columnFilters).every(colKey => {
-        const searchVal = columnFilters[colKey]?.trim().toLowerCase().replace(/[-/,]/g, ' ');
-        if (!searchVal) return true;
-
         const columnDef = colsToSearch.find(c => c.key === colKey);
         if (!columnDef) return true;
 
-        const normalizedValue = this.normalizeValueForFilter(columnDef, data[colKey]);
-        return normalizedValue.includes(searchVal);
+        const searchVal = this.normalizeValue(columnDef, columnFilters[colKey]);
+        if (!searchVal) return true;
+
+        const normalizedValue = this.normalizeValue(columnDef, data[colKey]);
+
+        // Split search into tokens and ensure all are present
+        const searchTokens = searchVal.split(/\s+/);
+        return searchTokens.every(token => normalizedValue.includes(token));
       });
 
       if (!matchesColumnFilters) return false;
@@ -285,8 +301,10 @@ export class ApprovalDashboardComponent implements OnInit {
       // Global filtering
       if (globalFilter) {
         return colsToSearch.some(col => {
-          const normalizedValue = this.normalizeValueForFilter(col, data[col.key]);
-          return normalizedValue.includes(globalFilter);
+          const normalizedValue = this.normalizeValue(col, data[col.key]);
+          const normalizedSearch = this.normalizeValue(col, globalFilter);
+          const searchTokens = normalizedSearch.split(/\s+/);
+          return searchTokens.every(token => normalizedValue.includes(token));
         });
       }
 
@@ -294,14 +312,13 @@ export class ApprovalDashboardComponent implements OnInit {
     };
   }
 
+  // Column filter
   applyFilter(event: Event, column: string) {
-    let filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    filterValue = filterValue.replace(/[-/]/g, ' ');
-    filterValue = filterValue.replace(/[,/]/g, '');
-    this.columnFilterValues[column] = filterValue;
+    const inputValue = (event.target as HTMLInputElement).value;
+    this.columnFilterValues[column] = inputValue;
 
     this.dataSource.filterPredicate = this.buildFilterPredicate(this.columnFilterValues);
-    this.dataSource.filter = JSON.stringify(this.columnFilterValues); // still needed for Angular Material
+    this.dataSource.filter = JSON.stringify(this.columnFilterValues); // required trigger
 
     this.dataSourceMobile.filterPredicate = this.dataSource.filterPredicate;
     this.dataSourceMobile.filter = JSON.stringify(this.columnFilterValues);
@@ -312,19 +329,18 @@ export class ApprovalDashboardComponent implements OnInit {
     }
   }
 
+  // Global filter
   applyGlobalFilter(event: Event): void {
-    let filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    filterValue = filterValue.replace(/[-/]/g, ' ');
-    filterValue = filterValue.replace(/[,/]/g, '');
+    const inputValue = (event.target as HTMLInputElement).value;
 
     // Clear column filters when global filter is used
     this.columnFilterValues = {};
 
-    this.dataSource.filterPredicate = this.buildFilterPredicate({}, filterValue);
-    this.dataSource.filter = filterValue;
+    this.dataSource.filterPredicate = this.buildFilterPredicate({}, inputValue);
+    this.dataSource.filter = inputValue;
 
     this.dataSourceMobile.filterPredicate = this.dataSource.filterPredicate;
-    this.dataSourceMobile.filter = filterValue;
+    this.dataSourceMobile.filter = inputValue;
 
     if (this.isMobile) {
       this.mobileCurrentPage = 1;
@@ -359,44 +375,44 @@ export class ApprovalDashboardComponent implements OnInit {
   }
 
   toggleSelectAll(checked: boolean): void {
-      if (this.dataSource && this.dataSource.data) {
-        this.dataSource.data.forEach((element: any) => {
-          element.selected = checked;
-        });
-      }
-      if (this.mobileDisplayData) {
-        this.mobileDisplayData.forEach((element: any) => {
-          element.selected = checked;
-        });
-      }
-    }
-    
-    // bulk approve
-    bulkApprove(): void {
-      const selectedRequests = this.dataSource.data.filter((item: any) => item.selected);
-      if (selectedRequests.length === 0) {
-        this.snackbarService.error('No requests selected for approval', 3000);
-        return;
-      }
-  
-      this.dialog.open(BulkApproveModalComponent, {
-        width: '1000px',
-        data: { selectedRequests },
-        panelClass: 'custom-modal-panel'
+    if (this.dataSource && this.dataSource.data) {
+      this.dataSource.data.forEach((element: any) => {
+        element.selected = checked;
       });
     }
-
-    oneClickApprove(id: number) {
-      const selectedRequest = this.dataSource.data.filter((item: any) => item.ExpenseRequestId == id);
-      if (selectedRequest.length === 0) {
-        this.snackbarService.error('Something went wrong, Please try again!', 3000);
-        return;
-      }
-
-       this.dialog.open(OneClickApproveComponent, {
-        width: '1000px',
-        data: { selectedRequest },
-        panelClass: 'custom-modal-panel'
+    if (this.mobileDisplayData) {
+      this.mobileDisplayData.forEach((element: any) => {
+        element.selected = checked;
       });
     }
+  }
+
+  // bulk approve
+  bulkApprove(): void {
+    const selectedRequests = this.dataSource.data.filter((item: any) => item.selected);
+    if (selectedRequests.length === 0) {
+      this.snackbarService.error('No requests selected for approval', 3000);
+      return;
+    }
+
+    this.dialog.open(BulkApproveModalComponent, {
+      width: '1000px',
+      data: { selectedRequests },
+      panelClass: 'custom-modal-panel'
+    });
+  }
+
+  oneClickApprove(id: number) {
+    const selectedRequest = this.dataSource.data.filter((item: any) => item.ExpenseRequestId == id);
+    if (selectedRequest.length === 0) {
+      this.snackbarService.error('Something went wrong, Please try again!', 3000);
+      return;
+    }
+
+    this.dialog.open(OneClickApproveComponent, {
+      width: '1000px',
+      data: { selectedRequest },
+      panelClass: 'custom-modal-panel'
+    });
+  }
 }
