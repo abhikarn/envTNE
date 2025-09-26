@@ -45353,7 +45353,7 @@
     },
     "dashboard": {
         "name": "My dashboard",
-        "link": "/expense/expense/my",
+        "link": "/dashboard",
         "statusWiseTravelRequest": {
             "name": "Travel Request",
             "statusWise": [
@@ -45437,7 +45437,7 @@
             {
                 "label": "Raise Expense Claim",
                 "type": "link",
-                "url": "/expense/expense/landing",
+                "url": "/expense/landing",
                 "class": "btn btn-primary w-100"
             },
             {

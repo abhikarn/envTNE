@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../core/components/header/header.component';
 import { SideMenuComponent } from '../core/components/side-menu/side-menu.component';
-import { ExpenseModule } from './feature/expense/expense.module';
-import { FeatureModule } from './feature/feature.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -181,7 +179,7 @@ export class AppComponent implements OnInit {
                 localStorage.setItem('userMasterId', userDataResponse.token.userMasterId);
                 this.authService.setToken(userDataResponse.token);
                 this.authService.setUserMasterId(userDataResponse.token.userMasterId);
-                this.router.navigate(['/expense/expense/dashboard']);
+                this.router.navigate(['/dashboard']);
               }
             });
 
@@ -210,7 +208,7 @@ export class AppComponent implements OnInit {
             localStorage.setItem('loginType', 'DeepLink');
             this.onAuthenticated();
             this.platformService.setPlatform(platform === 'Mobile')
-            this.router.navigate(['/expense/expense/dashboard']);
+            this.router.navigate(['/dashboard']);
           },
           error: () => {
             this.authService.Logout();
@@ -240,7 +238,7 @@ export class AppComponent implements OnInit {
         this.onAuthenticated();
         // Redirect to dashboard if authenticated and on /account
         if (currentUrl.toLowerCase() === '/account') {
-          this.router.navigate(['/expense/expense/dashboard']);
+          this.router.navigate(['/dashboard']);
         }
       } else {
         this.isAuthenticated = false;

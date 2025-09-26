@@ -118,7 +118,7 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('userData', JSON.stringify(userDataResponse));
                 localStorage.setItem('userMasterId', userDataResponse.token.userMasterId);
                 console.log(userDataResponse);
-                this.router.navigate(['/expense/expense/dashboard']);
+                this.router.navigate(['/dashboard']);
               },
               error: () => {
                 this.errorMessage = 'Unable to retrieve user data.';

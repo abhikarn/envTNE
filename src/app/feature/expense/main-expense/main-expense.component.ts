@@ -868,10 +868,10 @@ export class MainExpenseComponent {
         this.bottomSheet.dismiss();
       }
       if (this.editMode) {
-        this.router.navigate(['../expense/expense/dashboard']);
+        this.router.navigate(['../dashboard']);
         return;
       } else {
-        this.router.navigate(['../expense/expense/landing']);
+        this.router.navigate(['../expense/landing']);
         return;
       }
     }
@@ -886,7 +886,7 @@ export class MainExpenseComponent {
           this.createExpenseRequest(type);
         });
     } else {
-      this.router.navigate(['expense/expense/landing']);
+      this.router.navigate(['expense/landing']);
     }
   }
 
@@ -946,7 +946,7 @@ export class MainExpenseComponent {
             .pipe(take(1))
             .subscribe({
               next: (response) => {
-                this.router.navigate(['/expense/expense/dashboard']);
+                this.router.navigate(['/dashboard']);
                 this.snackbarService.success(response.ResponseValue[0].ErrorMessage + ' ' + response.ResponseValue[0].Reference, 10000);
               },
               error: (err) => {
