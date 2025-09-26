@@ -14953,6 +14953,7 @@
                         "order": 17
                     },
                     {
+                        "type": "date",
                         "name": "BillDate",
                         "label": "Bill Date",
                         "visible": true,
@@ -15787,6 +15788,7 @@
                         "order": 17
                     },
                     {
+                        "type": "date",
                         "name": "BillDate",
                         "label": "Bill Date",
                         "visible": true,
@@ -37331,7 +37333,7 @@
                         "name": "TravelDate",
                         "label": "Travel Date",
                         "visible": true,
-                        "position": "in-out"
+                        "position": "in"
                     },
                     {
                         "name": "Origin",
@@ -37755,7 +37757,7 @@
                         "name": "TravelDate",
                         "label": "Travel Date",
                         "visible": true,
-                        "position": "in-out"
+                        "position": "in"
                     },
                     {
                         "name": "Origin",
@@ -43753,6 +43755,7 @@
                         "order": 8
                     },
                     {
+                        "type": "date",
                         "name": "BillDate",
                         "label": "Bill Date",
                         "visible": true,
