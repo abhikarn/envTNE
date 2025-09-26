@@ -69,7 +69,7 @@
                 {
                     "isEnabled": true,
                     "name": "UserLeaveSummary",
-                    "label": "LeaveSummary",
+                    "label": "Leave Summary",
                     "value": null,
                     "order": 6
                 },
@@ -1583,7 +1583,7 @@
                     },
                     {
                         "name": "AvailedClass",
-                        "label": "AvailedClass",
+                        "label": "Availed Class",
                         "visible": true,
                         "position": "in",
                         "order": 3
@@ -32086,7 +32086,7 @@
                     },
                     {
                         "name": "AvailedClass",
-                        "label": "AvailedClass",
+                        "label": "Availed Class",
                         "visible": true,
                         "position": "in",
                         "order": 3
@@ -37390,7 +37390,7 @@
                     },
                     {
                         "name": "AvailedClass",
-                        "label": "AvailedClass",
+                        "label": "Availed Class",
                         "visible": true,
                         "position": "out"
                     },
@@ -37814,7 +37814,7 @@
                     },
                     {
                         "name": "AvailedClass",
-                        "label": "AvailedClass",
+                        "label": "Availed Class",
                         "visible": true,
                         "position": "out"
                     },
