@@ -241,29 +241,18 @@ export class DashboardComponent implements OnInit {
     this.updateMobileDisplayData();
   }
 
-  // Centralized normalization for both data and search inputs
-  private normalizeValue(col: ColumnConfig, rawValue: any): string {
+  private normalizeValueForFilter(col: ColumnConfig, rawValue: any): string {
     if (rawValue == null) return '';
 
-    let value = String(rawValue).toLowerCase();
-
-    // Normalize separators
-    value = value.replace(/[-/]/g, ' ');    // replace - and / with space
-    value = value.replace(/[,]/g, '');      // remove commas
-    value = value.replace(/\s*\|\s*/g, ' '); // replace " | " or "|" with space
-
-    // Collapse multiple spaces and trim
-    value = value.replace(/\s+/g, ' ').trim();
-
-    // Special case: Numbers
+    // Numbers
     if (col.type === 'number') {
       const precision = col.decimalPrecision ?? 2;
-      return Number(value)
+      return Number(rawValue)
         .toFixed(precision)
-        .replace(/,/g, '');
+        .replace(/,/g, ''); // ensure no commas
     }
 
-    // Special case: Dates (normalize to dd MMM yyyy)
+    // Dates (normalize to dd-MMM-yyyy, and replace separators with spaces)
     if (col.key.toLowerCase().includes('date')) {
       const dateObj = new Date(rawValue);
       if (!isNaN(dateObj.getTime())) {
@@ -274,33 +263,28 @@ export class DashboardComponent implements OnInit {
             year: 'numeric'
           })
           .toLowerCase()
-          .replace(/[-/]/g, ' ')
-          .replace(/\s+/g, ' ')
-          .trim();
+          .replace(/[-/]/g, ' '); // "08-mar-2024" → "08 mar 2024"
       }
     }
 
-    return value;
+    // Default (string/text)
+    return String(rawValue).toLowerCase();
   }
 
-  // Filter predicate (handles column + global)
   private buildFilterPredicate(columnFilters: { [key: string]: string }, globalFilter?: string) {
     return (data: any): boolean => {
       const colsToSearch = this.displayedColumns.filter(col => col.showSearch);
 
       // Column-wise filtering
       const matchesColumnFilters = Object.keys(columnFilters).every(colKey => {
+        const searchVal = columnFilters[colKey]?.trim().toLowerCase().replace(/[-/,]/g, ' ');
+        if (!searchVal) return true;
+
         const columnDef = colsToSearch.find(c => c.key === colKey);
         if (!columnDef) return true;
 
-        const searchVal = this.normalizeValue(columnDef, columnFilters[colKey]);
-        if (!searchVal) return true;
-
-        const normalizedValue = this.normalizeValue(columnDef, data[colKey]);
-
-        // Split search into tokens and ensure all are present
-        const searchTokens = searchVal.split(/\s+/);
-        return searchTokens.every(token => normalizedValue.includes(token));
+        const normalizedValue = this.normalizeValueForFilter(columnDef, data[colKey]);
+        return normalizedValue.includes(searchVal);
       });
 
       if (!matchesColumnFilters) return false;
@@ -308,10 +292,8 @@ export class DashboardComponent implements OnInit {
       // Global filtering
       if (globalFilter) {
         return colsToSearch.some(col => {
-          const normalizedValue = this.normalizeValue(col, data[col.key]);
-          const normalizedSearch = this.normalizeValue(col, globalFilter);
-          const searchTokens = normalizedSearch.split(/\s+/);
-          return searchTokens.every(token => normalizedValue.includes(token));
+          const normalizedValue = this.normalizeValueForFilter(col, data[col.key]);
+          return normalizedValue.includes(globalFilter);
         });
       }
 
@@ -319,13 +301,14 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  // Column filter
   applyFilter(event: Event, column: string) {
-    const inputValue = (event.target as HTMLInputElement).value;
-    this.columnFilterValues[column] = inputValue;
+    let filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    filterValue = filterValue.replace(/[-/]/g, ' ');
+    filterValue = filterValue.replace(/[,/]/g, '');
+    this.columnFilterValues[column] = filterValue;
 
     this.dataSource.filterPredicate = this.buildFilterPredicate(this.columnFilterValues);
-    this.dataSource.filter = JSON.stringify(this.columnFilterValues); // required trigger
+    this.dataSource.filter = JSON.stringify(this.columnFilterValues); // still needed for Angular Material
 
     this.dataSourceMobile.filterPredicate = this.dataSource.filterPredicate;
     this.dataSourceMobile.filter = JSON.stringify(this.columnFilterValues);
@@ -336,18 +319,19 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  // Global filter
   applyGlobalFilter(event: Event): void {
-    const inputValue = (event.target as HTMLInputElement).value;
+    let filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    filterValue = filterValue.replace(/[-/]/g, ' ');
+    filterValue = filterValue.replace(/[,/]/g, '');
 
     // Clear column filters when global filter is used
     this.columnFilterValues = {};
 
-    this.dataSource.filterPredicate = this.buildFilterPredicate({}, inputValue);
-    this.dataSource.filter = inputValue;
+    this.dataSource.filterPredicate = this.buildFilterPredicate({}, filterValue);
+    this.dataSource.filter = filterValue;
 
     this.dataSourceMobile.filterPredicate = this.dataSource.filterPredicate;
-    this.dataSourceMobile.filter = inputValue;
+    this.dataSourceMobile.filter = filterValue;
 
     if (this.isMobile) {
       this.mobileCurrentPage = 1;
