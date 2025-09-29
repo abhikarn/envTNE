@@ -925,6 +925,7 @@ export class MainExpenseComponent {
         .forEach((control: any) => {
           item.data.forEach((data: any) => {
             delete data[control.name];
+            delete data?.excludedData[control.name];
           });
         });
     });
@@ -1174,6 +1175,7 @@ export class MainExpenseComponent {
       Purpose: this.purpose,
       CostCentreId: this.costcenterId,
       Remarks: this.justificationForm.get(this.expenseConfig.justification.controlName)?.value,
+      ClaimTypeId: this.travelRequestPreview.travelTypeId,
       ActionBy: this.userMasterId,
       expenseCategoryGroupId: 1,
       expenseCategoryGroupName: "TRE",

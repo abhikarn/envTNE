@@ -19189,7 +19189,7 @@
                                 },
                                 "outputControl": {
                                     "CityGrade": "ResponseValue.GradeId",
-                                    "CityGradeId": "ResponseValue.Grade"
+                                    "CityGradeName": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
                                     "Type": "travelTypeId"
@@ -19211,9 +19211,9 @@
                                 },
                                 "outputControl": {
                                     "Country": "ResponseValue.CountryId",
-                                    "CountryId": "ResponseValue.Country",
+                                    "CountryName": "ResponseValue.Country",
                                     "CountryGrade": "ResponseValue.GradeId",
-                                    "CountryGradeId": "ResponseValue.Grade"
+                                    "CountryGradeName": "ResponseValue.Grade"
                                 },
                                 "otherControls": {
                                     "Type": "travelTypeId"
@@ -19239,7 +19239,7 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
-                        "name": "CityGradeId",
+                        "name": "CityGradeName",
                         "isExcluded": true,
                         "label": "City Grade",
                         "value": "",
@@ -19260,7 +19260,7 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
-                        "name": "CountryId",
+                        "name": "CountryName",
                         "isExcluded": true,
                         "label": "Country",
                         "value": "",
@@ -19281,7 +19281,7 @@
                         "type": "text",
                         "subType": "text",
                         "dataType": "string",
-                        "name": "CountryGradeId",
+                        "name": "CountryGradeName",
                         "isExcluded": true,
                         "label": "Country Grade",
                         "value": "",
@@ -19805,7 +19805,7 @@
                     },
                     {
                         "type": "hidden",
-                        "name": "Country",
+                        "name": "CountryName",
                         "isExcluded": true,
                         "value": 3,
                         "showInUI": false
@@ -19957,7 +19957,7 @@
                         "order": 10
                     },
                     {
-                        "name": "CountryGradeId",
+                        "name": "CountryGradeName",
                         "label": "Country Grade",
                         "visible": true,
                         "position": "out",
@@ -19965,7 +19965,7 @@
                         "international": true
                     },
                     {
-                        "name": "CityGradeId",
+                        "name": "CityGradeName",
                         "label": "City Grade",
                         "visible": true,
                         "position": "out",

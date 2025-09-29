@@ -767,12 +767,12 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       const type = control.formConfig.type;
       const fieldName = control.formConfig.name;
       let fieldValue: any;
-      if (control.formConfig.inPayload === false) {
-        fieldValue = control.formConfig.value;
-        this.form.get(fieldName)?.setValue(fieldValue);
-      } else {
+      // if (control.formConfig.inPayload === false) {
+      //   fieldValue = control.formConfig.value;
+      //   this.form.get(fieldName)?.setValue(fieldValue);
+      // } else {
         fieldValue = this.form.value[fieldName];
-      }
+      // }
 
       control.formConfig.value = fieldValue;
       if (!this.formData.data) {
