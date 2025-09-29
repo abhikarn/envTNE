@@ -39340,7 +39340,7 @@
                         "order": 11
                     },
                     {
-                        "name": "Constraint",
+                        "name": "ConstraintNames",
                         "label": "Constraint",
                         "visible": true,
                         "position": "out",
