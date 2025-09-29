@@ -170,7 +170,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       // Populate form with initial API data if available
       this.dynamicFormService.populateFormWithData(this.form, this.category.onInitAPI, this.moduleData);
     }
-    this.form.reset();
+    this.form.reset({
+      IsTravelRaiseRequest: this.form.get('IsTravelRaiseRequest')?.value ?? false
+    });
 
     this.form.valueChanges
       .pipe(
