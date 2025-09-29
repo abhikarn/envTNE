@@ -168,7 +168,7 @@
                                     @if (col.type == 'date') {
                                     <div class="trl-req-head"> <label> {{ col.label }} </label></div>
                                     <div class="trl-req-detail">
-                                        <p> {{ row[col.name] | globalDate }} </p>
+                                        <p> {{ row[col.name] | globalDate: 'dd-MMM-yyyy' }} </p>
                                     </div>
                                     } @else {
                                     <div class="trl-req-head"> <label> {{ col.label }} </label> </div>
@@ -210,9 +210,9 @@
                                         <a style="text-decoration: underline; cursor: pointer;color: blue;" (click)="previewFile(entry[col.name])">{{
                                             entry[col.name].FileName }}</a>
                                     } @else if(col?.type == 'date') {
-                                        {{ entry[col.name] | globalDate }}
+                                        {{ entry[col.name] | globalDate: 'dd-MMM-yyyy' }}
                                     } @else if(col?.type == 'datetime') {
-                                        {{ entry[col.name] | globalDate }}
+                                        {{ entry[col.name] | globalDate: 'dd-MMM-yyyy' }}
                                     } @else if(col?.type == 'number') {
                                         {{ (+entry[col.name]).toFixed(col?.decimalPrecision || 2) }}
                                     } @else {
