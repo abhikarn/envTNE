@@ -37320,7 +37320,7 @@
             }
         },
         "notifications": {
-            "AtLeastOneClaimDataEntry": "Please add at least one claim data entry!"
+            "AtLeastOneClaimDataEntry": "Please add at least one claim detail before saving as draft or submitting."
         }
     },
     "expenseRequestPreviewAndApproval": {
@@ -45529,7 +45529,7 @@
             ]
         },
         "statusWiseExpenseRequest": {
-            "name": "Expense Claim",
+            "name": "Expense Claim Overview",
             "statusWise": [
                 {
                     "key": "approved",
@@ -45730,7 +45730,7 @@
                 {
                     "key": "ClaimStatus",
                     "label": "Status",
-                    "sortable": true,
+                    "sortable": false,
                     "showSearch": true,
                     "order": 9
                 },

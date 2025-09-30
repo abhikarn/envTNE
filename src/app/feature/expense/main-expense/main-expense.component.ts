@@ -1127,7 +1127,7 @@ export class MainExpenseComponent {
 
     // Check for required data presence
     if (!this.travelRequestId || !requestData) {
-      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+      this.snackbarService.warning(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return false;
     }
 
@@ -1137,12 +1137,12 @@ export class MainExpenseComponent {
     });
 
     if (!hasRequiredData) {
-      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+      this.snackbarService.warning(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return false;
     }
 
     if (this.travelRequestId > 0 && requestData.length === 0) {
-      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+      this.snackbarService.warning(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return false;
     }
 
@@ -1196,7 +1196,7 @@ export class MainExpenseComponent {
 
     // Check for required data presence
     if (!requestData || requestData.length === 0) {
-      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+      this.snackbarService.warning(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return false;
     }
     // Check for required data presense in all requested categories
@@ -1205,7 +1205,7 @@ export class MainExpenseComponent {
     });
 
     if (!hasRequiredData) {
-      this.snackbarService.error(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
+      this.snackbarService.warning(this.expenseConfig.notifications.AtLeastOneClaimDataEntry);
       return false;
     }
 
