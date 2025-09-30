@@ -538,7 +538,8 @@ export class PreviewComponent {
     uniqueCostCenters.forEach((costCenterName) => {
       summary.items.push({
         label: costCenterName,
-        value: 0.00
+        value: 0.00,
+        showInUI: true
       });
     });
 

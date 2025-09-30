@@ -729,6 +729,12 @@
                                 91
                             ]
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "disable": false,
                         "oCRRequired": false,
                         "order": 1
@@ -1849,6 +1855,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -2623,6 +2635,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,
@@ -3502,6 +3520,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -5086,6 +5110,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -6547,6 +6577,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -8132,6 +8168,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -8775,6 +8817,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,
@@ -9634,6 +9682,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -10277,6 +10331,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,
@@ -11136,6 +11196,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -11904,6 +11970,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,
@@ -12823,6 +12895,12 @@
                                 58
                             ]
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "disable": false,
                         "oCRRequired": false,
                         "order": 1
@@ -16440,6 +16518,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,
@@ -22132,7 +22216,7 @@
                                 "name": "attachment",
                                 "isExcluded": false,
                                 "label": "Upload Your Bill",
-                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
+                                "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                                 "value": null,
                                 "multiple": true,
                                 "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -22594,6 +22678,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -23645,6 +23735,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -25487,6 +25583,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -27586,6 +27688,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,
@@ -31215,6 +31323,12 @@
                                 91
                             ]
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "disable": false,
                         "oCRRequired": false,
                         "order": 1
@@ -32354,6 +32468,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -33122,6 +33242,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,
@@ -34018,6 +34144,12 @@
                                 58
                             ]
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "disable": false,
                         "oCRRequired": false,
                         "order": 1
@@ -35377,6 +35509,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },

@@ -5,4 +5,5 @@ export interface IValidationConfig {
   value?: any;
   name?: string;
   options?: any;
+  compareWith?: any;
 }

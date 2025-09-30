@@ -5,7 +5,7 @@ import { CustomValidators } from './custom-validators';
 
 export class FormControlFactory {
   static createControl(config: any): FormControl {
-    const validationConfigs: IValidationConfig[] = config.validations || [];
+    const validationConfigs: IValidationConfig[] = config.required ? config.validations : [];
     const validators: ValidatorFn[] = validationConfigs.map((validationConfig: IValidationConfig) => {
       let validatorFn: ValidatorFn | null = null;
       
@@ -47,7 +47,11 @@ export class FormControlFactory {
             const validatorFunc = CustomValidators[validatorKey];
             if (typeof validatorFunc === 'function') {
               config.validations[validatorKey] = validationConfig.message || `Invalid ${config.name}`;
-              validatorFn = validatorFunc(validationConfig.message);
+              if (validationConfig.compareWith) {
+                validatorFn = validatorFunc(validationConfig.compareWith, validationConfig.message);
+              } else {
+                validatorFn = validatorFunc(validationConfig.message);
+              }
             }
           } else {
             console.warn(`Custom validator not found: ${validationConfig.name}`);

@@ -417,7 +417,14 @@ export class DynamicFormService {
         });
 
         if (isRequired) {
+          const requiredConfig = (config.validations || []).find((v: any) => v.type === 'required');
+          const requiredMsg = requiredConfig?.message || `${config.label} is required`;
+
           control?.setValidators([Validators.required]);
+
+          // Store back into config so getErrorMessage() uses it
+          if (!config.validations) config.validations = [];
+          config.validations['required'] = requiredMsg;
         } else {
           control?.clearValidators();
         }
