@@ -676,7 +676,7 @@
         "category": [
             {
                 "name": "Travel Ticket",
-                "label": "Tickets Expense",
+                "label": "Ticket Expenses",
                 "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
@@ -1557,7 +1557,7 @@
                         "Violation": "ResponseValue.Message"
                     },
                     "confirmPopup": {
-                        "title": "Tickets Expense",
+                        "title": "Ticket Expenses",
                         "message": "ResponseValue.Message",
                         "confirmText": "Ok",
                         "cancelText": "Cancel"
@@ -31270,7 +31270,7 @@
             },
             {
                 "name": "Relocation Travel Ticket",
-                "label": "Tickets Expense",
+                "label": "Ticket Expenses",
                 "OCRRequired": false,
                 "duplicateCheckFields": [
                     {
@@ -32175,7 +32175,7 @@
                         "Violation": "ResponseValue.Message"
                     },
                     "confirmPopup": {
-                        "title": "Tickets Expense",
+                        "title": "Ticket Expenses",
                         "message": "ResponseValue.Message",
                         "confirmText": "Ok",
                         "cancelText": "Cancel"
@@ -37127,12 +37127,12 @@
                 "items": [
                     {
                         "name": "Travel Ticket",
-                        "label": "Tickets Expense",
+                        "label": "Ticket Expenses",
                         "showInUI": true
                     },
                     {
                         "name": "Relocation Travel Ticket",
-                        "label": "Tickets Expense",
+                        "label": "Ticket Expenses",
                         "showInUI": true
                     },
                     {
