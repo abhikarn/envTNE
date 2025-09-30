@@ -2623,6 +2623,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,
@@ -8775,6 +8781,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,
@@ -10277,6 +10289,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,
@@ -11904,6 +11922,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,
@@ -16440,6 +16464,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,
@@ -22132,7 +22162,7 @@
                                 "name": "attachment",
                                 "isExcluded": false,
                                 "label": "Upload Your Bill",
-                        "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
+                                "helpText": "Supported formats: JPG, JPEG, PNG, PDF, DOC, DOCX, XLS, XLSX",
                                 "value": null,
                                 "multiple": true,
                                 "accept": ".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx",
@@ -27586,6 +27616,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,
@@ -33122,6 +33158,12 @@
                             {
                                 "type": "required",
                                 "message": "Tax Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "name": "taxLessThanOrEqualClaimValidator",
+                                "compareWith": "ClaimAmount",
+                                "message": "Tax Amount should not be greater than the Claim Amount."
                             }
                         ],
                         "disable": false,

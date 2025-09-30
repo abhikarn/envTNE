@@ -252,10 +252,16 @@ export class TextInputComponent implements OnInit {
     if (!this.controlConfig?.validations) return '';
 
     for (const validation of this.controlConfig.validations) {
-      if (
-        (validation.type && this.control.hasError(validation.type)) ||
-        (validation.subType && this.control.hasError(validation.subType))
-      ) {
+      const errorKeys = Object.keys(this.control.errors || {});
+
+      // Check for standard Angular validators (type)
+      if (validation.type && errorKeys.includes(validation.type)) {
+        return validation.message;
+      }
+
+      // Check for custom validators (name or subType)
+      if ((validation.name && errorKeys.includes(validation.name)) ||
+        (validation.subType && errorKeys.includes(validation.subType))) {
         return validation.message;
       }
     }

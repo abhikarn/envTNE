@@ -2,15 +2,48 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export class CustomValidators {
 
+  static revalidateTracker = new WeakMap<AbstractControl, boolean>();
+
+  static taxLessThanOrEqualClaimValidator(compareWith: string, message?: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || control.value == null) return null;
+
+      const parent = control.parent;
+      if (!parent) return null;
+
+      const claimControl = parent.get(compareWith);
+      if (!claimControl) return null;
+
+      // subscribe only once
+      if (!CustomValidators.revalidateTracker.get(control)) {
+        CustomValidators.revalidateTracker.set(control, true);
+        claimControl.valueChanges.subscribe(() => {
+          control.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+        });
+      }
+
+      const claimAmount = parseFloat(claimControl.value);
+      const taxAmount = parseFloat(control.value);
+
+      if (!isNaN(claimAmount) && !isNaN(taxAmount) && taxAmount > claimAmount) {
+        return { taxLessThanOrEqualClaimValidator: message || 'Tax Amount cannot be greater than Claim Amount' };
+      }
+
+      return null;
+    };
+  }
+
+
+
   static greaterThanZeroValidator(message?: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = parseFloat(control.value);
-      return value > 0 ? null : { greaterThanZeroValidator: message || 'Amount must be greater than zero'};
+      return value > 0 ? null : { greaterThanZeroValidator: message || 'Amount must be greater than zero' };
     };
   }
 
   static validateGST(message?: string): ValidatorFn {
-     
+
     return (control: AbstractControl): ValidationErrors | null => {
       const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
       const gstNumber = control.value?.toUpperCase().trim();

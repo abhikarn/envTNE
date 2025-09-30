@@ -47,7 +47,11 @@ export class FormControlFactory {
             const validatorFunc = CustomValidators[validatorKey];
             if (typeof validatorFunc === 'function') {
               config.validations[validatorKey] = validationConfig.message || `Invalid ${config.name}`;
-              validatorFn = validatorFunc(validationConfig.message);
+              if (validationConfig.compareWith) {
+                validatorFn = validatorFunc(validationConfig.compareWith, validationConfig.message);
+              } else {
+                validatorFn = validatorFunc(validationConfig.message);
+              }
             }
           } else {
             console.warn(`Custom validator not found: ${validationConfig.name}`);
