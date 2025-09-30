@@ -882,7 +882,7 @@ export class MainExpenseComponent {
 
       this.applicationMessageService.getApplicationMessage({ Flag: 'ExpenseSubmitConfirm' })
         .subscribe((data: any) => {
-          this.expenseConfirmMessage = data?.ResponseValue?.Message;
+          this.expenseConfirmMessage = type == 'submit' ? data?.ResponseValue?.Message : 'Are you sure you want to save this expense request as a draft?';
           this.createExpenseRequest(type);
         });
     } else {
@@ -936,7 +936,7 @@ export class MainExpenseComponent {
 
     this.confirmDialogService
       .confirm({
-        title: 'Create Expense Request',
+        title: type === 'submit' ? 'Create Expense Request' : 'Draft Expense Request',
         message: this.expenseConfirmMessage,
         confirmText: 'Create',
         cancelText: 'Cancel'
