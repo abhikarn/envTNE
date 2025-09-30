@@ -729,6 +729,12 @@
                                 91
                             ]
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "disable": false,
                         "oCRRequired": false,
                         "order": 1
@@ -1849,6 +1855,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -3508,6 +3520,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -5092,6 +5110,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -6553,6 +6577,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -8138,6 +8168,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -9646,6 +9682,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -11154,6 +11196,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -12847,6 +12895,12 @@
                                 58
                             ]
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "disable": false,
                         "oCRRequired": false,
                         "order": 1
@@ -22624,6 +22678,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -23675,6 +23735,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -25517,6 +25583,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -31251,6 +31323,12 @@
                                 91
                             ]
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "disable": false,
                         "oCRRequired": false,
                         "order": 1
@@ -32390,6 +32468,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
@@ -34060,6 +34144,12 @@
                                 58
                             ]
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "disable": false,
                         "oCRRequired": false,
                         "order": 1
@@ -35419,6 +35509,12 @@
                         "requiredIf": {
                             "IsBillRequired": true
                         },
+                        "validations": [
+                            {
+                                "type": "required",
+                                "message": "Please upload a bill to continue"
+                            }
+                        ],
                         "oCRRequired": false,
                         "order": 1
                     },
