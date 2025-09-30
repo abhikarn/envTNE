@@ -569,17 +569,59 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         const formValues = fields.map((f: any) => this.normalizeValue(this.form.value[f]));
 
         const isDuplicate = this.existingData.some((row: any, index: number) => {
-          // Skip row being edited
+          // Skip the row being edited
           if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
 
-          return fields.every((f: any, i: any) => {
+          // --- Case 1: Single field (e.g. TravelDate) ---
+          if (fields.length === 1) {
+            const newVal = this.normalizeValue(this.form.value[fields[0]]);
+            const rowVal = this.normalizeValue(row[fields[0]]);
+
+            if (newVal instanceof Date && rowVal instanceof Date) {
+              const newDate = this.datePipe.transform(
+                newVal,
+                duplicateConfig.skipTimeCheck ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm:ss'
+              );
+              const rowDate = this.datePipe.transform(
+                rowVal,
+                duplicateConfig.skipTimeCheck ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm:ss'
+              );
+              return newDate === rowDate;
+            }
+            return newVal === rowVal;
+          }
+
+          // --- Case 2: Two fields (date range check) ---
+          if (fields.length === 2) {
+            const [startField, endField] = fields;
+
+            const newStart = this.normalizeValue(this.form.value[startField]);
+            const newEnd = this.normalizeValue(this.form.value[endField]) || newStart;
+
+            const rowStart = this.normalizeValue(row[startField]);
+            const rowEnd = this.normalizeValue(row[endField]) || rowStart;
+
+            if (newStart instanceof Date && newEnd instanceof Date &&
+              rowStart instanceof Date && rowEnd instanceof Date) {
+              // overlap logic
+              return newStart <= rowEnd && newEnd >= rowStart;
+            }
+          }
+
+          // --- Case 3: Multi-field exact match (TravelDate + TravelMode, etc.) ---
+          return fields.every((f: any) => {
             const newVal = this.normalizeValue(this.form.value[f]);
             const rowVal = this.normalizeValue(row[f]);
 
-            // Special case for date fields: compare as yyyy-MM-dd if skipTimeCheck = true
-            if (duplicateConfig.skipTimeCheck && this.isDateField(newVal, rowVal)) {
-              const newDate = this.datePipe.transform(newVal, 'dd-MMM-yyyy');
-              const rowDate = this.datePipe.transform(rowVal, 'dd-MMM-yyyy');
+            if (newVal instanceof Date && rowVal instanceof Date) {
+              const newDate = this.datePipe.transform(
+                newVal,
+                duplicateConfig.skipTimeCheck ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm:ss'
+              );
+              const rowDate = this.datePipe.transform(
+                rowVal,
+                duplicateConfig.skipTimeCheck ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm:ss'
+              );
               return newDate === rowDate;
             }
 
@@ -673,13 +715,12 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   private normalizeValue(value: any): any {
     if (value == null) return null;
 
-    // If it's a date string or Date object
     if (value instanceof Date) return value;
+
     if (typeof value === 'string' && !isNaN(Date.parse(value))) {
       return new Date(value);
     }
 
-    // If it's an object with value property
     if (typeof value === 'object' && value?.value !== undefined) {
       return value.value;
     }
@@ -1105,11 +1146,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     if (this.isClearing) return;
 
     // Avoid duplicate triggers for the same value
-    const currentValue = this.form.get(control.name)?.value;
-    const serialized = JSON.stringify(currentValue ?? null);
+    // const currentValue = this.form.get(control.name)?.value;
+    // const serialized = JSON.stringify(currentValue ?? null);
 
-    if (control['lastProcessedValue'] === serialized) return;
-    control['lastProcessedValue'] = serialized;
+    // if (control['lastProcessedValue'] === serialized) return;
+    // control['lastProcessedValue'] = serialized;
 
     if (control.conditionBasedDisplayFieldsCheck) {
       setTimeout(() => {
