@@ -5,7 +5,7 @@ import { CustomValidators } from './custom-validators';
 
 export class FormControlFactory {
   static createControl(config: any): FormControl {
-    const validationConfigs: IValidationConfig[] = config.required ? config.validations : [];
+    const validationConfigs: IValidationConfig[] = config.validations || [];
     const validators: ValidatorFn[] = validationConfigs.map((validationConfig: IValidationConfig) => {
       let validatorFn: ValidatorFn | null = null;
       

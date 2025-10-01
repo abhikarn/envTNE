@@ -178,6 +178,37 @@ export class DynamicFormService {
           });
         }
 
+        if(form.value.IsTaxIncluded) {
+          const fieldsToAdd = [
+            'TaxAmount'
+          ];
+
+          fieldsToAdd.forEach((field: any) => {
+            if (!form.get(field)) {
+              const fieldControlConfig = formControls.find(c => c.formConfig?.name === field);
+              if (fieldControlConfig) {
+                form.addControl(field, fieldControlConfig.formConfig.control);
+              }
+              const controlConfig = formControls.find(c => c.formConfig?.name === field);
+              if (controlConfig) {
+                controlConfig.formConfig.showInUI = true;
+              }
+            }
+          });
+        } else {
+          const fieldsToRemove = [
+            'TaxAmount'
+          ];
+
+          fieldsToRemove.forEach(field => {
+            form.removeControl(field);
+            const control = formControls.find(c => c?.name === field);
+            if (control) {
+              control.showInUI = false;
+            }
+          });
+        }
+
         if (form.value.IsActual) {
           const fieldsToRemove = [
             'EntitlementCurrency',
@@ -339,8 +370,12 @@ export class DynamicFormService {
         if (typeof category.policyViolationCheckApi.outputControl === 'object') {
           // Multiple fields case
           for (const [outputControl, responsePath] of Object.entries(category.policyViolationCheckApi.outputControl) as [string, string][]) {
-            const value = this.extractValueFromPath(response, responsePath);
+            let value = this.extractValueFromPath(response, responsePath);
             if (value !== undefined) {
+              if (typeof value === 'string') {
+                const doc = new DOMParser().parseFromString(value, 'text/html');
+                value = doc.body.textContent || '';
+              }
               form.get(outputControl)?.setValue(value);
             }
           }
@@ -348,7 +383,11 @@ export class DynamicFormService {
         if (typeof category.policyViolationCheckApi.confirmPopup === 'object') {
           // Multiple fields case
           for (const [confirmPopup, responsePath] of Object.entries(category.policyViolationCheckApi.confirmPopup) as [string, string][]) {
-            const value = this.extractValueFromPath(response, responsePath);
+            let value = this.extractValueFromPath(response, responsePath);
+            if (typeof value === 'string') {
+              const doc = new DOMParser().parseFromString(value, 'text/html');
+              value = doc.body.textContent || '';
+            }
             if (value !== undefined) {
               confirmPopupData[confirmPopup] = value;
             } else {
