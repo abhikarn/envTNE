@@ -689,11 +689,11 @@ export class PreviewComponent {
   onAction(buttonData: any) {
 
     const allSelectedData = this.materialTableComponents.map(table => table.getSelectedData());
-
+    console.log(allSelectedData)
     const invalidItemFound = allSelectedData.some((data: any) => {
       return data?.data?.some((item: any) => {
         if (item?.selected === false && item?.remarks === '' && item.ClaimStatusId !== 5) {
-          this.snackbarService.error('Please provide justification reamrk for unselected items.');
+          this.snackbarService.error('Please provide justification remarks for unselected items.');
           return true; // Stop inner loop
         }
         return false;

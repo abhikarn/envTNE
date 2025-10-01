@@ -1198,7 +1198,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -1528,7 +1528,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -2754,7 +2754,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -3126,7 +3126,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -4359,7 +4359,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -5869,7 +5869,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -6210,7 +6210,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -7450,7 +7450,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -8936,7 +8936,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -9283,7 +9283,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -10452,7 +10452,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -10799,7 +10799,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -12101,7 +12101,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -12462,7 +12462,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -13876,7 +13876,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -14096,7 +14096,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -15633,7 +15633,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -15775,7 +15775,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -16643,7 +16643,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -16976,7 +16976,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -17811,7 +17811,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -18007,7 +18007,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -18830,7 +18830,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -18967,7 +18967,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -19768,7 +19768,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -19929,7 +19929,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -20492,7 +20492,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -20620,7 +20620,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -21101,7 +21101,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -21225,7 +21225,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -22052,7 +22052,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -22313,7 +22313,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -25180,7 +25180,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -25306,7 +25306,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -31825,7 +31825,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -32147,7 +32147,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -33382,7 +33382,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -33754,7 +33754,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -34987,7 +34987,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -35214,7 +35214,7 @@
                 "checkValidationOnSubmit": {
                     "costCenter": [
                         {
-                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts cannot be more than the claimed amount.",
+                            "AmountMustMatchClaimAmount": "Sum of all cost center amounts must be equal to the claimed amount.",
                             "dependsOn": [
                                 "ClaimAmount",
                                 "costcentreWiseExpense"
@@ -36222,7 +36222,7 @@
                                     ],
                                     "range": {
                                         "min": 0,
-                                        "max": 2
+                                        "max": 3
                                     }
                                 },
                                 "required": true,
@@ -37757,7 +37757,7 @@
                                 ],
                                 "range": {
                                     "min": 0,
-                                    "max": 2
+                                    "max": 3
                                 }
                             },
                             "required": true,
@@ -38181,7 +38181,7 @@
                                 ],
                                 "range": {
                                     "min": 0,
-                                    "max": 2
+                                    "max": 3
                                 }
                             },
                             "required": true,
@@ -43377,7 +43377,7 @@
                                 ],
                                 "range": {
                                     "min": 0,
-                                    "max": 2
+                                    "max": 3
                                 }
                             },
                             "required": true,
