@@ -339,8 +339,12 @@ export class DynamicFormService {
         if (typeof category.policyViolationCheckApi.outputControl === 'object') {
           // Multiple fields case
           for (const [outputControl, responsePath] of Object.entries(category.policyViolationCheckApi.outputControl) as [string, string][]) {
-            const value = this.extractValueFromPath(response, responsePath);
+            let value = this.extractValueFromPath(response, responsePath);
             if (value !== undefined) {
+              if (typeof value === 'string') {
+                const doc = new DOMParser().parseFromString(value, 'text/html');
+                value = doc.body.textContent || '';
+              }
               form.get(outputControl)?.setValue(value);
             }
           }
@@ -348,7 +352,11 @@ export class DynamicFormService {
         if (typeof category.policyViolationCheckApi.confirmPopup === 'object') {
           // Multiple fields case
           for (const [confirmPopup, responsePath] of Object.entries(category.policyViolationCheckApi.confirmPopup) as [string, string][]) {
-            const value = this.extractValueFromPath(response, responsePath);
+            let value = this.extractValueFromPath(response, responsePath);
+            if (typeof value === 'string') {
+              const doc = new DOMParser().parseFromString(value, 'text/html');
+              value = doc.body.textContent || '';
+            }
             if (value !== undefined) {
               confirmPopupData[confirmPopup] = value;
             } else {

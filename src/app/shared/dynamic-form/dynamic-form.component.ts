@@ -1093,8 +1093,12 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             if (typeof this.category.policyViolationCheckApi.outputControl === 'object') {
               // Multiple fields case
               for (const [outputControl, responsePath] of Object.entries(this.category.policyViolationCheckApi.outputControl) as [string, string][]) {
-                const value = this.extractValueFromPath(response, responsePath);
+                let value = this.extractValueFromPath(response, responsePath);
                 if (value !== undefined) {
+                  if (typeof value === 'string') {
+                    const doc = new DOMParser().parseFromString(value, 'text/html');
+                    value = doc.body.textContent || '';
+                  }
                   this.form.get(outputControl)?.setValue(value);
                 }
               }
@@ -1102,7 +1106,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             if (typeof this.category.policyViolationCheckApi.confirmPopup === 'object') {
               // Multiple fields case
               for (const [confirmPopup, responsePath] of Object.entries(this.category.policyViolationCheckApi.confirmPopup) as [string, string][]) {
-                const value = this.extractValueFromPath(response, responsePath);
+                let value = this.extractValueFromPath(response, responsePath);
+                if (typeof value === 'string') {
+                  const doc = new DOMParser().parseFromString(value, 'text/html');
+                  value = doc.body.textContent || '';
+                }
                 if (value !== undefined) {
                   confirmPopupData[confirmPopup] = value;
                 } else {
