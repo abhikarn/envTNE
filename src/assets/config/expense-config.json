@@ -2551,12 +2551,10 @@
                             },
                             {
                                 "name": "DifferentialAmount",
-                                "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "formula": "ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
                                 "dependsOn": [
-                                    "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency",
-                                    "TaxAmount"
+                                    "EntitlementAmountInBaseCurrency"
                                 ]
                             }
                         ],
@@ -2608,12 +2606,10 @@
                             },
                             {
                                 "name": "DifferentialAmount",
-                                "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "formula": "ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
                                 "dependsOn": [
-                                    "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency",
-                                    "TaxAmount"
+                                    "EntitlementAmountInBaseCurrency"
                                 ]
                             }
                         ],
@@ -2639,12 +2635,8 @@
                             },
                             "decimalPrecision": "2"
                         },
-                        "required": true,
+                        "required": false,
                         "validations": [
-                            {
-                                "type": "required",
-                                "message": "Tax Amount is required"
-                            },
                             {
                                 "type": "custom",
                                 "name": "taxLessThanOrEqualClaimValidator",
@@ -2654,18 +2646,6 @@
                         ],
                         "disable": false,
                         "readonly": false,
-                        "setFields": [
-                            {
-                                "name": "DifferentialAmount",
-                                "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
-                                "dependsOn": [
-                                    "IsTaxIncluded",
-                                    "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency",
-                                    "TaxAmount"
-                                ]
-                            }
-                        ],
                         "order": 20
                     },
                     {
@@ -3161,7 +3141,7 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
@@ -8726,12 +8706,10 @@
                             },
                             {
                                 "name": "DifferentialAmount",
-                                "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "formula": "ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
                                 "dependsOn": [
-                                    "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency",
-                                    "TaxAmount"
+                                    "EntitlementAmountInBaseCurrency"
                                 ]
                             }
                         ],
@@ -8783,12 +8761,10 @@
                             },
                             {
                                 "name": "DifferentialAmount",
-                                "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "formula": "ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
                                 "dependsOn": [
-                                    "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency",
-                                    "TaxAmount"
+                                    "EntitlementAmountInBaseCurrency"
                                 ]
                             }
                         ],
@@ -8837,12 +8813,8 @@
                             },
                             "decimalPrecision": "2"
                         },
-                        "required": true,
+                        "required": false,
                         "validations": [
-                            {
-                                "type": "required",
-                                "message": "Tax Amount is required"
-                            },
                             {
                                 "type": "custom",
                                 "name": "taxLessThanOrEqualClaimValidator",
@@ -8855,12 +8827,10 @@
                         "setFields": [
                             {
                                 "name": "DifferentialAmount",
-                                "formula": "IsTaxIncluded ? ClaimAmountInBaseCurrency + Number(TaxAmount) - EntitlementAmountInBaseCurrency : ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
+                                "formula": "ClaimAmountInBaseCurrency - EntitlementAmountInBaseCurrency",
                                 "dependsOn": [
-                                    "IsTaxIncluded",
                                     "ClaimAmountInBaseCurrency",
-                                    "EntitlementAmountInBaseCurrency",
-                                    "TaxAmount"
+                                    "EntitlementAmountInBaseCurrency"
                                 ]
                             }
                         ],
@@ -9328,13 +9298,11 @@
                 },
                 "policyViolationManualCheck": [
                     {
-                        "formula": "!IsActual && (IsTaxIncluded ? (Number(ClaimAmountInBaseCurrency) + Number(TaxAmount)) > Number(EntitlementAmountInBaseCurrency) : Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency))",
+                        "formula": "!IsActual && Number(ClaimAmountInBaseCurrency) > Number(EntitlementAmountInBaseCurrency)",
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual",
-                            "IsTaxIncluded": "IsTaxIncluded",
-                            "TaxAmount": "TaxAmount"
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",

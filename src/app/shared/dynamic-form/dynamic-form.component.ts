@@ -930,6 +930,21 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onEditRow(rowData: any) {
+    if(!rowData?.row?.IsTaxIncluded) {
+      const fieldsToRemove = [
+        'TaxAmount'
+      ];
+
+      fieldsToRemove.forEach(field => {
+        this.form.removeControl(field);
+        const control = this.formControls.find(c => c.formConfig?.name === field);
+        if (control) {
+          control.formConfig.required = false;
+          control.formConfig.showInUI = false;
+        }
+      });
+    }
+
     if (rowData?.row?.IsActual) {
       const fieldsToRemove = [
         'EntitlementCurrency',

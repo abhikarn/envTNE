@@ -178,6 +178,37 @@ export class DynamicFormService {
           });
         }
 
+        if(form.value.IsTaxIncluded) {
+          const fieldsToAdd = [
+            'TaxAmount'
+          ];
+
+          fieldsToAdd.forEach((field: any) => {
+            if (!form.get(field)) {
+              const fieldControlConfig = formControls.find(c => c.formConfig?.name === field);
+              if (fieldControlConfig) {
+                form.addControl(field, fieldControlConfig.formConfig.control);
+              }
+              const controlConfig = formControls.find(c => c.formConfig?.name === field);
+              if (controlConfig) {
+                controlConfig.formConfig.showInUI = true;
+              }
+            }
+          });
+        } else {
+          const fieldsToRemove = [
+            'TaxAmount'
+          ];
+
+          fieldsToRemove.forEach(field => {
+            form.removeControl(field);
+            const control = formControls.find(c => c?.name === field);
+            if (control) {
+              control.showInUI = false;
+            }
+          });
+        }
+
         if (form.value.IsActual) {
           const fieldsToRemove = [
             'EntitlementCurrency',
