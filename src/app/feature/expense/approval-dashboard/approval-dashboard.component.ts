@@ -404,4 +404,14 @@ export class ApprovalDashboardComponent implements OnInit {
       panelClass: 'custom-modal-panel'
     });
   }
+
+  onRowSelectionChange(): void {
+    // For mobile
+    // const source = this.isMobile ? this.mobileDisplayData : this.dataSource.data;
+    // const allSelected = source.every((item: any) => item.selected);
+    // this.selectAll = allSelected;
+    const allSelected = this.dataSource.data.every((item: any) => item.selected);
+    this.selectAll = allSelected;
+  }
+
 }

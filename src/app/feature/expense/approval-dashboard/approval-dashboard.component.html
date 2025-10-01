@@ -825,7 +825,7 @@
                                                     <!-- Data Cell -->
                                                     <td [attr.data-label]="column.label" mat-cell *matCellDef="let element; let i = index" [ngClass]="column.class">
                                                         <ng-container *ngIf="column.key === 'slNo'; else columnContent">
-                                                            <mat-checkbox [(ngModel)]="element.selected"></mat-checkbox>
+                                                            <mat-checkbox [(ngModel)]="element.selected" (change)="onRowSelectionChange()"></mat-checkbox>
                                                             {{ isMobile ? (i + 1) : (paginator.pageIndex * paginator.pageSize) + (i + 1) }}
                                                         </ng-container>
                                                         <ng-template #columnContent>

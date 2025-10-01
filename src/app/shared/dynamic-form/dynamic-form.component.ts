@@ -183,11 +183,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         this.emitDateInputComponentValue.emit(this.dateInputComponentRef || []);
       });
 
-      if(this.formDisabled) {
-        this.form.disable();
-      } else {
-        this.form.enable();
-      }
+    if (this.formDisabled) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
   }
 
   setupAutoFormat(config: any, configService: GlobalConfigService): void {
@@ -560,76 +560,176 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     if (this.existingData?.length > 0) {
       if (this.category?.duplicateEntryCheck) {
-        const { fields, name, skipTimeCheck } = this.category.duplicateEntryCheck;
-        if (!fields || fields.length === 0) return;
+        const duplicateConfig = this.category.duplicateEntryCheck;
+        if (!duplicateConfig || !Array.isArray(duplicateConfig.fields)) return;
 
-        // If only one field (e.g., single date) is provided
-        if (fields.length === 1) {
-          const [field] = fields;
+        const fields = duplicateConfig.fields;
+        const labels = duplicateConfig.labels;
 
-          if (skipTimeCheck) {
-            // If skipTimeCheck is true, compare only the date part
-            const newDate = this.datePipe.transform(this.form.value[field], 'yyyy-MM-dd');
-            const isDuplicate = this.existingData.some((row: any, index: number) => {
-              if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
+        const formValues = fields.map((f: any) => this.normalizeValue(this.form.value[f]));
 
-              const existingDate = this.datePipe.transform(row[field], 'yyyy-MM-dd');
-              return newDate === existingDate;
-            });
-            if (isDuplicate) {
-              this.snackbarService.error(`${name} for ${this.datePipe.transform(this.form.value[field], 'yyyy-MM-dd')} has already been claimed.`, 5000);
-              if (this.editIndex && this.isTravelRaiseRequest) {
-                this.freezeControlsBasedOnConditions();
-              }
-              return;
+        const isDuplicate = this.existingData.some((row: any, index: number) => {
+          // Skip the row being edited
+          if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
+
+          // --- Case 1: Single field (e.g. TravelDate) ---
+          if (fields.length === 1) {
+            const newVal = this.normalizeValue(this.form.value[fields[0]]);
+            const rowVal = this.normalizeValue(row[fields[0]]);
+
+            if (newVal instanceof Date && rowVal instanceof Date) {
+              const newDate = this.datePipe.transform(
+                newVal,
+                duplicateConfig.skipTimeCheck ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm:ss'
+              );
+              const rowDate = this.datePipe.transform(
+                rowVal,
+                duplicateConfig.skipTimeCheck ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm:ss'
+              );
+              return newDate === rowDate;
             }
-          } else {
-            const newDate = new Date(this.form.value[field]).getTime();
+            return newVal === rowVal;
+          }
 
-            const isDuplicate = this.existingData.some((row: any, index: number) => {
-              if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
+          // --- Case 2: Two fields (date range check) ---
+          if (fields.length === 2) {
+            const [startField, endField] = fields;
 
-              const existingDate = new Date(row[field]).getTime();
-              return newDate === existingDate;
-            });
-            if (isDuplicate) {
-              this.snackbarService.error(`${name} for ${this.form.value[field]} has already been claimed.`, 5000);
-              if (this.editIndex && this.isTravelRaiseRequest) {
-                this.freezeControlsBasedOnConditions();
-              }
-              return;
+            const newStart = this.normalizeValue(this.form.value[startField]);
+            const newEnd = this.normalizeValue(this.form.value[endField]) || newStart;
+
+            const rowStart = this.normalizeValue(row[startField]);
+            const rowEnd = this.normalizeValue(row[endField]) || rowStart;
+
+            if (newStart instanceof Date && newEnd instanceof Date &&
+              rowStart instanceof Date && rowEnd instanceof Date) {
+              // overlap logic
+              return newStart <= rowEnd && newEnd >= rowStart;
             }
           }
-        }
 
-        // If two fields (range comparison)
-        if (fields.length === 2) {
-          const [checkInField, checkOutField] = fields;
-          const newCheckIn = new Date(this.form.value[checkInField]);
-          const newCheckOut = new Date(this.form.value[checkOutField]);
+          // --- Case 3: Multi-field exact match (TravelDate + TravelMode, etc.) ---
+          return fields.every((f: any) => {
+            const newVal = this.normalizeValue(this.form.value[f]);
+            const rowVal = this.normalizeValue(row[f]);
 
-          const isConflict = this.existingData.some((row: any, index: number) => {
-            // Skip if it's the same row being edited
-            if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
+            if (newVal instanceof Date && rowVal instanceof Date) {
+              const newDate = this.datePipe.transform(
+                newVal,
+                duplicateConfig.skipTimeCheck ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm:ss'
+              );
+              const rowDate = this.datePipe.transform(
+                rowVal,
+                duplicateConfig.skipTimeCheck ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm:ss'
+              );
+              return newDate === rowDate;
+            }
 
-            const existingCheckIn = new Date(row[checkInField]);
-            const existingCheckOut = new Date(row[checkOutField]);
-
-            return newCheckIn <= existingCheckOut && newCheckOut >= existingCheckIn;
+            return newVal === rowVal;
           });
+        });
 
-          if (isConflict) {
-            this.snackbarService.error(`${name} for the date ${this.form.value[checkInField]} - ${this.form.value[checkOutField]} has already been claimed.`, 5000);
-            if (this.editIndex && this.isTravelRaiseRequest) {
-              this.freezeControlsBasedOnConditions();
-            }
-            return;
+        if (isDuplicate) {
+          this.snackbarService.error(
+            `${duplicateConfig.name} with same ${labels.join(', ')} already exists.`,
+            5000
+          );
+          if (this.editIndex && this.isTravelRaiseRequest) {
+            this.freezeControlsBasedOnConditions();
           }
+          return;
         }
+
+        //   const { fields, name, skipTimeCheck } = this.category.duplicateEntryCheck;
+        //   if (!fields || fields.length === 0) return;
+
+        //   // If only one field (e.g., single date) is provided
+        //   if (fields.length === 1) {
+        //     const [field] = fields;
+
+        //     if (skipTimeCheck) {
+        //       // If skipTimeCheck is true, compare only the date part
+        //       const newDate = this.datePipe.transform(this.form.value[field], 'yyyy-MM-dd');
+        //       const isDuplicate = this.existingData.some((row: any, index: number) => {
+        //         if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
+
+        //         const existingDate = this.datePipe.transform(row[field], 'yyyy-MM-dd');
+        //         return newDate === existingDate;
+        //       });
+        //       if (isDuplicate) {
+        //         this.snackbarService.error(`${name} for ${this.datePipe.transform(this.form.value[field], 'yyyy-MM-dd')} has already been claimed.`, 5000);
+        //         if (this.editIndex && this.isTravelRaiseRequest) {
+        //           this.freezeControlsBasedOnConditions();
+        //         }
+        //         return;
+        //       }
+        //     } else {
+        //       const newDate = new Date(this.form.value[field]).getTime();
+
+        //       const isDuplicate = this.existingData.some((row: any, index: number) => {
+        //         if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
+
+        //         const existingDate = new Date(row[field]).getTime();
+        //         return newDate === existingDate;
+        //       });
+        //       if (isDuplicate) {
+        //         this.snackbarService.error(`${name} for ${this.form.value[field]} has already been claimed.`, 5000);
+        //         if (this.editIndex && this.isTravelRaiseRequest) {
+        //           this.freezeControlsBasedOnConditions();
+        //         }
+        //         return;
+        //       }
+        //     }
+        //   }
+
+        //   // If two fields (range comparison)
+        //   if (fields.length === 2) {
+        //     const [checkInField, checkOutField] = fields;
+        //     const newCheckIn = new Date(this.form.value[checkInField]);
+        //     const newCheckOut = new Date(this.form.value[checkOutField]);
+
+        //     const isConflict = this.existingData.some((row: any, index: number) => {
+        //       // Skip if it's the same row being edited
+        //       if (this.editIndex !== null && index === (this.editIndex - 1)) return false;
+
+        //       const existingCheckIn = new Date(row[checkInField]);
+        //       const existingCheckOut = new Date(row[checkOutField]);
+
+        //       return newCheckIn <= existingCheckOut && newCheckOut >= existingCheckIn;
+        //     });
+
+        //     if (isConflict) {
+        //       this.snackbarService.error(`${name} for the date ${this.form.value[checkInField]} - ${this.form.value[checkOutField]} has already been claimed.`, 5000);
+        //       if (this.editIndex && this.isTravelRaiseRequest) {
+        //         this.freezeControlsBasedOnConditions();
+        //       }
+        //       return;
+        //     }
+        //   }
       }
     }
 
     this.validatePolicyViolation();
+  }
+
+  private normalizeValue(value: any): any {
+    if (value == null) return null;
+
+    if (value instanceof Date) return value;
+
+    if (typeof value === 'string' && !isNaN(Date.parse(value))) {
+      return new Date(value);
+    }
+
+    if (typeof value === 'object' && value?.value !== undefined) {
+      return value.value;
+    }
+
+    return value;
+  }
+
+  private isDateField(val1: any, val2: any): boolean {
+    return val1 instanceof Date && val2 instanceof Date;
   }
 
   validateManualPolicyViolation() {
@@ -1046,11 +1146,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     if (this.isClearing) return;
 
     // Avoid duplicate triggers for the same value
-    const currentValue = this.form.get(control.name)?.value;
-    const serialized = JSON.stringify(currentValue ?? null);
+    // const currentValue = this.form.get(control.name)?.value;
+    // const serialized = JSON.stringify(currentValue ?? null);
 
-    if (control['lastProcessedValue'] === serialized) return;
-    control['lastProcessedValue'] = serialized;
+    // if (control['lastProcessedValue'] === serialized) return;
+    // control['lastProcessedValue'] = serialized;
 
     if (control.conditionBasedDisplayFieldsCheck) {
       setTimeout(() => {
