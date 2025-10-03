@@ -235,9 +235,8 @@ export class AppComponent implements OnInit {
       if (parsedToken) {
         this.getIPAddress().then((ipAddress) => {
           const payload = {
-            // userId: parsedToken?.claim_employeecode,
-            employeeCode: 'DM11163',
-            password: 'Env@123',
+            employeeCode: parsedToken?.claim_employeecode,
+            password: '',
             ipAddress: ipAddress,
             browser: navigator.userAgent,
           };
