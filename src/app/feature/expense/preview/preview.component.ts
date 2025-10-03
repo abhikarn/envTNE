@@ -862,8 +862,16 @@ export class PreviewComponent {
     this.cdr.detectChanges(); // Ensure the view updates after changing isCreateAdjustmentform    
   }
 
+   // Utility to detect mobile devices
+  isMobile(): boolean {
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  }
+
   goBack() {
     if (this.mode == 'preview') {
+      if(this.isMobile()) {
+        this.bottomSheet.dismiss();
+      }
       this.router.navigate(['/expense/expense/dashboard']);
     }
     if (this.mode == 'approval') {

@@ -478,10 +478,10 @@
                            {{ expenseRequestPreviewConfig.actions[2].label }}
                         </button>
                         }
-                        <button type="button" class="btn btn-outline-secondary" (click)="goBack()">
+                        }
+                        <button type="button" class="btn btn-outline-secondary" [ngClass]="isMobile() ? 'back-button-width-100' : ''" (click)="goBack()">
                            Back
                         </button>
-                        }
                      </div>
                   </div>
                </ng-template>

@@ -17,6 +17,7 @@ import { PlatformService } from './shared/service/platform.service';
 import { NewExpenseService } from './feature/expense/service/new-expense.service';
 import { SessionTimeoutService } from './shared/service/session-timeout.service';
 import { ConfirmDialogService } from './shared/service/confirm-dialog.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
   isAuthenticated = false;
   showIdleWarning = false;
   private idleStarted = false;
+  errorMessage = '';
 
   constructor(
     private translate: TranslateService,
@@ -37,7 +39,8 @@ export class AppComponent implements OnInit {
     private platformService: PlatformService,
     private newExpenseService: NewExpenseService,
     private sessionTimeoutService: SessionTimeoutService,
-    private confirmDialogService: ConfirmDialogService
+    private confirmDialogService: ConfirmDialogService,
+    private http: HttpClient,
   ) {
     this.translate.setDefaultLang('en');
     const browserLang = navigator.language.split('-')[0];
@@ -156,7 +159,6 @@ export class AppComponent implements OnInit {
   }
 
   readTokenForSSO(url: string) {
-    console.log('AppComponent initialized with SSO URL:', url);
     const queryParams = new URLSearchParams(window.location.search);
     let sessionId = queryParams.get('token');
 
@@ -164,26 +166,27 @@ export class AppComponent implements OnInit {
 
     if (sessionId) {
       try {
-         this.newExpenseService.GetUserData({
-              sessionId: sessionId, // use token's jti as session
-            }).subscribe({
-              next: (userDataResponse: any) => {
-                if (!userDataResponse || !userDataResponse.token) {
-                  alert('Invalid user data received. Please log in again.');
-                  this.authService.Logout();
-                  return;
-                }
-                this.isAuthenticated = true;
-                this.onAuthenticated();
-                localStorage.setItem('loginType', 'SSO');
-                localStorage.setItem('sessionId', sessionId);
-                localStorage.setItem('userData', JSON.stringify(userDataResponse));
-                localStorage.setItem('userMasterId', userDataResponse.token.userMasterId);
-                this.authService.setToken(userDataResponse.token);
-                this.authService.setUserMasterId(userDataResponse.token.userMasterId);
-                this.router.navigate(['/expense/expense/dashboard']);
-              }
-            });
+        this.newExpenseService.GetUserData({
+          sessionId: sessionId,
+        }).subscribe({
+          next: (userDataResponse: any) => {
+            console.log('SSO: GetUserData response', userDataResponse);
+            if (!userDataResponse || !userDataResponse.token) {
+              alert('Invalid user data received. Please log in again.');
+              this.authService.Logout();
+              return;
+            }
+            this.isAuthenticated = true;
+            this.onAuthenticated();
+            localStorage.setItem('loginType', 'SSO');
+            localStorage.setItem('sessionId', sessionId);
+            localStorage.setItem('userData', JSON.stringify(userDataResponse));
+            localStorage.setItem('userMasterId', userDataResponse.token.userMasterId);
+            this.authService.setToken(userDataResponse.token);
+            this.authService.setUserMasterId(userDataResponse.token.userMasterId);
+            this.router.navigate(['/expense/expense/dashboard']);
+          }
+        });
 
       } catch (e) {
         console.error('Error decoding token:', e);
@@ -193,33 +196,92 @@ export class AppComponent implements OnInit {
     }
   }
 
+  private async getIPAddress(): Promise<string> {
+    try {
+      const response = await this.http.get<{ ip: string }>('https://api.ipify.org?format=json').toPromise();
+      return response?.ip || '0.0.0.0';
+    } catch (error) {
+      console.error('Error fetching IP address:', error);
+      return '0.0.0.0';
+    }
+  }
+
+  private parseJwt(token: string): any {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+          .join('')
+      );
+      return JSON.parse(jsonPayload);
+    } catch (e) {
+      console.error('Invalid JWT token', e);
+      return null;
+    }
+  }
 
 
   private handleDeepLink(url: string): void {
     const queryParams = new URLSearchParams(window.location.search);
-    const accessToken = queryParams.get('accessToken');
-    const callbackUrl = queryParams.get('callbackUrl');
-    const platform = queryParams.get('platform');
+    const accessToken = queryParams.get('access_token');
 
-    if (accessToken && callbackUrl && platform) {
-      // Send to your backend for validation
-      this.authService.validatePeopleStrongSession({ accessToken, callbackUrl, platform })
-        .subscribe({
-          next: () => {
-            this.isAuthenticated = true;
-            localStorage.setItem('loginType', 'DeepLink');
-            this.onAuthenticated();
-            this.platformService.setPlatform(platform === 'Mobile')
-            this.router.navigate(['/expense/expense/dashboard']);
-          },
-          error: () => {
-            this.authService.Logout();
-            this.router.navigate(['/account']);
-          }
+    if (accessToken) {
+      const parsedToken = this.parseJwt(accessToken);
+      console.log('Deep Link: Parsed JWT', parsedToken);
+
+      if (parsedToken) {
+        this.getIPAddress().then((ipAddress) => {
+          const payload = {
+            // userId: parsedToken?.claim_employeecode,
+            employeeCode: 'DM11163',
+            password: 'Env@123',
+            ipAddress: ipAddress,
+            browser: navigator.userAgent,
+          };
+
+          this.newExpenseService.EmployeeAuth(payload).subscribe({
+            next: (response: any) => {
+              const result = response.responseValue;
+              if (result?.isAuthenticated) {
+                this.newExpenseService.GetUserData({
+                  sessionId: result.sessionId,
+                }).subscribe({
+                  next: (userDataResponse: any) => {
+                    console.log('Deep Link: GetUserData response', userDataResponse);
+                    if (!userDataResponse || !userDataResponse.token) {
+                      alert('Invalid user data received. Please log in again.');
+                      this.authService.Logout();
+                      return;
+                    }
+                    this.isAuthenticated = true;
+                    this.onAuthenticated();
+                    localStorage.setItem('loginType', 'DeepLink');
+                    localStorage.setItem('sessionId', result.sessionId);
+                    localStorage.setItem('userData', JSON.stringify(userDataResponse));
+                    localStorage.setItem('userMasterId', userDataResponse?.token?.userMasterId);
+                    this.authService.setToken(userDataResponse.token);
+                    this.authService.setUserMasterId(userDataResponse.token.userMasterId);
+                    this.router.navigate([parsedToken?.redirect_url]);
+                  },
+                  error: () => {
+                    this.errorMessage = 'Unable to retrieve user data.';
+                  },
+                });
+              } else {
+                this.errorMessage = 'Invalid or expired token.';
+              }
+            },
+            error: () => {
+              this.errorMessage = 'Authentication failed. Please try again.';
+            },
+          });
         });
+      }
     } else {
-      // Fallback to normal local token validation
-      this.gettoken(url);
+      this.gettoken(url); // fallback
     }
   }
 
