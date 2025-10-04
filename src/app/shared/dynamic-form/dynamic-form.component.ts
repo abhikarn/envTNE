@@ -277,23 +277,36 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
           const costCenterData = this.form.value?.[costCenterField] || [];
           if (costCenterData.length > 0) {
+            const precision = this.configService.getDecimalPrecision?.() || 2;
+
+            // Parse Claim Amount safely and round
             const claimAmountRaw = this.form.value?.[claimAmountField];
-            const claimAmount = parseFloat(
-              typeof claimAmountRaw === 'string' ? claimAmountRaw.replace(/,/g, '') : claimAmountRaw
-            ) || 0;
+            const claimAmount = this.toDecimal(
+              typeof claimAmountRaw === 'string'
+                ? claimAmountRaw.replace(/,/g, '')
+                : claimAmountRaw,
+              precision
+            );
 
-            const totalCostCenterAmount = costCenterData.reduce((sum: number, item: any) => {
-              const rawAmount = item?.AmmoutInActual;
-              const amount = parseFloat(
-                typeof rawAmount === 'string' ? rawAmount.replace(/,/g, '') : rawAmount
-              );
-              return sum + (isNaN(amount) ? 0 : amount);
-            }, 0);
+            // Sum cost center actuals safely and round
+            const totalCostCenterAmount = this.toDecimal(
+              costCenterData.reduce((sum: number, item: any) => {
+                const rawAmount = item?.AmmoutInActual;
+                const amount = this.toDecimal(
+                  typeof rawAmount === 'string' ? rawAmount.replace(/,/g, '') : rawAmount,
+                  precision
+                );
+                return sum + amount;
+              }, 0),
+              precision
+            );
 
-            const isMatch = Math.abs(totalCostCenterAmount - claimAmount) < 0.01;
+            // Compare with tolerance (e.g., 0.01 if precision=2)
+            const tolerance = Math.pow(10, -precision);
 
-            if (!isMatch) {
+            if (Math.abs(totalCostCenterAmount - claimAmount) > tolerance) {
               this.snackbarService.error(validation.AmountMustMatchClaimAmount, 5000);
+
               if (this.editIndex && this.isTravelRaiseRequest) {
                 this.freezeControlsBasedOnConditions();
               }
@@ -303,6 +316,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       }
     }
+
 
     if (this.category.checkValidationOnSubmit?.policyCheck) {
       for (const policy of this.category.checkValidationOnSubmit.policyCheck) {
@@ -930,7 +944,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onEditRow(rowData: any) {
-    if(!rowData?.row?.IsTaxIncluded) {
+    if (!rowData?.row?.IsTaxIncluded) {
       const fieldsToRemove = [
         'TaxAmount'
       ];
@@ -1457,6 +1471,12 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         control?.disable({ emitEvent: false });
       }
     });
+  }
+
+  /** Utility: Convert to fixed decimal safely */
+  private toDecimal(value: any, precision: number = 2): number {
+    const num = Number(value) || 0;
+    return Number(num.toFixed(precision));
   }
 
 }
