@@ -126,80 +126,101 @@ export class LineWiseCostCenterComponent {
   }
 
   addCostCenterRow() {
-    if (this.costCenterDetailsForm.invalid) {
-      this.costCenterDetailsForm.markAllAsTouched();
+
+    const form = this.costCenterDetailsForm;
+
+    if (form.invalid) {
+      form.markAllAsTouched();
       return;
     }
 
-    // do not allow 0 value in AmmoutInActual & AmmoutInPercentage
-    if (this.costCenterDetailsForm.get('AmmoutInActual')?.value <= 0 && this.costCenterDetailsForm.get('AmmoutInPercentage')?.value <= 0) {
+    const precision = this.globalConfig.getDecimalPrecision?.() || 2;
+
+    const actualAmount = this.toDecimal(form.get('AmmoutInActual')?.value, precision);
+    const percentage = this.toDecimal(form.get('AmmoutInPercentage')?.value, precision);
+    const costCentreId = form.get('CostCentreId')?.value;
+
+    // Validate amount values
+    if (actualAmount <= 0 && percentage <= 0) {
       this.snackbarService.error('Amount in Actual or Percentage must be greater than 0');
       return;
     }
 
-    // user can not select duplicate cost center
-    const costCentreId = this.costCenterDetailsForm.get('CostCentreId')?.value;
-    if (this.costCenterDetails.some((detail: any) => detail.CostCentreId === costCentreId)) {
+    // Prevent duplicate Cost Centre
+    const isDuplicate = this.costCenterDetails.some(
+      (detail: any) => detail.CostCentreId === costCentreId
+    );
+    if (isDuplicate) {
       this.snackbarService.error('Cost center already exists');
       return;
     }
 
-    let amount: any
+    // Determine total claimed amount
+    let claimedAmount = 0;
     if (this.controlConfig?.getControl) {
-      amount = parseFloat(this.form.get(`${this.controlConfig.getControl}`)?.value || "0");
+      claimedAmount = this.toDecimal(this.form.get(this.controlConfig.getControl)?.value, precision);
+    } else if (this.costcentreWiseExpense?.getControl) {
+      claimedAmount = this.toDecimal(this.amount, precision);
     }
 
-    if (this.costcentreWiseExpense?.getControl) {
-      amount = parseFloat(this.amount || 0)
-    }
+    // Validate AmountInActual limit
+    const totalActual = this.costCenterDetails.reduce(
+      (sum: number, d: any) => sum + this.toDecimal(d.AmmoutInActual, precision),
+      0
+    );
 
-    // Sum of All AmountInActual should not exceed Claimed Amount
-    const totalAmount = this.costCenterDetails.reduce((sum: number, detail: any) => {
-      return sum + (parseFloat(detail.AmmoutInActual) || 0);
-    }, 0);
+    const newTotalActual = this.toDecimal(totalActual + actualAmount, precision);
 
-    if (totalAmount + parseFloat(this.costCenterDetailsForm.get('AmmoutInActual')?.value || "0") > amount) {
-      this.snackbarService.error('Sum of all cost center amounts must be equal to the claimed amount.');
+    if (newTotalActual > claimedAmount + Math.pow(10, -precision)) {
+      this.snackbarService.error('Sum of all cost center amounts must not exceed the claimed amount.');
       return;
     }
-    // Total of AmmoutInPercentage should not exceed 100%
-    const totalPercentage = this.costCenterDetails.reduce((sum: number, detail: any) => {
-      return sum + (parseFloat(detail.AmmoutInPercentage) || 0);
-    }, 0);
 
-    if (totalPercentage + parseFloat(this.costCenterDetailsForm.get('AmmoutInPercentage')?.value || "0") > 100) {
+    // Validate Percentage limit
+    const totalPercent = this.costCenterDetails.reduce(
+      (sum: number, d: any) => sum + this.toDecimal(d.AmmoutInPercentage, precision),
+      0
+    );
+
+    const newTotalPercent = this.toDecimal(totalPercent + percentage, precision);
+
+    if (newTotalPercent > 100 + Math.pow(10, -precision)) {
       this.snackbarService.error('Total cost center percentage exceeds 100%');
       return;
     }
 
+    // Format numeric fields consistently
+    const formattedValue = { ...form.value };
     this.fields.forEach((field: any) => {
-      if (field?.dataType == 'numeric' && this.costCenterDetailsForm.value.hasOwnProperty(field.name)) {
-        if (this.costCenterDetailsForm.value[field.name] === null || this.costCenterDetailsForm.value[field.name] === undefined) {
-          this.costCenterDetailsForm.value[field.name] = 0;
-        }
-        const precision = field.autoFormat?.decimalPrecision || this.globalConfig.getDecimalPrecision();
-        this.costCenterDetailsForm.value[field.name] = parseFloat(this.costCenterDetailsForm.value[field.name]).toFixed(precision);
+      if (field?.dataType === 'numeric' && formattedValue.hasOwnProperty(field.name)) {
+        const fieldPrecision = field.autoFormat?.decimalPrecision || precision;
+        formattedValue[field.name] = this.toDecimal(formattedValue[field.name], fieldPrecision);
       }
     });
-    this.costCenterDetails.push(this.costCenterDetailsForm.value);
+
+    // Push into array or save via API
     if (this.control) {
+      this.costCenterDetails.push(formattedValue);
       this.control.setValue(this.costCenterDetails);
     } else {
-      console.log(this.costCenterDetailsForm.value);
-      this.costCenterDetailsForm.value.ExpenseRequestDetailId = this.ExpenseRequestDetailId;
-      let requestBody = {
-        Id: this.costCenterDetailsForm.value.ExpenseRequestCostCentrewiseAmmoutId,
-        AmountInPercentage: this.costCenterDetailsForm.value.AmmoutInPercentage,
-        AmountInActual: this.costCenterDetailsForm.value.AmmoutInActual,
-        CostCentreId: this.costCenterDetailsForm.value.CostCentreId,
+      formattedValue.ExpenseRequestDetailId = this.ExpenseRequestDetailId;
+
+      const requestBody = {
+        Id: formattedValue.ExpenseRequestCostCentrewiseAmmoutId,
+        AmountInPercentage: formattedValue.AmmoutInPercentage,
+        AmountInActual: formattedValue.AmmoutInActual,
+        CostCentreId: formattedValue.CostCentreId,
         ExpenseRequestDetailId: this.ExpenseRequestDetailId
-      }
-      this.expenseService.expenseExpenseRequestCostCentrewiseAmountIu(requestBody).pipe(take(1)).subscribe({
-        next: (res: any) => {
-          this.snackbarService.success(res?.ResponseValue?.Message);
-        }
-      });
+      };
+
+      this.expenseService.expenseExpenseRequestCostCentrewiseAmountIu(requestBody)
+        .pipe(take(1))
+        .subscribe({
+          next: (res: any) => this.snackbarService.success(res?.ResponseValue?.Message)
+        });
     }
+
+    // Reset form for next entry
     this.initCostCenterDetailsForm();
   }
 
@@ -291,4 +312,17 @@ export class LineWiseCostCenterComponent {
       this.costCenterDetailsForm.get(field.name)?.setValue(inputValue, { emitEvent: false });
     }
   }
+
+  /** Utility: Convert to fixed decimal safely */
+  private toDecimal(value: any, precision: number = 2): number {
+    const num = Number(value) || 0;
+    return Number(num.toFixed(precision));
+  }
+
+  /** Utility: Compare decimals with tolerance */
+  private areEqual(num1: number, num2: number, precision: number = 2): boolean {
+    const factor = Math.pow(10, precision);
+    return Math.round(num1 * factor) === Math.round(num2 * factor);
+  }
+
 }
