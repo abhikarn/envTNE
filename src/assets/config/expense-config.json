@@ -3187,7 +3187,17 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
-                    }
+                    },
+                    "setFields": [
+                        {
+                            "name": "EntitlementAmount",
+                            "formula": "OriginalEntitlementAmount * NoOfDays",
+                            "dependsOn": [
+                                "NoOfDays",
+                                "OriginalEntitlementAmount"
+                            ]
+                        }
+                    ]
                 },
                 "expanded": true,
                 "displayTable": true,
@@ -12541,7 +12551,17 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
-                    }
+                    },
+                    "setFields": [
+                        {
+                            "name": "EntitlementAmount",
+                            "formula": "OriginalEntitlementAmount * NoOfDays",
+                            "dependsOn": [
+                                "NoOfDays",
+                                "OriginalEntitlementAmount"
+                            ]
+                        }
+                    ]
                 },
                 "expanded": true,
                 "displayTable": true,

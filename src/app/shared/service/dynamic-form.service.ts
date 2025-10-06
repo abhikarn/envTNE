@@ -178,7 +178,7 @@ export class DynamicFormService {
           });
         }
 
-        if(form.value.IsTaxIncluded) {
+        if (form.value.IsTaxIncluded) {
           const fieldsToAdd = [
             'TaxAmount'
           ];
@@ -332,6 +332,21 @@ export class DynamicFormService {
               control.showInUI = false;
             }
           }
+        }
+
+        if (category.policyEntitlementCheckApi.setFields) {
+          category.policyEntitlementCheckApi.setFields.forEach((field: any) => {
+
+            const values: any = {};
+            field.dependsOn?.forEach((dep: string) => {
+              values[dep] = form.get(dep)?.value;
+            });
+
+            const calculatedValue = this.evaluateFormula(field.formula, values);
+            const controlToValidate = form.get(field.name);
+            controlToValidate?.setValue(Math.max(0, calculatedValue));
+            
+          });
         }
 
         this.updateConditionalValidators(form, formControls);
