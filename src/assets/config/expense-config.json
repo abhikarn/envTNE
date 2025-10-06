@@ -39200,8 +39200,8 @@
                         "order": 12
                     },
                     {
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -39546,8 +39546,8 @@
                     },
                     {
                         "type": "number",
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -39892,8 +39892,8 @@
                     },
                     {
                         "type": "number",
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -40222,8 +40222,8 @@
                     },
                     {
                         "type": "number",
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -44166,8 +44166,8 @@
                         "order": 9
                     },
                     {
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 10
@@ -44314,8 +44314,8 @@
                         "order": 9
                     },
                     {
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 10
@@ -44595,8 +44595,8 @@
                         "order": 11
                     },
                     {
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
