@@ -83,6 +83,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   selectedFiles: any = [];
   isClearing = false;
   isTravelRaiseRequest: boolean = false;
+  checkPolicyEntitlementCheck: boolean = true;
 
   constructor(
     private serviceRegistry: ServiceRegistryService,
@@ -261,6 +262,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.dynamicFormService.scrollToFirstInvalidControl('form');
       return;
     }
+    this.checkPolicyEntitlementCheck = false;
     this.form.get('IsViolation')?.setValue(false);
     this.dynamicFormService.updateConditionalValidators(this.form, this.formConfig);
     // enable all controls before submission
@@ -1090,7 +1092,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       }
     });
-
+    this.checkPolicyEntitlementCheck = true;
     setTimeout(() => {
       this.isClearing = false;
     }, 500);
@@ -1195,7 +1197,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       }, 500);
     }
 
-    if (control.policyEntitlementCheck) {
+    if (control.policyEntitlementCheck && this.checkPolicyEntitlementCheck) {
       setTimeout(() => {
         this.dynamicFormService.validateFieldPolicyEntitlement(control, this.category, this.form, this.formConfig, this.moduleData);
       }, 500);
