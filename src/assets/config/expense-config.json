@@ -37583,6 +37583,19 @@
                         "position": "out"
                     },
                     {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
                         "name": "Remarks",
                         "label": "Remarks",
                         "visible": true,
@@ -38426,7 +38439,6 @@
                         "visible": true,
                         "position": "in"
                     },
-                    {},
                     {
                         "name": "BillNumber",
                         "label": "Bill Number",
