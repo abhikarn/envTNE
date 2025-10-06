@@ -263,7 +263,9 @@ export class AppComponent implements OnInit {
                     localStorage.setItem('userMasterId', userDataResponse?.token?.userMasterId);
                     this.authService.setToken(userDataResponse.token);
                     this.authService.setUserMasterId(userDataResponse.token.userMasterId);
-                    this.router.navigate([parsedToken?.redirect_url]);
+                    this.router.navigateByUrl(parsedToken?.redirect_url).then(() => {
+                      window.location.reload();
+                    });
                   },
                   error: () => {
                     this.errorMessage = 'Unable to retrieve user data.';
