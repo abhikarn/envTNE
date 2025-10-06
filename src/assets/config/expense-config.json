@@ -38402,14 +38402,14 @@
                         "position": "in"
                     },
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "CheckInDateTime",
                         "label": "Check-in Date",
                         "visible": true,
                         "position": "in"
                     },
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "CheckOutDateTime",
                         "label": "Check-out Date",
                         "visible": true,
@@ -38420,7 +38420,7 @@
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out"
+                        "position": "in"
                     },
                     {
                         "type": "number",
@@ -38458,6 +38458,12 @@
                         "label": "Approved(INR)",
                         "visible": true,
                         "position": "in"
+                    },
+                    {
+                        "name": "HotelName",
+                        "label": "Hotel Name",
+                        "visible": true,
+                        "position": "out"
                     },
                     {
                         "name": "BillNumber",
