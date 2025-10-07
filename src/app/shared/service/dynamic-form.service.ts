@@ -178,7 +178,7 @@ export class DynamicFormService {
           });
         }
 
-        if(form.value.IsTaxIncluded) {
+        if (form.value.IsTaxIncluded) {
           const fieldsToAdd = [
             'TaxAmount'
           ];
@@ -332,6 +332,21 @@ export class DynamicFormService {
               control.showInUI = false;
             }
           }
+        }
+
+        if (category.policyEntitlementCheckApi.setFields) {
+          category.policyEntitlementCheckApi.setFields.forEach((field: any) => {
+
+            const values: any = {};
+            field.dependsOn?.forEach((dep: string) => {
+              values[dep] = form.get(dep)?.value;
+            });
+
+            const calculatedValue = this.evaluateFormula(field.formula, values);
+            const controlToValidate = form.get(field.name);
+            controlToValidate?.setValue(Math.max(0, calculatedValue));
+            
+          });
         }
 
         this.updateConditionalValidators(form, formControls);
@@ -668,8 +683,7 @@ export class DynamicFormService {
       const vals = keys.map(k => {
         const v = values[k];
         if (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}/.test(v)) {
-          const dateOnly = v.split('T')[0];
-          return new Date(dateOnly + 'T00:00:00Z').getTime();
+          return new Date(v).getTime();
         }
         return v; // preserve arrays/objects
       });

@@ -3153,9 +3153,7 @@
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual",
-                            "IsTaxIncluded": "IsTaxIncluded",
-                            "TaxAmount": "TaxAmount"
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -3189,7 +3187,17 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
-                    }
+                    },
+                    "setFields": [
+                        {
+                            "name": "EntitlementAmount",
+                            "formula": "OriginalEntitlementAmount * NoOfDays",
+                            "dependsOn": [
+                                "NoOfDays",
+                                "OriginalEntitlementAmount"
+                            ]
+                        }
+                    ]
                 },
                 "expanded": true,
                 "displayTable": true,
@@ -4737,9 +4745,7 @@
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual",
-                            "IsTaxIncluded": "IsTaxIncluded",
-                            "TaxAmount": "TaxAmount"
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -6247,9 +6253,7 @@
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual",
-                            "IsTaxIncluded": "IsTaxIncluded",
-                            "TaxAmount": "TaxAmount"
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -7823,9 +7827,7 @@
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual",
-                            "IsTaxIncluded": "IsTaxIncluded",
-                            "TaxAmount": "TaxAmount"
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -10852,9 +10854,7 @@
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual",
-                            "IsTaxIncluded": "IsTaxIncluded",
-                            "TaxAmount": "TaxAmount"
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -12517,9 +12517,7 @@
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual",
-                            "IsTaxIncluded": "IsTaxIncluded",
-                            "TaxAmount": "TaxAmount"
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -12553,7 +12551,17 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
-                    }
+                    },
+                    "setFields": [
+                        {
+                            "name": "EntitlementAmount",
+                            "formula": "OriginalEntitlementAmount * NoOfDays",
+                            "dependsOn": [
+                                "NoOfDays",
+                                "OriginalEntitlementAmount"
+                            ]
+                        }
+                    ]
                 },
                 "expanded": true,
                 "displayTable": true,
@@ -17035,9 +17043,7 @@
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual",
-                            "IsTaxIncluded": "IsTaxIncluded",
-                            "TaxAmount": "TaxAmount"
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -23474,9 +23480,7 @@
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual",
-                            "IsTaxIncluded": "IsTaxIncluded",
-                            "TaxAmount": "TaxAmount"
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -24523,9 +24527,7 @@
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual",
-                            "IsTaxIncluded": "IsTaxIncluded",
-                            "TaxAmount": "TaxAmount"
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -26382,9 +26384,7 @@
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual",
-                            "IsTaxIncluded": "IsTaxIncluded",
-                            "TaxAmount": "TaxAmount"
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -33827,9 +33827,7 @@
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual",
-                            "IsTaxIncluded": "IsTaxIncluded",
-                            "TaxAmount": "TaxAmount"
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -36624,9 +36622,7 @@
                         "controls": {
                             "ClaimAmountInBaseCurrency": "ClaimAmountInBaseCurrency",
                             "EntitlementAmountInBaseCurrency": "EntitlementAmountInBaseCurrency",
-                            "IsActual": "IsActual",
-                            "IsTaxIncluded": "IsTaxIncluded",
-                            "TaxAmount": "TaxAmount"
+                            "IsActual": "IsActual"
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
@@ -37607,6 +37603,19 @@
                         "position": "out"
                     },
                     {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out"
+                    },
+                    {
                         "name": "Remarks",
                         "label": "Remarks",
                         "visible": true,
@@ -38393,14 +38402,14 @@
                         "position": "in"
                     },
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "CheckInDateTime",
                         "label": "Check-in Date",
                         "visible": true,
                         "position": "in"
                     },
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "CheckOutDateTime",
                         "label": "Check-out Date",
                         "visible": true,
@@ -38411,7 +38420,7 @@
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out"
+                        "position": "in"
                     },
                     {
                         "type": "number",
@@ -38450,7 +38459,12 @@
                         "visible": true,
                         "position": "in"
                     },
-                    {},
+                    {
+                        "name": "HotelName",
+                        "label": "Hotel Name",
+                        "visible": true,
+                        "position": "out"
+                    },
                     {
                         "name": "BillNumber",
                         "label": "Bill Number",
@@ -39212,8 +39226,8 @@
                         "order": 12
                     },
                     {
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -39558,8 +39572,8 @@
                     },
                     {
                         "type": "number",
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -39904,8 +39918,8 @@
                     },
                     {
                         "type": "number",
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -40234,8 +40248,8 @@
                     },
                     {
                         "type": "number",
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -44178,8 +44192,8 @@
                         "order": 9
                     },
                     {
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 10
@@ -44326,8 +44340,8 @@
                         "order": 9
                     },
                     {
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 10
@@ -44607,8 +44621,8 @@
                         "order": 11
                     },
                     {
-                        "name": "EntitlementAmount",
-                        "label": "Entitlement Amount(INR)",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
                         "visible": true,
                         "position": "out",
                         "order": 13

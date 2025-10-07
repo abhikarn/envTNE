@@ -112,6 +112,8 @@
             } @else {
             @if (col.type == 'date') {
             {{ row[col.name] | globalDate: 'dd-MMM-yyyy' }}
+            } @else if (col.type == 'datetime') {
+            {{ row[col.name] | globalDate: 'dd-MMM-yyyy HH:mm' }}
             } @else {
             @if(mode==="approval" && col.name === 'ApprovedAmount') {
             <input [type]="col.type" class="form-control" [(ngModel)]="row[col.name]"
@@ -212,7 +214,7 @@
                                     } @else if(col?.type == 'date') {
                                         {{ entry[col.name] | globalDate: 'dd-MMM-yyyy' }}
                                     } @else if(col?.type == 'datetime') {
-                                        {{ entry[col.name] | globalDate: 'dd-MMM-yyyy' }}
+                                        {{ entry[col.name] | globalDate: 'dd-MMM-yyyy HH:mm' }}
                                     } @else if(col?.type == 'number') {
                                         {{ (+entry[col.name]).toFixed(col?.decimalPrecision || 2) }}
                                     } @else {

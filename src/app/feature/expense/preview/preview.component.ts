@@ -604,7 +604,7 @@ export class PreviewComponent {
     });
   }
 
-  private recalculateExpenseSummary() {
+  recalculateExpenseSummary() {
     const EXPENSE_SUMMARY_ID = "expense-summary";
     const TOTAL_EXPENSE_KEYS = [91, 92, 93, 94];
     const PAYABLE_KEYS = [91, 94];
@@ -626,17 +626,33 @@ export class PreviewComponent {
 
     let totalExpense = 0.00;
     let amountPayable = 0.00;
-
     summary.items?.forEach((item: any) => {
-      const value = Number(item.value);
-      if (TOTAL_EXPENSE_KEYS.includes(item.paymentModeId)) totalExpense += value;
-      if (PAYABLE_KEYS.includes(item.paymentModeId)) amountPayable += value;
+      const value = Number(item.value) || 0;
+      const modeId = Number(item.paymentModeId);
+
+      // Calculate totalExpense
+      if (TOTAL_EXPENSE_KEYS.includes(modeId)) {
+        totalExpense += value;
+      }
+
+      // Calculate amountPayable
+      if (PAYABLE_KEYS.includes(modeId)) {
+        amountPayable += value;
+      }
+
+      // Always format to 2 decimals for display
       item.value = value.toFixed(2);
     });
 
-    summary.items?.forEach((item: any) => {
-      if (item.name === 'totalExpense') item.value = totalExpense.toFixed(2);
-      if (item.name === 'amountPayable') item.value = amountPayable.toFixed(2);
+    // Update summary totals
+    summary.items = summary.items.map((item: any) => {
+      if (item.name === 'totalExpense') {
+        item.value = totalExpense.toFixed(2);
+      }
+      if (item.name === 'amountPayable') {
+        item.value = amountPayable.toFixed(2);
+      }
+      return item;
     });
   }
 
@@ -862,14 +878,14 @@ export class PreviewComponent {
     this.cdr.detectChanges(); // Ensure the view updates after changing isCreateAdjustmentform    
   }
 
-   // Utility to detect mobile devices
+  // Utility to detect mobile devices
   isMobile(): boolean {
     return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   }
 
   goBack() {
     if (this.mode == 'preview') {
-      if(this.isMobile()) {
+      if (this.isMobile()) {
         this.bottomSheet.dismiss();
       }
       this.router.navigate(['/expense/expense/dashboard']);
@@ -936,7 +952,7 @@ export class PreviewComponent {
     if (!summary) return;
 
     const getValue = (name: string): number => {
-      const item = summary.items?.find((i: any) => i.name === name && [92, 93].includes(i.paymentModeId));
+      const item = summary.items?.find((i: any) => i.name === name);
       return item ? parseFloat(item.value) || 0 : 0;
     };
 
