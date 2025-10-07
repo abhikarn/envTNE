@@ -40927,7 +40927,7 @@
                     {
                         "type": "date",
                         "name": "ClaimToDate",
-                        "label": "To Date",
+                        "label": "Claim To Date",
                         "visible": true,
                         "position": "in",
                         "order": 3
@@ -40937,7 +40937,7 @@
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "order": 3
                     },
                     {
@@ -40983,6 +40983,28 @@
                         "order": 7
                     },
                     {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "name": "VendorName",
+                        "label": "Vendor Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
                         "name": "City",
                         "label": "City",
                         "visible": true,
@@ -41024,17 +41046,10 @@
                     {
                         "type": "number",
                         "name": "TaxAmount",
-                        "label": "Tax Amount",
+                        "label": "Applicable Tax",
                         "visible": true,
                         "position": "out",
                         "order": 13
-                    },
-                    {
-                        "name": "BillNumber",
-                        "label": "Bill Number",
-                        "visible": true,
-                        "position": "out",
-                        "order": 14
                     },
                     {
                         "name": "Justification",
