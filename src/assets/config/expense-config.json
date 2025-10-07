@@ -39139,9 +39139,15 @@
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
+                        "name": "AccommodationType",
+                        "label": "Type",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
                         "type": "date",
                         "name": "ClaimDate",
-                        "label": "From Date",
+                        "label": "Claim From Date",
                         "visible": true,
                         "position": "in",
                         "order": 1
@@ -39149,7 +39155,7 @@
                     {
                         "type": "date",
                         "name": "ClaimToDate",
-                        "label": "To Date",
+                        "label": "Claim To Date",
                         "visible": true,
                         "position": "in",
                         "order": 2
@@ -39159,7 +39165,7 @@
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "order": 3
                     },
                     {
@@ -39202,6 +39208,21 @@
                         "label": "Approved(INR)",
                         "visible": true,
                         "position": "in",
+                        "order": 8
+                    },
+                    {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
                         "order": 8
                     },
                     {
