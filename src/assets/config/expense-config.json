@@ -20286,8 +20286,17 @@
                     {
                         "type": "text",
                         "subType": "text",
+                        "dataType": "string",
                         "name": "Country",
                         "label": "Country",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z ]+"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": false,
                         "disable": false,
                         "readonly": false,
