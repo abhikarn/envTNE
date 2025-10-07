@@ -14,9 +14,9 @@ export class CostCenterService {
    */
   validateUnsavedCostCenter(costCenterComponentRef: any): boolean {
     if (!costCenterComponentRef) return true;
-    const multipleCostCenterEnabled = costCenterComponentRef.costCenterForm.get('IsBillRaisedInMultipleCostCenter').value;
-    const lineWiseRef = costCenterComponentRef.getLineWiseCostCenterRef();
-    const form = lineWiseRef.costCenterDetailsForm;
+    const multipleCostCenterEnabled = costCenterComponentRef?.costCenterForm.get('IsBillRaisedInMultipleCostCenter').value;
+    const lineWiseRef = costCenterComponentRef?.getLineWiseCostCenterRef();
+    const form = lineWiseRef?.costCenterDetailsForm;
 
     // Only validate if multiple cost centers are enabled
     if (multipleCostCenterEnabled && form?.dirty) {

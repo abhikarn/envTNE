@@ -15953,6 +15953,66 @@
                         "order": 22
                     }
                 ],
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Center",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Amount In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Amount In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "attachment",
+                        "label": "Attachments",
+                        "dataKey": "attachment",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "FileName",
+                                "label": "File Name",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "name": "__actions",
+                                "label": "Action",
+                                "visible": true,
+                                "order": 3
+                            }
+                        ]
+                    }
+                ],
                 "displayPage": {
                     "Travel Expense": true,
                     "Direct Expense Domestic": true,
@@ -39199,7 +39259,7 @@
                     {
                         "type": "numeric",
                         "name": "ApprovedAmount",
-                        "label": "Approved",
+                        "label": "Approved Amount",
                         "visible": true,
                         "isEditableInApproval": true,
                         "isEditableInFinanceApproval": true,
@@ -39559,7 +39619,7 @@
                     {
                         "type": "numeric",
                         "name": "ApprovedAmount",
-                        "label": "Approved",
+                        "label": "Approved Amount",
                         "visible": true,
                         "isEditableInApproval": true,
                         "isEditableInFinanceApproval": true,
@@ -39905,7 +39965,7 @@
                     {
                         "type": "numeric",
                         "name": "ApprovedAmount",
-                        "label": "Approved",
+                        "label": "Approved Amount",
                         "visible": true,
                         "isEditableInApproval": true,
                         "isEditableInFinanceApproval": true,
@@ -40242,7 +40302,7 @@
                     {
                         "type": "numeric",
                         "name": "ApprovedAmount",
-                        "label": "Approved",
+                        "label": "Approved Amount",
                         "visible": true,
                         "isEditableInApproval": true,
                         "isEditableInFinanceApproval": true,
@@ -42908,6 +42968,93 @@
                         "order": 11
                     }
                 ],
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Center",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Amount In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Amount In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gst",
+                        "dataKey": "gst",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "GstIn",
+                                "label": "GSTIN",
+                                "visible": true
+                            },
+                            {
+                                "name": "InvoiceNumber",
+                                "label": "Invoice Number",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "Amount",
+                                "label": "Amount",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "SGST",
+                                "label": "SGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "CGST",
+                                "label": "CGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "IGST",
+                                "label": "IGST",
+                                "visible": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "UGST",
+                                "label": "UTGST",
+                                "visible": true
+                            }
+                        ]
+                    }
+                ],
                 "showInUI": true
             },
             {
@@ -44253,7 +44400,7 @@
                     {
                         "type": "numeric",
                         "name": "ApprovedAmount",
-                        "label": "Approved",
+                        "label": "Approved Amount",
                         "visible": true,
                         "isEditableInApproval": true,
                         "isEditableInFinanceApproval": true,
@@ -44401,7 +44548,7 @@
                     {
                         "type": "numeric",
                         "name": "ApprovedAmount",
-                        "label": "Approved",
+                        "label": "Approved Amount",
                         "visible": true,
                         "isEditableInApproval": true,
                         "isEditableInFinanceApproval": true,
@@ -44659,7 +44806,7 @@
                     {
                         "type": "numeric",
                         "name": "ApprovedAmount",
-                        "label": "Approved",
+                        "label": "Approved Amount",
                         "visible": true,
                         "isEditableInApproval": true,
                         "isEditableInFinanceApproval": true,
