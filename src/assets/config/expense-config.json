@@ -20286,8 +20286,17 @@
                     {
                         "type": "text",
                         "subType": "text",
+                        "dataType": "string",
                         "name": "Country",
                         "label": "Country",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^A-Za-z ]+"
+                            ],
+                            "range": {
+                                "max": 50
+                            }
+                        },
                         "required": false,
                         "disable": false,
                         "readonly": false,
@@ -39130,9 +39139,15 @@
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
+                        "name": "AccommodationType",
+                        "label": "Type",
+                        "visible": true,
+                        "position": "in"
+                    },
+                    {
                         "type": "date",
                         "name": "ClaimDate",
-                        "label": "From Date",
+                        "label": "Claim From Date",
                         "visible": true,
                         "position": "in",
                         "order": 1
@@ -39140,7 +39155,7 @@
                     {
                         "type": "date",
                         "name": "ClaimToDate",
-                        "label": "To Date",
+                        "label": "Claim To Date",
                         "visible": true,
                         "position": "in",
                         "order": 2
@@ -39150,7 +39165,7 @@
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "order": 3
                     },
                     {
@@ -39193,6 +39208,21 @@
                         "label": "Approved(INR)",
                         "visible": true,
                         "position": "in",
+                        "order": 8
+                    },
+                    {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
                         "order": 8
                     },
                     {
@@ -40523,7 +40553,7 @@
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "order": 3
                     },
                     {
@@ -40569,6 +40599,28 @@
                         "order": 7
                     },
                     {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "name": "VendorName",
+                        "label": "Vendor Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
                         "name": "City",
                         "label": "City",
                         "visible": true,
@@ -40610,17 +40662,10 @@
                     {
                         "type": "number",
                         "name": "TaxAmount",
-                        "label": "Tax Amount",
+                        "label": "Applicable Tax",
                         "visible": true,
                         "position": "out",
                         "order": 13
-                    },
-                    {
-                        "name": "BillNumber",
-                        "label": "Bill Number",
-                        "visible": true,
-                        "position": "out",
-                        "order": 14
                     },
                     {
                         "name": "Justification",
@@ -40882,7 +40927,7 @@
                     {
                         "type": "date",
                         "name": "ClaimToDate",
-                        "label": "To Date",
+                        "label": "Claim To Date",
                         "visible": true,
                         "position": "in",
                         "order": 3
@@ -40892,7 +40937,7 @@
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "order": 3
                     },
                     {
@@ -40938,6 +40983,28 @@
                         "order": 7
                     },
                     {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
+                        "name": "VendorName",
+                        "label": "Vendor Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 8
+                    },
+                    {
                         "name": "City",
                         "label": "City",
                         "visible": true,
@@ -40979,17 +41046,10 @@
                     {
                         "type": "number",
                         "name": "TaxAmount",
-                        "label": "Tax Amount",
+                        "label": "Applicable Tax",
                         "visible": true,
                         "position": "out",
                         "order": 13
-                    },
-                    {
-                        "name": "BillNumber",
-                        "label": "Bill Number",
-                        "visible": true,
-                        "position": "out",
-                        "order": 14
                     },
                     {
                         "name": "Justification",

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -6,6 +7,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-mobile-nav',
   imports: [
+    CommonModule,
     RouterModule, 
     ReactiveFormsModule
   ],
