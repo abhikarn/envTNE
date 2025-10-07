@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { IFormControl } from '../../form-control.interface';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SnackbarService } from '../../../service/snackbar.service';
@@ -19,6 +19,7 @@ import { MatRadioModule } from '@angular/material/radio';
   encapsulation: ViewEncapsulation.None
 })
 export class CostCenterComponent {
+  @ViewChild(LineWiseCostCenterComponent) lineWiseCostCenterRef!: LineWiseCostCenterComponent;
   @Input() control: any;
   @Input() controlConfig: IFormControl = { name: '' };
   @Input() form: any;
@@ -50,6 +51,10 @@ export class CostCenterComponent {
 
   setMultipleCostCenterFlag(value: boolean): void {
     this.costCenterForm.get('IsBillRaisedInMultipleCostCenter')?.setValue(value);
+  }
+
+  getLineWiseCostCenterRef(): LineWiseCostCenterComponent {
+    return this.lineWiseCostCenterRef;
   }
 
 }

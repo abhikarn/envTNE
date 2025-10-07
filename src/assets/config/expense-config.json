@@ -1093,6 +1093,16 @@
                                 "message": "Amount must be greater than zero"
                             }
                         ],
+                        "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
+                            }
+                        ],
                         "disable": false,
                         "readonly": false,
                         "order": 13
@@ -1122,6 +1132,16 @@
                             {
                                 "type": "required",
                                 "message": "Conversion Rate is required"
+                            }
+                        ],
+                        "setFields": [
+                            {
+                                "name": "ClaimAmountInBaseCurrency",
+                                "formula": "ClaimAmount * ConversionRate",
+                                "dependsOn": [
+                                    "ClaimAmount",
+                                    "ConversionRate"
+                                ]
                             }
                         ],
                         "disable": false,
@@ -1254,7 +1274,7 @@
                         "isExcluded": false,
                         "label": "GST",
                         "value": [],
-                        "getControl": "ClaimAmount",
+                        "getControl": "ClaimAmountInBaseCurrency",
                         "fields": [
                             {
                                 "name": "ExpenseRequestGstTypeId",
@@ -12593,7 +12613,7 @@
                     {
                         "type": "datetime",
                         "name": "CheckOutDateTime",
-                        "label": "Check-out Date Time",
+                        "label": "Check-out Date",
                         "visible": true,
                         "position": "in",
                         "order": 4
@@ -33902,7 +33922,7 @@
                     {
                         "type": "datetime",
                         "name": "CheckOutDateTime",
-                        "label": "Check-out Date Time",
+                        "label": "Check-out Date",
                         "visible": true,
                         "position": "in",
                         "order": 4
@@ -41301,7 +41321,7 @@
                         "order": 1
                     },
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "CheckInDateTime",
                         "label": "Check-in Date",
                         "visible": true,
@@ -41309,7 +41329,7 @@
                         "order": 2
                     },
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "CheckOutDateTime",
                         "label": "Check-out Date",
                         "visible": true,
@@ -41321,7 +41341,7 @@
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "order": 4
                     },
                     {
@@ -41365,7 +41385,6 @@
                         "position": "in",
                         "order": 8
                     },
-                    {},
                     {
                         "name": "BillNumber",
                         "label": "Bill Number",
@@ -41377,6 +41396,20 @@
                         "type": "date",
                         "name": "BillDate",
                         "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "NoOfDays",
+                        "label": "No. of Days",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "HotelName",
+                        "label": "Hotel Name",
                         "visible": true,
                         "position": "out",
                         "order": 10
@@ -41421,19 +41454,19 @@
                         "order": 15
                     },
                     {
+                        "type": "number",
+                        "name": "TaxAmount",
+                        "label": "Applicable Tax",
+                        "visible": true,
+                        "position": "out",
+                        "order": 17
+                    },
+                    {
                         "name": "Justification",
                         "label": "Justification",
                         "visible": true,
                         "position": "out",
                         "order": 16
-                    },
-                    {
-                        "type": "number",
-                        "name": "TaxAmount",
-                        "label": "Tax Amount",
-                        "visible": true,
-                        "position": "out",
-                        "order": 17
                     }
                 ],
                 "gst": {
