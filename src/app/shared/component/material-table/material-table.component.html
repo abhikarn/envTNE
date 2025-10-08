@@ -136,10 +136,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="getRowClass(row)">
         <pre>{{row |json}}</pre>
     </tr>
-    <!-- Approval Mode: Remarks Row -->
-    @if (mode === 'approval' || mode === 'finance-approval') {
-    <tr mat-row *matRowDef="let row; columns: ['remarksRow']" class="remarks-row"></tr>
-    }
+
     <!-- Expanded Detail Row -->
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row nested-table"></tr>
     <!-- Detail Row Template -->
@@ -218,15 +215,12 @@
             </div>
         </td>
     </ng-container>
-    <!-- Remarks Full Width Row -->
-    <!-- <ng-container matColumnDef="remarksRow">
-      <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
-          <div class="remarks-container">
-              <label class="remarks-label">Remarks</label>
-              <textarea [(ngModel)]="row.remarks" class="form-control" rows="2"></textarea>
-          </div>
-      </td>
-      </ng-container> -->
+    
+     <!-- Approval Mode: Remarks Row -->
+    @if (mode === 'approval' || mode === 'finance-approval') {
+    <tr mat-row *matRowDef="let row; columns: ['remarksRow']" class="remarks-row"></tr>
+    }
+    
     <!-- Remarks Full Width Row -->
     <ng-container matColumnDef="remarksRow">
         <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
