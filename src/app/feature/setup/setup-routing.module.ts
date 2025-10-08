@@ -11,6 +11,10 @@ const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./main-setup/main-setup.component').then(c => c.MainSetupComponent)
+      },
+      {
+        path: 'expense-policy',
+        loadComponent: () => import('./expense-policy/expense-policy.component').then(c => c.ExpensePolicyComponent)
       }
     ]
   }

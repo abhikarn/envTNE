@@ -13127,3 +13127,30 @@ width: 157px;
     top: 2px;
     position: relative;
 }
+
+.setup-block {
+	background-color: #FFF;
+	padding: 10px;
+	border-radius: 10px;
+	border: 1px solid #eaeaea;
+	width: 100%;
+	box-shadow: 0 .25rem 1.75rem rgba(30, 34, 40, 0.03);
+}
+.setup-block-content p {
+	color: #626273;
+} .setup-block-ico {
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}.setup-block-content span {
+	font-size: 13px;
+}a:hover .setup-block {
+	box-shadow: 0 .25rem 1.75rem rgba(30, 34, 40, 0.11);
+	border: 1px solid #D3DEFB;
+}.app-designation h6 {
+	text-transform: capitalize;
+	font-weight: bold;
+	color: #6a6e77;
+	font-size: 12px;
+}
