@@ -938,7 +938,7 @@ export class MainExpenseComponent {
       .confirm({
         title: type === 'submit' ? 'Create Expense Request' : 'Draft Expense Request',
         message: this.expenseConfirmMessage,
-        confirmText: 'Create',
+        confirmText: type === 'submit' ? 'Create' : 'Draft',
         cancelText: 'Cancel'
       })
       .subscribe((confirmed) => {

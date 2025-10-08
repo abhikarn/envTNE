@@ -313,6 +313,37 @@ export class LineWiseCostCenterComponent {
     }
   }
 
+  clearCostCenterForm(): void {
+    if (!this.costCenterDetailsForm) return;
+
+    // Reset form values
+    this.costCenterDetailsForm.reset();
+
+    // Reset each control state
+    Object.keys(this.costCenterDetailsForm.controls).forEach((key) => {
+      const control = this.costCenterDetailsForm.get(key);
+      control?.setErrors(null);
+      control?.markAsPristine();
+      control?.markAsUntouched();
+    });
+
+    // Force the entire form state to pristine
+    this.costCenterDetailsForm.markAsPristine();
+    this.costCenterDetailsForm.markAsUntouched();
+    this.costCenterDetailsForm.updateValueAndValidity({ onlySelf: false, emitEvent: false });
+
+    // NEW: explicitly set dirty flag to false (Angular quirk guard)
+    (this.costCenterDetailsForm as any)._pristine = true;
+    (this.costCenterDetailsForm as any)._dirty = false;
+
+    // Optional cleanup of autocomplete
+    if (this.filteredOptionsMap) {
+      Object.keys(this.filteredOptionsMap).forEach((key) => {
+        this.filteredOptionsMap[key] = [];
+      });
+    }
+  }
+
   /** Utility: Convert to fixed decimal safely */
   private toDecimal(value: any, precision: number = 2): number {
     const num = Number(value) || 0;

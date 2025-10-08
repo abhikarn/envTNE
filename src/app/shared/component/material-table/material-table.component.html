@@ -24,78 +24,63 @@
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let row" style="padding: 7px 0;">
             <div class="icons-new">
-                <div class="dropdown" style="padding: 5px;">
-                    <button class="p-0   w-auto h-auto" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="fa-solid fs-6 fa-ellipsis-vertical"></i>
-                    </button>
+                <span style="width: 22px;">
+                    <div [matTooltip]="'GL Code: ' + row?.GLCode" matTooltipPosition="above" [matTooltipDisabled]="!row?.GLCode">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px">
+                            <path d="M9 7H15" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M15 17V14" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M15 11H15.01" stroke="#323232" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M12 11H12.01" stroke="#323232" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M9 11H9.01" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9 14H9.01" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12 14H12.01" stroke="#323232" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M12 17H12.01" stroke="#323232" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M9 17H9.01" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M5 7C5 5.11438 5 4.17157 5.58579 3.58579C6.17157 3 7.11438 3 9 3H12H15C16.8856 3 17.8284 3 18.4142 3.58579C19 4.17157 19 5.11438 19 7V12V17C19 18.8856 19 19.8284 18.4142 20.4142C17.8284 21 16.8856 21 15 21H12H9C7.11438 21 6.17157 21 5.58579 20.4142C5 19.8284 5 18.8856 5 17V12V7Z"
+                                stroke="#323232" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </span>
+                <span style="width: 22px;">
+                    <div (click)="showAttachments(row?.attachment)" matTooltip="Documents" matTooltipPosition="above"
+                        [ngClass]="{ 'disabled-icon': !row?.attachment?.length }" [matTooltipDisabled]="!row?.attachment?.length">
+                        <svg fill="#000000" viewBox="0 0 24 24" id="paper-clip-bottom-right" data-name="Flat Line"
+                            xmlns="http://www.w3.org/2000/svg" class="icon flat-line" width="18px" height="18px">
+                            <path id="primary"
+                                d="M15.27,5.23l3.95,3.95a6.1,6.1,0,0,1,0,8.61h0a6.09,6.09,0,0,1-8.6,0L4.19,11.36a4,4,0,0,1,0-5.74h0a4.06,4.06,0,0,1,5.73,0l6.74,6.74a2,2,0,0,1,0,2.87h0a2,2,0,0,1-2.87,0l-7-7"
+                                style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;" />
+                        </svg>
+                    </div>
+                </span>
+                <span style="width: 22px;">
+                    <div [matTooltip]="'Payment Type: ' + row?.PaymentMode" [matTooltipDisabled]="!row?.PaymentMode"
+                        matTooltipPosition="above">
             
-                    <ul class="dropdown-menu threedots-dd" aria-labelledby="dropdownMenuButton">
-                        <!-- GL Code -->
-                        <li class="d-flex align-items-start" *ngIf="row?.GLCode">
-                            <svg class="mr-2" viewBox="0 0 24 24" width="18px" height="18px" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9 7H15" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                </path>
-                                <path d="M15 17V14" stroke="#323232" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
-                                <path d="M15 11H15.01" stroke="#323232" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
-                                <path d="M12 11H12.01" stroke="#323232" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
-                                <path d="M9 11H9.01" stroke="#323232" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
-                                <path d="M9 14H9.01" stroke="#323232" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
-                                <path d="M12 14H12.01" stroke="#323232" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
-                                <path d="M12 17H12.01" stroke="#323232" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
-                                <path d="M9 17H9.01" stroke="#323232" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
-                                <path
-                                    d="M5 7C5 5.11438 5 4.17157 5.58579 3.58579C6.17157 3 7.11438 3 9 3H12H15C16.8856 3 17.8284 3 18.4142 3.58579C19 4.17157 19 5.11438 19 7V12V17C19 18.8856 19 19.8284 18.4142 20.4142C17.8284 21 16.8856 21 15 21H12H9C7.11438 21 6.17157 21 5.58579 20.4142C5 19.8284 5 18.8856 5 17V12V7Z"
-                                    stroke="#323232" stroke-width="2" stroke-linejoin="round"></path>
-                            </svg>
-                             <h6>  <label  class="d-block" style="font-size: 11px;color: #808197;">  GL Code: </label> {{ row?.GLCode }} </h6>
-                        </li>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px">
+                            <path d="M3.5 10H20.5" stroke="#323232" stroke-width="2" stroke-linecap="round" />
+                            <path d="M6 14H8" stroke="#323232" stroke-width="2" stroke-linecap="round" />
+                            <path d="M11 14H13" stroke="#323232" stroke-width="2" stroke-linecap="round" />
+                            <path
+                                d="M3 9C3 7.11438 3 6.17157 3.58579 5.58579C4.17157 5 5.11438 5 7 5H12H17C18.8856 5 19.8284 5 20.4142 5.58579C21 6.17157 21 7.11438 21 9V12V15C21 16.8856 21 17.8284 20.4142 18.4142C19.8284 19 18.8856 19 17 19H12H7C5.11438 19 4.17157 19 3.58579 18.4142C3 17.8284 3 16.8856 3 15V12V9Z"
+                                stroke="#323232" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
             
-                        <!-- Attachments -->
-                        <li class="d-flex align-items-start"  [ngClass]="{ 'disabled': !row?.attachment?.length }"
-                            (click)="row?.attachment?.length && showAttachments(row?.attachment)">
-                            <svg class="mr-2"  fill="#000000" viewBox="0 0 24 24" width="18px" height="18px" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M15.27,5.23l3.95,3.95a6.1,6.1,0,0,1,0,8.61h0a6.09,6.09,0,0,1-8.6,0L4.19,11.36a4,4,0,0,1,0-5.74h0a4.06,4.06,0,0,1,5.73,0l6.74,6.74a2,2,0,0,1,0,2.87h0a2,2,0,0,1-2.87,0l-7-7"
-                                    style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;"></path>
-                            </svg>
-                            <h6> Documents </h6>
-                        </li>
+                    </div>
             
-                        <!-- Payment Type -->
-                        <li class="d-flex align-items-start" *ngIf="row?.PaymentMode">
-                            <svg  class="mr-2" viewBox="0 0 24 24" width="18px" height="18px" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3.5 10H20.5" stroke="#323232" stroke-width="2" stroke-linecap="round"></path>
-                                <path d="M6 14H8" stroke="#323232" stroke-width="2" stroke-linecap="round"></path>
-                                <path d="M11 14H13" stroke="#323232" stroke-width="2" stroke-linecap="round"></path>
-                                <path
-                                    d="M3 9C3 7.11438 3 6.17157 3.58579 5.58579C4.17157 5 5.11438 5 7 5H12H17C18.8856 5 19.8284 5 20.4142 5.58579C21 6.17157 21 7.11438 21 9V12V15C21 16.8856 21 17.8284 20.4142 18.4142C19.8284 19 18.8856 19 17 19H12H7C5.11438 19 4.17157 19 3.58579 18.4142C3 17.8284 3 16.8856 3 15V12V9Z"
-                                    stroke="#323232" stroke-width="2" stroke-linejoin="round"></path>
-                            </svg>
-                            <h6>  <label  class="d-block" style="font-size: 11px;color: #808197;">  Payment Type: </label> {{ row?.PaymentMode }} </h6>
-                        </li>
-            
-                        <!-- Remarks -->
-                        <li>
-                            <button class="p-0 w-auto h-auto d-flex align-items-start" type="button" (click)="showRemarks(row)">
-                                <svg class="mr-2"  width="18px" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M6.64286 9.00522H12.3571M5.5 5.57441H13.5M7.21429 13.5714L9.5 17L11.7857 13.5714H16.3571C16.9891 13.5714 17.5 13.0606 17.5 12.4286V2.14286C17.5 1.51086 16.9891 1 16.3571 1H2.64286C2.01086 1 1.5 1.51086 1.5 2.14286V12.4286C1.5 13.0606 2.01086 13.5714 2.64286 13.5714H7.21429Z"
-                                        stroke="black" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                                <h6> Remarks </h6>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
+                </span>
+                <span style="width: 22px;">
+                    <svg (click)="showRemarks(row?.ExpenseRequestDetailId)" width="18px" height="18" viewBox="0 0 19 18" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M6.64286 9.00522H12.3571M5.5 5.57441H13.5M7.21429 13.5714L9.5 17L11.7857 13.5714H16.3571C16.9891 13.5714 17.5 13.0606 17.5 12.4286V2.14286C17.5 1.51086 16.9891 1 16.3571 1H2.64286C2.01086 1 1.5 1.51086 1.5 2.14286V12.4286C1.5 13.0606 2.01086 13.5714 2.64286 13.5714H7.21429Z"
+                            stroke="black" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </span>
             </div>
         </td>
     </ng-container>
@@ -151,10 +136,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="getRowClass(row)">
         <pre>{{row |json}}</pre>
     </tr>
-    <!-- Approval Mode: Remarks Row -->
-    @if (mode === 'approval' || mode === 'finance-approval') {
-    <tr mat-row *matRowDef="let row; columns: ['remarksRow']" class="remarks-row"></tr>
-    }
+
     <!-- Expanded Detail Row -->
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row nested-table"></tr>
     <!-- Detail Row Template -->
@@ -233,15 +215,12 @@
             </div>
         </td>
     </ng-container>
-    <!-- Remarks Full Width Row -->
-    <!-- <ng-container matColumnDef="remarksRow">
-      <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
-          <div class="remarks-container">
-              <label class="remarks-label">Remarks</label>
-              <textarea [(ngModel)]="row.remarks" class="form-control" rows="2"></textarea>
-          </div>
-      </td>
-      </ng-container> -->
+    
+     <!-- Approval Mode: Remarks Row -->
+    @if (mode === 'approval' || mode === 'finance-approval') {
+    <tr mat-row *matRowDef="let row; columns: ['remarksRow']" class="remarks-row"></tr>
+    }
+    
     <!-- Remarks Full Width Row -->
     <ng-container matColumnDef="remarksRow">
         <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">

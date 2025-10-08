@@ -29,6 +29,7 @@ import _moment from 'moment';
 import { QuotationComponent } from './form-controls/quotation/quotation.component';
 import { ExpenseService } from '../../../../tne-api';
 import { firstValueFrom } from 'rxjs';
+import { CostCenterService } from '../service/cost-center.service';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -93,7 +94,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     private dynamicFormService: DynamicFormService,
     private dynamicTableService: DynamicTableService,
     private datePipe: DatePipe, // inject DatePipe
-    private expenseService: ExpenseService
+    private expenseService: ExpenseService,
+    private costCenterService: CostCenterService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -262,6 +264,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.dynamicFormService.scrollToFirstInvalidControl('form');
       return;
     }
+    // Prevent losing unsaved cost center details
+    const isCostCenterValid = this.costCenterService.validateUnsavedCostCenter(this.costCenterComponentRef);
+    if (!isCostCenterValid) return;
+
     this.checkPolicyEntitlementCheck = false;
     this.form.get('IsViolation')?.setValue(false);
     this.dynamicFormService.updateConditionalValidators(this.form, this.formConfig);

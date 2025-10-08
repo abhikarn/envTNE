@@ -4,9 +4,19 @@ import { BaseSetupComponent } from './base-setup.component';
 
 const routes: Routes = [
   {
-    path: 'base-setup',
+    path: '',
     component: BaseSetupComponent,
-    data: { title: 'Setup' }
+    data: { title: 'Setup' },
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./main-setup/main-setup.component').then(c => c.MainSetupComponent)
+      },
+      {
+        path: 'expense-policy',
+        loadComponent: () => import('./expense-policy/expense-policy.component').then(c => c.ExpensePolicyComponent)
+      }
+    ]
   }
 ];
 
