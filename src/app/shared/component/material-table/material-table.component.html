@@ -165,6 +165,13 @@
                         </div>
                     </ng-container>
                 </div>
+                
+                @if (mode === 'approval' || mode === 'finance-approval') {
+                <div *ngIf="row.ClaimStatusId !== 5" class="remarks-container" [ngClass]="{ 'remarks-error': isRemarkInvalid(row) }">
+                    <label class="remarks-label">Remarks</label>
+                    <textarea [(ngModel)]="row.remarks" class="form-control chm-formtextarea" rows="2" maxlength="500"></textarea>
+                </div>
+                }
 
                 @if (mode === 'finance-approval') {
                 @if (categoryGST) {
@@ -217,12 +224,12 @@
     </ng-container>
     
      <!-- Approval Mode: Remarks Row -->
-    @if (mode === 'approval' || mode === 'finance-approval') {
+    <!-- @if (mode === 'approval' || mode === 'finance-approval') {
     <tr mat-row *matRowDef="let row; columns: ['remarksRow']" class="remarks-row"></tr>
-    }
+    } -->
     
     <!-- Remarks Full Width Row -->
-    <ng-container matColumnDef="remarksRow">
+    <!-- <ng-container matColumnDef="remarksRow">
         <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
             <div *ngIf="row.ClaimStatusId !== 5" class="remarks-container"
                 [ngClass]="{ 'remarks-error': isRemarkInvalid(row) }">
@@ -231,7 +238,7 @@
                     maxlength="500"></textarea>
             </div>
         </td>
-    </ng-container>
+    </ng-container> -->
 </table>
 </div>
  
