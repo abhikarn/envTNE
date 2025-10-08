@@ -159,6 +159,8 @@ export class AppComponent implements OnInit {
   }
 
   readTokenForSSO(url: string) {
+    console.log(url);
+    console.log(window.location.search)
     const queryParams = new URLSearchParams(window.location.search);
     let sessionId = queryParams.get('token');
 
