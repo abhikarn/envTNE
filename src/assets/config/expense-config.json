@@ -45786,7 +45786,7 @@
                     "decimalPrecision": 2,
                     "sortable": true,
                     "showSearch": true,
-                    "class": "text-end",
+                    "class": "text-start",
                     "order": 7
                 },
                 {
@@ -45794,7 +45794,7 @@
                     "label": "Policy Violation",
                     "sortable": false,
                     "showSearch": false,
-                    "class": "text-center",
+                    "class": "text-start",
                     "order": 8
                 },
                 {
@@ -45862,7 +45862,7 @@
                     "decimalPrecision": 2,
                     "sortable": true,
                     "showSearch": true,
-                    "class": "text-end",
+                    "class": "text-start",
                     "order": 7
                 },
                 {
@@ -45870,7 +45870,7 @@
                     "label": "Policy Violation",
                     "sortable": false,
                     "showSearch": false,
-                    "class": "text-center",
+                    "class": "text-start",
                     "order": 8
                 },
                 {

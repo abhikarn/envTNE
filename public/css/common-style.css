@@ -4805,7 +4805,16 @@ button.dropbtn {
 
 }.expense-list-head {
         width: 100%;
-    }#expenseHead .more-dropdown .menu-item {
+    }
+.expense-list-head h6 small {
+	font-size: 100%;
+	/* white-space: nowrap; */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/* width: 200px; */
+	/* display: block; */
+}
+    #expenseHead .more-dropdown .menu-item {
         width: auto;
         padding: 0 31px;
         font-size: 12px;

@@ -15,8 +15,9 @@ app-bulk-approve-modal{
     border-bottom: 1px solid #ddd;
 }
 
-.modal-dialog {
-    margin: inherit;
+ .modal-dialog {
+	margin: inherit;
+	height: 100vh;
 }
 .close-dialouge{ background: transparent; border: none;;}
 app-bulk-approve-modal .attachment-table tr:last-child td {
