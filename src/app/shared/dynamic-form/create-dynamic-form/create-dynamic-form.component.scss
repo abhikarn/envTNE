@@ -18,7 +18,7 @@ app-create-dynamic-form{
 		width: 100%;
 		text-align: left !important;
 		position: relative !important;
-		display: inline !important;
+	display: block !important;
 	}
 
 	.mat-mdc-form-field {
@@ -111,7 +111,7 @@ app-create-dynamic-form{
 
 	.mat-mdc-select {
 
-		font-size: 0.9rem !important;
+		font-size: 0.9rem !important;    display: block!important;
 
 	}
 
@@ -129,7 +129,7 @@ app-create-dynamic-form{
 	}
 
 	.mdc-text-field__input {
-
+    display: block!important;
 		font-size: 0.9rem !important;
 	}
 }
