@@ -24627,6 +24627,14 @@
                         "isExcluded": false,
                         "value": "",
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsEdit",
+                        "isExcluded": false,
+                        "value": true,
+                        "showInUI": false,
+                        "inPayload": false
                     }
                 ],
                 "onInitAPI": {
@@ -44538,17 +44546,17 @@
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "BillingFromDate",
-                        "label": "From Date",
+                        "label": "Billing From Date",
                         "visible": true,
                         "position": "in",
                         "order": 1
                     },
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "BillingToDate",
-                        "label": "To Date",
+                        "label": "Billing To Date",
                         "visible": true,
                         "position": "in",
                         "order": 2
@@ -44565,7 +44573,7 @@
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "order": 4
                     },
                     {
@@ -44608,6 +44616,21 @@
                         "label": "Approved(INR)",
                         "visible": true,
                         "position": "in",
+                        "order": 9
+                    },
+                    {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
                         "order": 9
                     },
                     {
