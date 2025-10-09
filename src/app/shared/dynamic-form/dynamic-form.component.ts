@@ -59,6 +59,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @ViewChild(CostCenterComponent) costCenterComponentRef!: CostCenterComponent;
   @ViewChild(GstComponent) gstComponentRef!: GstComponent;
   @ViewChildren(DateInputComponent) dateInputComponentRef!: QueryList<DateInputComponent>;
+  @ViewChild(SelectInputComponent) SelectInputComponentRef!: SelectInputComponent;
   @Input() moduleData: any;
   @Input() category: any;
   @Input() formConfig: IFormControl[] = [];
@@ -1098,6 +1099,14 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       }
     });
+    
+    this.SelectInputComponentRef.setReadableDefaultvalue();
+    
+    if (this.category?.onInitAPI) {
+      // Populate form with initial API data if available
+      this.dynamicFormService.populateFormWithData(this.form, this.category.onInitAPI, this.moduleData);
+    }
+
     this.checkPolicyEntitlementCheck = true;
     setTimeout(() => {
       this.isClearing = false;
