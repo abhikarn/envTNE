@@ -22923,7 +22923,10 @@
                                 "apiService": "ExpenseService",
                                 "apiMethod": "expenseGetFrequencyTypeReference",
                                 "labelKey": "ReferenceType",
-                                "valueKey": "ReferenceTypeId"
+                                "valueKey": "ReferenceTypeId",
+                                "config": {
+                                    "setNull": true
+                                }
                             }
                         ],
                         "required": true,
@@ -22941,7 +22944,7 @@
                         "getReadableValue": {
                             "controlName": "Reference"
                         },
-                         "setValue": [
+                        "setValue": [
                             {
                                 "name": "BillingFromDate",
                                 "config": {
@@ -24002,7 +24005,10 @@
                                 "apiService": "ExpenseService",
                                 "apiMethod": "expenseGetFrequencyTypeReference",
                                 "labelKey": "ReferenceType",
-                                "valueKey": "ReferenceTypeId"
+                                "valueKey": "ReferenceTypeId",
+                                "config": {
+                                    "setNull": true
+                                }
                             }
                         ],
                         "required": true,

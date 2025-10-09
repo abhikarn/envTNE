@@ -787,6 +787,8 @@ export class DynamicFormService {
 
             if (caseItem?.config?.decimalPrecision) {
               form.get(outputControl)?.setValue(extracted?.toFixed(caseItem.config.decimalPrecision) ?? extracted);
+            } else if(caseItem?.config?.setNull) {
+              form.get(outputControl)?.setValue(null);
             } else {
               form.get(outputControl)?.setValue(
                 extracted ?? caseItem.config?.defaultValue ?? ''
