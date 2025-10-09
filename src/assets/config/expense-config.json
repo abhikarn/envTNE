@@ -22941,6 +22941,20 @@
                         "getReadableValue": {
                             "controlName": "Reference"
                         },
+                         "setValue": [
+                            {
+                                "name": "BillingFromDate",
+                                "config": {
+                                    "dateRange": "Reference"
+                                }
+                            },
+                            {
+                                "name": "BillingToDate",
+                                "config": {
+                                    "dateRange": "Reference"
+                                }
+                            }
+                        ],
                         "policyViolationCheck": true,
                         "order": 3
                     },
@@ -24000,6 +24014,20 @@
                         "getReadableValue": {
                             "controlName": "Reference"
                         },
+                        "setValue": [
+                            {
+                                "name": "BillingFromDate",
+                                "config": {
+                                    "dateRange": "Reference"
+                                }
+                            },
+                            {
+                                "name": "BillingToDate",
+                                "config": {
+                                    "dateRange": "Reference"
+                                }
+                            }
+                        ],
                         "policyViolationCheck": true,
                         "order": 3
                     },
