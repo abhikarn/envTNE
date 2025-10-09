@@ -44453,7 +44453,7 @@
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "BillingFromDate",
                         "label": "From Date",
                         "visible": true,
@@ -44461,7 +44461,7 @@
                         "order": 1
                     },
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "BillingToDate",
                         "label": "To Date",
                         "visible": true,
@@ -44480,7 +44480,7 @@
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "order": 4
                     },
                     {
@@ -44526,6 +44526,21 @@
                         "order": 9
                     },
                     {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
                         "name": "EntitlementAmountInBaseCurrency",
                         "label": "Entitlement Amount in Base Currency",
                         "visible": true,
@@ -44541,7 +44556,7 @@
                     },
                     {
                         "name": "ReferenceNumber",
-                        "label": "Mobile Number",
+                        "label": "Broadband Number",
                         "visible": true,
                         "position": "out",
                         "order": 12
