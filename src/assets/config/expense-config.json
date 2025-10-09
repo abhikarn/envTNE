@@ -24129,6 +24129,15 @@
                         "isExcluded": false,
                         "label": "Mobile Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9+]"
+                            ],
+                            "range": {
+                                "min": 6,
+                                "max": 15
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
