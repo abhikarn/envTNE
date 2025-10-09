@@ -23674,6 +23674,12 @@
                         "cancelText": "Cancel"
                     }
                 },
+                "checkValidationOnSubmit": {
+                    "duplicateEntry": {
+                        "validate": true,
+                        "duplicateField": "ReferenceTypeId"
+                    }
+                },
                 "expanded": false,
                 "displayTable": true,
                 "displayAddClearButton": true,
@@ -24750,6 +24756,12 @@
                         "message": "ResponseValue.Message",
                         "confirmText": "Ok",
                         "cancelText": "Cancel"
+                    }
+                },
+                "checkValidationOnSubmit": {
+                    "duplicateEntry": {
+                        "validate": true,
+                        "duplicateField": "ReferenceTypeId"
                     }
                 },
                 "expanded": false,
