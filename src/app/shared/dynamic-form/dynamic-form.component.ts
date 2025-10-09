@@ -30,6 +30,7 @@ import { QuotationComponent } from './form-controls/quotation/quotation.componen
 import { ExpenseService } from '../../../../tne-api';
 import { firstValueFrom } from 'rxjs';
 import { CostCenterService } from '../service/cost-center.service';
+import { CheckValidationOnSubmitService } from '../service/check-validation-on-submit.service';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -59,6 +60,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @ViewChild(CostCenterComponent) costCenterComponentRef!: CostCenterComponent;
   @ViewChild(GstComponent) gstComponentRef!: GstComponent;
   @ViewChildren(DateInputComponent) dateInputComponentRef!: QueryList<DateInputComponent>;
+  @ViewChild(SelectInputComponent) SelectInputComponentRef!: SelectInputComponent;
   @Input() moduleData: any;
   @Input() category: any;
   @Input() formConfig: IFormControl[] = [];
@@ -95,7 +97,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     private dynamicTableService: DynamicTableService,
     private datePipe: DatePipe, // inject DatePipe
     private expenseService: ExpenseService,
-    private costCenterService: CostCenterService
+    private costCenterService: CostCenterService,
+    private checkValidationOnSubmitService: CheckValidationOnSubmitService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -408,6 +411,17 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           }
           return; // stop further processing
         }
+      }
+    }
+
+    if (
+      this.existingData?.length > 0 &&
+      this.category.checkValidationOnSubmit?.duplicateEntry?.validate
+    ) {
+      const duplicate =  this.checkValidationOnSubmitService.duplicateLineItems(this.category.checkValidationOnSubmit, this.existingData, this.form, this.editIndex)
+      if(duplicate) {
+        this.snackbarService.error(`Duplicate claims are not allowed for the same month.`, 5000);
+        return;
       }
     }
 
@@ -1098,6 +1112,14 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       }
     });
+    
+    this.SelectInputComponentRef.setReadableDefaultvalue();
+    
+    if (this.category?.onInitAPI) {
+      // Populate form with initial API data if available
+      this.dynamicFormService.populateFormWithData(this.form, this.category.onInitAPI, this.moduleData);
+    }
+
     this.checkPolicyEntitlementCheck = true;
     setTimeout(() => {
       this.isClearing = false;

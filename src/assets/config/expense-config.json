@@ -19311,6 +19311,66 @@
                         "order": 15
                     }
                 ],
+                "nestedTables": [
+                    {
+                        "name": "costCenter",
+                        "dataKey": "costcentreWiseExpense",
+                        "label": "Cost Center",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "CostCentre",
+                                "label": "Cost Center",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInPercentage",
+                                "label": "Amount In Percentage",
+                                "visible": true,
+                                "order": 3
+                            },
+                            {
+                                "type": "number",
+                                "name": "AmmoutInActual",
+                                "label": "Amount In Actual",
+                                "visible": true,
+                                "order": 4
+                            }
+                        ]
+                    },
+                    {
+                        "name": "attachment",
+                        "label": "Attachments",
+                        "dataKey": "attachment",
+                        "columns": [
+                            {
+                                "name": "__slNo",
+                                "label": "Sl. No",
+                                "visible": true,
+                                "order": 1
+                            },
+                            {
+                                "name": "FileName",
+                                "label": "File Name",
+                                "visible": true,
+                                "order": 2
+                            },
+                            {
+                                "name": "__actions",
+                                "label": "Action",
+                                "visible": true,
+                                "order": 3
+                            }
+                        ]
+                    }
+                ],
                 "displayPage": {
                     "Mobile Handset Purchase": true
                 },
@@ -22923,7 +22983,10 @@
                                 "apiService": "ExpenseService",
                                 "apiMethod": "expenseGetFrequencyTypeReference",
                                 "labelKey": "ReferenceType",
-                                "valueKey": "ReferenceTypeId"
+                                "valueKey": "ReferenceTypeId",
+                                "config": {
+                                    "setNull": true
+                                }
                             }
                         ],
                         "required": true,
@@ -22941,6 +23004,20 @@
                         "getReadableValue": {
                             "controlName": "Reference"
                         },
+                        "setValue": [
+                            {
+                                "name": "BillingFromDate",
+                                "config": {
+                                    "dateRange": "Reference"
+                                }
+                            },
+                            {
+                                "name": "BillingToDate",
+                                "config": {
+                                    "dateRange": "Reference"
+                                }
+                            }
+                        ],
                         "policyViolationCheck": true,
                         "order": 3
                     },
@@ -23660,6 +23737,12 @@
                         "cancelText": "Cancel"
                     }
                 },
+                "checkValidationOnSubmit": {
+                    "duplicateEntry": {
+                        "validate": true,
+                        "duplicateField": "ReferenceTypeId"
+                    }
+                },
                 "expanded": false,
                 "displayTable": true,
                 "displayAddClearButton": true,
@@ -23982,7 +24065,10 @@
                                 "apiService": "ExpenseService",
                                 "apiMethod": "expenseGetFrequencyTypeReference",
                                 "labelKey": "ReferenceType",
-                                "valueKey": "ReferenceTypeId"
+                                "valueKey": "ReferenceTypeId",
+                                "config": {
+                                    "setNull": true
+                                }
                             }
                         ],
                         "required": true,
@@ -24000,6 +24086,20 @@
                         "getReadableValue": {
                             "controlName": "Reference"
                         },
+                        "setValue": [
+                            {
+                                "name": "BillingFromDate",
+                                "config": {
+                                    "dateRange": "Reference"
+                                }
+                            },
+                            {
+                                "name": "BillingToDate",
+                                "config": {
+                                    "dateRange": "Reference"
+                                }
+                            }
+                        ],
                         "policyViolationCheck": true,
                         "order": 3
                     },
@@ -24129,6 +24229,15 @@
                         "isExcluded": false,
                         "label": "Mobile Number",
                         "value": "",
+                        "autoFormat": {
+                            "patterns": [
+                                "[^0-9+]"
+                            ],
+                            "range": {
+                                "min": 6,
+                                "max": 15
+                            }
+                        },
                         "required": true,
                         "validations": [
                             {
@@ -24627,6 +24736,14 @@
                         "isExcluded": false,
                         "value": "",
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsEdit",
+                        "isExcluded": false,
+                        "value": true,
+                        "showInUI": false,
+                        "inPayload": false
                     }
                 ],
                 "onInitAPI": {
@@ -24705,6 +24822,12 @@
                         "message": "ResponseValue.Message",
                         "confirmText": "Ok",
                         "cancelText": "Cancel"
+                    }
+                },
+                "checkValidationOnSubmit": {
+                    "duplicateEntry": {
+                        "validate": true,
+                        "duplicateField": "ReferenceTypeId"
                     }
                 },
                 "expanded": false,
@@ -44390,7 +44513,7 @@
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "BillingFromDate",
                         "label": "From Date",
                         "visible": true,
@@ -44398,7 +44521,7 @@
                         "order": 1
                     },
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "BillingToDate",
                         "label": "To Date",
                         "visible": true,
@@ -44417,7 +44540,7 @@
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "order": 4
                     },
                     {
@@ -44463,6 +44586,21 @@
                         "order": 9
                     },
                     {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
                         "name": "EntitlementAmountInBaseCurrency",
                         "label": "Entitlement Amount in Base Currency",
                         "visible": true,
@@ -44478,7 +44616,7 @@
                     },
                     {
                         "name": "ReferenceNumber",
-                        "label": "Mobile Number",
+                        "label": "Broadband Number",
                         "visible": true,
                         "position": "out",
                         "order": 12
@@ -44538,17 +44676,17 @@
                 "slNoLabel": "Sl. No.",
                 "columns": [
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "BillingFromDate",
-                        "label": "From Date",
+                        "label": "Billing From Date",
                         "visible": true,
                         "position": "in",
                         "order": 1
                     },
                     {
-                        "type": "date",
+                        "type": "datetime",
                         "name": "BillingToDate",
-                        "label": "To Date",
+                        "label": "Billing To Date",
                         "visible": true,
                         "position": "in",
                         "order": 2
@@ -44565,7 +44703,7 @@
                         "name": "EntitlementAmount",
                         "label": "Entitlement",
                         "visible": true,
-                        "position": "in-out",
+                        "position": "in",
                         "order": 4
                     },
                     {
@@ -44608,6 +44746,21 @@
                         "label": "Approved(INR)",
                         "visible": true,
                         "position": "in",
+                        "order": 9
+                    },
+                    {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
                         "order": 9
                     },
                     {

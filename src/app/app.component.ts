@@ -49,8 +49,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     // Handle deep link first
+    console.log(this.router)
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-      this.readTokenForSSO(event.urlAfterRedirects);
+      console.log(event)
+      this.handleDeepLink(event.urlAfterRedirects);
     });
     // If user is already logged-in on initial load (token in localStorage), start idle watcher
     const token = this.authService.getToken();
@@ -227,6 +229,8 @@ export class AppComponent implements OnInit {
 
 
   private handleDeepLink(url: string): void {
+    console.log(url);
+    console.log(window.location.search)
     const queryParams = new URLSearchParams(window.location.search);
     const accessToken = queryParams.get('access_token');
 
