@@ -8995,22 +8995,23 @@ ul.summary-list li span {
         }
         ul.policy-vio-list {
             width: 100%;
-            padding: 10px;
+            padding: 10px;background-color: #F7F7FA;
         }
-        ul.policy-vio-list li {
-            list-style-type: none;
-            /* padding: 5px 0; */
-            color: #E53535;
-            font-size: 12px;
-            font-weight: 400;
-            line-height: 16px;
-            margin: 0 0 13px 0;
-            display: flex;
-            align-items: center;
-            background-color: #ffffff;
-            padding: 7px;
-            border-radius: 5px;
-        } ul.policy-vio-list li:last-child{ margin-bottom: 0;}
+     ul.policy-vio-list li {
+	list-style-type: none;
+	/* padding: 5px 0; */
+	/* color: #E53535; */
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 16px;
+	margin: 0 0 13px 0;
+	display: flex;
+	align-items: center;
+	background-color: transparent;
+	padding: 7px;
+	border-radius: 5px;
+	border: 1px solid #E53535;
+} ul.policy-vio-list li:last-child{ margin-bottom: 0;}
         ul.policy-vio-list .fa-pv .fa {
         margin-right: 10px;
         }
