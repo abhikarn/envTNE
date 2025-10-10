@@ -37894,6 +37894,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -37910,6 +37911,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -37921,6 +37923,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -37946,6 +37949,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -37961,6 +37965,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -37976,6 +37981,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -37991,6 +37997,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -38318,6 +38325,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -38334,6 +38342,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -38345,6 +38354,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -38370,6 +38380,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -38385,6 +38396,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -38400,6 +38412,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -38415,6 +38428,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -38803,6 +38817,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -38819,6 +38834,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -38830,6 +38846,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -38855,6 +38872,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -38870,6 +38888,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -38885,6 +38904,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -38900,6 +38920,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39167,6 +39188,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -39183,6 +39205,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -39194,6 +39217,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39219,6 +39243,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39234,6 +39259,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39249,6 +39275,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39264,6 +39291,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39533,6 +39561,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -39549,6 +39578,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -39560,6 +39590,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39585,6 +39616,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39600,6 +39632,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39615,6 +39648,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39630,6 +39664,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39879,6 +39914,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -39895,6 +39931,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -39906,6 +39943,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39931,6 +39969,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39946,6 +39985,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39961,6 +40001,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -39976,6 +40017,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -40224,6 +40266,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -40240,6 +40283,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -40251,6 +40295,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -40276,6 +40321,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -40291,6 +40337,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -40306,6 +40353,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -40321,6 +40369,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -40554,6 +40603,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -40570,6 +40620,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -40581,6 +40632,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -40606,6 +40658,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -40621,6 +40674,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -40636,6 +40690,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -40651,6 +40706,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -40938,6 +40994,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -40954,6 +41011,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -40965,6 +41023,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -40990,6 +41049,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -41005,6 +41065,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -41020,6 +41081,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -41035,6 +41097,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -41322,6 +41385,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -41338,6 +41402,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -41349,6 +41414,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -41374,6 +41440,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -41389,6 +41456,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -41404,6 +41472,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -41419,6 +41488,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -41712,6 +41782,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -41728,6 +41799,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -41739,6 +41811,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -41764,6 +41837,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -41779,6 +41853,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -41794,6 +41869,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -41809,6 +41885,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42069,6 +42146,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -42085,6 +42163,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -42096,6 +42175,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42121,6 +42201,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42136,6 +42217,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42151,6 +42233,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42166,6 +42249,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42426,6 +42510,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -42442,6 +42527,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -42453,6 +42539,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42478,6 +42565,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42493,6 +42581,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42508,6 +42597,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42523,6 +42613,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42807,6 +42898,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -42823,6 +42915,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -42834,6 +42927,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42859,6 +42953,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42874,6 +42969,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42889,6 +42985,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -42904,6 +43001,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -43375,6 +43473,7 @@
                         {
                             "name": "GstIn",
                             "type": "text",
+                            "label": "GstIn",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -43391,6 +43490,7 @@
                         {
                             "name": "InvoiceNumber",
                             "type": "text",
+                            "label": "Invoice Number",
                             "showInUI": true,
                             "validations": [
                                 {
@@ -43402,6 +43502,7 @@
                         {
                             "name": "Amount",
                             "type": "text",
+                            "label": "Amount",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -43427,6 +43528,7 @@
                         {
                             "name": "SGST",
                             "type": "text",
+                            "label": "SGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -43442,6 +43544,7 @@
                         {
                             "name": "CGST",
                             "type": "text",
+                            "label": "CGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -43457,6 +43560,7 @@
                         {
                             "name": "IGST",
                             "type": "text",
+                            "label": "IGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
@@ -43472,6 +43576,7 @@
                         {
                             "name": "UGST",
                             "type": "text",
+                            "label": "UGST",
                             "showInUI": true,
                             "autoFormat": {
                                 "patterns": [
