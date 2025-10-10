@@ -983,9 +983,10 @@ export class PreviewComponent {
               0
             );
 
-            if (totalAmountInActual !== Number(item.ApprovedAmount)) {
+            if (totalAmountInActual !== Number(item.ApprovedAmountInBaseCurrency)) {
+              console.log(item);
               this.snackbarService.error(
-                `Expense ID ${item.ExpenseRequestDetailId}: Total Amount In Actual (${totalAmountInActual}) does not match Approved Amount (${item.ApprovedAmount}).`
+                `Expense Category ${item.ExpenseCategory}: Total Amount In Actual (${totalAmountInActual}) does not match Approved Amount (${item.ApprovedAmountInBaseCurrency}).`
               );
               return false;
             }
