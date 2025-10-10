@@ -42067,6 +42067,35 @@
                         "order": 10
                     },
                     {
+                        "name": "MonthName",
+                        "label": "Month",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "VendorName",
+                        "label": "Vendor Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
                         "name": "City",
                         "label": "City",
                         "visible": true,
@@ -42091,14 +42120,24 @@
                     },
                     {
                         "name": "OriginPointName",
-                        "label": "Origin",
+                        "label": "Origin Point Name",
                         "visible": true,
                         "position": "out",
                         "order": 13
                     },
                     {
                         "name": "DestinationPointName",
-                        "label": "Destination",
+                        "label": "Destination Point Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 13
+                    },
+                    {
+                        "type": "radio",
+                        "name": "BillableToClient",
+                        "label": "Billable To Client",
+                        "yes": "Yes",
+                        "no": "No",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -42118,8 +42157,8 @@
                         "order": 15
                     },
                     {
-                        "name": "Justification",
-                        "label": "Justification",
+                        "name": "Remarks",
+                        "label": "Remarks",
                         "visible": true,
                         "position": "out",
                         "order": 16
