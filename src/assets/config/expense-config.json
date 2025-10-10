@@ -2838,7 +2838,7 @@
                         "isExcluded": false,
                         "label": "GST",
                         "value": [],
-                        "getControl": "ClaimAmount",
+                        "getControl": "ClaimAmountInBaseCurrency",
                         "fields": [
                             {
                                 "name": "ExpenseRequestGstTypeId",
@@ -4456,7 +4456,7 @@
                         "isExcluded": false,
                         "label": "GST",
                         "value": [],
-                        "getControl": "ClaimAmount",
+                        "getControl": "ClaimAmountInBaseCurrency",
                         "fields": [
                             {
                                 "name": "ExpenseRequestGstTypeId",
@@ -5969,7 +5969,7 @@
                         "isExcluded": false,
                         "label": "GST",
                         "value": [],
-                        "getControl": "ClaimAmount",
+                        "getControl": "ClaimAmountInBaseCurrency",
                         "fields": [
                             {
                                 "name": "ExpenseRequestGstTypeId",
@@ -7553,7 +7553,7 @@
                         "isExcluded": false,
                         "label": "GST",
                         "value": [],
-                        "getControl": "ClaimAmount",
+                        "getControl": "ClaimAmountInBaseCurrency",
                         "fields": [
                             {
                                 "name": "ExpenseRequestGstTypeId",
@@ -9046,7 +9046,7 @@
                         "isExcluded": false,
                         "label": "GST",
                         "value": [],
-                        "getControl": "ClaimAmount",
+                        "getControl": "ClaimAmountInBaseCurrency",
                         "fields": [
                             {
                                 "name": "ExpenseRequestGstTypeId",
@@ -10564,7 +10564,7 @@
                         "isExcluded": false,
                         "label": "GST",
                         "value": [],
-                        "getControl": "ClaimAmount",
+                        "getControl": "ClaimAmountInBaseCurrency",
                         "fields": [
                             {
                                 "name": "ExpenseRequestGstTypeId",
@@ -12213,7 +12213,7 @@
                         "isExcluded": false,
                         "label": "GST",
                         "value": [],
-                        "getControl": "ClaimAmount",
+                        "getControl": "ClaimAmountInBaseCurrency",
                         "fields": [
                             {
                                 "name": "ExpenseRequestGstTypeId",
@@ -16923,7 +16923,7 @@
                         "isExcluded": false,
                         "label": "GST",
                         "value": [],
-                        "getControl": "ClaimAmount",
+                        "getControl": "ClaimAmountInBaseCurrency",
                         "fields": [
                             {
                                 "name": "ExpenseRequestGstTypeId",
@@ -32249,7 +32249,7 @@
                         "isExcluded": false,
                         "label": "GST",
                         "value": [],
-                        "getControl": "ClaimAmount",
+                        "getControl": "ClaimAmountInBaseCurrency",
                         "fields": [
                             {
                                 "name": "ExpenseRequestGstTypeId",
@@ -33808,7 +33808,7 @@
                         "isExcluded": false,
                         "label": "GST",
                         "value": [],
-                        "getControl": "ClaimAmount",
+                        "getControl": "ClaimAmountInBaseCurrency",
                         "fields": [
                             {
                                 "name": "ExpenseRequestGstTypeId",
@@ -36651,7 +36651,7 @@
                         "isExcluded": false,
                         "label": "GST",
                         "value": [],
-                        "getControl": "ClaimAmount",
+                        "getControl": "ClaimAmountInBaseCurrency",
                         "fields": [
                             {
                                 "name": "ExpenseRequestGstTypeId",
@@ -37942,7 +37942,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -38373,7 +38373,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -38865,7 +38865,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -39236,7 +39236,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -39609,7 +39609,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -39962,7 +39962,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -40314,7 +40314,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -40651,7 +40651,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -41042,7 +41042,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -41433,7 +41433,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -41830,7 +41830,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -42233,7 +42233,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -42597,7 +42597,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -42985,7 +42985,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
@@ -43560,7 +43560,7 @@
                     "name": "gst",
                     "label": "GST",
                     "value": [],
-                    "getControl": "ApprovedAmount",
+                    "getControl": "ApprovedAmountInBaseCurrency",
                     "fields": [
                         {
                             "name": "ExpenseRequestGstTypeId",
