@@ -14248,7 +14248,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "KM is less than minimum KM.",
+                            "message": "Entered kilometers are less than the minimum allowed. Please review or confirm to proceed.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -14262,7 +14262,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "KM is greater than maximum KM.",
+                            "message": "Entered kilometers exceed the maximum allowed. Please review or confirm to proceed.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
