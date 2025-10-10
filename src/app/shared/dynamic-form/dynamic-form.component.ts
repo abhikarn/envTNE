@@ -418,8 +418,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.existingData?.length > 0 &&
       this.category.checkValidationOnSubmit?.duplicateEntry?.validate
     ) {
-      const duplicate =  this.checkValidationOnSubmitService.duplicateLineItems(this.category.checkValidationOnSubmit, this.existingData, this.form, this.editIndex)
-      if(duplicate) {
+      const duplicate = this.checkValidationOnSubmitService.duplicateLineItems(this.category.checkValidationOnSubmit, this.existingData, this.form, this.editIndex)
+      if (duplicate) {
         this.snackbarService.error(`Duplicate claims are not allowed for the same month.`, 5000);
         return;
       }
@@ -1112,9 +1112,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
       }
     });
-    
+
     this.SelectInputComponentRef.setReadableDefaultvalue();
-    
+
     if (this.category?.onInitAPI) {
       // Populate form with initial API data if available
       this.dynamicFormService.populateFormWithData(this.form, this.category.onInitAPI, this.moduleData);
@@ -1276,7 +1276,15 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
               if (parsedMonth.isValid()) {
                 const minDate = parsedMonth.startOf('month').toDate();
-                const maxDate = parsedMonth.endOf('month').toDate();
+
+                // Determine if selected month is current month
+                const isCurrentMonth =
+                  parsedMonth.isSame(_moment(), 'month') && parsedMonth.isSame(_moment(), 'year');
+
+                // If current month, limit maxDate to today; else full month end
+                const maxDate = isCurrentMonth
+                  ? _moment().endOf('day').toDate()
+                  : parsedMonth.endOf('month').toDate();
 
                 this.dateInputComponentRef.forEach((dateInput: DateInputComponent) => {
                   if (dateInput.controlConfig.name === field.name) {

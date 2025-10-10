@@ -13563,6 +13563,10 @@
                         ],
                         "disable": false,
                         "readonly": false,
+                        "displayPage": {
+                            "Travel Expense": true,
+                            "Local Travel Conveyance": false
+                        },
                         "order": 18
                     },
                     {
@@ -13720,7 +13724,7 @@
                         "type": "text",
                         "subType": "number",
                         "name": "KM",
-                        "label": "KM",
+                        "label": "Travelled Distance (KM)",
                         "isExcluded": false,
                         "value": null,
                         "autoFormat": {
@@ -14244,7 +14248,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "KM is less than minimum KM.",
+                            "message": "Entered kilometers are less than the minimum allowed. Please review or confirm to proceed.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -14258,7 +14262,7 @@
                         },
                         "confirmPopup": {
                             "title": "Policy Violation",
-                            "message": "KM is greater than maximum KM.",
+                            "message": "Entered kilometers exceed the maximum allowed. Please review or confirm to proceed.",
                             "confirmButtonText": "Yes",
                             "cancelButtonText": "No"
                         }
@@ -14293,7 +14297,7 @@
                     },
                     {
                         "name": "LocalTravelMode",
-                        "label": "LocalTravelMode",
+                        "label": "Local Travel Mode",
                         "visible": true,
                         "position": "in",
                         "order": 4
@@ -14336,32 +14340,93 @@
                         "order": 10
                     },
                     {
+                        "name": "VendorName",
+                        "label": "Vendor Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 11
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 12
+                    },
+                    {
+                        "name": "CityGradeName",
+                        "label": "City Grade",
+                        "visible": true,
+                        "position": "out",
+                        "order": 13,
+                        "international": false
+                    },
+                    {
                         "name": "OriginPointName",
                         "label": "Origin Point Name",
                         "visible": true,
                         "position": "out",
-                        "order": 10
+                        "order": 14
                     },
                     {
                         "name": "DestinationPointName",
                         "label": "Destination Point Name",
                         "visible": true,
                         "position": "out",
-                        "order": 10
+                        "order": 15
                     },
                     {
                         "name": "KM",
-                        "label": "KM",
+                        "label": "Travelled Distance (KM)",
                         "visible": true,
                         "position": "out",
-                        "order": 10
+                        "order": 16
+                    },
+                    {
+                        "name": "MinimumKM",
+                        "label": "Minimum KM",
+                        "visible": true,
+                        "position": "out",
+                        "order": 16
+                    },
+                    {
+                        "name": "MaximumKM",
+                        "label": "Maximum KM",
+                        "visible": true,
+                        "position": "out",
+                        "order": 16
+                    },
+                    {
+                        "name": "LocalTravelPurpose",
+                        "label": "Local Travel Purpose",
+                        "visible": true,
+                        "position": "out",
+                        "order": 17
                     },
                     {
                         "name": "Purpose",
                         "label": "Purpose",
                         "visible": true,
                         "position": "out",
-                        "order": 10
+                        "order": 17
+                    },
+                    {
+                        "type": "radio",
+                        "name": "BillableToClient",
+                        "label": "Billable To Client",
+                        "yes": "Yes",
+                        "no": "No",
+                        "visible": true,
+                        "position": "out",
+                        "order": 17
                     },
                     {
                         "type": "number",
@@ -14369,14 +14434,14 @@
                         "label": "Claim Amount In Base Currency",
                         "visible": true,
                         "position": "out",
-                        "order": 11
+                        "order": 18
                     },
                     {
                         "name": "Remarks",
                         "label": "Justification",
                         "visible": true,
                         "position": "out",
-                        "order": 12
+                        "order": 19
                     }
                 ],
                 "nestedTables": [
@@ -20904,7 +20969,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmount",
-                        "label": "Amount",
+                        "label": "Visa Application Fee",
                         "visible": true,
                         "position": "in",
                         "decimalPrecision": "2",
@@ -21487,7 +21552,7 @@
                     {
                         "type": "date",
                         "name": "ClaimDate",
-                        "label": "Claim Date",
+                        "label": "Processing Date",
                         "visible": true,
                         "position": "in",
                         "order": 2
@@ -31164,7 +31229,7 @@
                         "type": "text",
                         "subType": "number",
                         "name": "KM",
-                        "label": "KM",
+                        "label": "Travelled Distance (KM)",
                         "isExcluded": true,
                         "value": null,
                         "autoFormat": {
@@ -31531,7 +31596,7 @@
                     },
                     {
                         "name": "KM",
-                        "label": "KM",
+                        "label": "Travelled Distance (KM)",
                         "visible": true,
                         "position": "out",
                         "order": 10
@@ -35070,7 +35135,7 @@
                         "type": "text",
                         "subType": "number",
                         "name": "KM",
-                        "label": "KM",
+                        "label": "Travelled Distance (KM)",
                         "isExcluded": false,
                         "value": null,
                         "autoFormat": {
@@ -35692,7 +35757,7 @@
                     },
                     {
                         "name": "KM",
-                        "label": "KM",
+                        "label": "Travelled Distance (KM)",
                         "visible": true,
                         "position": "out",
                         "order": 10
@@ -42067,6 +42132,35 @@
                         "order": 10
                     },
                     {
+                        "name": "MonthName",
+                        "label": "Month",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "VendorName",
+                        "label": "Vendor Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
                         "name": "City",
                         "label": "City",
                         "visible": true,
@@ -42091,14 +42185,24 @@
                     },
                     {
                         "name": "OriginPointName",
-                        "label": "Origin",
+                        "label": "Origin Point Name",
                         "visible": true,
                         "position": "out",
                         "order": 13
                     },
                     {
                         "name": "DestinationPointName",
-                        "label": "Destination",
+                        "label": "Destination Point Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 13
+                    },
+                    {
+                        "type": "radio",
+                        "name": "BillableToClient",
+                        "label": "Billable To Client",
+                        "yes": "Yes",
+                        "no": "No",
                         "visible": true,
                         "position": "out",
                         "order": 13
@@ -42118,8 +42222,8 @@
                         "order": 15
                     },
                     {
-                        "name": "Justification",
-                        "label": "Justification",
+                        "name": "Remarks",
+                        "label": "Remarks",
                         "visible": true,
                         "position": "out",
                         "order": 16
@@ -44199,7 +44303,7 @@
                     {
                         "type": "date",
                         "name": "ClaimDate",
-                        "label": "Claim Date",
+                        "label": "Processing Date",
                         "visible": true,
                         "position": "in",
                         "order": 1
@@ -44214,9 +44318,9 @@
                     {
                         "type": "number",
                         "name": "ClaimAmount",
-                        "label": "Claimed",
+                        "label": "Visa Application Fee",
                         "visible": true,
-                        "position": "in-out"
+                        "position": "in"
                     },
                     {
                         "type": "numeric",
@@ -44304,7 +44408,7 @@
                     {
                         "type": "date",
                         "name": "ClaimDate",
-                        "label": "Claim Date",
+                        "label": "Processing Date",
                         "visible": true,
                         "position": "in",
                         "order": 1

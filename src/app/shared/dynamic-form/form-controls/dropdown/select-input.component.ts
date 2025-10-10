@@ -240,7 +240,7 @@ export class SelectInputComponent implements AfterViewInit {
     if (this.controlConfig.getReadableValue) {
       const readableControl = this.form.get(this.controlConfig.getReadableValue.controlName);
       if (readableControl) {
-        readableControl.setValue(this.controlConfig.defaultValue.Display || '');
+        readableControl.setValue(this.controlConfig?.defaultValue?.Display || '');
       }
     }
   }

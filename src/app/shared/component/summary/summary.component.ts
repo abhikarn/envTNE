@@ -1,9 +1,12 @@
  import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+//  import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
-  styleUrls: ['./summary.component.scss']
+  styleUrls: ['./summary.component.scss'],
+  // standalone: true,
+  // imports: [JsonPipe]
 })
 
 export class SummaryComponent implements OnChanges {
@@ -126,6 +129,7 @@ export class SummaryComponent implements OnChanges {
             totalCategoryExpense = totalCategoryExpense + Number(ApprovedAmountInBaseCurrency || ClaimAmountInBaseCurrency || 0);
           });
           item.value = totalCategoryExpense.toFixed(2);
+          item.showInUI = true;
         }
       })
     });

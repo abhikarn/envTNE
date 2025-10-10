@@ -133,6 +133,16 @@ export class DynamicTableComponent implements OnInit {
       return parseFloat(value || 0).toFixed(column.decimalPrecision || this.configService.getDecimalPrecision());
     }
 
+    const isRadioType = column && (column.type === 'radio');
+    if (isRadioType) {
+      if(value) {
+        value = column.yes;
+      } else {
+        value = column.no;
+      }
+      return value;
+    }
+
     return value;
   }
 

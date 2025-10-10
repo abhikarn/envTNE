@@ -152,7 +152,12 @@
                                     @if (col.type == 'date') {
                                     <div class="trl-req-head"> <label> {{ col.label }} </label></div>
                                     <div class="trl-req-detail">
-                                        <p> {{ row[col.name] | globalDate: 'dd-MMM-yyyy' }} </p>
+                                        <p> {{ row[col.name] | globalDate: 'dd-MMM-yyyy' }}</p>
+                                    </div>
+                                    } @else if (col.type == 'radio') {
+                                    <div class="trl-req-head"> <label> {{ col.label }} </label></div>
+                                    <div class="trl-req-detail">
+                                        <p> {{ row[col.name] ? col.yes : col.no }} </p>
                                     </div>
                                     } @else {
                                     <div class="trl-req-head"> <label> {{ col.label }} </label> </div>
