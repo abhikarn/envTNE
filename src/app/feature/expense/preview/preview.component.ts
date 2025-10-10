@@ -27,8 +27,8 @@ import { RemarksModalComponent } from '../../../shared/component/remarks-modal/r
 import { CreateDynamicFormComponent } from '../../../shared/dynamic-form/create-dynamic-form/create-dynamic-form.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatTooltip } from '@angular/material/tooltip';
-import { A } from '@angular/cdk/keycodes';
 import { DynamicFormService } from '../../../shared/service/dynamic-form.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-preview',
@@ -95,7 +95,8 @@ export class PreviewComponent {
     private dataService: DataService,
     private bottomSheet: MatBottomSheet,
     private cdr: ChangeDetectorRef,
-    private dynamicFormService: DynamicFormService
+    private dynamicFormService: DynamicFormService,
+    private location: Location
   ) {
 
   }
@@ -884,18 +885,12 @@ export class PreviewComponent {
   }
 
   goBack() {
-    if (this.mode == 'preview') {
-      if (this.isMobile()) {
-        this.bottomSheet.dismiss();
-      }
-      this.router.navigate(['/expense/expense/dashboard']);
+    if (this.mode === 'preview' && this.isMobile()) {
+      this.bottomSheet.dismiss();
     }
-    if (this.mode == 'approval') {
-      this.router.navigate(['/expense/expense/approval']);
-    }
-    if (this.mode == 'finance-approval') {
-      this.router.navigate(['/expense/expense/finance']);
-    }
+
+    // Navigate back to previous URL (browser history)
+    this.location.back();
   }
 
   showRemarks(row: any) {
