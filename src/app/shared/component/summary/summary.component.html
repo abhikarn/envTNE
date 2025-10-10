@@ -1,5 +1,6 @@
 <div class="accordion accordion-flush mobile-acc-color preview-standard-view" id="accordionFlushExample">
   @for (summary of summaries; track summary) {
+     <!-- <pre>{{ summary | json}}</pre> -->
   @if(summary?.items?.length !== 0) {
   <div class="accordion-item mb-2">
     <h2 class="accordion-header" [id]="'heading-' + summary.id">
