@@ -21552,7 +21552,7 @@
                     {
                         "type": "date",
                         "name": "ClaimDate",
-                        "label": "Claim Date",
+                        "label": "Processing Date",
                         "visible": true,
                         "position": "in",
                         "order": 2
@@ -44408,7 +44408,7 @@
                     {
                         "type": "date",
                         "name": "ClaimDate",
-                        "label": "Claim Date",
+                        "label": "Processing Date",
                         "visible": true,
                         "position": "in",
                         "order": 1
