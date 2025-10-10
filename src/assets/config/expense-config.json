@@ -20969,7 +20969,7 @@
                     {
                         "type": "number",
                         "name": "ClaimAmount",
-                        "label": "Amount",
+                        "label": "Visa Application Fee",
                         "visible": true,
                         "position": "in",
                         "decimalPrecision": "2",
@@ -44303,7 +44303,7 @@
                     {
                         "type": "date",
                         "name": "ClaimDate",
-                        "label": "Claim Date",
+                        "label": "Processing Date",
                         "visible": true,
                         "position": "in",
                         "order": 1
@@ -44318,9 +44318,9 @@
                     {
                         "type": "number",
                         "name": "ClaimAmount",
-                        "label": "Claimed",
+                        "label": "Visa Application Fee",
                         "visible": true,
-                        "position": "in-out"
+                        "position": "in"
                     },
                     {
                         "type": "numeric",
