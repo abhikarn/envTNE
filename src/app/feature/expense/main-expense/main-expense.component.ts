@@ -764,6 +764,7 @@ export class MainExpenseComponent {
     if (categoryBlock) {
       categoryBlock.data = updated.data;
     }
+    this.updateCategoryCounts();
     this.applyExcludedFields();
     const tab = this.categories.find((c: any) => c.name === updated.name);
     if (tab) tab.count = updated.data.length;

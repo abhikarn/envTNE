@@ -37,7 +37,8 @@
               <app-dynamic-form [formConfig]="box.formControls" [displayTable]="box.displayTable"
                 [moduleData]="box.moduleData" [existingData]="existingExpenseRequestData"
                 [displayAddClearButton]="box.displayAddClearButton" (emitFormValue)="getFormValue($event)"
-                (emitDateInputComponentValue)="getDateInputComponentValue($event)" [moduleConfig]="moduleConfig">
+                (emitDateInputComponentValue)="getDateInputComponentValue($event)" [moduleConfig]="moduleConfig"
+                (updateData)="updateCategoryData($event)">
               </app-dynamic-form>
             </div>
             }
