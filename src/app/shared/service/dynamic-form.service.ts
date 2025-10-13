@@ -345,11 +345,11 @@ export class DynamicFormService {
             const calculatedValue = this.evaluateFormula(field.formula, values);
             const controlToValidate = form.get(field.name);
             controlToValidate?.setValue(Math.max(0, calculatedValue));
-            
+
           });
         }
 
-        if(category.policyEntitlementCheckApi.EntitlementAmountCalculation) {
+        if (category.policyEntitlementCheckApi.EntitlementAmountCalculation) {
           this.calculateEntitlementAmount(category.policyEntitlementCheckApi, form);
         }
 
@@ -531,7 +531,7 @@ export class DynamicFormService {
       const checkOut = new Date(checkOutDate);
 
       const timeDiff = Math.abs(checkOut.getTime() - checkIn.getTime());
-      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Calculate number of days
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // Calculate number of days
 
       const entitlementAmount = originalEntitlementAmount * diffDays;
       const outputFieldName = Object.keys(config.outputControl)[0];
@@ -791,7 +791,7 @@ export class DynamicFormService {
 
             if (caseItem?.config?.decimalPrecision) {
               form.get(outputControl)?.setValue(extracted?.toFixed(caseItem.config.decimalPrecision) ?? extracted);
-            } else if(caseItem?.config?.setNull) {
+            } else if (caseItem?.config?.setNull) {
               form.get(outputControl)?.setValue(null);
             } else {
               form.get(outputControl)?.setValue(
