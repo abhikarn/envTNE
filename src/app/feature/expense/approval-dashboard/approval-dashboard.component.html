@@ -934,26 +934,22 @@
                                                                                         <a [routerLink]="['/expense/expense/approval',element.TransactionId]"
                                                                                             class="btn-icon-action btn-icon-edit"><span   class="fa-square-check fa-regular"
                                                                                                 data-bs-original-title="Approve" aria-label="Approve"></span>
-                                                                                                <h6>  Approve</h6>
+                                                                                                <h6> Approval </h6>
                                                                                         </a>
                                                                                     </li>
-                                                                                    <li><a href="javascript:void()" class="btn-icon-action btn-icon-cancel expenseaction"
+                                                                                    <li><a (click)="oneClickReject(element.ExpenseRequestId)" class="btn-icon-action btn-icon-cancel expenseaction"
                                                                                             data-bs-toggle="modal" data-bs-target="#modal-expenseReject" data-expenserequestid="74">
-                                                                                            <span
-                                                                                               
-                                                                                                class="fa-xmark fa-solid" data-bs-original-title="Reject" aria-label="Reject"></span>
-                                                                                                 <h6>  Reject</h6>
-                                                                                            
-                                                                                            
+                                                                                            <span class="fa-xmark fa-solid" data-bs-original-title="Reject" aria-label="Reject"></span>
+                                                                                                 <h6> One Click Reject</h6>
                                                                                             </a>
                                                                                     </li>
-                                                                                    <li><a href="javascript:void()" class="btn-icon-action btn-icon-view expenseaction"
+                                                                                    <li><a (click)="oneClickSeekClarification(element.ExpenseRequestId)" class="btn-icon-action btn-icon-view expenseaction"
                                                                                             data-bs-toggle="modal" data-bs-target="#modal-expenseseekclarication"
                                                                                             data-expenserequestid="74">
                                                                                             <span  
                                                                                                 class="fa-rotate-right fa-solid" data-bs-original-title="Seek Clarification"
                                                                                                 aria-label="Seek Clarification"></span>
-                                                                                             <h6>  Seek Clarification</h6>
+                                                                                             <h6> One Click Seek Clarification</h6>
                                                                                             </a>
                                                                                     </li>
                                                                                     <li>

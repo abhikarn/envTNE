@@ -405,6 +405,32 @@ export class ApprovalDashboardComponent implements OnInit {
     });
   }
 
+  oneClickReject(id: number) {
+    const selectedRequest = this.dataSource.data.filter((item: any) => item.ExpenseRequestId == id);
+    if (selectedRequest.length === 0) {
+      this.snackbarService.error('Something went wrong, Please try again!', 3000);
+      return;
+    }
+    this.dialog.open(OneClickApproveComponent, {
+      width: '1000px',
+      data: { selectedRequest, isReject: true },
+      panelClass: 'custom-modal-panel'
+    });
+  }
+
+  oneClickSeekClarification(id: number) {
+    const selectedRequest = this.dataSource.data.filter((item: any) => item.ExpenseRequestId == id);
+    if (selectedRequest.length === 0) {
+      this.snackbarService.error('Something went wrong, Please try again!', 3000);
+      return;
+    }
+    this.dialog.open(OneClickApproveComponent, {
+      width: '1000px',
+      data: { selectedRequest, isSeekClarification: true },
+      panelClass: 'custom-modal-panel'
+    });
+  }
+
   onRowSelectionChange(): void {
     // For mobile
     // const source = this.isMobile ? this.mobileDisplayData : this.dataSource.data;
