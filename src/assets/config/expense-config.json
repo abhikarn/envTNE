@@ -22188,6 +22188,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -23564,6 +23570,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -24655,6 +24667,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -26530,6 +26548,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
