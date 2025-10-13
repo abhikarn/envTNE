@@ -11427,7 +11427,6 @@
                             "required": true
                         },
                         "apiDateLimit": true,
-                        "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
                                 "CheckInDateTime": "CheckInDateTime",
