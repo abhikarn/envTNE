@@ -2,7 +2,7 @@
     <div class="modal-content" style="background-color: #F7F7FA;">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-                One Click Approval
+                {{ title }}
             </h5>
             <button class="close-dialouge" type="button" mat-button (click)="close()"> <i
                     class="fa fa-times text-white fs-6"></i></button>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="text-end mt-3">
 
-                        <button class="btn btn-primary" (click)="approve()">Approve</button>
+                        <button class="btn btn-primary" (click)="approve()">{{ buttonText }}</button>
                     </div>
                 </div>
             </div>

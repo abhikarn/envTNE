@@ -172,7 +172,7 @@ export class LineWiseCostCenterComponent {
     const newTotalActual = this.toDecimal(totalActual + actualAmount, precision);
 
     if (newTotalActual > claimedAmount + Math.pow(10, -precision)) {
-      this.snackbarService.error('Sum of all cost center amounts must not exceed the claimed amount.');
+      this.snackbarService.error('Sum of all cost center amounts must be equal to the claimed amount.');
       return;
     }
 
