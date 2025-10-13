@@ -27868,7 +27868,7 @@
                     {
                         "type": "text",
                         "subType": "text",
-                        "dataType": "",
+                        "dataType": "numeric",
                         "name": "CourseDuration",
                         "isExcluded": false,
                         "label": "Course Duration (Month)",
