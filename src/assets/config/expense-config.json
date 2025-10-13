@@ -28336,6 +28336,43 @@
                         "order": 9
                     },
                     {
+                        "type": "string",
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "name": "InstituteName",
+                        "label": "Institute/Agency Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "name": "CourseDuration",
+                        "label": "Course Duration (Month)",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "CourseDescription",
+                        "label": "Course Description",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
                         "label": "Claim Amount in Base Currency",
@@ -28346,7 +28383,7 @@
                     },
                     {
                         "name": "Remarks",
-                        "label": "Justification",
+                        "label": "Remarks",
                         "visible": true,
                         "position": "out",
                         "order": 11
