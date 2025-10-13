@@ -60,19 +60,20 @@ export class BulkApproveModalComponent {
     this.expenseService.expenseExpenseRequestBulkApprovals(requestBody).subscribe({
       next: (response: any) => {
         // Handle successful approval
-        if(response?.ResponseValue) {
-          if(response?.ResponseValue?.Result == 'SUCCESS') {
+        if (response?.ResponseValue) {
+          if (response?.ResponseValue?.Result == 'SUCCESS') {
             this.snackbarService.success('Bulk approval successful');
-          } else {
-            this.snackbarService.error(response?.ResponseValue?.Message || 'Bulk approval failed');
           }
           this.close();
+        } else {
+          this.snackbarService.error(response?.ResponseValue?.Message || 'Bulk approval failed');
+          this.remarks = '';
         }
-        
       },
       error: (error) => {
         // Handle error
         this.snackbarService.error('Bulk approval failed');
+        this.remarks = '';
       }
     });
 
