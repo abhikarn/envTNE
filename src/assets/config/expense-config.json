@@ -37673,7 +37673,7 @@
             },
             {
                 "id": "cost-center-wise-expense",
-                "title": "Costcenter wise Expense",
+                "title": "Cost Center wise Expense",
                 "isOpen": false,
                 "type": "costcenter",
                 "items": []
