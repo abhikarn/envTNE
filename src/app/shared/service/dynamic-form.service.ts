@@ -349,6 +349,10 @@ export class DynamicFormService {
           });
         }
 
+        if(category.policyEntitlementCheckApi.EntitlementAmountCalculation) {
+          this.calculateEntitlementAmount(category.policyEntitlementCheckApi, form);
+        }
+
         this.updateConditionalValidators(form, formControls);
         matchedControlNameList = [];
       });

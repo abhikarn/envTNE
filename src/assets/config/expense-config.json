@@ -8277,6 +8277,16 @@
                                 }
                             }
                         ],
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "CheckInDateTime": "ClaimDate",
+                                "CheckOutDateTime": "ClaimToDate",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        },
                         "dateTimeValidation": {
                             "fromDate": "ClaimDate",
                             "toDate": "ClaimToDate"
@@ -8300,6 +8310,16 @@
                         "disable": false,
                         "readonly": false,
                         "apiDateLimit": true,
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "CheckInDateTime": "ClaimDate",
+                                "CheckOutDateTime": "ClaimToDate",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        },
                         "dateTimeValidation": {
                             "fromDate": "ClaimDate",
                             "toDate": "ClaimToDate"
@@ -9390,6 +9410,16 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    },
+                    "EntitlementAmountCalculation": {
+                        "inputControls": {
+                            "CheckInDateTime": "ClaimDate",
+                            "CheckOutDateTime": "ClaimToDate",
+                            "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                        },
+                        "outputControl": {
+                            "EntitlementAmount": "EntitlementAmount"
+                        }
                     }
                 },
                 "expanded": false,
@@ -9791,6 +9821,16 @@
                                 }
                             }
                         ],
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "CheckInDateTime": "ClaimDate",
+                                "CheckOutDateTime": "ClaimToDate",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        },
                         "dateTimeValidation": {
                             "fromDate": "ClaimDate",
                             "toDate": "ClaimToDate"
@@ -9814,6 +9854,16 @@
                         "disable": false,
                         "readonly": false,
                         "apiDateLimit": true,
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "CheckInDateTime": "ClaimDate",
+                                "CheckOutDateTime": "ClaimToDate",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        },
                         "dateTimeValidation": {
                             "fromDate": "ClaimDate",
                             "toDate": "ClaimToDate"
@@ -9911,6 +9961,16 @@
                         "disable": false,
                         "readonly": true,
                         "policyEntitlementCheck": true,
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "CheckInDateTime": "ClaimDate",
+                                "CheckOutDateTime": "ClaimToDate",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        },
                         "international": false,
                         "order": 6
                     },
@@ -10908,6 +10968,16 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    },
+                    "EntitlementAmountCalculation": {
+                        "inputControls": {
+                            "CheckInDateTime": "ClaimDate",
+                            "CheckOutDateTime": "ClaimToDate",
+                            "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                        },
+                        "outputControl": {
+                            "EntitlementAmount": "EntitlementAmount"
+                        }
                     }
                 },
                 "expanded": false,
