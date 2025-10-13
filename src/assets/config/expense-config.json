@@ -38917,15 +38917,15 @@
                         "position": "out"
                     },
                     {
-                        "name": "Justification",
-                        "label": "Justification",
+                        "type": "number",
+                        "name": "TaxAmount",
+                        "label": "Tax Amount",
                         "visible": true,
                         "position": "out"
                     },
                     {
-                        "type": "number",
-                        "name": "TaxAmount",
-                        "label": "Tax Amount",
+                        "name": "Justification",
+                        "label": "Justification",
                         "visible": true,
                         "position": "out"
                     }
@@ -39288,15 +39288,15 @@
                         "position": "out"
                     },
                     {
-                        "name": "Justification",
-                        "label": "Justification",
+                        "type": "number",
+                        "name": "TaxAmount",
+                        "label": "Tax Amount",
                         "visible": true,
                         "position": "out"
                     },
                     {
-                        "type": "number",
-                        "name": "TaxAmount",
-                        "label": "Tax Amount",
+                        "name": "Justification",
+                        "label": "Justification",
                         "visible": true,
                         "position": "out"
                     }
@@ -43378,13 +43378,6 @@
                         "order": 9
                     },
                     {
-                        "name": "Remarks",
-                        "label": "Justification",
-                        "visible": true,
-                        "position": "out",
-                        "order": 11
-                    },
-                    {
                         "name": "CityGrade",
                         "label": "City Grade",
                         "visible": true,
@@ -43398,6 +43391,13 @@
                         "visible": true,
                         "position": "out",
                         "international": true,
+                        "order": 11
+                    },
+                    {
+                        "name": "Remarks",
+                        "label": "Justification",
+                        "visible": true,
+                        "position": "out",
                         "order": 11
                     }
                 ],
