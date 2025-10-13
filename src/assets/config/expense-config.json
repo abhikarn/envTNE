@@ -25754,6 +25754,14 @@
                         "isExcluded": false,
                         "value": 0,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsEdit",
+                        "isExcluded": false,
+                        "value": true,
+                        "showInUI": false,
+                        "inPayload": false
                     }
                 ],
                 "checkValidationOnSubmit": {
@@ -28239,8 +28247,8 @@
                                     "name": "Certification Copy"
                                 },
                                 {
-                                    "id": 176,
-                                    "name": "Other Document"
+                                    "id": 175,
+                                    "name": "Approver Email Copy"
                                 }
                             ],
                             "dependsOn": [
