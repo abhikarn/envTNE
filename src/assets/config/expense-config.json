@@ -45158,6 +45158,14 @@
                     },
                     {
                         "type": "number",
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement",
+                        "visible": true,
+                        "position": "in",
+                        "order": 2
+                    },
+                    {
+                        "type": "number",
                         "name": "ClaimAmount",
                         "label": "Claimed",
                         "visible": true,
@@ -45213,8 +45221,15 @@
                         "order": 9
                     },
                     {
-                        "name": "Justification",
-                        "label": "Justification",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "Remarks",
+                        "label": "Remarks",
                         "visible": true,
                         "position": "out"
                     }
