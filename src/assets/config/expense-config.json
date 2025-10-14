@@ -19336,6 +19336,30 @@
                         }
                     }
                 ],
+                 "policyViolationCheckApi": {
+                    "apiService": "ExpenseService",
+                    "apiMethod": "expenseValidateMobileHandSetPurchasePolicy",
+                    "requestBody": {
+                        "ExpenseCategoryId": 25,
+                        "ExpenseRequestDetailId": 0
+                    },
+                    "otherControls": {
+                        "UserMasterId": "UserMasterId"
+                    },
+                    "inputControls": {
+                        "ClaimDate": "ReferenceDate"
+                    },
+                    "outputControl": {
+                        "IsViolation": "ResponseValue.IsPolicyViolation",
+                        "Violation": "ResponseValue.Message"
+                    },
+                    "confirmPopup": {
+                        "title": "Mobile Handset Purchase Policy Violation",
+                        "message": "ResponseValue.Message",
+                        "confirmButton": false,
+                        "cancelText": "Ok"
+                    }
+                },
                 "expanded": false,
                 "displayTable": true,
                 "displayAddClearButton": true,
@@ -25836,6 +25860,30 @@
                         "NoOfTimes": "No Of Times",
                         "Frequency": "Frequency",
                         "Duration": "Duration"
+                    }
+                },
+                "policyViolationCheckApi": {
+                    "apiService": "ExpenseService",
+                    "apiMethod": "expenseValidateMarriageGiftPolicy",
+                    "requestBody": {
+                        "ExpenseCategoryId": 22,
+                        "ExpenseRequestDetailId": 0
+                    },
+                    "otherControls": {
+                        "UserMasterId": "UserMasterId"
+                    },
+                    "inputControls": {
+                        "ClaimDate": "ReferenceDate"
+                    },
+                    "outputControl": {
+                        "IsViolation": "ResponseValue.IsPolicyViolation",
+                        "Violation": "ResponseValue.Message"
+                    },
+                    "confirmPopup": {
+                        "title": "Marrige Gift Expense Policy Violation",
+                        "message": "ResponseValue.Message",
+                        "confirmButton": false,
+                        "cancelText": "Ok"
                     }
                 },
                 "expanded": true,
