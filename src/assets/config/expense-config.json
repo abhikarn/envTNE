@@ -19602,6 +19602,7 @@
                                 "message": "Number Of Hours is required"
                             }
                         ],
+                        "policyEntitlementCheck": true,
                         "disable": false,
                         "readonly": false,
                         "order": 3
