@@ -1394,6 +1394,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
    * Example: extractValueFromPath({ ResponseValue: { Value: 1 } }, "ResponseValue.Value") => 1
    */
   private extractValueFromPath(obj: any, path: string): any {
+    if (typeof path !== 'string') return path; // just return as-is
     return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
   }
 

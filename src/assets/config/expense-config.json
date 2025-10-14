@@ -25838,6 +25838,30 @@
                         "Duration": "Duration"
                     }
                 },
+                "policyViolationCheckApi": {
+                    "apiService": "ExpenseService",
+                    "apiMethod": "expenseValidateMarriageGiftPolicy",
+                    "requestBody": {
+                        "ExpenseCategoryId": 19,
+                        "ExpenseRequestDetailId": 0
+                    },
+                    "otherControls": {
+                        "UserMasterId": "UserMasterId"
+                    },
+                    "inputControls": {
+                        "ClaimDate": "ReferenceDate"
+                    },
+                    "outputControl": {
+                        "IsViolation": "ResponseValue.IsPolicyViolation",
+                        "Violation": "ResponseValue.Message"
+                    },
+                    "confirmPopup": {
+                        "title": "Marrige Gift Expense Policy Violation",
+                        "message": "ResponseValue.Message",
+                        "confirmButton": false,
+                        "cancelText": "Ok"
+                    }
+                },
                 "expanded": true,
                 "displayTable": true,
                 "displayAddClearButton": true,
