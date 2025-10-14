@@ -14,8 +14,22 @@ export class DynamicTableService {
       const updatedDataArray = await Promise.all(
         dataArray.map(async (data) => {
           for (const control of formControls) {
-            const { type, name, autoComplete, options, apiService, apiMethod, dependsOn, payloadKey, labelKey, valueKey } = control.formConfig;
-  
+            const { type, name, autoComplete, options, apiService, apiMethod, dependsOn, payloadKey, labelKey, valueKey, getReadableValue } = control.formConfig;
+           
+            if(type === 'multi-select' && name in data) {
+              let selectedValues = data[name];
+              if (selectedValues && Array.isArray(selectedValues)) {
+                selectedValues = selectedValues.map((val: any) => (typeof val === 'object' ? val.value : val));
+              } else {
+                selectedValues = [];
+              }
+              // take from option if options are present
+              if (options && options.length > 0) {
+                const matchedOptions = options.filter((opt: any) => selectedValues.includes(opt.value));
+                data[getReadableValue.controlName] = matchedOptions.map((opt: any) => opt.label).join(', ');
+              }
+            }
+
             if ((type === 'select') && name in data) {
               let selected = data[name];
               if (selected && typeof selected === 'object') {
