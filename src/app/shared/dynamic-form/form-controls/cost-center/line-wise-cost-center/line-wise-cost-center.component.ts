@@ -332,10 +332,6 @@ export class LineWiseCostCenterComponent {
     this.costCenterDetailsForm.markAsUntouched();
     this.costCenterDetailsForm.updateValueAndValidity({ onlySelf: false, emitEvent: false });
 
-    // NEW: explicitly set dirty flag to false (Angular quirk guard)
-    (this.costCenterDetailsForm as any)._pristine = true;
-    (this.costCenterDetailsForm as any)._dirty = false;
-
     // Optional cleanup of autocomplete
     if (this.filteredOptionsMap) {
       Object.keys(this.filteredOptionsMap).forEach((key) => {
