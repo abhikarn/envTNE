@@ -21836,7 +21836,6 @@
                         "readonly": false,
                         "mindate": "01-01-1900",
                         "maxDate": "today",
-                        "policyEntitlementCheck": true,
                         "order": 2
                     },
                     {
