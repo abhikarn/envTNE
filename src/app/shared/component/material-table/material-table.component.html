@@ -179,11 +179,11 @@
                 }
 
                 @if (mode === 'finance-approval') {
-                @if (categoryGST) {
+                @if (categoryGST && row.ClaimStatusId !== 5) {
                 <app-add-gst [categoryGST]="categoryGST" [ExpenseRequestDetailId]="row?.ExpenseRequestDetailId" [gstData]="row?.gst"
                     [amount]="row?.ApprovedAmount"></app-add-gst>
                 }
-                @if (costcentreWiseExpense) {
+                @if (costcentreWiseExpense && row.ClaimStatusId !== 5) {
                 <app-line-wise-cost-center [costcentreWiseExpense]="costcentreWiseExpense"
                     [ExpenseRequestDetailId]="row?.ExpenseRequestDetailId" [amount]="row?.ApprovedAmount"
                     [costCenterData]="row?.costcentreWiseExpense"></app-line-wise-cost-center>

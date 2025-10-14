@@ -8277,6 +8277,16 @@
                                 }
                             }
                         ],
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "CheckInDateTime": "ClaimDate",
+                                "CheckOutDateTime": "ClaimToDate",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        },
                         "dateTimeValidation": {
                             "fromDate": "ClaimDate",
                             "toDate": "ClaimToDate"
@@ -8300,6 +8310,16 @@
                         "disable": false,
                         "readonly": false,
                         "apiDateLimit": true,
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "CheckInDateTime": "ClaimDate",
+                                "CheckOutDateTime": "ClaimToDate",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        },
                         "dateTimeValidation": {
                             "fromDate": "ClaimDate",
                             "toDate": "ClaimToDate"
@@ -9390,6 +9410,16 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    },
+                    "EntitlementAmountCalculation": {
+                        "inputControls": {
+                            "CheckInDateTime": "ClaimDate",
+                            "CheckOutDateTime": "ClaimToDate",
+                            "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                        },
+                        "outputControl": {
+                            "EntitlementAmount": "EntitlementAmount"
+                        }
                     }
                 },
                 "expanded": false,
@@ -9791,6 +9821,16 @@
                                 }
                             }
                         ],
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "CheckInDateTime": "ClaimDate",
+                                "CheckOutDateTime": "ClaimToDate",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        },
                         "dateTimeValidation": {
                             "fromDate": "ClaimDate",
                             "toDate": "ClaimToDate"
@@ -9814,6 +9854,16 @@
                         "disable": false,
                         "readonly": false,
                         "apiDateLimit": true,
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "CheckInDateTime": "ClaimDate",
+                                "CheckOutDateTime": "ClaimToDate",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        },
                         "dateTimeValidation": {
                             "fromDate": "ClaimDate",
                             "toDate": "ClaimToDate"
@@ -9911,6 +9961,16 @@
                         "disable": false,
                         "readonly": true,
                         "policyEntitlementCheck": true,
+                        "EntitlementAmountCalculation": {
+                            "inputControls": {
+                                "CheckInDateTime": "ClaimDate",
+                                "CheckOutDateTime": "ClaimToDate",
+                                "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                            },
+                            "outputControl": {
+                                "EntitlementAmount": "EntitlementAmount"
+                            }
+                        },
                         "international": false,
                         "order": 6
                     },
@@ -10908,6 +10968,16 @@
                         "IsBillRequired": "ResponseValue.IsBillRequired",
                         "IsActual": "ResponseValue.IsActual",
                         "IsTaxIncluded": "ResponseValue.IsTaxIncluded"
+                    },
+                    "EntitlementAmountCalculation": {
+                        "inputControls": {
+                            "CheckInDateTime": "ClaimDate",
+                            "CheckOutDateTime": "ClaimToDate",
+                            "OriginalEntitlementAmount": "OriginalEntitlementAmount"
+                        },
+                        "outputControl": {
+                            "EntitlementAmount": "EntitlementAmount"
+                        }
                     }
                 },
                 "expanded": false,
@@ -11357,7 +11427,6 @@
                             "required": true
                         },
                         "apiDateLimit": true,
-                        "policyEntitlementCheck": true,
                         "EntitlementAmountCalculation": {
                             "inputControls": {
                                 "CheckInDateTime": "CheckInDateTime",
@@ -22119,6 +22188,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -23495,6 +23570,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -24586,6 +24667,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -25667,6 +25754,14 @@
                         "isExcluded": false,
                         "value": 0,
                         "showInUI": false
+                    },
+                    {
+                        "type": "hidden",
+                        "name": "IsEdit",
+                        "isExcluded": false,
+                        "value": true,
+                        "showInUI": false,
+                        "inPayload": false
                     }
                 ],
                 "checkValidationOnSubmit": {
@@ -26461,6 +26556,12 @@
                             {
                                 "type": "required",
                                 "message": "Claimed Amount is required"
+                            },
+                            {
+                                "type": "custom",
+                                "subType": "greaterThanZeroValidator",
+                                "name": "greaterThanZeroValidator",
+                                "message": "Amount must be greater than zero"
                             }
                         ],
                         "disable": false,
@@ -27767,7 +27868,7 @@
                     {
                         "type": "text",
                         "subType": "text",
-                        "dataType": "",
+                        "dataType": "numeric",
                         "name": "CourseDuration",
                         "isExcluded": false,
                         "label": "Course Duration (Month)",
@@ -28146,8 +28247,8 @@
                                     "name": "Certification Copy"
                                 },
                                 {
-                                    "id": 176,
-                                    "name": "Other Document"
+                                    "id": 175,
+                                    "name": "Approver Email Copy"
                                 }
                             ],
                             "dependsOn": [
@@ -28235,6 +28336,43 @@
                         "order": 9
                     },
                     {
+                        "type": "string",
+                        "name": "BillNumber",
+                        "label": "Bill Number",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "type": "date",
+                        "name": "BillDate",
+                        "label": "Bill Date",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "name": "InstituteName",
+                        "label": "Institute/Agency Name",
+                        "visible": true,
+                        "position": "out",
+                        "order": 9
+                    },
+                    {
+                        "name": "CourseDuration",
+                        "label": "Course Duration (Month)",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "CourseDescription",
+                        "label": "Course Description",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
                         "type": "number",
                         "name": "ClaimAmountInBaseCurrency",
                         "label": "Claim Amount in Base Currency",
@@ -28245,7 +28383,7 @@
                     },
                     {
                         "name": "Remarks",
-                        "label": "Justification",
+                        "label": "Remarks",
                         "visible": true,
                         "position": "out",
                         "order": 11
@@ -38848,15 +38986,15 @@
                         "position": "out"
                     },
                     {
-                        "name": "Justification",
-                        "label": "Justification",
+                        "type": "number",
+                        "name": "TaxAmount",
+                        "label": "Tax Amount",
                         "visible": true,
                         "position": "out"
                     },
                     {
-                        "type": "number",
-                        "name": "TaxAmount",
-                        "label": "Tax Amount",
+                        "name": "Justification",
+                        "label": "Justification",
                         "visible": true,
                         "position": "out"
                     }
@@ -39219,15 +39357,15 @@
                         "position": "out"
                     },
                     {
-                        "name": "Justification",
-                        "label": "Justification",
+                        "type": "number",
+                        "name": "TaxAmount",
+                        "label": "Tax Amount",
                         "visible": true,
                         "position": "out"
                     },
                     {
-                        "type": "number",
-                        "name": "TaxAmount",
-                        "label": "Tax Amount",
+                        "name": "Justification",
+                        "label": "Justification",
                         "visible": true,
                         "position": "out"
                     }
@@ -43309,13 +43447,6 @@
                         "order": 9
                     },
                     {
-                        "name": "Remarks",
-                        "label": "Justification",
-                        "visible": true,
-                        "position": "out",
-                        "order": 11
-                    },
-                    {
                         "name": "CityGrade",
                         "label": "City Grade",
                         "visible": true,
@@ -43329,6 +43460,13 @@
                         "visible": true,
                         "position": "out",
                         "international": true,
+                        "order": 11
+                    },
+                    {
+                        "name": "Remarks",
+                        "label": "Justification",
+                        "visible": true,
+                        "position": "out",
                         "order": 11
                     }
                 ],
@@ -45065,6 +45203,14 @@
                     },
                     {
                         "type": "number",
+                        "name": "EntitlementAmount",
+                        "label": "Entitlement",
+                        "visible": true,
+                        "position": "in",
+                        "order": 2
+                    },
+                    {
+                        "type": "number",
                         "name": "ClaimAmount",
                         "label": "Claimed",
                         "visible": true,
@@ -45120,8 +45266,15 @@
                         "order": 9
                     },
                     {
-                        "name": "Justification",
-                        "label": "Justification",
+                        "name": "EntitlementAmountInBaseCurrency",
+                        "label": "Entitlement Amount in Base Currency",
+                        "visible": true,
+                        "position": "out",
+                        "order": 10
+                    },
+                    {
+                        "name": "Remarks",
+                        "label": "Remarks",
                         "visible": true,
                         "position": "out"
                     }
